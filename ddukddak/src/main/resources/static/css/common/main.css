@@ -7,9 +7,10 @@
 
 /* 메인 폰트 */
 @font-face {
-    font-family: "main";
+    font-family: 'main';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
     font-style: normal;
-    src: local('Pretendard Black'), local('Pretendard-Black'), url(../fonts/Pretendard-Black.woff) format('woff');
+    font-weight: 400;
 }
 
 /* h태그 */
