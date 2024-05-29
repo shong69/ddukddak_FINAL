@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        
+        <link rel="stylesheet" href="/src/main/resources/static/css/common/main.css"> 
+        <link rel="stylesheet" href="/src/main/resources/static/css/partner/interior/interiorList.css"> 
+
+    </head>
+    <body>
+
+        <main>
+
+            <section class="banner">
+
+                <h1>시공사 모아보기</h1>
+
+            </section>
+
+            <section class="searchInterior" style="border: 1px solid black;">
+
+                <div class="titleArea">
+                    <h2>시공사 찾기</h2>
+                </div>
+                <div>
+
+                    <span>시공사 지역</span>
+
+                    <span>
+                        <select id="region" name="region" class="regionSelect">
+                            <option value="seoul">서울</option>
+                            <option value="busan">부산</option>
+                            <option value="incheon">인천</option>
+                            <option value="daegu">대구</option>
+                            <option value="daejeon">대전</option>
+                            <option value="gwangju">광주</option>
+                            <option value="ulsan">울산</option>
+                            <option value="sejong">세종</option>
+                            <option value="jeju">제주</option>
+                        </select>
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <span>견적 금액</span>
+                    <span>
+                        <input type="number">
+                        <span>~</span>
+                        <input type="number">
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <span>시공일정</span>
+                    <input type="date">
+                    <span>~</span>
+                    <input type="date">
+
+                </div>
+
+                <div>
+
+                    <span>원하는 스타일</span>
+                    <span>
+                        <input type="radio" value="modern">모던
+                        <input type="radio" value="chic">시크 
+                        <input type="radio" value="fancy">화려
+                        <input type="radio" value="clean">깔끔
+                        <input type="radio" value="achromatic">무채색
+                    </span>
+
+                </div>
+
+                <div class="btnArea">
+                    <button>파트너 찾기</button>
+                </div>
+
+            </section>
+            
+            <section class="interiorList">
+
+                <div class="titleArea">
+                    <h2>시공사 리스트</h2>
+                </div>
+
+                <table style="border: 1px solid black;">
+
+                    <thead>
+                        <th>시공사</th>
+                        <th>전화번호</th>
+                        <th>주소</th>
+                        <th>시공가격(평당)</th>
+                        <th>포트폴리오</th>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>삶</td>
+                            <td>01012341234</td>
+                            <td>서울특별시 중랑구 면목동</td>
+                            <td>1,000,000</td>
+                            <td>포트폴리오</td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+                <th:block>
+
+                <div class="pagination-area">
+
+                    <ul class="pagination" th:object="${pagination}">
+                        <!-- 첫 페이지로 이동 -->
+                        <li><a th:href="#">&lt;&lt;</a></li>
+
+                        <!-- 이전 목록 마지막 번호로 이동 -->
+                        <li><a th:href="#">&lt;</a></li>
+
+                        <!-- 특정 페이지로 이동 -->
+
+                        <th:block>
+
+                            <!-- 현재 보고있는 페이지 -->
+                            <li>
+                                <a class="current">현재페이지</a>
+                            </li>
+
+                            <!-- 보고있지 않은 페이지 -->
+                            <li>
+                                <a th:href="#">이동할 페이지</a>
+                            </li>
+                        </th:block>
+
+                        <!-- 다음 목록 시작 번호로 이동 -->
+                        <li><a th:href="#">&gt;</a></li>
+
+                        <!-- 끝 페이지로 이동 -->
+                        <li><a th:href="#">&gt;&gt;</a></li>
+                    </ul>
+                </div>
+
+                </th:block>
+
+            </section>
+
+        </main>
+
+    </body>
+
+</html>

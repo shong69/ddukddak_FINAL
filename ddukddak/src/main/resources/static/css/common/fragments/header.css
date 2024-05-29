@@ -1,0 +1,41 @@
+header {
+    background-color: white;
+    display: flex;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/* 로고 */
+header > div:nth-child(1) {
+    flex-basis: 10%;
+    padding: 0 10px;
+}
+
+/* 네비바 */
+header > div:nth-child(2) {
+    flex-basis: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header > div:nth-child(2) > a {
+    padding: 0 20px;
+}
+
+/* 로그인/회원가입 */
+header > div:nth-child(3) {
+    flex-basis: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header > div:nth-child(3) > a {
+    padding: 0 20px;
+}
+
