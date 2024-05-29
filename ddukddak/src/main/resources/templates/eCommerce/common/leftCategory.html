@@ -1,0 +1,114 @@
+<style>
+    #detailCategory {
+    display: flex;
+    flex-direction: column;
+}
+
+#detaildetailCategory {
+    margin-top: 20px;
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+    border: 1px black solid;
+    padding: 10px;
+}
+
+#detaildetailCategory table {
+    font-family: 'main';
+}
+
+#detaildetailCategory table td {
+    padding: 5px 0px;
+}
+
+#detaildetailCategory table tr > td:first-child {
+    width: 200px;
+}
+
+#priceSearch {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#priceSearch input {
+    height: 30px;
+    border-radius: 10px;
+    border: 1px black solid;
+}
+
+#priceSearch button {
+    height: 30px;
+    width: 200px;
+    background-color: #404040;
+    border: none;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+#priceSearch button h3 {
+    color: white;
+}
+</style>
+
+<div id="detailCategory">
+    <h4>가구</h4>
+
+    <div id="detaildetailCategory">
+        <div>
+            <table>
+                <tr>
+                    <td>침대</td>
+                    <td>></td>
+                </tr>
+                <tr>
+                    <td>매트리스/토퍼</td>
+                    <td>></td>
+                </tr>
+                <tr>
+                    <td>테이블/식탁/책상</td>
+                    <td>></td>
+                </tr>
+                <tr>
+                    <td>소파</td>
+                    <td>></td>
+                </tr>
+                <tr>
+                    <td>서랍/수납장</td>
+                    <td>></td>
+                </tr>
+                <tr>
+                    <td>거실장/TV장</td>
+                    <td>></td>
+                </tr>
+                <tr>
+                    <td>선반</td>
+                    <td>></td>
+                </tr>
+                <tr>
+                    <td>진열장/책장</td>
+                    <td>></td>
+                </tr>
+                <tr>
+                    <td>의자</td>
+                    <td>></td>
+                </tr>
+                <tr>
+                    <td>행거/옷장</td>
+                    <td>></td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="border: 1px solid black;"></div>
+
+        <div id="priceSearch">
+            <h4 style="margin: 10px 0;">가격</h4>
+            <input>
+            <h3>~</h3>
+            <input>
+            <button><h3>찾기</h3></button>
+        </div>
+    </div>
+</div>
