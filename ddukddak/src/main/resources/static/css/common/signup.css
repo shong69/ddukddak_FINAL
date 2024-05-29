@@ -6,18 +6,26 @@ main {
 
 .signupTitle1 {
     color: var(--secondary);
+    margin-bottom: 60px;
+    font-size: 34px;
 }
 
 .signupTitle2 {
     font-weight: 700;
-    margin-bottom: 10px;
+}
+
+.signupBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* 회원가입 전체 컨테이너 */
 .signupContainer {
     border: 1px solid black;
     border-radius: 30px;
-    width: 700px;
+    width: 600px;
     height: 500px;
     display: flex;
     flex-direction: column;
@@ -30,6 +38,7 @@ main {
     display: flex;
     width: 400px;
     height: 300px;
+    margin-top: 50px;
 }
 
 /* 회원 선택 영역 */
@@ -37,8 +46,9 @@ main {
     flex-basis: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    padding-top: 28px;
     
 }
 
@@ -47,11 +57,28 @@ main {
     flex-basis: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    padding-top: 28px;
+}
+
+
+.horizontal-align {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.horizontal-align input[type="radio"] {
+    margin-right: 10px;
 }
 
 
 
-
-
+.choiceBtnArea {
+    
+    height: 100px;
+}
