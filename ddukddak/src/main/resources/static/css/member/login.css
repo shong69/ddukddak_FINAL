@@ -1,74 +1,147 @@
-/* 로그인 전체 페이지 */
-.loginPage {
-
-    width: 1440px; 
-    height: 1100px; 
-    position: relative; 
-    background: white;
-    font-family: 'main';
+main {
+    width: 1440px;
+    height: 100vh;
+    color: var(--gray1);
 }
 
-/* 로그인 박스 */
+
+.loginPageTitle1 {
+    color: var(--secondary);
+}
+
+.loginPageTitle2 {
+    margin-bottom: 60px;
+    font-weight: 700;
+}
+
+/* 박스 전체 */
 .loginBox {
-    width: 721px; 
-    height: 600px; 
-    left: 361px; 
-    top: 255px; 
-    position: absolute;
+    width: 620px;
+    height: 540px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 30px;
+    padding: 20px;
+
 }
 
-.loginBoxBorder {
-    width: 721px; 
-    height: 600px; 
-    left: 0px; 
-    top: 0px; 
-    position: absolute; 
-    border-radius: 30px; 
-    border: 1px black solid;
+/* 박스 안 div */
+.boxInDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 558px;
 }
 
-.textId {
-    left: 200px; 
-    top: 119px; 
-    position: absolute; 
-    color: black; 
-    font-size: 18px; 
+
+/* 아이디, 비밀번호 입력 영역 */
+.inputArea {
+    height: 90px;
+    margin-top: 20px;
+}
+
+/* 인풋 라벨(아이디, 비밀번호) */
+.inputArea label {
+    font-size: 14px;
     font-weight: 500;
-    word-wrap: break-word"
 }
 
-.textPw {
-    left: 200px; 
-    top: 165px; 
-    position: absolute; 
-    color: black; 
-    font-size: 18px; 
+/* 인풋 크기 */
+.inputArea input {
+    width: 274px;
+    height: 40px;
+    margin-left: 60px;
+    border-radius: 5px;
+    padding: 8px;
+    font-family: 'main';
+    font-size: 14px;
     font-weight: 500;
-    word-wrap: break-word"
+    outline: none;
+    border: 1px solid var(--gray5);
+    margin-bottom: 5px;
 }
 
 
-#inputId {
-    width: 274px; 
-    height: 40px; 
-    left: 287px; 
-    top: 112px; 
-    position: absolute; 
-    border: 1px black solid;
+/* 인풋 div 그룹화 */
+.inputGroup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+    
+}
+
+/* 아이디 기억하기 영역 */
+.saveIdArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 30px;
+}
+
+/* 아이디 기억하기 라벨 */
+.saveIdArea label{
+    margin-left: 6px;
+    margin-right: 10px;
+
+    margin: 0 10px 0 6px;
+
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* 판매자 로그인 바로가기 */
+.goToPartnerLogin {
+    height: 30px;
+    width: 100%;
+    align-content: end;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 30px;
+}
+
+
+.goToPartnerLogin a {
+    text-decoration: none;
+    color: var(--gray1);
+}
+
+
+/* 버튼 전체 영역 */
+.loginBtnArea {
+    margin-top: 10px;
+}
+
+
+
+/* 네이버, 카카오 버튼 묶음 */
+.socialLoginArea {
+    display: flex;
+    margin-top: 40px;
+}
+
+
+/* 네이버 버튼 이미지 */
+#naver_id_login img {
+    width: 195px;
     border-radius: 5px;
+    margin-right: 10px;
 }
 
-#inputPw {
-    width: 274px; 
-    height: 40px; 
-    left: 287px; 
-    top: 152px; 
-    position: absolute; 
-    border: 1px black solid;
-    border-radius: 5px;
+.linksArea {
+    display: flex;
+    height: 100px;
+    width: 400px;
+    justify-content: space-between;
+    align-items: end;
+    font-weight: 700;
 }
-
-
-
 
 

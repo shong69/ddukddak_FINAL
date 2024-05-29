@@ -1,0 +1,57 @@
+main {
+    width: 1440px;
+    height: 100vh;
+    color: var(--gray1);
+}
+
+.signupTitle1 {
+    color: var(--secondary);
+}
+
+.signupTitle2 {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* 회원가입 전체 컨테이너 */
+.signupContainer {
+    border: 1px solid black;
+    border-radius: 30px;
+    width: 700px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 회원, 파트너 선택 전체 영역 */
+.signupChoiceArea {
+    display: flex;
+    width: 400px;
+    height: 300px;
+}
+
+/* 회원 선택 영역 */
+.memberChoiceArea {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+/* 파트너 선택 영역 */
+.partnerChoiceArea {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+

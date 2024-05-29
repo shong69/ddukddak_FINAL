@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쇼핑 메인페이지</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/eCommerce/eCommerceMain.css">
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    
+    <th:block th:replace="~{eCommerce/common/searchHeader}"></th:block>
+
+    <!-- 광고영상 -->
+    <div id="ad-container">
+        <iframe src="https://www.youtube.com/embed/_jgIs1bMQc4?autoplay=1&mute=1&controls=0&loop=1&playlist=_jgIs1bMQc4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+        <div id="slide2">
+            <ul>
+                <li>
+                    <a href="#">
+                        <img src="/images/main/ad-4.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="/images/main/ad-5.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="/images/main/ad-6.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="/images/main/ad-7.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="/images/main/ad-8.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="/images/main/ad-9.jpg">
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="/images/main/ad-10.jpg">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- 쇼핑 카테고리 -->
+    <div style="margin-left: 30px;"><h4>카테고리별 상품보기</h4></div>
+    <th:block th:replace="~{eCommerce/common/category}"></th:block>
+
+
+    <!-- 쇼핑 목록 -->
+    <div id="shoping-list" style="margin-top: 100px;">
+        <div>
+          <h3 style="font-weight: bold;">오늘의 상품</h3>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+          <h4>+ 더보기</h4>
+        </div>
+
+        <!-- 쇼핑 아이템들 -->
+        <div id="shopping-items">
+          <div style="margin-right: 120px;">
+            <div><img src="/images/main/shopping-1.jpg" style="height: 300px; width: 250px;"></div>
+            <div>
+              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
+                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+              <h3 style="font-weight: 600;">32,700</h3>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <img src="/images/main/star.png" style="height: 10px;">
+              <h5 style="margin-right: 5px;">4.1</h5>
+              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            </div>
+          </div>
+
+
+          <div style="margin-right: 120px;">
+            <div><img src="/images/main/shopping-2.jpg" style="height: 300px; width: 250px;"></div>
+            <div>
+              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
+                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+              <h3 style="font-weight: 600;">32,700</h3>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <img src="/images/main/star.png" style="height: 10px;">
+              <h5 style="margin-right: 5px;">4.1</h5>
+              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            </div>
+          </div>
+
+
+          <div style="margin-right: 120px;">
+            <div><img src="/images/main/shopping-3.jpg" style="height: 300px; width: 250px;"></div>
+            <div>
+              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
+                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+              <h3 style="font-weight: 600;">32,700</h3>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <img src="/images/main/star.png" style="height: 10px;">
+              <h5 style="margin-right: 5px;">4.1</h5>
+              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            </div>
+          </div>
+
+
+          <div>
+            <div><img src="/images/main/shopping-4.jpg" style="height: 300px; width: 250px;"></div>
+            <div>
+              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
+                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+              <h3 style="font-weight: 600;">32,700</h3>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <img src="/images/main/star.png" style="height: 10px;">
+              <h5 style="margin-right: 5px;">4.1</h5>
+              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- 베스트 -->
+    <div id="shoping-list" style="margin-top: 150px;">
+        <div>
+          <h3 style="font-weight: bold; margin-right: 30px;">베스트</h3>
+          <h4>가구</h4>
+          <h4>가전/디지털</h4>
+          <h4>주방용품</h4>
+          <h4>데코/식물</h4>
+          <h4>수납/정리</h4>
+          <h4>생활용품</h4>
+          <h4>유아/아동</h4>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+          <h4>+ 더보기</h4>
+        </div>
+
+        <!-- 쇼핑 아이템들 -->
+        <div id="shopping-items" style="margin-bottom: 200px;">
+          <div style="margin-right: 120px;">
+            <div><img src="/images/eCommerce/shopping-1.jpg" style="height: 300px; width: 250px;"></div>
+            <div>
+              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
+                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+              <h3 style="font-weight: 600;">32,700</h3>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <img src="/images/main/star.png" style="height: 10px;">
+              <h5 style="margin-right: 5px;">4.1</h5>
+              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            </div>
+          </div>
+
+
+          <div style="margin-right: 120px;">
+            <div><img src="/images/eCommerce/shopping-2.jpg" style="height: 300px; width: 250px;"></div>
+            <div>
+              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
+                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+              <h3 style="font-weight: 600;">32,700</h3>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <img src="/images/main/star.png" style="height: 10px;">
+              <h5 style="margin-right: 5px;">4.1</h5>
+              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            </div>
+          </div>
+
+
+          <div style="margin-right: 120px;">
+            <div><img src="/images/eCommerce/shopping-3.jpg" style="height: 300px; width: 250px;"></div>
+            <div>
+              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
+                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+              <h3 style="font-weight: 600;">32,700</h3>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <img src="/images/main/star.png" style="height: 10px;">
+              <h5 style="margin-right: 5px;">4.1</h5>
+              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            </div>
+          </div>
+
+
+          <div>
+            <div><img src="/images/eCommerce/shopping-4.png" style="height: 300px; width: 250px;"></div>
+            <div>
+              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
+                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+              <h3 style="font-weight: 600;">32,700</h3>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <img src="/images/main/star.png" style="height: 10px;">
+              <h5 style="margin-right: 5px;">4.1</h5>
+              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/eCommerce/eCommerce.js"></script>
+</body>
+</html>

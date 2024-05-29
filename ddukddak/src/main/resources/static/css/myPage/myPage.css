@@ -1,0 +1,93 @@
+/* 메인 폰트 */
+@font-face {
+    font-family: 'main';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+*{
+    font-family: 'main';
+}
+
+
+.myPage-main{
+    min-width: 1400px;
+    min-height: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/*주문내역*/
+.category-name{
+    margin: 30px 0;
+}
+
+.skuList{
+    margin:30px 0;
+}
+.skuList thead{
+    height: 70px;
+    
+}
+.skuList th{
+    min-width: 90px;
+    border-bottom:1px solid black;
+}
+.skuList tr{
+    height: 60px;
+    
+}
+
+.skuList td{
+    border-bottom:1px solid black;
+}
+
+.sku-status{
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+    justify-content: space-evenly;
+}
+
+/*위시리스트*/
+.wishList-table{
+    margin-top: 80px;
+    margin-left: 70px;
+    margin-bottom: 50px;
+}
+.item-row{
+    height: 180px;
+}
+.item_img{
+    height: 150px;
+    width: 150px;
+}
+.wish-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width : 450px;
+    height: 180px;
+    margin:20px 20px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.wish-item>div{
+    display: flex;
+    flex-direction: column;
+    width:200px;
+    text-align: end;
+    margin:5px 10px;
+    line-height: 30px;
+}
+
+.item-title{
+    font-weight: 600;
+}
+.heart{
+    text-align: start;
+    position:relative;
+    left:-40px;
+}

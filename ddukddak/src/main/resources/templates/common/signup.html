@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{app.name}">Document</title>
+
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+    <link rel="stylesheet" href="/css/common/button.css">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/signup.css">
+
+
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+
+    <main>
+        <h1 class="signupTitle1">회원가입</h1>
+        <h4 class="signupTitle2">회원 / 파트너 선택</h4>
+        <div class="signupContainer">
+            <form>
+                <div class="signupBox">
+                    <!-- 회원, 파트너 묶음 영역 -->
+                    <div class="signupChoiceArea">
+                        <!-- 회원 선택 영역 -->
+                        <div class="memberChoiceArea">
+                            <h3 style="font-weight: 700;">일반 회원</h3>
+                            <label for="memberChoice">
+                                <input type="radio" id="memberChoice"> 고객
+                            </label>
+                        </div>
+
+                        <!-- 파트너 선택 영역 -->
+                        <div class="partnerChoiceArea">
+                            <h3 style="font-weight: 700;">파트너</h3>
+                            <label>
+                                <input type="radio" id="sellerChoice"> 판매사
+                            </label>
+                            <label>
+                                <input type="radio" id="interierChoice"> 시공사
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 선택 완료 버튼 영역 -->
+                    <div>
+                        <button class="mainPageBtn">선택 완료</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+
+
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+</body>
+</html>

@@ -51,7 +51,7 @@ button:active {
 
 
 .mainPageBtn {
-    width: 350px; 
+    width: 400px;
     height: 50px;
     border-radius: 10px;
 
@@ -103,7 +103,6 @@ button:active {
 /* 회원가입 관련 버튼 */
 
 /* 주소 검색 버튼 */
-
 .searchAddressBtn {
     
     width: 150px; 
