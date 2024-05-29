@@ -17,6 +17,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    
 }
 
 /*주문내역*/
@@ -42,6 +43,7 @@
 
 .skuList td{
     border-bottom:1px solid black;
+    height: 80px;
 }
 
 .sku-status{
@@ -50,7 +52,11 @@
     height: 60px;
     justify-content: space-evenly;
 }
-
+.product-image{
+    width: 60px;
+    height: 60px;
+    background-color: #757575;
+}
 /*위시리스트*/
 .wishList-table{
     margin-top: 80px;
@@ -90,4 +96,11 @@
     text-align: start;
     position:relative;
     left:-40px;
+}
+
+/*장바구니*/
+.cartList{
+    margin-top: 80px;
+    margin-left: 70px;
+    margin-bottom: 50px;
 }

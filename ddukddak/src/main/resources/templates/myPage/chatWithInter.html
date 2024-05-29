@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cart</title>
+    <link rel="stylesheet" href="/css/myPage/myPage.css">
+    <link rel="stylesheet" href="/css/common/fragments/myPageSidebar.css">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    <main>
+
+        <th:block th:replace="~{common/fragments/myPageProfileSection}"></th:block>
+
+        <section class="myPage-row2">
+            <th:block th:replace="~{common/fragments/myPageSideBar}"></th:block>
+
+            <section class="myPage-main">
+                <h2 class="category-name">시공사와의 채팅</h2>
+
+
+            </section>
+        </section>
+
+        <th:block th:replace="~{common/fragments/footer}"></th:block>
+</body>
+</html>
