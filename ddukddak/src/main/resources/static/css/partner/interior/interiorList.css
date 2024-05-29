@@ -47,16 +47,56 @@ section {
 /* 시공사 찾기 */
 .searchInterior {
     
-    width: 1020px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
     border: 1px solid black;
-    padding: 20px;
-    border-radius: 10px;
+    border-radius: 30px;
 }
 
 .searchInteriorTable {
     display: flex;
     flex-direction: column;
 }
+
+
+.searchInterior table {
+    padding: 30px 0;
+    margin: 0 30px;
+}
+
+.searchInterior table td {
+    padding-bottom: 30px;
+}
+
+.searchInterior table td h3 {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.searchInterior table select {
+    font-family: 'main';
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px black solid;
+}
+
+.searchInterior tr:nth-child(1) input,
+.searchInterior tr:nth-child(2) input {
+    font-family: 'main';
+    height: 30px;
+    border-radius: 10px;
+    border: 1px black solid;
+}
+
+.searchInterior tr:nth-child(3) h4 {
+    margin-left: 3px;
+    margin-right: 10px;
+}
+
 
 /*시공사 리스트*/
 .interiorList {

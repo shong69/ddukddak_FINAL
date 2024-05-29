@@ -511,16 +511,21 @@ button:active {
 
 /* 시공사 찾기 */
 .interiorSearchBtn {
-    width: 350px; 
+    border: none;
+    background-color: #404040;
+    width: 300px;
     height: 50px;
+    cursor: pointer;
     border-radius: 10px;
-
-    /* 폰트 */
+    transition-duration: 0.3s;
+    font-family: 'main';
     font-size: 18px;
-    font-weight: 700;
+    color: white;
 }
 .interiorSearchBtn:hover {
-    color: var(--white);
+    color: black;
+    background-color: #FFFAF0;
+    box-shadow: 3px 3px 3px #9B9B9B;
 }
 
 /* 바로가기 */
