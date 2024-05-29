@@ -1,0 +1,9 @@
+.btnArea {
+    display: flex;
+    justify-content: center;
+}
+
+.titleArea {
+    display: flex;
+    justify-content: center;
+}
