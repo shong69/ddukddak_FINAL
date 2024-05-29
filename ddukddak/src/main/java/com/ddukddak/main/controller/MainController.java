@@ -11,4 +11,14 @@ public class MainController {
 	public String main() {
 		return "common/main";
 	}
+	
+	
+	/** 회원 가입 페이지 이동(고객, 판매사, 시공사 선택)
+	 * @return
+	 */
+	@RequestMapping("signup")
+	public String signup() {
+		return "common/signup";
+	}
+	
 }

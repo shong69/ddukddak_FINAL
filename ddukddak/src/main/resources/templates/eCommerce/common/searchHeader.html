@@ -1,0 +1,145 @@
+<style>
+    #serch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#serch input {
+    margin-left: 50px;
+    width: 1000px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid #9B9B9B;
+}
+
+#serch input::placeholder {
+    font-family: 'main';
+    padding-left: 10px;
+}
+
+/* 인기검색어 */
+#slide {
+    margin-left: 30px;
+}
+
+#slide div {
+    width: 130px;
+    display: flex;
+    align-items: center;
+}
+
+#slide div h4:first-child {
+    font-weight: bold;
+}
+
+#slide div img {
+    margin: 0 10px;
+}
+
+#slide{
+    height: 20px;
+    overflow: hidden;
+}
+#slide>ul{
+    height: 60px;
+}
+#slide>ul>li{
+    height: 20px;
+}
+</style>
+
+<!-- 검색헤더 -->
+<div id="serch">
+    <h2>쇼핑</h2>
+    <input placeholder="쇼핑상품 검색">
+
+    <!-- 인기 검색어 -->
+    <div id="slide">
+        <ul>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>1</h4>
+                        <img src="/images/eCommerce/triangle-1.jpg" style="height: 15px;">
+                        <h4>일체형책상</h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>2</h4>
+                        <img src="/images/eCommerce/triangle-2.png" style="height: 10px;">
+                        <h4>매트리스</h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>3</h4>
+                        <img src="/images/eCommerce/triangle-1.jpg" style="height: 15px;">
+                        <h4>스탠딩조명</h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>4</h4>
+                        <img src="/images/eCommerce/triangle-2.png" style="height: 10px;">
+                        <h4>데코용 식물</h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>5</h4>
+                        <img src="/images/eCommerce/triangle-2.png" style="height: 10px;">
+                        <h4>해먹</h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>6</h4>
+                        <img src="/images/eCommerce/triangle-1.jpg" style="height: 15px;">
+                        <h4>센서휴지통</h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>7</h4>
+                        <img src="/images/eCommerce/triangle-1.jpg" style="height: 15px;">
+                        <h4>스탠딩티비</h4>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    /* 인기검색어 */
+setInterval(function(){
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "-20px"})
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "-40px"})
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "-60px"})
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "-80px"})
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "-100px"})
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "-120px"})
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "0px"})
+});
+</script>

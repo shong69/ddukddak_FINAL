@@ -16,7 +16,7 @@ public class MemberController {
 	private final MemberService service;
 	
 	@GetMapping("login")
-	public String login() {
+	public String memberLogin() {
 		
 		return "/member/login";
 	}
