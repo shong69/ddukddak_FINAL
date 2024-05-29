@@ -1,6 +1,16 @@
+/* 메인 폰트 */
+@font-face {
+    font-family: 'main';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+
+
 .main-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
 }
 
@@ -18,24 +28,65 @@
 /* 광고 포스터*/
 #poster-container {
     padding: 100px 0;
+    overflow: hidden;
+    position: relative;
+    width: 1500px;
+    box-sizing: border-box;
+}
+
+#image-box {
+    width: 4000px;
+    height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: nowrap;
+    animation: bannermove 20s linear infinite;
 }
 
-#poster-container > img:nth-child(1) {
-    width: 500px;
-    padding-right: 100px;
+#image-box > div {
+    margin: 0 -1px 0 0;
 }
 
-#poster-container > img:nth-child(2) {
-    width: 500px;
+#image-box > div > img {
+    padding: 0 50px;
+    height: 500px;
 }
+
+@keyframes bannermove {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-50%, 0);
+    }
+}
+
+/* 라이브 커머스 */
+#live {
+    padding: 100px 0;
+}
+
+#live iframe {
+    margin-top: 50px;
+    height: 500px;
+    width: 888px;
+}
+
+#live div {
+    margin-top: 30px;
+    display: flex;
+    justify-content: end;
+}
+
+#live div h4 {
+    cursor: pointer;
+}
+
 
 
 /* 3d 모델링 */
 #modeling-container {
     background-color: #FFFAF0;
+    width: 1500px;
     padding: 50px 0;
     display: flex;
     flex-direction: column;
@@ -70,6 +121,18 @@
     background-color: #404040;
     width: 300px;
     height: 50px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition-duration: 0.3s;
+    font-family: 'main';
+    font-size: 14px;
+    color: white;
+}
+
+#threeD-container button:hover {
+    color: black;
+    background-color: #FFFAF0;
+    box-shadow: 3px 3px 3px #9B9B9B;
 }
 
 #threeD-container > div:last-child > iframe {
@@ -100,7 +163,18 @@
 }
 
 #category-circle > div {
-    border: 1px #CACACA solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#category-circle > div > h3 {
+    margin-top: 15px;
+}
+
+#category-circle > div > div {
+    border: 1px #ececec solid;
     border-radius: 50%;
     height: 150px;
     width: 150px;
@@ -108,9 +182,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    transition-duration: 0.3s;
 }
 
-#category-circle > div > img {
+#category-circle > div > div:hover {
+    box-shadow: 5px 5px 5px #9B9B9B;
+}
+
+#category-circle > div > div > img {
     width: 70%;
     height: 70%;
 }
@@ -118,6 +198,7 @@
 #shoping-list {
     display: flex;
     flex-direction: column;
+    margin-top: 50px;
 }
 
 #shoping-list > div:nth-child(2) {
@@ -129,9 +210,152 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 #shopping-items > div {
     display: flex;
     flex-direction: column;
+}
+
+
+/* 커뮤니티 */
+#community {
+    padding: 100px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.community-child {
+    display: flex;
+    flex-direction: column;
+}
+
+.community-child h4 {
+    text-align: end;
+}
+
+.comeHome-box {
+    margin-bottom: 50px;
+    width: 1500px;
+    height: 100px;
+    background-color: white;
+    box-shadow: 8px 8px 8px #b8b8b8;
+    display: flex;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#konwHow {
+    margin-top: 150px;
+}
+
+#konwHow > div:nth-child(3) {
+    width: 1500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#konwHow > div:nth-child(3) > div {
+    margin: 0 100px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+#konwHow > div:nth-child(3) > div > img {
+    height: 300px;
+    width: 300px;
+}
+
+#konwHow > div:nth-child(3) > div > * {
+    margin-bottom: 5px;
+}
+
+#konwHow > div:nth-child(3) > div > h3,
+#konwHow > div:nth-child(3) > div > h4,
+#konwHow > div:nth-child(3) > div > h5 {
+    padding: 0 15px;
+}
+
+/* 시공사 찾기 */
+#constructor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+}
+
+#constructor button {
+    border: none;
+    background-color: #404040;
+    width: 300px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition-duration: 0.3s;
+    font-family: 'main';
+    font-size: 18px;
+    color: white;
+}
+
+#constructor button:hover {
+    color: black;
+    background-color: #FFFAF0;
+    box-shadow: 3px 3px 3px #9B9B9B;
+}
+
+#constructor table {
+    padding: 30px 0;
+}
+
+#constructor table td {
+    padding-bottom: 30px;
+}
+
+#constructor table td h3 {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+#constructor table select {
+    font-family: 'main';
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px black solid;
+}
+
+#constructor tr:nth-child(1) input,
+#constructor tr:nth-child(2) input {
+    font-family: 'main';
+    height: 30px;
+    border-radius: 10px;
+    border: 1px black solid;
+}
+
+#constructor tr:nth-child(3) h4 {
+    margin-left: 3px;
+    margin-right: 10px;
+}
+
+/* 탑버튼 */
+#top {
+    position: fixed;
+    top: 90%;
+    left: 95%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    background-color: white;
+    font-family: 'main';
+    cursor: pointer;
+    border: 2px black solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
