@@ -1,11 +1,10 @@
 @font-face {
   font-family: 'iconsax';
-
-  src:  url('/font/icon/iconsax.eot');
-  src:  url('/font/icon/iconsax.eot?yjegnn#iefix') format('embedded-opentype'),
-    url('/font/icon/iconsax.ttf') format('truetype'),
-    url('/font/icon/iconsax.woff') format('woff'),
-    url('/font/icon/iconsax.svg') format('svg');
+  src:  url('../../font/icon/iconsax.eot?yjegnn');
+  src:  url('../../font/icon/iconsax.eot?yjegnn#iefix') format('embedded-opentype'),
+    url('../../font/icon/iconsax.ttf?yjegnn') format('truetype'),
+    url('../../font/icon/iconsax.woff?yjegnn') format('woff'),
+    url('../../font/icon/iconsax.svg?yjegnn#iconsax') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
