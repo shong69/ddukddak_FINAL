@@ -1,0 +1,74 @@
+/* 로그인 전체 페이지 */
+.loginPage {
+
+    width: 1440px; 
+    height: 1100px; 
+    position: relative; 
+    background: white;
+    font-family: 'main';
+}
+
+/* 로그인 박스 */
+.loginBox {
+    width: 721px; 
+    height: 600px; 
+    left: 361px; 
+    top: 255px; 
+    position: absolute;
+}
+
+.loginBoxBorder {
+    width: 721px; 
+    height: 600px; 
+    left: 0px; 
+    top: 0px; 
+    position: absolute; 
+    border-radius: 30px; 
+    border: 1px black solid;
+}
+
+.textId {
+    left: 200px; 
+    top: 119px; 
+    position: absolute; 
+    color: black; 
+    font-size: 18px; 
+    font-weight: 500;
+    word-wrap: break-word"
+}
+
+.textPw {
+    left: 200px; 
+    top: 165px; 
+    position: absolute; 
+    color: black; 
+    font-size: 18px; 
+    font-weight: 500;
+    word-wrap: break-word"
+}
+
+
+#inputId {
+    width: 274px; 
+    height: 40px; 
+    left: 287px; 
+    top: 112px; 
+    position: absolute; 
+    border: 1px black solid;
+    border-radius: 5px;
+}
+
+#inputPw {
+    width: 274px; 
+    height: 40px; 
+    left: 287px; 
+    top: 152px; 
+    position: absolute; 
+    border: 1px black solid;
+    border-radius: 5px;
+}
+
+
+
+
+
