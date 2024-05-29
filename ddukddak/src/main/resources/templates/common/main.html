@@ -1,11 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+
+  <link rel="stylesheet" href="/css/common/fragments/header.css">
+  <link rel="stylesheet" href="/css/common/main.css">
+  <link rel="stylesheet" href="/css/common/first.css">
 </head>
 <body>
+  <th:block th:replace="~{common/fragments/header}"></th:block>
+
+  <!-- 헤더 전체 div -->
+  <div class="main-container">
+
+    <!-- 메인 배너 광고 -->
+    <div id="video-container">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/dMekU8fxlW8?autoplay=1&mute=1&controls=0&loop=1&playlist=dMekU8fxlW8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <!-- 광고 포스터 -->
+    <div id="poster-container">
+      <img src="/images/main/ad-3.jpg">
+      <img src="/images/main/ad-1.jpeg">
+    </div>
+
+    <!-- 3d 모델링 -->
+    <div id="modeling-container">
+      <div>
+        <h2>3D 모델링으로 내 방을 미리 꾸며보자!</h2>
+      </div>
+
+      <div id="threeD-container">
+        <div>
+          <div><img src="/images/main/3d-modeling.png" style="height: 300px;"></div>
+          <div><button><h4 style="color: white;">3D 모델링 바로가기</h4></button></div>
+        </div>
+
+        <div>
+          <iframe src="https://www.youtube.com/embed/TtrVg4Hz_fU?autoplay=1&mute=1&controls=0&loop=1&playlist=TtrVg4Hz_fU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- 쇼핑 -->
+    <div id="shopping">
+      <!-- 쇼핑 카테고리 -->
+      <div>
+        <div style="margin-left: 30px;"><h3>카테고리별 상품보기</h3></div>
+        <div id="category-circle">
+          <div><img src="/images/main/category-1.png"></div>
+          <div><img src="/images/main/category-2.png"></div>
+          <div><img src="/images/main/category-3.png"></div>
+          <div><img src="/images/main/category-4.png"></div>
+          <div><img src="/images/main/category-5.png"></div>
+          <div><img src="/images/main/category-6.png"></div>
+          <div><img src="/images/main/category-7.png"></div>
+        </div>
+      </div>
+
+      <!-- 쇼핑 목록 -->
+      <div id="shoping-list">
+        <div>
+          <h3>쇼핑</h3>
+        </div>
+
+        <div>
+          <h4>+ 더보기</h4>
+        </div>
+
+        <!-- 쇼핑 아이템들 -->
+        <div id="shopping-items">
+          <div>
+            <div><img src="/images/main/shopping-1.jpg" style="height: 300px;"></div>
+            <div>
+              <h4>캐롯 카로틴 카밍 워터 패드 2개<br>
+              +증정 리필 30매+패드케이스</h4>
+            </div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 커뮤니티 -->
+    <div></div>
+
+    <!-- 시공사 찾기 -->
+    <div></div>
+
+  </div>
+
   
 </body>
 </html>
