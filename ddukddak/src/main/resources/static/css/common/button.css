@@ -5,8 +5,16 @@ button {
     left: 0px; 
     top: 0px;
     background-color: var(--gray1);
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
     border-color: transparent;
-    
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 100%;
+    will-change: transform;
+    outline: none;
+
     cursor: pointer;
     
     /* 폰트 */
@@ -20,29 +28,200 @@ button {
 button:hover {
     left: 0px; 
     top: 0px;
-    background: var(--white);
-    border-radius: 30px;
-    transition: background-color 0.3s;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
     border-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+    
 
     /* 폰트 */
     font-family: 'main';
-    color: var(--white);
+    color: var(--gray1);
     text-align: center;
     word-wrap: break-word;
 }
+
+button:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+/* ----------------------------------------------------------- */
+
+/* 메인페이지 관련 버튼 */
+
+
+.mainPageBtn {
+    width: 350px; 
+    height: 50px;
+    border-radius: 10px;
+
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 18px;
+    font-weight: 700;
+}
+.mainPageBtn:hover {
+    background-color: var(--white);
+}
+
+
 
 /* ----------------------------------------------------------- */
 
 
 
 /* 로그인 관런 버튼 */
-.loginBtn {
+
+
+
+/* 로그인/아이디찾기/비밀번호찾기 메인 버튼*/
+.loginMainBtn {
 
     width: 500px; 
     height: 50px;
     border-radius: 10px;
 
-    
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 18px;
+    font-weight: 700;
+}
 
+.loginMainBtn:hover {
+    background: var(--white);
+}
+
+
+
+
+
+/* API 카카오/네이버 버튼 */
+
+/* ----------------------------------------------------------- */
+
+
+/* 회원가입 관련 버튼 */
+
+/* 주소 검색 버튼 */
+
+.searchAddressBtn {
+    
+    width: 150px; 
+    height: 30px;
+    border-radius: 10px;
+
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 14px;
+    font-weight: 500;
+}
+.searchAddressBtn:hover {
+    background-color: var(--white);
+
+    /* 폰트 */
+    font-weight: 700;
+}
+
+
+/* ----------------------------------------------------------- */
+
+/* 마이페이지 관련 버튼 */
+
+
+
+
+/* 교환/구매확정/사진변경 버튼 */
+.myPageMainBtn {
+    width: 85px; 
+    height: 20px;
+    border-radius: 5px;
+
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 12px;
+    font-weight: 500;
+}
+.myPageMainBtn:hover {
+    background-color: var(--white);
+    border: 0.5px solid var(--gray1);
+
+}
+
+
+
+
+/* 비밀번호 변경/이메일 변경/닉네임 변경/휴대전화 변경(인증) */
+.myPageSubBtn {
+    width: 85px; 
+    height: 20px;
+    border-radius: 5px;
+    background-color: var(--gray3);
+
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 12px;
+    font-weight: 500;
+}
+.myPageSubBtn:hover {
+    background-color: var(--white);
+    border: 0.5px solid var(--gray1);
+
+}
+
+
+
+/* 삭제/수정 */
+.myPageDelUpdateBtn {
+    width: 40px; 
+    height: 20px;
+    border-radius: 5px;
+}
+.myPageDelUpdateBtn:hover {
+    background-color: var(--white);
+    border: 0.5px solid var(--gray1);
+
+}
+
+/* 확인/취소 */
+.myPageConfirmCancelBtn {
+    width: 60px; 
+    height: 25px;
+    border-radius: 5px;
+}
+.myPageConfirmCancelBtn:hover {
+    background-color: var(--white);
+    border: 0.5px solid var(--gray1);
+}
+
+/* 인증 */
+.myPageVerifyBtn {
+    width: 60px; 
+    height: 20px;
+    border-radius: 5px;
+}
+
+
+
+
+
+/* 체팅 -> 보내기 */
+.myPageChatSend {
+    width: 140px; 
+    height: 50px;
+    border-radius: 5px;
+    background-color: var(--secondary);
+
+    /* 폰트 */
+    font-size: 24px;
+    font-weight: 700;
+}
+.myPageChatSend:hover {
+    background-color: var(--white);
+    border: 1px solid var(--secondary);
+    box-shadow: none;
+    transform: none;
+}
+.myPageChatSend:active {
+    background-color: var(--secondary);
+    color: var(--white);
 }

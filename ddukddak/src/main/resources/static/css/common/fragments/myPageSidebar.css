@@ -1,0 +1,105 @@
+
+/* 메인 폰트 */
+@font-face {
+    font-family: 'main';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+*{
+    font-family: 'main';
+}
+main {
+    min-height: 1000px;
+    display: flex;
+    width: 100%;
+}
+/*마이페이지 상단 개인정보 영역*/
+
+.myPage-row1{
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left:300px;
+    padding-right: 330px;
+    border-bottom: 2px solid black;
+}
+.myPage-row2{
+    min-height: 700px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.myPage-row1>div:first-child{
+    display: flex;
+    flex-direction: row;
+    padding: 30px 0;
+}
+.profile-image{
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+    margin-top: 25px;
+}
+
+.profile-content tr>td:first-child{
+    font-weight: 600;
+    padding-right: 20px;
+}
+
+
+
+.myPage-row1>div:last-child{
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.title{
+    font-family: 'main';
+    font-weight: 600;
+    font-size: 45px;
+    margin-left: auto;
+}
+.quick-view{
+    line-height: 32.5px;
+    
+}
+.quick-view>a{
+    margin:0 5px;
+}
+
+.nav-content:hover{
+    font-weight: 600;
+}
+
+
+/*사이드바*/
+.side-bar{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    border-right: 1px solid #737373;
+    background-color: black;
+    
+}
+
+.side-bar-logo {
+    width: 100px;
+    height: 100px;
+}
+.side-bar div{
+    padding:30px 60px;
+    border-bottom: 0.3px solid #ffffff;
+}
+.menu{
+    display: flex;
+    flex-direction: column;
+}
+.menu *{
+    margin:15px auto;
+    color:white;
+}
+
