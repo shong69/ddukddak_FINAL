@@ -1,0 +1,48 @@
+/* 메인 버튼 CSS */
+
+button {
+
+    left: 0px; 
+    top: 0px;
+    background-color: var(--gray1);
+    border-color: transparent;
+    
+    cursor: pointer;
+    
+    /* 폰트 */
+    font-family: 'main';
+    word-wrap: break-word;
+    text-align: center; 
+    color: var(--white); 
+
+}
+
+button:hover {
+    left: 0px; 
+    top: 0px;
+    background: var(--white);
+    border-radius: 30px;
+    transition: background-color 0.3s;
+    border-color: transparent;
+
+    /* 폰트 */
+    font-family: 'main';
+    color: var(--white);
+    text-align: center;
+    word-wrap: break-word;
+}
+
+/* ----------------------------------------------------------- */
+
+
+
+/* 로그인 관런 버튼 */
+.loginBtn {
+
+    width: 500px; 
+    height: 50px;
+    border-radius: 10px;
+
+    
+
+}
