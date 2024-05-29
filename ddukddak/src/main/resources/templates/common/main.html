@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>뚝딱뚝딱 메인페이지</title>
 
   <link rel="stylesheet" href="/css/common/fragments/header.css">
+  <link rel="stylesheet" href="/css/common/fragments/footer.css">
   <link rel="stylesheet" href="/css/common/main.css">
   <link rel="stylesheet" href="/css/common/first.css">
 </head>
@@ -22,8 +23,39 @@
 
     <!-- 광고 포스터 -->
     <div id="poster-container">
-      <img src="/images/main/ad-3.jpg">
-      <img src="/images/main/ad-1.jpeg">
+      <div id="image-box">
+        <div>
+          <img src="/images/main/ad-4.jpg">
+        </div>
+        <div>
+          <img src="/images/main/ad-5.jpg">
+        </div>
+        <div>
+          <img src="/images/main/ad-6.jpg">
+        </div>
+        <div>
+          <img src="/images/main/ad-7.jpg">
+        </div>
+        <div>
+          <img src="/images/main/ad-8.jpg">
+        </div>
+        <div>
+          <img src="/images/main/ad-9.jpg">
+        </div>
+        <div>
+          <img src="/images/main/ad-10.jpg">
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 라이브 커머스 -->
+    <div id="live">
+      <h2>오늘의 라이브커머스</h2>
+      <iframe src="https://www.youtube.com/embed/edEuwPLsdIw?autoplay=1&mute=1&controls=0&loop=1&playlist=edEuwPLsdIw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <div>
+        <h4>라이브커머스 바로가기 >></h4>
+      </div>
     </div>
 
     <!-- 3d 모델링 -->
@@ -35,7 +67,7 @@
       <div id="threeD-container">
         <div>
           <div><img src="/images/main/3d-modeling.png" style="height: 300px;"></div>
-          <div><button><h4 style="color: white;">3D 모델링 바로가기</h4></button></div>
+          <div><button>3D 모델링 바로가기</button></div>
         </div>
 
         <div>
@@ -50,48 +82,282 @@
       <div>
         <div style="margin-left: 30px;"><h3>카테고리별 상품보기</h3></div>
         <div id="category-circle">
-          <div><img src="/images/main/category-1.png"></div>
-          <div><img src="/images/main/category-2.png"></div>
-          <div><img src="/images/main/category-3.png"></div>
-          <div><img src="/images/main/category-4.png"></div>
-          <div><img src="/images/main/category-5.png"></div>
-          <div><img src="/images/main/category-6.png"></div>
-          <div><img src="/images/main/category-7.png"></div>
+          <div>
+            <div><img src="/images/main/category-1.png"></div>
+            <h3>가구</h3>
+          </div>
+
+          <div>
+            <div><img src="/images/main/category-2.png"></div>
+            <h3>가전/디지털</h3>
+          </div>
+
+          <div>
+            <div><img src="/images/main/category-3.png"></div>
+            <h3>주방용품</h3>
+          </div>
+
+          <div>
+            <div><img src="/images/main/category-4.png"></div>
+            <h3>데코/식물</h3>
+          </div>
+
+          <div>
+            <div><img src="/images/main/category-5.png"></div>
+            <h3>수납/정리</h3>
+          </div>
+
+          <div>
+            <div><img src="/images/main/category-6.png"></div>
+            <h3>생활용품</h3>
+          </div>
+
+          <div>
+            <div><img src="/images/main/category-7.png"></div>
+            <h3>유아/아동</h3>
+          </div>
         </div>
       </div>
 
       <!-- 쇼핑 목록 -->
       <div id="shoping-list">
         <div>
-          <h3>쇼핑</h3>
+          <h3 style="font-weight: bold;">쇼핑</h3>
         </div>
 
-        <div>
+        <div style="margin-bottom: 10px;">
           <h4>+ 더보기</h4>
         </div>
 
         <!-- 쇼핑 아이템들 -->
         <div id="shopping-items">
-          <div>
-            <div><img src="/images/main/shopping-1.jpg" style="height: 300px;"></div>
+          <div style="margin-right: 120px;">
+            <div><img src="/images/main/shopping-1.jpg" style="height: 300px; width: 250px;"></div>
             <div>
-              <h4>캐롯 카로틴 카밍 워터 패드 2개<br>
-              +증정 리필 30매+패드케이스</h4>
+              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
+                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
             </div>
-            <div></div>
-            <div></div>
+            <div style="display: flex; margin-top: 8px;">
+              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+              <h3 style="font-weight: 600;">32,700</h3>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <img src="/images/main/star.png" style="height: 10px;">
+              <h5 style="margin-right: 5px;">4.1</h5>
+              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            </div>
+          </div>
+
+
+          <div style="margin-right: 120px;">
+            <div><img src="/images/main/shopping-2.jpg" style="height: 300px; width: 250px;"></div>
+            <div>
+              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
+                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+              <h3 style="font-weight: 600;">32,700</h3>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <img src="/images/main/star.png" style="height: 10px;">
+              <h5 style="margin-right: 5px;">4.1</h5>
+              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            </div>
+          </div>
+
+
+          <div style="margin-right: 120px;">
+            <div><img src="/images/main/shopping-3.jpg" style="height: 300px; width: 250px;"></div>
+            <div>
+              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
+                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+              <h3 style="font-weight: 600;">32,700</h3>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <img src="/images/main/star.png" style="height: 10px;">
+              <h5 style="margin-right: 5px;">4.1</h5>
+              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            </div>
+          </div>
+
+
+          <div>
+            <div><img src="/images/main/shopping-4.jpg" style="height: 300px; width: 250px;"></div>
+            <div>
+              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
+                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+              <h3 style="font-weight: 600;">32,700</h3>
+            </div>
+            <div style="display: flex; margin-top: 8px;">
+              <img src="/images/main/star.png" style="height: 10px;">
+              <h5 style="margin-right: 5px;">4.1</h5>
+              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- 커뮤니티 -->
-    <div></div>
+    <div id="community">
+      <h3 style="text-align: center; font-weight: bold; margin-bottom: 100px;">커뮤니티</h3>
+
+      <!-- 집들이 -->
+      <div>
+        <div id="comeHome" class="community-child">
+          <div>
+            <h3 style="font-weight: bold;">집들이</h3>
+          </div>
+  
+          <div style="margin-bottom: 10px;">
+            <h4>+ 더보기</h4>
+          </div>
+        </div>
+
+        <div class="comeHome-box">
+          <img src="/images/main/interior-1.jpg" style="width: 150px;">
+          <h2 style="display: flex; align-items: center; width: 1100px; padding-left: 30px;">셀프인테리어 3년차에요 평가 부탁드려요</h2>
+          <h5 style="color: #9B9B9B;">유저삼  |  조회수 30  |  2024-05-11</h5>
+        </div>
+        <div class="comeHome-box">
+          <img src="/images/main/interior-2.jpg" style="width: 150px;">
+          <h2 style="display: flex; align-items: center; width: 1100px; padding-left: 30px;">나만의 공간을 꾸몄어요</h2>
+          <h5 style="color: #9B9B9B;">유저사  |  조회수 30  |  2024-05-11</h5>
+        </div>
+        <div class="comeHome-box">
+          <img src="/images/main/interior-3.jpeg" style="width: 150px;">
+          <h2 style="display: flex; align-items: center; width: 1100px; padding-left: 30px;">5년만에 이사했어요! 셀프로 인테리어 해봤습니다</h2>
+          <h5 style="color: #9B9B9B;">유저삼  |  조회수 30  |  2024-05-11</h5>
+        </div>
+      </div>
+
+      <!-- 노하우 -->
+      <div>
+        <div id="konwHow" class="community-child">
+          <div>
+            <h3 style="font-weight: bold;">노하우</h3>
+          </div>
+  
+          <div style="margin-bottom: 10px;">
+            <h4>+ 더보기</h4>
+          </div>
+
+          <div>
+            <div>
+              <img src="/images/main/interior-4.jpeg">
+              <h4>@user01</h4>
+              <h3 style="font-weight: bold;">베란다 가구배치 꿀팁</h3>
+              <h3>♡ 16</h3>
+              <h5>
+                공간 측정: 베란다의 크기를 정확히 측정하고<br>
+                가구의 크기와 배치 계획을 세웁니다.<br>
+                구역 나누기: 베란다를 여러 구역으로 나눠<br>
+                휴식, 식사, 가드닝 등 다양한 용도로 사용할 수 있도...
+              </h5>
+            </div>
+
+
+            <div>
+              <img src="/images/main/interior-5.jpg">
+              <h4>@user01</h4>
+              <h3 style="font-weight: bold;">베란다 가구배치 꿀팁</h3>
+              <h3>♡ 16</h3>
+              <h5>
+                공간 측정: 베란다의 크기를 정확히 측정하고<br>
+                가구의 크기와 배치 계획을 세웁니다.<br>
+                구역 나누기: 베란다를 여러 구역으로 나눠<br>
+                휴식, 식사, 가드닝 등 다양한 용도로 사용할 수 있도...
+              </h5>
+            </div>
+
+
+            <div>
+              <img src="/images/main/interior-6.jpg">
+              <h4>@user01</h4>
+              <h3 style="font-weight: bold;">베란다 가구배치 꿀팁</h3>
+              <h3>♡ 16</h3>
+              <h5>
+                공간 측정: 베란다의 크기를 정확히 측정하고<br>
+                가구의 크기와 배치 계획을 세웁니다.<br>
+                구역 나누기: 베란다를 여러 구역으로 나눠<br>
+                휴식, 식사, 가드닝 등 다양한 용도로 사용할 수 있도...
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div style="width: 1200px; border: 1px #404040 solid;"></div>
+
 
     <!-- 시공사 찾기 -->
-    <div></div>
+    <div id="constructor">
+      <div><h2 style="margin-bottom: 30px;">시공사 찾기</h2></div>
+
+      <div>
+        <table>
+          <tr>
+            <td><h3>시공사 지역</h3></td>
+            <td>
+              <select>
+                <option>서울</option>
+                <option>경기/인천</option>
+                <option>충청/대전</option>
+                <option>전라/광주</option>
+                <option>경북/대구</option>
+                <option>경남/부산/울산</option>
+                <option>강원</option>
+                <option>제주</option>
+              </select>
+            </td>
+            <td><h3>견적금액</h3></td>
+            <td>
+              <input type="number">~<input type="number">
+            </td>
+          </tr>
+
+
+          <tr>
+            <td><h3>시공일정</h3></td>
+            <td>
+              <input type="date">~<input type="date">
+            </td>
+          </tr>
+
+
+          <tr>
+            <td><h3>원하는 스타일</h3></td>
+            <td style="display: flex;">
+              <input type="checkbox" name="style" value="1"><h4>모던</h4>
+              <input type="checkbox" name="style" value="2"><h4>시크</h4>
+              <input type="checkbox" name="style" value="3"><h4>화려</h4>
+              <input type="checkbox" name="style" value="4"><h4>깔끔</h4>
+              <input type="checkbox" name="style" value="5"><h4>무채색</h4>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div>
+        <button>시공사 찾기</button>
+      </div>
+    </div>
 
   </div>
+
+  <div id="top">↑</div>
+
+
+  <th:block th:replace="~{common/fragments/footer}"></th:block>
 
   
 </body>
