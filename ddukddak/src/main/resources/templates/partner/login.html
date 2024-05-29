@@ -10,14 +10,11 @@
     <link rel="stylesheet" href="/css/common/button.css">
     <link rel="stylesheet" href="/css/common/fragments/header.css">
     <link rel="stylesheet" href="/css/common/fragments/footer.css">
-    <link rel="stylesheet" href="/css/member/login.css">
+    <link rel="stylesheet" href="/css/partner/login.css">
 
     <!-- 폰트어썸 -->
     <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
 
-    <!-- 네이버 스크립트 -->
-    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
     <th:block th:replace="~{common/fragments/header}"></th:block>
@@ -25,7 +22,7 @@
     <main>
 
         <h1 class="loginPageTitle1">뚝딱뚝딱</h1>
-        <h4 class="loginPageTitle2">회원 로그인</h4>
+        <h4 class="loginPageTitle2">파트너 로그인</h4>
         
         <div class="loginBox">
             <form id="loginForm">
@@ -34,12 +31,12 @@
                     <div class="inputArea">
                         <div class="inputGroup">
                             <label for="inputId" class="idLabel">아이디</label>
-                            <input type="text" id="inputId" name="memberId" required>
+                            <input type="text" id="inputId" name="partnerId" required>
                         </div>
                         
                         <div class="inputGroup">
                             <label for="password" class="pwLabel">비밀번호</label>
-                            <input type="password" id="inputPw" name="memberPw" required>
+                            <input type="password" id="inputPw" name="partnerPw" required>
                         </div>
                     </div>
 
@@ -51,7 +48,7 @@
 
                     <!-- 파트너 로그인 영역 -->
                     <div class="goToPartnerLogin">
-                        <a href="/partner/login">파트너 로그인 <i class="fa-solid fa-square-caret-right"></i></a>
+                        <a href="/member/login">회원 로그인 <i class="fa-solid fa-square-caret-right"></i></a>
                     </div>
                     
                     <!-- 로그인 버튼 -->
@@ -59,19 +56,6 @@
                         <button class="mainPageBtn" id="loginBtn">로그인</button>
                     </div>
 
-                    <div class="socialLoginArea">
-                        <!-- 네이버 -->
-                        <div id="naver_id_login"></div>
-                    
-                        <!-- 카카오 -->
-                        <div>
-                            <a id="kakao-login-btn" href="javascript:loginWithKakao()">
-                                <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
-                                    width="195px;" height="50px" alt="카카오 로그인 버튼" />
-                            </a>
-                        </div>
-                    </div>
-                    
 
                     <div class="linksArea">
                         <div><a href="#">회원가입</a></div>
@@ -89,19 +73,6 @@
 
     <th:block th:replace="~{common/fragments/footer}"></th:block>
 
-    <script type="text/javascript" th:inline="javascript">
-
-		const clientId = /*[[${clientId}]]*/ "클라이언트 키값";
-
-		console.log(clientId);
-        var naver_id_login = new naver_id_login("uoiYUgBnF7qZ2w07iyBY", "http://localhost:8080/naverLogin");
-        var state = naver_id_login.getUniqState();
-        naver_id_login.setButton("green", 3,50);
-        naver_id_login.setDomain("http://localhost:8080");
-        naver_id_login.setState(state);
-        naver_id_login.setPopup();
-        naver_id_login.init_naver_id_login();
-    </script>
 
 </body>
 </html>

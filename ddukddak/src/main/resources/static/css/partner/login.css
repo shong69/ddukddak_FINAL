@@ -4,7 +4,6 @@ main {
     color: var(--gray1);
 }
 
-
 .loginPageTitle1 {
     color: var(--secondary);
 }
@@ -17,7 +16,7 @@ main {
 /* 박스 전체 */
 .loginBox {
     width: 620px;
-    height: 540px;
+    height: 440px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -120,20 +119,6 @@ main {
 }
 
 
-
-/* 네이버, 카카오 버튼 묶음 */
-.socialLoginArea {
-    display: flex;
-    margin-top: 40px;
-}
-
-
-/* 네이버 버튼 이미지 */
-#naver_id_login img {
-    width: 195px;
-    border-radius: 5px;
-    margin-right: 10px;
-}
 
 .linksArea {
     display: flex;
