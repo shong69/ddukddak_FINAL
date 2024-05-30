@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>포트폴리오</title>
+
+        <link rel="stylesheet" href="/css/common/main.css">
+        <link rel="stylesheet" href="/css/partner/interior/interiorPortfolioDetail.css">
+        <link rel="stylesheet" href="/css/common/fragments/header.css">
+        <link rel="stylesheet" href="/css/common/fragments/footer.css">
+        <link rel="stylesheet" href="/css/common/button.css">
+        <link rel="stylesheet" href="/css/common/fragments/portfolioCarousel.css">
+    </head>
+    <body>
+        <!-- 헤더 -->
+        <th:block th:replace="~{common/fragments/header}"></th:block>
+
+
+
+        <main class="mainContainer">
+
+            
+
+            <!-- 중간 시공사 컨테이너 -->
+            <div class="topContainer">
+                <div class="imgContainer">
+                    <img class="portLogo" src="/images/profile/main.jpg"></img>
+                </div>
+                <div class="nameContainer">
+                    <h2 class="portName">캣츠코</h2>
+                </div>
+                <div class="buttonContainer">
+                    <button class="interiorMatchBtn">컨택하기</button>
+                </div>
+            </div>
+
+            <!-- 시공사 이름 + 프로젝트 캐러셀 컨테이너 -->
+            <div class="midContainer">
+                <h1 class="portTitle">외국계 글로벌 데비마이어 목동 사옥</h1>
+                
+                <th:block th:replace="~{/common/fragments/portfolioCarouselDetail}"></th:block>
+            </div>
+
+
+            <!-- 프로젝트 내용 컨테이너 -->
+            <div class="detailContainer">
+                <div class="detailTitle">
+                    <h1>프로젝트 정보</h1>
+                </div>
+                <div class="detailContent">
+                    <h3>남양주 별내동</h3>
+                    <h3>2024-03-25</h3>
+                    <h3>43평</h3>
+                    <h3>리모델링</h3>
+                    <h3>4000만원대</h3>
+                </div>
+                <div class="detailExplination">
+                    <textarea disabled>서울시 강남구에 위치한 현대적 사무실 리모델링 프로젝트는 ABC 인테리어 아키텍처 회사에 의해 성공적으로 완공되었습니다. 이 프로젝트의 주요 목표는 효율적인 작업 환경을 제공하는 동시에 세련된 디자인을 구현하는 것이었습니다.
+
+                        리모델링 전, 사무실은 어두운 색상과 좁은 공간으로 인해 직원들의 생산성이 저하되고 있었습니다. 이를 개선하기 위해 ABC 인테리어 아키텍처 팀은 다음과 같은 작업을 수행했습니다:
+                        
+                        공간 재배치 및 확장: 기존의 좁은 사무 공간을 재배치하고 확장하여 더 넓고 열린 작업 환경을 조성했습니다. 벽을 허물고 유리 칸막이를 사용해 시각적으로 넓어 보이는 효과를 주었습니다.
+                        
+                        밝은 색상 및 자연 채광: 사무실 내부를 밝은 색상으로 페인팅하고 큰 창문을 설치하여 자연 채광을 최대화했습니다. 이는 직원들의 기분과 생산성에 긍정적인 영향을 미쳤습니다.
+                        
+                        모던한 가구 및 인테리어: 현대적이고 세련된 가구와 인테리어 소품을 배치하여 고급스러운 분위기를 연출했습니다. 인체공학적인 가구를 사용해 직원들의 편안함을 높였습니다.
+                        
+                        친환경 요소 도입: 실내 식물을 배치하고, 에너지 효율이 높은 조명을 설치하여 친환경적인 사무실 환경을 만들었습니다.
+                    </textarea>
+                </div>
+            </div>
+
+            <!-- 프로젝트 리스트 컨테이너 -->
+            <div class="botContainer">
+                <!-- 프로젝트 리스트 불러오기 -->
+                <th:block th:replace="~{common/fragments/interiorProjectList.html}"></th:block>
+
+
+                <button class="interiorProjectViewMoreBtn" id="interiorProjectViewMore">더보기 +</button>
+            </div>
+
+        </main> 
+
+        <!-- <div id="portTop">↑</div> -->
+
+
+        <!-- 푸터 -->
+        <th:block th:replace="~{common/fragments/footer}"></th:block>
+        <script src="/js/common/fragments/portfolioCarousel.js"></script>
+        <script src="/js/partner/interior/interiorPortfolio.js"></script>
+        <script src="/js/partner/interior/interiorPortfolio-dom.js"></script>
+        <script src="https://kit.fontawesome.com/7f3fe5627c.js" crossorigin="anonymous"></script>
+    </body>
+</html>

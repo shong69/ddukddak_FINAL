@@ -34,4 +34,9 @@ public class InteriorController {
 		return "partner/interior/modeling/modelingEstimate";
 	}
 	
+	@GetMapping("interiorPortfolioDetail")
+	public String interiorPortfolioDetail() {
+		return "partner/interior/interiorPortfolioDetail";
+	}
+	
 }
