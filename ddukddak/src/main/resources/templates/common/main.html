@@ -54,7 +54,12 @@
       <h2>오늘의 라이브커머스</h2>
       <div id="liveCommerce">
         <iframe src="https://www.youtube.com/embed/edEuwPLsdIw?autoplay=1&mute=1&controls=0&loop=1&playlist=edEuwPLsdIw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <div id="chatting"></div>
+        <div>
+          <div id="chatting"></div>
+          <div>
+            <input id="chattingInput" placeholder="채팅을 입력해 주세요"><button id="chattingButton" onclick="makeChatting2();">등록</button>
+          </div>
+        </div>
       </div>
       <div>
         <h4>라이브커머스 바로가기 >></h4>
@@ -70,7 +75,7 @@
       <div id="threeD-container">
         <div>
           <div><img src="/images/main/3d-modeling.png" style="height: 300px;"></div>
-          <div><button>3D 모델링 바로가기</button></div>
+          <div><button onclick="location.href='/partner/interior/modeling/main';">3D 모델링 바로가기</button></div>
         </div>
 
         <div>

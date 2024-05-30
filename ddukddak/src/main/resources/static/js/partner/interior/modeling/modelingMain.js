@@ -52,9 +52,9 @@ function drop(e) {
 
 
         var cubeDrag = scene.getObjectByName(sqareId);
-        cubeDrag.position.x = rectX*0.53 - 198;
+        cubeDrag.position.x = rectX*0.53 - 385;
         cubeDrag.position.y = 25;
-        cubeDrag.position.z = rectY*0.53 - 90;
+        cubeDrag.position.z = rectY*0.53 - 235;
     }
 }
 
@@ -75,9 +75,9 @@ chair.addEventListener("click", () => {
 
 
             const loader = new THREE.GLTFLoader();
-            loader.load('/images/gamingChair.glb', function (gltf) {
+            loader.load('/images/partner/interior/modeling/gamingChair.glb', function (gltf) {
                 const model = gltf.scene;
-                model.position.set(rectX * 0.53 - 198, 25, rectY * 0.53 - 90);
+                model.position.set(rectX * 0.53 - 385, 25, rectY * 0.53 - 235);
                 model.scale.set(0.1,0.1,0.1);
 
                 model.name = `chair-${i}`;
@@ -112,9 +112,9 @@ table.addEventListener("click", () => {
             const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
             // 바닥 평면의 중심에 정육면체 추가
-            cube.position.x = rectX*0.53 - 198;
+            cube.position.x = rectX*0.53 - 385;
             cube.position.y = 18.5;
-            cube.position.z = rectY*0.53 - 90;
+            cube.position.z = rectY*0.53 - 235;
             cube.name = `table-${i}`;
 
             scene.add(cube);
@@ -145,9 +145,9 @@ sofa.addEventListener("click", () => {
             const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
             // 바닥 평면의 중심에 정육면체 추가
-            cube.position.x = rectX*0.53 - 198;
+            cube.position.x = rectX*0.53 - 385;
             cube.position.y = 18.5;
-            cube.position.z = rectY*0.53 - 90;
+            cube.position.z = rectY*0.53 - 235;
             cube.name = `sofa-${i}`;
 
             scene.add(cube);
@@ -178,9 +178,9 @@ bed.addEventListener("click", () => {
             const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
             // 바닥 평면의 중심에 정육면체 추가
-            cube.position.x = rectX*0.53 - 198;
+            cube.position.x = rectX*0.53 - 385;
             cube.position.y = 18.5;
-            cube.position.z = rectY*0.53 - 90;
+            cube.position.z = rectY*0.53 - 235;
             cube.name = `bed-${i}`;
 
             scene.add(cube);
