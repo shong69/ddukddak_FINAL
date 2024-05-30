@@ -18,4 +18,9 @@ public class InteriorController {
 		
 	}
 
+	@GetMapping("interiorPortfolio")
+	public String interiorPortfolio() {
+		return "partner/interior/interiorPortfolio";
+	}
+	
 }

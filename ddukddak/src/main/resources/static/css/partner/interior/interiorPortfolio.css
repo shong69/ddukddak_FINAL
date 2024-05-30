@@ -1,0 +1,60 @@
+/* 메인 컨테이너 */
+
+.mainContainer {
+    width: 1160px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+
+/* 탑 컨테이너 */
+.topContainer {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+
+/* 중간 컨테이너 */
+.midContainer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.imgContainer {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.portLogo {
+    width: 100px; 
+    height: 100px;
+    border-radius: 9999px;
+    /* border: 1px solid black; */
+}
+.nameContainer {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+}
+.buttonContainer {
+    width: 80%;
+}
+
+/* 프로젝트 컨테이너 */
+.botContainer {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+}
