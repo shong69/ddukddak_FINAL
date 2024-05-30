@@ -25,23 +25,28 @@
     margin: 30px 0;
 }
 
-.skuList{
+.skuList,
+.cartList{
     margin:30px 0;
 }
-.skuList thead{
+.skuList thead,
+.cartList thead{
     height: 70px;
     
 }
-.skuList th{
+.skuList th,
+.cartList th{
     min-width: 90px;
     border-bottom:1px solid black;
 }
-.skuList tr{
+.skuList tr,
+.cartList tr{
     height: 60px;
     
 }
 
-.skuList td{
+.skuList td,
+.cartList td{
     border-bottom:1px solid black;
     height: 80px;
 }
@@ -100,7 +105,86 @@
 
 /*장바구니*/
 .cartList{
+    margin-left: 70px;
+    margin-bottom: 50px;
+}
+
+
+/*내 집들이*/
+.homeBoard-list{
+    list-style-type: none;
+}
+.homeBoard-list > li {
+    width : 800px;
+    margin: 50px 0;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.homeBoard-img{
+    width : 300px;
+    height: 200px;
+}
+
+
+.homeboard-title{
+    flex-basis: 40%;
+    font-size : 18px;
+    margin-top: 20px;
+    margin-left: 15px;
+    height: 30px;
+    text-align: start;
+}
+.homeboard-title>a:hover{
+    font-weight: 600;
+    cursor: pointer;
+}
+.homeBoard-info{
+    flex-basis: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+.homeBoard-info>div:first-child{
+    margin-left: auto;
+    margin-top: 15px;
+}
+.homeBoard-info>div:last-child{
+    margin-left: auto;
+}
+.homeBoard-info a{
+    color: rgb(0, 73, 182);
+    font-size: 15px;
+}
+.homeBoard-info span{
+    font-size: 12px;
+    color: #757575;
+}
+
+/*내 노하우*/
+.tipBoard-table{
     margin-top: 80px;
     margin-left: 70px;
     margin-bottom: 50px;
+}
+.tipBoard-row{
+    height: 180px;
+}
+
+.tipBoard-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width : 450px;
+    height: 500px;
+    margin:20px 20px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.tipBoard-img{
+    width:200px;
+    height: 150px;
 }
