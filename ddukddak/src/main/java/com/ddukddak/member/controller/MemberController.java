@@ -21,4 +21,9 @@ public class MemberController {
 		return "/member/login";
 	}
 	
+	@GetMapping("signup")
+	public String memberSignup() {
+		
+		return "/member/signup";
+	}
 }

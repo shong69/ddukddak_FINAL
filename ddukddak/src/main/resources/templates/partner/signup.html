@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="/css/common/fragments/header.css">
     <link rel="stylesheet" href="/css/common/fragments/footer.css">
     <link rel="stylesheet" href="/css/partner/signup.css">
+
+        <!-- 폰트어썸 -->
+        <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -25,24 +28,31 @@
                     <div class="agreeArea">
                         <div>
                             <div>
-                                <h1>뚝딱뚝딱</h1>
-                                <h4>약관에 동의 후 개인정보를 입력해야 파트너 등록 요청이 완료됩니다.</h4>
+                                <div class="logoArea1">
+                                    <img onclick="location.href='/';" src="/images/main/main-logo.png" style="height: 60px; width: 60px; cursor: pointer;">
+                                    <h1 style="font-size: 34px; color: var(--secondary);">뚝딱뚝딱</h1>
+                                </div>
+                                <div class="logoArea2">
+                                    <h4>
+                                        약관에 동의 후 개인정보를 입력해야 파트너 등록 요청이 완료됩니다.
+                                    </h4>
+                                </div>
                             </div>
                             <!-- 이용약관 -->
-                            <div>
+                            <div class="agreeCheckBox1">
                                 <div class="agreeCheck">
-                                    <h3>이용약관 동의<span class="required">(필수)</span></h3>
-                                    <input type="checkbox">
+                                    <h3 class="requiredRel">이용약관 동의<span class="required">(필수)</span></h3>
+                                    <input type="checkbox" id="agreeBtn1" name="agree" class="agreeBtn">
                                 </div>
                                 <div>
                                     <textarea readonly><th:block th:replace="~{common/fragments/policies/terms-and-conditions}"></th:block></textarea>
                                 </div>
                             </div>
                             <!-- 개인정보 수집 -->
-                            <div>
-                                <div>
-                                    <h3>개인정보 수집 및 이용 동의<span class="required">(필수)</span></h3>
-                                    <input type="checkbox">
+                            <div class="agreeCheckBox2">
+                                <div class="agreeCheck">
+                                    <h3 class="requiredRel">개인정보 수집 및 이용 동의<span class="required">(필수)</span></h3>
+                                    <input type="checkbox" id="agreeBtn2"  name="agree" class="agreeBtn">
                                 </div>
                                 <div>
                                     <textarea readonly><th:block th:replace="~{common/fragments/policies/privacy-policy}"></th:block></textarea>
@@ -50,38 +60,47 @@
                             </div>
                             <!-- 계정 운영 정책 -->
                             <div>
-                                <div>
-                                    <h3>계정 운영 정책<span class="required">(필수)</span></h3>
-                                    <input type="checkbox">
+                                <div class="agreeCheck">
+                                    <h3 class="requiredRel">계정 운영 정책<span class="required">(필수)</span></h3>
+                                    <input type="checkbox" id="agreeBtn3" name="agree" class="agreeBtn">
                                 </div>
                                 <div>
                                     <textarea readonly><th:block th:replace="~{common/fragments/policies/account-management-policy}"></th:block></textarea>
                                 </div>
                             </div>
+                            <div class="agreeAllArea">
+                                <input type="checkbox" id="agreeAllBtn">
+                                <label for="agreeAll" class="agreeAllBtnLabel">약관 전체 동의</label>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <!-- 사업자, 회원정보 입력 -->
+                    <!-- 사업자, 회원정보 입력 -->
+                    <div class="infoArea">
+                        
+                        <div class="partnerType">
+                            <i class="fa-solid fa-paint-roller"></i>
+                            <span style="font-size: 18px; font-weight: 600;" th:text="${choice} == 1 ? '시공사' : '판매사'"></span>
+                        </div>
                         <div>
                             <!-- 사업자인증 ~ span -->
                             <div>
                                 <div>
-                                    <div>
-                                        <h3>사업자인증</h3>
-                                        <a>인증</a>
+                                    <div class="authArea">
+                                        <h3 style="font-size: 18px; font-weight: 700;">사업자인증</h3>
+                                        <a href="#" class="authBtn">인증</a>
                                     </div>
                                 </div>
-                                <div>
+                                <div class="businessNoArea">
                                     <input> - <input> - <input>
                                 </div>
-                                <div>
-                                    <span>인증되었습니다.</span>
+                                <div class="businessNoAuthMsgArea">
+                                    <span id="businessNoAuthMsg">인증되었습니다.</span>
                                 </div>
                             </div>
 
                             <!-- 상호명 -->
                             <div>
-                                <div>
+                                <div class="infoInputArea1">
                                     <input placeholder="상호명">
                                     <input placeholder="사업자 등록 번호">
                                     <input placeholder="대표자명">
@@ -89,19 +108,29 @@
                             </div>
 
                             <!-- 아이디, 비밀번호, 휴대폰 번호 -->
-                            <div>
+                            <div class="infoInputArea2">
                                 <input placeholder="아이디">
-                                <input placeholder="비밀번호">
-                                <input placeholder="휴대폰번호">
-                                <span>인증되었습니다.</span>
-                                <a>인증</a>
+                                <input type="password" placeholder="비밀번호">
+                                <input type="tel" placeholder="휴대폰번호">
                             </div>
+                            <div class="telAuthMsgArea">
+                                <span id="telAuthMsg">인증되었습니다.</span>
+                            </div>
+                            <div class="telAuthBtnArea">
+                                <a href="#" class="authBtn">인증</a>
+                            </div>
+
+                            <br>
+                            <!-- 인증 이벤트 추후 구현 -->
+                            <h4>(모달 혹은 인증 버튼이 사라지고 인풋+확인버튼 노출)</h4>
+                            <h4 th:text="|파트너 타입 : ${choice} -> 1 : 시공사 / 2: 판매사|">chice 값 테스트</h4>
+                            
                         </div>
                     </div>
                 </div>
-                    <!-- 파트너 등록 요청 -->
-                <div>
-                    <button>파트너 등록 요청</button>
+                <!-- 파트너 등록 요청 -->
+                <div class="partnerRequestArea">
+                    <button class="mainPageBtn">파트너 등록 요청</button>
                 </div>      
             </div>
         </form>
@@ -109,6 +138,6 @@
 
 
     <th:block th:replace="~{common/fragments/footer}"></th:block>
-
+    <script src="/js/partner/signup.js"></script>
 </body>
 </html>
