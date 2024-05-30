@@ -1,0 +1,104 @@
+.mainContainer {
+    display: flex;
+    background-color: #FFFAF0;
+}
+
+/* 카테고리 버튼 */
+.categoryNav {
+    margin: 50px;
+}
+
+.boardMainBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+/* 메인 area */
+.mainArea {
+    margin: 50px;
+    width: 900px;
+}
+
+/* 검색 area */
+.searchArea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #3A732A;
+}
+
+.searchArea input {
+    width: 725px;
+    height: 48px;
+    font-size: 25px;
+    border: none;
+    border-radius: 10px;
+    margin: 0 10px;
+    
+}
+
+.searchArea input:focus {
+    outline: none;
+}
+
+.searchArea > span:nth-child(2) {
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+}
+
+.searchArea > span:nth-child(2) > i {
+    font-size: 25px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+/* 정렬방식 area */
+.sortingArea {
+    text-align: end;
+    margin: 50px 0;
+}
+
+.sortingArea select {
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* 집들이 리스트 */
+.myHouseList {
+    display: flex;
+}
+
+.myHouseThumbnail img {
+    width: 300px;
+    height: 200px;
+}
+
+.myHouseInfo {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.myHouseInfo .top-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.myHouseInfo .bottom-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
