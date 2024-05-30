@@ -1,0 +1,16 @@
+/* 카테고리 버튼 */
+.categoryNav {
+    margin: 50px;
+    position: sticky;
+    top: 55px;
+    left: 0;
+    height: fit-content;
+}
+
+.boardMainBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    cursor: pointer;
+}

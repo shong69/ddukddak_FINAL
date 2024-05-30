@@ -7,74 +7,141 @@
 
       <link rel="stylesheet" href="/css/board/myHouseBoard/myHouseBoard.css">
       <link rel="stylesheet" href="/css/common/main.css"> 
-      <link rel="stylesheet" href="/css/common/fragments/header.css"> 
+      <link rel="stylesheet" href="/css/common/fragments/header.css">  
       <link rel="stylesheet" href="/css/common/fragments/footer.css"> 
+      <link rel="stylesheet" href="/css/common/fragments/board/side-category.css"> 
       <link rel="stylesheet" href="/css/common/button.css"> 
+      
 
       <script src="https://kit.fontawesome.com/fa0ef5fd68.js" crossorigin="anonymous"></script>
   </head>
   <body>
+
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    
+    
+    
+    <div class="topContainer">
       
-    <div class="mainContainer">
-
-      <section class="categoryNav">
-
-        <div class="boardMainBtn">집들이</div>
-        <div class="boardMainBtn">노하우</div>
-
-      </section>
-
-      <section class="mainArea">
-
-        <section class="searchArea">
-
-          <span class="title">집들이</span>
-          <span>
-            <input type="text" placeholder="집들이 검색">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </span>
-
-        </section>
+      
+      <div class="mainContainer">
         
-        <section class="sortingArea">
-          <select>
-            <option>최신순</option>
-            <option>조회순</option>
-          </select>
-        </section>
-        
-        <section class="listArea">
+        <th:block th:replace="~{common/fragments/board/side-category}"></th:block>
+        <!-- <section class="categoryNav">
+    
+          <div class="boardMainBtn" id="toMyHouseBoard">집들이</div>
+          <div class="boardMainBtn" id="toTipBoard">노하우</div>
+    
+        </section> -->
 
-          <div class="myHouseList">
-            
-            <span class="myHouseThumbnail">
-              <img src="/images/board/myHouse/3364958d-89de-4f1a-8ff5-f730f6ccc826.jpg">
-            </span>
-            <span class="myHouseInfo">
-              <div class="top-left">
-                <h1>셀프인테리어 후기</h1>
-              </div>
-              <div class="bottom-right">
-                <h4>유저일 | 조회수 : 20 | 2024-05-30</h4>
-              </div>
+
+        <section class="mainArea">
+
+          <section class="searchArea">
+
+            <span class="title">집들이</span>
+            <span>
+              <input type="text" placeholder="집들이 검색">
+              <i class="fa-solid fa-magnifying-glass"></i>
             </span>
 
+          </section>
+          
+          <section class="sortingArea">
+            <select>
+              <option>최신순</option>
+              <option>조회순</option>
+            </select>
+          </section>
+          
+          <section class="listArea">
+
+            <div class="myHouseList" id="myHouseDetail">
+              
+              <span class="myHouseThumbnail">
+                <img src="/images/board/myHouse/3364958d-89de-4f1a-8ff5-f730f6ccc826.jpg">
+              </span>
+              <span class="myHouseInfo">
+                <div>
+                  <h1>셀프인테리어 후기</h1>
+                </div>
+                <div>
+                  <h3>유저일 | 조회수 : 20 | 2024-05-30</h3>
+                </div>
+              </span>
+
+            </div>
+
+            <div class="myHouseList">
+              
+              <span class="myHouseThumbnail">
+                <img src="/images/board/myHouse/3364958d-89de-4f1a-8ff5-f730f6ccc826.jpg">
+              </span>
+              <span class="myHouseInfo">
+                <div>
+                  <h1>셀프인테리어 후기</h1>
+                </div>
+                <div>
+                  <h3>유저일 | 조회수 : 20 | 2024-05-30</h3>
+                </div>
+              </span>
+
+            </div>
+
+          </section>
+          
+          <section class="btnArea">
+            <button class="boardCreateBtn">작성하기</button>
+          </section>
+          
+          <section class="paginationArea">
+
+            <div class="pagination-area">
+          
+              <ul class="pagination">
+                  <!-- 첫 페이지로 이동 -->
+                  <li><a href="#">&lt;&lt;</a></li>
+
+                  <!-- 이전 목록 마지막 번호로 이동 -->
+                  <li><a href="#">&lt;</a></li>
+
+                  <!-- 특정 페이지로 이동 -->
+
+                  <th:block>
+
+                      <!-- 현재 보고있는 페이지 -->
+                      <li>
+                          <a class="current">1</a>
+                      </li>
+
+                      <!-- 보고있지 않은 페이지 -->
+                      <li>
+                          <a href="#">2</a>
+                      </li>
+                  </th:block>
+
+                  <!-- 다음 목록 시작 번호로 이동 -->
+                  <li><a href="#">&gt;</a></li>
+
+                  <!-- 끝 페이지로 이동 -->
+                  <li><a href="#">&gt;&gt;</a></li>
+              </ul>
           </div>
 
-        </section>
-        
-        <section class="btnArea">
-          <button>작성하기</button>
-        </section>
-        
-        <section class="paginationArea">
+          </section>
 
         </section>
 
-      </section>
-
+      </div>
+      
     </div>
+
+    
           
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+    <script src="/js/common/fragments/board/side-category.js"></script>
+    <script src="/js/board/myHouseboard/myHouseBoard.js"></script>
       
   </body>
 </html>
