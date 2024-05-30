@@ -1,0 +1,82 @@
+.infoBox > h3 {
+    color: var(--secondary);
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.infoBox > div {
+    border: 1px solid rgb(187, 187, 187);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    padding: 20px;
+}
+
+#change {
+    display: flex;
+}
+
+.infoBox h4 {
+    font-size: 15px;
+    padding: 5px 0;
+}
+
+#delivery select {
+    border: 1px solid rgb(187, 187, 187);
+    border-radius: 10px;
+    height: 30px;
+    margin: 5px 0;
+    color: rgb(187, 187, 187);
+}
+
+#optionBox {
+    display: flex;
+}
+
+#optionBox h5 {
+    margin: 5px 7px;
+    font-size: 14px;
+}
+
+#title {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+#option {
+    display: flex;
+    align-items: center;
+}
+
+#total {
+    border: 1px solid rgb(187, 187, 187);
+    border-radius: 10px;
+    width: 1000px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    background-color: var(--primary3);
+    height: 70px;
+    margin-top: 20px;
+}
+
+#total h3 {
+    font-weight: bold;
+}
+
+#pamentOption {
+    display: flex;
+    flex-direction: column;
+}
+
+#pamentOption div {
+    border-bottom: 1px solid rgb(187, 187, 187);
+    padding: 5px 0;
+    margin: 5px 0;
+}
+
+#pamentOption label {
+    font-family: 'main';
+    font-size: 15px;
+}
