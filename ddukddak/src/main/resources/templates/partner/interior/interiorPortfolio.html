@@ -1,34 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
 
-        <link rel="stylesheet" href="/src/main/resources/static/css/common/main.css">
-        <link rel="stylesheet" href="/src/main/resources/static/css/partner/interior/interiorPortfolio.css">
+        <link rel="stylesheet" href="/css/common/main.css">
+        <link rel="stylesheet" href="/css/partner/interior/interiorPortfolio.css">
+        <link rel="stylesheet" href="/css/common/fragments/header.css">
+        <link rel="stylesheet" href="/css/common/fragments/footer.css">
+        <link rel="stylesheet" href="/css/common/button.css">
+        <link rel="stylesheet" href="/css/common/fragments/portfolioCarousel.css">
     </head>
     <body>
+        <!-- 헤더 -->
+        <th:block th:replace="~{common/fragments/header}"></th:block>
 
-        <div class="mainContainer">
 
-            <h1>캣츠코</h1>
 
-            <div class="mainProjectArea">
+        <main class="mainContainer">
 
+            <!-- 시공사 이름 + 메인 캐러셀 컨테이너 -->
+            <div class="topContainer">
+                <h2 class="portTitle">캣츠코</h2>
                 
-                
+                <th:block th:replace="~{common/fragments/portfolioCarousel}"></th:block>
             </div>
 
-            <div class="interiorContactArea">
-
+            <!-- 중간 시공사 컨테이너 -->
+            <div class="midContainer">
+                <div class="imgContainer">
+                    <img class="portLogo" src="/images/profile/main.jpg"></img>
+                </div>
+                <div class="nameContainer">
+                    <h2 class="portName">캣츠코</h2>
+                </div>
+                <div class="buttonContainer">
+                    <button class="interiorMatchBtn">컨택하기</button>
+                </div>
             </div>
-            
-            <div class="allProject">
 
+
+            <!-- 프로젝트 리스트 컨테이너 -->
+            <div class="botContainer">
+                <!-- 프로젝트 리스트 불러오기 -->
+                <th:block th:replace="~{common/fragments/interiorProjectList.html}"></th:block>
+
+
+                <button class="interiorProjectViewMoreBtn">더보기 +</button>
             </div>
+        </main> 
 
-        </div>
-        
+
+
+        <!-- 푸터 -->
+        <th:block th:replace="~{common/fragments/footer}"></th:block>
+        <script src="/js/common/fragments/portfolioCarousel.js"></script>
+        <script src="https://kit.fontawesome.com/7f3fe5627c.js" crossorigin="anonymous"></script>
     </body>
 </html>
