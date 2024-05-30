@@ -23,4 +23,9 @@ public class InteriorController {
 		return "partner/interior/interiorPortfolio";
 	}
 	
+	@GetMapping("interiorPortfolioDetail")
+	public String interiorPortfolioDetail() {
+		return "partner/interior/interiorPortfolioDetail";
+	}
+	
 }

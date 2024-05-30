@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>포트폴리오</title>
 
         <link rel="stylesheet" href="/css/common/main.css">
         <link rel="stylesheet" href="/css/partner/interior/interiorPortfolio.css">
@@ -22,7 +22,7 @@
 
             <!-- 시공사 이름 + 메인 캐러셀 컨테이너 -->
             <div class="topContainer">
-                <h2 class="portTitle">캣츠코</h2>
+                <h1 class="portTitle">캣츠코</h1>
                 
                 <th:block th:replace="~{common/fragments/portfolioCarousel}"></th:block>
             </div>
@@ -47,15 +47,18 @@
                 <th:block th:replace="~{common/fragments/interiorProjectList.html}"></th:block>
 
 
-                <button class="interiorProjectViewMoreBtn">더보기 +</button>
+                <button class="interiorProjectViewMoreBtn" id="interiorProjectViewMore">더보기 +</button>
             </div>
         </main> 
 
+        <div id="portTop">↑</div>
 
 
         <!-- 푸터 -->
         <th:block th:replace="~{common/fragments/footer}"></th:block>
         <script src="/js/common/fragments/portfolioCarousel.js"></script>
+        <script src="/js/partner/interior/interiorPortfolio-dom.js"></script>
+        <script src="/js/partner/interior/interiorPortfolio.js"></script>
         <script src="https://kit.fontawesome.com/7f3fe5627c.js" crossorigin="anonymous"></script>
     </body>
 </html>
