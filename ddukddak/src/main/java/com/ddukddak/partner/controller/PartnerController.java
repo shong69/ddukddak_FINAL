@@ -17,7 +17,7 @@ public class PartnerController {
 	}
 	
 	
-	/** 파트너 회원가입
+	/** 파트너 회원가입 페이지 이동
 	 * @param choice : 1 : 시공사 / 2 : 판매사
 	 * @param model
 	 * @return
