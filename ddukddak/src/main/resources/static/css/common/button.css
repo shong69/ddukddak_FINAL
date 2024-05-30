@@ -413,7 +413,8 @@ button:active {
     font-weight: 500;
 }
 .boardCreateBtn:hover {
-    background-color: var(--white);
+    background-color: var(--secondary);
+    color: var(--white);
 }
 .boardCreateBtn:active {
     background-color: var(--gray1);

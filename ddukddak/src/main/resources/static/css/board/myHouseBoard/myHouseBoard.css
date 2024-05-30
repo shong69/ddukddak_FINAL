@@ -1,11 +1,25 @@
+.topContainer {
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFDF8;
+}
+
+
 .mainContainer {
     display: flex;
-    background-color: #FFFAF0;
+    width: 1200px;
+    position: relative;
 }
 
 /* 카테고리 버튼 */
-.categoryNav {
+/* .categoryNav {
     margin: 50px;
+    position: sticky;
+    top: 55px;
+    left: 0;
+    height: fit-content;
 }
 
 .boardMainBtn {
@@ -13,10 +27,12 @@
     justify-content: center;
     align-items: center;
     margin: 10px 0;
-}
+    cursor: pointer;
+} */
 
 /* 메인 area */
 .mainArea {
+    flex-grow: 1;
     margin: 50px;
     width: 900px;
 }
@@ -35,9 +51,9 @@
 }
 
 .searchArea input {
-    width: 725px;
+    width: 650px;
     height: 48px;
-    font-size: 25px;
+    font-size: 20px;
     border: none;
     border-radius: 10px;
     margin: 0 10px;
@@ -77,28 +93,77 @@
 /* 집들이 리스트 */
 .myHouseList {
     display: flex;
+    
+    border-radius: 10px; 
+    margin: 30px 0;
+    height: 150px;
+    cursor: pointer;
+    background-color: white;
 }
 
-.myHouseThumbnail img {
-    width: 300px;
+.myHouseList:hover {
+
+    box-shadow: 7px 7px 4px rgba(0, 0, 0, 0.25); 
+    transition: 0.3s;
+
+}
+
+.myHouseThumbnail {
     height: 200px;
 }
 
+.myHouseThumbnail img {
+    margin: 5px;
+    width: 250px;
+    height: 140px;
+    border-radius: 10px;
+}
+
 .myHouseInfo {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 15px;
+    width: -webkit-fill-available;
+}
+
+
+.myHouseInfo > div:nth-child(2) {
+    text-align: end;
+}
+
+/* 작성하기 버튼 */
+.btnArea {
+    text-align: end;
+    margin: 30px 0;
+}
+
+/*페이징*/
+.pagination{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.pagination li{
+    width: 20px;
+    margin: 0 5px;
+    text-align: center;
     display: inline-block;
+    cursor: pointer;
+}
+
+.pagination a{
+    display: block;
     width: 100%;
     height: 100%;
 }
 
-.myHouseInfo .top-left {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.myHouseInfo .bottom-right {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-}
+.current{
+    font-weight: bold;
+    background-color: #3A732A;
+    border-radius: 50%;
+    color: white !important;
+    letter-spacing: 0 !important;
+} 
