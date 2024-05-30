@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/common/fragments/footer.css">
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/eCommerce/eCommerceDetail.css">
+    <link rel="stylesheet" href="/css/common/button.css">
 </head>
 <body>
     <th:block th:replace="~{common/fragments/header}"></th:block>
@@ -29,8 +30,58 @@
                 <div><img src="/images/main/shopping-1.jpg" style="height: 700px; width: 600px;"></div>
 
                 <!-- 가격칸 -->
-                <div>
+                <div id="productPrice">
+                    <!-- 설명/가격칸 -->
+                    <div>
+                        <div>
+                            <h2 style="margin-top: 10px; font-weight: 500;">[최대10%쿠폰+사은품][맞춤]</h2>
+                            <h2 >비침없는 도톰 레이스/쉬폰커튼</h2>
+                            <h2 style="font-weight: 500;">(나비주름/핀형/봉집)</h2>
+                        </div>
 
+                        <div>
+                            <h1 style="font-weight: 600;">16,900</h1>
+                            <h2 style="font-weight: 500;">28%</h2>
+                        </div>
+                    </div>
+
+                    <!-- 포인트 -->
+                    <div>
+                        <h4>받을 수 있는 포인트</h4>
+                        <h4 style="color: red;">최대 +1,609pt</h4>
+                    </div>
+
+                    <!-- 안내사항 -->
+                    <div>
+                        <div><h3>무이자 할부 | 카드 자세히 보기 [?]</h3></div>
+                        <div><h3>택배배송 | 무료배송 기타택배</h3></div>
+                        <div><h3 style="color: #bbbbbb;">제주, 도서지역 추가 3,000원</h3></div>
+                    </div>
+
+                    <!-- 옵션선택칸 -->
+                    <div>
+                        <select>
+                            <option>선택</option>
+                            <option>아이보리</option>
+                            <option>베이지</option>
+                            <option>연핑크</option>
+                        </select>
+                    </div>
+
+                    <!-- 총 가격칸 -->
+                    <div>
+                        <div style="margin-bottom: 10px;"><h3>총 상품 금액</h3></div>
+                        <div>
+                            <h2>0원</h2>
+                            <h4>총 수량 0개</h4>
+                        </div>
+                    </div>
+
+                    <!-- 버튼 -->
+                    <div>
+                        <button class="eCommerBuyDetailConfirmBtn" onclick="location.href='/eCommerce/payment';">구매하기</button>
+                        <button class="eCommerBuyDetailConfirmBtn">찜하기</button>
+                    </div>
                 </div>
             </div>
 

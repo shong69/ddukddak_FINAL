@@ -21,4 +21,9 @@ public class eCommerceController {
 	public String eCommerceDetail() {
 		return "eCommerce/eCommerceDetail";
 	}
+	
+	@RequestMapping("payment")
+	public String eCommercePayment() {
+		return "eCommerce/eCommercePayment";
+	}
 }

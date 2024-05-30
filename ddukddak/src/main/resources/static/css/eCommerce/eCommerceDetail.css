@@ -18,10 +18,133 @@
     height: 700px;
     margin-left: 50px;
 }
+
+/* 가격칸 */
+#productPrice {
+    display: flex;
+    flex-direction: column;
+}
+
+#productPrice > div:first-child {
+    display: flex;
+    flex-direction: column;
+}
+
+#productPrice > div:first-child > div:first-child > h2 {
+    padding: 3px 10px;
+}
+
+#productPrice > div:first-child > div:last-child {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 0 15px;
+    margin-top: 20px;
+}
+
+#productPrice > div:first-child > div:last-child > h2 {
+    display: flex;
+    align-items: end;
+    margin-right: 10px;
+    color: var(--secondary);
+}
+
+/* 포인트 */
+#productPrice > div:nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    background-color: rgb(243, 243, 243);
+    border: 1px solid rgb(214, 214, 214);
+    border-radius: 10px;
+    height: 50px;
+}
+
+#productPrice > div:nth-child(2) h4 {
+    padding: 10px;
+}
+
+
+/* 안내사항 */
+#productPrice > div:nth-child(3) {
+    display: flex;
+    flex-direction: column;
+}
+
+#productPrice > div:nth-child(3) > div {
+    margin: 10px;
+}
+
+#productPrice > div:nth-child(3) > div:first-child,
+#productPrice > div:nth-child(3) > div:last-child {
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(201, 201, 201);
+}
+
+
+/* 관련상품 */
 #shoping-list {
     display: flex;
     flex-direction: column;
 }
+
+/* 옵션선택칸 */
+#productPrice > div:nth-child(4) {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#productPrice > div:nth-child(4) select {
+    width: 400px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 0 10px;
+}
+
+/* 총 가격칸 */
+#productPrice > div:nth-child(5) {
+    display: flex;
+    flex-direction: column;
+}
+
+#productPrice > div:nth-child(5) > div:last-child {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#productPrice > div:nth-child(5) > div {
+    padding: 0 20px;
+}
+
+#productPrice > div:nth-child(5) > div h4 {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-right: 15px;
+    color: rgb(192, 192, 192);
+}
+
+/* 버튼 */
+#productPrice > div:nth-child(6) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#productPrice > div:nth-child(6) button {
+    margin: 10px 0;
+}
+
+
+
+
+
+
+
+
 
 #shoping-list > div:nth-child(2) {
     display: flex;
@@ -41,6 +164,8 @@
     flex-direction: column;
 }
 
+
+/* 상세정보 */
 #detailBox > div {
     width: 1050px;
     height: 300px;

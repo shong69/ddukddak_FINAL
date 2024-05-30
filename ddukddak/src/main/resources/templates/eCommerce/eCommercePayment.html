@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쇼핑 결제창</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/button.css">
+    <link rel="stylesheet" href="/css/eCommerce/eCommercePayment.css">
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+
+    <h2 style="text-align: center; margin: 50px;">주문/결제</h2>
+
+
+    <!-- 배송지 -->
+    <div class="infoBox">
+        <h3>배송지</h3>
+
+        <div id="delivery">
+            <div id="change">
+                <h4 style="margin-right: 850px;">홍길동</h4>
+                <button class="eCommerBuyDetailUpdateBtn">변경</button>
+            </div>
+
+            <h4 style="color: rgb(165, 165, 165);">010-1234-1234</h4>
+            <h4>서울특별시 서대문로 120 그레이츠청계 3층 E강의장</h4>
+
+            <select>
+                <option>배송메모를 선택해 주세요</option>
+                <option>문 앞에 놓아주세요.</option>
+                <option>배송 후 문자주세요.</option>
+                <option>경비실에 맡겨주세요.</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 주문상품 -->
+    <div class="infoBox" style="margin-top: 100px;">
+        <h3>주문상품</h3>
+
+        <div>
+
+            <div id="title">
+                <h4 style="margin-right: 830px;">책상</h4>
+                <h5 style="color: rgb(165, 165, 165);">배송비 : 3,000원</h5>
+            </div>
+
+            <div id="optionBox">
+                <img src="/images/main/shopping-1.jpg" style="height: 80px;">
+
+                <div>
+                    <div>
+                        <h5>
+                            [최대10%쿠폰+사은품][맞춤]<br>
+                            비침없는 도톰 레이스/쉬폰커튼 (나비주름/핀형/봉집)
+                        </h5>
+                    </div>
+
+                    <div id="option">
+                        <h5 style="border: 1px black solid; padding: 3px;">옵션</h5>
+                        <h5>색깔 : 흰색, 크기 : 40</h5>
+                    </div>
+
+                    <h3 style="margin: 20px 7px;">13,900원</h3>
+                </div>
+            </div>
+
+        </div>
+
+
+        <block id="total">
+            <h3 style="margin-right: 800px;">총 주문금액</h3>
+            <h3>16,900원</h3>
+        </block>
+
+    </div>
+
+    <!-- 결제수단 -->
+    <div class="infoBox">
+        <h3>결제수단</h3>
+
+        <div id="pamentOption">
+            <div>
+                <input type="radio" id="option1" name="option" value="1">
+                <label for="option1">카드 결제</label>
+            </div>
+            <div>
+                <input type="radio" id="option2" name="option" value="2">
+                <label for="option2">무통장 입금</label>
+            </div>
+            <div>
+                <input type="radio" id="option3" name="option" value="3">
+                <label for="option3">간편 결제</label></br>
+            </div>
+        </div>
+
+    </div>
+    
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+</body>
+</html>
