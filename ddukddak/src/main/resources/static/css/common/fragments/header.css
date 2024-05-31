@@ -34,6 +34,10 @@ header > div:nth-child(2) > a {
     padding: 0 30px;
 }
 
+header > div:nth-child(2) > a > h4 {
+    font-weight: bold;
+}
+
 /* 로그인/회원가입 */
 header > div:nth-child(3) {
     flex-basis: 15%;

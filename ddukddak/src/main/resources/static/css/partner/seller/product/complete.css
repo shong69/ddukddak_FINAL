@@ -1,0 +1,48 @@
+#completeContainer {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+}
+
+#completeContainer > h1 {
+    padding: 50px;
+}
+
+#orderStatus {
+    display: flex;
+    margin: 5px 0;
+}
+
+#orderStatus > h3,
+#orderStatus > label {
+    margin-right: 30px;
+}
+
+#orderStatus > label {
+    margin-left: 5px;
+}
+
+#productList table {
+    width: 1000px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
+#productList table input {
+    margin-left: 10px;
+}
+
+#productList thead {
+    background-color: var(--white);
+}
+
+.borderTr {
+    box-shadow: 5px 5px 10px var(--gray5);
+    height: 120px;
+}
+
+.borderTr > td:first-child {
+    width: 10px;
+}
