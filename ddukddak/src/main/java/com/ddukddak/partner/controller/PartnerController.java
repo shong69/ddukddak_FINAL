@@ -32,6 +32,7 @@ public class PartnerController {
 		return "partner/signup";
 	}
 	
+
 	/** [파트너] 아이디 찾기 페이지 이동
 	 * @return
 	 */
@@ -41,7 +42,7 @@ public class PartnerController {
 	}	
 	
 	
-	/** [파트너] 아이디 찾기 페이지 이동
+	/** [파트너] 비밀번호 찾기 페이지 이동
 	 * @return
 	 */
 	@GetMapping("findPw")
@@ -49,5 +50,15 @@ public class PartnerController {
 		return "partner/findPw";
 	}
 	
+	
+
+	
+	/** 파트너 메인페이지 이동
+	 * @return
+	 */
+	@GetMapping("main")
+	public String partnerMain() {
+		return "partner/partnerMain";
+	}
 	
 }

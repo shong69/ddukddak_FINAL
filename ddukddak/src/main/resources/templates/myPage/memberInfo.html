@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="/css/common/fragments/footer.css">
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/common/style.css">
+    <link rel="stylesheet" href="/css/common/button.css">
+    <script src="https://kit.fontawesome.com/4b505ed7b7.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
     <th:block th:replace="~{common/fragments/header}"></th:block>
@@ -22,8 +25,147 @@
 
             <section class="myPage-main">
                 <h2 class="category-name">회원정보</h2>
+                <section>
+                    <table class="member-info">
+                        <tbody>
+                            <tr class="profile-img-area">
+                                <th>사진</th>
+                                <td><img class="profile-img"></td>
+                                <td>
+                                    <span>회원님을 알릴 수 있는 사진을 등록해 주세요. <br>등록된 사진은 회원님의 게시물이나 댓글들에 사용됩니다.</span>
+                                </td>
+                                <td><button class="myPageMainBtn">사진 변경</button></td>
+                                <!--변경 시-->
+                                <td style='display:none;'><button class="myPageDelUpdateBtn">삭제</button><button class="myPageDelUpdateBtn">수정</button></td>
+                            </tr>
+    
+                            <tr class="id-area" colspan="3">
+                                <th>아이디</th>
+                                <td colspan="3"><h3 class="id-box">shsdfsdfdsong69</h3></td>
+                            </tr>
+    
+                            <tr>
+                                <th>비밀번호</th>
+                                <td class="before-modify" colspan="3">
+                                    <div>**********</div>
+                                    <div><button class="myPageSubBtn">비밀번호 변경</button></div>
+                                </td>
+                                <!--변경 시-->
+                                <td style='display:none;' colspan="3">
+                                    <div class="password-area">
+                                        <span>현재 비밀번호</span>
+                                        <input style="display:block;" placeholder="기존 비밀번호 입력">
+                                    </div>
+                                    <div class="password-area">
+                                        <span>신규 비밀번호</span>
+                                        <input placeholder="신규 비밀번호 입력">
+                                    </div>
+                                    <div class="password-area">
+                                        <span>신규 비밀번호 확인</span>
+                                        <input placeholder="신규 비밀번호 확인">
+                                    </div>
+                                    <div class="password-commit">
+                                        <button class="myPageConfirmCancelBtn">확인</button>
+                                        <button class="myPageConfirmCancelBtn">취소</button>
+                                    </div>
+                                </td>
+                            </tr>
+    
+                            <tr>
+                                <th>이메일</th>
+                                <td class="before-modify" colspan="3">
+                                    <div>shong7576@gmail.com</div>
+                                    <div><button class="myPageSubBtn">이메일 변경</button></div>
+                                </td>
+                                <!--변경 시-->
+                                <td style='display:none;' colspan="3">
+                                    <ul class="mail-alarm">
+                                        <li>메일주소를 입력 후 인증하기 버튼 클릭 시, 
+                                            <br>회원님의 이메일로 이메일 인증 번호가 적힌 메일이 발송됩니다</li>
+                                        <li>아래에 인증번호를 입력하면 인증이 완료됩니다.</li>
+                                    </ul>
+                                    <div class="email-input-area">
+                                        <div>
+                                            <input  class= "email-input" placeholder="이메일 주소 입력">
+                                            <input class= "email-input" placeholder="인증번호 입력">
+                                        </div>
+                                        <button class="myPageVerifyBtn">인증</button>
+                                    </div>
+                                    <div class="email-btn-area">
+                                        <button class="myPageConfirmCancelBtn">확인</button>
+                                        <button class="myPageConfirmCancelBtn">취소</button>
+                                    </div>
+                                </td>
+                            </tr>
+    
+                            <tr>
+                                <th>닉네임</th>
+                                <td class="before-modify" colspan="3">
+                                    <div>김송</div>
+                                    <div><button class="myPageSubBtn">닉네임 변경</button></div>
+                                </td>
+                                <!--변경 시-->
+                                <td style='display:none;' class="nickname-area" colspan="3">
+                                    <h3 class="nickname">김송</h3>
+                                    <ul>
+                                        <li>이번달 수정 가능 횟수(월 최대 4회까지만 변경 가능합니다.)</li>
+                                        <li>길이는 최대 8자 이내로 작성해주세요.</li>
+                                        <li>중복 닉네임은 설정 불가합니다.</li>
+                                        <li>띄어쓰기는 불가합니다.</li>
+                                        <li>닉네임 설정에 이모티콘 및 특수문자 사용이 불가합니다. ex)& < > ( ) ' " ,</li>
+                                    </ul>
+                                    <input placeholder="닉네임 입력">
+                                    <div class="nickname-btn-area">
+                                        <button class="myPageConfirmCancelBtn">확인</button>
+                                        <button class="myPageConfirmCancelBtn">취소</button>
+                                    </div>
+                                </td>
+                            </tr>
+    
+                            <tr>
+                                <th>휴대전화</th>
+                                <td class="before-modify" colspan="3">
+                                    <div>010-1111-2222</div>
+                                    <div><button class="myPageSubBtn">휴대전화 정보 변경</button></div>
+                                    
+                                </td>
+                                <!--변경 시-->
+                                <td style='display:none;' class="phoneNum-area"colspan="3">
+                                    <div class="phonNum-input-area">
+                                        <input placeholder="'-' 없이 입력">
+                                        <button class="myPageVerifyBtn">인증</button>
+                                    </div>
+                                    <div>
+                                        <button class="myPageConfirmCancelBtn">확인</button>
+                                        <button class="myPageConfirmCancelBtn">취소</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
 
 
+
+                    </table>
+
+                </section>
+
+                <section>
+                    <h2>추가 회원 정보</h2>
+                    <table class="add-info">
+                        <tr class="add-item">
+                            <th>생년월일</th>
+                            <td>1999.06.29</td>
+                        </tr>
+                        <tr class="add-item">
+                            <th>성별</th>
+                            <td>여</td>
+                        </tr>
+                        <tr class="add-item">
+                            <th>주소</th>
+                            <td>제주도 제주시 연화로 25 202동 408호</td>
+                        </tr>
+                    </table>
+                </section>
             </section>
         </section>
         <th:block th:replace="~{common/fragments/footer}"></th:block>

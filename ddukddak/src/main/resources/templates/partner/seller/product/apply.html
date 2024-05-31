@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>판매 등록</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/partner/seller/product/apply.css">
+</head>
+<body>
+    <th:block th:replace="~{partner/seller/common/header}"></th:block>
+
+
+    <div id="applyContainer">
+        <h1>상품관리 > 판매등록</h1>
+
+        <!-- 검색엔진 -->
+        <th:block th:replace="~{partner/seller/common/search}"></th:block>
+
+        <!-- 상품 분류 -->
+        <th:block th:replace="~{partner/seller/common/category}"></th:block>
+
+        <!-- 판매 상태-->
+        <div id="saleStatus">
+            <h3>판매 상태</h3>
+
+            <input type="checkbox" value="all" name="sale"><label>전체</label>
+            <input type="checkbox" value="saleNow" name="sale"><label>판매중</label>
+            <input type="checkbox" value="saleStop" name="sale"><label>판매 중지</label>
+            <input type="checkbox" value="Nosale" name="sale"><label>진열 안함</label>
+        </div>
+
+        <!-- 상품등록버튼 -->
+        <div id="sellerButton">
+            <button>판매 등록</button>
+            <button>판매 중지</button>
+            <button>진열 안함</button>
+        </div>
+
+        <div id="selectAll">
+            <input type="checkbox" value="selectAll" name="select"><label>전체 선택</label>
+        </div>
+
+        <!-- 상품목록 -->
+        <div id="productList">
+            <table>
+                <thead style="height: 60px;">
+                    <td></td>
+                    <td>상품</td>
+                    <td>분류</td>
+                    <td>옵션</td>
+                    <td>수량</td>
+                    <td>상품번호</td>
+                    <td>상품명</td>
+                    <td>판매가</td>
+                </thead>
+
+
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div><h3 style="text-align: center; margin: 30px 0;"><<&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;>></h3></div>
+
+
+    </div>
+    
+</body>
+</html>
