@@ -1,0 +1,89 @@
+.topContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFDF8;
+}
+
+
+.mainContainer {
+    display: flex;
+    width: 1200px;
+    position: relative;
+}
+
+.mainArea {
+    margin: 50px;
+    width: 900px;
+}
+
+/* 페이지 타이틀 */
+.topTitle {
+    text-align: center;
+    color: var(--secondary);
+}
+
+/* myHouse 입력 부분 */
+.titleInput {
+    margin: 30px 0;
+}
+
+.titleInput > input {
+    width: 900px;
+    height: 40px;
+    padding: 5px 10px;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+.contentInput textarea {
+    width: 900px;
+    resize: none;
+    border-radius: 10px;
+    height: 300px;
+    padding: 10px;
+    font-size: 15px;
+}
+
+/* 파일첨부 */
+.midTitle {
+    margin: 30px 0;
+}
+
+.inputFile {
+    margin: 30px 0;
+}
+
+.preview-container {
+    display: flex;
+    overflow-x: scroll;
+    width: 100%;
+    white-space: nowrap;
+}
+.preview-container img {
+    width: 100px;
+    height: 80px;
+    margin: 10px;
+}
+
+#largeImage {
+    width: 900px;
+    height: 500px;
+}
+
+.thumbnailImg {
+    margin: 50px 0;
+}
+
+
+/* 버튼 */
+.btnArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnArea button {
+    margin: 0 10px;
+}
