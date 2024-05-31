@@ -1,6 +1,6 @@
 main {
     width: 1440px;
-    height: 100vh;
+    height: 1200px;
     color: var(--gray1);
     
 }
@@ -50,7 +50,7 @@ main {
     justify-content: space-between;
     align-items: center;
     width: 1140px;
-    margin-top: 30px;
+    margin-top: 60px;
 }
 
 
@@ -113,9 +113,21 @@ main {
 /* ------------------------------------------------------ */
 .partnerType {
     display: flex;
-    justify-content: end;
+    justify-content: center;
+    align-items: center; /* 중앙 정렬을 위해 start를 center로 변경 */
     width: 360px;
-    
+    transform: translateY(-75px);
+}
+
+.partnerType i {
+    font-size: 24px;
+}
+
+.partnerType h2 {
+    margin-left: 10px;
+    font-size: 24px;
+    display: flex;
+    align-items: center; /* 중앙 정렬 추가 */
 }
 
 
@@ -126,7 +138,7 @@ main {
     align-items: center;
     justify-content: center;
     width: 420px;
-    height: 1000px;
+
 }
 
 /* 인증 관련 메시지 */
@@ -281,5 +293,5 @@ main {
 
 .partnerRequestArea {
     margin-top: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 80px;
 }

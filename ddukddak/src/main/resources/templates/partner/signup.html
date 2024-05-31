@@ -78,8 +78,8 @@
                     <div class="infoArea">
                         
                         <div class="partnerType">
-                            <i class="fa-solid fa-paint-roller"></i>
-                            <span style="font-size: 18px; font-weight: 600;" th:text="${choice} == 1 ? '시공사' : '판매사'"></span>
+                            <i class="fa-solid" th:classappend="${choice} == 1 ? fa-paint-roller : fa-store"></i>
+                            <h2 th:text="${choice} == 1 ? '시공사' : '판매사'"></h2>
                         </div>
                         <div>
                             <!-- 사업자인증 ~ span -->
