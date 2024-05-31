@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱 : ID 찾기</title>
+
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/partner/findId.css">
+
+    <!-- 폰트어썸 -->
+    <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    <main>
+        <section>
+            <header>
+                <div><a onclick="window.history.back();"><i class="fa-solid fa-chevron-left" style="color: var(--gray1);"></a></i></div>
+                <div><h3>아이디 찾기</h3></div>
+
+                <!-- 빈공간 -->
+                <div></div>
+            </header>
+
+            <!-- 컨텐츠 -->
+            <form id="findIdForm" action="#">
+                <div class="content">
+                    
+                    <!-- 타입 선택 -->
+                    <div class="typeDiv">
+                        <div class="memberBtnArea" onclick="location.href='/member/findId'"><a>회원</a></div>
+                        <div class="partnerBtnArea" onclick="location.href='/partner/findId'"><a>파트너</a></div>
+                    </div>
+
+                    <!-- 이메일 -->
+                    <!-- <div class="emailDiv">
+                        <div class="radioDiv">
+                            <input id="emailChoice" type="radio" name="authType" checked>
+                            <label for="emailChoice">이메일</label>
+                        </div>
+                        <div id="emailHiddenDiv">
+                            <div>
+                                <input placeholder="닉네임">
+                            </div>
+                            <div class="authArea">
+                                <input type="email" placeholder="이메일">
+                                <button type="button" id="emailAuthBtn" >인증 요청</button>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- 휴대폰 -->
+                    <div class="telDiv">
+                        <div class="radioDiv2">
+                            <input id="telChoice" type="radio" name="authType" value="tel" checked>
+                            <label for="telChoice">휴대폰</label>
+                        </div>
+                        <div id="telHiddenDiv" class="authArea">
+                            <input type="tel" placeholder="전화번호(-없이)">
+                            <button type="button" id="telAuthBtn" >인증 요청</button>
+                        </div>
+                    </div>
+
+                    <!-- 버튼 -->
+                    <div class="btnDiv">
+                        <button class="choiceBtn">아이디 찾기</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+    <script src="/js/partner/findId.js"></script>
+
+
+
+</body>
+</html>

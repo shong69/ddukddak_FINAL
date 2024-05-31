@@ -71,5 +71,20 @@
         });
     </script>
 
+    <!-- 고객 선택 값에 따라 기본 checked 설정 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 이전 URL 가져오기
+            var referrer = document.referrer;
+
+            // URL 검사하여 라디오 버튼 선택
+            if (referrer.includes('partner/login')) {
+                document.getElementById('sellerChoice').checked = true;
+            } else {
+                document.getElementById('memberChoice').checked = true;
+            } 
+        });
+    </script>
+
 </body>
 </html>

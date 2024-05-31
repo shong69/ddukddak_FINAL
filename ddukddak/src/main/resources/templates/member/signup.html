@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱 : 회원가입</title>
+
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+    <!-- <link rel="stylesheet" href="/css/common/button.css"> -->
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/member/signup.css">
+
+
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    <main>
+        <section>
+            <div class="logo-div">
+                <img onclick="location.href='/';" src="/images/main/main-logo.png" style="height: 60px; width: 60px; cursor: pointer;">
+                <h1 style="font-size: 34px; color: var(--secondary);">뚝딱뚝딱</h1>
+            </div>
+
+            <div class="container">
+                <form action="/member/signup" method="POST" name="signUpForm" id="signUpForm">
+                    <div class="input-div">
+                        
+                        <!-- 아이디 -->
+                        <label for="memberId"><em style="color: red;">*</em> 아이디</label>                          
+                        <div class="signUp-input-area">
+                            <input type="text" name="memberId" id="memberId" maxlength="20" autocomplete="off" required>
+                        </div>
+                        <span id="idMsg">아이디를 입력해 주세요.</span> 
+                        
+
+                        <!-- 비밀번호 -->
+                        <label for="memberPw"><em style="color: red;">*</em> 비밀번호</label>                                               
+                        <div class="signUp-input-area">
+                            <input type="password" name="memberPw" id="memberPw" maxlength="20">
+                        </div>
+                        <span id="pwMsg">6~20자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.</span>                        
+
+                        <!-- 비밀번호  확인 -->
+                        <label for="memberPwConfirm"><em style="color: red;">*</em> 비밀번호 확인</label>                        
+                        <div class="signUp-input-area">
+                            <input type="password" name="memberPwConfirm" id="memberPwConfirm" maxlength="20">
+                        </div>
+                        <span id="pwConfirmMsg"></span>
+                        
+                        <!-- 닉네임 -->
+                        <label for="memberNickname"><em style="color: red;">*</em> 닉네임</label>                        
+                        <div class="signUp-input-area">
+                            <input type="text" name="memberNickname" id="memberNickname" maxlength="10" autocomplete="off">
+                        </div>
+                        <span id="nickMsg">2~5자의 한글만 사용해 주세요.</span>
+
+
+                        <!-- 이메일 -->
+                        <label for="memberEmail"><em style="color: red;">*</em> 이메일</label>                        
+                        <div class="signUp-input-area auth-btn-area1">
+                            <input type="email" name="memberEmail" id="memberEmail" maxlength="30" autocomplete="off">
+                            <button type="button" id="emailAuth">인증하기</button>
+
+                            <!-- 이메일 인증 -->
+                            <!-- <label for="memberEmail"><em style="color: red;">*</em> 이메일</label> -->
+                            <div id="emailAuthDiv" class="authCheckArea1 hidden">
+                                <input>
+                                <button type="button" id="emailAuthCheck" class="authCheck">확인</button>
+                                <span id="emailAuthTime" class="authMsg">05:00</span>
+                            </div>
+
+                        </div>
+                        <span id="emailMsg">실제 사용하고 계신 이메일을 입력해 주세요.</span>
+        
+
+                        <!-- 전화번호 -->
+                        <label for="memberTel"><em style="color: red;">*</em> 휴대전화</label>                        
+                        <div class="signUp-input-area auth-btn-area2">
+                            <input type="tel" name="memberTel" id="memberTel" placeholder="휴대폰 번호(-없이)">
+                            <button type="button" id="telAuth">인증하기</button>
+
+                            <!-- 전화번호 인증 -->
+                            <div id="telAuthDiv" class="authCheckArea2 hidden">
+                                <input type="tel">
+                                <button type="button" id="telAuthCheck" class="authCheck">확인</button>
+                                <span id="telAuthTime" class="authMsg">05:00</span>
+                            </div>
+                        </div>
+                        <span id="telMsg"></span>
+
+                        <!-- 주소 -->
+                        <label for="memberAddress">주소</label>   
+                        <div class="address-input-area">
+                            <input type="text" name="memberAddress" placeholder="우편번호" maxlength="6" id="postcode" readonly>                       
+                        
+                            <button type="button" onclick="sample6_execDaumPostcode()" id="searchAddress">검색</button>
+                        </div>
+
+                        <div class="address-input-area">
+                            <input type="text" name="memberAddress" placeholder="도로명/지번 주소" id="address" readonly>
+                        </div>
+                        
+                        <div class="address-input-area">
+                            <input type="text" name="memberAddress" placeholder="상세 주소" id="detailAddress">
+                        </div>
+
+                        <button id="signUpBtn">가입하기</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+    <!-- 다음 주소 API -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="/js/member/signup.js"></script>
+</body>
+</html>
