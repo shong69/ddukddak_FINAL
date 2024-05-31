@@ -457,7 +457,8 @@ button:active {
     font-weight: 300;
 }
 .boardDetailSubmitChatBtn:hover {
-    background-color: var(--white);
+    background-color: var(--secondary);
+    color: var(--white);
 }
 .boardDetailSubmitChatBtn:active {
     background-color: var(--gray1);
@@ -492,15 +493,15 @@ button:active {
     width: 330px; 
     height: 55px;
     border-radius: 10px;
-    background-color: var(--white);
+    background-color: var(--gray2);
 
     /* 폰트 */
     font-size: 24px;
     font-weight: 600;
-    color: var(--gray1);
+    color: var(--white);
 }
 .boardQuickViewBtn:hover {
-    color: var(--gray1);
+    color: var(--white);
 }
 
 
