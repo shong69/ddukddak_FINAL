@@ -1,0 +1,163 @@
+/* 방 이미지 */
+.imgArea {
+    margin: 50px 0;
+}
+
+.mainImg > img{
+    width: 900px;
+    height: 600px;
+}
+
+.images {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.images img {
+    width: 100px;
+    height: 80px;
+    margin-top: 30px;
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+/* 유저 프로필 */
+.userProfileArea {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+.userProfileArea div {
+    display: flex;
+}
+
+.profileImg > img{
+    width: 50px;
+    border-radius: 9999px;
+}
+
+.leftSide div{
+    margin-right: 20px;
+    align-items: center;
+}
+
+.rightSide div {
+    margin-right: 20px;
+    align-items: center;
+}
+
+/* 집들이 내용 */
+.myHouseContent {
+    width: 100%;
+    flex-wrap: wrap;
+    white-space: pre-wrap;
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.25);
+    margin-top: 20px;
+    background-color: white;
+}
+
+
+/* 댓글 */
+.commentArea {
+    margin-top: 50px;
+    border-top: 1px solid black;
+}
+
+.topArea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px;
+}
+
+.commentTextArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.commentTextArea > textarea {
+    width: 840px;
+    resize: none;
+}
+
+.like > i {
+    margin-right: 3px;
+}
+
+.comment {
+    margin-top: 30px;
+    border-top: 1px solid black;
+}
+
+.commentUser {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.commentUser div {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.leftArea img {
+    width: 30px;
+    margin-right: 10px;
+    border-radius: 9999px;
+}
+
+.commentBtnArea div {
+    color: #8C8C8C;
+    cursor: pointer;
+}
+
+
+.commentContent {
+    margin: 20px 30px;
+}
+
+.commentInsertContent {
+    width: 840px;
+    resize: none;
+    margin-left: 30px;
+}
+
+.comment-btn-area {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 30px;
+}
+
+.comment-btn-area button {
+    width: 50px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.comment-btn-area button:hover {
+    background-color: var(--secondary);
+    color: white;
+}
+
+/* 탑버튼 */
+#top {
+    position: fixed;
+    top: 90%;
+    left: 95%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    background-color: white;
+    font-family: 'main';
+    cursor: pointer;
+    border: 2px black solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

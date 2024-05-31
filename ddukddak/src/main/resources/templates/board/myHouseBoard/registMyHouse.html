@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/common/main.css"> 
+    <link rel="stylesheet" href="/css/common/fragments/header.css">  
+    <link rel="stylesheet" href="/css/common/fragments/footer.css"> 
+    <link rel="stylesheet" href="/css/common/fragments/board/side-category.css"> 
+    <link rel="stylesheet" href="/css/common/button.css">
+    <link rel="stylesheet" href="/css/board/myHouseBoard/registMyHouse.css">
+</head>
+<body>
+
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+
+    <div class="topContainer">
+
+        <div class="mainContainer">
+
+            <th:block th:replace="~{common/fragments/board/side-category}"></th:block>
+
+            <div class="mainArea">
+
+                <div class="topTitle">
+                    <h1>집들이 작성하기</h1>
+                </div>
+
+                <div class="titleInput">
+                    <input type="text" placeholder="제목">
+                </div>
+
+                <div class="contentInput">
+                    <textarea placeholder="내용 입력"></textarea>
+                </div>
+
+                <div class="midTitle">
+                    <h2>사진 첨부하기</h2>
+                </div>
+
+                <div class="inputFile">
+                    <input type="file" id="imageUpload" accept="image/*" multiple>
+                </div>
+
+                <div class="thumbnailImg">
+                    <img id="largeImage" src="" alt="Large Image Preview" style="display: none;">
+                </div>
+
+
+                <div class="btnArea">
+                    <button class="boardCreateSubmitBtn">등록하기</button>
+                    <button class="boardQuickViewBtn">미리보기</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="top">↑</div>
+    
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+    <script src="/js/common/fragments/board/side-category.js"></script>
+    <script src="/js/common/main.js"></script>
+    <script src="/js/board/myHouseboard/registMyHouse.js"></script>
+</body>
+</html>
