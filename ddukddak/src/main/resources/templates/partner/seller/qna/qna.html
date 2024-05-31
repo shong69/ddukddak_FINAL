@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>판매자 문의내역</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/partner/seller/qna/qna.css">
+</head>
+<body>
+    <th:block th:replace="~{partner/seller/common/header}"></th:block>
+
+
+    <div id="qnaContainer">
+        <div id="qnaTitle">
+            <h1>문의내역</h1>
+    
+            <div>
+                <input type="checkbox" value="all" name="qna"><label>전체</label>
+                <input type="checkbox" value="complete" name="qna"><label>답변 완료</label>
+                <input type="checkbox" value="completeNot" name="qna"><label>답변 미완료</label>
+            </div>
+        </div>
+    
+    
+    
+    
+    
+        <div>
+            <!-- 상품목록 -->
+         <div id="productList">
+            <table>
+                <thead style="height: 40px;">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td>주문번호</td>
+                    <td>회원 아이디</td>
+                    <td>상품 이름</td>
+                    <td>옵션</td>
+                    <td>문의 날짜</td>
+                    <td>답변 여부</td>
+                </thead>
+
+
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color:green; margin-right: 5px;">●</h5>답변 완료
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                
+                
+            </table>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div><h3 style="text-align: center; margin: 30px 0;"><<&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;>></h3></div>
+        </div>
+    </div>
+
+    
+</body>
+</html>
