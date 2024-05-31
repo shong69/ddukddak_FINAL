@@ -17,7 +17,7 @@ public class PartnerController {
 	}
 	
 	
-	/** 파트너 회원가입 페이지 이동
+	/** [파트너] 회원가입 페이지 이동
 	 * @param choice : 1 : 시공사 / 2 : 판매사
 	 * @param model
 	 * @return
@@ -31,5 +31,23 @@ public class PartnerController {
 		
 		return "partner/signup";
 	}
+	
+	/** [파트너] 아이디 찾기 페이지 이동
+	 * @return
+	 */
+	@GetMapping("findId")
+	public String partnerFindId() {
+		return "partner/findId";
+	}	
+	
+	
+	/** [파트너] 아이디 찾기 페이지 이동
+	 * @return
+	 */
+	@GetMapping("findPw")
+	public String partnerFindPw() {
+		return "partner/findPw";
+	}
+	
 	
 }

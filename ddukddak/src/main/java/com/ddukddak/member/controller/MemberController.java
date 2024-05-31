@@ -21,9 +21,30 @@ public class MemberController {
 		return "/member/login";
 	}
 	
+
+	/** [회원] 회원가입 페이지 이동
+	 * @return
+	 */
 	@GetMapping("signup")
 	public String memberSignup() {
 		
 		return "/member/signup";
+	}
+	
+	
+	/** [회원] 아이디 찾기 페이지 이동
+	 * @return
+	 */
+	@GetMapping("findId")
+	public String memberFindId() {
+		return "member/findId";
+	}
+	
+	/** [회원] 비밀번호 찾기 페이지 이동
+	 * @return
+	 */
+	@GetMapping("findPw")
+	public String memberFindPw() {
+		return "member/findPw";
 	}
 }

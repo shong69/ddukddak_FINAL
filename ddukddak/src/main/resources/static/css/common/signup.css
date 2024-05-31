@@ -67,13 +67,16 @@ main {
     display: flex;
     align-items: center;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500;
     margin-top: 30px;
     margin-bottom: 50px;
 }
 
 .horizontal-align input[type="radio"] {
     margin-right: 10px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
 }
 
 
@@ -81,4 +84,15 @@ main {
 .choiceBtnArea {
     
     height: 100px;
+}
+
+
+input[type='radio'] {
+    width: 13px;
+    height: 13px;
+    cursor: pointer;
+}
+
+label {
+    cursor: pointer;
 }

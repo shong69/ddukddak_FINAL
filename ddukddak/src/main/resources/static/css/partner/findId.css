@@ -1,0 +1,311 @@
+main {
+    /* border: 1px solid red; */
+    width: 1440px;
+    height: auto;
+    color: var(--gray1);
+    margin: 100px 0;
+}
+
+/* 찾기 박스 전체 */
+main section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--gray4);
+    width: 400px;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* 박스 내 헤더 */
+main header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 16px;
+    
+}
+
+main header div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main header a {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+main header i {
+    padding: 10px;
+}
+
+main header h3 {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+/* 콘텐츠(박스 본문) */
+#findIdForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+
+/* 회원, 파트너 선택 영역 */ 
+.partnerBtnArea {
+    background-color: var(--gray1);
+    color: var(--white);
+    box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+    border: none;
+    cursor: pointer;
+}
+
+.partnerBtnArea a {
+    color: var(--white);
+    text-decoration: none;
+}
+
+.memberBtnArea {
+    background-color: #f1f1f1;
+    border-left: none;
+    border: none;
+    cursor: pointer;
+}
+
+.memberBtnArea a {
+    color: #aaa;
+    text-decoration: none;
+}
+
+/* 콘텐츠 메인 */
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 80%;
+}
+
+.content label {
+    padding: 0 0 0 10px;
+    font-size: 14px;
+    cursor: pointer;
+    font-style: normal;
+}
+
+.content input[type='radio'] {
+    width: 16px;
+    height: 16px;
+}
+
+/* 회원 찾기, 파트너 찾기 영역 */
+.typeDiv {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    margin-bottom: 20px;
+}
+
+.typeDiv div {
+    flex-basis: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 3px;
+}
+
+
+
+.radioDiv {
+    margin: 16px 0;
+}
+
+.radioDiv2 {
+    margin-top: 30px;
+    margin-bottom: 6px;
+}
+
+
+#emailHiddenDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 이메일, 핸드폰 인증 영역 */
+
+.emailDiv {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.emailDiv div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.emailDiv div input:not([type='radio']) {
+    width: 100%;
+    height: 50px;
+    border: 1px solid var(--gray5);
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.emailDiv div input:focus {
+    outline: none;
+}
+
+/* 이메일, 전화번호 인증창 div */
+.authArea {
+    position: relative;
+    margin-top: 10px;
+}
+
+
+
+#emailAuthBtn, #telAuthBtn {
+    position: absolute;
+    width: 80px;
+    height: 30px;
+    top: -10;
+    right: 10px;
+    background-color: var(--gray1);
+    color: var(--white);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+#emailAuthBtn:hover, #telAuthBtn:hover {
+    background-color: var(--white);
+    color: var(--gray1);
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 5px 5px;
+    transform: translateY(-2px);
+    font-family: 'main';
+    color: var(--gray1);
+    text-align: center;
+    word-wrap: break-word;
+
+    
+}
+
+#emailAuthBtn:active, #telAuthBtn:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+/* 전화번호 인증 영역 */
+.telDiv {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+
+.telDiv div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+
+.telDiv div input:not([type='radio']) {
+    width: 100%;
+    height: 50px;
+    border: 1px solid var(--gray5);
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.telDiv div input:focus {
+    outline: none;
+}
+
+
+
+
+/* 버튼 영역 */
+.btnDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin: 40px 0;
+}
+
+/* 선택하기 버튼 */
+.choiceBtn {
+    background-color: var(--gray1);
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 100%;
+    height: 50px;
+    will-change: transform;
+    outline: none;
+
+    cursor: pointer;
+    
+    /* 폰트 */
+    font-family: 'main';
+    word-wrap: break-word;
+    text-align: center; 
+    color: var(--white); 
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+}
+
+.choiceBtn:hover {
+    left: 0px; 
+    top: 0px;
+    background-color: var(--white);
+    color: var(--gray1);
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 5px 5px;
+    transform: translateY(-2px);
+    font-family: 'main';
+    color: var(--gray1);
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.choiceBtn:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+
+
+/* 체크 시 히든 */
+.hidden {
+    display: none !important;
+}
