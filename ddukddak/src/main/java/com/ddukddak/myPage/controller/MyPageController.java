@@ -38,5 +38,8 @@ public class MyPageController {
 	public String myPageTipBoard() {
 		return "myPage/myPageTipBoard";
 	}
-	
+	@GetMapping("memberInfo")
+	public String memberInfo() {
+		return"myPage/memberInfo";
+	}
 }
