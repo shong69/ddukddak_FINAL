@@ -1,17 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/board/boardMainPage.css">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/common/button.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="/css/common/fragments/board/side-category.css"> 
+    <title>뚝딱뚝딱 : 커뮤니티</title>
 </head>
 <body>
+
+    <!-- 헤더 -->
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+
     
+    <main class="boardMainPageContainer">
+
+        <div class="boardMainPageContentContainer">
+
+            <!-- 사이드 카테고리 버튼 -->
+            <th:block th:replace="~{common/fragments/board/side-category}"></th:block>
+
+            <section class="mainArea">
+
+            
+                <section class="searchArea">
+
+                    <span>
+                        <input type="text" placeholder="집들이 검색" class="searchBox">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    
+                </section>
+                <!-- 광고 -->
+                <div class="boardAdContainer">
+                    <img src="/images/board/boardMainAd.png" alt="" class="boardAd mySlides">
+                    <img src="/images/board/boardMainAd2.png" alt="" class="boardAd mySlides">
+                    <img src="/images/board/boardMainAd3.jpg" alt="" class="boardAd mySlides">
+                    <img src="/images/board/boardMainAd4.jpg" alt="" class="boardAd mySlides">
+                    <img src="/images/board/boardMainAd5.jpg" alt="" class="boardAd mySlides">
+                    <img src="/images/board/boardMainAd6.png" alt="" class="boardAd mySlides">
+                    <h4 class="adViewMore">1/6+</h4>
+                    <a class="prev" onclick="plusSlides(-1)"><i class="fa-solid fa-chevron-left"></i></a>
+                    <a class="next" onclick="plusSlides(1)"><i class="fa-solid fa-chevron-right"></i></a>
+                </div>
+                <!-- 집들이 -->
+                <div class="myHouseMainContainer">
+                    <div class="titleContainer">
+                        <a href="/myHouse/main" class="myHouseViewMore"><h1>집들이</h1></a>
+                        <a href="/myHouse/main" class="myHouseViewMore">+ 더 보기</a>
+
+                    </div>
+                    <th:block th:replace="~{common/fragments/board/boardMainMyHouse}"></th:block>
+
+                </div>
+                <!-- 노하우 -->
+                <div class="tipMainContainer">
+                    <div class="titleContainer">
+                        <a href="/tip/main" class="tipViewMore"><h1>노하우</h1></a>
+                        <a href="/tip/main" class="tipViewMore">+ 더 보기</a>
+
+                    </div>
+                    <th:block th:replace="~{common/fragments/board/boardMainTip}"></th:block>
+
+                </div>
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- 탑 버튼  -->
+    <div id="boardMainTop">↑</div>
+
+
+    <!-- 푸터 -->
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
     
 
+    <script src="/js/board/boardMainPage.js"></script>
+    <script src="/js/common/fragments/board/side-category.js"></script>
+
+    <!-- 아이콘 -->
+    <script src="https://kit.fontawesome.com/7f3fe5627c.js" crossorigin="anonymous"></script>
 </body>
 </html>
 

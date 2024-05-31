@@ -70,6 +70,7 @@
     justify-content: space-around;
     flex-direction: column;
 }
+
 .detailTitle {
     height: auto;
 }
@@ -79,6 +80,7 @@
     font-weight: bold;
     margin-bottom: 10px;
 }
+
 .detailContent {
     height: auto;
     display: flex;
@@ -86,27 +88,38 @@
     margin-bottom: 20px;
     width: 100%;
     padding: 10px;
-
+    flex-wrap: wrap;
     border-bottom: 1px solid var(--gray1);
 }
+
 .detailContent h3 {
-    display: inline-block;
+    display: flex;
     font-weight: 700;
+    height: auto;
 }
+
 .detailExplination {
-    height: auto;
-}
-.detailExplination textarea {
     width: 100%;
-    height: auto;
+    flex-wrap: wrap;
+    display: flex;
+    white-space: pre-wrap;
+}
+
+.detailTextarea {
+    display: flex;
+    width: 100%;
     border: none;
-    resize: none;
+    word-wrap: break-word;
     background: none;
     font-size: 16px;
     line-height: 1.5;
-    overflow: hidden;
-    flex-wrap: wrap;
+    white-space: pre-wrap;
+    height: auto;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden; /* Ensure no scrollbars */
 }
+
 
 /* 프로젝트 리스트 컨테이너 */
 .botContainer {

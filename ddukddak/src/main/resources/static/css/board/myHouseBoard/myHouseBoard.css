@@ -65,7 +65,7 @@
 }
 
 .searchArea > span:nth-child(2) {
-    border: 1px solid black;
+    border: 1px solid var(--gray5);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -76,6 +76,13 @@
     font-size: 25px;
     margin: 0 10px;
     cursor: pointer;
+    color: var(--gray3);
+}
+
+.searchBox::placeholder {
+    font-family: 'main';
+    font-size: 18px;
+    color: var(--gray3);
 }
 
 /* 정렬방식 area */

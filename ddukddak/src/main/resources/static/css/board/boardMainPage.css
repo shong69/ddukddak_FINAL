@@ -1,0 +1,365 @@
+
+
+
+/* 전체 백그라운드색 컨테이너 */
+.boardMainPageContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    background-color: #FFFDF8;
+    width: 100%;
+}
+
+
+
+
+/* 메인 컨테이너 */
+.boardMainPageContentContainer {
+    display: flex;
+    width: 1200px;
+    position: relative;
+}
+
+.mainArea {
+    flex-grow: 1;
+    margin: 50px;
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+
+/* 검색 area */
+.searchArea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #3A732A;
+}
+
+.searchArea input {
+    width: 100%;
+    height: 48px;
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    margin: 0 10px;
+    
+}
+
+.searchArea input:focus {
+    outline: none;
+}
+
+.searchArea > span:nth-child(1) {
+    border: 1px solid var(--gray5);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    width: 100%;
+}
+
+.searchBox::placeholder {
+    font-family: 'main';
+    font-size: 18px;
+    color: var(--gray3);
+}
+
+.searchArea > span:nth-child(1) > i {
+    font-size: 25px;
+    margin: 0 10px;
+    cursor: pointer;
+    color: var(--gray3);
+}
+
+/* 광고 베너 컨테이너 */
+.boardAdContainer {
+    position: relative;
+    width: 100%;
+    height: 670px;
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.boardAd {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.adViewMore {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.5); 
+    color: var(--white);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.8s ease;
+}
+
+.active {
+    background-color: #717171;
+}
+
+.mySlides {
+    display: none;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+
+/* 중간 집들이 컨테이너 */
+.myHouseMainContainer, .tipMainContainer {
+    height: auto;
+    width: 110%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 50px;
+    border-radius: 30px;
+    background-color: white;
+    box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.titleContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 95%;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.portListMainContainer {
+    width: 95%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.portListContainer {
+    width: 240px;
+    height: 240px;
+    margin: 20px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.portListContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) 100%); /* Gradient overlay */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    color: white; /* Text color */
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.overlay h2, .overlay h4 {
+    margin: 5px 0; /* Adjust margin for spacing */
+}
+
+.overlay h1 {
+    text-align: left;
+    word-break: keep-all;
+    line-height: 40px;
+}
+
+.overlay h4 {
+    font-size: 16px; /* Adjust font size as needed */
+    width: 100%;
+    text-align: right;
+}
+
+.portDate {
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+.interiorProjectViewMoreBtn {
+    margin-top: 20px;
+}
+
+.myHouseViewMore:hover, .tipViewMore:hover {
+    color: var(--secondary);
+    transition: 0.2s;
+}
+
+/* 팁 보드  */
+
+.tipMainContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.tipBoardMainContainer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.tipBoardContainer {
+    width: 400px;
+    height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff; /* Ensure background is white */
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3); /* Soft shadow */
+    border-radius: 10px; /* Optional: rounded corners */
+    padding: 20px; /* Add some padding */
+    box-sizing: border-box; 
+    margin: 20px;
+    cursor: pointer;
+}
+
+.tipBoardImg {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 10px; /* Optional: rounded corners */
+}
+
+.tipBoardUserInfoContainer {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.tipBoardUserName {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.tipBoardTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.tipBoardLikeContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tipBoardLikeContainer a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.tipBoardLikeContainer i {
+    font-size: 16px;
+    color: red;
+    margin-right: 5px;
+}
+
+.tipBoardLikeContainer h4 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.tipBoardContent {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+    overflow: hidden; /* Ensure long text is handled */
+    text-overflow: ellipsis;
+}
+/* 탑버튼 */
+#boardMainTop {
+    position: fixed;
+    top: 90%;
+    left: 95%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    background-color: white;
+    font-family: 'main';
+    cursor: pointer;
+    border: 2px black solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
