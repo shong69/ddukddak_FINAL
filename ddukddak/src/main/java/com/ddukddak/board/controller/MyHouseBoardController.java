@@ -18,4 +18,9 @@ public class MyHouseBoardController {
 		return "board/myHouseBoard/myHouseBoardDetail";
 	}
 	
+	@GetMapping("registMyHouse")
+	public String registMyHouse() {
+		return "board/myHouseBoard/registMyHouse";
+	}
+	
 }
