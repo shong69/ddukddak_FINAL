@@ -32,4 +32,13 @@ public class PartnerController {
 		return "partner/signup";
 	}
 	
+	
+	/** 파트너 메인페이지 이동
+	 * @return
+	 */
+	@GetMapping("main")
+	public String partnerMain() {
+		return "partner/partnerMain";
+	}
+	
 }

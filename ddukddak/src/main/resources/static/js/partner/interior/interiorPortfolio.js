@@ -1,3 +1,5 @@
+/* 탑 버튼 */
+
 const portTopButton = document.querySelector("#portTop");
 
 if (portTopButton != null ) {
@@ -9,7 +11,7 @@ if (portTopButton != null ) {
     });
 }
 
-
+/* 프로젝트 더보기 */
 const viewMoreBtn = document.querySelector("#interiorProjectViewMore");
 const portBotContainer = document.querySelector(".botContainer");
 const portListMainContainer = document.querySelector(".portListMainContainer");
@@ -29,12 +31,13 @@ if (viewMoreBtn != null) {
     });
 }
 
-if(portListMainContainer != null) {
+// if(portListMainContainer != null) {
 
-    // Initially hide all portListMainContainer elements
-    portListMainContainer.forEach((container, index) => {
-        if (index >= currentVisibleIndex) {
-            container.style.display = 'none';
-        }
-    });
-}
+//     // Initially hide all portListMainContainer elements
+//     portListMainContainer.forEach((container, index) => {
+//         if (index >= currentVisibleIndex) {
+//             container.style.display = 'none';
+//         }
+//     });
+// }
+

@@ -18,5 +18,4 @@ public class MyHouseBoardController {
 		return "board/myHouseBoard/myHouseBoardDetail";
 	}
 	
-
 }

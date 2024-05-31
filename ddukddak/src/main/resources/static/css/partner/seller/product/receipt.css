@@ -1,0 +1,83 @@
+#receiptContainer {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+}
+
+#receiptContainer > h1 {
+    padding: 50px;
+}
+
+#sellerButton {
+    display: flex;
+    justify-content: end;
+    margin: 10px 0;
+}
+
+#sellerButton button {
+    background-color: var(--primary3);
+    width: 80px;
+    height: 30px;
+    font-weight: bold;
+    border: none;
+    box-shadow: 3px 3px 3px var(--gray5);
+    border-radius: 10px;
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+
+#sellerButton button:hover {
+    background-color: var(--gray1);
+    color: white;
+}
+
+#receiptStatus {
+    display: flex;
+    margin: 5px 0;
+}
+
+#receiptStatus > h3,
+#receiptStatus > label {
+    margin-right: 30px;
+}
+
+#receiptStatus > label {
+    margin-left: 5px;
+}
+
+#selectAll {
+    display: flex;
+}
+
+#selectAll > label {
+    margin-left: 5px;
+}
+
+#productList img{
+    height: 100px;
+}
+
+#productList table {
+    width: 1000px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
+#productList table input {
+    margin-left: 10px;
+}
+
+
+#productList thead {
+    background-color: var(--white);
+}
+
+.borderTr {
+    box-shadow: 5px 5px 10px var(--gray5);
+}
+
+.borderTr > td:first-child {
+    width: 10px;
+}

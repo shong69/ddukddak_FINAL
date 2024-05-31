@@ -1,0 +1,58 @@
+#qnaContainer {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+}
+
+#qnaTitle {
+    display: flex;
+    flex-direction: column;
+}
+
+#qnaTitle h1 {
+    margin: 20px 0;
+}
+
+#qnaTitle > div:last-child {
+    display: flex;
+}
+
+#qnaTitle > div:last-child label {
+    margin-left: 5px;
+    margin-right: 30px;
+}
+
+#productList table {
+    margin-top: 50px;
+    width: 1000px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-collapse: collapse;
+}
+
+#productList table input {
+    margin-left: 10px;
+}
+
+#productList thead {
+    background-color: var(--gray1);
+    color: var(--white);
+}
+
+#productList tr {
+    border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+.borderTr {
+    height: 50px;
+}
+
+.borderTr div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.borderTr > td:first-child {
+    width: 10px;
+}

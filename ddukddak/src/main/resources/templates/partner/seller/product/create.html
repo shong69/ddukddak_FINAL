@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 재고생성</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/partner/seller/product/create.css">
+</head>
+<body>
+    <th:block th:replace="~{partner/seller/common/header}"></th:block>
+
+
+    <div id="createContainer">
+        <h1>상품관리 > 재고생성</h1>
+
+        <!-- 검색엔진 -->
+        <th:block th:replace="~{partner/seller/common/search}"></th:block>
+
+        <!-- 상품 분류 -->
+        <th:block th:replace="~{partner/seller/common/category}"></th:block>
+
+        <!-- 상품등록버튼 -->
+        <div id="sellerButton">
+            <button>재고 등록</button>
+        </div>
+
+        <!-- 상품목록 -->
+        <div id="productList">
+            <table>
+                <thead style="height: 60px;">
+                    <td>상품</td>
+                    <td>분류</td>
+                    <td>옵션</td>
+                    <td>수량</td>
+                    <td>상품번호</td>
+                    <td>상품명</td>
+                    <td>판매가</td>
+                    <td>상품삭제</td>
+                </thead>
+
+
+                <tr class="borderTr">
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                    <td><button>삭제</button></td>
+                </tr>
+                <tr class="borderTr">
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                    <td><button>삭제</button></td>
+                </tr>
+                <tr class="borderTr">
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                    <td><button>삭제</button></td>
+                </tr>
+                <tr class="borderTr">
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                    <td><button>삭제</button></td>
+                </tr>
+                <tr class="borderTr">
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                    <td><button>삭제</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div><h3 style="text-align: center; margin: 30px 0;"><<&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;>></h3></div>
+
+    </div>
+
+
+
+
+
+    <!-- 모달창 -->
+    <div class="modal">
+        <div>X</div>
+
+        <div>
+            <h2>재고 등록</h2>
+        </div>
+
+
+        <form>
+            <div id="createProduct">
+    
+                <div>
+                    <img src="/images/main/shopping-3.jpg">
+                    <div>
+                        <img src="/images/eCommerce/shopping-1.jpg">
+                        <img src="/images/eCommerce/shopping-2.jpg">
+                        <img src="/images/eCommerce/shopping-3.jpg">
+                        <div>+</div>
+                        <div>+</div>
+                    </div>
+                </div>
+    
+                <div id="productEx">
+                    <table>
+                        <tr>
+                            <td><h4>상품명</h4></td>
+                            <td><input></td>
+                        </tr>
+                        <tr>
+                            <td><h4>상품 분류</h4></td>
+                            <td>
+                                <select>
+                                    <option>대분류</option>
+                                    <option>가구</option>
+                                    <option>가전/디지털</option>
+                                    <option>주방용품</option>
+                                    <option>데코/식물</option>
+                                    <option>수납/정리</option>
+                                    <option>생활용품</option>
+                                    <option>유아/아동</option>
+                                </select>
+    
+                                <select>
+                                    <option>소분류</option>
+                                    <option>침대</option>
+                                    <option>매트리스/토퍼</option>
+                                    <option>테이블/식탁/책상</option>
+                                    <option>소파</option>
+                                    <option>서랍/수납장</option>
+                                    <option>거실장/TV장</option>
+                                    <option>선반</option>
+                                    <option>진열장/책장</option>
+                                    <option>의자</option>
+                                    <option>행거/옷장</option>
+                                </select>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <td><h4>판매가</h4></td>
+                            <td><input></td>
+                        </tr>
+                    </table>
+    
+    
+                    <h4>옵션명</h4>
+                    <div id="option">
+                        <div id="optionBox"></div>
+                        <div id="plusBox">
+                            <button type="button" id="productPlusButton">+</button>
+                        </div>
+                    </div>
+    
+    
+                    <div id="buttonBox"><button id="createButton">등록하기</button></div>
+                </div>
+    
+            </div>
+        </div>
+
+        </form>
+
+    <script src="/js/partner/seller/product/create.js"></script>
+
+    
+</body>
+</html>
