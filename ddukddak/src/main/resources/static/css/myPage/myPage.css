@@ -26,8 +26,12 @@
 }
 
 .skuList,
-.cartList{
+.cartList,
+.member-info,
+.add-info{
     margin:30px 0;
+    width : 1100px;
+    border-collapse: collapse;
 }
 .skuList thead,
 .cartList thead{
@@ -37,17 +41,15 @@
 .skuList th,
 .cartList th{
     min-width: 90px;
-    border-bottom:1px solid black;
 }
 .skuList tr,
 .cartList tr{
     height: 60px;
-    
+    border-bottom:1px solid black;
 }
 
 .skuList td,
 .cartList td{
-    border-bottom:1px solid black;
     height: 80px;
 }
 
@@ -105,7 +107,6 @@
 
 /*장바구니*/
 .cartList{
-    margin-left: 70px;
     margin-bottom: 50px;
 }
 
@@ -115,7 +116,7 @@
     list-style-type: none;
 }
 .homeBoard-list > li {
-    width : 800px;
+    width : 900px;
     margin: 50px 0;
     padding: 15px;
     display: flex;
@@ -164,9 +165,9 @@
 }
 
 /*내 노하우*/
+
 .tipBoard-table{
     margin-top: 80px;
-    margin-left: 70px;
     margin-bottom: 50px;
 }
 .tipBoard-row{
@@ -176,15 +177,254 @@
 .tipBoard-item{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width : 450px;
-    height: 500px;
-    margin:20px 20px;
+    width : 400px;
+    height: 520px;
+    margin:20px 50px;
+    padding:30px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
+.tipBoard-item span:nth-child(2),
+.tipBoard-item span:nth-child(3),
+.tipBoard-item span:nth-child(4){
+    margin:5px 0;
+    margin-right: auto;
+}
+.tipBoard-item span:nth-child(3){
+    font-weight: 600;
+}
+
+.tipBoard-item span:nth-child(2){
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+.tipBoard-item span:nth-child(4){
+    font-size: 12px;
+    margin-bottom: 25px;
+}
+
+.tipBoard-item span:last-child{
+    line-height: 25px;
+}
 .tipBoard-img{
-    width:200px;
+    width:330px;
+    height: 240px;
+}
+
+/*좋아요한 게시글*/
+.select-area{
+    margin-left: auto;
+}
+.select-box{
+    width: 150px;
+    height: 35px;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin:10px 0;
+}
+
+.select-box>option {
+    background-color: black;
+    color:white;
+    width: 146px;
+    font-size: 16px;
+}
+
+
+/*회원 정보*/
+input{
+    border : 1px solid black;
+}
+
+.member-info th,
+.add-info th{
+    width : 100px;
+    border-collapse: collapse;
+}
+.member-info tr,
+.add-info tr{
+    border-bottom: 1px solid #dddd;
+}
+.member-info tr:first-child,
+.member-info tr:nth-child(3),
+.member-info tr:nth-child(4),
+.member-info tr:nth-child(5){
+    height: 300px;
+}
+.member-info tr:nth-child(2),
+.add-info tr{
+    height: 100px;
+}
+.member-info tr:nth-child(6){
     height: 150px;
+}
+
+.profile-img{
+    width : 140px;
+    height: 140px;
+
+}
+.profile-img-area td:nth-child(2){
+    display: flex;
+    width: 300px;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+}
+.profile-img-area td:nth-child(3){
+    width: 650px;
+    text-align: start;
+}
+
+.myPageDelUpdateBtn{
+    margin:0 4px;
+}
+
+.id-area{
+    text-align: start;
+}
+.id-box {
+    width: 30px;
+    margin-left: 80px;
+    font-weight: 600;
+}
+
+.password-area {
+    display: flex;
+    flex-direction: row;
+
+    margin: 15px 0;
+}
+
+.password-area span {
+    margin:0 10px 0 80px;
+    width : 300px;
+    text-align: start;
+}
+.password-area input{
+    width : 400px;
+    height: 30px;
+    border-radius: 8px;
+}
+
+.password-commit{
+    display: flex;
+    width: 450px;
+    margin-left: 80px;
+}
+.myPageConfirmCancelBtn{
+    margin: 10px 10px 0 0;
+}
+
+
+.mail-alarm,
+.nickname-area>ul{
+    width: 400px;
+    line-height: 20px;
+    margin-left: 100px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: start;
+}
+
+.email-input{
+    width : 400px;
+    height: 30px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+input::placeholder{
+    padding-left : 13px;
+    color: #9c9c9cdd;
+}
+.email-input-area{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.email-input-area>div:first-child{
+    margin-left: 80px;
+    display: flex;
+    flex-direction: column;
+}
+.email-btn-area{
+    display: flex;
+    margin-left: 80px;
+}
+
+
+
+
+
+.nickname-area{
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.nickname{
+    margin-left: 80px;
+    font-weight: 600;
+}
+.nickname-area>input{
+    width : 400px;
+    height: 30px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    margin-left: 80px;
+}
+.nickname-area>div{
+    margin-left: 80px;
+}
+
+
+.phoneNum-area{
+    text-align: start;
+}
+.phonNum-input-area{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 80px;
+}
+.phonNum-input-area>input{
+    width : 400px;
+    height: 30px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+
+}
+
+.phoneNum-area div:nth-child(2){
+    margin-left: 80px;
+}
+
+
+.add-item>th{
+    text-align: start;
+}
+.add-item >td{
+    width: 700px;
+    text-align: start; 
+    margin-left: 500px;
+}
+
+/*회원정보 변경 전 설정*/
+.good{
+    margin-left: auto;
+}
+
+
+.before-modify > div:first-child {
+    display: flex;
+    justify-content: start;
+}
+.before-modify > div:last-child {
+    position:relative;
+    top:-20px;
+    display: flex;
+    justify-content: end;
 }
