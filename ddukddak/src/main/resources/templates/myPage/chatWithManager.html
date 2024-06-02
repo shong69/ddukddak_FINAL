@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1:1문의</title>
+    <link rel="stylesheet" href="/css/myPage/managerChat.css">
+</head>
+<body>
+    <main>
+        <div>
+            <h2>1:1문의</h2>
+            <button onclick="closeChat()">채팅방 나가기</button>
+        </div>
+        <div>  
+            <div class="info-area">
+                <img class="manager-img"src="/images/profile/main.jpg">
+                <p>
+                    뚝딱뚝딱 챗봇입니다~ 
+                    원하는 질문을 작성해주세요.
+                </p>
+            </div>
+        </div>
+        <div class="chatting-content"><!--채팅 영역-->
+            <ul class="display-chatting">
+                <li class="target-chat">
+                    <img src="/images/profile/main.jpg">
+                    <div>
+                        <b>상대방 이름</b><br>
+                        <p class="chat">안녕하세요! 뚝딱뚝딱 cs봇입니다!<br>원하는 내용을 질문해주세요!</p>
+                        <span class="chatDate">10:05 AM</span>
+                    </div>
+                </li>
+                <li class="my-chat">
+                    <span class="chatDate">10:00 AM</span>
+                    <p class="chat">안녕하세요!</p>
+                </li>
+                <li class="target-chat">
+                    <img src="/images/profile/main.jpg">
+                    <div>
+                        <b>상대방 이름</b><br>
+                        <p class="chat">오늘 날씨가 정말 좋네요.</p>
+                        <span class="chatDate">10:05 AM</span>
+                    </div>
+                </li>
+                <li class="my-chat">
+                    <span class="chatDate">10:10 AM</span>
+                    <p class="chat">어디 가기 좋은 곳 있을까요?</p>
+                </li>
+                <li class="my-chat">
+                    <span class="chatDate">10:10 AM</span>
+                    <p class="chat">경복궁 어때요?</p>
+                </li>
+                <li class="target-chat">
+                    <img src="/images/profile/main.jpg">
+                    <div>
+                        <b>상대방 이름</b><br>
+                        <p class="chat">좋아요</p>
+                        <span class="chatDate">10:05 AM</span>
+                    </div>
+                </li>
+                <li class="target-chat">
+                    <img src="/images/profile/main.jpg">
+                    <div>
+                        <b>상대방 이름</b><br>
+                        <p class="chat">김밥 싸갈게요.</p>
+                        <span class="chatDate">10:05 AM</span>
+                    </div>
+                </li>
+                <li class="my-chat">
+                    <span class="chatDate">10:10 AM</span>
+                    <p class="chat">저는 과일 싸갈게요</p>
+                </li>
+            </ul>
+        </div>
+        <div class="input-area">
+            <textarea id="inputChatting" col="3"></textarea>
+            <button id="send">보내기</button>
+        </div>
+    </main>
+    <script src="/js/myPage/managerChat.js"></script>
+</body>
+</html>

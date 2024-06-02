@@ -1,0 +1,102 @@
+html{
+    overflow-x: hidden;
+    position:relative;
+    height: 100vh;
+    border:0;
+}
+h2,ul{
+    margin:5px 0;
+    padding:0;
+}
+
+.manager-img{
+    width: 50px;
+    height: 50px;
+}
+.info-area{
+    display: flex;
+    flex-direction: row;
+}
+
+.chatting-content{
+    height: 70%;
+}
+
+.display-none {
+	display: none;
+}
+
+.prev-message{
+	width: 70%;
+}
+
+.display-chatting {
+    /*height:570px;*/
+    width:100%;
+	max-height: calc(100vh - 150px);
+    overflow: auto;
+	list-style: none;
+}
+
+.display-chatting > li{
+	margin: 10px 0;
+}
+.display-chatting li:last-child {
+    margin-bottom: 0; /* 마지막 li 요소의 아래 여백을 없애기 */
+}
+.target-chat{
+	display: flex;
+	align-items: flex-start;
+}
+.target-chat > img{
+	width: 50px;
+	margin-right: 5px;
+}
+
+.chat {
+	display: inline-block;
+	border-radius: 5px;
+	padding: 5px;
+	background-color: #eee;
+	text-align: left;
+	max-width: 500px;
+	word-break: break-all;
+	white-space: pre-wrap;
+}
+
+
+.input-area {
+    position:fixed;
+    bottom:0;
+    right:10px;
+	height: 80px;
+	width:90%;
+    display: flex;
+}
+textarea{
+    border: 2px solid #ddd;
+    outline-color: #00663a;
+}
+#inputChatting {
+	padding: 3px;
+	font-size: 1.3em;
+	width: 80%;
+	resize: none;
+}
+
+#send {
+	width: 20%;
+}
+
+.my-chat {
+	text-align: right;
+}
+
+.my-chat>p {
+	background-color: #00663a;
+    color: #fffcde;
+}
+
+.chatDate {
+	font-size: 9px;
+}

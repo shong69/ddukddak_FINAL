@@ -42,4 +42,9 @@ public class MyPageController {
 	public String memberInfo() {
 		return"myPage/memberInfo";
 	}
+	@GetMapping("chatWithManager")
+	public String chatWithManager() {
+		return "myPage/chatWithManager";
+	}
+	
 }
