@@ -37,11 +37,11 @@ main {
     flex-direction: row;
     padding: 30px 0;
 }
-.profile-image{
+.profile-img{
     width: 100px;
     height: 100px;
     margin-right: 20px;
-    margin-top: 25px;
+    margin-top: 20px;
 }
 
 .profile-content tr>td:first-child{
