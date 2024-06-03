@@ -1,39 +1,29 @@
-// // 이메일 인증 radio
-// const emailChoice = document.getElementById('emailChoice');
-// const emailHiddenDiv = document.getElementById('emailHiddenDiv');
+// 필요하면 Member 쪽  findId.js 참고
 
-// // 전화 번호 인증 radio
-// const telChoice = document.getElementById('telChoice');
-// const telHiddenDiv = document.getElementById('telHiddenDiv');
+// 전화번호 입력 input
+const inputTel = document.getElementById('inputTel');
 
+const telMsg = document.getElementById('telMsg');
 
-// // 초기 상태 설정
-// function setInitialState() {
-//     if (emailChoice.checked) {
-//         telHiddenDiv.classList.add('hidden');
-//         emailHiddenDiv.classList.remove('hidden');
-//     } else if (telChoice.checked) {
-//         emailHiddenDiv.classList.add('hidden');
-//         telHiddenDiv.classList.remove('hidden');
-//     }
-// }
+// SMS 인증요청 버튼
+const telAuthBtn = document.getElementById('telAuthBtn');
 
-// // 라디오 버튼 상태 변경 시 처리
-// emailChoice.addEventListener('change', function() {
-//     if (emailChoice.checked) {
-//         telHiddenDiv.classList.add('hidden');
-//         emailHiddenDiv.classList.remove('hidden');
-//     }
-// });
+// SMS 인증키 입력(선 히든)
+const telAuthHidden = document.getElementById('telAuthHidden');
 
-// telChoice.addEventListener('change', function() {
-//     if (telChoice.checked) {
-//         emailHiddenDiv.classList.add('hidden');
-//         telHiddenDiv.classList.remove('hidden');
-//     }
-// });
+// ********* SMS 인증 요청 클릭 시 *********
+if(telAuthHidden.classList.contains('hidden')) {
+    telAuthBtn.addEventListener('click', () => {
+        telAuthHidden.classList.remove('hidden');
+    })
+    
+}   
 
 
-// 페이지 로드 시 초기 상태 설정
-//setInitialState();
+inputTel.addEventListener('focus', () => {
+    if(inputTel.value.trim().length === 0) {
+        telMsg.innerText = '전화번호를 입력해 주세요.'
+    }
+
+})
 

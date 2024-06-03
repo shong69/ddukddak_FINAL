@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/common/style.css">
     <link rel="stylesheet" href="/css/common/fragments/header.css">
     <link rel="stylesheet" href="/css/common/fragments/footer.css">
-    <link rel="stylesheet" href="/css/member/findPw.css">
+    <link rel="stylesheet" href="/css/common/findPw.css">
 
     <!-- 폰트어썸 -->
     <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
@@ -31,45 +31,33 @@
             <!-- 컨텐츠 -->
             <form id="findPwForm" action="#">
                 <div class="content">
-                    
-                    <!-- 타입 선택 -->
-                    <div class="typeDiv">
-                        <div class="memberBtnArea" onclick="location.href='/member/findId'"><a>회원</a></div>
-                        <div class="partnerBtnArea" onclick="location.href='/partner/findId'"><a>파트너</a></div>
-                    </div>
-
-                    <!-- 이메일 -->
-                    <div class="emailDiv">
-                        <div class="radioDiv">
-                            <input id="emailChoice" type="radio" name="authType" value="email" checked>
-                            <label for="emailChoice">이메일</label>
+                    <!-- ID 입력 영역 -->
+                    <div class="inputIdDiv">
+                        <div class="inputInfoDiv">
+                            <h4>비밀번호를 찾으시려는 아이디를 입력하세요.</h4>
                         </div>
                         <div id="emailHiddenDiv">
                             <div>
-                                <input placeholder="닉네임">
-                            </div>
-                            <div class="authArea">
-                                <input id="emailAuthKey" type="email" placeholder="이메일">
-                                <button type="button" id="emailAuthBtn" >인증 요청</button>
+                                <input placeholder="아이디">
                             </div>
                         </div>
                     </div>
 
                     <!-- 휴대폰 -->
                     <div class="telDiv">
-                        <div class="radioDiv2">
-                            <input id="telChoice" type="radio" name="authType" value="tel">
-                            <label for="telChoice">휴대폰</label>
-                        </div>
-                        <div id="telHiddenDiv" class="authArea">
-                            <input type="tel" placeholder="전화번호(-없이)">
+                        <div id="telHiddenDiv" class="authArea hidden">
+                            <input type="tel" placeholder="전화번호(-없이)" name="memberTel">
                             <button type="button" id="telAuthBtn" >인증 요청</button>
                         </div>
                     </div>
 
                     <!-- 버튼 -->
-                    <div class="btnDiv">
-                        <button class="choiceBtn">비밀번호 찾기</button>
+                    <div class="btnDiv1">
+                        <button type="button" id="nextBtn" class="nextBtn">다음</button>
+                    </div>
+
+                    <div id="findPwBtnDiv" class="btnDiv2 hidden">
+                        <button id="findPwBtn" class="findPwBtn">비밀번호 찾기</button>
                     </div>
 
                     <div class="findPwMoveDiv">
@@ -81,7 +69,7 @@
     </main>
 
     <th:block th:replace="~{common/fragments/footer}"></th:block>
-    <script src="/js/member/findId.js"></script>
+    <script src="/js/common/findPw.js"></script>
 
 
 
