@@ -14,7 +14,7 @@
 
 
     <div id="receiptContainer">
-        <h1>상품관리 > 판매등록</h1>
+        <h1>상품관리 > 접수관리</h1>
 
         <!-- 검색엔진 -->
         <th:block th:replace="~{partner/seller/common/search}"></th:block>
@@ -24,21 +24,21 @@
 
         <!-- 접수 상태-->
         <div id="receiptStatus">
-            <h3>판매 상태</h3>
+            <h3>접수 상태</h3>
 
             <input type="checkbox" value="all" name="receipt"><label>전체</label>
             <input type="checkbox" value="receiptWait" name="receipt"><label>결제 대기</label>
             <input type="checkbox" value="payComplete" name="receipt"><label>결제 완료</label>
-            <input type="checkbox" value="receiptComplete" name="receipt"><label>접수 완료</label>
         </div>
 
         <!-- 상품접수버튼 -->
         <div id="sellerButton">
-            <button>접수</button>
+            <button id="orderReceipt" style="margin-right: 10px;">주문 접수</button>
+            <button id="orderRejection">주문 거절</button>
         </div>
 
         <div id="selectAll">
-            <input type="checkbox" value="selectAll" name="select"><label>전체 선택</label>
+            <input type="checkbox" value="selectAll" name="select" id="selectAllCheckBox"><label>전체 선택</label>
         </div>
 
         <!-- 상품목록 -->
@@ -51,6 +51,7 @@
                     <td>옵션</td>
                     <td>수량</td>
                     <td>상품번호</td>
+                    <td>접수상태</td>
                     <td>상품명</td>
                     <td>판매가</td>
                 </thead>
@@ -65,6 +66,7 @@
                     <td>오크내추럴</td>
                     <td>300</td>
                     <td>F202405210001</td>
+                    <td>결제대기</td>
                     <td>오아르 벤 원목 부클레 패브릭 의자</td>
                     <td>122,200</td>
                 </tr>
@@ -77,6 +79,7 @@
                     <td>오크내추럴</td>
                     <td>300</td>
                     <td>F202405210001</td>
+                    <td>결제대기</td>
                     <td>오아르 벤 원목 부클레 패브릭 의자</td>
                     <td>122,200</td>
                 </tr>
@@ -89,6 +92,7 @@
                     <td>오크내추럴</td>
                     <td>300</td>
                     <td>F202405210001</td>
+                    <td>결제완료</td>
                     <td>오아르 벤 원목 부클레 패브릭 의자</td>
                     <td>122,200</td>
                 </tr>
@@ -101,6 +105,7 @@
                     <td>오크내추럴</td>
                     <td>300</td>
                     <td>F202405210001</td>
+                    <td>결제대기</td>
                     <td>오아르 벤 원목 부클레 패브릭 의자</td>
                     <td>122,200</td>
                 </tr>
@@ -113,6 +118,72 @@
                     <td>오크내추럴</td>
                     <td>300</td>
                     <td>F202405210001</td>
+                    <td>결제완료</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>결제완료</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>결제대기</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>결제대기</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>결제대기</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>결제완료</td>
                     <td>오아르 벤 원목 부클레 패브릭 의자</td>
                     <td>122,200</td>
                 </tr>
@@ -124,6 +195,39 @@
 
 
     </div>
+
+
+    <!-- 모달창 -->
+    <div class="modal">
+        <div id="closeButton">X</div>
+
+        <div>
+            <h2>판매 상태 변경</h2>
+        </div>
+
+        <div>
+            <table>
+                <tr>
+                    <th>상품번호</th>
+                    <th>상품명</th>
+                    <th>상품 옵션</th>
+                    <th>판매 상태</th>
+                    <th>판매 등록일</th>
+                </tr>
+            </table>
+
+            <div id="productListBox"></div>
+
+            <div>
+                <button id="orderOK">확인</button>
+                <button id="orderNO">취소</button>
+            </div>
+        </div>
+            
+    </div>
+
+
+    <script src="/js/partner/seller/product/receipt.js"></script>
     
 </body>
 </html>

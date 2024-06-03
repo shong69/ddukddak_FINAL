@@ -1,12 +1,12 @@
 const modal = document.querySelector(".modal");
-const changeStatus = document.querySelector("#changeStatus");
+const sellerButton = document.querySelector("#sellerButton");
 const productListBox = document.querySelector("#productListBox");
 
-changeStatus.addEventListener("click", () => {
+sellerButton.addEventListener("click", () => {
     productListBox.innerHTML = "";
     modal.style.display = "flex";
 
-    const query = 'input[name="selectProduct"]:checked'
+    const query = 'input[name="product"]:checked'
     const selectedEls = document.querySelectorAll(query);
 
     console.log(selectedEls);
@@ -48,34 +48,23 @@ changeStatus.addEventListener("click", () => {
     })
 
 
-    const saleing = document.querySelector("#saleing");
-    const salestop = document.querySelector("#salestop");
-    const nosale = document.querySelector("#nosale");
+    const shipmentButton = document.querySelector("#shipmentButton");
+    const shipmentRejection = document.querySelector("#shipmentRejection");
 
 
-    saleing.addEventListener("click", () => {
-        alert("변경되었습니다");
+    shipmentButton.addEventListener("click", () => {
+        alert("출고되었습니다.");
+        modal.style.display = 'none';
         selectedEls.forEach(elements => {
             elements.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerText = '판매중';
-            modal.style.display = 'none';
         })
     })
 
-    salestop.addEventListener("click", () => {
-        alert("변경되었습니다");
-        selectedEls.forEach(elements => {
-            elements.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerText = '판매중지';
-            modal.style.display = 'none';
-        })
+    shipmentRejection.addEventListener("click", () => {
+        alert("출고가 거절되었습니다.");
+        modal.style.display = 'none';
     })
 
-    nosale.addEventListener("click", () => {
-        alert("변경되었습니다");
-        selectedEls.forEach(elements => {
-            elements.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerText = '진열안함';
-            modal.style.display = 'none';
-        })
-    })
 });
 
 
@@ -89,7 +78,7 @@ closeButton.addEventListener("click", () => {
 
 /* 전체선택버튼 */
 const selectAll = document.querySelector('#selectAllCheckBox');
-const checkboxes = document.getElementsByName('selectProduct');
+const checkboxes = document.getElementsByName('product');
 
 selectAll.addEventListener('change', () => {
     if(selectAll.checked == true) {
