@@ -72,7 +72,9 @@ if (slideshow != null) {
         let i;
         let slides = document.getElementsByClassName("mySlides");
         if (n > slides.length) { slideIndex = 1; }
+        // 슬라이드 번호가 이미지 개수를 넘어가면 1번째 슬라이드로
         if (n < 1) { slideIndex = slides.length; }
+        // 슬라이드 번호가 1보다 작으면 마지막 슬라이드로
         for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
             slides[i].style.opacity = 0.4;
