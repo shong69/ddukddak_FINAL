@@ -1,0 +1,270 @@
+#applyProductContainer {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+}
+
+#applyProductContainer > h1 {
+    padding: 50px;
+}
+
+#formContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+#formContainer > div {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#formContainer > div:first-child select:first-child {
+    width: 200px;
+    height: 30px;
+    border: 1px solid var(--gray5);
+    border-radius: 5px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+#formContainer > div:first-child select:last-child {
+    width: 300px;
+    height: 30px;
+    border: 1px solid var(--gray5);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#formContainer > div > input {
+    width: 530px;
+    height: 40px;
+    border: 1px solid var(--gray5);
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+
+#formContainer > div:nth-child(5) > div {
+    display: flex;
+    margin-top: 10px;
+}
+
+#formContainer > div:nth-child(5) > div > label {
+    margin-left: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#formContainer > div:nth-child(7) > input {
+    border: none;
+}
+
+/* 옵션칸 */
+#option {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    height: 250px;
+    overflow-y: auto;
+    overflow-x: visible;
+}
+
+#plusBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#addoption {
+    display: none;
+    flex-direction: column;
+}
+
+#productPlusButton {
+    background-color: var(--gray1);
+    color: white;
+    border-radius: 5px;
+    height: 20px;
+    width: 30px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+
+#productPlusButton:hover {
+    background-color: var(--white);
+    color: var(--gray1);
+    transform: translateY(-3px);
+    box-shadow: 3px 3px 5px var(--gray5);
+}
+
+.optionMainBox {
+    width: 800px;
+    margin: 10px 0;
+}
+
+.optionName {
+    height: 30px;
+    width: 800px;
+    border:  1px solid var(--gray5);
+    padding: 0 10px;
+}
+
+.optionContentBox {
+    width: 800px;
+    box-shadow: 5px 5px 7px var(--gray5);
+}
+
+.contentInput {
+    height: 30px;
+    width: 350px;
+    border:  1px solid var(--gray5);
+    padding: 0 10px;
+}
+
+.contentCountInput {
+    height: 30px;
+    width: 400px;
+    border:  1px solid var(--gray5);
+    padding: 0 10px;
+}
+
+.applyButton {
+    width: 40px;
+    height: 20px;
+    background-color: var(--secondary);
+    color: var(--white);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+    border: none;
+    margin-top: 5px;
+    margin-left: 750px;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+}
+
+.applyButton:hover {
+    background-color: var(--white);
+    color: var(--gray1);
+    box-shadow: 3px 3px 5px var(--gray5);
+    transform: translateY(-3px);
+}
+
+.addOption {
+    width: 20px;
+    height: 20px;
+    background-color: var(--secondary);
+    color: var(--white);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+    border: none;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.addOption:hover {
+    box-shadow: 3px 3px 5px var(--gray5);
+    transform: translateY(-3px);
+}
+
+.minusOption {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: var(--white);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+    border: none;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.minusOption:hover {
+    box-shadow: 3px 3px 5px var(--gray5);
+    transform: translateY(-3px);
+}
+
+
+/* 이미지 업로드 */
+#applyProductContainer li {
+    list-style: none;
+  }
+
+  #applyProductContainer img {
+    width: 100px;
+    height: 100px;
+  }
+
+  #applyProductContainer .real-upload {
+    display: none;
+  }
+
+  #applyProductContainer .upload {
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+  }
+
+  #applyProductContainer .image-preview {
+    width: 1000px;
+    height: 130px;
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid var(--gray5);
+  }
+
+
+  #buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px;
+  }
+
+  #buttons > button {
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+  }
+
+  #buttons > button:first-child {
+    color: var(--white);
+    background-color: var(--secondary);
+    transition-duration: 0.2s;
+    margin-right: 30px;
+    cursor: pointer;
+  }
+
+  #buttons > button:first-child:hover {
+    box-shadow: 5px 5px 7px var(--gray5);
+    transform: translateY(-10px);
+    background-color: var(--white);
+    color: black;
+  }
+
+  #buttons > button:last-child {
+    color: black;
+    background-color: var(--white);
+    transition-duration: 0.2s;
+    cursor: pointer;
+  }
+
+  #buttons > button:last-child:hover {
+    box-shadow: 5px 5px 7px var(--gray5);
+    transform: translateY(-10px);
+    background-color: var(--secondary);
+    color: var(--white);
+  }

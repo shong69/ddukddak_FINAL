@@ -18,6 +18,11 @@ public class SellerController {
 		return "partner/seller/product/apply";
 	}
 	
+	@GetMapping("product/applyProduct")
+	public String ProductApplyProduct() {
+		return "partner/seller/product/applyProduct";
+	}
+	
 	@GetMapping("product/receipt")
 	public String ProductReceipt() {
 		return "partner/seller/product/receipt";
