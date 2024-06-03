@@ -35,6 +35,9 @@
     flex-grow: 1;
     margin: 50px;
     width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* 검색 area */
@@ -42,6 +45,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .title {
@@ -88,6 +92,7 @@
 /* 정렬방식 area */
 .sortingArea {
     text-align: end;
+    width: 100%;
     margin: 50px 0;
 }
 
@@ -98,14 +103,22 @@
 }
 
 /* 집들이 리스트 */
+.listArea {
+    border-radius: 10px;
+    width: 1000px;
+    padding: 50px;
+    background-color: white;
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.25); 
+}
+
 .myHouseList {
     display: flex;
-    
     border-radius: 10px; 
     margin: 30px 0;
     height: 150px;
     cursor: pointer;
-    background-color: white;
+    background-color: #ded9d1;
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.25); 
 }
 
 .myHouseList:hover {
@@ -120,9 +133,9 @@
 }
 
 .myHouseThumbnail img {
-    margin: 5px;
-    width: 250px;
-    height: 140px;
+    margin: 10px;
+    width: 230px;
+    height: 130px;
     border-radius: 10px;
 }
 
@@ -134,15 +147,20 @@
     width: -webkit-fill-available;
 }
 
+.myHouseInfo h2 {
+    color: var(--gray1);
+}
 
 .myHouseInfo > div:nth-child(2) {
     text-align: end;
+    color: var(--gray1);
 }
 
 /* 작성하기 버튼 */
 .btnArea {
     text-align: end;
     margin: 50px 0;
+    width: 100%;
 }
 
 /*페이징*/

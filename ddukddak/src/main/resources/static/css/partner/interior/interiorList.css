@@ -56,6 +56,10 @@ section {
     border-radius: 30px;
 }
 
+.selectDate {
+    padding: 5px;
+}
+
 .searchInteriorTable {
     display: flex;
     flex-direction: column;
