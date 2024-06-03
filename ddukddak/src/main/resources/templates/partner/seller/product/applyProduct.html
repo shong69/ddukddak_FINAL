@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>판매상품 등록</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/partner/seller/product/applyProduct.css">
+</head>
+<body>
+    <th:block th:replace="~{partner/seller/common/header}"></th:block>
+
+    <div id="applyProductContainer">
+        <h1>상품관리 > 판매등록</h1>
+
+        <form>
+            <div id="formContainer">
+
+                <div>
+                    <h4>카테고리 선택</h4>
+
+                    <div>
+                        <select id="bigCategory">
+                            <option value="none">대분류</option>
+                            <option value="furniture">가구</option>
+                            <option value="electronic">가전/디지털</option>
+                            <option value="kitchenware">주방용품</option>
+                            <option value="deco">데코/식물</option>
+                            <option value="storage">수납/정리</option>
+                            <option value="household">생활용품</option>
+                            <option value="baby">유아/아동</option>
+                        </select>
+
+                        <select id="smallCategory">
+                            <option value="none">소분류</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>상품명</h4>
+
+                    <input>
+                </div>
+
+                <div>
+                    <h4>판매가</h4>
+
+                    <input>
+                </div>
+
+                <div>
+                    <h4>재고수량</h4>
+
+                    <input>
+                </div>
+
+                <div>
+                    <h4>옵션</h4>
+
+                    <div>
+                        <input type="radio" name="productOption" value="1" id="radio1"><label for="radio1">설정함</label>
+                        <input type="radio" name="productOption" value="2" id="radio2"><label for="radio2">설정안함</label>
+                    </div>
+
+                    <div id="addoption">
+                        <h4>옵션명</h4>
+                        <div id="option">
+                            <div id="optionBox"></div>
+                            <div id="plusBox">
+                                <button type="button" id="productPlusButton">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>상품 이미지 등록</h4>
+
+                    <input type="file" class="real-upload" accept="image/*" required multiple>
+                    <div class="upload">+</div>
+                    <ul class="image-preview"></ul>
+                </div>
+
+                <div>
+                    <h4>상품 상세설명</h4>
+
+                    <input type="file">
+                </div>
+
+
+                <div>
+                    <div id="buttons">
+                        <button>등록하기</button>
+                        <button type="button">미리보기</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+
+    <script src="/js/partner/seller/product/applyProduct.js"></script>
+    
+</body>
+</html>

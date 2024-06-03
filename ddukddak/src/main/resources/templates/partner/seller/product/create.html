@@ -24,7 +24,7 @@
 
         <!-- 상품등록버튼 -->
         <div id="sellerButton">
-            <button>재고 등록</button>
+            <button id="productCreateButton" type="button">재고 등록</button>
         </div>
 
         <!-- 상품목록 -->
@@ -101,12 +101,9 @@
     </div>
 
 
-
-
-
     <!-- 모달창 -->
     <div class="modal">
-        <div>X</div>
+        <div id="closeButton">X</div>
 
         <div>
             <h2>재고 등록</h2>
@@ -131,41 +128,31 @@
                     <table>
                         <tr>
                             <td><h4>상품명</h4></td>
-                            <td><input></td>
+                            <td><input id="productName"></td>
                         </tr>
                         <tr>
                             <td><h4>상품 분류</h4></td>
                             <td>
-                                <select>
-                                    <option>대분류</option>
-                                    <option>가구</option>
-                                    <option>가전/디지털</option>
-                                    <option>주방용품</option>
-                                    <option>데코/식물</option>
-                                    <option>수납/정리</option>
-                                    <option>생활용품</option>
-                                    <option>유아/아동</option>
+                                <select id="bigCategory">
+                                    <option value="none">대분류</option>
+                                    <option value="furniture">가구</option>
+                                    <option value="electronic">가전/디지털</option>
+                                    <option value="kitchenware">주방용품</option>
+                                    <option value="deco">데코/식물</option>
+                                    <option value="storage">수납/정리</option>
+                                    <option value="household">생활용품</option>
+                                    <option value="baby">유아/아동</option>
                                 </select>
     
-                                <select>
-                                    <option>소분류</option>
-                                    <option>침대</option>
-                                    <option>매트리스/토퍼</option>
-                                    <option>테이블/식탁/책상</option>
-                                    <option>소파</option>
-                                    <option>서랍/수납장</option>
-                                    <option>거실장/TV장</option>
-                                    <option>선반</option>
-                                    <option>진열장/책장</option>
-                                    <option>의자</option>
-                                    <option>행거/옷장</option>
+                                <select id="smallCategory">
+                                    <option value="none">소분류</option>
                                 </select>
                             </td>
                         </tr>
     
                         <tr>
                             <td><h4>판매가</h4></td>
-                            <td><input></td>
+                            <td><input id="price"></td>
                         </tr>
                     </table>
     

@@ -34,13 +34,12 @@
 
         <!-- 상품등록버튼 -->
         <div id="sellerButton">
-            <button>판매 등록</button>
-            <button>판매 중지</button>
-            <button>진열 안함</button>
+            <button onclick="location.href='/partner/seller/product/applyProduct';">판매 등록</button>
+            <button id="changeStatus">판매 상태 변경</button>
         </div>
 
         <div id="selectAll">
-            <input type="checkbox" value="selectAll" name="select"><label>전체 선택</label>
+            <input type="checkbox" value="selectAll" name="select" id="selectAllCheckBox"><label>전체 선택</label>
         </div>
 
         <!-- 상품목록 -->
@@ -53,6 +52,7 @@
                     <td>옵션</td>
                     <td>수량</td>
                     <td>상품번호</td>
+                    <td>판매상태</td>
                     <td>상품명</td>
                     <td>판매가</td>
                 </thead>
@@ -67,54 +67,124 @@
                     <td>오크내추럴</td>
                     <td>300</td>
                     <td>F202405210001</td>
+                    <td>판매중</td>
                     <td>오아르 벤 원목 부클레 패브릭 의자</td>
                     <td>122,200</td>
                 </tr>
                 <tr class="borderTr">
                     <td>
-                        <input type="checkbox" value="1" name="selectProduct">
+                        <input type="checkbox" value="2" name="selectProduct">
                     </td>
                     <td><img src="/images/partner/seller/chair.jpg"></td>
                     <td>가구/의자</td>
                     <td>오크내추럴</td>
                     <td>300</td>
                     <td>F202405210001</td>
+                    <td>판매중</td>
                     <td>오아르 벤 원목 부클레 패브릭 의자</td>
                     <td>122,200</td>
                 </tr>
                 <tr class="borderTr">
                     <td>
-                        <input type="checkbox" value="1" name="selectProduct">
+                        <input type="checkbox" value="3" name="selectProduct">
                     </td>
                     <td><img src="/images/partner/seller/chair.jpg"></td>
                     <td>가구/의자</td>
                     <td>오크내추럴</td>
                     <td>300</td>
                     <td>F202405210001</td>
+                    <td>판매중지</td>
                     <td>오아르 벤 원목 부클레 패브릭 의자</td>
                     <td>122,200</td>
                 </tr>
                 <tr class="borderTr">
                     <td>
-                        <input type="checkbox" value="1" name="selectProduct">
+                        <input type="checkbox" value="4" name="selectProduct">
                     </td>
                     <td><img src="/images/partner/seller/chair.jpg"></td>
                     <td>가구/의자</td>
                     <td>오크내추럴</td>
                     <td>300</td>
                     <td>F202405210001</td>
+                    <td>판매중</td>
                     <td>오아르 벤 원목 부클레 패브릭 의자</td>
                     <td>122,200</td>
                 </tr>
                 <tr class="borderTr">
                     <td>
-                        <input type="checkbox" value="1" name="selectProduct">
+                        <input type="checkbox" value="5" name="selectProduct">
                     </td>
                     <td><img src="/images/partner/seller/chair.jpg"></td>
                     <td>가구/의자</td>
                     <td>오크내추럴</td>
                     <td>300</td>
                     <td>F202405210001</td>
+                    <td>진열안함</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="6" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>판매중</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="7" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>진열안함</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="8" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>판매중지</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="9" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>판매중지</td>
+                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td>122,200</td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="10" name="selectProduct">
+                    </td>
+                    <td><img src="/images/partner/seller/chair.jpg"></td>
+                    <td>가구/의자</td>
+                    <td>오크내추럴</td>
+                    <td>300</td>
+                    <td>F202405210001</td>
+                    <td>판매중</td>
                     <td>오아르 벤 원목 부클레 패브릭 의자</td>
                     <td>122,200</td>
                 </tr>
@@ -126,6 +196,41 @@
 
 
     </div>
+
+
+
+    <!-- 모달창 -->
+    <div class="modal">
+        <div id="closeButton">X</div>
+
+        <div>
+            <h2>판매 상태 변경</h2>
+        </div>
+
+        <div>
+            <table>
+                <tr>
+                    <th>상품번호</th>
+                    <th>상품명</th>
+                    <th>상품 옵션</th>
+                    <th>판매 상태</th>
+                    <th>판매 등록일</th>
+                </tr>
+            </table>
+
+            <div id="productListBox"></div>
+
+            <div>
+                <button id="saleing">판매중</button>
+                <button id="salestop">판매 중지</button>
+                <button id="nosale">진열안함</button>
+            </div>
+        </div>
+            
+    </div>
+
+
+    <script src="/js/partner/seller/product/apply.js"></script>
     
 </body>
 </html>
