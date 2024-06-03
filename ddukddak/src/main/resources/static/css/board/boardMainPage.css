@@ -8,6 +8,7 @@
     margin: 0;
     background-color: #FFFDF8;
     width: 100%;
+    transform: translateX(-5%);
 }
 
 
@@ -180,7 +181,7 @@
     align-items: center;
     width: 95%;
     justify-content: space-between;
-    padding: 20px;
+    padding: 30px;
     margin-top: 10px;
 }
 
@@ -272,21 +273,23 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    padding-bottom: 30px;
 }
 
 .tipBoardContainer {
     width: 400px;
-    height: 520px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #fff; /* Ensure background is white */
-    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3); /* Soft shadow */
+    background-color: #ded9d1;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
     border-radius: 10px; /* Optional: rounded corners */
     padding: 20px; /* Add some padding */
     box-sizing: border-box; 
     margin: 20px;
     cursor: pointer;
+
 }
 
 .tipBoardImg {
@@ -302,6 +305,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-bottom: 30px;
 }
 
 .tipBoardUserName {
@@ -346,7 +350,15 @@
     line-height: 1.5;
     overflow: hidden; /* Ensure long text is handled */
     text-overflow: ellipsis;
+    font-weight: 700;
 }
+
+
+.tipBoardUserName, .tipBoardTitle, .tipBoardContent {
+    color: var(--gray1);
+}
+
+
 /* 탑버튼 */
 #boardMainTop {
     position: fixed;

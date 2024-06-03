@@ -19,5 +19,8 @@ public class TipBoardController {
 		return "board/tipBoard/tipBoardDetail";
 	}
 	
-	
+	@GetMapping("registTipBoard")
+	public String registTipBoard() {
+		return "board/tipBoard/registTipBoard";
+	}
 }
