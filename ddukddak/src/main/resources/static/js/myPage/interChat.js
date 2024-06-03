@@ -328,6 +328,7 @@ function selectChattingFn() {
 
 				// 상대 이름
 				const b = document.createElement("b");
+				b.classList.add("target-name")
 				b.innerText = selectTargetName; // 전역변수
 
 				const br = document.createElement("br");

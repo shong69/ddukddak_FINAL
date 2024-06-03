@@ -277,7 +277,7 @@ input{
 .profile-img{
     width : 140px;
     height: 140px;
-
+    border-radius: 50%;
 }
 .profile-img-area td:nth-child(2),
 .change-profile-img-area td:nth-child(2){
@@ -420,19 +420,13 @@ input::placeholder{
     margin-bottom: 100px;
 }
 
-<<<<<<< HEAD
-.add-info{
-    margin-bottom: 150px;
-}
-=======
+
 .add-info td{
     display: flex;
     line-height: 100px;
     margin-left: 80px;
 }
 
-
->>>>>>> 00488a32459d7d1a052114a96825e1cfba8e50dc
 /*회원정보 변경 전 설정*/
 
 .before-modify {
