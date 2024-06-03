@@ -4,13 +4,15 @@
     justify-content: center;
     align-items: center;
     background-color: #FFFDF8;
+    transform: translateX(-5%);
 }
 
 
 .mainContainer {
     display: flex;
-    width: 1200px;
+    width: 900px;
     position: relative;
+    justify-content: center;
 }
 
 .mainArea {
@@ -67,9 +69,20 @@
     margin: 10px;
 }
 
+.mainImgText {
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--secondary);
+    color: white;
+    position: absolute;
+    z-index: 1;
+    border-radius: 5px;
+}
+
 #largeImage {
     width: 900px;
     height: 500px;
+    position: relative;
 }
 
 .thumbnailImg {
@@ -86,4 +99,21 @@
 
 .btnArea button {
     margin: 0 10px;
+}
+
+/* 탑버튼 */
+#top {
+    position: fixed;
+    top: 90%;
+    left: 95%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    background-color: white;
+    font-family: 'main';
+    cursor: pointer;
+    border: 2px black solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

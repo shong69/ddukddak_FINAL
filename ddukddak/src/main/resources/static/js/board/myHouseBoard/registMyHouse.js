@@ -1,14 +1,26 @@
+const largeImage = document.querySelector("#largeImage");
+const mainImgText = document.querySelector("#mainImgText");
+
+
 document.getElementById('imageUpload').addEventListener('change', function(event) {
     const files = event.target.files;
     // 기존의 preview-container가 있으면 삭제
     let existingPreviewContainer = document.querySelector('.preview-container');
+    const largeImage = document.querySelector("#largeImage");
+
+    largeImage.style.display='none';
+    mainImgText.style.display='none';
+    largeImage.src = '';
+    
+
     if (existingPreviewContainer) {
-        existingPreviewContainer.innerHTM='';
+        existingPreviewContainer.innerHTML='';
     } else {
         existingPreviewContainer = document.createElement('div');
         existingPreviewContainer.classList.add('preview-container');
         event.target.parentElement.appendChild(existingPreviewContainer);
     }
+
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
@@ -28,7 +40,10 @@ document.getElementById('imageUpload').addEventListener('change', function(event
 });
 
 function displayLargeImage(src) {
-    const largeImage = document.getElementById('largeImage');
+
+    mainImgText.classList.add('mainImgText');
+    mainImgText.style.display = 'block';
     largeImage.src = src;
     largeImage.style.display = 'block';
-}
+
+};

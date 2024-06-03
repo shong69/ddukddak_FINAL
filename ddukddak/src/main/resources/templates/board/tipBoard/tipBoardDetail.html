@@ -4,54 +4,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <link rel="stylesheet" href="/css/board/myHouseBoard/myHouseBoard.css">
+    <link rel="stylesheet" href="/css/board/myHouseBoard/myHouseBoardDetail.css">
+    <link rel="stylesheet" href="/css/common/main.css"> 
+    <link rel="stylesheet" href="/css/common/fragments/header.css">  
+    <link rel="stylesheet" href="/css/common/fragments/footer.css"> 
+    <link rel="stylesheet" href="/css/common/fragments/board/side-category.css"> 
+    <link rel="stylesheet" href="/css/common/button.css"> 
+
+    <script src="https://kit.fontawesome.com/fa0ef5fd68.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <main>
-        <div style="width: 1440px; height: 1700px; position: relative; background: #FFFDF8">
-            <div class="User01" style="left: 388px; top: 694px; position: absolute; color: black; font-size: 20px; font-family: Lexend; font-weight: 400; text-transform: uppercase; line-height: 20px; word-wrap: break-word">@User01</div>
-            <div style="left: 378px; top: 730px; position: absolute; color: black; font-size: 40px; font-family: Lexend; font-weight: 700; text-transform: uppercase; line-height: 40px; word-wrap: break-word">베란다 가구배치 꿀팁</div>
-            <div class="16" style="left: 993px; top: 705px; position: absolute; color: black; font-size: 20px; font-family: Lexend; font-weight: 400; text-transform: uppercase; line-height: 20px; word-wrap: break-word">좋아요 ♥ 16</div>
-            <div class="Rectangle226" style="width: 749px; height: 148px; left: 378px; top: 802px; position: absolute; background: white; border: 1px #8C8C8C solid"></div>
-            <div style="width: 19px; height: 19px; left: 1109px; top: 706px; position: absolute; color: black; font-size: 18px; font-family: Lexend; font-weight: 400; text-transform: uppercase; line-height: 18px; word-wrap: break-word">🚨</div>
-            <div style="width: 19px; height: 19px; left: 1134px; top: 1219px; position: absolute; color: black; font-size: 18px; font-family: Lexend; font-weight: 400; text-transform: uppercase; line-height: 18px; word-wrap: break-word">🚨</div>
-            <img class="D689afbaefb75fd3753e8ae88cdcd5be11004451" style="width: 749px; height: 368px; left: 378px; top: 213px; position: absolute" src="https://via.placeholder.com/749x368" />
-            <div style="left: 295px; top: 134px; position: absolute; color: #3A732A; font-size: 30px; font-family: Lexend; font-weight: 700; text-transform: uppercase; line-height: 30px; word-wrap: break-word">노하우</div>
-            <div class="Group33847" style="width: 725px; height: 48px; left: 445px; top: 125px; position: absolute">
-              <div class="Rectangle397" style="width: 725px; height: 48px; left: 0px; top: 0px; position: absolute; background: white; border-radius: 10px; border: 1px #9B9B9B solid"></div>
-              <div class="SearchNormal" style="width: 24px; height: 25.62px; left: 672px; top: 11px; position: absolute">
-                <div class="Vector" style="width: 19px; height: 20.28px; left: 2px; top: 2.13px; position: absolute; border: 1.50px #9B9B9B solid"></div>
-                <div class="Vector" style="width: 2px; height: 2.13px; left: 20px; top: 21.35px; position: absolute; border: 1.50px #9B9B9B solid"></div>
-                <div class="Vector" style="width: 24px; height: 25.62px; left: 0px; top: 0px; position: absolute; opacity: 0"></div>
-              </div>
-              <div style="left: 20px; top: 14px; position: absolute; color: #9B9B9B; font-size: 20px; font-family: Lexend; font-weight: 400; text-transform: uppercase; line-height: 20px; word-wrap: break-word">집들이 검색</div>
+    
+  <th:block th:replace="~{common/fragments/header}"></th:block>
+    
+  <div class="topContainer">
+
+    <div class="mainContainer">
+
+      <th:block th:replace="~{common/fragments/board/side-category}"></th:block>
+
+      <div class="mainArea">
+
+        <div class="searchArea">
+
+          <span class="title">노하우</span>
+            <span>
+              <input type="text" placeholder="노하우 검색">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+
+        </div>
+
+        
+        <div class="boardAdContainer">
+          <img src="/images/board/myHouse/3364958d-89de-4f1a-8ff5-f730f6ccc826.jpg" alt="" class="boardAd mySlides">
+          <img src="/images/board/myHouse/0a0a379f-05c8-4777-a071-b29abcf9f542.jpg" alt="" class="boardAd mySlides">
+          <img src="/images/board/myHouse/38206_28135_2644.jpg" alt="" class="boardAd mySlides">
+          <img src="/images/board/myHouse/147215_155199_1614.jpg" alt="" class="boardAd mySlides">
+          <img src="/images/board/myHouse/117575264.4.jpg" alt="" class="boardAd mySlides">
+          <h4 class="adViewMore">1/6+</h4>
+          <a class="prev" onclick="plusSlides(-1)"><i class="fa-solid fa-chevron-left"></i></a>
+          <a class="next" onclick="plusSlides(1)"><i class="fa-solid fa-chevron-right"></i></a>
+        </div>
+
+        <div class="myHouseTitle">
+          <h3>[노하우]</h3>
+          <h2>베란다 가구배치 꿀팁</h2>
+        </div>
+
+        <div class="userProfileArea">
+          <div class="leftSide">
+            <div class="profileImg">
+              <img src="/images/profile/main.jpg">
             </div>
-            <div style="left: 399px; top: 830px; position: absolute; color: black; font-size: 20px; font-family: Lexend; font-weight: 400; text-transform: uppercase; line-height: 20px; word-wrap: break-word">꿀팁나간다</div>
-            <div class="Line23" style="width: 791.01px; height: 0px; left: 353px; top: 987px; position: absolute; border: 1px black solid"></div>
-            <div class="Line24" style="width: 812px; height: 0px; left: 353px; top: 1203px; position: absolute; border: 1px black solid"></div>
-            <div class="Rectangle231" style="width: 749px; height: 103px; left: 378px; top: 1079px; position: absolute; background: white; border: 1px #8C8C8C solid"></div>
-            <div style="left: 363px; top: 1223px; position: absolute; color: black; font-size: 15px; font-family: Lexend; font-weight: 700; word-wrap: break-word">@유저이</div>
-            <div class="5" style="left: 362px; top: 1014px; position: absolute; color: black; font-size: 30px; font-family: Lexend; font-weight: 700; word-wrap: break-word">댓글 5개</div>
-            <div class="10" style="width: 55px; left: 428px; top: 1222px; position: absolute; color: black; font-size: 15px; font-family: Lexend; font-weight: 700; word-wrap: break-word">♥ 10</div>
-            <div style="left: 1023px; top: 1220px; position: absolute; color: black; font-size: 15px; font-family: ABeeZee; font-weight: 400; word-wrap: break-word">답글/수정/삭제</div>
-            <div style="left: 377px; top: 1256px; position: absolute; color: black; font-size: 15px; font-family: ABeeZee; font-weight: 400; word-wrap: break-word">개이쁘다</div>
-            <img class="23" style="width: 80px; height: 80px; left: 379px; top: 600px; position: absolute" src="https://via.placeholder.com/80x80" />
-            <img class="Y2k6ydkxka3" style="width: 80px; height: 80px; left: 477px; top: 600px; position: absolute" src="https://via.placeholder.com/80x80" />
-            <img class="Main0922" style="width: 80px; height: 80px; left: 575px; top: 600px; position: absolute" src="https://via.placeholder.com/80x80" />
-            <div class="Hover" style="width: 82px; height: 29px; left: 1055px; top: 1037px; position: absolute">
-              <div class="Rectangle233" style="width: 82px; height: 29px; left: 0px; top: 0px; position: absolute; background: #404040; box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25); border-radius: 5px"></div>
-              <div style="left: 27px; top: 5px; position: absolute; color: #FFFAF0; font-size: 16px; font-family: Pretendard; font-weight: 400; word-wrap: break-word">등록</div>
-            </div>
-            <div class="Group33889" style="width: 150px; height: 137px; left: 52px; top: 162px; position: absolute">
-              <div style="width: 150px; height: 55px; left: 0px; top: 0px; position: absolute">
-                <div class="Rectangle114" style="width: 150px; height: 55px; left: 0px; top: 0px; position: absolute; background: #D3BBA4; border-radius: 30px"></div>
-                <div style="left: 51px; top: 19px; position: absolute; color: #3A732A; font-size: 18px; font-family: Pretendard; font-weight: 700; text-transform: uppercase; line-height: 18px; word-wrap: break-word">집들이</div>
-              </div>
-              <div style="width: 150px; height: 55px; left: 0px; top: 82px; position: absolute">
-                <div class="Rectangle114" style="width: 150px; height: 55px; left: 0px; top: 0px; position: absolute; background: #D3BBA4; border-radius: 30px"></div>
-                <div style="left: 51px; top: 19px; position: absolute; color: #3A732A; font-size: 18px; font-family: Pretendard; font-weight: 700; text-transform: uppercase; line-height: 18px; word-wrap: break-word">노하우</div>
-              </div>
+            <div class="userNickname">
+              <h3>유저일</h3>
             </div>
           </div>
-    </main>
+
+          <div class="rightSide">
+            <div class="date">
+              <h3>2024.05.31</h3>
+            </div>
+            <div class="reportBtn">
+              <i class="fa-solid fa-bullhorn"></i>
+              <h3>신고</h3>
+            </div>
+          </div>
+        </div>
+        
+        <div class="contentArea">
+
+          <div class="myHouseContent">
+
+            안녕하세요, 여러분! 오늘은 제가 최근에 진행한 셀프 인테리어 프로젝트에 대해 공유하려고 합니다.
+            몇 주 동안의 노력 끝에, 저의 작은 아파트가 어떻게 변화했는지 여러분께 보여드리고자 해요.
+            시작은 작은 아이디어에서
+            처음에는 단순히 집을 조금 더 아늑하게 만들고 싶다는 생각이었습니다.
+            그래서 인터넷에서 여러 인테리어 아이디어를 찾아보았고, 결국 셀프 인테리어에 도전하기로 결
+            심했죠. 가장 중점을 둔 부분은 베란다였습니다. 작지만 활용도가 높은 공간으로 바꾸고 싶었어요.
+
+
+            최근 집을 아늑한 느낌의 인테리어로 꾸몄습니다. 따뜻한 베이지 톤의 벽지와 부드러운 질감의 패브릭 
+            소파를 배치해 편안한 분위기를 만들었어요. 조명은 은은한 노란빛을 선택해 눈이 편안하고, 책장을 채운
+            다양한 책들이 공간을 더욱 풍성하게 합니다. 커다란 러그와 여러 개의 쿠션들이 더해져 공간이 더욱 
+            포근해졌습니다. 창가에는 초록 식물들을 놓아 생기를 불어넣었고, 벽에는 가족사진과 작은 액자들로 
+            장식해 개인적인 터치를 더했어요. 이 모든 요소들이 어우러져 집에 들어설 때마다 따뜻한 포옹을 
+            받는 듯한 기분이 듭니다.
+
+          </div>
+
+        </div>
+
+        <div class="commentArea">
+
+          <div class="inputCommentArea">
+
+            <div class="topArea">
+              <h2>댓글수</h2>
+              <button class="boardDetailSubmitChatBtn">등록</button>
+            </div>
+
+            <div class="commentTextArea">
+              <textarea cols="120" rows="5"></textarea>
+            </div>
+
+          </div>
+
+          <div class="comment">
+
+            <div class="commentUser">
+
+              <div class="leftArea">
+                <div>
+                  <img src="/images/profile/main.jpg">
+                  <h3>유저이</h3>
+                </div>
+
+                <div class="like">
+                  <i class="fa-solid fa-heart" style="color: red;"></i>
+                  <!-- 빈하트 : fa-regular -->
+                  <div class="like-count">10</div>
+                </div>
+              </div>
+
+              <div class="rightArea">
+
+                <div class="commentBtnArea">
+                  <div th:onclick="|showInsertComment(this)|">답글</div>
+                  <div>수정</div>
+                  <div>삭제</div>
+                </div>
+
+                <div class="reportBtn">
+                  <i class="fa-solid fa-bullhorn"></i>
+                  <h3>신고</h3>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="commentContent" id="commentContent">
+              <h3>댓글 내용</h3>
+            </div>
+
+          </div>
+
+          
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="top">↑</div>
+
+  <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+  <script src="/js/common/fragments/board/side-category.js"></script>
+  <script src="/js/board/myHouseboard/myHouseBoard.js"></script>
+  <script src="/js/board/myHouseboard/myHouseBoardDetail.js"></script>
+  <script src="/js/common/main.js"></script>
+
 </body>
 </html>

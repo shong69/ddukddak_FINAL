@@ -101,26 +101,91 @@ const insertChildComment = (parentCommentNo, btn) => {
 
 }
 
-const thumbnails = Array.from(document.getElementsByClassName('thumbnail'));
+// const thumbnails = Array.from(document.getElementsByClassName('thumbnail'));
 
-function swapImage(clickedThumbnail) {
-    const mainImage = document.getElementById('mainImage');
-    const mainImageSrc = mainImage.src;
+// function swapImage(clickedThumbnail) {
+//     const mainImage = document.getElementById('mainImage');
+//     const mainImageSrc = mainImage.src;
 
-    // 큰 이미지와 클릭된 작은 이미지의 src를 교환합니다.
-    mainImage.src = clickedThumbnail.src;
-    clickedThumbnail.src = mainImageSrc;
+//     // 큰 이미지와 클릭된 작은 이미지의 src를 교환합니다.
+//     mainImage.src = clickedThumbnail.src;
+//     clickedThumbnail.src = mainImageSrc;
 
-    // 클릭된 작은 이미지의 index를 가져옵니다.
-    const index = parseInt(clickedThumbnail.getAttribute('data-index'));
+//     // 클릭된 작은 이미지의 index를 가져옵니다.
+//     const index = parseInt(clickedThumbnail.getAttribute('data-index'));
 
-    // 배열에서 해당 index의 이미지를 변경합니다.
-    thumbnails[index].src = mainImageSrc;
+//     // 배열에서 해당 index의 이미지를 변경합니다.
+//     thumbnails[index].src = mainImageSrc;
+// }
+
+// // 페이지 로드 시 초기 설정
+// document.addEventListener('DOMContentLoaded', () => {
+//     thumbnails.forEach((thumbnail, index) => {
+//         thumbnail.setAttribute('data-index', index);
+//     });
+// });
+
+
+const slideshow = document.querySelector(".boardAdContainer");
+
+if (slideshow != null) {
+    let slideIndex = 1;
+    let slideInterval;
+    
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+            slides[i].style.opacity = 0.4;
+        }
+        slides[slideIndex-1].style.display = "block";
+        setTimeout(() => {
+            slides[slideIndex-1].style.opacity = 1;
+        }, 30);
+        document.querySelector('.adViewMore').textContent = `${slideIndex} / ${slides.length}`;
+    }
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+        resetInterval();
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+        resetInterval();
+    }
+
+    function resetInterval() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(() => {
+            plusSlides(1);
+        }, 5000);
+    }
+    
+    showSlides(slideIndex);
+
+    resetInterval();
+
+    document.querySelector('.next').addEventListener('click', () => plusSlides(1));
+    document.querySelector('.prev').addEventListener('click', () => plusSlides(-1));
+
+    
 }
 
-// 페이지 로드 시 초기 설정
-document.addEventListener('DOMContentLoaded', () => {
-    thumbnails.forEach((thumbnail, index) => {
-        thumbnail.setAttribute('data-index', index);
-    });
-});
+// 팝업 경로
+let path;
+
+// 팝업 사이즈
+const popupW = 400;
+const popupH = 360;
+
+// 팝업 위치
+let tempLeft = Math.ceil((window.screen.width - popupW)/2);
+let tempTop = Math.ceil((window.screen.height - popupH)/2);
+
+const reportBtn = document.querySelector("#reportBtn");
+
