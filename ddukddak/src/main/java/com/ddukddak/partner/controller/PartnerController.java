@@ -3,8 +3,11 @@ package com.ddukddak.partner.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.ddukddak.member.model.dto.Member;
 
 @Controller
 @RequestMapping("partner")
@@ -40,6 +43,17 @@ public class PartnerController {
 	public String partnerFindId() {
 		return "partner/findId";
 	}	
+	
+	/** [파트너] 아이디 찾기 결과
+	 * @param inputMember
+	 * @return
+	 */
+	@GetMapping("resultId")
+	public String resultId(Member inputMember) {
+		
+		
+		return "/common/resultId";
+	}
 	
 	
 	/** [파트너] 비밀번호 찾기 페이지 이동

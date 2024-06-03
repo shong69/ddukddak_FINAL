@@ -75,14 +75,16 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // 이전 URL 가져오기
-            var referrer = document.referrer;
+            const referrer = document.referrer;
+
+            const partnerPattern = /partner\/(login|signup|.*)/;
 
             // URL 검사하여 라디오 버튼 선택
-            if (referrer.includes('partner/login')) {
+            if (partnerPattern.test(referrer)) {
                 document.getElementById('sellerChoice').checked = true;
             } else {
                 document.getElementById('memberChoice').checked = true;
-            } 
+            }
         });
     </script>
 

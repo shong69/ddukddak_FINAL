@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID 찾기 결과</title>
+
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/resultId.css">
+
+    <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    
+    <main>
+        <h1>아이디 찾기 결과</h1>
+        <div class="resultBox">
+
+            <!-- 헤더 -->
+            <div class="resultTitle">
+                <h4>
+                    <span th:if="${userType} == 'member'">회원님의 </span>
+                    <span th:unless="${userType} == 'member'">파트너님의</span>   
+                    <span th:if="${authType} == 'email'">이메일로</span>
+                    <span th:unless="${authType} == 'email'">휴대전화로</span>
+                    가입된 아이디는
+                </h4>
+                <h4>아래와 같습니다.</h4>
+            </div>
+
+            <!-- 아이디 내역 -->
+            <div class="findIdDiv">
+                <div>
+                    <h3>soowagger</h3>
+                </div>
+                
+                <div><h3>가입일 : 24.01.01</h3></div>
+            </div>
+
+            <!-- 비밀번호 찾기 -->
+            <div class="findPwMove">
+                <div><h4>비밀번호가 기억나지 않나요?</h4></div>
+                <div><a href="/member/findPw">비밀번호 찾기</a></div>
+            </div>
+
+            <!-- 로그인 버튼 영역 -->
+            <div>
+                <button id="goToLoginBtn">로그인하러 가기</button>
+            </div>
+
+        </div>
+    </main>
+
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+
+    <!-- 고객 선택 값에 따라 기본 checked 설정 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 이전 URL 가져오기
+            const referrer = document.referrer;
+
+            const partnerPattern = /partner\/(login|signup|findId|.*)/;
+
+            const goToLoginBtn = document.getElementById('goToLoginBtn');
+            // 버튼 클릭 시
+            goToLoginBtn.addEventListener("click", () => {
+                if(partnerPattern.test(referrer)) {
+                    location.href = '/partner/login'
+                } else {
+                    location.href = '/member/login'
+                }
+            })
+
+        });
+    </script>
+    
+
+
+</body>
+</html>

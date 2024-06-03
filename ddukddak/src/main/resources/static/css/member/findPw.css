@@ -51,7 +51,7 @@ main header h3 {
 
 
 /* 콘텐츠(박스 본문) */
-#findIdForm {
+#findPwForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,7 +62,7 @@ main header h3 {
 
 /* 회원, 파트너 선택 영역 */
 .memberBtnArea {
-    background-color: var(--gray1);
+    background-color: var(--secondary);
     color: var(--white);
     box-shadow: 0 3px 3px rgba(0,0,0,0.2);
     border: none;
@@ -308,7 +308,7 @@ main header h3 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
+    align-items: flex-start;
     margin-bottom: 20px;
     width: 100%;
     font-weight: 700px;

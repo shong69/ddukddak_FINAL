@@ -29,7 +29,9 @@
             </header>
 
             <!-- 컨텐츠 -->
-            <form id="findIdForm" action="#">
+            <form id="findIdForm" action="/partner/resultId" method="get">
+                <!-- 유저 타입 값 보내기 용 히든 -->
+                <input type="hidden" name="userType" value="partner">
                 <div class="content">
                     
                     <!-- 타입 선택 -->
@@ -62,7 +64,7 @@
                             <label for="telChoice">휴대폰</label>
                         </div>
                         <div id="telHiddenDiv" class="authArea">
-                            <input type="tel" placeholder="전화번호(-없이)">
+                            <input type="tel" placeholder="전화번호(-없이)" name="memberTel">
                             <button type="button" id="telAuthBtn" >인증 요청</button>
                         </div>
                     </div>
@@ -71,9 +73,13 @@
                     <div class="btnDiv">
                         <button class="choiceBtn">아이디 찾기</button>
                     </div>
+
+                    <div class="findPwMoveDiv">
+                        <a href="/partner/findPw">비밀번호 찾기 <i class="fa-solid fa-angle-right"></i></a>
+                    </div>
                 </form>
-            </section>
-        </div>
+            </div>
+        </section>
     </main>
 
     <th:block th:replace="~{common/fragments/footer}"></th:block>
