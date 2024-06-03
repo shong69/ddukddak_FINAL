@@ -254,7 +254,7 @@ main header h3 {
     align-items: center;
     width: 100%;
     height: auto;
-    margin: 40px 0;
+    margin: 40px;
 }
 
 /* 선택하기 버튼 */
@@ -303,9 +303,24 @@ main header h3 {
     transform: translateY(0);
 }
 
+.findPwMoveDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    width: 100%;
+    font-weight: 700px;
+}
 
+.findPwMoveDiv a {
+    font-size: 14px;
+    color: var(--gray1);
+}
 
 /* 체크 시 히든 */
 .hidden {
     display: none !important;
 }
+
+

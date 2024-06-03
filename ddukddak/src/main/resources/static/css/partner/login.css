@@ -18,7 +18,7 @@ main {
 /* 박스 전체 */
 .loginBox {
     width: 620px;
-    height: 440px;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,7 +36,7 @@ main {
     justify-content: center;
     align-items: center;
     width: 400px;
-    height: 558px;
+    height: 450px;
 }
 
 
@@ -126,9 +126,11 @@ main {
     display: flex;
     height: 100px;
     width: 400px;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: end;
     font-weight: 700;
+    font-size: 15px;
+
 }
 
 
