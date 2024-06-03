@@ -420,6 +420,11 @@ input::placeholder{
     margin-bottom: 100px;
 }
 
+<<<<<<< HEAD
+.add-info{
+    margin-bottom: 150px;
+}
+=======
 .add-info td{
     display: flex;
     line-height: 100px;
@@ -427,6 +432,7 @@ input::placeholder{
 }
 
 
+>>>>>>> 00488a32459d7d1a052114a96825e1cfba8e50dc
 /*회원정보 변경 전 설정*/
 
 .before-modify {
