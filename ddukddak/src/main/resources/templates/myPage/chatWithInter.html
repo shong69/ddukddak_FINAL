@@ -24,16 +24,6 @@
 
             <section class="myPage-main">
                 <h2 class="category-name">시공사와의 채팅</h2>
-
-                <div id="addTargetPopupLayer" class="popup-layer-close">  
-                    <span id="closeBtn">&times</span>
-        
-                    <div class="target-input-area">
-                        <input type="search" id="targetInput" placeholder="닉네임 또는 이메일을 입력하세요" autocomplete="off">
-                    </div>
-        
-                    <ul id="resultArea"></ul>
-                </div>
                 
                 <!--
                 <div class="chatting-area">
@@ -119,16 +109,17 @@
                     </div>
                     
                 </div>-->
-                <div id="addTargetPopupLayer" class="">  
+                <div id="addTargetPopupLayer" class="popup-layer-close">  
                     <span id="closeBtn">×</span>
         
                     <div class="target-input-area">
                         <input type="search" id="targetInput" placeholder="닉네임 또는 이메일을 입력하세요" autocomplete="off">
+                        <div id="inputCloseBtn" style="cursor:pointer">×</div>
                     </div>
         
                     <ul id="resultArea"></ul>
                 </div>
-                
+
                 <div class="chatting-area">
                     <ul class="chatting-list">
                         <div id="addTarget"class="fa-solid fa-user-plus" title="시공사 추가"></div>
@@ -217,6 +208,6 @@
                 </div>
             </section>
         </section>
-        <!--<script src="/js/myPage/interChat.js"></script>-->
+        <script src="/js/myPage/interChat.js"></script>
 </body>
 </html>

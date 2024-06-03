@@ -4,6 +4,8 @@ const addTargetPopupLayer = document.querySelector("#addTargetPopupLayer"); // �
 
 const closeBtn = document.querySelector("#closeBtn"); // 닫기 버튼
 
+const inputCloseBtn = document.querySelector("#inputCloseBtn"); //input값 삭제 버튼
+
 const targetInput = document.querySelector("#targetInput"); // 사용자 검색
 
 const resultArea = document.querySelector("#resultArea"); // 검색 결과
@@ -28,7 +30,13 @@ addTarget.addEventListener("click", e => {
 // 검색 팝업 레이어  닫기
 closeBtn.addEventListener("click", e => {
 	addTargetPopupLayer.classList.toggle("popup-layer-close");
+	targetInput.value = "";
 	resultArea.innerHTML = "";
+});
+
+//검색 팝업의 인풋 값 삭제
+inputCloseBtn.addEventListener("click", ()=>{
+	targetInput.value="";
 });
 
 
@@ -74,14 +82,22 @@ targetInput.addEventListener("input", e => {
 				if(member.profileImg == null) img.setAttribute("src", "/images/user.png");
 				else	img.setAttribute("src", member.profileImg);
 
-				let nickname = member.memberNickname;
-				let email = member.memberEmail;
+				let nickname = member.memberNickname;/*닉네임 말고 업체명으로 바꾸기 */
+				let email = member.memberEmail;/*email 말고 전화번호로 바꾸기*/
 
-				const span = document.createElement("span");
-				span.innerHTML = `${nickname} ${email}`.replace(query, `<mark>${query}</mark>`);
+				const div = document.createElement("div");
+				div.classList.add("interInfo");
+				const nameSpan = document.createElement("span");
+				const phoneNumSpan = document.createElement("span");
+				
+				/*span.innerHTML = `${nickname} ${email}`.replace(query, `<mark>${query}</mark>`);*/
+				nameSpan.innerHTML = nickname.replace(query, `<mark>${query}</mark>`);
+				phoneNumSpan.innerHTML = email.replace(query, `<mark>${query}</mark>`);
+				
+				div.append("nameSpan", "phoneNumSpan");
 
 				// 요소 조립(화면에 추가)
-				li.append(img, span);
+				li.append(img, div);
 				resultArea.append(li);
 
 				// li요소에 클릭 시 채팅방에 입장하는 이벤트 추가
@@ -357,9 +373,9 @@ function selectChattingFn() {
 // /chattingSock 이라는 요청 주소로 통신할 수 있는  WebSocket 객체 생성
 let chattingSock;
 
-if(loginMemberNo != ""){
+/*if(loginMemberNo != ""){
 	chattingSock = new SockJS("/chattingSock");
-}
+}*/
 
 
 
@@ -399,7 +415,7 @@ inputChatting.addEventListener("keyup", e => {
 })
 
 
-
+/*
 // WebSocket 객체 chattingSock이 서버로 부터 메세지를 통지 받으면 자동으로 실행될 콜백 함수
 chattingSock.onmessage = function(e) {
 	// 메소드를 통해 전달받은 객체값을 JSON객체로 변환해서 obj 변수에 저장.
@@ -475,3 +491,5 @@ document.addEventListener("DOMContentLoaded", ()=>{
 	// 보내기 버튼에 이벤트 추가
 	send.addEventListener("click", sendMessage);
 });
+
+*/
