@@ -48,7 +48,7 @@ public class PartnerController {
 	 * @param inputMember
 	 * @return
 	 */
-	@GetMapping("resultId")
+	@PostMapping("resultId")
 	public String partnerResultId(Member inputMember) {
 		
 		

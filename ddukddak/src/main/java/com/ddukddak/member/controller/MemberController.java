@@ -51,7 +51,7 @@ public class MemberController {
 	 * @param authType
 	 * @return
 	 */
-	@GetMapping("resultId")
+	@PostMapping("resultId")
 	public String memberResultId(
 					@RequestParam(value = "authType", required = false) String authType,
 					@RequestParam("userType") String userType,
