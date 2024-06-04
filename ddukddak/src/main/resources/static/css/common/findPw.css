@@ -61,7 +61,7 @@ main header h3 {
 }
 
 /* 회원, 파트너 선택 영역 */
-.memberBtnArea {
+.findPwBtnArea {
     background-color: var(--secondary);
     color: var(--white);
     box-shadow: 0 3px 3px rgba(0,0,0,0.2);
@@ -69,19 +69,19 @@ main header h3 {
     cursor: pointer;
 }
 
-.memberBtnArea a {
+.findPwBtnArea a {
     color: var(--white);
     text-decoration: none;
 }
 
-.partnerBtnArea {
+.findIdBtnArea {
     background-color: #f1f1f1;
     border-left: none;
     border: none;
     cursor: pointer;
 }
 
-.partnerBtnArea a {
+.findIdBtnArea a {
     color: #aaa;
     text-decoration: none;
 }
@@ -128,14 +128,11 @@ main header h3 {
 
 
 
-.radioDiv {
+.inputIdDiv {
     margin: 16px 0;
 }
 
-.radioDiv2 {
-    margin-top: 30px;
-    margin-bottom: 6px;
-}
+
 
 
 #emailHiddenDiv {
@@ -145,7 +142,7 @@ main header h3 {
 
 /* 이메일, 핸드폰 인증 영역 */
 
-.emailDiv {
+.inputIdDiv {
     height: auto;
     width: 100%;
     display: flex;
@@ -154,13 +151,13 @@ main header h3 {
     align-items: flex-start;
 }
 
-.emailDiv div {
+.inputIdDiv div {
     display: flex;
     align-items: center;
     width: 100%;
 }
 
-.emailDiv div input:not([type='radio']) {
+.inputIdDiv div input:not([type='radio']) {
     width: 100%;
     height: 50px;
     border: 1px solid var(--gray5);
@@ -168,15 +165,21 @@ main header h3 {
     border-radius: 4px;
 }
 
-.emailDiv div input:focus {
+.inputIdDiv div input:focus {
     outline: none;
 }
 
-/* 이메일, 전화번호 인증창 div */
-.authArea {
-    position: relative;
-    margin-top: 10px;
+.inputIdDiv h4 {
+    font-weight: 700;
 }
+
+
+.inputInfoDiv {
+    margin-bottom: 10px;
+}
+
+
+
 
 
 
@@ -243,23 +246,36 @@ main header h3 {
     outline: none;
 }
 
-
+/* 이메일, 전화번호 인증창 div */
+.authArea {
+    position: relative;
+}
 
 
 /* 버튼 영역 */
-.btnDiv {
+.btnDiv1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: auto;
-    margin: 40px;
+    margin: 30px 0;
+}
+
+.btnDiv2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin: -30px 0 30px 0;
 }
 
 /* 선택하기 버튼 */
-.choiceBtn {
-    background-color: var(--gray1);
+.nextBtn, .findPwBtn {
+    background-color: var(--secondary);
     transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
     border-color: transparent;
     text-decoration: none;
@@ -279,11 +295,12 @@ main header h3 {
     text-align: center; 
     color: var(--white); 
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 15px;
+    
     box-shadow: 0 3px 3px rgba(0,0,0,0.2);
 }
 
-.choiceBtn:hover {
+.nextBtn:hover, .findPwBtn:hover {
     left: 0px; 
     top: 0px;
     background-color: var(--white);
@@ -298,7 +315,7 @@ main header h3 {
     word-wrap: break-word;
 }
 
-.choiceBtn:active {
+.nextBtn:active, .findPwBtn:active {
     box-shadow: none;
     transform: translateY(0);
 }
@@ -318,7 +335,6 @@ main header h3 {
     font-size: 14px;
     color: var(--gray1);
 }
-
 
 
 /* 체크 시 히든 */

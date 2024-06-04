@@ -51,8 +51,8 @@ public class MemberController {
 	 * @param authType
 	 * @return
 	 */
-	@GetMapping("resultId")
-	public String resultId(
+	@PostMapping("resultId")
+	public String memberResultId(
 					@RequestParam(value = "authType", required = false) String authType,
 					@RequestParam("userType") String userType,
 					Member inputMember,
@@ -65,12 +65,5 @@ public class MemberController {
 		return "/common/resultId";
 	}
 	
-	
-	/** [회원] 비밀번호 찾기 페이지 이동
-	 * @return
-	 */
-	@GetMapping("findPw")
-	public String memberFindPw() {
-		return "member/findPw";
-	}
+	// * 비밀번호 찾기는 common.controller 에서 공통 처리
 }

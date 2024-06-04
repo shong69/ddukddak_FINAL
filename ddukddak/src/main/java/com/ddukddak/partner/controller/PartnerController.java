@@ -48,23 +48,14 @@ public class PartnerController {
 	 * @param inputMember
 	 * @return
 	 */
-	@GetMapping("resultId")
-	public String resultId(Member inputMember) {
+	@PostMapping("resultId")
+	public String partnerResultId(Member inputMember) {
 		
 		
 		return "/common/resultId";
 	}
 	
-	
-	/** [파트너] 비밀번호 찾기 페이지 이동
-	 * @return
-	 */
-	@GetMapping("findPw")
-	public String partnerFindPw() {
-		return "partner/findPw";
-	}
-	
-	
+	// * 비밀번호 찾기는 common.controller 에서 공통 처리 	
 
 	
 	/** 파트너 메인페이지 이동

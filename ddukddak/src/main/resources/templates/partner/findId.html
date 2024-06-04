@@ -29,7 +29,7 @@
             </header>
 
             <!-- 컨텐츠 -->
-            <form id="findIdForm" action="/partner/resultId" method="get">
+            <form id="findIdForm" action="/partner/resultId" method="post">
                 <!-- 유저 타입 값 보내기 용 히든 -->
                 <input type="hidden" name="userType" value="partner">
                 <div class="content">
@@ -64,21 +64,27 @@
                             <label for="telChoice">휴대폰</label>
                         </div>
                         <div id="telHiddenDiv" class="authArea">
-                            <input type="tel" placeholder="전화번호(-없이)" name="memberTel">
-                            <button type="button" id="telAuthBtn" >인증 요청</button>
+                            <div>
+                                <input id="inputTel" type="tel" placeholder="전화번호(-없이)" name="memberTel" maxlength="11">
+                                <button type="button" id="telAuthBtn" >SMS 인증</button>
+                            </div>
+                            <span id="telMsg" class="msgSpan"></span>
+                            <div id="telAuthHidden" class="authArea hidden">
+                                <input id="telAuthInput" type="tel" placeholder="인증번호(숫자 6자리)" name="smsAuthKey" maxlength="6">
+                            </div>
+                            <span id="telAuthMsg" class="msgSpan"></span>
                         </div>
                     </div>
-
                     <!-- 버튼 -->
                     <div class="btnDiv">
-                        <button class="choiceBtn">아이디 찾기</button>
+                        <button id="findIdBtn" class="findIdBtn" disabled>아이디 찾기</button>
                     </div>
 
                     <div class="findPwMoveDiv">
-                        <a href="/partner/findPw">비밀번호 찾기 <i class="fa-solid fa-angle-right"></i></a>
+                        <a href="/common/findPw">비밀번호 찾기 <i class="fa-solid fa-angle-right"></i></a>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </section>
     </main>
 
