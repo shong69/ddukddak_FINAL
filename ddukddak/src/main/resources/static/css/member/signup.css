@@ -21,7 +21,7 @@ main {
     flex-direction: column;
     justify-content: center;
     width: 600px;
-    height: 900px;
+    height: auto;
 }
 
 label {
@@ -37,7 +37,7 @@ label {
     margin-left: 10px;
     width: 100%;
     padding: 8px 0 2px 0;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .signUp-input-area input:focus {
