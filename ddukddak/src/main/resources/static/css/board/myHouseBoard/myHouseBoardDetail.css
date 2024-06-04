@@ -206,6 +206,7 @@
 .commentInsertContent {
     width: 840px;
     resize: none;
+    padding: 5px;
 }
 
 .comment-btn-area {

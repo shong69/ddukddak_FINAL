@@ -125,8 +125,12 @@ const insertChildComment = (parentCommentNo, btn) => {
 //     });
 // });
 
-
+/* 이미지 */
 const slideshow = document.querySelector(".boardAdContainer");
+const adViewMore = document.querySelector('.adViewMore');
+
+const next = document.querySelector('.next');
+const prev = document.querySelector('.prev');
 
 if (slideshow != null) {
     let slideIndex = 1;
@@ -135,27 +139,31 @@ if (slideshow != null) {
     function showSlides(n) {
         let i;
         let slides = document.getElementsByClassName("mySlides");
-        let dots = document.getElementsByClassName("dot");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
+        if (n > slides.length) { slideIndex = 1; }
+        if (n < 1) { slideIndex = slides.length; }
         for (i = 0; i < slides.length; i++) {
             slides[i].style.display = "none";
             slides[i].style.opacity = 0.4;
         }
-        slides[slideIndex-1].style.display = "block";
+        slides[slideIndex - 1].style.display = "block";
         setTimeout(() => {
-            slides[slideIndex-1].style.opacity = 1;
+            slides[slideIndex - 1].style.opacity = 1;
         }, 30);
-        document.querySelector('.adViewMore').textContent = `${slideIndex} / ${slides.length}`;
+        if (adViewMore != null) {
+            
+            adViewMore.textContent = `${slideIndex} / ${slides.length}`;
+        }
     }
 
     function plusSlides(n) {
-        showSlides(slideIndex += n);
+        slideIndex += n;
+        showSlides(slideIndex);
         resetInterval();
     }
 
     function currentSlide(n) {
-        showSlides(slideIndex = n);
+        slideIndex = n;
+        showSlides(slideIndex);
         resetInterval();
     }
 
@@ -169,11 +177,19 @@ if (slideshow != null) {
     showSlides(slideIndex);
 
     resetInterval();
+    if (next != null) {
+        next.addEventListener('click', () => {
+             plusSlides(1);
+             resetInterval();
+         });
+    }
 
-    document.querySelector('.next').addEventListener('click', () => plusSlides(1));
-    document.querySelector('.prev').addEventListener('click', () => plusSlides(-1));
-
-    
+    if (prev != null) {
+        prev.addEventListener('click', () => {
+            plusSlides(-1);
+            resetInterval();
+        });
+    }
 }
 
 // 팝업 경로
