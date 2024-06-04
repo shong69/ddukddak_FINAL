@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/css/common/fragments/footer.css"> 
     <link rel="stylesheet" href="/css/common/fragments/board/side-category.css"> 
     <link rel="stylesheet" href="/css/common/button.css"> 
+    <link rel="stylesheet" href="/css/common/fragments/board/reportModal.css">
 
     <script src="https://kit.fontawesome.com/fa0ef5fd68.js" crossorigin="anonymous"></script>
 </head>
@@ -45,8 +46,8 @@
           <img src="/images/board/myHouse/147215_155199_1614.jpg" alt="" class="boardAd mySlides">
           <img src="/images/board/myHouse/117575264.4.jpg" alt="" class="boardAd mySlides">
           <h4 class="adViewMore">1/6+</h4>
-          <a class="prev" onclick="plusSlides(-1)"><i class="fa-solid fa-chevron-left"></i></a>
-          <a class="next" onclick="plusSlides(1)"><i class="fa-solid fa-chevron-right"></i></a>
+          <a class="prev"><i class="fa-solid fa-chevron-left"></i></a>
+          <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
         </div>
 
         <div class="myHouseTitle">
@@ -68,7 +69,7 @@
             <div class="date">
               <h3>2024.05.31</h3>
             </div>
-            <div class="reportBtn">
+            <div class="reportBtn" id="reportBtn">
               <i class="fa-solid fa-bullhorn"></i>
               <h3>신고</h3>
             </div>
@@ -138,11 +139,6 @@
                   <div>삭제</div>
                 </div>
 
-                <div class="reportBtn">
-                  <i class="fa-solid fa-bullhorn"></i>
-                  <h3>신고</h3>
-                </div>
-
               </div>
 
             </div>
@@ -166,8 +162,44 @@
 
   <div id="top">↑</div>
 
+  <div id="reportModal" class="reportModal" style="display: none;">
+    <div class="modal-content">
+      <div class="top-area">
+        <h2>신고하기</h2>
+        <span class="close-button">&times;</span>
+      </div>
+      <div class="mid-area">
+        <div>
+    * 아래 중 해당하는 항목을 선택하여 주세요.
+    * 허위신고일 경우, 신고자의 서비스 활동이 제한될 수 있습니다.
+        </div>
+      </div>
+      <form>
+          <div class="reportDetail">
+              <div>신고사유</div>
+              <div>
+                <label><input type="radio" name="reason" value="홍보성 게시물"> 홍보성 게시물</label><br>
+                <label><input type="radio" name="reason" value="음란성 게시물"> 음란성 게시물</label><br>
+                <label><input type="radio" name="reason" value="욕설/부적절한 언어"> 욕설/부적절한 언어</label><br>
+                <label><input type="radio" name="reason" value="회원 분란 유도"> 회원 분란 유도</label><br>
+                <label><input type="radio" name="reason" value="도배성 게시물"> 도배성 게시물</label><br>
+                <label><input type="radio" name="reason" value="정치/종교 등 부적절한 논쟁"> 정치/종교 등 부적절한 논쟁</label><br>
+                <label><input type="radio" name="reason" value="명예훼손/저작권 침해"> 명예훼손/저작권 침해</label><br>
+                <label><input type="radio" name="reason" value="개인정보/사생활 침해"> 개인정보/사생활 침해</label>
+              </div>
+          </div>
+
+          <div class="btn-area">
+            <button type="modalButton" id="confirmButton" class="myPageConfirmCancelBtn">확인</button>
+            <button type="modalButton" id="cancelButton" class="myPageConfirmCancelBtn">취소</button>
+          </div>
+      </form>
+    </div>
+  </div>
+
   <th:block th:replace="~{common/fragments/footer}"></th:block>
 
+  <script src="/js/common/fragments/board/reportModal.js"></script>
   <script src="/js/common/fragments/board/side-category.js"></script>
   <script src="/js/board/myHouseboard/myHouseBoard.js"></script>
   <script src="/js/board/myHouseboard/myHouseBoardDetail.js"></script>
