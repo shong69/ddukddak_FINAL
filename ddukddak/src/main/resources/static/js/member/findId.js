@@ -199,6 +199,7 @@ emailAuthBtn.addEventListener('click', async () => {
         checkEmailObj.emailAuth = false;
         emailAuthInput.value = "";
         inputEmail.value = "";
+        emailAuthMsg.innerText ="";
         emailAuthHidden.classList.add('hidden');
 
         return;
