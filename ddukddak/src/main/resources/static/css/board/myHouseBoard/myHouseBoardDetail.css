@@ -79,6 +79,10 @@
     width: 100%;
 }
 
+.myHouseTitle h4 {
+    margin-bottom: 5px;
+}
+
 /* 유저 프로필 */
 .userProfileArea {
     display: flex;
