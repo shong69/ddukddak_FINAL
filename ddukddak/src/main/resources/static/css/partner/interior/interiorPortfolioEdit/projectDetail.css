@@ -7,9 +7,18 @@
 }
 
 .interior-title {
+    width: 100%;
     display: flex;
     align-items: center;
     margin: 20px 0;
+}
+
+.logo-img {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
 .project-name {
