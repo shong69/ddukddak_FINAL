@@ -5,8 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.member.model.service.MemberService;
@@ -27,7 +29,7 @@ public class MemberController {
 	}
 	
 
-	/** [회원] 회원가입 페이지 이동
+	/** [회원가입] 페이지 이동
 	 * @return
 	 */
 	@GetMapping("signup")
@@ -37,7 +39,7 @@ public class MemberController {
 	}
 	
 	
-	/** [회원] 아이디 찾기 페이지 이동
+	/** [아이디 찾기] 페이지 이동
 	 * @return
 	 */
 	@GetMapping("findId")
@@ -46,8 +48,18 @@ public class MemberController {
 		
 	}
 	
+	/** [아이디 찾기] 닉네임, 이메일 일치 여부 확인
+	 * @return
+	 */
+	@PostMapping("memberCheck")
+	@ResponseBody
+	public int memberCheck(@RequestBody Member member) {
+		
+		return service.memberCheck(member);
+	}
 	
-	/** [회원] 아이디 찾기 결과
+	
+	/** [아이디 찾기] 결과
 	 * @param authType
 	 * @return
 	 */
