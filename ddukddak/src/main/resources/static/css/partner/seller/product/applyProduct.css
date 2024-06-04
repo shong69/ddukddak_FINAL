@@ -245,8 +245,8 @@
   }
 
   #applyProductContainer img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
   }
 
   #applyProductContainer .real-upload {
@@ -269,12 +269,49 @@
 
   #applyProductContainer .image-preview {
     width: 1000px;
-    height: 130px;
+    height: 180px;
     display: flex;
     gap: 20px;
     border-bottom: 1px solid var(--gray5);
+    overflow-x: auto;
   }
 
+  .image-preview > li:first-child {
+    margin-left: 50px;
+  }
+
+  .image-preview > li {
+    position: relative;
+  }
+
+  .main-text {
+    position: absolute;
+    top: 5px;
+    left: 92px;
+    color: white;
+    padding: 3px;
+    border: 1px solid white;
+    opacity: 50%;
+    font-family: 'main';
+    font-size: 13px;
+    cursor: pointer;
+    transition-duration: 0.1s;
+  }
+
+  .main-text:hover {
+    opacity: 100%;
+    background-color: white;
+    color: var(--secondary);
+    border: none;
+  }
+
+
+  .first-text {
+    opacity: 100%;
+    background-color: white;
+    color: var(--secondary);
+    border: none;
+  }
 
   #buttons {
     display: flex;
