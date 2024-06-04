@@ -1,0 +1,218 @@
+/* 메인 폰트 */
+@font-face {
+    font-family: 'main';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+*{
+    font-family: 'main';
+	margin:0;
+	padding:0;
+}
+.main-board{
+    height: 1400px;
+    width: 100%;
+    background: linear-gradient(#A8CBFF,#D7E1FF, #F9F1FF);
+}
+.main-board>div{
+    margin: 50px 100px;
+}
+
+/*라이브커머스 영역*/
+.title{
+    margin:50px 0 20px 180px;
+}
+.main-video{
+    width : 80%;
+    height: 780px;
+    margin: 0 auto;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.4), 0 3px 3px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: row;
+}
+
+.video-area{
+    width:70%;
+    display:flex;
+    flex-direction: column;
+
+}
+.video{
+    flex-basis: 80%;
+    background-color: black;
+}
+.video-title{
+    flex-basis: 20%;
+    background-color: white;
+    padding: 20px;
+}
+.sub-area{
+    width:30%;
+    display: flex;
+    flex-direction: column;
+}
+.chat-area{
+    flex-basis: 80%;
+    background-color: #F9F1FF;
+}
+
+.input-area{
+    flex-basis: 20%;
+    background-color: white;
+}
+
+.display-chatting > li{
+	margin: 15px 10px;
+}
+.display-chatting li:last-child {
+    margin-bottom: 0; /* 마지막 li 요소의 아래 여백을 없애기 */
+}
+.target-chat{
+	display: flex;
+	align-items: flex-start;
+}
+.target-chat > img{
+	width: 30px;
+	margin-right: 5px;
+	border-radius: 50%;
+}
+.target-name{
+	font-size: 13px;
+}
+.chat {
+	display: inline-block;
+	border-radius: 9px;
+	padding: 10px 15px 10px 15px;
+	background-color: #eee;
+	text-align: left;
+	max-width: 500px;
+	word-break: break-all;
+	white-space: pre-wrap;
+	font-size: 14px;
+}
+
+
+.input-area {
+    display: flex;
+}
+
+#inputChatting {
+	padding: 3px;
+	font-size: 1.3em;
+	width: 100%;
+	resize: none;
+	border: 1px solid #ddd;
+    outline-color: #00663a;
+}
+
+#send {
+	width: 20%;
+	border:1px solid #eee;
+	font-size: 15px;
+	background-color: #3b3b3b;
+	color: #fffef0;
+	border-radius: 6px;
+}
+
+.my-chat {
+	text-align: right;
+}
+
+.my-chat>p {
+	background-color: #00663a;
+    color: #fffef0;
+}
+
+
+/*다시보기 영역*/
+
+.slider-container {
+    width: 70%;
+    margin-top: 30px;
+    margin-left: 300px;
+}
+
+.slider-list{
+    list-style-type: none;
+}
+
+
+.slick-next:before, .slick-prev:before {
+    font-size: 50px !important;
+}
+.slick-next, .slick-prev {
+
+    width: 50px !important;
+    height: 50px !important;
+
+}
+.slick-prev {
+    left: -100px !important;
+}
+.slick-next {
+    right: 10px;
+}
+.slide{
+    height: 300px;
+}
+.text{
+    width : 200px;
+    height: 200px;
+    text-align: center;
+}
+
+.thumb>a>img{
+    width:200px;
+    height: 150px;
+    background-color: black;
+    cursor: pointer;
+}
+.merchan-area{
+    display : flex;
+    flex-direction: row;
+    width:inherit;
+}
+strong{
+    display: inline-block;
+    font-size: 14px;
+    width: 200px;
+    height: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    overflow: hidden;
+    text-align: start;
+}
+.merchan-area>div{
+    flex-basis: 75%;
+    display:flex;
+    flex-direction: column;
+}
+.merchan-img{
+    width : 50px;
+    height: 40px;
+    flex-basis: 25%;
+}
+.merchan-link{
+    font-size: 11px;
+    width : 150px;
+    height: 11px;
+    color:#535353;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    overflow: hidden;
+    text-align: start;
+}
+
+.merchan-price{
+    display:flex;
+    font-size: 15px;
+    align-items: end;
+}
+.merchan-price>span:first-child{
+    font-size: 25px;
+    color: #3A732A;
+}
+

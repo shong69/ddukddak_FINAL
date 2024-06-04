@@ -118,16 +118,35 @@ input::-webkit-search-cancel-button{
 
 
 /* 채팅창 영역 */
+.chatting-area-box{
+	display: flex;
+	flex-direction: column;
+	margin-top: 100px;
+	margin-left: 200px;
+	height: 800px;
+	width: 1100px;
+	box-shadow: 0 3px 3px rgba(0,0,0,0.2), 0 3px 3px rgba(0,0,0,0.2);
+	border-top-left-radius: 13px;
+	border-top-right-radius: 13px;
+}
+.chatting-header{
+	border-top-left-radius: 13px;
+	border-top-right-radius: 13px;
+}
+.chatting-header1{
+	height: 50px;
+	background-color: #ffffff;
+	border-top-left-radius: 13px;
+	border-top-right-radius: 13px;
+	border-bottom: 1px solid #d4d4d4;
+}
 
 
 .chatting-area {
-	height: 800px;
-	width: 1100px;
-	margin-left: 200px;
 	display: flex;
-	margin-top: 100px;
+	height: 800px;
 	background-color: white;
-	box-shadow: 0 3px 3px rgba(0,0,0,0.2), 0 3px 3px rgba(0,0,0,0.2);
+	
 }
 
 /*  채팅 목록 */
@@ -146,7 +165,7 @@ input::-webkit-search-cancel-button{
 	background-color: transparent;
     color: #3A732A;
     cursor: pointer;
-	margin:10px 0 20px 290px;
+	margin:15px 0 0 25px;
 }
 
 #addTarget:hover{

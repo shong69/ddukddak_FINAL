@@ -24,11 +24,27 @@
         <div class="title">마이페이지</div>
         <div class="quick-view">
             <a class="nav-content" href="/myPage/memberInfo"><i class="fa-solid fa-circle-info" style="margin-right: 5px;"></i>회원정보</a>
-            <a onclick="openChatPopup()" class="nav-content" style="cursor: pointer;"><i class="fa-regular fa-comments" style="margin-right: 5px;"></i>1:1문의</a>
-            <a class="nav-content" href="#"><i class="fa-solid fa-coins" style="margin-right: 5px;"></i>포인트</a>
+            <a class="nav-content" onclick="openChatPopup()" ><i class="fa-regular fa-comments" style="margin-right: 5px;"></i>1:1문의</a>
+            <a class="nav-content" onclick="openPointModal()"><i class="fa-solid fa-coins" style="margin-right: 5px;"></i>포인트</a>
         </div>
     </div>
 </section>
+<div class="pointModal display-none">
+    <div class="close-btn" onclick="closePointModal()">&times;</div>
+    <div>
+        
+        <table class="pointTable">
+            <tr>
+                <td>김소영 님의 포인트<i class="fa-solid fa-sack-dollar"></i></td>
+            </tr>
+            <tr>
+                <th>
+                    5900pt
+                </th>
+            </tr>
+        </table>
+    </div>
+</div>
 <script th:inline="javascript">
     function openChatPopup() { window.open("/myPage/chatWithManager", "1:1 문의", "width=500px, height=750px, left=470, top=50,resizable=no, scrollbars=no"); }
     /*function openChatPopup() {
@@ -39,5 +55,13 @@
     };
     }
     */
+    const modal = document.querySelector(".pointModal");
+   function openPointModal(){
+        modal.classList.remove("display-none");
+   }
+
+   function closePointModal(){
+        modal.classList.add("display-none");
+   }
 
 </script>
