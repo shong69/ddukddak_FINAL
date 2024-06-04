@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,17 +30,21 @@
     <h4 style="text-align: center; margin-top: 70px;">본인의 파트너 유형을 선택해 주세요</h4>
 
     <div id="selectContainer">
-        <div class="selectBox" onclick="location.href='/partner/seller/product/create';">
-            <i class="fa-solid fa-house-user"></i>
-            <h3>판매사</h3>
-        </div>
+        <form action="/partner/seller/product/create" method="get">
+            <div class="selectBox" id="sellerBtn">
+                <i class="fa-solid fa-house-user"></i>
+                <h3>판매사</h3>
+            </div>
+        </form>
 
-        <div class="selectBox">
-            <i class="fa-solid fa-paint-roller"></i>
-            <h3>시공사</h3>
-        </div>
+        <form action="/partner/interiorPortfolioEditMain" method="get">
+            <div class="selectBox" id="interiorBtn">
+                <i class="fa-solid fa-paint-roller"></i>
+                <h3>시공사</h3>
+            </div>
+        </form>
     </div>
 
-    
+    <script src="/js/partner/main.js"></script>
 </body>
 </html>
