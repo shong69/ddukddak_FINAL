@@ -19,6 +19,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 30px;
 }
 
 /* 회원가입 전체 컨테이너 */

@@ -42,8 +42,8 @@ public class EmailServiceImpl implements EmailService {
 			
 			switch(pageName) {
 			
-				//case "signup" : subject = "[뚝딱뚝딱] 이메일 인증번호 : " + authKey; break;
-				case "findId" : subject = "[뚝딱뚝딱] 이메일 인증번호 : " + authKey; break;
+				//case "signup" : subject = "[뚝딱뚝딱] 회원가입 인증번호 : " + authKey; break;
+				case "findId" : subject = "[뚝딱뚝딱] 아이디 찾기 인증번호 : " + authKey; break;
 			
 			}
 			
@@ -81,7 +81,7 @@ public class EmailServiceImpl implements EmailService {
 		}
 		
 		
-		// 이메일 + 인증번호를 "TB_AUTH_KEY" 테이블 저장
+		// 이메일 + 인증번호를 "AUTH_KEY" 테이블 저장
 		Map<String, String> map = new HashMap<>();
 		
 		map.put("authKey", authKey);

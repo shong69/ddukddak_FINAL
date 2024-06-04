@@ -242,7 +242,6 @@ emailAuthBtn.addEventListener('click', async () => {
             body: inputEmail.value // 추후 JSON으로 변경해야할 수도 있음
         });
         const emailSendResult = await emailSendResp.text();
-    
         if(emailSendResult == 1) {
             console.log("인증 번호 발송 성공");
             alert("입력해 주신 이메일 주소로 인증번호가 발송되었습니다.")
