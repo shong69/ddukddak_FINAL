@@ -2,14 +2,18 @@ const myHouseDetail = document.querySelector("#myHouseDetail");
 const boardCreateBtn = document.querySelector("#boardCreateBtn");
 
 
-myHouseDetail.addEventListener("click", () => {
+if (myHouseDetail != null) {
+    myHouseDetail.addEventListener("click", () => {
+    
+        location.href="/myHouse/detail";
+    
+    });
+}
 
-    location.href="/myHouse/detail";
-
-});
-
-boardCreateBtn.addEventListener("click", () => {
-
-    location.href="/myHouse/registMyHouse";
-
-})
+if (boardCreateBtn != null) {
+    boardCreateBtn.addEventListener("click", () => {
+    
+        location.href="/myHouse/registMyHouse";
+    
+    });
+}

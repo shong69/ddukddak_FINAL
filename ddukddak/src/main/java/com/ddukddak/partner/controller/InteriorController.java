@@ -39,4 +39,9 @@ public class InteriorController {
 		return "partner/interior/interiorPortfolioDetail";
 	}
 	
+	
+	@GetMapping("interiorPortfolioEditMain")
+	public String interiorPortfolioEditMain() {
+		return "partner/interior/interiorPortfolioEdit/interiorPortfolioEditMain";
+	}
 }

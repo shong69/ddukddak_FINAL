@@ -101,25 +101,18 @@
     position: absolute;
 }
 
-.mySlides {
-    display: none;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-}
-
-
 .overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 100%); /* Gradient overlay */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 100%);
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: start;
-    color: white; /* Text color */
+    color: white;
     text-align: center;
     padding: 0;
     box-sizing: border-box;
@@ -128,8 +121,6 @@
     border-radius: 10px;
 }
 
-
-/* Content container on top of the ad */
 .boardAdContentContainer {
     position: absolute;
     top: 0;
@@ -138,12 +129,12 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: flex-start;
     color: var(--white);
     padding: 20px;
-    z-index: 2; /* Ensure it appears above the image and overlay */
-    pointer-events: auto; /* Allow interaction */
+    z-index: 2;
+    pointer-events: auto;
 }
 
 .boardAdContentContainer h1 {
@@ -166,6 +157,21 @@
     color: var(--white);
 }
 
+.boardAdContentContainer h3 {
+    font-weight: 700;
+    font-size: 20px;
+}
+.boardAdContentContainer h4 {
+    font-weight: 300;
+    line-height: 1.8;
+    overflow: hidden;
+    word-wrap: normal;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+}
 
 /* 버튼 */
 
