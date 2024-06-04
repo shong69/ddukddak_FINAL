@@ -2,10 +2,20 @@ const productCreateButton = document.querySelector("#productCreateButton");
 const modal = document.querySelector(".modal");
 const plusButton = document.querySelector("#productPlusButton");
 const optionBox = document.querySelector("#optionBox")
+const createButton = document.querySelector("#createButton");
+const productName = document.querySelector("#productName");
+const bigCategory = document.querySelector("#bigCategory");
+const smallcategory = document.querySelector("#smallCategory");
+const price = document.querySelector("#price");
 
 
 productCreateButton.addEventListener("click", () => {
     modal.style.display = "flex";
+    productName.value = "";
+    bigCategory.value = 'none';
+    smallcategory.value = 'none';
+    price.value = "";
+    optionBox.innerHTML = "";
 });
 
 
@@ -127,11 +137,7 @@ plusButton.addEventListener("click", () => {
     })
 });
 
-const createButton = document.querySelector("#createButton");
-const productName = document.querySelector("#productName");
-const bigCategory = document.querySelector("#bigCategory");
-const smallcategory = document.querySelector("#smallCategory");
-const price = document.querySelector("#price");
+
 
 createButton.addEventListener("click", e => {
     if(productName.value.trim().length === 0 ||

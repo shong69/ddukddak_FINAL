@@ -42,7 +42,7 @@
             <table>
                 <thead>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="all" name="product" id="selectAllCheckBox">
                     </td>
                     <td>no</td>
                     <td>주문번호</td>
@@ -56,7 +56,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="1" name="product" >
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -73,7 +73,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="2" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -90,7 +90,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="3" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -107,7 +107,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="4" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -124,7 +124,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="5" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -141,7 +141,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="6" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -158,7 +158,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="7" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -175,7 +175,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="8" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -192,7 +192,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="9" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -209,7 +209,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="10" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -226,7 +226,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="11" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -243,7 +243,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="12" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -260,7 +260,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="13" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -277,7 +277,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="14" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -294,7 +294,7 @@
 
                 <tr>
                     <td>
-                        <input type="checkbox" value="all" name="product">
+                        <input type="checkbox" value="15" name="product">
                     </td>
                     <td>323</td>
                     <td>20241231-000001</td>
@@ -315,6 +315,38 @@
         <div><h3 style="text-align: center; margin: 30px 0;"><<&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;>></h3></div>
 
     </div>
+
+
+    <!-- 모달창 -->
+    <div class="modal">
+        <div id="closeButton">X</div>
+
+        <div>
+            <h2>판매 상태 변경</h2>
+        </div>
+
+        <div>
+            <table>
+                <tr>
+                    <th>상품번호</th>
+                    <th>상품명</th>
+                    <th>상품 옵션</th>
+                    <th>판매 상태</th>
+                    <th>판매 등록일</th>
+                </tr>
+            </table>
+
+            <div id="productListBox"></div>
+
+            <div>
+                <button id="shipmentButton">출고하기</button>
+                <button id="shipmentRejection">출고거절</button>
+            </div>
+        </div>
+            
+    </div>
+
+    <script src="/js/partner/seller/product/shipment.js"></script>
     
 </body>
 </html>

@@ -28,6 +28,14 @@
     margin-top: 10px;
 }
 
+#formContainer > div:first-child,
+#formContainer > div:nth-child(2),
+#formContainer > div:nth-child(3),
+#formContainer > div:nth-child(4),
+#formContainer > div:nth-child(5) {
+  margin-left: 50px;
+}
+
 #formContainer > div:first-child select:last-child {
     width: 300px;
     height: 30px;
@@ -37,7 +45,7 @@
 }
 
 #formContainer > div > input {
-    width: 530px;
+    width: 700px;
     height: 40px;
     border: 1px solid var(--gray5);
     border-radius: 5px;
@@ -60,6 +68,46 @@
 #formContainer > div:nth-child(7) > input {
     border: none;
 }
+
+
+#formContainer > div:nth-child(7) input[type='file'] {
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+  .form__input--file_wrap {
+    display: flex;
+    margin-top: 10px;
+  }
+  .form__label--file {
+    width: 80px;
+    height: 30px;
+    line-height:30px;
+    background: #999;
+    border-radius: 3px;
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .form__span--file {
+    padding: 0 5px 0 10px;
+    margin-left: 5px;
+    display: block;
+    width: 500px;
+    min-height: 30px;
+    border: 1px solid #e7e7e7;
+    border-radius: 3px;
+    line-height: 30px;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
 
 /* 옵션칸 */
 #option {
@@ -206,9 +254,12 @@
   }
 
   #applyProductContainer .upload {
-    width: 20px;
+    font-size: 12px;
+    text-align: center;
+    width: 70px;
     height: 20px;
-    border: 1px solid black;
+    border: 1px solid var(--gray4);
+    color: var(--gray4);
     cursor: pointer;
     display: flex;
     justify-content: center;
