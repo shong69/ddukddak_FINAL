@@ -17,6 +17,10 @@ public class ManagerController {
 	public String chatWithMember() {
 		return"manager/chatWithMember";
 	}
+	@GetMapping("chatPopup")
+	public String chatWithMemberPopup() {
+		return "manager/chatWithMemberPopup";
+	}
 	
 	@GetMapping("registerLiveCommerce")
 	public String registerLiveCommerce() {
