@@ -32,7 +32,12 @@
 
                                 <tr class="profile-img-area">
                                     <th>사진</th>
-                                    <td><img class="profile-img" src="/images/profile/main.jpg"></td>
+                                    <td>
+                                        <label class="image-label">
+                                            <img>
+                                        </label>
+
+                                    </td>
                                     <td>
                                         <span>회원님을 알릴 수 있는 사진을 등록해 주세요. <br>등록된 사진은 회원님의 게시물이나 댓글들에 사용됩니다.</span>
                                     </td>
@@ -40,17 +45,23 @@
                                 </tr>
 
                                 <tr style='display: none;' class="change-profile-img-area">
-                                    <form>
+                                    <form id ="profile-form" action="profileImg" method = "POST" name = "profileForm" enctype="multipart/form-data" >
                                         <th>사진</th>
-                                        <td><img class="profile-img"></td>
+                                        <td class="profileImg">
+                                            <label class="image-label" for="inputImage" >
+                                                <img id="profile-img">
+                                            </label>
+                                            <input id="inputImage"type="file" name="profile-image" accept="iamge/*">
+                                            <span class="delete-image">&times;</span>
+                                        </td>
                                         <td>
                                             <span>회원님을 알릴 수 있는 사진을 등록해 주세요. <br>등록된 사진은 회원님의 게시물이나 댓글들에 사용됩니다.</span>
                                         </td>                                    
                                         <td class="profile-area">
-                                            <button class="profile-del-btn myPageDelUpdateBtn" type="button">삭제</button><button class="confirm myPageDelUpdateBtn">수정</button>
+                                            <button class="profile-del-btn myPageDelUpdateBtn" type="button">삭제</button>
+                                            <button class="confirm myPageDelUpdateBtn">수정</button>
                                         </td>
                                     </form>
-
                                 </tr>
         
                                 <tr class="id-area" colspan="3">
@@ -69,27 +80,25 @@
                                     </td>
                                 </tr>
                                 <tr style='display: none;' class="change-password-area">
-                                    <form>
-                                        <th>비밀번호</th>
-                                        <td colspan="3">
-                                            <div class="password-area2">
-                                                <span>현재 비밀번호</span>
-                                                <input style="display:block;" placeholder="기존 비밀번호 입력" type="password" autocomplete="off">
-                                            </div>
-                                            <div class="password-area2">
-                                                <span>신규 비밀번호</span>
-                                                <input placeholder="신규 비밀번호 입력" type="password" autocomplete="off">
-                                            </div>
-                                            <div class="password-area2">
-                                                <span>신규 비밀번호 확인</span>
-                                                <input placeholder="신규 비밀번호 확인" type="password" autocomplete="off">
-                                            </div>
-                                            <div class="password-commit">
-                                                <button class="confirm myPageConfirmCancelBtn">확인</button>
-                                                <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
-                                            </div>
-                                        </td>
-                                    </form>
+                                    <th>비밀번호</th>
+                                    <td colspan="3">
+                                        <div class="password-area2">
+                                            <span>현재 비밀번호</span>
+                                            <input style="display:block;" name = "currentPw" placeholder="기존 비밀번호 입력" type="password" autocomplete="off">
+                                        </div>
+                                        <div class="password-area2">
+                                            <span>신규 비밀번호</span>
+                                            <input placeholder="신규 비밀번호 입력" name = "newPw" type="password" autocomplete="off">
+                                        </div>
+                                        <div class="password-area2">
+                                            <span>신규 비밀번호 확인</span>
+                                            <input placeholder="신규 비밀번호 확인"name="confirmNewPw" type="password" autocomplete="off">
+                                        </div>
+                                        <div class="password-commit">
+                                            <button id = "pwConfirmBtn"class="confirm myPageConfirmCancelBtn">확인</button>
+                                            <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
+                                        </div>
+                                    </td>
                                 </tr>
 
 
@@ -215,11 +224,14 @@
 
             </section>
         </section>
+    </main>
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
 
-        <th:block th:replace="~{common/fragments/footer}"></th:block>
-<<<<<<< HEAD
-=======
-        <script src="/js/myPage/myPage.js"></script>
->>>>>>> 00488a32459d7d1a052114a96825e1cfba8e50dc
+      <!-- 회원 프로필 이미지 변경시 사용할 변수 js 변수로 얻어놓기 -->
+    <script th:inline="javascript">
+        const loginMemberProfileImg = /*[[${session.loginMember.profileImg}]]*/ "회원프로필이미지";
+    </script>
+    <script src="/js/myPage/myPage.js"></script>
 </body>
+
 </html>
