@@ -17,3 +17,10 @@ if (boardCreateBtn != null) {
     
     });
 }
+
+// ===============================================================================
+
+document.querySelector("#searchBtn").addEventListener("click", () => {
+
+
+});
