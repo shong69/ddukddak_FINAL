@@ -231,7 +231,7 @@ emailAuthBtn.addEventListener('click', async () => {
             return;
         }
 
-         // 이메일 발송 요청 (이름, 이메일 회원 일치 여부를 확인하면서 병렬로 처리)
+         // 이메일 발송 요청
         const emailSendResp = await fetch("/email/findId", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -326,6 +326,7 @@ emailAuthInput.addEventListener('blur', () => {
 
     })
 
+    disabledCheckButton();
 
 });
 
@@ -340,7 +341,7 @@ telNm.addEventListener('focus', e => {
 
     if(telNmValue.trim().length ===0) {
         telNm.classList.add('errorB');
-        checkEmailObj.telNm = false;
+        checkTelObj.telNm = false;
     }
 })
 
@@ -357,18 +358,18 @@ telNm.addEventListener('input', e => {
 
     if(telNmValue.trim().length === 0) {
         telNm.classList.add('errorB');
-        checkEmailObj.telNm = false;
+        checkTelObj.telNm = false;
         return;
     }
 
     if(!regExpName.test(telNmValue)) {
         telNm.classList.add('errorB');
-        checkEmailObj.telNm = false;
+        checkTelObj.telNm = false;
         return;
     }
 
     telNm.classList.remove('errorB'); // 일단 공백, 유효성만 통과하면 빨간 테두리 X
-    checkEmailObj.telNm = true;
+    checkTelObj.telNm = true;
     
     disabledCheckButton();
 });
@@ -391,7 +392,7 @@ inputTel.addEventListener('focus', e => {
         telMsg.innerText = '전화번호를 입력해 주세요.';
         telMsg.classList.add('errorC');
         inputTel.classList.add('errorB');
-        checkEmailObj.tel = false;
+        checkTelObj.tel = false;
     }
 });
 
@@ -441,11 +442,8 @@ inputTel.addEventListener('input', e => {
 });
 
 
-
-
-
 // 2. SMS 인증 요청 클릭 시
-telAuthBtn.addEventListener('click', () => {
+telAuthBtn.addEventListener('click', async () => {
 
     // 이미 인증 입력 시도 중이였다면
     if(!telAuthHidden.classList.contains('hidden')) {
@@ -469,7 +467,7 @@ telAuthBtn.addEventListener('click', () => {
     }
 
     // 이름 다시 한 번 걸러주고
-    if(!checkEmailObj.telNm) {
+    if(!checkTelObj.telNm) {
         alert('이름을 다시 확인 후 요청해 주세요.')
         return;
     }
@@ -479,24 +477,47 @@ telAuthBtn.addEventListener('click', () => {
         "memberTel" : inputTel.value
     }
 
-    // *********** 수정 필요 부분 try ~ catch **************
-    if (checkTelObj.tel) {
-        telAuthHidden.classList.remove('hidden');
-        // 여기에 실제 SMS 인증 요청 비동기 코드를 추가 예정
-        // inputTel이 실제로 존재하지 않으면 return 구문 작성 필요
+    try {
+        const memberNTCheckResp = await fetch("/member/memberNTCheck", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(memberNTCheck)
+        });
 
-        smsAuthKey = '123456'; // 예시 설정
+        const memberNTCheckResult = await memberNTCheckResp.text();
 
-        checkTelObj.telAuth = false;
-        telAuthInput.focus();
+        if(memberNTCheckResult == 0) {
+            alert("입력하신 정보와 일치하는 회원이 존재하지 않습니다.");
+            return;
+        }
 
-    } else {
-        alert('유효한 전화번호를 입력해 주세요.');
-        inputTel.value = "";
-        checkTelObj.tel = false;
-        return;
+        // sms 발송 결과 요청
+        const smsSendResp = await fetch("/sms/findId", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: inputTel.value
+        });
+
+        // sms 발송 결과
+        const smsSendResult = await smsSendResp.text();
+
+        if(smsSendResult == 1) {
+            
+            console.log('인증 번호 발송 성공');
+            alert("입력해 주신 휴대폰 번호로 인증번호가 발송되었습니다.");
+            telAuthHidden.classList.remove('hidden');
+            telAuthInput.focus();
+        } else {
+            console.log("인증 번호 발송 실패");
+            alert("인증 번호 발송에 실패했습니다. 다시 시도해 주세요.");
+        }
+
+
+    } catch(err) {
+        console.log('Error', err)
     }
-    // *******************************************************
+
+
 });
 
 // 3. 휴대폰 인증 입력
@@ -570,7 +591,7 @@ telAuthInput.addEventListener('blur', () => {
     })
 
     disabledCheckButton();
-})
+});
 
 
 
@@ -607,7 +628,7 @@ findIdForm.addEventListener('submit', (e) => {
         if (!checkTelObj.tel || !checkTelObj.telAuth || !checkTelObj.telNm ) {
             e.preventDefault();
 
-            if(!checkEmailObj.telNm) {
+            if(!checkTelObj.telNm) {
                 alert('유효한 이름을 입력해 주세요.');
                 return;
             }

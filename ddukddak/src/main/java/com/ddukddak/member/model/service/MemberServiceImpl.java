@@ -15,7 +15,7 @@ public class MemberServiceImpl implements MemberService {
 
 	private final MemberMapper mapper;
 
-	/** [아이디 찾기] 닉네임, 이메일 일치 여부 확인
+	/** [메일] 아이디 찾기 / 이름, 이메일 일치 여부 확인
 	 *
 	 */
 	@Override
@@ -25,23 +25,33 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	
-	/** 이메일로 아이디 찾기
+	/** [아이디 찾기 결과] 이메일로 아이디 찾기
 	 *
 	 */
 	@Override
 	public Member findIdByEmail(Member member) {
-		// TODO Auto-generated method stub
+		
 		return mapper.findIdByEmail(member);
 	}
 
 
-	/** 휴대폰으로 아이디 찾기
+	/** [아이디 찾기 결과] 휴대폰으로 아이디 찾기
 	 *
 	 */
 	@Override
 	public Member findIdByTel(Member member) {
-		// TODO Auto-generated method stub
+		
 		return mapper.findIdByTel(member);
+	}
+
+
+	/** [SMS] 아이디 찾기 / 이름, 이메일 일치 여부 확인
+	 *
+	 */
+	@Override
+	public int memberNTCheck(Member member) {
+		
+		return mapper.memberNTCheck(member);
 	}
 
 

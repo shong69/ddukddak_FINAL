@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddukddak.sms.model.mapper.SmsMapper">
+
+	<!-- 인증 업데이트 -->
+	<update id="updateSmsAuthKey">
+		UPDATE "SMS_AUTH" SET
+		"SMS_AUTH_KEY" = #{smsAuthKey},
+		"SMS_CREATE_TIME" = SYSDATE
+		WHERE "SMS_TEL" = #{smsTel}
+	</update>
+	
+	<!-- 업데이트 실패 시 인증 삽입 -->
+	<insert id="insertSmsAuthKey">
+		INSERT INTO "SMS_AUTH"
+		VALUES(SEQ_SMS_KEY_NO.NEXTVAL, #{smsTel}, #{smsAuthKey}, DEFAULT)
+	</insert>
+	
+	<!-- SMS 인증키 확인 -->
+	<select id="checkSmsAuthKey" resultType="_int">
+		SELECT COUNT(*)
+		FROM "SMS_AUTH"
+		WHERE "SMS_TEL" = #{smsTel}
+		AND "SMS_AUTH_KEY" = #{smsAuthKey}
+	</select>
+
+</mapper>

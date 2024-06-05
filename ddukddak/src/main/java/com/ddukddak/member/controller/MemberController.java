@@ -2,7 +2,6 @@ package com.ddukddak.member.controller;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +28,9 @@ public class MemberController {
 	@GetMapping("login")
 	public String memberLogin() {
 		
-
+//		String smsAuthKey = Utility.RandomNumber6();
+//		
+//		log.info("인증 번호 테스트 : {}", smsAuthKey);
 		
 		return "member/login";
 	}
@@ -65,12 +66,17 @@ public class MemberController {
 	}
 	
 	
-//	@PostMapping("memberTelCheck")
-//	@ResponseBody
-//	public int memberTelCheck(@RequestBody String memberTel) {
-//		
-//		return service.memberTelCheck(memberTel);
-//	}
+	
+	/** [아이디 찾기] 이름, 휴대폰 일치 여부 확인
+	 * @param memberTel
+	 * @return
+	 */
+	@PostMapping("memberNTCheck")
+	@ResponseBody
+	public int memberNTCheck(@RequestBody Member member) {
+		
+		return service.memberNTCheck(member);
+	}
 	
 	
 	/** [아이디 찾기] 결과

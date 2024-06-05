@@ -3,6 +3,7 @@ package com.ddukddak.email.model.service;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -28,6 +29,9 @@ public class EmailServiceImpl implements EmailService {
 	private final EmailMapper mapper;
 	
 	
+    /** 메일 보내기(서버 비동기화)
+     *
+     */
     @Async
     @Override
     public void sendEmailAsync(String pageName, String email) {
@@ -73,7 +77,7 @@ public class EmailServiceImpl implements EmailService {
 			// CID(Content-ID)를 이용해 메일에 이미지 첨부
 			// (파일첨부와는 다름, 이메일 내용 자체에 사용할 이미지 첨부)
 			// logo 추가 예정
-			//helper.addInline("logo", new ClassPathResource("static/images/logo.jpg"));
+			helper.addInline("logo", new ClassPathResource("static/images/main/main-logo.png"));
 			// -> 로고 이미지를 메일 내용에 첨부하는데
 			//    사용하고 싶으면 "logo"라는 id를 작성해라
 			

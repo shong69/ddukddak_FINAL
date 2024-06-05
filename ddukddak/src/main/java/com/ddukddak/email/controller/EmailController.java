@@ -41,7 +41,7 @@ public class EmailController {
 //		return 0; // 실패
 //	}
 	
-    /** [회원] 아이디 찾기 메일 발송
+    /** 아이디 찾기 메일 발송
      * @return
      */
     @ResponseBody
@@ -54,7 +54,7 @@ public class EmailController {
         return 1; // 요청 성공
     }
 	
-	/** 인증키 일치 여부 확인
+	/** 메일 인증키 일치 여부 확인
 	 * @param map
 	 * @return
 	 */
