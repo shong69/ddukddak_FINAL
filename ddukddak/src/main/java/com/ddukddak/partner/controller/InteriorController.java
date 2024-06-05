@@ -50,6 +50,21 @@ public class InteriorController {
 		return "partner/interior/interiorPortfolioEdit/projectDetail";
 	}
 	
+	@GetMapping("interiorChatWithManager")
+	public String interiorChatWithManager() {
+		return "partner/interior/interiorChatWithManager/interiorChatWithManager";
+	}
+	
+	@GetMapping("interiorChatWithManagerPopup")
+	public String interiorChatWithManagerPopup() {
+		return "partner/interior/interiorChatWithManager/interiorChatWithManagerPopup";
+	}
+	
+	@GetMapping("interiorChatWithUser")
+	public String interiorChatWithUser() {
+		return "partner/interior/interiorChatWithUser/interiorChatWithUser";
+	}
+	
 	@GetMapping("registProject")
 	public String registProject() {
 		return "partner/interior/interiorPortfolioEdit/registProject";

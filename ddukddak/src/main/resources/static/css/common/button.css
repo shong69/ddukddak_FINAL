@@ -385,8 +385,8 @@ button:active {
 .boardMainBtn:hover {
     transform: none;
     box-shadow: none;
-    border: 1px solid var(--secondary);
-
+    /* border: 1px solid var(--secondary); */
+    background-color: var(--primary1);
     transition: 0.3s;
     color: var(--secondary);
 }

@@ -375,3 +375,11 @@
     justify-content: center;
     align-items: center;
 }
+
+
+
+
+/* 게시글 넘는것들 처리 */
+.hidden {
+    display: none;
+}
