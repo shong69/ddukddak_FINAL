@@ -41,6 +41,7 @@
 }
 
 #shopping-items {
+    width: 1300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,6 +51,7 @@
 #shopping-items > div {
     display: flex;
     flex-direction: column;
+    margin: 0 60px;
 }
 
 #shoping-list > div:first-child {

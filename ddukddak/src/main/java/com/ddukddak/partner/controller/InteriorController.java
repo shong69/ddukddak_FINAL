@@ -65,4 +65,8 @@ public class InteriorController {
 		return "partner/interior/interiorChatWithUser/interiorChatWithUser";
 	}
 	
+	@GetMapping("registProject")
+	public String registProject() {
+		return "partner/interior/interiorPortfolioEdit/registProject";
+	}
 }

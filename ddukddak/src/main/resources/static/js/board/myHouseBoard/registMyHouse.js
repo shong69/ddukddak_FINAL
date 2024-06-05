@@ -47,3 +47,8 @@ function displayLargeImage(src) {
     largeImage.style.display = 'block';
 
 };
+
+
+// --------------------------------------------------------------------------
+
+/* 집들이 작성 유효성 검사 */

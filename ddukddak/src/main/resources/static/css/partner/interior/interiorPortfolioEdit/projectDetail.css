@@ -6,11 +6,12 @@
     margin: 0;
 }
 
+/* 회사명 */
 .interior-title {
     width: 100%;
     display: flex;
     align-items: center;
-    margin: 20px 0;
+    margin: 50px 0;
 }
 
 .logo-img {
@@ -21,6 +22,12 @@
     cursor: pointer;
 }
 
+.logo-img img {
+    width: 50px;
+    border-radius: 999px;
+}
+
+/* 프로젝트 내용 */
 .project-name {
     margin: 20px 0;
 }
@@ -31,16 +38,152 @@
 }
 
 .projectImg {
+    position: relative;
+}
+
+.previewImg {
     width: 100px;
     height: 80px;
+    display: inline-block;
+    text-align: center;
+    display: flex;
+    position: relative;
+}
+
+.previewImg {
+    display: none;
+}
+.previewImg.active {
+    display: flex;
+}
+
+.projectImg label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.projectImg img {
+    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    
 }
 
 .thumbnail {
     width: 100%;
     height: 600px;
+    border: 1px solid var(--gray5);
 }
 
 .preview-img {
     display: flex;
-    overflow-x: scroll;
+    padding: 20px 0;
+    justify-content: flex-start;
+}
+
+.inputImg {
+    display: none;
+}
+
+.active {
+    margin-right: 15px;
+}
+
+/* 삭제 버튼 */
+.delete-img{
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+/* 프로젝트 정보 */
+.project-info-area {
+    margin: 40px 0;
+    padding: 20px;
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.25);
+}
+
+.project-info-area h2 {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.project-info-area div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    height: 20px;
+}
+
+.project-info-area > div > select {
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+.project-info div {
+    border: 1px solid var(--gray5);
+    border-radius: 5px;
+    padding: 15px 10px;
+}
+
+.project-info > div > input {
+    border: none;
+    outline: none;
+    font-size: 15px;
+    width: 100px;
+}
+
+
+/* 세부정보 */
+.detail-info-area {
+    margin: 20px 0;
+    padding: 20px;
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.25);
+}
+
+.detail-info-area h2 {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.detail-info-area div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    height: 20px;
+}
+
+.detail-info-area > div > select {
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+/* 버튼 */
+.btn-area {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 50px;
+}
+
+.btn-area button {
+    width: 150px;
+}
+
+.viewMoreBtn {
+    width: 100px;
 }
