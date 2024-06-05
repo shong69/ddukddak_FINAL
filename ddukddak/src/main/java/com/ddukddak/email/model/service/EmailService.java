@@ -18,6 +18,10 @@ public interface EmailService {
 	int checkAuthKey(Map<String, Object> map);
 
 	
+	/** 이메일 발송(서버 비동기)
+	 * @param pageName
+	 * @param email
+	 */
 	void sendEmailAsync(String pageName, String email);
 
 }

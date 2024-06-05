@@ -2,15 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ddukddak.member.model.mapper.MemberMapper">
 	
-	<!-- 이름, 이메일 일치 여부 확인 -->
+	<!-- [메일] 이름, 이메일 일치 여부 확인 -->
 	<select id="memberNMCheck">
 		SELECT COUNT(*)
 		FROM "MEMBER"
 		WHERE MEMBER_NAME = #{memberName} 
 		AND MEMBER_EMAIL = #{memberEmail}
 		AND MEMBER_DEL_FL = 'N'
+		AND SOCIAL_LOGIN_TYPE = 'D'
 	</select>
 	
+	<!-- 아이디 찾기 결과(이메일) -->
 	<select id="findIdByEmail">
 		SELECT MEMBER_ID, TO_CHAR(ENROLL_DATE, 'YY"."MM"."DD') ENROLL_DATE
 		FROM "MEMBER"
@@ -20,11 +22,22 @@
 		AND SOCIAL_LOGIN_TYPE = 'D'
 	</select>
 	
+	<!-- 아이디 찾기 결과(휴대폰) -->
 	<select id="findIdByTel">
 		SELECT MEMBER_ID, TO_CHAR(ENROLL_DATE, 'YY"."MM"."DD') ENROLL_DATE
 		FROM "MEMBER"
 		WHERE MEMBER_Tel = #{memberTel}
 		AND MEMBER_NAME = #{memberName}
+		AND MEMBER_DEL_FL = 'N'
+		AND SOCIAL_LOGIN_TYPE = 'D'
+	</select>
+	
+	<!-- [SMS] 이름, 이메일 일치 여부 확인 -->
+	<select id="memberNTCheck">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_NAME = #{memberName} 
+		AND MEMBER_TEL = #{memberTel}
 		AND MEMBER_DEL_FL = 'N'
 		AND SOCIAL_LOGIN_TYPE = 'D'
 	</select>

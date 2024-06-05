@@ -2,6 +2,8 @@ package com.ddukddak.common.util;
 
 import java.text.SimpleDateFormat;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 public class Utility {
 
 	public static int seqNum = 1; // 1 ~ 99999 반복
@@ -34,5 +36,14 @@ public class Utility {
 		
 		return date + "_" + number + ext;
 	}
+	
+
+	/** SMS 난수 생성(String형 숫자 6자리)
+	 * @return
+	 */
+	public static String RandomNumber6() {
+        // 숫자만 포함된 6자리 난수를 생성
+        return RandomStringUtils.randomNumeric(6);
+    }
 	
 }
