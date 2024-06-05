@@ -149,9 +149,11 @@
 }
 .slick-prev {
     left: -100px !important;
+    top: 90px !important;
 }
 .slick-next {
     right: 10px;
+    top: 90px !important;
 }
 .slide{
     height: 300px;
