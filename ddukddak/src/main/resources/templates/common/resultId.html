@@ -34,11 +34,11 @@
 
             <!-- 아이디 내역 -->
             <div class="findIdDiv">
-                <div>
-                    <h3>soowagger</h3>
-                </div>
-                
-                <div><h3>가입일 : 24.01.01</h3></div>
+                    <div>
+                        <h3 th:text="${memberId}">아이디</h3>
+                    </div>
+                    
+                    <div><h3 th:text="|가입일 : ${enrollDate}|">가입일 : 24.01.01</h3></div>
             </div>
 
             <!-- 비밀번호 찾기 -->

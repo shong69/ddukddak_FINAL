@@ -19,6 +19,7 @@ public class Member {
 	private String memberId;
 	private String memberEmail;
 	private String memberPw;
+	private String memberName; // 이름 추가
 	private String memberNickname;
 	private String memberTel;
 	private String memberAddr;
