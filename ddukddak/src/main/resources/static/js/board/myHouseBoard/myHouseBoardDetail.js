@@ -191,17 +191,3 @@ if (slideshow != null) {
         });
     }
 }
-
-// 팝업 경로
-let path;
-
-// 팝업 사이즈
-const popupW = 400;
-const popupH = 360;
-
-// 팝업 위치
-let tempLeft = Math.ceil((window.screen.width - popupW)/2);
-let tempTop = Math.ceil((window.screen.height - popupH)/2);
-
-const reportBtn = document.querySelector("#reportBtn");
-

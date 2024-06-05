@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 1:1문의</title>
+    <link rel="stylesheet" href="/css/manager/chatWithMember.css">
+    <link rel="stylesheet" href="/css/common/fragments/myPageSidebar.css">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+    <script src="https://kit.fontawesome.com/4b505ed7b7.js" crossorigin="anonymous"></script>
+    <style>
+        .side-bar{
+            width: 200px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    <main>
+        <th:block th:replace="~{common/fragments/myPageProfileSection}"></th:block>
+        <section class="myPage-row2">
+            <th:block th:replace="~{common/fragments/myPageSideBar}"></th:block>
+            <section class="myPage-main">
+                <div class="chat-header">
+                    <h2 style="color:white;">1:1 문의</h2>
+                    <div>
+                        <input class="member-search" name="memberName" placeholder="이름을 입력해주세요">
+                        <button id="search-btn">검색</button>
+                    </div>
+                </div>
+                <table class="chatTable">
+                    <tr>
+                        <th>이름</th>
+                        <th>회원구분</th>
+                        <th>요청 시간</th>
+                        <th>채팅방</th>
+                        <th>상태</th>
+                    </tr>
+                    <tr>
+                        <td>김소영</td>
+                        <td>일반회원</td>
+                        <td>2024.06.04 18:35 PM</td>
+                        <td><button class="chat-enter-btn" onclick="openChatPopup()" type="button">입장</button></td>
+                        <td>진행중</td>
+                    </tr>
+                    <tr>
+                        <td>이승주</td>
+                        <td>시공사</td>
+                        <td>2024.06.03 12:15 PM</td>
+                        <td><button class="chat-enter-btn" onclick="openChatPopup()" type="button">입장</button></td>
+                        <td>진행중</td>
+                    </tr>
+                    <tr>
+                        <td>홍샘</td>
+                        <td>판매사</td>
+                        <td>2024.06.03 12:14 PM</td>
+                        <td><button class="chat-enter-btn" onclick="openChatPopup()" type="button" disabled>입장</button></td>
+                        <td>종료</td>
+                    </tr>
+                </table>
+            </section>
+
+        </section>
+    </main>
+</body>
+<script th:inline="javascript">
+    function openChatPopup() { window.open("/manager/chatPopup", "1:1 문의", "width=500px, height=750px, left=470, top=50,resizable=no, scrollbars=no"); }
+
+</script>
+</html>

@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상세페이지</title>
+    <title>뚝딱뚝딱 : 쇼핑</title>
 
     <link rel="stylesheet" href="/css/common/fragments/header.css">
     <link rel="stylesheet" href="/css/common/fragments/footer.css">
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/eCommerce/eCommerceDetail.css">
     <link rel="stylesheet" href="/css/common/button.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+
+    <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <th:block th:replace="~{common/fragments/header}"></th:block>
@@ -27,7 +30,22 @@
         <div id="detailContainer">
             <!-- 메인 이미지/ 가격 -->
             <div id="productContainer">
-                <div><img src="/images/main/shopping-1.jpg" style="height: 700px; width: 600px;"></div>
+                <div id="imgContainer">
+                    <img src="/images/main/shopping-1.jpg" class="mainImg">
+                    <div class="arrow-container">
+                        <div class="arrow left-arrow">&lt;</div>
+                        <div class="arrow right-arrow">&gt;</div>
+                    </div>
+
+                    <div id="imgSubContainer">
+                        <img src="/images/main/shopping-1.jpg" class="subImg">
+                        <img src="/images/main/shopping-2.jpg" class="subImg">
+                        <img src="/images/main/shopping-3.jpg" class="subImg">
+                        <img src="/images/main/shopping-4.jpg" class="subImg">
+                    </div>
+
+                    <!-- 화살표 추가 -->
+                </div>
 
                 <!-- 가격칸 -->
                 <div id="productPrice">
@@ -178,13 +196,72 @@
             <div id="detailBox">
                 <div>
                     <div>
-                        <div><h3>상세정보</h3></div>
-                        <div><h3>리뷰 0</h3></div>
-                        <div><h3>QNA</h3></div>
-                        <div><h3>반품/교환 정보</h3></div>
+                        <button class="eCommerceProductDetailBtn" id="detailInfo">상세정보</button>
+                        <button class="eCommerceProductDetailBtn" id="review">리뷰 0</button>
+                        <button class="eCommerceProductDetailBtn" id="qna">QNA</button>
+                        <button class="eCommerceProductDetailBtn" id="changeInfo">반품/교환 정보</button>
                     </div>
 
-                    <div></div>
+                    <div id="detailUnder">
+
+
+                        <!-- 교환/반품 -->
+                        <div id="change">
+                            <h2>교환/반품 정보</h2>
+
+                            <ul>
+                                <li><h4>반품배송비(편도) :</h4> 편도 3,000원 (최초 배송비 미결제시 6,000원 부과)</li>
+                                <li><h4>교환배송비(왕복) :</h4> 6,000원</li>
+                                <li><h4>보내실 곳 :</h4> (17502) 경기도 안성시 양성면 돌꽃지길 52 제너럴아이디어</li>
+                                <li>단, 교환/반품 비용은 상품 및 교환/반품 사유에 따라 변경될 수 있으므로 교환/반품 신청 화면 확인 부탁드립니다.</li>
+                            </ul>
+
+                            <h2>교환/반품 사유에 따른 요청 가능 기간</h2>
+
+                            <ul>
+                                <li>구매자 단순 변심 : 상품 수령 후 7일 이내(구매자 반품 배송비 부담)</li>
+                                <li>표시/광고와 상이, 계약 내용과 다르게 이행된 경우 :<br>상품 수령 후 3개월 이내 호긍ㄴ 표시/광고와 다른 사실을 안 날로부터 30일 이내(판매자 반품 배송비 부담)</li>
+                            </ul>
+
+                            <h2>교환/반품 불가한 경우</h2>
+
+                            <ol>
+                                <li>교환/반품 요청이 기간이 지난 경우</li>
+                                <li>소비자의 책임 있는 사유로 상품 등이 분실/파손/훼손된 경우 (단, 확인을 위한 포장 훼손 제외)</li>
+                                <li>소비자의 사용/소비에 의해 상품 등의 가치가 현저히 감소한 경우 (예 : 식품, 화장품, 향수, 음반)</li>
+                                <li>제품을 설치 또는 장착하였거나 개통한 경우 (예 : 전자제품, 컴퓨터, 휴대폰 등)</li>
+                                <li>시간의 경과에 의해 재판매가 곤란할 정도로 상품 등의 가치가 현저히 감소한 경우 (신선식품과 같이 유통기한이 정해져 있는 상품)</li>
+                                <li>복제가 가능한 상품 등의 포장을 훼손한 경우 (CD/DVD/GAME/BOOK의 겨우 포장 개봉 시)</li>
+                                <li>주문제작 상품 중 상품제작에 들어간 경우 (주문접수 후 개별생산, 맞춤 제작 등)</li>
+                            </ol>
+
+                            <h2>거래 조건에 대한 정보</h2>
+
+                            <ol>
+                                <li>
+                                    소화물 택배의 배송은 발송일로부터 1~2 영업일이 소요되나,<br>
+                                    지역/대형 화물/설치/예약/발송지체 등의 특이사항에 따라 배송기간은 달라질 수 있습니다.
+                                </li>
+                                <li>
+                                    '전자상거래등에서의소비자보호에관한법률'이 정하는 바에 따라 소비자의 청약철회 후 판매자가 재화 등을 반환 받은 날로부터<br>
+                                    3영업일 이내에 지급받은 대금의 환급을 정당한 사유없이 지연하는 때에는 소비자는 지연기간에 대해서 전상법 시행령으로 정하는 이율을<br>
+                                    곱하여 산정한 지연이자(지연배상금)을 신청할 수 있습니다.
+                                </li>
+                            </ol>
+
+                            <h2>판매자 정보</h2>
+
+                            <ul>
+                                <li>상호명 : <h4>(주)뚝딱뚝딱</h4></li>
+                                <li>대표자 : <h4>누굴까</h4></li>
+                                <li>연락처 : <h4>02-123-1234</h4></li>
+                                <li>통신판매업자번호 : <h4>1996-서울서초-00015</h4></li>
+                                <li>사업자등록번호 : <h4>106-81-51510</h4></li>
+                                <li>사업장소재지 : <h4>서울특별시 종로구 남대문로 120 그레이츠청계</h4></li>
+                                <li>E-mail : <h4>ddukddak@gmail.com</h4></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -195,5 +272,6 @@
     
     <th:block th:replace="~{common/fragments/footer}"></th:block>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/eCommerce/eCommerceDetail.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>뚝딱 : 회원로그인</title>
+    <title>뚝딱뚝딱 : 회원로그인</title>
 
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/common/style.css">
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/common/fragments/header.css">
     <link rel="stylesheet" href="/css/common/fragments/footer.css">
     <link rel="stylesheet" href="/css/member/login.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
 
     <!-- 폰트어썸 -->
     <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
@@ -89,6 +90,38 @@
     
     </main>
 
+    <div style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 5px; overflow: hidden; font-family: Pretendard, sans-serif;">
+        <div style="padding: 30px; text-align: left;">
+            
+            <div style="display: flex; height: 60px;margin-bottom: 50px;">
+                <img src="cid:logo" alt="뚝딱뚝딱 로고" style="width: 60px; height: 60px; object-fit: cover;">
+                <h3 style="font-size:16px;font-weight:700;margin-left: 0px;margin-top: 26px;padding-right: 0px;margin-right: 0px;" >뚝딱뚝딱</h3>
+            </div>
+    
+    
+            <div style="display: flex; align-items: center; height: 60px;" >
+                <h1 style="font-size: 28px; margin: 0;">아이디 찾기 인증번호</h1>
+            </div>
+    
+            <hr style="border: 1px solid #e0e0e0; margin-bottom:40px;">
+            <p style="font-size: 15px; color: #000000; font-weight: 700;">요청하신 아이디 찾기를 위한 인증번호입니다.</p>
+            <p style="font-size: 15px; color: #333333;">아래의 인증번호를 인증번호 입력창에 입력하세요.</p>
+            <p style="font-size: 15px; color: #333333;">* 인증번호는 발송 요청 후 5분간만 사용하실 수 있습니다.</p>
+            <p style="font-size: 15px; color: #333333;">* 만약 본인이 아이디 찾기를 신청한 것이 아닐 경우 고객센터로 문의해 주세요.</p>
+            <div style="font-size: 15px; color: #000000; font-weight: bold; background-color: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 4px; margin-bottom: 40px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr style="background-color: #f5f5f5;">
+                        <td style="width: 20%; padding: 20px; text-align: left; font-size: 16px; font-weight: bold; border-bottom: 1px solid #e0e0e0;" colspan="2">아이디 찾기</td>
+                    </tr>
+                    <tr style="background-color: white;">
+                        <td style="width: 20%; padding: 20px 0px 20px 20px; text-align: left; font-size: 16px; font-weight: bold;" >인증번호</td>
+                        <td style="padding: 20px; text-align: left; font-size: 16px; color: #8C8C8C;" >인증키</td>
+                    </tr>
+                </table>
+            </div>
+            <p style="font-size: 12px; color: #999999; text-align: center;">이 메일은 발신 전용입니다. 회신을 삼가 주시기 바랍니다.</p>
+        </div>
+    </div>
 
     <th:block th:replace="~{common/fragments/footer}"></th:block>
 

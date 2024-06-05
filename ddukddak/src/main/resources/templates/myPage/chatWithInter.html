@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cart</title>
+    <title>뚝딱뚝딱 : 마이페이지</title>
     <link rel="stylesheet" href="/css/myPage/interChat.css">
     <link rel="stylesheet" href="/css/common/fragments/myPageSidebar.css">
     <link rel="stylesheet" href="/css/common/fragments/header.css">
     <link rel="stylesheet" href="/css/common/fragments/footer.css">
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/common/style.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
     <script src="https://kit.fontawesome.com/4b505ed7b7.js" crossorigin="anonymous"></script>
 
 </head>
@@ -119,93 +120,100 @@
         
                     <ul id="resultArea"></ul>
                 </div>
-
-                <div class="chatting-area">
-                    <ul class="chatting-list">
-                        <div id="addTarget"class="fa-solid fa-user-plus" title="시공사 추가"></div>
-                        <li class="chatting-item" chat-no="4" target-no="5">
-                            <div class="item-header">
-    
-                                <img class="list-profile" src="/images/profile/main.jpg">
-                            </div>
-                            <div class="item-body">
-                                <p>
-                                    <span class="target-name">유저이</span>
-                                    <span class="recent-send-time">2024.06.03</span>
-                                </p>
-                                <div>
-                                    <p class="recent-message">왜</p>
+                <div class="chatting-area-box">
+                    <div class="chatting-header">
+                        <div class="chatting-header1">
+                            <div id="addTarget"class="fa-solid fa-user-plus" title="시공사 추가"></div>
+                        </div>
+                    </div><!--뚜껑-->
+                    
+                    <div class="chatting-area">
+                        <ul class="chatting-list">
+                            <li class="chatting-item" chat-no="4" target-no="5">
+                                <div class="item-header">
+        
+                                    <img class="list-profile" src="/images/profile/main.jpg">
                                 </div>
-                            </div>
-                        </li>
-
-                        <li class="chatting-item" chat-no="3" target-no="1">
-                            <div class="item-header">
-                                <img class="list-profile" src="/images/profile/main.jpg">
-
-                            </div>
-                            <div class="item-body">
-                                <p>
-                                    <span class="target-name">김유저1</span>
-                                    <span class="recent-send-time">2024.06.03</span>
-                                </p>
-                                <div>
-                                    <p class="recent-message">잉?</p>
-
+                                <div class="item-body">
+                                    <p>
+                                        <span class="target-name">유저이</span>
+                                        <span class="recent-send-time">2024.06.03</span>
+                                    </p>
+                                    <div>
+                                        <p class="recent-message">왜</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-
-                        <li class="chatting-item" chat-no="5" target-no="4">
-                            <div class="item-header">
-
-                                <img class="list-profile" src="/images/profile/main.jpg">
-                                
-                            </div>
-                            <div class="item-body">
-                                <p>
-                                    <span class="target-name">김소영</span>
-                                    <span class="recent-send-time">2024.05.22</span>
-                                </p>
-                                <div>
-                                    <p class="recent-message"></p>
+                            </li>
     
+                            <li class="chatting-item" chat-no="3" target-no="1">
+                                <div class="item-header">
+                                    <img class="list-profile" src="/images/profile/main.jpg">
+    
+                                </div>
+                                <div class="item-body">
+                                    <p>
+                                        <span class="target-name">김유저1</span>
+                                        <span class="recent-send-time">2024.06.03</span>
+                                    </p>
+                                    <div>
+                                        <p class="recent-message">잉?</p>
+    
+                                    </div>
+                                </div>
+                            </li>
+    
+                            <li class="chatting-item" chat-no="5" target-no="4">
+                                <div class="item-header">
+    
+                                    <img class="list-profile" src="/images/profile/main.jpg">
                                     
                                 </div>
-                            </div>
-                        </li>
+                                <div class="item-body">
+                                    <p>
+                                        <span class="target-name">김소영</span>
+                                        <span class="recent-send-time">2024.05.22</span>
+                                    </p>
+                                    <div>
+                                        <p class="recent-message"></p>
         
-                        
-        
-                    </ul>
-        
-                    <div class="prev-message display-none">
-                        <h1>채팅방을 선택해주세요</h1>	
-                    </div>
-                    
-                    <div class="chatting-content ">
-                        <ul class="display-chatting">
-                            <li class="target-chat">
-                                <img src="/images/profile/main.jpg">
-                                <div>
-                                    <b>유저이</b><br>
-                                    <p class="chat">야</p>
-                                    <span class="chatDate">2024.06.03 11:45</span>
+                                        
+                                    </div>
                                 </div>
                             </li>
-                            <li class="my-chat">
-                                <span class="chatDate">2024.06.03 16:33</span>
-                                <p class="chat">왜</p>
-                            </li>
+            
+                            
+            
                         </ul>
-                    
-                        <div class="input-area">
-                            <textarea id="inputChatting" rows="3"></textarea>
-        
-                            <button id="send">보내기</button>
+            
+                        <div class="prev-message display-none">
+                            <h1>채팅방을 선택해주세요</h1>	
+                        </div>
+                        
+                        <div class="chatting-content ">
+                            <ul class="display-chatting">
+                                <li class="target-chat">
+                                    <img src="/images/profile/main.jpg">
+                                    <div>
+                                        <b>유저이</b><br>
+                                        <p class="chat">야</p>
+                                        <span class="chatDate">2024.06.03 11:45</span>
+                                    </div>
+                                </li>
+                                <li class="my-chat">
+                                    <span class="chatDate">2024.06.03 16:33</span>
+                                    <p class="chat">왜</p>
+                                </li>
+                            </ul>
+                        
+                            <div class="input-area">
+                                <textarea id="inputChatting" rows="3"></textarea>
+            
+                                <button id="send">보내기</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
             </section>
         </section>
         <script src="/js/myPage/interChat.js"></script>

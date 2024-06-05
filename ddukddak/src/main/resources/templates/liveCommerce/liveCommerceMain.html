@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 라이브</title>
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/liveCommerce/liveCommerce.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    <section class="main-board">
+        
+        <div class="main-area">
+            <h2 class="title">오늘의 라이브 커머스</h2>
+            <div class="main-video">
+                <div class="video-area">
+                    <div class="video">
+                        <video></video>
+                    </div>
+                    <div class="video-title">
+                        <h1>[오늘만 특가!! 한정판매] <br>stockholme syndrome 에서 선보이는
+                            인테리어 소품 “달빛 조명”</h1>
+                    </div>
+                </div>
+                <div class="sub-area">
+                    <div class="chat-area"><!--채팅 영역-->
+                        <ul class="display-chatting">
+                            <li class="target-chat">
+                                <img src="/images/profile/main.jpg">
+                                <div>
+                                    <b class="target-name">뚝딱봇</b><br>
+                                    <p class="chat">나나나나 나 주세요</p>
+                                </div>
+                            </li>
+                            <li class="target-chat">
+                                <img src="/images/profile/main.jpg">
+                                <div>
+                                    <b class="target-name">김유저</b><br>
+                                    <p class="chat">저도 갖고 시퍼용</p>
+                                </div>
+                            </li>
+                            <li class="target-chat">
+                                <img src="/images/profile/main.jpg">
+                                <div>
+                                    <b class="target-name">유저삼</b><br>
+                                    <p class="chat">와 개꿀템인데 뒷모습도 보여주세요</p>
+                                </div>
+                            </li>                            <li class="target-chat">
+                                <img src="/images/profile/main.jpg">
+                                <div>
+                                    <b class="target-name">유저일</b><br>
+                                    <p class="chat">할인 언제까지 하나요</p>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="input-area">
+                        <textarea id="inputChatting" col="3"></textarea>
+                        <button id="send">보내기</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div>
+            <h2 class="title">지난 라이브 보기</h2>
+            <div class="slider-container">
+                <ul class="slider-list">
+                    <div class="slider">
+                        <div class="slide">
+                            <li class="ani4">
+                                <div class="thumb">
+                                    <a>
+                                        <img >
+                                    </a>
+                                </div>
+                                <a href="#" style="cursor: pointer;">
+                                    <div class="text">
+                                        <strong>[한샘] 한샘에서 진행하는 초특가 침구 할인! 빨리 들어와</strong>
+                                        <div class="merchan-area">
+                                            <img class="merchan-img">
+                                            <div>
+                                                <div class="merchan-link">베러쿨 아이스몽글 냉감 여름 침대패드</div>
+                                                <div class="merchan-price">
+                                                    <span>18%</span>
+                                                    <span>25,000원</span>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </li>
+                        </div>
+                        <div class="slide">
+                            <li class="ani4">
+                                <div class="thumb">
+                                    <a>
+                                        <img >
+                                    </a>
+                                </div>
+                                <a href="#" style="cursor: pointer;">
+                                    <div class="text">
+                                        <strong>이찬원도 반한 놀라운 편안함 아기 쿨매트</strong>
+                                        <div class="merchan-area">
+                                            <img class="merchan-img">
+                                            <div>
+                                                <a class="merchan-link">듀라론 냉감 신생아 패드 </a>
+                                                <div class="merchan-price">
+                                                    <span>18%</span>
+                                                    <span>25,000원</span>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+    
+                                    </div>
+                                </a>
+
+
+                            </li>
+                        </div>
+                        <div class="slide">
+                            <li class="ani4">
+                                <div class="thumb">
+                                    <a>
+                                        <img >
+                                    </a>
+                                </div>
+                                <a href="#" style="cursor: pointer;">
+                                    <div class="text">
+                                        <strong>[이케아쇼룸] 러그 특별전! ~50% </strong>
+                                        <div class="merchan-area">
+                                            <img class="merchan-img">
+                                            <div>
+                                                <a class="merchan-link">호이데코 모티프 방수 러그 거실카페트 겨울 단모 아이방 먼지없는 워셔블</a>
+                                                <div class="merchan-price">
+                                                    <span>18%</span>
+                                                    <span>25,000원</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </li>
+                        </div>
+                        <div class="slide">
+                            <li class="ani4">
+                                <div class="thumb">
+                                    <a>
+                                        <img >
+                                    </a>
+                                </div>
+                                <a href="#" style="cursor: pointer;">
+                                    <div class="text">
+                                        <strong>이찬원도 반한 놀라운 편안함 아기 쿨매트</strong>
+                                        <div class="merchan-area">
+                                            <img class="merchan-img">
+                                            <div>
+                                                <a class="merchan-link">듀라론 냉감 신생아 패드 </a>
+                                                <div class="merchan-price">
+                                                    <span>25%</span>
+                                                    <span>25,000원</span>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </a>
+
+
+                            </li>
+                        </div>
+                        <div class="slide">
+                            <li class="ani4">
+                                <div class="thumb">
+                                    <a>
+                                        <img >
+                                    </a>
+                                </div>
+                                <a href="#" style="cursor: pointer;">
+                                    <div class="text">
+                                        <strong>더 빠르고 선명해진 2024 오디세이G9</strong>
+                                        <div class="merchan-area">
+                                            <img class="merchan-img">
+                                            <div>
+                                                <a class="merchan-link">삼성전자 오디세이 OLED G9 S49CG954 49형 OLED 32:9 게이밍 모니터 240Hz 0.03ms G95SC</a>
+                                                <div class="merchan-price">
+                                                    <span>25%</span>
+                                                    <span>1,890,000원</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                            </li>
+                        </div>
+                    </div>
+
+                    
+                </ul>
+            </div>
+
+        </div>
+    </section>
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+    <script src="/js/liveCommerce/liveCommerce.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.slider').slick({
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                autoplaySpeed: 3000,
+                speed: 3000,
+                pauseOnFocus: true,
+            pauseOnHover: true,
+                infinite:false,
+                autoplay:false,
+                prevArrow: $('.slick-prev'),
+                nextArrow: $('.slick-next'),
+                responsive: [
+                {
+                    breakpoint: 1024,   //width 1024px 미만
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 480,   //width 480px 미만
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                }
+            ]
+
+            });
+        });
+    </script>
+    
+</body>
+
+</html>

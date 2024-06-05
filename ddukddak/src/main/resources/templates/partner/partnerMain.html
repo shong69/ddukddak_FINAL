@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>파트너 메인</title>
+    <title>뚝딱뚝딱 : 파트너</title>
 
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/partner/partnerMain.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
 
 
     <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
@@ -30,17 +31,21 @@
     <h4 style="text-align: center; margin-top: 70px;">본인의 파트너 유형을 선택해 주세요</h4>
 
     <div id="selectContainer">
-        <div class="selectBox" onclick="location.href='/partner/seller/product/create';">
-            <i class="fa-solid fa-house-user"></i>
-            <h3>판매사</h3>
-        </div>
+        <form action="/partner/seller/product/create" method="get">
+            <div class="selectBox" id="sellerBtn">
+                <i class="fa-solid fa-house-user"></i>
+                <h3>판매사</h3>
+            </div>
+        </form>
 
-        <div class="selectBox">
-            <i class="fa-solid fa-paint-roller"></i>
-            <h3>시공사</h3>
-        </div>
+        <form action="/partner/interiorPortfolioEditMain" method="get">
+            <div class="selectBox" id="interiorBtn">
+                <i class="fa-solid fa-paint-roller"></i>
+                <h3>시공사</h3>
+            </div>
+        </form>
     </div>
 
-    
+    <script src="/js/partner/main.js"></script>
 </body>
 </html>

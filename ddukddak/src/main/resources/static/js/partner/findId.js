@@ -98,9 +98,26 @@ inputTel.addEventListener('input', e => {
 
 // SMS 인증 요청 클릭 시
 telAuthBtn.addEventListener('click', () => {
+
+    // 이미 인증 입력 시도 중이였다면
+    if(!telAuthHidden.classList.contains('hidden')) {
+
+        alert('이미 인증 요청하셨습니다. 다시 입력 후 시도해 주세요.')
+
+        checkTelObj.tel = false;
+        checkTelObj.telAuth = false;
+        telAuthInput.value = "";
+        inputTel.value = "";
+        telAuthHidden.classList.add('hidden');
+
+        return;
+    }
+
     if (checkTelObj.tel) {
         telAuthHidden.classList.remove('hidden');
         // 여기에 실제 SMS 인증 요청 비동기 코드를 추가 예정
+        // inputTel이 실제로 존재하지 않으면 return 구문 작성 필요
+
         smsAuthKey = '123456'; // 예시 설정
 
         checkTelObj.telAuth = false;

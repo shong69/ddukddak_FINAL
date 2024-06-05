@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>뚝딱 : ID 찾기</title>
+    <title>뚝딱뚝딱 : ID 찾기</title>
 
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/common/style.css">
     <link rel="stylesheet" href="/css/common/fragments/header.css">
     <link rel="stylesheet" href="/css/common/fragments/footer.css">
     <link rel="stylesheet" href="/css/partner/findId.css">
-
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
     <!-- 폰트어썸 -->
     <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
 
@@ -40,23 +40,6 @@
                         <div class="partnerBtnArea" onclick="location.href='/partner/findId'"><a>파트너</a></div>
                     </div>
 
-                    <!-- 이메일 -->
-                    <!-- <div class="emailDiv">
-                        <div class="radioDiv">
-                            <input id="emailChoice" type="radio" name="authType" checked>
-                            <label for="emailChoice">이메일</label>
-                        </div>
-                        <div id="emailHiddenDiv">
-                            <div>
-                                <input placeholder="닉네임">
-                            </div>
-                            <div class="authArea">
-                                <input type="email" placeholder="이메일">
-                                <button type="button" id="emailAuthBtn" >인증 요청</button>
-                            </div>
-                        </div>
-                    </div> -->
-
                     <!-- 휴대폰 -->
                     <div class="telDiv">
                         <div class="radioDiv2">
@@ -64,9 +47,12 @@
                             <label for="telChoice">휴대폰</label>
                         </div>
                         <div id="telHiddenDiv" class="authArea">
+                            <div class="telNmDiv">
+                                <input id="telNm" placeholder="이름" name="telNm">
+                            </div>
                             <div>
                                 <input id="inputTel" type="tel" placeholder="전화번호(-없이)" name="memberTel" maxlength="11">
-                                <button type="button" id="telAuthBtn" >SMS 인증</button>
+                                <button type="button" id="telAuthBtn" >인증요청</button>
                             </div>
                             <span id="telMsg" class="msgSpan"></span>
                             <div id="telAuthHidden" class="authArea hidden">

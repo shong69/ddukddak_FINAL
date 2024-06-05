@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>뚝딱뚝딱 : 커뮤니티</title>
 
     <link rel="stylesheet" href="/css/common/main.css"> 
     <link rel="stylesheet" href="/css/common/fragments/header.css">  
@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/common/fragments/board/side-category.css"> 
     <link rel="stylesheet" href="/css/common/button.css">
     <link rel="stylesheet" href="/css/board/myHouseBoard/registMyHouse.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
 </head>
 <body>
 
@@ -24,36 +25,40 @@
 
             <div class="mainArea">
 
-                <div class="topTitle">
-                    <h1>집들이 작성하기</h1>
-                </div>
+                <form action="/myHouse/insertMyHouse" method="POST" id="registMyHouseForm" enctype="multipart/form-data">
 
-                <div class="titleInput">
-                    <input type="text" placeholder="제목">
-                </div>
+                    <div class="topTitle">
+                        <h1>집들이 작성하기</h1>
+                    </div>
 
-                <div class="contentInput">
-                    <textarea placeholder="내용 입력"></textarea>
-                </div>
+                    <div class="titleInput">
+                        <input type="text" placeholder="제목">
+                    </div>
 
-                <div class="midTitle">
-                    <h2>사진 첨부하기</h2>
-                </div>
+                    <div class="contentInput">
+                        <textarea placeholder="내용 입력"></textarea>
+                    </div>
 
-                <div class="inputFile">
-                    <input type="file" id="imageUpload" accept="image/*" multiple>
-                </div>
+                    <div class="midTitle">
+                        <h2>사진 첨부하기</h2>
+                    </div>
 
-                <div class="thumbnailImg">
-                    <h1 id="mainImgText" style="display: none;">메인 이미지</h1>
-                    <img id="largeImage" src="" alt="Large Image Preview" style="display: none;">
-                </div>
+                    <div class="inputFile">
+                        <input type="file" id="imageUpload" accept="image/*" multiple>
+                    </div>
+
+                    <div class="thumbnailImg">
+                        <h1 id="mainImgText" style="display: none;">메인 이미지</h1>
+                        <img id="largeImage" src="" alt="Large Image Preview" style="display: none;">
+                    </div>
 
 
-                <div class="btnArea">
-                    <button class="boardCreateSubmitBtn">등록하기</button>
-                    <button class="boardQuickViewBtn">미리보기</button>
-                </div>
+                    <div class="btnArea">
+                        <button class="boardCreateSubmitBtn">등록하기</button>
+                        <button type="button" class="boardQuickViewBtn">등록취소</button>
+                    </div>
+
+                </form>
 
             </div>
 

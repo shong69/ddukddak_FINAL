@@ -45,40 +45,42 @@ const chattingUser = [
 ]
 
 function makeChatting1() {
-    const box = document.createElement("div");
-        box.classList.add("chattingBox");
-
-        const user = document.createElement("div");
-        user.classList.add("chattingUser");
-        user.innerText = "@" + chattingUser[Math.floor(Math.random()*chattingUser.length)];
-
-        const underBox = document.createElement("div");
-        underBox.classList.add("chattingUnder");
-
-        const chattingmessage = document.createElement("div");
-        chattingmessage.innerText = chattingMessage[Math.floor(Math.random()*chattingMessage.length)];
-        chattingmessage.classList.add("chattingmessage");
-        
-        const today = new Date();
-        const hour = today.getHours();
-        const min = today.getMinutes();
-        const sec = today.getSeconds();
-
-        const chattingTime = `${hour}:${min}:${sec}`;
-
-        const timeBox = document.createElement("div");
-        timeBox.innerText = chattingTime;
-        timeBox.classList.add("chattingTime");
-
-        underBox.append(chattingmessage);
-        underBox.append(timeBox);
-        box.append(user);
-        box.append(underBox);
-        chatting.append(box);
-
-        const scrollHeight = chatting.scrollHeight;
-
-        chatting.scrollTop = scrollHeight;
+    if (chattingUser != null && chattingMessage != null && chatting != null) {
+        const box = document.createElement("div");
+            box.classList.add("chattingBox");
+    
+            const user = document.createElement("div");
+            user.classList.add("chattingUser");
+            user.innerText = "@" + chattingUser[Math.floor(Math.random()*chattingUser.length)];
+    
+            const underBox = document.createElement("div");
+            underBox.classList.add("chattingUnder");
+    
+            const chattingmessage = document.createElement("div");
+            chattingmessage.innerText = chattingMessage[Math.floor(Math.random()*chattingMessage.length)];
+            chattingmessage.classList.add("chattingmessage");
+            
+            const today = new Date();
+            const hour = today.getHours();
+            const min = today.getMinutes();
+            const sec = today.getSeconds();
+    
+            const chattingTime = `${hour}:${min}:${sec}`;
+    
+            const timeBox = document.createElement("div");
+            timeBox.innerText = chattingTime;
+            timeBox.classList.add("chattingTime");
+    
+            underBox.append(chattingmessage);
+            underBox.append(timeBox);
+            box.append(user);
+            box.append(underBox);
+            chatting.append(box);
+    
+            const scrollHeight = chatting.scrollHeight;
+    
+            chatting.scrollTop = scrollHeight;
+    }
 }
 
 function makeChatting2() {
@@ -117,13 +119,14 @@ function makeChatting2() {
 
         chatting.scrollTop = scrollHeight;
 }
-
+let intervalId;
 
 function startInterval() {
-    intervalId = setInterval(function() {
-        makeChatting1();
-        
-    }, 2000);
+    if (chattingUser != null && chattingMessage != null) { 
+        intervalId = setInterval(function() {
+            makeChatting1();
+        }, 2000);
+    }
 }
 function stopInterval() {
     clearInterval(intervalId);
@@ -138,14 +141,17 @@ window.onload = function() {
 
 
 
-chattingInput.addEventListener("keypress", (e) => {
-    if(e.key === 'Enter') {
-        if(chattingInput.value.trim().length === 0) {
-            alert("채팅을 입력해 주세요");
-        } else {
-            makeChatting2();
-            chattingInput.value = "";
+if (chattingInput != null) {
+    chattingInput.addEventListener("keypress", (e) => {
+        if(e.key === 'Enter') {
+            if(chattingInput.value.trim().length === 0) {
+                alert("채팅을 입력해 주세요");
+            } else {
+                makeChatting2();
+                chattingInput.value = "";
+            }
         }
-    }
-
-});
+    
+    });
+    
+}

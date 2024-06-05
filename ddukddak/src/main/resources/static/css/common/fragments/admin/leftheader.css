@@ -1,0 +1,21 @@
+#leftheaderContainer {
+    width: 200px;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-right: 1px solid var(--gray5);
+}
+
+#leftheaderContainer h2 {
+    margin-bottom: 50px;
+}
+
+#leftheaderContainer h3 {
+    margin-bottom: 30px;
+}

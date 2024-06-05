@@ -23,3 +23,33 @@
 #productList td {
     padding: 15px;
 }
+
+#productList table td {
+    cursor: pointer;
+    width: 280px;
+}
+
+#productList table td > div > div:first-child {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+#productList table td > div > div:first-child > img {
+    height: 300px;
+    width: 250px;
+}
+
+#productList table td > div > div:nth-child(3) {
+    display: flex;
+    margin-top: 8px;
+}
+
+#productList table td > div > h3:nth-child(2) {
+    font-weight: 600px;
+}
+
+#productList table td > div > div:nth-child(4) {
+    display: flex;
+    margin-top: 8px;
+}

@@ -294,7 +294,7 @@ button:active {
 
 /* e 커머스 상품 상세 정보 페이지 */
 
-/* 성새정보/리뷰/Q&A/반품 교환정보 */
+/* 상세정보/리뷰/Q&A/반품 교환정보 */
 
 /* ****중요 클릭시 변한색으로 고정은 JS 으로 처리**** */
 .eCommerceProductDetailBtn {
@@ -305,8 +305,8 @@ button:active {
     transition: 0.3s;
 
     /* 폰트 */
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 600;
     color: var(--gray1);
 }
 .eCommerceProductDetailBtn:hover {
@@ -385,8 +385,8 @@ button:active {
 .boardMainBtn:hover {
     transform: none;
     box-shadow: none;
-    border: 1px solid var(--secondary);
-
+    /* border: 1px solid var(--secondary); */
+    background-color: var(--primary1);
     transition: 0.3s;
     color: var(--secondary);
 }

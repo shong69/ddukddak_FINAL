@@ -41,6 +41,7 @@
 }
 
 #shopping-items {
+    width: 1300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,6 +51,7 @@
 #shopping-items > div {
     display: flex;
     flex-direction: column;
+    margin: 0 60px;
 }
 
 #shoping-list > div:first-child {
@@ -65,4 +67,24 @@
     background-color: var(--primary3);
     border-radius: 10px;
     cursor: pointer;
+}
+
+.img-wrap {
+    position: relative;
+}
+
+/* 카운트다운 */
+.sample {
+    background-color: rgb(255, 46, 46);
+    color: white;
+    border-radius: 5px;
+    height: 18px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
 }

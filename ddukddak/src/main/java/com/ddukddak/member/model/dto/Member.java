@@ -19,6 +19,7 @@ public class Member {
 	private String memberId;
 	private String memberEmail;
 	private String memberPw;
+	private String memberName; // 이름 추가
 	private String memberNickname;
 	private String memberTel;
 	private String memberAddr;
@@ -30,4 +31,19 @@ public class Member {
 	private String socialLoginType; // 일반 D, 네이버 N, 카카오 K
 	
 	
+//	위시리스트 추가
+	private int productNo;
+	
+//	장바구니
+	private int productCount;
+	
+	
+//	리뷰 번호
+	private int reviewNo;
+	
+//	주문상세번호
+	private int orderItemNo;
+	
+//	주문번호
+	private int orderNo;
 }

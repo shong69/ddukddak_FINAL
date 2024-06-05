@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+        <title>뚝딱뚝딱 : 시공사</title>
+
+        <link rel="stylesheet" href="/css/partner/interior/interiorPortfolioEdit/registProject.css">
+        <link rel="stylesheet" href="/css/common/button.css">
+        <link rel="stylesheet" href="/css/common/main.css">
+        <link rel="stylesheet" href="/css/common/fragments/header.css">
+        <link rel="stylesheet" href="/css/common/fragments/footer.css">
+
+        <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+    </head>
+
+    <body>
+
+        <th:block th:replace="~{partner/interior/common/header}"></th:block>
+
+        <div class="mainContainer">
+
+            <div class="title-area">
+                <h1>프로젝트 추가</h1>
+            </div>
+
+            <form>
+
+                <div class="top-container">
+                    <div class="input-project-title">
+                        <div>
+                            <h3>프로젝트명</h3>
+                        </div>
+                        <div>
+                            <input type="text">
+                        </div>
+                    </div>
+
+                    <div class="input-project-info">
+                        <div>
+                            <h3>프로젝트 정보</h3>
+                        </div>
+                        <div>
+                            <table class="project-info">
+                                <tr>
+                                    <td>주거형태</td>
+                                    <td>
+                                        <select>
+                                            <option>단독주택</option>
+                                            <option>아파트</option>
+                                            <option>다세대 주택</option>
+                                            <option>상가</option>
+                                            <option>오피스텔</option>
+                                        </select>
+                                    </td>
+                                    <td>작업형태</td>
+                                    <td>
+                                        <select>
+                                            <option>리모델링</option>
+                                            <option>바닥공사</option>
+                                            <option>벽지도배</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>시공비용</td>
+                                    <td>
+                                        <input type="number">
+                                    </td>
+                                    <td>평수</td>
+                                    <td>
+                                        <input type="number">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="input-project-detail">
+                        <div>
+                            <h3>세부정보</h3>
+                        </div>
+                        <div>
+                            <select>
+                                <option>서울</option>
+                                <option>경기/인천</option>
+                                <option>충청/대전</option>
+                                <option>전라/광주</option>
+                                <option>경북/대구</option>
+                                <option>경남/부산/울산</option>
+                                <option>강원</option>
+                                <option>제주</option>
+                            </select>
+
+                            <select>
+                                <option>2000</option>
+                                <option>2001</option>
+                                <option>2002</option>
+                                <option>2003</option>
+                                <option>2004</option>
+                                <option>2005</option>
+                                <option>2006</option>
+                                <option>2007</option>
+                                <option>2008</option>
+                                <option>2009</option>
+                                <option>2010</option>
+                                <option>2011</option>
+                                <option>2012</option>
+                                <option>2013</option>
+                                <option>2014</option>
+                                <option>2015</option>
+                                <option>2016</option>
+                                <option>2017</option>
+                                <option>2018</option>
+                                <option>2019</option>
+                                <option>2020</option>
+                                <option>2021</option>
+                                <option>2022</option>
+                                <option>2023</option>
+                                <option>2024</option>
+                            </select>
+
+                            <select>
+                                <option>1인 가족</option>
+                                <option>2인 가족</option>
+                                <option>4인 가족</option>
+                                <option>기타</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-img-area">
+                    <div class="projectImg thumbnail">
+                        <label for="img0">
+                            <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가해주세요.">
+                        </label>
+                        <input type="file" name="images" class="inputImg" id="img0">
+                        <span class="delete-img">&times;</span>
+                    </div>
+
+                    <div class="preview-img">
+
+                        <div class="projectImg previewImg">
+                            <label for="img1">
+                                <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가해주세요.">
+                            </label>
+                            <input type="file" name="images" class="inputImg" id="img1">
+                            <span class="delete-img">&times;</span>
+                        </div>
+
+                        <div class="projectImg previewImg">
+                            <label for="img2">
+                                <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가해주세요.">
+                            </label>
+                            <input type="file" name="images" class="inputImg" id="img2">
+                            <span class="delete-img">&times;</span>
+                        </div>
+
+                        <div class="projectImg previewImg">
+                            <label for="img3">
+                                <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가해주세요.">
+                            </label>
+                            <input type="file" name="images" class="inputImg" id="img3">
+                            <span class="delete-img">&times;</span>
+                        </div>
+
+                        <div class="projectImg previewImg">
+                            <label for="img4">
+                                <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가해주세요.">
+                            </label>
+                            <input type="file" name="images" class="inputImg" id="img4">
+                            <span class="delete-img">&times;</span>
+                        </div>
+
+                        <div class="projectImg previewImg">
+                            <label for="img5">
+                                <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가해주세요.">
+                            </label>
+                            <input type="file" name="images" class="inputImg" id="img5">
+                            <span class="delete-img">&times;</span>
+                        </div>
+
+                        <div class="projectImg previewImg">
+                            <label for="img6">
+                                <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가해주세요.">
+                            </label>
+                            <input type="file" name="images" class="inputImg" id="img6">
+                            <span class="delete-img">&times;</span>
+                        </div>
+
+                        <div class="projectImg previewImg">
+                            <label for="img7">
+                                <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가해주세요.">
+                            </label>
+                            <input type="file" name="images" class="inputImg" id="img7">
+                            <span class="delete-img">&times;</span>
+                        </div>
+
+                        <div class="projectImg previewImg">
+                            <label for="img8">
+                                <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가해주세요.">
+                            </label>
+                            <input type="file" name="images" class="inputImg" id="img8">
+                            <span class="delete-img">&times;</span>
+                        </div>
+
+                        <div class="projectImg previewImg">
+                            <label for="img9">
+                                <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가해주세요.">
+                            </label>
+                            <input type="file" name="images" class="inputImg" id="img9">
+                            <span class="delete-img">&times;</span>
+                        </div>
+
+                        <div class="projectImg previewImg">
+                            <label for="img10">
+                                <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가해주세요.">
+                            </label>
+                            <input type="file" name="images" class="inputImg" id="img10">
+                            <span class="delete-img">&times;</span>
+                        </div>
+
+                        <button type="button" class="viewMoreBtn">+</button>
+
+                    </div>
+                </div>
+
+                <div class="btn-area">
+                    <button class="boardCreateBtn">등록</button>
+                </div>
+
+            </form>
+
+        </div>
+
+        <th:block th:replace="~{common/fragments/footer}"></th:block>
+        
+        <script src="/js/partner/interior/interiorPortfolioEdit/registProject.js"></script>
+    </body>
+</html>

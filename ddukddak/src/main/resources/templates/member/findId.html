@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>뚝딱 : ID 찾기</title>
+    <title>뚝딱뚝딱 : ID 찾기</title>
 
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/common/style.css">
     <link rel="stylesheet" href="/css/common/fragments/header.css">
     <link rel="stylesheet" href="/css/common/fragments/footer.css">
     <link rel="stylesheet" href="/css/member/findId.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
 
     <!-- 폰트어썸 -->
     <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
@@ -48,16 +49,16 @@
                         </div>
                         <div id="emailHiddenDiv">
                             <div>
-                                <input placeholder="닉네임">
+                                <input id="emailNm" placeholder="이름" name="emailNm">
                             </div>
                             <div class="authArea">
                                 <input id="inputEmail" type="email" placeholder="이메일" name="memberEmail">
-                                <button type="button" id="emailAuthBtn" >메일 인증</button>
+                                <button type="button" id="emailAuthBtn" >인증요청</button>
                             </div>
-                            <span id="emilMsg" class="msgSpan"></span>
+                            <span id="emailMsg" class="msgSpan"></span>
 
                             <div id="emailAuthHidden" class="authArea hidden">
-                                <input id="emailAuthInput" type="email" placeholder="인증문구(6자리)" name="authKey">
+                                <input id="emailAuthInput" type="text" placeholder="인증번호(6자리)" name="authKey" maxlength="6">
                             </div>
                             <span id="emailAuthMsg" class="msgSpan"></span>
                         </div>
@@ -70,13 +71,16 @@
                             <label for="telChoice">휴대폰</label>
                         </div>
                         <div id="telHiddenDiv" class="authArea hidden">
+                            <div class="telNmDiv">
+                                <input id="telNm" placeholder="이름" name="telNm" maxlength="">
+                            </div>
                             <div>
                                 <input id="inputTel" type="tel" placeholder="전화번호(-없이)" name="memberTel" maxlength="11">
-                                <button type="button" id="telAuthBtn" >SMS 인증</button>
+                                <button type="button" id="telAuthBtn" >인증요청</button>
                             </div>
                             <span id="telMsg" class="msgSpan"></span>
                             <div id="telAuthHidden" class="authArea hidden">
-                                <input id="telAuthInput" type="tel" placeholder="인증번호(숫자 6자리)" name="smsAuthKey" maxlength="6">
+                                <input id="telAuthInput" type="text" placeholder="인증번호(숫자 6자리)" name="smsAuthKey" maxlength="6">
                             </div>
                             <span id="telAuthMsg" class="msgSpan"></span>
                         </div>
