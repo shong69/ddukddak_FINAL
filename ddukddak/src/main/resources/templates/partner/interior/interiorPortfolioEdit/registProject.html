@@ -4,9 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+
+        <link rel="stylesheet" href="/css/partner/interior/interiorPortfolioEdit/registProject.css">
+        <link rel="stylesheet" href="/css/common/button.css">
+        <link rel="stylesheet" href="/css/common/main.css">
+        <link rel="stylesheet" href="/css/common/fragments/header.css">
+        <link rel="stylesheet" href="/css/common/fragments/footer.css">
     </head>
 
     <body>
+
+        <th:block th:replace="~{partner/interior/common/header}"></th:block>
 
         <div class="mainContainer">
 
@@ -31,7 +39,7 @@
                             <h3>프로젝트 정보</h3>
                         </div>
                         <div>
-                            <table>
+                            <table class="project-info">
                                 <tr>
                                     <td>주거형태</td>
                                     <td>
@@ -176,18 +184,18 @@
 
 
                 <div class="interior-info">
-                    <textarea placeholder="업체설명">
-
-                    </textarea>
+                    <textarea placeholder="업체설명"></textarea>
                 </div>
 
                 <div class="btn-area">
-                    <button>등록</button>
+                    <button class="boardCreateBtn">등록</button>
                 </div>
 
             </form>
 
         </div>
+
+        <th:block th:replace="~{common/fragments/footer}"></th:block>
         
     </body>
 </html>

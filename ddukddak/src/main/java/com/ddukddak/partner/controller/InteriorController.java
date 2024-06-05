@@ -49,4 +49,9 @@ public class InteriorController {
 	public String projectDetail() {
 		return "partner/interior/interiorPortfolioEdit/projectDetail";
 	}
+	
+	@GetMapping("registProject")
+	public String registProject() {
+		return "partner/interior/interiorPortfolioEdit/registProject";
+	}
 }
