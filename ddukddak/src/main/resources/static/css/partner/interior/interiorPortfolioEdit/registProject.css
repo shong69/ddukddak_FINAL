@@ -1,0 +1,151 @@
+.mainContainer {
+    width: 1160px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+/* 페이지 타이틀 */
+.title-area {
+    margin: 30px 0;
+}
+
+/* 프로젝트 정보 박스 area */
+.top-container {
+    margin: 30px 0;
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+}
+
+.top-container div {
+    margin: 15px 0;
+}
+
+.input-project-title {
+    display: flex;
+    align-items: center;
+}
+
+.input-project-title div {
+    margin-right: 80px;
+}
+
+.input-project-info {
+    padding: 10px 0;
+}
+
+.project-info {
+    width: 100%;
+    height: 100px;
+    padding: 0 50px;
+}
+
+.project-info input {
+    width: 100px;
+}
+
+.input-project-detail > div:last-child {
+    display: flex;
+    margin-left: 155px;
+}
+
+select {
+    margin-right: 160px;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+input {
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* 이미지 첨부 */
+.input-img-area {
+    width: 100%;
+    height: auto;
+}
+
+.projectImg {
+    position: relative;
+}
+
+.previewImg {
+    width: 100px;
+    height: 80px;
+    display: inline-block;
+    text-align: center;
+    display: flex;
+    position: relative;
+}
+
+.previewImg {
+    display: none;
+}
+.previewImg.active {
+    display: flex;
+}
+
+.projectImg label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.projectImg img {
+    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    
+}
+
+.thumbnail {
+    width: 100%;
+    height: 600px;
+    border: 1px solid var(--gray5);
+}
+
+.preview-img {
+    display: flex;
+    padding: 20px 0;
+    justify-content: flex-start;
+}
+
+.inputImg {
+    display: none;
+}
+
+.active {
+    margin-right: 15px;
+}
+
+/* 버튼 */
+.btn-area {
+    margin: 50px 0;
+    width: 100%;
+    text-align: end;
+}
+
+h3 {
+    color: var(--secondary);
+}
+
+/* 삭제 버튼 */
+.delete-img{
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.viewMoreBtn {
+    width: 100px;
+}
