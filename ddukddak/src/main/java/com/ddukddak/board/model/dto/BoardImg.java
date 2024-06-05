@@ -24,10 +24,12 @@ public class BoardImg {
 	private int uploadImgOrder;
 	private int category;
 	
+//	게시글 불러올때
 	private int boardNo;
 	private int boardType;
 	private String boardName;
 	
+//	이미지 추가시 멀티파트
 	private MultipartFile uploadFile;
 	
 }

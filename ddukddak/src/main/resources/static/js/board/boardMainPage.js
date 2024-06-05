@@ -126,3 +126,57 @@ if (slideshow != null) {
     }
 }
  
+
+
+// 숨긴처리 
+document.addEventListener('DOMContentLoaded', (event) => {
+    const tipBoardMainContainers = document.querySelectorAll('.tipBoardMainContainer');
+    const viewMoreBtn = document.querySelector("#tipBoardViewMore");
+    let currentVisibleIndex = 0; // Tracks the currently visible list
+
+    // Show the first container
+    if (tipBoardMainContainers.length > 0) {
+        tipBoardMainContainers[0].classList.remove('hidden');
+    }
+
+    // Handle "View More" button click
+    if (viewMoreBtn != null) {
+        viewMoreBtn.addEventListener("click", () => {
+            if (currentVisibleIndex < tipBoardMainContainers.length - 1) {
+                currentVisibleIndex++;
+                tipBoardMainContainers[currentVisibleIndex].classList.remove('hidden'); // Show the next hidden list
+                
+                // If all lists are shown, hide the button
+                if (currentVisibleIndex >= tipBoardMainContainers.length - 1) {
+                    viewMoreBtn.style.display = 'none';
+                }
+            }
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const portListMainContainers = document.querySelectorAll('.portListMainContainer');
+    const viewMoreBtn = document.querySelector("#portListViewMore");
+    let currentVisibleIndex = 0; // Tracks the currently visible list
+
+    // Show the first container
+    if (portListMainContainers.length > 0) {
+        portListMainContainers[0].classList.remove('hidden');
+    }
+
+    // Handle "View More" button click
+    if (viewMoreBtn != null) {
+        viewMoreBtn.addEventListener("click", () => {
+            if (currentVisibleIndex < portListMainContainers.length - 1) {
+                currentVisibleIndex++;
+                portListMainContainers[currentVisibleIndex].classList.remove('hidden'); // Show the next hidden list
+                
+                // If all lists are shown, hide the button
+                if (currentVisibleIndex >= portListMainContainers.length - 1) {
+                    viewMoreBtn.style.display = 'none';
+                }
+            }
+        });
+    }
+});
