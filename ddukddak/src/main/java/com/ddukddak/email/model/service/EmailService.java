@@ -17,4 +17,7 @@ public interface EmailService {
 	 */
 	int checkAuthKey(Map<String, Object> map);
 
+	
+	void sendEmailAsync(String pageName, String email);
+
 }

@@ -21,7 +21,7 @@ main {
     flex-direction: column;
     justify-content: center;
     width: 600px;
-    height: 900px;
+    height: auto;
 }
 
 label {
@@ -37,7 +37,7 @@ label {
     margin-left: 10px;
     width: 100%;
     padding: 8px 0 2px 0;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .signUp-input-area input:focus {
@@ -282,3 +282,8 @@ span {
     box-shadow: none;
     transform: translateY(0);
 }
+
+
+
+input:-webkit-autofill { -webkit-box-shadow: 0 0 0 30px #fff inset ; -webkit-text-fill-color: #000; }
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0s; }

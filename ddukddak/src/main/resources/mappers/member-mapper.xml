@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ddukddak.member.model.mapper.MemberMapper">
-	<select id="memberCheck">
+	
+	<!-- 이름, 이메일 일치 여부 확인 -->
+	<select id="memberNMCheck">
 		SELECT COUNT(*)
 		FROM "MEMBER"
-		WHERE MEMBER_NICKNAME = #{memberNickname} 
+		WHERE MEMBER_NAME = #{memberName} 
 		AND MEMBER_EMAIL = #{memberEmail}
 		AND MEMBER_DEL_FL = 'N'
 	</select>
+	
+	<select id="findIdByEmail">
+		SELECT MEMBER_ID, TO_CHAR(ENROLL_DATE, 'YY"."MM"."DD') ENROLL_DATE
+		FROM "MEMBER"
+		WHERE MEMBER_EMAIL = #{memberEmail}
+		AND MEMBER_NAME = #{memberName}
+		AND MEMBER_DEL_FL = 'N'
+		AND SOCIAL_LOGIN_TYPE = 'D'
+	</select>
+	
+	<select id="findIdByTel">
+		SELECT MEMBER_ID, TO_CHAR(ENROLL_DATE, 'YY"."MM"."DD') ENROLL_DATE
+		FROM "MEMBER"
+		WHERE MEMBER_Tel = #{memberTel}
+		AND MEMBER_NAME = #{memberName}
+		AND MEMBER_DEL_FL = 'N'
+		AND SOCIAL_LOGIN_TYPE = 'D'
+	</select>
+
 </mapper>

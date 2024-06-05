@@ -8,6 +8,20 @@ public interface MemberService {
 	 * @param member
 	 * @return
 	 */
-	int memberCheck(Member member);
+	int memberNMCheck(Member member);
+
+	/** 이메일로 아이디 찾기
+	 * @param memberEmail
+	 * @return
+	 */
+	Member findIdByEmail(Member member);
+
+	/** 휴대폰으로 아이디 찾기
+	 * @param memberTel
+	 * @return
+	 */
+	Member findIdByTel(Member member);
+
+
 
 }

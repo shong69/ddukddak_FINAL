@@ -23,23 +23,36 @@ public class EmailController {
 	// 회원가입 추후 구현 sendEmail 활용
 	
 	
-	/** [회원] 아이디 찾기 메일 발송
-	 * @return
-	 */
-	@ResponseBody
-	@PostMapping("findId")	
-	public int findId(@RequestBody String email) {
-		
-		
-		String authKey = service.sendEmail("findId", email);
-		
-		if(authKey != null) {
-			
-			return 1; // 성공
-		}
-		
-		return 0; // 실패
-	}
+//	/** [회원] 아이디 찾기 메일 발송
+//	 * @return
+//	 */
+//	@ResponseBody
+//	@PostMapping("findId")	
+//	public int findId(@RequestBody String email) {
+//		
+//		
+//		String authKey = service.sendEmail("findId", email);
+//		
+//		if(authKey != null) {
+//			
+//			return 1; // 성공
+//		}
+//		
+//		return 0; // 실패
+//	}
+	
+    /** [회원] 아이디 찾기 메일 발송
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("findId")    
+    public int findId(@RequestBody String email) {
+        // 비동기 메서드 호출로 변경
+        service.sendEmailAsync("findId", email);
+        
+        // 비동기 호출이므로 성공 응답을 즉시 반환
+        return 1; // 요청 성공
+    }
 	
 	/** 인증키 일치 여부 확인
 	 * @param map

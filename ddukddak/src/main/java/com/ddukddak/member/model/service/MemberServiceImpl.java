@@ -19,10 +19,32 @@ public class MemberServiceImpl implements MemberService {
 	 *
 	 */
 	@Override
-	public int memberCheck(Member member) {
+	public int memberNMCheck(Member member) {
 		
-		return mapper.memberCheck(member);
+		return mapper.memberNMCheck(member);
 	}
+
+	
+	/** 이메일로 아이디 찾기
+	 *
+	 */
+	@Override
+	public Member findIdByEmail(Member member) {
+		// TODO Auto-generated method stub
+		return mapper.findIdByEmail(member);
+	}
+
+
+	/** 휴대폰으로 아이디 찾기
+	 *
+	 */
+	@Override
+	public Member findIdByTel(Member member) {
+		// TODO Auto-generated method stub
+		return mapper.findIdByTel(member);
+	}
+
+
 	
 	
 }
