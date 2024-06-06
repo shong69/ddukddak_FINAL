@@ -5,6 +5,7 @@ const myPageMainBtn = document.querySelector(".myPageMainBtn");
 const myPageSubBtns = document.querySelectorAll(".myPageSubBtn");
 /*취소 버튼 */
 const cancelBtns = document.querySelectorAll(".cancel");
+const pwCancelBtn = document.querySelector(".pwCancel");
 /*변경 확인 버튼 */
 const confirmBtns = document.querySelectorAll(".confirm");
 
@@ -35,6 +36,34 @@ profileCancelBtn.addEventListener("click", e=>{
     parentTd.style.display="none";
     parentTd.previousElementSibling.style.display= "";
 });
+
+//비밀번호 취소 시 내용 삭제 + 비밀번호 보이기 여부 초기화
+const viewPwBtns = document.querySelectorAll(".fa-eye");
+const unviewPwBtns = document.querySelectorAll(".fa-eye-slash");
+
+pwCancelBtn.addEventListener("click", ()=>{
+    const parentTd =pwCancelBtn.parentElement.parentElement.parentElement;
+    parentTd.style.display ="none";
+    parentTd.previousElementSibling.style.display="";
+
+    //작성했던 input 값 없애기
+    const inputs = parentTd.querySelectorAll('input');
+    inputs.forEach(input =>{
+        input.value = '';
+    });
+    viewPwBtns.forEach(btn=>{
+        btn.classList.remove('display-none');
+    });
+    unviewPwBtns.forEach(btn=>{
+        btn.classList.add('display-none');
+    });
+    //알람 문구 초기화
+    currentPwAlert.innerText="";
+    newPwAlert.innerText="";
+    newPwConfirmAlert.innerText="";
+
+
+})
 
 //취소 버튼 클릭 시(나머지의 경우) 
 cancelBtns.forEach(btn =>{
@@ -144,26 +173,145 @@ if(profile != null){
 
 }
 
-function updateProfileImage() {
-    const formData = new FormData(profile);
+// function updateProfileImage() {
+//     const formData = new FormData(profile);
     
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/profileImg', true); // POST 형식, endpoint:/porfileImg, 비동기 여부 : true
+//     const xhr = new XMLHttpRequest();
+//     xhr.open('POST', '/profileImg', true); // POST 형식, endpoint:/porfileImg, 비동기 여부 : true
 
-    xhr.onload = function() { //서버로부터 응답 도착 시 함수 실행
-        if(xhr.status=== 200) {
-            alert('성공적으로 변경됨');
-        }else{
-            alert('실패');
-        }
-    };
-    xhr.send(formData); //서버로 데이터 변경 요청
+//     xhr.onload = function() { //서버로부터 응답 도착 시 함수 실행
+//         if(xhr.status=== 200) {
+//             alert('성공적으로 변경됨');
+//         }else{
+//             alert('실패');
+//         }
+//     };
+//     xhr.send(formData); //서버로 데이터 변경 요청
+// }
+
 
 //2. 비밀번호 변경
 const pwConfirmBtn = document.querySelector("#pwConfirmBtn");
 
-pwConfirmBtn.addEventListener("click", ()=>{
-    const param = {
+const currentPw = document.querySelector('input[name="currentPw"]');
+const currentPwAlert = document.querySelector(".currentPwAlert");
 
+const newPw = document.querySelector('input[name="newPw"]');
+const newPwAlert = document.querySelector(".newPwAlert");
+
+const confirmNewPw = document.querySelector('input[name="confirmNewPw"]');
+const newPwConfirmAlert = document.querySelector(".newPwConfirmAlert");
+
+//*비밀번호 미입력 시 알람 문구 
+const pwObj = { //유효성 확인 객체
+    currentPw : false,
+    newPw : false,
+    confirmNewPw : false
+}
+
+    //1. 현재 비밀번호 : 글자수 검사
+currentPw.addEventListener("input", e=>{
+    if(e.target.value.trim().length <4){
+        currentPwAlert.innerText =  "4자 이상 입력해주세요.";
+        return;
+    }else{
+        currentPwAlert.innerText = "";
+        pwObj.currentPw = true;
     }
+});
+    //2. 새 비밀번호 : 글자수, 유효성 검사
+newPw.addEventListener("input", e=>{
+
+    const inputValue = e.target.value;
+
+    const regExp = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/;
+
+    if(inputValue.trim().length <8 || inputValue.trim().length >16){
+        newPwAlert.innerText = "8~16자 사이의 비밀번호를 입력해주세요";
+        pwObj.newPw=false;
+        return;
+
+    }else if(!regExp.test(inputValue)){
+        newPwAlert.innerText = "숫자, 영문 대소문자, 특수문자를 조합해 주세요.";
+        pwObj.newPw=false;
+        return;
+        
+    }else{
+        //유효한 경우
+        newPwAlert.innerText = "";
+        pwObj.newPw = true;
+    }
+
+    if(confirmNewPw.value.length>0){
+        checkPw();
+    }
+
+});
+    //3. 새 비밀번호 확인 : 새 비밀번호와 동일한지 검사
+confirmNewPw.addEventListener("input", ()=>{
+    //같을 경우
+    if(newPw.value == confirmNewPw.value){
+        newPwConfirmAlert.innerText="";
+        pwObj.confirmNewPw= true; 
+        return;
+    }
+    //다를 경우
+    newPwConfirmAlert.innerText="비밀번호가 일치하지 않습니다.";
+    pwObj.confirmNewPw=false;
+});
+
+
+
+
+//*눈 클릭 시 비밀번호 보였다 안보였다
+// const viewPwBtns = document.querySelectorAll(".fa-eye"); 위에서 선언함
+// const unviewPwBtns = document.querySelectorAll(".fa-eye-slash");
+
+//비번 보이도록하기
+viewPwBtns.forEach( btn =>{
+    btn.addEventListener("click", ()=>{
+        btn.classList.add('display-none');
+        btn.nextElementSibling.classList.remove('display-none');
+        btn.previousElementSibling.type="text"; //input의 type을 text로 바꾸기
+    });
 })
+
+unviewPwBtns.forEach(btn =>{
+    btn.addEventListener("click", ()=>{
+        btn.classList.add("display-none");
+        btn.previousElementSibling.classList.remove('display-none');
+        btn.previousElementSibling.previousElementSibling.type="password";
+    })
+})
+
+
+//*비밀번호 변경하기-비동기
+// pwObj가 모두 true인 경우 넘기기
+pwConfirmBtn.addEventListener("click", e=>{
+    let pass="true";
+    for(let key in pwObj){
+        if(!pwObj[key]) pass="false";
+    }
+    if(pass=="false") {
+        alert("비밀번호 입력이 유효하지 않습니다.\n다시 시도해 주세요");
+        return;
+    }
+
+    const obj = {
+        "currentPw" : currentPw.value,
+        "newPw" : newPw.value,
+        "confirmNewPw" : confirmNewPw.value
+    }
+
+    //비동기로 비밀번호 값들 넘기기
+    fetch("/myPage/memberInfo/password",{
+        method: "POST",
+        headers : {"Content-Type" : "application/json"},
+        body: JSON.stringify(obj)
+    })
+    .then(resp => resp.text())
+    .then(result => {
+        const str = JSON.parse(result);
+        alert(str);
+    })
+});

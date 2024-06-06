@@ -76,18 +76,18 @@ public class MyPageController {
 	 * @return
 	 * @throws Exception
 	 */
-	@PostMapping("memberInfo/profileImg")
-	@ResponseBody
-	public ResponseEntity<String> changeProfileImg(
-			@RequestParam("profile-image") MultipartFile file,
-			@SessionAttribute("loginMember") Member loginMemebr) throws Exception{
-		int result  = infoService.updateImg(file, loginMemebr);
-		
-		if(result >0) return ResponseEntity.ok().build();
-		else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-
-		
-	}
+//	@PostMapping("memberInfo/profileImg")
+//	@ResponseBody
+//	public ResponseEntity<String> changeProfileImg(
+//			@RequestParam("profile-image") MultipartFile file,
+//			@SessionAttribute("loginMember") Member loginMemebr) throws Exception{
+//		int result  = infoService.updateImg(file, loginMemebr);
+//		
+//		if(result >0) return ResponseEntity.ok().build();
+//		else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//
+//		
+//	}
 	
 	
 	
