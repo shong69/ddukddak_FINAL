@@ -129,19 +129,19 @@
                                         <th>이메일</th>
                                         <td colspan="3">
                                             <ul class="mail-alarm">
-                                                <li>메일주소를 입력 후 인증하기 버튼 클릭 시, 
+                                                <li>변경 할 메일주소를 입력 후 인증하기 버튼 클릭 시, 
                                                     <br>회원님의 이메일로 이메일 인증 번호가 적힌 메일이 발송됩니다</li>
-                                                <li>아래에 인증번호를 입력하면 인증이 완료됩니다.</li>
+                                                <li>아래에 인증번호를 입력하면 변경이 완료됩니다.</li>
                                             </ul>
                                             <div class="email-input-area">
                                                 <div>
-                                                    <input  class= "email-input" placeholder="이메일 주소 입력" type="email" required>
-                                                    <input class= "email-input" placeholder="인증번호 입력" required>
+                                                    <input name="email-input" class= "email-input" placeholder="이메일 주소 입력" type="email" required>
+                                                    <input name="auth-input"class= "email-input" placeholder="인증번호 입력" required>
                                                 </div>
-                                                <button class="myPageVerifyBtn">인증</button>
+                                                <button type="button" class="emailAuthBtn myPageVerifyBtn">인증</button>
                                             </div>
                                             <div class="email-btn-area">
-                                                <button class="confrim myPageConfirmCancelBtn">확인</button>
+                                                <button class="emailConfirmBtn confrim myPageConfirmCancelBtn">확인</button>
                                                 <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
                                             </div>
                                         </td>

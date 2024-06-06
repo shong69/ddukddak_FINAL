@@ -84,7 +84,7 @@ cancelBtns.forEach(btn =>{
 
 //-----------------------------------------------------------
 
-/*회원 정보 변경 확인 버튼 클릭 시 display="" 처리 + form 제출하기(비동기)*/
+/*****회원 정보 변경 확인 버튼 클릭 시 display="" 처리 + form 제출하기(비동기)*****/
 
 //1. 사진 변경
 const profile = document.querySelector("#profile-form");
@@ -189,6 +189,9 @@ if(profile != null){
 //     xhr.send(formData); //서버로 데이터 변경 요청
 // }
 
+
+
+//-------------------------------------------------------------------
 
 //2. 비밀번호 변경
 const pwConfirmBtn = document.querySelector("#pwConfirmBtn");
@@ -309,9 +312,108 @@ pwConfirmBtn.addEventListener("click", e=>{
         headers : {"Content-Type" : "application/json"},
         body: JSON.stringify(obj)
     })
-    .then(resp => resp.text())
+    .then(resp => resp.json())
     .then(result => {
-        const str = JSON.parse(result);
-        alert(str);
+        alert(result.message);
+    })
+    .catch(error =>{
+        console.error('Error',error);
     })
 });
+
+
+
+
+//-------------------------------------------------------------------
+// 3. 이메일 변경
+const emailInput = document.querySelector("input[name='email-input']");
+const authBtn = document.querySelector(".emailAuthBtn");
+const authInput = document.querySelector("input[name='auth-input']")
+
+const emailConfirmBtn = document.querySelector(".eamilAuthBtn");
+// 1. 이메일 형식 유효성 검사 + 메일 발송
+authBtn.addEventListener("click", async()=>{
+    //공백
+    if(emailInput.value.trim().length ===0){
+        alert("이메일 주소를 입력해주세요.");
+        return;
+    }
+
+    //유효성
+    const regExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if(!regExp.test(emailInput.value)){
+        alert("알맞은 이메일 형식이 아닙니다.");
+        return;
+    }
+
+    try{
+        //이메일 중복검사
+        const emailDupCheck = await fetch("/myPage/memberInfo/emailDup?memberEmail="+emailInput.value);
+        const dupResult = await emailDupCheck.text();
+        console.log(dupResult);
+        if(dupResult == 1){
+            alert("이미 사용 중인 이메일입니다.");
+            return;
+        }
+
+        try{
+            //인증메일 보내기
+            const emailSend = await fetch("/email/updateEmail",{
+                method:"POST",
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify({email:emailInput.value})
+            });
+
+            if(!emailSend.ok){
+                alert("인증번호 발송에 실패하였습니다\n다시 시도해주세요");
+                return;
+            }else if(emailSend.ok){
+                alert("입력해주신 이메일 주소로 인증번호가 발송되었습니다.");
+            }
+        }catch(Error){
+            console.error("Error : ", Error);
+            alert("메일 발송 중 오류 발생");
+        }
+        
+    }catch(Error){
+        console.error("Error : ", Error);
+        alert("오류가 발생했습니다. 다시 시도해주세요");
+    }
+});
+
+
+
+//인증번호 입력하기 -비동기
+
+// emailConfirmBtn.addEventListener("click", ()=>{
+//     //공백
+//     if(authInput.value.trim().length===0){
+
+//     }
+//     //유효성 검사
+
+//     //인증번호 검증 -비동기
+
+//     const obj = {
+//         "email" : emailInput.value,
+//         "authKey" : authInput.value
+//     };
+
+//     fetch("/email/checkAuthKey", {
+//         method : "POST",
+//         headers : {"Content-Type" : "application/json"},
+//         body : JSON.stringify(obj)
+//     })
+//     .then(resp => resp.text())
+//     .then(result => {
+
+//         if(result == 0) {
+//             alert("인증번호를 잘못 입력하였습니다.\n 다시 시도해주세요.");
+//             return;
+//         }
+//     });
+
+//     //이메일 변경하기
+// })
+
+

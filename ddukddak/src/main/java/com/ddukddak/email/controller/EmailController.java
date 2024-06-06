@@ -2,6 +2,7 @@ package com.ddukddak.email.controller;
 
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,6 +55,19 @@ public class EmailController {
         return 1; // 요청 성공
     }
 	
+    
+    /** 이메일 변경 메일 발송
+     * @param email
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("updateEmail")
+    public ResponseEntity<String> updateEmail(@RequestBody String email) {
+    	
+    	service.sendEmailAsync("updateEmail", email);
+    	return ResponseEntity.ok().build(); //비동기 여부에 대한 http응답 반환
+    }
+    
 	/** 메일 인증키 일치 여부 확인
 	 * @param map
 	 * @return
