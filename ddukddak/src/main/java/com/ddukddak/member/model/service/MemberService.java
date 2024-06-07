@@ -28,6 +28,8 @@ public interface MemberService {
 	 */
 	int memberNTCheck(Member member);
 
+	Member login(Member member);
+
 
 
 }

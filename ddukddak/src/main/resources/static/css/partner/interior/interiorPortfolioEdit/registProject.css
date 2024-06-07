@@ -148,4 +148,9 @@ h3 {
 
 .viewMoreBtn {
     width: 100px;
+    font-size: 28px;
+}
+
+.viewMoreBtn:hover {
+    color: var(--white);
 }

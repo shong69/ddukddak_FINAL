@@ -14,6 +14,7 @@ import com.ddukddak.sms.model.service.SmsService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 
 
 @RestController
@@ -62,20 +63,20 @@ public class SmsController {
      * @param request
      * @return
      */
-    @ResponseBody
-    @PostMapping("updatePhoneNum")
-    public ResponseEntity<String> updatePhoneNum(@RequestBody Map<String, String> request){
-    	String phoneNum = request.get("phoneNum");
-    	
-    	if(phoneNum== null || phoneNum.isEmpty()) {
-    		return ResponseEntity.badRequest().build();
-    	}
-    	
-    	SingleMessageSentResponse response = service.sendSms(phoneNum);
-    	if(response != null) return ResponseEntity.ok().build(); //비동기 여부에 대한 http응답 반환
-    	else				 return ResponseEntity.badRequest().build();
-    }
-    
+//    @ResponseBody
+//    @PostMapping("updatePhoneNum")
+//    public ResponseEntity<String> updatePhoneNum(@RequestBody Map<String, String> request){
+//    	String phoneNum = request.get("phoneNum");
+//    	
+//    	if(phoneNum== null || phoneNum.isEmpty()) {
+//    		return ResponseEntity.badRequest().build();
+//    	}
+//    	
+//    	SingleMessageSentResponse response = service.sendSms(phoneNum);
+//    	if(response != null) return ResponseEntity.ok().build(); //비동기 여부에 대한 http응답 반환
+//    	else				 return ResponseEntity.badRequest().build();
+//    }
+//    
     /** SMS 인증키 일치 여부 확인
      * @param map
      * @return

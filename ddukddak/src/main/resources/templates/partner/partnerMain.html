@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/partner/partnerMain.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
     <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
 
 
@@ -17,35 +18,53 @@
     <header>
         <!-- 로고 -->
         <div>
-            <img onclick="location.href='/';" src="/images/main/main-logo.png" style="height: 50px;">
+            <img onclick="location.href='/partner/main';" src="/images/main/main-logo.png" style="height: 50px;">
         </div>
 
     
         <!-- 로그인/회원가입 -->
-        <div>
-            <a href="#"><h4>마이페이지</h4></a>
-            <a href="#"><h4>로그아웃</h4></a>
-        </div>
+        <th:block th:unless="${session.loginPartnerMember}">
+            <div>
+                <a href="/member/login"><h4>로그인</h4></a>
+                <a href="/signup"><h4>회원가입</h4></a>
+            </div>
+        </th:block>
+
+        <th:block th:if="${session.loginPartnerMember}" th:object="${session.loginPartnerMember}">
+            <div>
+                <th:block th:if="#{partnerType} == 1">
+                    <a href="/partner/logout"><h4>로그아웃</h4></a>
+                </th:block>
+                <th:block th:if="#{partnerType} == 2">
+                    <a href="/partner/logout"><h4>로그아웃</h4></a>
+                </th:block>
+            </div>
+        </th:block>
     </header>
 
     <h4 style="text-align: center; margin-top: 70px;">본인의 파트너 유형을 선택해 주세요</h4>
 
-    <div id="selectContainer">
-        <form action="/partner/seller/product/create" method="get">
-            <div class="selectBox" id="sellerBtn">
-                <i class="fa-solid fa-house-user"></i>
-                <h3>판매사</h3>
-            </div>
-        </form>
 
-        <form action="/partner/interiorPortfolioEditMain" method="get">
-            <div class="selectBox" id="interiorBtn">
-                <i class="fa-solid fa-paint-roller"></i>
-                <h3>시공사</h3>
-            </div>
-        </form>
-    </div>
+    <th:block th:object="${session.loginPartnerMember}">
+        <div id="selectContainer">
+            <form action="/partner/seller/product/create" method="get">
+                <div class="selectBox" id="sellerBtn">
+                    <i class="fa-solid fa-house-user"></i>
+                    <h3>판매사</h3>
+                </div>
+            </form>
 
+            <form action="/partner/interiorPortfolioEditMain" method="get">
+                <div class="selectBox" id="interiorBtn">
+                    <i class="fa-solid fa-paint-roller"></i>
+                    <h3>시공사</h3>
+                </div>
+            </form>
+        </div>
+    </th:block>
+
+
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
     <script src="/js/partner/main.js"></script>
 </body>
 </html>

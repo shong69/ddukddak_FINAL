@@ -12,8 +12,16 @@
     </div>
 
     <!-- 로그인/회원가입 -->
-    <div>
-        <a href="/member/login"><h4>로그인</h4></a>
-        <a href="/signup"><h4>회원가입</h4></a>
-    </div>
+    <th:block th:unless="${session.loginPartnerMember}">
+        <div>
+            <a href="/member/login"><h4>로그인</h4></a>
+            <a href="/signup"><h4>회원가입</h4></a>
+        </div>
+    </th:block>
+
+    <th:block th:if="${session.loginPartnerMember}">
+        <div>
+            <a href="/partner/logout"><h4>로그아웃</h4></a>
+        </div>
+    </th:block>
 </header>

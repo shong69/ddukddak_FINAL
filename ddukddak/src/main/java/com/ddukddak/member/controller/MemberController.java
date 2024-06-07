@@ -10,13 +10,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.member.model.service.MemberService;
+import com.ddukddak.partner.model.dto.Partner;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@SessionAttributes({"loginMember"})
 @RequestMapping("member")
 @RequiredArgsConstructor
 @Controller
@@ -25,14 +32,60 @@ public class MemberController {
 
 	private final MemberService service;
 	
+	
 	@GetMapping("login")
 	public String memberLogin() {
+		return "member/login";
+	}
+	
+	@PostMapping("login")
+	public String memberLogin(Member member, RedirectAttributes ra, Model model, @RequestParam(value="saveId", required=false) String saveId, HttpServletResponse resp) {
 		
 //		String smsAuthKey = Utility.RandomNumber6();
 //		
 //		log.info("인증 번호 테스트 : {}", smsAuthKey);
+
 		
-		return "member/login";
+		Member loginMember = service.login(member);
+		
+		String path = null;
+		
+		if(loginMember == null) {
+			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
+			path = "login";
+		}
+		if(loginMember != null) {
+			ra.addFlashAttribute("message", loginMember.getMemberId()+"님 환영합니다");
+			
+			model.addAttribute("loginMember", loginMember);
+			path="/";
+			
+			Cookie cookie = new Cookie("saveId", loginMember.getMemberId());
+			
+			cookie.setPath("/");
+			
+			if(saveId != null) {
+				cookie.setMaxAge(60 *60 * 24 * 30);
+				
+			} else { // 미체크시 
+				cookie.setMaxAge(0);
+			}
+			
+			resp.addCookie(cookie);
+
+		
+		}
+		return "redirect:" + path;
+	}
+	
+	@GetMapping("logout")
+	public String memberLogout(SessionStatus status, 
+			 RedirectAttributes ra) {
+		status.setComplete();
+		
+		ra.addFlashAttribute("message", "로그아웃 되었습니다.");
+		
+		return "redirect:/";
 	}
 	
 
