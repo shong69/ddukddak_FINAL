@@ -35,7 +35,11 @@
             <!-- 아이디 내역 -->
             <div class="findIdDiv">
                     <div>
-                        <h3 th:text="${memberId}">아이디</h3>
+                        <th:block th:if="${userType} == 'member'"><h3 th:text="${memberId}">아이디</h3></th:block>
+                        <th:block th:if="${userType} == 'partner'">
+                            <h3 th:text="${partnerId}">아이디</h3>
+                            <!-- <h3 th:text="${partnerId + (partnerType == 1 ? '(시공사)' : '(판매사)')}">아이디</h3> -->
+                        </th:block> 
                     </div>
                     
                     <div><h3 th:text="|가입일 : ${enrollDate}|">가입일 : 24.01.01</h3></div>
