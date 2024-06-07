@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddukddak.partner.model.mapper.PartnerMapper">
+	
+	<!-- [SMS] 이름, 이메일 일치 여부 확인 -->
+	<select id="partnerNTCheck">
+		SELECT COUNT(*)
+		FROM "PARTNER"
+		WHERE PARTNER_CEO_NAME = #{partnerCeoName} 
+		AND PARTNER_TEL = #{partnerTel}
+		AND PARTNER_DEL_FL = 'N'
+	</select>
+	
+	
+	<!-- 아이디 찾기 결과(휴대폰) -->
+	<select id="findIdByTel">
+		SELECT PARTNER_ID, TO_CHAR(ENROLL_DATE, 'YY"."MM"."DD') ENROLL_DATE, PARTNER_TYPE
+		FROM "PARTNER"
+		WHERE PARTNER_TEL = #{partnerTel}
+		AND PARTNER_CEO_NAME = #{partnerCeoName}
+		AND PARTNER_DEL_FL = 'N'
+	</select>
+	
+
+
+</mapper>
