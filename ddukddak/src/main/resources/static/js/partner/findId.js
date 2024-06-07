@@ -264,6 +264,29 @@ telAuthInput.addEventListener('input', e => {
 
     }
 
+    // 입력 후 바로 엔터키 칠 경우 검증이 제대로 되지 않아 추가
+    const obj = {
+        "smsTel" : inputTel.value,
+        "smsAuthKey" : telAuthInput.value
+    }
+
+    fetch("/sms/checkSmsAuthKey", {
+        method : "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(obj)
+    })
+    .then(resp => resp.text())
+    .then(result => {
+
+        if(result == 0) {
+            checkTelObj.telAuth = false;
+            return;
+        }
+
+        checkTelObj.telAuth = true;
+
+    })
+
     disabledCheckButton();
 });
 

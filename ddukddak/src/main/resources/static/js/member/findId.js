@@ -296,6 +296,31 @@ emailAuthInput.addEventListener('input', e => {
         emailAuthInput.classList.remove('errorB');
     }
 
+    // 입력 후 엔터키 오류 방지
+    const obj = {
+        "email" : inputEmail.value,
+        "authKey" : emailAuthInput.value
+    }
+
+    fetch("/email/checkAuthKey", {
+        method : "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(obj)
+    })
+    .then(resp => resp.text())
+    .then(result => {
+
+        if(result == 0) {
+            checkEmailObj.emailAuth = false;
+            return;
+        }
+
+        checkEmailObj.emailAuth = true;
+
+    })
+    
+
+
     disabledCheckButton();
 });
 
@@ -552,6 +577,30 @@ telAuthInput.addEventListener('input', e => {
         telAuthInput.classList.remove('errorB');
 
     }
+
+    
+    // 입력 후 바로 엔터키 칠 경우 검증이 제대로 되지 않아 추가
+    const obj = {
+        "smsTel" : inputTel.value,
+        "smsAuthKey" : telAuthInput.value
+    }
+
+    fetch("/sms/checkSmsAuthKey", {
+        method : "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(obj)
+    })
+    .then(resp => resp.text())
+    .then(result => {
+
+        if(result == 0) {
+            checkTelObj.telAuth = false;
+            return;
+        }
+
+        checkTelObj.telAuth = true;
+
+    })
 
     disabledCheckButton();
 });
