@@ -45,11 +45,15 @@
     margin-top: 8px;
 }
 
-#productList table td > div > h3:nth-child(2) {
-    font-weight: 600px;
+.productPrice {
+    font-weight: bold;
 }
 
 #productList table td > div > div:nth-child(4) {
     display: flex;
     margin-top: 8px;
+}
+
+.productPrice {
+    font-weight: bold;
 }
