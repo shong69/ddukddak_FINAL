@@ -18,11 +18,11 @@
     align-items: center;
 }
 
-#category-circle > div > h4 {
+#category-circle > div  h4 {
     margin-top: 15px;
 }
 
-#category-circle > div > div {
+#category-circle > div > a > div {
     border: 1px #ececec solid;
     border-radius: 50%;
     height: 130px;
@@ -35,11 +35,11 @@
     transition-duration: 0.3s;
 }
 
-#category-circle > div > div:hover {
+#category-circle > div > a > div:hover {
     box-shadow: 5px 5px 5px #9B9B9B;
 }
 
-#category-circle > div > div > img {
+#category-circle > div  img {
     width: 60%;
     height: 60%;
 }
@@ -47,39 +47,13 @@
 
 <div>
     <div id="category-circle">
-      <div>
-        <div><img onclick="location.href='/eCommerce/list';" src="/images/main/category-1.png"></div>
-        <h4>가구</h4>
-      </div>
-
-      <div>
-        <div><img src="/images/main/category-2.png"></div>
-        <h4>가전/디지털</h4>
-      </div>
-
-      <div>
-        <div><img src="/images/main/category-3.png"></div>
-        <h4>주방용품</h4>
-      </div>
-
-      <div>
-        <div><img src="/images/main/category-4.png"></div>
-        <h4>데코/식물</h4>
-      </div>
-
-      <div>
-        <div><img src="/images/main/category-5.png"></div>
-        <h4>수납/정리</h4>
-      </div>
-
-      <div>
-        <div><img src="/images/main/category-6.png"></div>
-        <h4>생활용품</h4>
-      </div>
-
-      <div>
-        <div><img src="/images/main/category-7.png"></div>
-        <h4>유아/아동</h4>
+      <div th:each="category : ${categoryList}" th:object="${category}">
+        <a th:href="@{/eCommerce/list/{categoryNo} (categoryNo=*{bigCategoryNo})}">
+          <div><img th:src="@{|/images/main/category-${category.bigCategoryNo}.png|}"></div>
+        </a>
+        <a>
+          <h4 th:text="${category.bigCategoryName}">대분류</h4>
+        </a>
       </div>
     </div>
   </div>

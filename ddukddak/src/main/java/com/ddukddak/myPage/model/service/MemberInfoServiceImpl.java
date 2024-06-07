@@ -1,9 +1,11 @@
 package com.ddukddak.myPage.model.service;
 
 import java.io.File;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberInfoServiceImpl implements MemberInfoService{
 	
 	private final MemberInfoMapper mapper;
+	private final BCryptPasswordEncoder bcrypt;
 	
 	@Value("${my.profile.web-path}")
 	private String profileWebPath;
@@ -59,6 +62,29 @@ public class MemberInfoServiceImpl implements MemberInfoService{
 		}
 		
 		return result;
+	}
+
+	@Override
+	public int changePassword(Map<String, String> map, int memberNo) {
+		//현재 비밀번호 확인
+		String originPw = mapper.selectPw(memberNo);
+		
+		if(!bcrypt.matches(map.get("currentPw"), originPw)) {
+			return 0;
+		}
+		//새 비밀번호 등록하기
+		
+		String encPw = bcrypt.encode(map.get("newPw"));
+		
+		map.put("encPw", encPw);
+		map.put("memberNo", String.valueOf(memberNo));
+		return mapper.changePassword(map);
+	}
+
+	//이메일 중복 검사
+	@Override
+	public int checkEmail(String memberEmail) {
+		return mapper.checkEmail(memberEmail);
 	}
 	
 }

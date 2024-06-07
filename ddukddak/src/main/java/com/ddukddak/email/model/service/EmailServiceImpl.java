@@ -55,7 +55,7 @@ public class EmailServiceImpl implements EmailService {
 			
 				//case "signup" : subject = "[뚝딱뚝딱] 회원가입 인증번호 : " + authKey; break;
 				case "findId" : subject = "[뚝딱뚝딱] 아이디 찾기 인증번호 : " + authKey; break;
-			
+				case "updateEmail" : subject = "[뚝딱뚝딱] 이메일 변경 인증번호 : " + authKey; break;
 			}
 			
 			// MimeMessage : Java에서 메일을 보내는 객체
