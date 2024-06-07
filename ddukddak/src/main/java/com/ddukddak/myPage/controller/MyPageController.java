@@ -27,49 +27,28 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MyPageController {
 	private final MemberInfoService infoService;
-	
+	//주문내역 진입
 	@GetMapping("")
 	public String main() {
 		return"myPage/myPageMain";
 	}
-	
+	//위시리스트 진입
 	@GetMapping("wishList")
 	public String wishList() {
 		return"myPage/wishList";
 	}
-	
+	//장바구니 진입
 	@GetMapping("cart")
 	public String cart() {
 		return "myPage/cart";
 	}
-	
-	
 	//회원정보 진입
 	@GetMapping("memberInfo")
 	public String memberInfo() {
 		return"myPage/memberInfo";
 	}
 	
-//	/**[회원정보] 프로필 이미지 변경
-//	 * @return
-//	 * @throws Exception 
-//	 */
-//	@PostMapping("memberInfo/profileImg")  -> 동기 방식
-//	public String changeProfileImg(
-//				@RequestParam("profile-image") MultipartFile profileImg,
-//				@SessionAttribute("loginMember") Member loginMember,
-//				RedirectAttributes ra
-//				) throws Exception{
-//		int result = infoService.updateImg(profileImg, loginMember);
-//		String message = null;
-//		
-//		if(result > 0) message = "프로필 이미지가 변경되었습니다.";
-//		else		   message = "프로필 이미지 변경 실패 \n다시 시도해주세요";
-//		
-//		ra.addFlashAttribute("message", message);
-//		
-//		return"redirect:/myPage/memberInfo";
-//	}
+
 	
 	/**[회원정보] 프로필 이미지 변경 - 비동기
 	 * @param file
@@ -77,18 +56,18 @@ public class MyPageController {
 	 * @return
 	 * @throws Exception
 	 */
-//	@PostMapping("memberInfo/profileImg")
-//	@ResponseBody
-//	public ResponseEntity<String> changeProfileImg(
-//			@RequestParam("profile-image") MultipartFile file,
-//			@SessionAttribute("loginMember") Member loginMemebr) throws Exception{
-//		int result  = infoService.updateImg(file, loginMemebr);
-//		
-//		if(result >0) return ResponseEntity.ok().build();
-//		else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//
-//		
-//	}
+	@PostMapping("memberInfo/profileImg")
+	@ResponseBody
+	public ResponseEntity<String> changeProfileImg(
+			@RequestParam("profile-image") MultipartFile file,
+			@SessionAttribute("loginMember") Member loginMemebr) throws Exception{
+		int result  = infoService.updateImg(file, loginMemebr);
+		
+		if(result >0) return ResponseEntity.ok().build();
+		else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+		
+	}
 	
 	
 	
@@ -116,41 +95,8 @@ public class MyPageController {
 		
 	}
 	
-
-	@PostMapping("memberInfo/profileImg")
-	@ResponseBody
-	public ResponseEntity<String> changeProfileImg(
-			@RequestParam("profile-image") MultipartFile file,
-			@SessionAttribute("loginMember") Member loginMemebr) throws Exception{
-		int result  = infoService.updateImg(file, loginMemebr);
-		
-		if(result >0) return ResponseEntity.ok().build();
-		else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-
-		
-	}
-		
-//	@PostMapping("memberInfo/password")
-//	public String changePassword(
-//			@RequestParam Map<String, Object> paramMap,
-//			@SessionAttribute("loginMemebr") Member loginMember,
-//			RedirectAttributes ra) {
-//		
-//		String message = null;
-//		int memberNo = loginMember.getMemberNo();
-//		
-//		int result = infoService.changePassword(paramMap, memberNo);
-//		
-//		if(result>0) message = "비밀번호가 변경되었습니다.";
-//		else 		 message = "비밀번호 변경 실패\n다시 시도해주세요.";
-//		
-//		ra.addFlashAttribute("message", message);
-//	
-//		return"redirect:/myPage/memberInfo";
-//	}
-//		
-//		
-
+	
+	
 	
 	/**[회원정보] 이메일 중복 확인
 	 * @param memberEmail
@@ -162,13 +108,68 @@ public class MyPageController {
 		return infoService.checkEmail(memberEmail);
 	}
 	
-	@PostMapping("memberInfo/nickname")
-	public String changeNickname() {
-		return"";
+	/**이메일 변경하기
+	 * @param memberEmail
+	 * @param member
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("memberInfo/emailUpdate")
+	public int updateEmail(@RequestParam("memberEmail") String memberEmail,
+			@SessionAttribute("loginMember") Member member) {
+		int memberNo = member.getMemberNo();
+		Map<String, Object> map  = new HashMap<>();
+		map.put("memberEmail", memberEmail);
+		map.put("memberNo", memberNo);
+		return infoService.updateEmail(map);
 	}
 	
-	@PostMapping("memberInfo/phoneNum")
-	public String changePhoneNum() {
-		return "";
+	
+	
+	
+	/**닉네임 변경하기
+	 * @param memberNickname
+	 * @param member
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("memberInfo/nickname")
+	public int updateNickname(@RequestParam("memberNickname") String memberNickname,
+			@SessionAttribute("loginMember") Member member) {
+		int memberNo = member.getMemberNo();
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("memberNo", memberNo);
+		map.put("memberNickname", memberNickname);
+		
+		return infoService.updateNickname(map);
+	}
+	
+	
+	
+	
+	
+	/** 휴대폰 번호 중복 체크
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("memberInfo/phoneDup")
+	public int changePhoneNum(@RequestBody Map<String, String> map) {
+		return infoService.checkPhonNum(map.get("phoneNum"));
+	}
+	
+	/** 휴대폰 번호 업데이트하기
+	 * @param map{updatePhoneNum}
+	 * @param member
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("memberInfo/phoneNumUpdate")
+	public int updatePhoneNum(@RequestBody Map<String, Object> map,
+			@SessionAttribute("loginMember") Member member) {
+		
+		int memberNo = member.getMemberNo();
+		map.put("memberNo", memberNo);
+		return infoService.updatePhoneNum(map);
 	}
 }

@@ -62,7 +62,12 @@ public class EmailController {
      */
     @ResponseBody
     @PostMapping("updateEmail")
-    public ResponseEntity<String> updateEmail(@RequestBody String email) {
+    public ResponseEntity<String> updateEmail(@RequestBody Map<String, String> request) {
+    	String email = request.get("email");
+    	
+    	if(email== null || email.isEmpty()) {
+    		return ResponseEntity.badRequest().build();
+    	}
     	
     	service.sendEmailAsync("updateEmail", email);
     	return ResponseEntity.ok().build(); //비동기 여부에 대한 http응답 반환

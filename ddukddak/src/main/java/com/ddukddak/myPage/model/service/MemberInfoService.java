@@ -29,4 +29,29 @@ public interface MemberInfoService {
 	 */
 	int checkEmail(String memberEmail);
 
+	/**이메일 업데이트
+	 * @param map
+	 * @return
+	 */
+	int updateEmail(Map<String, Object> map);
+
+	/**닉네임 업데이트
+	 * @param memberNo
+	 * @param memberNickname
+	 * @return
+	 */
+	int updateNickname(Map<String, Object> map);
+
+	/** 휴대폰 번호 중복 체크
+	 * @param string
+	 * @return
+	 */
+	int checkPhonNum(String phoneNum);
+
+	/** 휴대폰 번호 업데이트
+	 * @param map
+	 * @return
+	 */
+	int updatePhoneNum(Map<String, Object> map);
+
 }

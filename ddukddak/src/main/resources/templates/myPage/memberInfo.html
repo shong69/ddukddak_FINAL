@@ -59,7 +59,7 @@
                                         </td>                                    
                                         <td class="profile-area">
                                             <button class="profile-del-btn myPageDelUpdateBtn" type="button">삭제</button>
-                                            <button class="confirm myPageDelUpdateBtn">수정</button>
+                                            <button class="confirm myPageDelUpdateBtn" type="button">수정</button>
                                         </td>
                                     </form>
                                 </tr>
@@ -141,7 +141,7 @@
                                                 <button type="button" class="emailAuthBtn myPageVerifyBtn">인증</button>
                                             </div>
                                             <div class="email-btn-area">
-                                                <button class="emailConfirmBtn confrim myPageConfirmCancelBtn">확인</button>
+                                                <button class="emailConfirmBtn confrim myPageConfirmCancelBtn" type="button">확인</button>
                                                 <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
                                             </div>
                                         </td>
@@ -172,10 +172,10 @@
                                                 <li>닉네임 설정에 이모티콘 및 특수문자 사용이 불가합니다. ex)& < > ( ) ' " ,</li>
                                             </ul>
                                             <div class="nickname-input-area">
-                                                <input placeholder="닉네임 입력">
+                                                <input name = "nicknameInput"placeholder="닉네임 입력">
                                             </div>
                                             <div class="nickname-btn-area">
-                                                <button class="confirm myPageConfirmCancelBtn">확인</button>
+                                                <button class="nicknameConfirmBtn confirm myPageConfirmCancelBtn" type="button">확인</button>
                                                 <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
                                             </div>
                                         </td>
@@ -198,11 +198,15 @@
                                         <th>휴대전화</th>
                                         <td colspan="3" class="phoneNum-area2">
                                             <div class="phonNum-input-area">
-                                                <input placeholder="'-' 없이 입력" type="tel">
-                                                <button class="myPageVerifyBtn">인증</button>
+                                                <div>
+                                                    <input name = "phoneNum" placeholder="'-' 없이 입력" type="tel">
+                                                    <input name="p-auth-input" placeholder="인증번호 입력">
+                                                </div>
+                                                
+                                                <button class="p-authBtn myPageVerifyBtn" type="button">인증</button>
                                             </div>
                                             <div>
-                                                <button class="confirm myPageConfirmCancelBtn">확인</button>
+                                                <button class="phoneConfirmBtn confirm myPageConfirmCancelBtn" type="button">확인</button>
                                                 <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
                                             </div>
                                         </td>
