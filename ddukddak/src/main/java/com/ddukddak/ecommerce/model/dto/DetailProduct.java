@@ -1,5 +1,7 @@
 package com.ddukddak.ecommerce.model.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product {
+public class DetailProduct {
 	
 	private int productNo;
 	private String productName;
@@ -26,12 +28,10 @@ public class Product {
 	private int partnerNo;
 	
 	
-	// 상품 썸네일 이미지
-	private int uploadImgmgNo;
-	private String uploadImgPath;
-	private String uploadImgOgName;
-	private String uploadImgRename;
-	private int uploadImgOrder;
-	private String category;
+	// 상품 이미지
+	private List<ProductImg> imgList;
+	
+	// 상품 옵션
+	private List<ProductOption> optionList;
 
 }

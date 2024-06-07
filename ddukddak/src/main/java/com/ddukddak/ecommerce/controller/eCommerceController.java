@@ -8,11 +8,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ddukddak.ecommerce.model.dto.BigCategory;
+import com.ddukddak.ecommerce.model.dto.Category;
+import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Product;
+import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,11 +34,12 @@ public class eCommerceController {
 
 	@GetMapping("main")
 	public String eCommerceMain(Model model) {
-		log.debug("## MAIN ##");
+
 		List<Product> list = service.selectProduct();
 		List<Product> bestList = service.selectBestProduct();
 		
-		List<BigCategory> categoryList = service.selectCategory();
+		// 대분류 카테고리 선택
+		List<Category> categoryList = service.selectCategory();
 		
 		model.addAttribute("selectProductList", list);
 		model.addAttribute("selectBestProductList", bestList);
@@ -43,22 +49,74 @@ public class eCommerceController {
 		return "/eCommerce/eCommerceMain";
 	}
 	
-	@GetMapping("list/{categoryNo:[0-9]+}")
-	public String eCommerceList(@PathVariable("categoryNo") int categoryNo,
+	@PostMapping("selectBestProduct")
+	@ResponseBody
+	public List<Product> selectBestProduct(Model model,
+											@RequestBody int categoryNo) {
+		
+		List<Product> bestProduct = service.BestProduct(categoryNo);
+		
+		model.asMap().remove("selectBestProductList");
+		model.addAttribute("selectBestProductList", bestProduct);
+		
+		return bestProduct;
+		
+	}
+	
+	@GetMapping("list/{bigcategoryNo:[0-9]+}/{smallcategoryNo:[0-9]+}")
+	public String eCommerceList(@PathVariable("bigcategoryNo") int bigcategoryNo,
+								@PathVariable("smallcategoryNo") int smallcategoryNo,
 								Model model) {
-		Map<String,Integer> map = new HashMap<String, Integer>();
 		
-		map.put("categoryNo", categoryNo);
+		List<Product> list = service.selectProductList(smallcategoryNo);
+		log.info("list : " + list);
 		
-		List<Product> list = service.selectProductList(categoryNo);
+		// 대분류 카테고리 선택
+		List<Category> categoryList = service.selectCategory();
+		
+		// 소분류 카테고리 선택
+		List<Category> smallCategoryList = service.selectSmallCategory(bigcategoryNo);
+		
+		String bigCategoryName = service.selectBigCategory(bigcategoryNo);
 		
 		model.addAttribute("selectProductList", list);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("smallCategoryList", smallCategoryList);
+		model.addAttribute("bigCategoryName", bigCategoryName);
 		
 		return "/eCommerce/eCommerceList";
 	}
 	
-	@RequestMapping("detail")
-	public String eCommerceDetail() {
+	@GetMapping("list/{bigcategoryNo:[0-9]+}/{smallcategoryNo:[0-9]+}/{productNo:[0-9]+}/detail")
+	public String eCommerceDetail(@PathVariable("bigcategoryNo") int bigcategoryNo,
+								@PathVariable("smallcategoryNo") int smallcategoryNo,
+								@PathVariable("productNo") int productNo,
+									Model model) {
+		
+		DetailProduct productInfo = service.selectOneProduct(productNo);
+		log.info("productInfo : " + productInfo);
+		
+		// 대분류 카테고리 선택
+		List<Category> categoryList = service.selectCategory();
+				
+		// 소분류 카테고리 선택
+		List<Category> smallCategoryList = service.selectSmallCategory(bigcategoryNo);
+		
+		// 추천상품 선택
+		List<Product> recList = service.selectRecProduct(smallcategoryNo);
+		
+		// 옵션 개수 선택
+		List<ProductOption> optionList = service.selectOptionListName(productNo);
+		log.info("optionList : " + optionList);
+		
+		model.addAttribute("productInfo", productInfo);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("smallCategoryList", smallCategoryList);
+		model.addAttribute("bigcategoryNo", bigcategoryNo);
+		model.addAttribute("selectRecProductList", recList);
+		model.addAttribute("optionList", optionList);
+		
+		
 		return "eCommerce/eCommerceDetail";
 	}
 	

@@ -13,25 +13,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product {
+public class ProductImg {
 	
-	private int productNo;
-	private String productName;
-	private int productPrice;
-	private String productCreateDate;
-	private String productUpdateDate;
-	private char productFl;
-	private int categoryNo;
-	private int bigCategoryNo;
-	private int partnerNo;
-	
-	
-	// 상품 썸네일 이미지
 	private int uploadImgmgNo;
 	private String uploadImgPath;
 	private String uploadImgOgName;
 	private String uploadImgRename;
 	private int uploadImgOrder;
 	private String category;
+	private int productNo;
 
 }

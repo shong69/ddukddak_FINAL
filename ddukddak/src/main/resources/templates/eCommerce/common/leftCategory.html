@@ -1,106 +1,85 @@
 <style>
     #detailCategory {
-    flex: 1;
-    padding: 20px;
-    position: sticky;
-    top: 10%;
-    transition: transform 0.2s ease-out;
-    height: fit-content; /* 콘텐츠에 맞게 높이 조절 */
-}
+        flex: 1;
+        padding: 20px;
+        position: sticky;
+        top: 10%;
+        transition: transform 0.2s ease-out;
+        height: fit-content;
+    }
 
-#detaildetailCategory {
-    margin-top: 20px;
-    margin-right: 50px;
-    display: flex;
-    flex-direction: column;
-    border: 1px black solid;
-    padding: 10px;
-}
+    #detaildetailCategory {
+        margin-top: 20px;
+        margin-right: 50px;
+        display: flex;
+        flex-direction: column;
+        border: 1px black solid;
+        padding: 10px;
+    }
 
-#detaildetailCategory table {
-    font-family: 'main';
-}
+    #detaildetailCategory table {
+        font-family: 'main';
+    }
 
-#detaildetailCategory table td {
-    padding: 5px 0px;
-}
+    #detaildetailCategory table tr {
+        cursor: pointer;
+    }
 
-#detaildetailCategory table tr > td:first-child {
-    width: 200px;
-}
+    #detaildetailCategory table td {
+        padding: 5px 0px;
+    }
 
-#priceSearch {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+    #detaildetailCategory table tr td:first-child {
+        width: 200px;
+    }
 
-#priceSearch input {
-    height: 30px;
-    border-radius: 10px;
-    border: 1px black solid;
-}
+    #priceSearch {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 
-#priceSearch button {
-    height: 30px;
-    width: 200px;
-    background-color: #404040;
-    border: none;
-    border-radius: 10px;
-    margin-top: 20px;
-}
+    #priceSearch input {
+        height: 30px;
+        border-radius: 10px;
+        border: 1px black solid;
+    }
 
-#priceSearch button h3 {
-    color: white;
-}
+    #priceSearch button {
+        height: 30px;
+        width: 200px;
+        background-color: #404040;
+        border: none;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    #priceSearch button h3 {
+        color: white;
+    }
+
+    .highlight {
+        font-weight: bold;
+    }
 </style>
-
+</head>
+<body>
 <div id="detailCategory">
-    <h4>가구</h4>
+    <h4 th:text="${bigCategoryName}">소분류</h4>
 
     <div id="detaildetailCategory">
         <div>
             <table>
-                <tr>
-                    <td>침대</td>
-                    <td>></td>
-                </tr>
-                <tr>
-                    <td>매트리스/토퍼</td>
-                    <td>></td>
-                </tr>
-                <tr>
-                    <td>테이블/식탁/책상</td>
-                    <td>></td>
-                </tr>
-                <tr>
-                    <td>소파</td>
-                    <td>></td>
-                </tr>
-                <tr>
-                    <td>서랍/수납장</td>
-                    <td>></td>
-                </tr>
-                <tr>
-                    <td>거실장/TV장</td>
-                    <td>></td>
-                </tr>
-                <tr>
-                    <td>선반</td>
-                    <td>></td>
-                </tr>
-                <tr>
-                    <td>진열장/책장</td>
-                    <td>></td>
-                </tr>
-                <tr>
-                    <td>의자</td>
-                    <td>></td>
-                </tr>
-                <tr>
-                    <td>행거/옷장</td>
-                    <td>></td>
+                <tr th:each="category : ${smallCategoryList}" th:object="${category}" onclick="window.location.href = this.querySelector('a').href">
+                    <td>
+                        <a th:href="@{/eCommerce/list/{bigcategoryNo}/{smallcategoryNo} (bigcategoryNo=*{bigCategoryNo}, smallcategoryNo=*{categoryNo})}" style="display:block; width:100%; height:100%;">
+                            <span th:value="${category.categoryNo}" class="data-category-no" th:text="${category.categoryName}">소분류</span>
+                        </a>
+                    </td>
+                    <a th:href="@{/eCommerce/list/{bigcategoryNo}/{smallcategoryNo} (bigcategoryNo=*{bigCategoryNo}, smallcategoryNo=*{categoryNo})}" style="display:block; width:100%; height:100%;"></a>
+                        <td>></td>
+                    </a>
                 </tr>
             </table>
         </div>
@@ -119,48 +98,61 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const category = document.getElementById('detailCategory');
-    let lastScrollY = window.scrollY;
-    let isTicking = false;
-    let targetOffset = 0;
-    let animationFrame;
+        const category = document.getElementById('detailCategory');
+        let lastScrollY = window.scrollY;
+        let isTicking = false;
+        let targetOffset = 0;
+        let animationFrame;
 
-    function onScroll() {
-        const currentScrollY = window.scrollY;
-        const deltaY = currentScrollY - lastScrollY;
+        function onScroll() {
+            const currentScrollY = window.scrollY;
+            const deltaY = currentScrollY - lastScrollY;
 
-        targetOffset += deltaY * 0.2; // Adjust the factor for desired effect
-        targetOffset = Math.max(Math.min(targetOffset, 20), -20); // Limit the movement range
+            targetOffset += deltaY * 0.2; // Adjust the factor for desired effect
+            targetOffset = Math.max(Math.min(targetOffset, 20), -20); // Limit the movement range
 
-        if (!isTicking) {
-            window.requestAnimationFrame(() => {
-                category.style.transform = `translateY(${targetOffset}px)`;
-                isTicking = false;
-            });
-            isTicking = true;
-        }
+            if (!isTicking) {
+                window.requestAnimationFrame(() => {
+                    category.style.transform = `translateY(${targetOffset}px)`;
+                    isTicking = false;
+                });
+                isTicking = true;
+            }
 
-        lastScrollY = currentScrollY;
-        if (animationFrame) {
-            cancelAnimationFrame(animationFrame);
-        }
+            lastScrollY = currentScrollY;
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
 
-        animationFrame = requestAnimationFrame(resetPosition);
-    }
-
-    function resetPosition() {
-        targetOffset *= 0.9; // Damping factor to bring back to original position
-        if (Math.abs(targetOffset) < 0.1) {
-            targetOffset = 0;
-            cancelAnimationFrame(animationFrame);
-        } else {
-            category.style.transform = `translateY(${targetOffset}px)`;
             animationFrame = requestAnimationFrame(resetPosition);
         }
-    }
 
-    window.addEventListener('scroll', onScroll);
-});
+        function resetPosition() {
+            targetOffset *= 0.9; // Damping factor to bring back to original position
+            if (Math.abs(targetOffset) < 0.1) {
+                targetOffset = 0;
+                cancelAnimationFrame(animationFrame);
+            } else {
+                category.style.transform = `translateY(${targetOffset}px)`;
+                animationFrame = requestAnimationFrame(resetPosition);
+            }
+        }
+
+        window.addEventListener('scroll', onScroll);
+    });
 
 
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+        var extractedNumber = currentUrl.match(/\/\d+\/(\d+)\/?/)[1];  
+
+        const categoryNos = document.querySelectorAll(".data-category-no");
+
+        categoryNos.forEach(elements => {
+
+            if(elements.attributes[0].value === extractedNumber[0]) {
+                elements.classList.add("highlight");
+            }
+        })
+    });
 </script>
