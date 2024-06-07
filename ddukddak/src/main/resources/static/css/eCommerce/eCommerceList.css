@@ -29,18 +29,22 @@
     width: 280px;
 }
 
-#productList table td > div > div:first-child {
+#productList table td > div > a > div:first-child {
     display: flex;
     justify-content: center;
     margin-bottom: 5px;
 }
 
-#productList table td > div > div:first-child > img {
+#productList table td > div > a > div:first-child > img {
     height: 300px;
     width: 250px;
 }
 
-#productList table td > div > div:nth-child(3) {
+#productList table td > div h4:hover {
+    text-decoration: underline;
+}
+
+#productList table td > div > a > div:nth-child(3) {
     display: flex;
     margin-top: 8px;
 }
@@ -49,7 +53,7 @@
     font-weight: bold;
 }
 
-#productList table td > div > div:nth-child(4) {
+#productList table td > div > a > div:nth-child(4) {
     display: flex;
     margin-top: 8px;
 }

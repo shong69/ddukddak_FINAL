@@ -153,3 +153,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+
+/* 이미지 x 버튼 눌렸을때 */
+
+document.addEventListener('DOMContentLoaded', () => {
+  const delImgButtons = document.querySelectorAll(".delete-img");
+
+  if (delImgButtons != null) {
+     delImgButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            const projectImg = event.target.closest('.projectImg');
+            if (projectImg) {
+                projectImg.style.display = 'none'; // Hide the image container
+            }
+        });
+    });
+  }
+});

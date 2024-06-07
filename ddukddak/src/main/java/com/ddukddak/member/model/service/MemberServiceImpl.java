@@ -55,6 +55,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	@Override
+	public Member login(Member member) {
+		return mapper.login(member);
+	}
+
+
 	
 	
 }

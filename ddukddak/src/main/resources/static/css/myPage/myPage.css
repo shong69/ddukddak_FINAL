@@ -445,9 +445,13 @@ input::placeholder{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-left: 80px;
 }
-.phonNum-input-area>input{
+.phonNum-input-area>div:first-child{
+    margin-left: 80px;
+    display: flex;
+    flex-direction: column;
+}
+.phonNum-input-area input{
     width : 400px;
     height: 30px;
     border-radius: 8px;

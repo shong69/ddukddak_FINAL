@@ -26,25 +26,100 @@
 		ORDER BY p.PRODUCT_NO
 	</select>
 	
-	<!-- 카테고리별 상품목록 출력 -->
-	<select id="selectProductList">
+	<!-- 카테고리별 베스트상품 출력 -->
+	<select id="BestProduct">
 		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
 		PRODUCT_FL, CATEGORY_NO, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
 		UPLOAD_IMG_ORDER, CATEGORY
 		FROM PRODUCT p
 		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
 		WHERE UPLOAD_IMG_ORDER = 1
 		AND PRODUCT_FL = 'N'
-		AND CATEGORY = (SELECT CATEGORY_NO
-						FROM CATEGORY c JOIN BIG_CATEGORY b ON(c.BIG_CATEGORY_NO = b.BIG_CATEGORY_NO)
-						WHERE c.BIG_CATEGORY_NO = #{categoryNo}
-						AND ROWNUM = 1)	
+		AND BIG_CATEGORY_NO = ${categoryNo}
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+	
+	<!-- 카테고리별 상품목록 출력 -->
+	<select id="selectProductList">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, p.CATEGORY_NO "CATEGORY_NO", PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME, BIG_CATEGORY_NO,
+		UPLOAD_IMG_ORDER, CATEGORY
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		LEFT JOIN CATEGORY c ON(p.CATEGORY_NO = c.CATEGORY_NO)
+		WHERE UPLOAD_IMG_ORDER = 1
+		AND PRODUCT_FL = 'N'
+		AND CATEGORY = #{smallcategoryNo}
 		ORDER BY p.PRODUCT_NO
 	</select>
 	
+	<!-- 대분류 카테고리 선택 -->
 	<select id="selectCategory">
-		SELECT * FROM BIG_CATEGORY
+		WITH RankedCategories AS (
+	    SELECT 
+	        c.CATEGORY_NO, 
+	        b.BIG_CATEGORY_NAME, 
+	        b.BIG_CATEGORY_NO,
+	        ROW_NUMBER() OVER (PARTITION BY b.BIG_CATEGORY_NO ORDER BY c.CATEGORY_NO) AS rn
+	    FROM CATEGORY c
+	    LEFT JOIN BIG_CATEGORY b ON c.BIG_CATEGORY_NO = b.BIG_CATEGORY_NO
+	)
+	SELECT CATEGORY_NO, BIG_CATEGORY_NAME, BIG_CATEGORY_NO
+	FROM RankedCategories
+	WHERE rn = 1
 	</select>
+	
+	<!-- 소분류 카테고리 선택 -->
+	<select id="selectSmallCategory">
+		SELECT CATEGORY_NO, CATEGORY_NAME, b.BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM CATEGORY c JOIN BIG_CATEGORY b ON(c.BIG_CATEGORY_NO = b.BIG_CATEGORY_NO)
+		WHERE b.BIG_CATEGORY_NO = #{bigcategoryNo}
+	</select>
+	
+	<!-- 대분류 카테고리 이름 -->
+	<select id="selectBigCategoty">
+		SELECT BIG_CATEGORY_NAME
+		FROM BIG_CATEGORY
+		WHERE BIG_CATEGORY_NO = #{bigcategoryNo}
+	</select>
+	
+	<!-- 상품 상세정보 -->
+	<select id="selectOneProduct">
+		SELECT * FROM "PRODUCT" WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 상품 상세정보 이미지리스트 -->
+	<select id="selectImgList">
+		SELECT * FROM "UPLOAD_FILE" WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 상품 상세정보 옵션리스트 -->
+	<select id="selectOptionList">
+		SELECT * FROM "OPTION" WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 상품별 추천상품 출력 -->
+	<select id="recProduct">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, p.CATEGORY_NO "CATEGORY_NO", PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME, BIG_CATEGORY_NO,
+		UPLOAD_IMG_ORDER, CATEGORY
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		LEFT JOIN CATEGORY c ON(p.CATEGORY_NO = c.CATEGORY_NO)
+		WHERE UPLOAD_IMG_ORDER = 1
+		AND PRODUCT_FL = 'N'
+		AND CATEGORY = #{smallcategoryNo}
+	</select>
+	
+	<!-- 상품의 옵션이름 출력 -->
+	<select id="selectOptionListName">
+		SELECT DISTINCT OPTION_NAME AS "optionName"
+		FROM "OPTION"
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
 	
 	
 </mapper>

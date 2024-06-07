@@ -2,10 +2,14 @@ package com.ddukddak.partner.model.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.ddukddak.partner.dto.Partner;
+import com.ddukddak.partner.model.dto.Partner;
 
 @Mapper
 public interface PartnerMapper {
+
+	Partner login(Partner partner);
+
+
 
 	/** 파트너 이름, 휴대폰 일치 여부 확인(비동기)
 	 * @param partner

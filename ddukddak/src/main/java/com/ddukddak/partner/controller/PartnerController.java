@@ -10,15 +10,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ddukddak.partner.dto.Partner;
+import com.ddukddak.partner.model.dto.Partner;
 import com.ddukddak.partner.model.service.PartnerService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("partner")
+@SessionAttributes({"loginPartnerMember"})
 @RequiredArgsConstructor
 @Slf4j
 public class PartnerController {
@@ -26,9 +32,62 @@ public class PartnerController {
 	private final PartnerService service;
 	
 	@GetMapping("login")
-	public String partnerLogin() {
+	public String partnerLogin() {		
 		
 		return "/partner/login";
+	}
+	
+	@PostMapping("login")
+	public String partnerLogin(Partner partner, RedirectAttributes ra, Model model, @RequestParam(value="saveId", required=false) String partnerSaveId, HttpServletResponse resp) {
+		
+		Partner loginPartnerMember = service.login(partner);
+		
+		String path = null;
+		
+		if(loginPartnerMember == null) {
+			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
+			path = "login";
+		}
+		if(loginPartnerMember != null) {
+			ra.addFlashAttribute("message", loginPartnerMember.getPartnerId()+"님 환영합니다");
+			
+			model.addAttribute("loginPartnerMember", loginPartnerMember);
+			path="/partner/main";
+			
+			Cookie cookie = new Cookie("partnerSaveId", loginPartnerMember.getPartnerId());
+			
+			cookie.setPath("/");
+			
+			if(partnerSaveId != null) {
+				cookie.setMaxAge(60 *60 * 24 * 30);
+				
+			} else { // 미체크시 
+				cookie.setMaxAge(0);
+			}
+			
+			resp.addCookie(cookie);
+		}
+		
+		
+		
+		
+		return "redirect:" + path;
+	}
+	
+	
+	/** 로그 아웃
+	 * @param status
+	 * @return
+	 */
+	@GetMapping("logout")
+	public String logout(SessionStatus status, 
+						 RedirectAttributes ra) {
+		
+		status.setComplete();
+		
+		ra.addFlashAttribute("message", "로그아웃 되었습니다.");
+		
+		return "redirect:/";
 	}
 	
 	

@@ -48,7 +48,7 @@
 <div>
     <div id="category-circle">
       <div th:each="category : ${categoryList}" th:object="${category}">
-        <a th:href="@{/eCommerce/list/{categoryNo} (categoryNo=*{bigCategoryNo})}">
+        <a th:href="@{/eCommerce/list/{bigcategoryNo}/{smallcategoryNo} (bigcategoryNo=*{bigCategoryNo}, smallcategoryNo=*{categoryNo})}">
           <div><img th:src="@{|/images/main/category-${category.bigCategoryNo}.png|}"></div>
         </a>
         <a>

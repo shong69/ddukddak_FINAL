@@ -27,7 +27,7 @@
         
         <div class="loginBox">
             
-            <form id="loginForm">
+            <form id="loginForm" action="/partner/login" method="post">
                 
                 <div class="boxInDiv">
                     <h4 class="loginPageTitle2">파트너 로그인</h4>
@@ -36,7 +36,7 @@
                     <div class="inputArea">
                         <div class="inputGroup">
                             <label for="inputId" class="idLabel">아이디</label>
-                            <input type="text" id="inputId" name="partnerId" required>
+                            <input type="text" id="partnerSaveId" name="partnerId" required>
                         </div>
                         
                         <div class="inputGroup">
@@ -47,7 +47,7 @@
 
                     <!-- 아이디 저장 영역 -->
                     <div class="saveIdArea">
-                        <input type="checkbox" id="saveId">
+                        <input type="checkbox" id="saveId" name="saveId">
                         <label for="saveId"> 아이디 기억하기</label>
                     </div>
 
@@ -77,7 +77,7 @@
 
 
     <th:block th:replace="~{common/fragments/footer}"></th:block>
-
+    <script src="/js/common/login.js"></script>
 
 </body>
 </html>

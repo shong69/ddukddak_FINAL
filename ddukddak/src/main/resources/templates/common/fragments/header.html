@@ -19,8 +19,16 @@
     </div>
 
     <!-- 로그인/회원가입 -->
-    <div>
-        <a href="/member/login"><h4>로그인</h4></a>
-        <a href="/signup"><h4>회원가입</h4></a>
-    </div>
+    <th:block th:if="${session.loginMember == null}">
+        <div>
+            <a href="/member/login"><h4>로그인</h4></a>
+            <a href="/signup"><h4>회원가입</h4></a>
+        </div>
+    </th:block>
+    <th:block th:if="${session.loginMember != null}">
+        <div>
+            <a href="/myPage"><h4>마이페이지</h4></a>
+            <a href="/member/logout"><h4>로그아웃</h4></a>
+        </div>
+    </th:block>
 </header>

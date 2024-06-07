@@ -30,12 +30,12 @@
 
 
 /* 오늘의 상품 */
-#shoping-list {
+.shoping-list {
     display: flex;
     flex-direction: column;
 }
 
-#shoping-list > div:nth-child(2) {
+.shoping-list > div:nth-child(2) {
     display: flex;
     justify-content: end;
 }
@@ -54,7 +54,7 @@
     margin: 0 60px;
 }
 
-#shoping-list > div:first-child {
+.shoping-list > div:first-child {
     display: flex;
 }
 
@@ -62,12 +62,12 @@
     font-weight: bold;
 }
 
-#shoping-list > div:first-child h4 {
+.shoping-list > div:first-child h4 {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 5px;
-    padding: 0 5px;
+    padding: 4px 7px;
     background-color: var(--primary3);
     border-radius: 10px;
     cursor: pointer;

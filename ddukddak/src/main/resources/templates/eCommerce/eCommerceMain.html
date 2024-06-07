@@ -70,7 +70,7 @@
 
 
     <!-- 쇼핑 목록 -->
-    <div id="shoping-list" style="margin-top: 100px;">
+    <div class="shoping-list" style="margin-top: 100px;">
         <div>
           <h3 style="font-weight: bold;">오늘의 상품</h3>
         </div>
@@ -99,19 +99,16 @@
               <h5 style="color: #9B9B9B;">리뷰 78개</h5>
             </div>
           </div>
-      </div>
+        </div>
+    </div>
 
     <!-- 베스트 -->
-    <div id="shoping-list" style="margin-top: 150px;">
+    <div class="shoping-list" id="bestContainer" style="margin-top: 150px;">
         <div>
           <h3 style="font-weight: bold; margin-right: 30px;">베스트</h3>
-          <h4>가구</h4>
-          <h4>가전/디지털</h4>
-          <h4>주방용품</h4>
-          <h4>데코/식물</h4>
-          <h4>수납/정리</h4>
-          <h4>생활용품</h4>
-          <h4>유아/아동</h4>
+          <div th:each="category : ${categoryList}" th:object="${category}">
+            <h4 th:text="${category.bigCategoryName}" th:value="${category.bigCategoryNo}" class="selectBest">대분류</h4>
+          </div>
         </div>
 
         <div style="margin-bottom: 10px;">
@@ -137,6 +134,7 @@
               <h5 style="color: #9B9B9B;">리뷰 78개</h5>
             </div>
           </div>
+        </div>
     </div>
 
 

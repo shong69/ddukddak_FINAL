@@ -1,8 +1,11 @@
 package com.ddukddak.partner.model.service;
 
-import com.ddukddak.partner.dto.Partner;
+import com.ddukddak.partner.model.dto.Partner;
 
 public interface PartnerService {
+
+	Partner login(Partner partner);
+
 
 	/** 파트너 이름, 휴대폰 일치 여부 확인(비동기)
 	 * @param partner

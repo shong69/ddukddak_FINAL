@@ -45,40 +45,34 @@
                     <tr th:each="row : ${#numbers.sequence(0, 2)}">
                         <td th:each="col : ${#numbers.sequence(row * 4, row * 4 + 3)}">
                             <div th:if="${col < selectProductList.size()}">
-                                <div><img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgOgName}|"></div>
-                                <div>
-                                <h4 th:text="${selectProductList[col].productName}">상품이름</h4>
-                                </div>
-                                <div>
-                                <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
-                                <h3 th:text="${selectProductList[col].productPrice} + '원'" class="productPrice">상품가격</h3>
-                                </div>
-                                <div>
-                                <img src="/images/main/star.png" style="height: 10px;">
-                                <h5 style="margin-right: 5px;">4.1</h5>
-                                <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+                                <a th:href="@{'/eCommerce/list/' + ${selectProductList[col].bigCategoryNo} + '/' + ${selectProductList[col].categoryNo} + '/' + ${selectProductList[col].productNo} + '/detail'}">
+                                    <div><img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgOgName}|"></div>
+                                    <div>
+                                    <h4 th:text="${selectProductList[col].productName}">상품이름</h4>
+                                    </div>
+                                    <div>
+                                    <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+                                    <h3 th:text="${selectProductList[col].productPrice} + '원'" class="productPrice">상품가격</h3>
+                                    </div>
+                                    <div>
+                                    <img src="/images/main/star.png" style="height: 10px;">
+                                    <h5 style="margin-right: 5px;">4.1</h5>
+                                    <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+                                </a>
                                 </div>
                             </div>
                         </td>
                     </tr>
                 </table>
-
-                <!--
-                <table border="1">
-                    <tr th:each="row : ${#numbers.sequence(0, 2)}">
-                        <td th:each="col : ${#numbers.sequence(row * 4, row * 4 + 3)}">
-                            <div th:if="${col < items.size()}">
-                                <div th:text="${items[col].name}">Item Name</div>
-                                <div th:text="${items[col].price}">Item Price</div>
-                                <div th:text="${items[col].description}">Item Description</div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            -->
             </div>
 
-            <h3 style="text-align: center; margin: 30px 0;"><<&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;>></h3>
+            <!-- 페이지네이션 -->
+            <div class="pagination">
+
+                
+
+            </div>
+
         </div>
     </div>
     
