@@ -117,6 +117,41 @@ public class MyPageController {
 		
 	}
 	
+
+	@PostMapping("memberInfo/profileImg")
+	@ResponseBody
+	public ResponseEntity<String> changeProfileImg(
+			@RequestParam("profile-image") MultipartFile file,
+			@SessionAttribute("loginMember") Member loginMemebr) throws Exception{
+		int result  = infoService.updateImg(file, loginMemebr);
+		
+		if(result >0) return ResponseEntity.ok().build();
+		else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+		
+	}
+		
+//	@PostMapping("memberInfo/password")
+//	public String changePassword(
+//			@RequestParam Map<String, Object> paramMap,
+//			@SessionAttribute("loginMemebr") Member loginMember,
+//			RedirectAttributes ra) {
+//		
+//		String message = null;
+//		int memberNo = loginMember.getMemberNo();
+//		
+//		int result = infoService.changePassword(paramMap, memberNo);
+//		
+//		if(result>0) message = "비밀번호가 변경되었습니다.";
+//		else 		 message = "비밀번호 변경 실패\n다시 시도해주세요.";
+//		
+//		ra.addFlashAttribute("message", message);
+//	
+//		return"redirect:/myPage/memberInfo";
+//	}
+//		
+//		
+
 	
 	/**[회원정보] 이메일 중복 확인
 	 * @param memberEmail

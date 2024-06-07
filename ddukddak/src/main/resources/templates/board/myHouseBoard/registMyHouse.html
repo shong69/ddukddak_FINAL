@@ -25,18 +25,18 @@
 
             <div class="mainArea">
 
-                <form action="/myHouse/insertMyHouse" method="POST" id="registMyHouseForm" enctype="multipart/form-data">
+                <form action="/myHouse/registMyHouse" method="POST" id="registMyHouseForm" enctype="multipart/form-data">
 
                     <div class="topTitle">
                         <h1>집들이 작성하기</h1>
                     </div>
 
                     <div class="titleInput">
-                        <input type="text" placeholder="제목">
+                        <input type="text" placeholder="제목" id="boardTitle" name="boardTitle">
                     </div>
 
                     <div class="contentInput">
-                        <textarea placeholder="내용 입력"></textarea>
+                        <textarea placeholder="내용 입력" id="boardContent" name="boardContent"></textarea>
                     </div>
 
                     <div class="midTitle">
@@ -52,10 +52,9 @@
                         <img id="largeImage" src="" alt="Large Image Preview" style="display: none;">
                     </div>
 
-
                     <div class="btnArea">
                         <button class="boardCreateSubmitBtn">등록하기</button>
-                        <button type="button" class="boardQuickViewBtn">등록취소</button>
+                        <button type="button" class="boardQuickViewBtn" id="backToList">등록취소</button>
                     </div>
 
                 </form>
