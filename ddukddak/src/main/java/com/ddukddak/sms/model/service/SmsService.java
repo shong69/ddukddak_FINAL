@@ -1,6 +1,7 @@
 package com.ddukddak.sms.model.service;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 
@@ -10,7 +11,7 @@ public interface SmsService {
 	 * @param toNumber
 	 * @return
 	 */
-	SingleMessageSentResponse sendSms(String toNumber);
+	CompletableFuture<SingleMessageSentResponse> sendSms(String toNumber);
 
 	/** SMS 인증키 일치 여부 확인
 	 * @param map

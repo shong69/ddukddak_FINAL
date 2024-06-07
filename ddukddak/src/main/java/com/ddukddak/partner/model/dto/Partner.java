@@ -22,8 +22,10 @@ public class Partner {
 	private String partnerBusinessName;
 	private String partnerCeoName;
 	private String partnerBusinessNum;
+	private String enrollDate;
+	private String partnerDelFl;
 	
-//	파트너 타이 -> 1: 시공사/2: 판매사
+//	파트너 타입 -> 1: 시공사 /2: 판매사
 	private int partnerType;
 	
 }

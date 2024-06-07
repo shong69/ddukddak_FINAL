@@ -49,6 +49,8 @@ var mainImg = document.querySelector('.mainImg');
 // 모든 subImg 요소를 선택합니다
 var subImgs = document.querySelectorAll('.subImg');
 
+subImgs[0].classList.add('border');
+
 // 각 subImg에 클릭 이벤트 리스너를 추가합니다
 subImgs.forEach(function(subImg) {
     subImg.addEventListener('click', function() {
@@ -104,3 +106,23 @@ rightArrow.addEventListener('click', function() {
     });
     subImgs[nextIndex].classList.add('border');
 });
+
+
+
+function formatNumberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const productPriceElements = document.getElementsByClassName("mainProductPrice");
+const point = document.querySelector("#point");
+
+
+for (let i = 0; i < productPriceElements.length; i++) {
+    let productPrice = productPriceElements[i].textContent.trim(); // 요소의 텍스트 내용 가져오기
+    var priceNum = +productPrice
+
+    productPriceElements[i].textContent = formatNumberWithCommas(productPrice); // 포맷팅된 내용으로 설정
+    productPriceElements[i].innerHTML += '원';
+
+    point.innerHTML = `최대 +${Math.floor(priceNum*0.01)}pt`;
+}

@@ -21,4 +21,24 @@ public class PartnerServiceImpl implements PartnerService{
 		return mapper.login(partner);
 	}
 
+	
+
+	/** 파트너 이름, 휴대폰 일치 여부 확인(비동기)
+	 *
+	 */
+	@Override
+	public int partnerNTCheck(Partner partner) {
+
+		return mapper.partnerNTCheck(partner);
+	}
+
+	/** 아이디 찾기 결과(휴대폰)
+	 *
+	 */
+	@Override
+	public Partner findIdByTel(Partner telFindPartner) {
+		
+		return mapper.findIdByTel(telFindPartner);
+	}
+	
 }

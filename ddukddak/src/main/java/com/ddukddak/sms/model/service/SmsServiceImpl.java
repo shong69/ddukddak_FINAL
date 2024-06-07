@@ -2,8 +2,10 @@ package com.ddukddak.sms.model.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.ddukddak.common.util.Utility;
@@ -27,9 +29,9 @@ public class SmsServiceImpl implements SmsService {
     @Value("${coolsms.from.number}")
     private String fromNumber;
 
-    
+    @Async
 	@Override
-	public SingleMessageSentResponse sendSms(String toNumber) {
+	public CompletableFuture<SingleMessageSentResponse> sendSms(String toNumber) {
 		
 		SingleMessageSentResponse response;
 		String smsAuthKey = Utility.RandomNumber6();
@@ -61,7 +63,7 @@ public class SmsServiceImpl implements SmsService {
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-			return null;
+			return CompletableFuture.completedFuture(null);
 		}
 		
 		// 수신번호 + 인증번호 SMS_AUTH_KEY 테이블에 저장
@@ -80,10 +82,9 @@ public class SmsServiceImpl implements SmsService {
 		}
 		
 		// 수정, 삽입 후에도 result 가 0 == 실패
-		if(result == 0) return null;
+		if(result == 0) return CompletableFuture.completedFuture(null);
 		
-		return response;
-		
+		return CompletableFuture.completedFuture(response);
 		
 	}
 

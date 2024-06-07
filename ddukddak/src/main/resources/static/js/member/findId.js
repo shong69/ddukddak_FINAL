@@ -54,7 +54,6 @@ const findIdBtn = document.getElementById('findIdBtn');
 
 
 
-
 // submit 버튼의 disabled 상태를 토글하는 함수 (전화번호와 이메일 모두 체크)
 function disabledCheckButton() {
     if ((checkTelObj.telNm && checkTelObj.tel && telAuthInput.value.trim().length == 6) ||
@@ -378,9 +377,6 @@ telNm.addEventListener('input', e => {
 // 정규식: 전화번호
 const regExpTel = /^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
 
-// SMS 인증 코드(임시)
-let smsAuthKey = "";
-
 
 
 // 1. (전화번호) 포커스 시
@@ -555,10 +551,6 @@ telAuthInput.addEventListener('input', e => {
         telAuthMsg.classList.remove('errorC');
         telAuthInput.classList.remove('errorB');
 
-        // 임시 문자 인증 끝나면 없애면 댐
-        if(smsAuthKey == telAuthInput.value) {
-            checkTelObj.telAuth = true;
-        }
     }
 
     disabledCheckButton();

@@ -22,6 +22,7 @@ public class Product {
 	private String productUpdateDate;
 	private char productFl;
 	private int categoryNo;
+	private int bigCategoryNo;
 	private int partnerNo;
 	
 	

@@ -27,7 +27,6 @@
             <section class="myPage-main">
                 <h2 class="category-name">회원정보</h2>
                 <section>
-                    <form> <!--정보 변경 폼-->
                         <table class="member-info">
                             <tbody>
 
@@ -60,7 +59,7 @@
                                         </td>                                    
                                         <td class="profile-area">
                                             <button class="profile-del-btn myPageDelUpdateBtn" type="button">삭제</button>
-                                            <button class="confirm myPageDelUpdateBtn">수정</button>
+                                            <button class="confirm myPageDelUpdateBtn" type="button">수정</button>
                                         </td>
                                     </form>
                                 </tr>
@@ -84,20 +83,32 @@
                                     <th>비밀번호</th>
                                     <td colspan="3">
                                         <div class="password-area2">
-                                            <span>현재 비밀번호</span>
-                                            <input style="display:block;" name = "currentPw" placeholder="기존 비밀번호 입력" type="password" autocomplete="off">
+                                            <div class="password-area2-1">
+                                                <span class="password-title">현재 비밀번호</span>
+                                                <input name = "currentPw" placeholder="기존 비밀번호 입력" maxlength="20" type="password" autocomplete="off">
+                                                <i class="fa-solid fa-eye"></i><i class="fa-solid fa-eye-slash display-none"></i>
+                                            </div>
+                                            <span class="pwAlert currentPwAlert"></span>
                                         </div>
                                         <div class="password-area2">
-                                            <span>신규 비밀번호</span>
-                                            <input placeholder="신규 비밀번호 입력" name = "newPw" type="password" autocomplete="off">
+                                            <div class="password-area2-1">
+                                                <span class="password-title">신규 비밀번호</span>
+                                                <input name = "newPw" placeholder="신규 비밀번호 입력" maxlength="20" type="password" autocomplete="off">
+                                                <i class="fa-solid fa-eye"></i><i class="fa-solid fa-eye-slash display-none"></i>
+                                            </div>
+                                            <span class="pwAlert newPwAlert"></span>
                                         </div>
                                         <div class="password-area2">
-                                            <span>신규 비밀번호 확인</span>
-                                            <input placeholder="신규 비밀번호 확인"name="confirmNewPw" type="password" autocomplete="off">
+                                            <div class="password-area2-1">
+                                                <span class="password-title">신규 비밀번호 확인</span>
+                                                <input name="confirmNewPw" placeholder="신규 비밀번호 확인" maxlength="20" type="password" autocomplete="off">
+                                                <i class="fa-solid fa-eye"></i><i class="fa-solid fa-eye-slash display-none"></i>
+                                            </div>
+                                            <span class="pwAlert newPwConfirmAlert"></span>
                                         </div>
                                         <div class="password-commit">
-                                            <button id = "pwConfirmBtn"class="confirm myPageConfirmCancelBtn">확인</button>
-                                            <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
+                                            <button id = "pwConfirmBtn" type="button" class="confirm myPageConfirmCancelBtn">확인</button>
+                                            <button class="pwCancel myPageConfirmCancelBtn" type="button">취소</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -118,19 +129,19 @@
                                         <th>이메일</th>
                                         <td colspan="3">
                                             <ul class="mail-alarm">
-                                                <li>메일주소를 입력 후 인증하기 버튼 클릭 시, 
+                                                <li>변경 할 메일주소를 입력 후 인증하기 버튼 클릭 시, 
                                                     <br>회원님의 이메일로 이메일 인증 번호가 적힌 메일이 발송됩니다</li>
-                                                <li>아래에 인증번호를 입력하면 인증이 완료됩니다.</li>
+                                                <li>아래에 인증번호를 입력하면 변경이 완료됩니다.</li>
                                             </ul>
                                             <div class="email-input-area">
                                                 <div>
-                                                    <input  class= "email-input" placeholder="이메일 주소 입력" type="email">
-                                                    <input class= "email-input" placeholder="인증번호 입력">
+                                                    <input name="email-input" class= "email-input" placeholder="이메일 주소 입력" type="email" required>
+                                                    <input name="auth-input"class= "email-input" placeholder="인증번호 입력" required>
                                                 </div>
-                                                <button class="myPageVerifyBtn">인증</button>
+                                                <button type="button" class="emailAuthBtn myPageVerifyBtn">인증</button>
                                             </div>
                                             <div class="email-btn-area">
-                                                <button class="confrim myPageConfirmCancelBtn">확인</button>
+                                                <button class="emailConfirmBtn confrim myPageConfirmCancelBtn" type="button">확인</button>
                                                 <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
                                             </div>
                                         </td>
@@ -161,10 +172,10 @@
                                                 <li>닉네임 설정에 이모티콘 및 특수문자 사용이 불가합니다. ex)& < > ( ) ' " ,</li>
                                             </ul>
                                             <div class="nickname-input-area">
-                                                <input placeholder="닉네임 입력">
+                                                <input name = "nicknameInput"placeholder="닉네임 입력">
                                             </div>
                                             <div class="nickname-btn-area">
-                                                <button class="confirm myPageConfirmCancelBtn">확인</button>
+                                                <button class="nicknameConfirmBtn confirm myPageConfirmCancelBtn" type="button">확인</button>
                                                 <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
                                             </div>
                                         </td>
@@ -187,11 +198,15 @@
                                         <th>휴대전화</th>
                                         <td colspan="3" class="phoneNum-area2">
                                             <div class="phonNum-input-area">
-                                                <input placeholder="'-' 없이 입력" type="tel">
-                                                <button class="myPageVerifyBtn">인증</button>
+                                                <div>
+                                                    <input name = "phoneNum" placeholder="'-' 없이 입력" type="tel">
+                                                    <input name="p-auth-input" placeholder="인증번호 입력">
+                                                </div>
+                                                
+                                                <button class="p-authBtn myPageVerifyBtn" type="button">인증</button>
                                             </div>
                                             <div>
-                                                <button class="confirm myPageConfirmCancelBtn">확인</button>
+                                                <button class="phoneConfirmBtn confirm myPageConfirmCancelBtn" type="button">확인</button>
                                                 <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
                                             </div>
                                         </td>
@@ -199,7 +214,6 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </form>
               
 
 
@@ -229,10 +243,8 @@
     <th:block th:replace="~{common/fragments/footer}"></th:block>
 
       <!-- 회원 프로필 이미지 변경시 사용할 변수 js 변수로 얻어놓기 -->
-    <script th:inline="javascript">
-        const loginMemberProfileImg = /*[[${session.loginMember.profileImg}]]*/ "회원프로필이미지";
-    </script>
-    <script src="/js/myPage/myPage.js"></script>
+
+    <script src="/js/myPage/myPage.js"></script> 
 </body>
 
 </html>

@@ -1,9 +1,11 @@
 package com.ddukddak.myPage.model.service;
 
 import java.io.File;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,14 +15,17 @@ import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.mapper.MemberInfoMapper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
 @PropertySource("classpath:/config.properties")
+@Slf4j
 public class MemberInfoServiceImpl implements MemberInfoService{
 	
 	private final MemberInfoMapper mapper;
+	private final BCryptPasswordEncoder bcrypt;
 	
 	@Value("${my.profile.web-path}")
 	private String profileWebPath;
@@ -60,5 +65,75 @@ public class MemberInfoServiceImpl implements MemberInfoService{
 		
 		return result;
 	}
+
+	@Override
+	public int changePassword(Map<String, String> map, int memberNo) {
+		//현재 비밀번호 확인
+		String originPw = mapper.selectPw(memberNo);
+		
+		if(!bcrypt.matches(map.get("currentPw"), originPw)) {
+			return 0;
+		}
+		//새 비밀번호 등록하기
+		
+		String encPw = bcrypt.encode(map.get("newPw"));
+		
+		map.put("encPw", encPw);
+		map.put("memberNo", String.valueOf(memberNo));
+		return mapper.changePassword(map);
+	}
+
+	//이메일 중복 검사
+	@Override
+	public int checkEmail(String memberEmail) {
+		log.info("memberEmail {}", memberEmail);
+		int result = mapper.checkEmail(memberEmail);
+		log.info("result {}", result);
+		return result;
+	}
+
+	//이메일 업데이트
+	@Override
+	public int updateEmail(Map<String, Object> map) {
+
+		return mapper.updateEmail(map);
+	}
+
+	//닉네임 업데이트
+	@Override
+	public int updateNickname(Map<String, Object> map) {
+		//닉네임 변경횟수 조회
+		int changeCount = mapper.changeCount(map.get("memberNo"));
+		
+		if(changeCount >= 4) {
+			return -1;
+		}		
+		//4회 미만 시 변경하면서 횟수도 바꾸기
+		String oldNickname = mapper.getOldNickname(map.get("memberNo")); //이전 닉네임
+		map.put("oldNickname", oldNickname);
+		int updateRows = mapper.updateNickname(map); //닉네임 업데이트
+		
+		if(updateRows > 0) {
+			mapper.insertNicknameChangeLog(map); //닉네임 테이블 insert
+			changeCount ++;
+		}
+		return changeCount;
+	}
+
+	//휴대폰 번호 중복 체크
+	@Override
+	public int checkPhonNum(String phoneNum) {
+		return mapper.checkPhoneNum(phoneNum);
+	}
+
+	//휴대폰 번호 업데이트
+	@Override
+	public int updatePhoneNum(Map<String, Object> map) {
+		//updatePhoneNum, memberNo
+		return mapper.updatePhoneNum(map);
+	}
+
+	
+
 	
 }

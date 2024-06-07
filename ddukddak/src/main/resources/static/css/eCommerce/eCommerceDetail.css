@@ -32,11 +32,32 @@
     width: 100px;
     margin-right: 30px;
     margin-top: 30px;
+    margin-bottom: 10px;
     cursor: pointer;
 }
 
+#imgSubContainer {
+    display: flex;
+    width: 600px;
+}
+
+#imgSubContainer::-webkit-scrollbar {
+    width: 5px;
+    height: 10px;
+}
+#imgSubContainer::-webkit-scrollbar-track {
+    background-color: white;
+}
+#imgSubContainer::-webkit-scrollbar-thumb { 
+    background-color: var(--gray5);
+    border-radius: 5px;
+}
+#imgSubContainer::-webkit-scrollbar-button {
+    display: none;
+}
+
 .border {
-    border: 1px solid red;
+    border: 1px solid var(--gray3);
 }
 
 .arrow {
@@ -46,48 +67,53 @@
     font-size: 50px;
     top: 650px;
     cursor: pointer;
+
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none
 }
 
 .left-arrow {
-    left: 570px;
+    left: 600px;
 }
 
 .right-arrow {
-    left: 1130px;
+    left: 1150px;
 }
 
 #productContainer > div:last-child {
     border: 1px solid black;
     width: 400px;
-    height: 700px;
+    height: auto;
     margin-left: 50px;
 }
 
 
 
 /* 가격칸 */
-#productPrice {
+#productPriceContainer {
     display: flex;
     flex-direction: column;
 }
 
-#productPrice > div:first-child {
+#productPriceContainer > div:first-child {
     display: flex;
     flex-direction: column;
 }
 
-#productPrice > div:first-child > div:first-child > h2 {
+#productPriceContainer > div:first-child > div:first-child > h2 {
     padding: 3px 10px;
 }
 
-#productPrice > div:first-child > div:last-child {
+#productPriceContainer > div:first-child > div:last-child {
     display: flex;
     flex-direction: row-reverse;
     padding: 0 15px;
     margin-top: 20px;
 }
 
-#productPrice > div:first-child > div:last-child > h2 {
+#productPriceContainer > div:first-child > div:last-child > h2 {
     display: flex;
     align-items: end;
     margin-right: 10px;
@@ -95,7 +121,7 @@
 }
 
 /* 포인트 */
-#productPrice > div:nth-child(2) {
+#productPriceContainer > div:nth-child(2) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -106,23 +132,23 @@
     height: 50px;
 }
 
-#productPrice > div:nth-child(2) h4 {
+#productPriceContainer > div:nth-child(2) h4 {
     padding: 10px;
 }
 
 
 /* 안내사항 */
-#productPrice > div:nth-child(3) {
+#productPriceContainer > div:nth-child(3) {
     display: flex;
     flex-direction: column;
 }
 
-#productPrice > div:nth-child(3) > div {
+#productPriceContainer > div:nth-child(3) > div {
     margin: 10px;
 }
 
-#productPrice > div:nth-child(3) > div:first-child,
-#productPrice > div:nth-child(3) > div:last-child {
+#productPriceContainer > div:nth-child(3) > div:first-child,
+#productPriceContainer > div:nth-child(3) > div:last-child {
     padding-bottom: 10px;
     border-bottom: 1px solid rgb(201, 201, 201);
 }
@@ -135,37 +161,44 @@
 }
 
 /* 옵션선택칸 */
-#productPrice > div:nth-child(4) {
+#productPriceContainer > div:nth-child(4) {
     padding: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#productPrice > div:nth-child(4) select {
-    width: 400px;
+#productPriceContainer > div:nth-child(4) select {
+    width: 350px;
     height: 40px;
     border-radius: 10px;
     font-size: 18px;
     padding: 0 10px;
+    margin-bottom: 10px;
+}
+
+#productTitle {
+    margin-top: 10px;
+    font-weight: 500;
 }
 
 /* 총 가격칸 */
-#productPrice > div:nth-child(5) {
+#productPriceContainer > div:nth-child(5) {
     display: flex;
     flex-direction: column;
 }
 
-#productPrice > div:nth-child(5) > div:last-child {
+#productPriceContainer > div:nth-child(5) > div:last-child {
     display: flex;
     flex-direction: row-reverse;
 }
 
-#productPrice > div:nth-child(5) > div {
+#productPriceContainer > div:nth-child(5) > div {
     padding: 0 20px;
 }
 
-#productPrice > div:nth-child(5) > div h4 {
+#productPriceContainer > div:nth-child(5) > div h4 {
     display: flex;
     flex-direction: column-reverse;
     margin-right: 15px;
@@ -173,15 +206,15 @@
 }
 
 /* 버튼 */
-#productPrice > div:nth-child(6) {
+#productPriceContainer > div:nth-child(6) {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#productPrice > div:nth-child(6) button {
-    margin: 10px 0;
+#productPriceContainer > div:nth-child(6) button {
+    margin-top: 20px;
 }
 
 
@@ -191,14 +224,20 @@
 
 
 
+
+/* 오늘의 상품 */
+#shoping-list {
+    display: flex;
+    flex-direction: column;
+}
 
 #shoping-list > div:nth-child(2) {
     display: flex;
     justify-content: end;
-    padding-right: 40px;
 }
 
 #shopping-items {
+    width: 1000px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -208,14 +247,34 @@
 #shopping-items > div {
     display: flex;
     flex-direction: column;
+    margin: 0 50px;
 }
+
+#shoping-list > div:first-child {
+    display: flex;
+}
+
+.productPrice {
+    font-weight: bold;
+}
+
+#shoping-list > div:first-child h4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    padding: 0 5px;
+    background-color: var(--primary3);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
 
 
 /* 상세정보 */
 #detailBox > div {
     width: 1050px;
     height: auto;
-    border: 1px black solid;
     margin-bottom: 100px;
 }
 
@@ -239,7 +298,6 @@
 
 #change > h2 {
     margin-bottom: 20px;
-    border-bottom: 1px solid var(--gray5);
 }
 
 #change > ul,
