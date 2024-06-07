@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
+import com.ddukddak.ecommerce.model.dto.BigCategory;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.mapper.eCommerceMapper;
 
@@ -23,7 +24,6 @@ public class eCommerceServiceImpl implements eCommerceService{
 	public List<Product> selectProduct() {
 		
 		List<Product> list = mapper.selectProduct();
-		
         
         List<Product> randomList = new ArrayList<Product>();
         
@@ -63,8 +63,14 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	// 카테고리별 상품목록 띄우기
 	@Override
-	public List<Product> selectProductList() {
-		return mapper.selectProductList();
+	public List<Product> selectProductList(int categoryNo) {
+		return mapper.selectProductList(categoryNo);
+	}
+
+	// 대분류 카테고리 선택
+	@Override
+	public List<BigCategory> selectCategory() {
+		return mapper.selectCategory();
 	}
 	
 	

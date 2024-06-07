@@ -88,32 +88,27 @@ public class MyPageController {
 
 		
 	}
-	
-	
-	
-	
-	/**[회원정보]비밀번호 변경 -비동기
-	 * @return
-	 */
-	@PostMapping("memberInfo/password")
-	public String changePassword(
-			@RequestParam Map<String, Object> paramMap,
-			@SessionAttribute("loginMemebr") Member loginMember,
-			RedirectAttributes ra) {
 		
-		String message = null;
-		int memberNo = loginMember.getMemberNo();
-		
+//	@PostMapping("memberInfo/password")
+//	public String changePassword(
+//			@RequestParam Map<String, Object> paramMap,
+//			@SessionAttribute("loginMemebr") Member loginMember,
+//			RedirectAttributes ra) {
+//		
+//		String message = null;
+//		int memberNo = loginMember.getMemberNo();
+//		
 //		int result = infoService.changePassword(paramMap, memberNo);
-		
+//		
 //		if(result>0) message = "비밀번호가 변경되었습니다.";
 //		else 		 message = "비밀번호 변경 실패\n다시 시도해주세요.";
-		
-		ra.addFlashAttribute("message", message);
-	
-		return"redirect:/myPage/memberInfo";
-	}
-	
+//		
+//		ra.addFlashAttribute("message", message);
+//	
+//		return"redirect:/myPage/memberInfo";
+//	}
+//		
+//		
 	
 	/**[회원정보] 이메일 변경
 	 * @return

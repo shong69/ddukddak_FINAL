@@ -58,6 +58,10 @@
     display: flex;
 }
 
+.productPrice {
+    font-weight: bold;
+}
+
 #shoping-list > div:first-child h4 {
     display: flex;
     justify-content: center;
