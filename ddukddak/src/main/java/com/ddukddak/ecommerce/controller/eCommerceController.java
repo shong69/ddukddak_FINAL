@@ -46,14 +46,11 @@ public class eCommerceController {
 	@GetMapping("list/{categoryNo:[0-9]+}")
 	public String eCommerceList(@PathVariable("categoryNo") int categoryNo,
 								Model model) {
-		log.info("## START LIST ##");
 		Map<String,Integer> map = new HashMap<String, Integer>();
 		
 		map.put("categoryNo", categoryNo);
 		
 		List<Product> list = service.selectProductList(categoryNo);
-		
-		log.info("list : " + list);
 		
 		model.addAttribute("selectProductList", list);
 		
