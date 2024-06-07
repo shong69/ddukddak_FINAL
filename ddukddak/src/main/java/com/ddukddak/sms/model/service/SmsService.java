@@ -11,7 +11,7 @@ public interface SmsService {
 	 * @param toNumber
 	 * @return
 	 */
-	CompletableFuture<SingleMessageSentResponse> sendSms(String toNumber);
+	SingleMessageSentResponse sendSms(String toNumber);
 
 	/** SMS 인증키 일치 여부 확인
 	 * @param map
