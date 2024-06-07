@@ -1,17 +1,15 @@
 package com.ddukddak.myPage.model.mapper;
 
-<<<<<<< HEAD
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ddukddak.member.model.dto.Member;
-=======
+
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ddukddak.member.model.dto.Member;
 
->>>>>>> 5d7dde5da7db498bbee33043b0f88b7fe8780a53
 @Mapper
 public interface MemberInfoMapper {
 
@@ -38,6 +36,49 @@ public interface MemberInfoMapper {
 	 * @return
 	 */
 	int checkEmail(String memberEmail);
+
+	/**이메일 변경
+	 * @param map
+	 * @return
+	 */
+	int updateEmail(Map<String, Object> map);
+
+	/**닉네임 변경횟수 조회
+	 * @param object
+	 * @return
+	 */
+	int changeCount(Object object);
+
+	/**닉네임 변경
+	 * @param map
+	 * @return 
+	 */
+	int updateNickname(Map<String, Object> map);
+	
+	/**이전 닉네임 조회
+	 * @param object
+	 * @return
+	 */
+	String getOldNickname(Object object);
+
+	/** 닉네임 횟수 테이블에 업데이트
+	 * @param map
+	 */
+	void insertNicknameChangeLog(Map<String, Object> map);
+
+	/** 휴대폰 번호 중복 체크
+	 * @param phoneNum
+	 * @return
+	 */
+	int checkPhoneNum(String phoneNum);
+
+	/**휴대폰 번호 업데이트
+	 * @param map
+	 * @return
+	 */
+	int updatePhoneNum(Map<String, Object> map);
+
+
 
 
 }

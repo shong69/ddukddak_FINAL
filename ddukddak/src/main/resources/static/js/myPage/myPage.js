@@ -330,7 +330,17 @@ const emailInput = document.querySelector("input[name='email-input']");
 const authBtn = document.querySelector(".emailAuthBtn");
 const authInput = document.querySelector("input[name='auth-input']")
 
-const emailConfirmBtn = document.querySelector(".eamilAuthBtn");
+const emailConfirmBtn = document.querySelector(".emailAuthBtn");
+
+//타이머
+let authTimer; //타이머 역할을 할 setInterval을 저장할 변수
+const initMin = 4; //타이머 초기값(분)
+const intitSec= 59; //타이머 초기값 (초)
+const initTime = "05:00";
+
+let min = initMin;
+let sec= intitSec;
+
 // 1. 이메일 형식 유효성 검사 + 메일 발송
 authBtn.addEventListener("click", async()=>{
     //공백
@@ -379,41 +389,263 @@ authBtn.addEventListener("click", async()=>{
         console.error("Error : ", Error);
         alert("오류가 발생했습니다. 다시 시도해주세요");
     }
+
+
+    //타이머 시작
+    authTimer = setInterval(()=>{
+
+        //0분 0초인 경우("00:00"출력 후에)
+        if(min == 0 && sec == 0){
+            clearInterval(authTimer);
+            return;
+        }
+
+        //0초인 경우(0초를 출력한 후)
+        if(sec==0){
+            sec= 60;
+            min--;
+        }
+
+        //평상시에는 1초씩 감소
+        sec--; //1초 감소
+
+        console.log(min, sec); //콘솔 창에서 남은 시간 확인
+    }, 1000); //1초 지연시간
 });
 
 
 
-//인증번호 입력하기 -비동기
+//인증 버튼 클릭 -비동기
+emailConfirmBtn.addEventListener("click", ()=>{
 
-// emailConfirmBtn.addEventListener("click", ()=>{
-//     //공백
-//     if(authInput.value.trim().length===0){
+    if(min === 0 && sec === 0){ //타이머가 00:00인 경우
+        alert("인증번호 입력 제한시간을 초과하였습니다.");
+        return;
+    }
+    if(authInput.value.length<6){ //인증번호는 6자리임->제대로 입력 안한 경우
+        alert("인증번호를 정확히 입력해 주세요");
+        return;
+    }
 
-//     }
-//     //유효성 검사
+    //인증번호 검증 -비동기
 
-//     //인증번호 검증 -비동기
+    const obj = {
+        "email" : emailInput.value,
+        "authKey" : authInput.value
+    };
 
-//     const obj = {
-//         "email" : emailInput.value,
-//         "authKey" : authInput.value
-//     };
+    fetch("/email/checkAuthKey", {
+        method : "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(obj)
+    })
+    .then(resp => resp.text())
+    .then(result => {
 
-//     fetch("/email/checkAuthKey", {
-//         method : "POST",
-//         headers : {"Content-Type" : "application/json"},
-//         body : JSON.stringify(obj)
-//     })
-//     .then(resp => resp.text())
-//     .then(result => {
+        if(result == 0) {
+            alert("인증번호를 잘못 입력하였습니다.\n 다시 시도해주세요.");
+            return;
+        }
+        clearInterval(authTimer);
+    });
 
-//         if(result == 0) {
-//             alert("인증번호를 잘못 입력하였습니다.\n 다시 시도해주세요.");
-//             return;
-//         }
-//     });
+    //이메일 변경하기
 
-//     //이메일 변경하기
-// })
+    fetch("/myPage/memberInfo/emailUpdate?memberEmail="+emailInput.value)
+    .then(resp => resp.text())
+    .then(result=>{
+        if(result == 0){
+            alert("이메일 변경 실패");
+            return;
+        }
+        alert("인증이 완료 후 이메일이 변경되었습니다.");
+
+    }).catch(error=>{
+        console.log(error);
+    })
+})
 
 
+
+//-------------------------------------------------------------------
+
+// 4. 닉네임
+const nicknameInput = document.querySelector("input[name='nicknameInput']");
+const nicknameConfirmBtn  = document.querySelector(".nicknameConfirmBtn");
+const nicknameAlert = document.querySelector(".nickname-alert");
+
+
+nicknameConfirmBtn.addEventListener("click", ()=>{
+    inputValue = nicknameInput.value;
+    const regExp = /[\uD800-\uDFFF!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/;
+
+    if(inputValue.trim().length <1 || inputValue.trim().length >8){
+        alert("8~16자 사이의 비밀번호를 입력해주세요");
+        return;
+
+    }else if(!regExp.test(inputValue)){
+        alert("이모티콘 및 특수문자 사용은 불가합니다.");
+        return;
+        
+    }
+
+    fetch("/myPage/memberInfo/nickname?memberNickname=" + nicknameInput.value)
+    .then(resp => resp.text())
+    .then(result =>{
+        if(result==-1){
+            alert("닉네임 변경 횟수가 초과하였습니다.");
+            return;
+        }
+        alert(`닉네임이 변경되었습니다(${result}/4)`);
+        
+    }).catch(error=>{
+        console.log(error);
+    })
+});
+
+
+//---------------------------------------
+
+//5. 휴대폰 번호 변경
+const phoneNum = document.querySelector("input[name='phoneNum']");
+const pAuthInput = document.querySelector("input[name='p-auth-input]");
+const pAuthBtn = document.querySelector(".p-authBtn");
+const phoneConfirmBtn = document.querySelector(".phoneConfirmBtn");
+
+let pmin = initMin;
+let psec= intitSec;
+
+// 1. 휴대폰 번호 형식 유효성 검사 + 메일 발송
+pAuthBtn.addEventListener("click", async()=>{
+    //공백
+    if(phoneNum.value.trim().length ===0){
+        alert("휴대폰 번호를 입력해주세요.");
+        return;
+    }
+
+    //유효성
+    const regExp = /^\d{3}\d{3,4}\d{4}$/;
+
+    if(!regExp.test(phoneNum.value)){
+        alert("알맞은 번호 형식이 아닙니다.");
+        return;
+    }
+
+    try{
+        //중복검사
+        const phoneDupCheck = await fetch("/myPage/memberInfo/phoneDup",{
+            method : "POST",
+            headers : {"Content-Type" : "application/json"},
+            body : JSON.stringify({phoneNum : phoneNum.value})
+        });
+
+        const dupResult = await phoneDupCheck.text();
+
+        if(dupResult == 1){
+            alert("이미 사용 중인 번호입니다.");
+            return;
+        }
+
+        try{
+            //인증 문자 보내기
+            const phoneNumSend = await fetch("/sms/updatePhoneNum",{
+                method:"POST",
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify({phoneNum:phoneNum.value})
+            });
+
+            if(!phoneNumSend.ok){
+                alert("인증번호 발송에 실패하였습니다\n다시 시도해주세요");
+                return;
+            }else if(phoneNumSend.ok){
+                alert("입력해주신 휴대폰으로 인증번호가 발송되었습니다.");
+            }
+        }catch(Error){
+            console.error("Error : ", Error);
+            alert("메일 발송 중 오류 발생");
+        }
+        
+    }catch(Error){
+        console.error("Error : ", Error);
+        alert("오류가 발생했습니다. 다시 시도해주세요");
+    }
+
+
+    //타이머 시작
+    authTimer = setInterval(()=>{
+
+        //0분 0초인 경우("00:00"출력 후에)
+        if(pmin == 0 && psec == 0){
+            clearInterval(authTimer);
+            return;
+        }
+
+        //0초인 경우(0초를 출력한 후)
+        if(psec==0){
+            psec= 60;
+            pmin--;
+        }
+
+        //평상시에는 1초씩 감소
+        psec--; //1초 감소
+
+        console.log(pmin, psec); //콘솔 창에서 남은 시간 확인
+    }, 1000); //1초 지연시간
+});
+
+
+
+//인증 버튼 클릭 -비동기
+phoneConfirmBtn.addEventListener("click", ()=>{
+
+    if(pmin === 0 && psec === 0){ //타이머가 00:00인 경우
+        alert("인증번호 입력 제한시간을 초과하였습니다.");
+
+        return;
+    }
+    if(pAuthInput.value.length<6){ //인증번호는 6자리임->제대로 입력 안한 경우
+        alert("인증번호를 정확히 입력해 주세요");
+        return;
+    }
+
+    //인증번호 검증 -비동기
+
+    const obj = {
+        "phone" : phoneNum.value,
+        "authKey" : pAuthInput.value
+    };
+
+    fetch("/sms/checkSmsAuthKey", {
+        method : "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(obj)
+    })
+    .then(resp => resp.text())
+    .then(result => {
+
+        if(result == 0) {
+            alert("인증번호를 잘못 입력하였습니다.\n 다시 시도해주세요.");
+            return;
+        }
+        clearInterval(authTimer);
+    });
+
+    //휴대폰 번호 변경하기
+
+    fetch("/myPage/memberInfo/phoneNumUpdate",{
+        method : "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify({updatePhoneNum : "phoneNum.value"})
+    })
+    .then(resp => resp.text())
+    .then(result=>{
+        if(result == 0){
+            alert("휴대폰 번호 변경 실패");
+            return;
+        }
+        alert("인증이 완료 후 휴대폰 정보가 변경되었습니다.");
+
+    }).catch(error=>{
+        console.log(error);
+    })
+})

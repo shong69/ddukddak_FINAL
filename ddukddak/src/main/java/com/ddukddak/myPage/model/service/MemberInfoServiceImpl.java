@@ -15,11 +15,13 @@ import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.mapper.MemberInfoMapper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
 @PropertySource("classpath:/config.properties")
+@Slf4j
 public class MemberInfoServiceImpl implements MemberInfoService{
 	
 	private final MemberInfoMapper mapper;
@@ -84,7 +86,54 @@ public class MemberInfoServiceImpl implements MemberInfoService{
 	//이메일 중복 검사
 	@Override
 	public int checkEmail(String memberEmail) {
-		return mapper.checkEmail(memberEmail);
+		log.info("memberEmail {}", memberEmail);
+		int result = mapper.checkEmail(memberEmail);
+		log.info("result {}", result);
+		return result;
 	}
+
+	//이메일 업데이트
+	@Override
+	public int updateEmail(Map<String, Object> map) {
+
+		return mapper.updateEmail(map);
+	}
+
+	//닉네임 업데이트
+	@Override
+	public int updateNickname(Map<String, Object> map) {
+		//닉네임 변경횟수 조회
+		int changeCount = mapper.changeCount(map.get("memberNo"));
+		
+		if(changeCount >= 4) {
+			return -1;
+		}		
+		//4회 미만 시 변경하면서 횟수도 바꾸기
+		String oldNickname = mapper.getOldNickname(map.get("memberNo")); //이전 닉네임
+		map.put("oldNickname", oldNickname);
+		int updateRows = mapper.updateNickname(map); //닉네임 업데이트
+		
+		if(updateRows > 0) {
+			mapper.insertNicknameChangeLog(map); //닉네임 테이블 insert
+			changeCount ++;
+		}
+		return changeCount;
+	}
+
+	//휴대폰 번호 중복 체크
+	@Override
+	public int checkPhonNum(String phoneNum) {
+		return mapper.checkPhoneNum(phoneNum);
+	}
+
+	//휴대폰 번호 업데이트
+	@Override
+	public int updatePhoneNum(Map<String, Object> map) {
+		//updatePhoneNum, memberNo
+		return mapper.updatePhoneNum(map);
+	}
+
+	
+
 	
 }
