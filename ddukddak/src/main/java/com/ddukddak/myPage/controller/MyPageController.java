@@ -104,10 +104,10 @@ public class MyPageController {
 		String message = null;
 		int memberNo = loginMember.getMemberNo();
 		
-		int result = infoService.changePassword(paramMap, memberNo);
-		
-		if(result>0) message = "비밀번호가 변경되었습니다.";
-		else 		 message = "비밀번호 변경 실패\n다시 시도해주세요.";
+//		int result = infoService.changePassword(paramMap, memberNo);
+//		
+//		if(result>0) message = "비밀번호가 변경되었습니다.";
+//		else 		 message = "비밀번호 변경 실패\n다시 시도해주세요.";
 		
 		ra.addFlashAttribute("message", message);
 	
