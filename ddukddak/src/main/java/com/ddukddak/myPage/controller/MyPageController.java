@@ -1,5 +1,6 @@
 package com.ddukddak.myPage.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -76,6 +78,46 @@ public class MyPageController {
 	 * @return
 	 * @throws Exception
 	 */
+//	@PostMapping("memberInfo/profileImg")
+//	@ResponseBody
+//	public ResponseEntity<String> changeProfileImg(
+//			@RequestParam("profile-image") MultipartFile file,
+//			@SessionAttribute("loginMember") Member loginMemebr) throws Exception{
+//		int result  = infoService.updateImg(file, loginMemebr);
+//		
+//		if(result >0) return ResponseEntity.ok().build();
+//		else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//
+//		
+//	}
+	
+	
+	
+	
+	/**[회원정보]비밀번호 변경 -비동기
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("memberInfo/password")
+	public Map<String, String> changePassword(
+			@RequestBody Map<String, String> map,
+			@SessionAttribute("loginMember") Member mem) {
+		
+		int memberNo = mem.getMemberNo();
+		
+		int result = infoService.changePassword(map, memberNo);
+		
+		String message=null;
+		Map<String, String> response = new HashMap<>();
+		if(result>0) message = "비밀번호가 변경되었습니다.";
+		else 		 message = "비밀번호 변경 실패\n다시 시도해주세요.";
+		
+		response.put("message", message);
+		return response;
+		
+	}
+	
+
 	@PostMapping("memberInfo/profileImg")
 	@ResponseBody
 	public ResponseEntity<String> changeProfileImg(
@@ -109,13 +151,16 @@ public class MyPageController {
 //	}
 //		
 //		
+
 	
-	/**[회원정보] 이메일 변경
+	/**[회원정보] 이메일 중복 확인
+	 * @param memberEmail
 	 * @return
 	 */
-	@PostMapping("memberInfo/email")
-	public String changeEmail() {
-		return "";
+	@ResponseBody
+	@GetMapping("memberInfo/emailDup")
+	public int checkEmail(@RequestParam("memberEmail") String memberEmail) {
+		return infoService.checkEmail(memberEmail);
 	}
 	
 	@PostMapping("memberInfo/nickname")
