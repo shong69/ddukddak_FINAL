@@ -43,7 +43,7 @@ public class eCommerceController {
 		return "/eCommerce/eCommerceMain";
 	}
 	
-	@GetMapping("{categoryNo:[0-9]+}")
+	@GetMapping("list/{categoryNo:[0-9]+}")
 	public String eCommerceList(@PathVariable("categoryNo") int categoryNo,
 								Model model) {
 		log.info("## START LIST ##");
