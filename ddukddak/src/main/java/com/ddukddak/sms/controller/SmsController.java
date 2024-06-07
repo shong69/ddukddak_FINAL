@@ -29,7 +29,9 @@ public class SmsController {
      */
     @PostMapping("/findId")
     public CompletableFuture<Integer> sendOne(@RequestBody String toNumber) {
-        
+    // CompletableFuture : Java 8에서 도입된 java.util.concurrent 패키지의 클래스
+    // 비동기 프로그래밍을 지원하며, 비동기 작업의 결과를 처리하고, 콜백을 등록하고, 예외를 처리하는 기능을 제공
+    	
     
 //    	SingleMessageSentResponse response = service.sendSms(toNumber);
 //    			
