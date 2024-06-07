@@ -9,13 +9,12 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class BigCategory {
 
 	private String bigCategoryNo;
 	private String bigCategoryName;
-	
 }

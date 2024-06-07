@@ -41,6 +41,7 @@ header > div:nth-child(2) > a {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 800px;
 }
 
 .selectBox {

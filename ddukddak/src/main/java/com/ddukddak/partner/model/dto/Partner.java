@@ -1,4 +1,4 @@
-package com.ddukddak.partner.dto;
+package com.ddukddak.partner.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

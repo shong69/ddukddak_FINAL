@@ -107,8 +107,7 @@ public class MyPageController {
 //	
 //		return"redirect:/myPage/memberInfo";
 //	}
-//		
-//		
+	
 	
 	/**[회원정보] 이메일 변경
 	 * @return
