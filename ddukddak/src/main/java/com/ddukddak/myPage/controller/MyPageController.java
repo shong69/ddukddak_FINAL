@@ -88,13 +88,7 @@ public class MyPageController {
 
 		
 	}
-	
-	
-	
-	
-	/**[회원정보]비밀번호 변경 -비동기
-	 * @return
-	 */
+		
 //	@PostMapping("memberInfo/password")
 //	public String changePassword(
 //			@RequestParam Map<String, Object> paramMap,
@@ -113,7 +107,8 @@ public class MyPageController {
 //	
 //		return"redirect:/myPage/memberInfo";
 //	}
-	
+//		
+//		
 	
 	/**[회원정보] 이메일 변경
 	 * @return
