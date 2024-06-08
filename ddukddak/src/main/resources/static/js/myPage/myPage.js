@@ -97,13 +97,12 @@ let backupInput; //input type="file" 값 변경 시 변경된 상태 저장 변�
 if(profile != null){
     const profileImg =document.querySelector("#profile-img");
     let imageInput = document.querySelector("#inputImage");
-
     const deleteImage = document.querySelector(".delete-image");
 
     const changeImageFn = e =>{
         const maxSize =  1024 * 1024 * 5;   //5MB
         const file = e.target.files[0];
-
+        console.log(file);
         //*업로드 파일이 없는 경우(취소한 경우)
         if(file == undefined){ 
             console.log("파일 로드 후 취소");
@@ -151,8 +150,6 @@ if(profile != null){
 
     //*x버튼 클릭 시 기본 이미지로 변경하기
     deleteImage.addEventListener("click", ()=>{
-        profileImg.src = "/images/profile/main.jpg";
-
         imageInput.value = "";
         backupInput = undefined;
         statusCheck = 0; //삭제 상태
@@ -173,21 +170,8 @@ if(profile != null){
 
 }
 
-// function updateProfileImage() {
-//     const formData = new FormData(profile);
-    
-//     const xhr = new XMLHttpRequest();
-//     xhr.open('POST', '/profileImg', true); // POST 형식, endpoint:/porfileImg, 비동기 여부 : true
 
-//     xhr.onload = function() { //서버로부터 응답 도착 시 함수 실행
-//         if(xhr.status=== 200) {
-//             alert('성공적으로 변경됨');
-//         }else{
-//             alert('실패');
-//         }
-//     };
-//     xhr.send(formData); //서버로 데이터 변경 요청
-// }
+
 
 
 
@@ -315,6 +299,9 @@ pwConfirmBtn.addEventListener("click", e=>{
     .then(resp => resp.json())
     .then(result => {
         alert(result.message);
+        currentPw.value = "";
+        newPw.value = "";
+        confirmNewPw.value = "";
     })
     .catch(error =>{
         console.error('Error',error);
@@ -326,11 +313,11 @@ pwConfirmBtn.addEventListener("click", e=>{
 
 //-------------------------------------------------------------------
 // 3. 이메일 변경
-const emailInput = document.querySelector("input[name='email-input']");
-const authBtn = document.querySelector(".emailAuthBtn");
-const authInput = document.querySelector("input[name='auth-input']")
+const emailInput = document.querySelector("input[name='email-input']"); //이메일 input
+const authBtn = document.querySelector(".emailAuthBtn"); //인증 버튼
+const authInput = document.querySelector("input[name='auth-input']") //인증번호 input
 
-const emailConfirmBtn = document.querySelector(".emailAuthBtn");
+const emailConfirmBtn = document.querySelector(".emailConfirmBtn"); //변경 버튼
 
 //타이머
 let authTimer; //타이머 역할을 할 setInterval을 저장할 변수
@@ -379,6 +366,7 @@ authBtn.addEventListener("click", async()=>{
                 return;
             }else if(emailSend.ok){
                 alert("입력해주신 이메일 주소로 인증번호가 발송되었습니다.");
+                emailConfirmBtn.disabled = false;
             }
         }catch(Error){
             console.error("Error : ", Error);
@@ -459,7 +447,11 @@ emailConfirmBtn.addEventListener("click", ()=>{
             return;
         }
         alert("인증이 완료 후 이메일이 변경되었습니다.");
+        emailInput.value = "";
+        authInput.value = "";
 
+        const emailDiv = document.querySelector("#emailValue");
+        emailDiv.innerText = emailInput.value;
     }).catch(error=>{
         console.log(error);
     })
@@ -472,31 +464,43 @@ emailConfirmBtn.addEventListener("click", ()=>{
 // 4. 닉네임
 const nicknameInput = document.querySelector("input[name='nicknameInput']");
 const nicknameConfirmBtn  = document.querySelector(".nicknameConfirmBtn");
-const nicknameAlert = document.querySelector(".nickname-alert");
 
 
 nicknameConfirmBtn.addEventListener("click", ()=>{
     inputValue = nicknameInput.value;
-    const regExp = /[\uD800-\uDFFF!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/;
+    console.log("바뀜!!");
+    const regExp = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,8}$/;
 
-    if(inputValue.trim().length <1 || inputValue.trim().length >8){
-        alert("8~16자 사이의 비밀번호를 입력해주세요");
+    if(inputValue.trim().length <2 || inputValue.trim().length >8){
+        alert("2~8자 사이의 닉네임을 입력해주세요");
         return;
 
-    }else if(!regExp.test(inputValue)){
-        alert("이모티콘 및 특수문자 사용은 불가합니다.");
+    } 
+    if(!regExp.test(inputValue)){
+        alert("이모티콘 및 자모음, 공백, 특수문자 사용은 불가합니다.");
         return;
         
     }
-
-    fetch("/myPage/memberInfo/nickname?memberNickname=" + nicknameInput.value)
+    //닉네임 중복 검사
+    //닉네임 변경 및 변경 횟수 검사
+    fetch("/myPage/memberInfo/updateMemberNickname?memberNickname=" + inputValue)
     .then(resp => resp.text())
     .then(result =>{
-        if(result==-1){
+        console.log(result);
+        if(result == -2){
+            alert("중복 닉네임입니다.\n다시 시도해주세요.");
+        }
+        else if(result==-1){
             alert("닉네임 변경 횟수가 초과하였습니다.");
             return;
+        }else{
+            alert(`닉네임이 변경되었습니다(${result}/4)`);
+            nicknameInput.value = "";
+            const nicknameDiv1 = document.querySelector("#nicknameDiv1");
+            const nicknameDiv2 = document.querySelector("#nicknameDiv2");
+            nicknameDiv1.innerText = inputValue;
+            nicknameDiv2.innerText = inputValue;
         }
-        alert(`닉네임이 변경되었습니다(${result}/4)`);
         
     }).catch(error=>{
         console.log(error);
@@ -559,6 +563,7 @@ pAuthBtn.addEventListener("click", async()=>{
                 return;
             }else if(phoneNumSend.ok){
                 alert("입력해주신 휴대폰으로 인증번호가 발송되었습니다.");
+                phoneConfirmBtn.disabled = false;
             }
         }catch(Error){
             console.error("Error : ", Error);
@@ -644,7 +649,9 @@ phoneConfirmBtn.addEventListener("click", ()=>{
             return;
         }
         alert("인증이 완료 후 휴대폰 정보가 변경되었습니다.");
-
+        phoneNum.value = "";
+        pAuthInput.value= "";
+        const phoneDiv = document.querySelector("#phoneDiv");
     }).catch(error=>{
         console.log(error);
     })

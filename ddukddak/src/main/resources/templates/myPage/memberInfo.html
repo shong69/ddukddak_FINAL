@@ -34,7 +34,8 @@
                                     <th>사진</th>
                                     <td>
                                         <label class="image-label">
-                                            <img>
+                                            <img th:with="user=#{user.default.image}"
+                                            th:src="${session.loginMember.profileImg?:user}">
                                         </label>
 
                                     </td>
@@ -45,11 +46,13 @@
                                 </tr>
 
                                 <tr style='display: none;' class="change-profile-img-area">
-                                    <form id ="profile-form" action="profileImg" method = "POST" name = "profileForm" enctype="multipart/form-data" >
+                                    <form id ="profile-form" action="/myPage/memberInfo/profileImg" method = "POST" name = "profileForm" enctype="multipart/form-data" >
                                         <th>사진</th>
                                         <td class="profileImg">
                                             <label class="image-label" for="inputImage" >
-                                                <img id="profile-img">
+                                                <img id="profile-img" 
+                                                th:with="user=#{user.default.image}"
+                                                th:src="${session.loginMember.profileImg?:user}">
                                             </label>
                                             <input id="inputImage"type="file" name="profile-image" accept="iamge/*">
                                             <span class="delete-image">&times;</span>
@@ -59,14 +62,14 @@
                                         </td>                                    
                                         <td class="profile-area">
                                             <button class="profile-del-btn myPageDelUpdateBtn" type="button">삭제</button>
-                                            <button class="confirm myPageDelUpdateBtn" type="button">수정</button>
+                                            <button class="confirm myPageDelUpdateBtn" type="submit">수정</button>
                                         </td>
                                     </form>
                                 </tr>
         
                                 <tr class="id-area" colspan="3">
                                     <th>아이디</th>
-                                    <td colspan="3"><h3 class="id-box">shsdfsdfdsong69</h3></td>
+                                    <td colspan="3"><h3 class="id-box"th:text=${session.loginMember.memberId}>Id</h3></td>
                                 </tr>
         
                                 <tr class="password-area">
@@ -85,7 +88,7 @@
                                         <div class="password-area2">
                                             <div class="password-area2-1">
                                                 <span class="password-title">현재 비밀번호</span>
-                                                <input name = "currentPw" placeholder="기존 비밀번호 입력" maxlength="20" type="password" autocomplete="off">
+                                                <input name = "currentPw" placeholder="기존 비밀번호 입력" maxlength="100" type="password" autocomplete="off">
                                                 <i class="fa-solid fa-eye"></i><i class="fa-solid fa-eye-slash display-none"></i>
                                             </div>
                                             <span class="pwAlert currentPwAlert"></span>
@@ -118,34 +121,33 @@
                                     <th>이메일</th>
                                     <td style='display:""'  colspan="3">
                                         <div class="before-modify" >
-                                            <div>shong7576@gmail.com</div>
+                                            <div id ="emailValue" th:text="${session.loginMember.memberEmail}">****@***.***</div>
                                             <div><button class="myPageSubBtn" type="button">이메일 변경</button></div>
                                         </div>
 
                                     </td>
                                 </tr>
                                 <tr style='display: none;' class="change-email-area">
-                                    <form>
-                                        <th>이메일</th>
-                                        <td colspan="3">
-                                            <ul class="mail-alarm">
-                                                <li>변경 할 메일주소를 입력 후 인증하기 버튼 클릭 시, 
-                                                    <br>회원님의 이메일로 이메일 인증 번호가 적힌 메일이 발송됩니다</li>
-                                                <li>아래에 인증번호를 입력하면 변경이 완료됩니다.</li>
-                                            </ul>
-                                            <div class="email-input-area">
-                                                <div>
-                                                    <input name="email-input" class= "email-input" placeholder="이메일 주소 입력" type="email" required>
-                                                    <input name="auth-input"class= "email-input" placeholder="인증번호 입력" required>
-                                                </div>
-                                                <button type="button" class="emailAuthBtn myPageVerifyBtn">인증</button>
+                                    <th>이메일</th>
+                                    <td colspan="3">
+                                        <ul class="mail-alarm">
+                                            <li>변경 할 메일주소를 입력 후 인증하기 버튼 클릭 시, 
+                                                <br>회원님의 이메일로 이메일 인증 번호가 적힌 메일이 발송됩니다</li>
+                                            <li>아래에 인증번호를 입력하면 변경이 완료됩니다.</li>
+                                        </ul>
+                                        <div class="email-input-area">
+                                            <div>
+                                                <input name="email-input" class= "email-input" placeholder="이메일 주소 입력" type="email" required>
+                                                <input name="auth-input"class= "email-input" placeholder="인증번호 입력" required>
                                             </div>
-                                            <div class="email-btn-area">
-                                                <button class="emailConfirmBtn confrim myPageConfirmCancelBtn" type="button">확인</button>
-                                                <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
-                                            </div>
-                                        </td>
-                                    </form>
+                                            <button type="button" class="emailAuthBtn myPageVerifyBtn">인증</button>
+                                        </div>
+                                        <div class="email-btn-area">
+                                            <button class="emailConfirmBtn confrim myPageConfirmCancelBtn" type="button" disabled>확인</button>
+                                            <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
+                                        </div>
+                                    </td>
+                              
 
                                 </tr>
         
@@ -153,33 +155,32 @@
                                     <th>닉네임</th>
                                     <td colspan="3">
                                         <div class="before-modify">
-                                            <div class="nickname">김송</div>
+                                            <div class="nickname" id ="nicknameDiv1" th:text="${session.loginMember.memberNickname}">닉네임</div>
                                             <div ><button class="myPageSubBtn" type="button">닉네임 변경</button></div>
                                         </div>
                                     </td>
                                 </tr>
                 
                                 <tr style='display: none;'class="change-nickname-area">
-                                    <form>
-                                        <th>닉네임</th>
-                                        <td class="nickname-area2" colspan="3">
-                                            <div class="nickname" style="margin-left: 80px;">김송</div>
-                                            <ul class="nickname-alarm">
-                                                <li>이번달 수정 가능 횟수(월 최대 4회까지만 변경 가능합니다.)</li>
-                                                <li>길이는 최대 8자 이내로 작성해주세요.</li>
-                                                <li>중복 닉네임은 설정 불가합니다.</li>
-                                                <li>띄어쓰기는 불가합니다.</li>
-                                                <li>닉네임 설정에 이모티콘 및 특수문자 사용이 불가합니다. ex)& < > ( ) ' " ,</li>
-                                            </ul>
-                                            <div class="nickname-input-area">
-                                                <input name = "nicknameInput"placeholder="닉네임 입력">
-                                            </div>
-                                            <div class="nickname-btn-area">
-                                                <button class="nicknameConfirmBtn confirm myPageConfirmCancelBtn" type="button">확인</button>
-                                                <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
-                                            </div>
-                                        </td>
-                                    </form>
+                                    <th  th:text="${session.loginMember.memberNickname}">닉네임</th>
+                                    <td class="nickname-area2" colspan="3">
+                                        <div id ="nicknameDiv2" class="nickname" style="margin-left: 80px;" th:text="${session.loginMember.memberNickname}">김송</div>
+                                        <ul class="nickname-alarm">
+                                            <li>이번달 수정 가능 횟수(월 최대 4회까지만 변경 가능합니다.)</li>
+                                            <li>길이는 최대 8자 이내로 작성해주세요.</li>
+                                            <li>중복 닉네임은 설정 불가합니다.</li>
+                                            <li>띄어쓰기는 불가합니다.</li>
+                                            <li>닉네임 설정에 이모티콘 및 특수문자 사용이 불가합니다. ex)& < > ( ) ' " ,</li>
+                                        </ul>
+                                        <div class="nickname-input-area">
+                                            <input name = "nicknameInput"placeholder="닉네임 입력">
+                                        </div>
+                                        <div class="nickname-btn-area">
+                                            <button class="nicknameConfirmBtn confirm myPageConfirmCancelBtn" type="button">확인</button>
+                                            <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
+                                        </div>
+                                    </td>
+                                  
                                 </tr>
 
 
@@ -187,30 +188,28 @@
                                     <th>휴대전화</th>
                                     <td colspan="3">
                                         <div class="before-modify">
-                                            <div>010-1111-2222</div>
+                                            <div id="phoneDiv" th:text="${session.loginMember.memberTel}">010-1111-2222</div>
                                             <div><button class="myPageSubBtn" type="button">정보 변경</button></div>
                                         </div>
                                     </td>
     
                                 </tr>
                                 <tr style='display: none;' class="change-phoneNum-area">
-                                    <form>
-                                        <th>휴대전화</th>
-                                        <td colspan="3" class="phoneNum-area2">
-                                            <div class="phonNum-input-area">
-                                                <div>
-                                                    <input name = "phoneNum" placeholder="'-' 없이 입력" type="tel">
-                                                    <input name="p-auth-input" placeholder="인증번호 입력">
-                                                </div>
-                                                
-                                                <button class="p-authBtn myPageVerifyBtn" type="button">인증</button>
-                                            </div>
+                                    <th>휴대전화</th>
+                                    <td colspan="3" class="phoneNum-area2">
+                                        <div class="phonNum-input-area">
                                             <div>
-                                                <button class="phoneConfirmBtn confirm myPageConfirmCancelBtn" type="button">확인</button>
-                                                <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
+                                                <input name = "phoneNum" placeholder="'-' 없이 입력" type="tel">
+                                                <input name="p-auth-input" placeholder="인증번호 입력">
                                             </div>
-                                        </td>
-                                    </form>
+                                            
+                                            <button class="p-authBtn myPageVerifyBtn" type="button">인증</button>
+                                        </div>
+                                        <div>
+                                            <button class="phoneConfirmBtn confirm myPageConfirmCancelBtn" type="button" disabled>확인</button>
+                                            <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -242,8 +241,10 @@
     </main>
     <th:block th:replace="~{common/fragments/footer}"></th:block>
 
-      <!-- 회원 프로필 이미지 변경시 사용할 변수 js 변수로 얻어놓기 -->
-
+    <!-- 회원 프로필 이미지 변경시 사용할 변수 js 변수로 얻어놓기 -->
+    <script th:inline="javascript"><!--타임리프 적용해서 자바스크립트 사용함 알림-->
+        const loginMemberProfileImg = /*[[${session.loginMember.profileImg}]]*/ "회원프로필이미지";
+    </script>
     <script src="/js/myPage/myPage.js"></script> 
 </body>
 
