@@ -215,3 +215,22 @@
     justify-content: center;
     align-items: center;
 }
+
+.emptyList {
+    text-align: center;
+    color: var(--gray3);
+}
+
+.myHouseRightSide {
+    display: flex;
+    justify-content: end;
+}
+
+.myHouseRightSide h3 {
+    margin: 0 5px;
+    color: var(--gray3);
+}
+
+.myHouseRightSide span {
+    color: var(--gray3);
+}

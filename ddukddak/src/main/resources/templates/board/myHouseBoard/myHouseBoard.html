@@ -58,7 +58,35 @@
           
           <section class="listArea">
 
-            <div class="myHouseList" id="myHouseDetail">
+            <th:block th:if="${#lists.isEmpty(myHouseList)}">
+              <h3 class="emptyList">등록된 집들이 게시물이 없습니다.</h3>
+            </th:block>
+
+            <th:block th:unless="${#lists.isEmpty(myHouseList)}">
+
+              <div th:each="myHouse : ${myHouseList}" th:object="${myHouse}" class="myHouseList" id="myHouseDetail">
+                
+                <span class="myHouseThumbnail">
+                  <img src="/images/board/myHouse/myHouseDetailImg2.jpg">
+                </span>
+                <span class="myHouseInfo">
+                  <div>
+                    <h2 th:text="${myHouse.boardTitle}">셀프인테리어 후기</h2>
+                  </div>
+                  <div class="myHouseRightSide">
+                    <h3 th:text="${myHouse.memberNickname}">유저일</h3>
+                    <span>|</span>
+                    <h3>조회수</h3>
+                    <span>|</span>
+                    <h3>날짜</h3>
+                  </div>
+                </span>
+
+              </div>
+
+            </th:block>
+
+            <!-- <div class="myHouseList">
               
               <span class="myHouseThumbnail">
                 <img src="/images/board/myHouse/myHouseDetailImg2.jpg">
@@ -120,23 +148,7 @@
                 </div>
               </span>
 
-            </div>
-
-            <div class="myHouseList">
-              
-              <span class="myHouseThumbnail">
-                <img src="/images/board/myHouse/myHouseDetailImg2.jpg">
-              </span>
-              <span class="myHouseInfo">
-                <div>
-                  <h2>셀프인테리어 후기</h2>
-                </div>
-                <div>
-                  <h3>유저일 | 조회수 : 20 | 2024-05-30</h3>
-                </div>
-              </span>
-
-            </div>
+            </div> -->
 
           </section>
           
