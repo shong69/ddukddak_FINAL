@@ -77,10 +77,11 @@
 		WHERE MEMBER_DEL_FL = 'N'
 		AND MEMBER_TEL=#{phoneNum}
 	</select>
+	
 	<!-- 휴대폰 번호 업데이트하기 -->
 	<update id="updatePhoneNum">
 		UPDATE "MEMBER" SET
 		MEMBER_TEL = #{updatePhoneNum}
-		WEHRE MEMBER_NO = #{memberNo}
+		WHERE MEMBER_NO = #{memberNo}
 	</update>
 </mapper>

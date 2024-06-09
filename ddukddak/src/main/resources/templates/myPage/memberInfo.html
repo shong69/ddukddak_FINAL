@@ -220,16 +220,28 @@
                     <table class="add-info">
                         <tbody>
                             <tr>
-                                <th>생년월일</th>
-                                <td>2000.01.01</td>
+                                <th>회원구분</th>
+                                <td th:switch="${session.loginMember.authority}">
+                                    <span th:case="1">일반회원</span>
+                                    <span th:case="2">관리자</span>
+                                    <span th:case="*">알 수 없음</span>
+                                </td>
                             </tr>
                             <tr>
-                                <th>성별</th>
-                                <td>여</td>
+                                <th>회원 이름</th>
+                                <td th:text="${session.loginMember.memberName}">홍길동</td>
+                            </tr>
+                            <tr>
+                                <th>로그인 경로</th>
+                                <td th:switch="${session.loginMember.socialLoginType}">
+                                    <span th:case="D">일반 로그인</span>
+                                    <span th:case="N">네이버 로그인</span>
+                                    <span th:case="K">카카오 로그인</span>
+                                </td>
                             </tr>
                             <tr>
                                 <th>배송지</th>
-                                <td>경남 사천시 서포면 선창부두길 11-2 선전리</td>
+                                <td th:text="${session.loginMember.memberAddr}">경남 사천시 서포면 선창부두길 11-2 선전리</td>
                             </tr>
                         </tbody>
                     </table>

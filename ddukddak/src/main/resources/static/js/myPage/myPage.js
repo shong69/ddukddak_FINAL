@@ -150,6 +150,7 @@ if(profile != null){
 
     //*x버튼 클릭 시 기본 이미지로 변경하기
     deleteImage.addEventListener("click", ()=>{
+        profileImg.src = "/images/profile/main.jpg";;
         imageInput.value = "";
         backupInput = undefined;
         statusCheck = 0; //삭제 상태
@@ -161,7 +162,7 @@ if(profile != null){
         if(loginMemberProfileImg == null && statusCheck==1) flag=false;
         if(loginMemberProfileImg != null && statusCheck ==0) flag = false;
         if(loginMemberProfileImg != null && statusCheck == 1) flag = false;
-
+        alert("이미지가 변경되었습니다.");
         if(flag){
             e.preventDefault();
             alert("이미지가 변경되지 않았습니다.");
@@ -403,59 +404,67 @@ authBtn.addEventListener("click", async()=>{
 
 
 
-//인증 버튼 클릭 -비동기
-emailConfirmBtn.addEventListener("click", ()=>{
-
-    if(min === 0 && sec === 0){ //타이머가 00:00인 경우
+// 인증 버튼 클릭 - 비동기
+emailConfirmBtn.addEventListener("click", () => {
+    if (min === 0 && sec === 0) { // 타이머가 00:00인 경우
         alert("인증번호 입력 제한시간을 초과하였습니다.");
         return;
     }
-    if(authInput.value.length<6){ //인증번호는 6자리임->제대로 입력 안한 경우
+    if (authInput.value.length < 6) { // 인증번호는 6자리임 -> 제대로 입력 안한 경우
         alert("인증번호를 정확히 입력해 주세요");
         return;
     }
 
-    //인증번호 검증 -비동기
-
+    // 인증번호 검증 - 비동기
     const obj = {
-        "email" : emailInput.value,
-        "authKey" : authInput.value
+        "email": emailInput.value,
+        "authKey": authInput.value
     };
 
     fetch("/email/checkAuthKey", {
-        method : "POST",
-        headers : {"Content-Type" : "application/json"},
-        body : JSON.stringify(obj)
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(obj)
     })
     .then(resp => resp.text())
     .then(result => {
-
-        if(result == 0) {
+        if (result == 0) {
             alert("인증번호를 잘못 입력하였습니다.\n 다시 시도해주세요.");
             return;
         }
         clearInterval(authTimer);
-    });
 
-    //이메일 변경하기
+        // 이메일 변경하기
+        fetch("/myPage/memberInfo/emailUpdate?memberEmail=" + emailInput.value)
+            .then(resp => resp.text())
+            .then(result => {
+                if (result == 0) {
+                    alert("이메일 변경 실패");
+                    return;
+                }
+                alert("인증이 완료 후 이메일이 변경되었습니다.");
+                emailInput.value = "";
+                authInput.value = "";
 
-    fetch("/myPage/memberInfo/emailUpdate?memberEmail="+emailInput.value)
-    .then(resp => resp.text())
-    .then(result=>{
-        if(result == 0){
-            alert("이메일 변경 실패");
-            return;
-        }
-        alert("인증이 완료 후 이메일이 변경되었습니다.");
-        emailInput.value = "";
-        authInput.value = "";
+                const emailDiv = document.querySelector("#emailValue");
+                emailDiv.innerText = emailInput.value;
 
-        const emailDiv = document.querySelector("#emailValue");
-        emailDiv.innerText = emailInput.value;
-    }).catch(error=>{
-        console.log(error);
-    })
-})
+                // 변경 폼 숨기기
+                const changePhoneNumArea = document.querySelector(".change-email-area");
+                changePhoneNumArea.style.display = 'none';
+
+                // 원래 폼 다시 보이기
+                const beforeModify = document.querySelector(".email-area");
+                beforeModify.style.display = '';
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        })
+        .catch(error => {
+            console.log(error);
+        });
+});
 
 
 
@@ -500,6 +509,14 @@ nicknameConfirmBtn.addEventListener("click", ()=>{
             const nicknameDiv2 = document.querySelector("#nicknameDiv2");
             nicknameDiv1.innerText = inputValue;
             nicknameDiv2.innerText = inputValue;
+
+            // 변경 폼 숨기기
+            const changePhoneNumArea = document.querySelector(".change-nickname-area");
+            changePhoneNumArea.style.display = 'none';
+
+            // 원래 폼 다시 보이기
+            const beforeModify = document.querySelector(".nickname-area");
+            beforeModify.style.display = '';
         }
         
     }).catch(error=>{
@@ -512,7 +529,7 @@ nicknameConfirmBtn.addEventListener("click", ()=>{
 
 //5. 휴대폰 번호 변경
 const phoneNum = document.querySelector("input[name='phoneNum']");
-const pAuthInput = document.querySelector("input[name='p-auth-input]");
+const pAuthInput = document.querySelector("input[name='p-auth-input']");
 const pAuthBtn = document.querySelector(".p-authBtn");
 const phoneConfirmBtn = document.querySelector(".phoneConfirmBtn");
 
@@ -600,59 +617,72 @@ pAuthBtn.addEventListener("click", async()=>{
 
 
 
-//인증 버튼 클릭 -비동기
-phoneConfirmBtn.addEventListener("click", ()=>{
-
-    if(pmin === 0 && psec === 0){ //타이머가 00:00인 경우
+// 인증 버튼 클릭 - 비동기
+phoneConfirmBtn.addEventListener("click", () => {
+    if (phoneConfirmBtn.disabled) alert("인증 번호가 미입력 상태입니다.");
+    if (pmin === 0 && psec === 0) { // 타이머가 00:00인 경우
         alert("인증번호 입력 제한시간을 초과하였습니다.");
-
         return;
     }
-    if(pAuthInput.value.length<6){ //인증번호는 6자리임->제대로 입력 안한 경우
+    if (pAuthInput.value.length < 6) { // 인증번호는 6자리임 -> 제대로 입력 안한 경우
         alert("인증번호를 정확히 입력해 주세요");
         return;
     }
 
-    //인증번호 검증 -비동기
-
+    // 인증번호 검증 - 비동기
     const obj = {
-        "phone" : phoneNum.value,
-        "authKey" : pAuthInput.value
+        "smsTel": phoneNum.value,
+        "smsAuthKey": pAuthInput.value
     };
 
     fetch("/sms/checkSmsAuthKey", {
-        method : "POST",
-        headers : {"Content-Type" : "application/json"},
-        body : JSON.stringify(obj)
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(obj)
     })
-    .then(resp => resp.text())
-    .then(result => {
+        .then(resp => resp.text())
+        .then(result => {
+            if (result == 0) {
+                alert("인증번호를 잘못 입력하였습니다.\n 다시 시도해주세요.");
+                return;
+            }
+            clearInterval(authTimer);
 
-        if(result == 0) {
-            alert("인증번호를 잘못 입력하였습니다.\n 다시 시도해주세요.");
-            return;
-        }
-        clearInterval(authTimer);
-    });
+            // 휴대폰 번호 변경하기
+            fetch("/myPage/memberInfo/phoneNumUpdate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ updatePhoneNum: phoneNum.value })
+            })
+                .then(resp => resp.text())
+                .then(result => {
+                    if (result == 0) {
+                        alert("휴대폰 번호 변경 실패");
+                        return;
+                    }
+                    alert("인증이 완료 후 휴대폰 정보가 변경되었습니다.");
 
-    //휴대폰 번호 변경하기
+                    let phoneDiv = document.querySelector("#phoneDiv");
+                    phoneDiv.innerText = phoneNum.value;
 
-    fetch("/myPage/memberInfo/phoneNumUpdate",{
-        method : "POST",
-        headers : {"Content-Type" : "application/json"},
-        body : JSON.stringify({updatePhoneNum : "phoneNum.value"})
-    })
-    .then(resp => resp.text())
-    .then(result=>{
-        if(result == 0){
-            alert("휴대폰 번호 변경 실패");
-            return;
-        }
-        alert("인증이 완료 후 휴대폰 정보가 변경되었습니다.");
-        phoneNum.value = "";
-        pAuthInput.value= "";
-        const phoneDiv = document.querySelector("#phoneDiv");
-    }).catch(error=>{
-        console.log(error);
-    })
-})
+                    phoneNum.value = "";
+                    pAuthInput.value = "";
+
+                    // 변경 폼 숨기기
+                    const changePhoneNumArea = document.querySelector(".change-phoneNum-area");
+                    changePhoneNumArea.style.display = 'none';
+
+                    // 원래 폼 다시 보이기
+                    const beforeModify = document.querySelector(".phoneNum-area");
+                    beforeModify.style.display = '';
+
+                    return;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        })
+        .catch(error => {
+            console.log(error);
+        });
+});

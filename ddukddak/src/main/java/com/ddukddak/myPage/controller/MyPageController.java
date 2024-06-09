@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.service.MemberInfoService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +34,8 @@ public class MyPageController {
 	private final MemberInfoService infoService;
 	//주문내역 진입
 	@GetMapping("")
-	public String main(@SessionAttribute("loginMember") Member loginMember, Model model) {
+	public String main(@SessionAttribute("loginMember") Member loginMember,
+						HttpSession session ) {
         
         // enrollDate가 String일 경우 Date 객체로 변환
         if (loginMember != null && loginMember.getEnrollDate() instanceof String) {
@@ -43,7 +44,8 @@ public class MyPageController {
                 SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = originalFormat.parse((String) loginMember.getEnrollDate());
                 String formattedDate = targetFormat.format(date);
-                model.addAttribute("enrollDate", formattedDate);
+                session.setAttribute("enrollDate", formattedDate);
+                
             } catch (ParseException e) {
                 e.printStackTrace();
             }
