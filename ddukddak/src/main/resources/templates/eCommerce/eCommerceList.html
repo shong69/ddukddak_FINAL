@@ -67,10 +67,33 @@
             </div>
 
             <!-- 페이지네이션 -->
-            <div class="pagination">
+            <div class="pagination" style="margin-top: 100px; margin-bottom: 30px;">
+                <!--검색 안한 경우-->
+                <ul class = "pagination" th:object="${pagination}">
+                    <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=1|}">&lt;&lt;</a></li>
+                    <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{prevPage}|}">&lt;</a></li>
+        
+                    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
 
+                        <li th:if="${i} == *{currentPage}">
+                            <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                        </li>
+
+                        <li th:unless="${i} == *{currentPage}">
+                            <a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=${i}|}"
+                            th:text="${i}">이동할 페이지</a>
+                        </li>
+                        
+                    </th:block>
+        
                 
-
+                    <li>
+                        <a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{nextPage}|}">&gt;</a>
+                    </li>
+                    <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{maxPage}|}">&gt;&gt;</a></li>
+                </ul>
+                
+            
             </div>
 
         </div>
