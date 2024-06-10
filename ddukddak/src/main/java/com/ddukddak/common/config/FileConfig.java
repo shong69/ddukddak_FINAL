@@ -33,6 +33,8 @@ public class FileConfig implements WebMvcConfigurer{
 	private String profileResourceHandler;
 	@Value("${my.profile.resource-location}")
 	private String profilResourceLocation;
+	
+	
 //	보드 요청 주소
 	@Value("${my.board.resource-handler}")
 	private String boardResourceHandler;
@@ -51,14 +53,14 @@ public class FileConfig implements WebMvcConfigurer{
 		
 		
 // 		프로필 이미지 요청 - 서버 폴더 연결 추가
-		registry.addResourceHandler(profileResourceHandler) // /myPage/profile/**
+		registry.addResourceHandler(profileResourceHandler) // /profile/**
 		.addResourceLocations(profilResourceLocation);
 				
 //		게시글 이미 추가
 		registry.addResourceHandler(boardResourceHandler).addResourceLocations("file:///" + classPath + "/board/");
 		
 //		기타 메인 이미지
-		registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
+		//registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
 		
 	}
 	

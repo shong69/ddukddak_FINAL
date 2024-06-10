@@ -31,7 +31,7 @@ public interface MemberMapper {
 	 */
 	int memberNTCheck(Member member);
 
-	Member login(Member member);
+	Member login(String string);
 
 
 

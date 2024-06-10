@@ -1,5 +1,6 @@
 package com.ddukddak.member.model.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -7,13 +8,16 @@ import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.member.model.mapper.MemberMapper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberMapper mapper;
+	private final BCryptPasswordEncoder bcrypt;
 
 	/** [메일] 아이디 찾기 / 이름, 이메일 일치 여부 확인
 	 *
@@ -57,7 +61,16 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Member login(Member member) {
-		return mapper.login(member);
+		Member loginMember = mapper.login(member.getMemberId());
+		if(loginMember == null) return null;
+		
+		if(!bcrypt.matches(member.getMemberPw(), loginMember.getMemberPw())) {
+			return null;
+		}
+		loginMember.setMemberPw(null);
+		
+		
+		return loginMember;
 	}
 
 

@@ -18,17 +18,14 @@ import lombok.ToString;
 public class CartItem {
 
 	private int cartId;
+	private int memberNo;
 	private int productNo;
 	private String productName;
-	private String optionName; //옵션명 mapper에서 조합하기
+	private int optionNo;
+	private String optionValue;
 	private int productPrice;
 	private int productCount;
 
 	// 상품 썸네일 이미지
-	private int uploadImgmgNo;
-	private String uploadImgPath;
-	private String uploadImgOgName;
-	private String uploadImgRename;
-	private int uploadImgOrder;
-	private String category;
+	private String productImg;
 }
