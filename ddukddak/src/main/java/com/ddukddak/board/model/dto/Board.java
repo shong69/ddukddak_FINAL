@@ -27,6 +27,9 @@ public class Board {
 //	커뮤니티 타입 -> 1: 집들이 / 2: 노하우
 	private int boardCode;
 	
+//	MEMBER 테이블 조인
+	private String memberNickname;
+	
 //	커뮤니티 이름
 	private String boardName;
 	

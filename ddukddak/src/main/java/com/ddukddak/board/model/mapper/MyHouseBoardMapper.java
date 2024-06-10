@@ -25,4 +25,12 @@ public interface MyHouseBoardMapper {
 	 */
 	int insertUploadList(List<BoardImg> uploadList);
 
+
+
+	/** 집들이 게시판 리스트 조회
+	 * @param boardType
+	 * @return myHouseList
+	 */
+	List<Board> selectMyHouseList(int boardType);
+
 }
