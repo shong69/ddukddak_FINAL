@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
@@ -28,7 +29,7 @@ public interface eCommerceMapper {
 	 * @param categoryNo 
 	 * @return
 	 */
-	List<Product> selectProductList(int smallcategoryNo);
+	List<Product> selectProductList(int smallcategoryNo, RowBounds rowBounds);
 
 	/** 대분류 카테고리 선택
 	 * @return
@@ -75,12 +76,18 @@ public interface eCommerceMapper {
 	 * @param smallcategoryNo
 	 * @return
 	 */
-	List<Product> recProduct(int smallcategoryNo);
+	List<Product> recProduct(Map<String, Object> map);
 
 	/** 상품의 옵션개수 출력
 	 * @param productNo
 	 * @return
 	 */
 	List<ProductOption> selectOptionListName(int productNo);
+
+	/** 카테고리별 상품개수
+	 * @param smallcategoryNo
+	 * @return
+	 */
+	int selectProductListCount(int smallcategoryNo);
 
 }

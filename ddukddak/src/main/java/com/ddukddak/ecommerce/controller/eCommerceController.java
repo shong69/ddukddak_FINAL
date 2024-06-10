@@ -66,10 +66,11 @@ public class eCommerceController {
 	@GetMapping("list/{bigcategoryNo:[0-9]+}/{smallcategoryNo:[0-9]+}")
 	public String eCommerceList(@PathVariable("bigcategoryNo") int bigcategoryNo,
 								@PathVariable("smallcategoryNo") int smallcategoryNo,
+								@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 								Model model) {
 		
-		List<Product> list = service.selectProductList(smallcategoryNo);
-		log.info("list : " + list);
+		Map<String, Object> map = service.selectProductList(smallcategoryNo, cp);
+		log.info("map" + map);
 		
 		// 대분류 카테고리 선택
 		List<Category> categoryList = service.selectCategory();
@@ -78,19 +79,24 @@ public class eCommerceController {
 		List<Category> smallCategoryList = service.selectSmallCategory(bigcategoryNo);
 		
 		String bigCategoryName = service.selectBigCategory(bigcategoryNo);
-		
-		model.addAttribute("selectProductList", list);
+
+		model.addAttribute("selectProductList", map.get("productList"));
+		model.addAttribute("pagination", map.get("pagination"));
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("smallCategoryList", smallCategoryList);
 		model.addAttribute("bigCategoryName", bigCategoryName);
+		model.addAttribute("bigCategoryNo", bigcategoryNo);
+		model.addAttribute("smallCategoryNo", smallcategoryNo);
 		
 		return "/eCommerce/eCommerceList";
 	}
+	
 	
 	@GetMapping("list/{bigcategoryNo:[0-9]+}/{smallcategoryNo:[0-9]+}/{productNo:[0-9]+}/detail")
 	public String eCommerceDetail(@PathVariable("bigcategoryNo") int bigcategoryNo,
 								@PathVariable("smallcategoryNo") int smallcategoryNo,
 								@PathVariable("productNo") int productNo,
+								@RequestParam Map<String, Object> paramMap,
 									Model model) {
 		
 		DetailProduct productInfo = service.selectOneProduct(productNo);
@@ -103,7 +109,7 @@ public class eCommerceController {
 		List<Category> smallCategoryList = service.selectSmallCategory(bigcategoryNo);
 		
 		// 추천상품 선택
-		List<Product> recList = service.selectRecProduct(smallcategoryNo);
+		List<Product> recList = service.selectRecProduct(productNo, smallcategoryNo);
 		
 		// 옵션 개수 선택
 		List<ProductOption> optionList = service.selectOptionListName(productNo);
@@ -119,6 +125,7 @@ public class eCommerceController {
 		
 		return "eCommerce/eCommerceDetail";
 	}
+	
 	
 	@RequestMapping("payment")
 	public String eCommercePayment() {

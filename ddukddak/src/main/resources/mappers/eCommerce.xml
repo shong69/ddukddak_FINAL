@@ -55,6 +55,10 @@
 		ORDER BY p.PRODUCT_NO
 	</select>
 	
+	<select id="selectProductListCount">
+		SELECT COUNT(*) FROM "PRODUCT" WHERE CATEGORY_NO = #{smallcategoryNo}
+	</select>
+	
 	<!-- 대분류 카테고리 선택 -->
 	<select id="selectCategory">
 		WITH RankedCategories AS (
@@ -87,7 +91,7 @@
 	
 	<!-- 상품 상세정보 -->
 	<select id="selectOneProduct">
-		SELECT * FROM "PRODUCT" WHERE PRODUCT_NO = #{productNo}
+		SELECT * FROM "PRODUCT" NATURAL JOIN CATEGORY NATURAL JOIN BIG_CATEGORY WHERE PRODUCT_NO = #{productNo}
 	</select>
 	
 	<!-- 상품 상세정보 이미지리스트 -->
@@ -111,6 +115,7 @@
 		WHERE UPLOAD_IMG_ORDER = 1
 		AND PRODUCT_FL = 'N'
 		AND CATEGORY = #{smallcategoryNo}
+		AND p.PRODUCT_NO != #{productNo}
 	</select>
 	
 	<!-- 상품의 옵션이름 출력 -->

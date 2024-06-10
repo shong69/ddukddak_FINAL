@@ -41,6 +41,10 @@
     width: 600px;
 }
 
+.subImg {
+    opacity: 50%;
+}
+
 #imgSubContainer::-webkit-scrollbar {
     width: 5px;
     height: 10px;
@@ -57,7 +61,7 @@
 }
 
 .border {
-    border: 1px solid var(--gray3);
+    opacity: 100%;
 }
 
 .arrow {
@@ -75,11 +79,11 @@
 }
 
 .left-arrow {
-    left: 600px;
+    left: 500px;
 }
 
 .right-arrow {
-    left: 1150px;
+    left: 1050px;
 }
 
 #productContainer > div:last-child {

@@ -110,27 +110,29 @@
                 </div>
 
                 <div style="margin-bottom: 10px;">
-                <h4>+ 더보기</h4>
+                <a style="cursor: pointer;" th:href="@{'/eCommerce/list/' + ${productInfo.bigCategoryNo} + '/' + ${productInfo.categoryNo}}">+ 더보기</a>
                 </div>
 
                 <!-- 쇼핑 아이템들 -->
                 <div id="shopping-items" style="margin-bottom: 30px;">
                     <div th:each="productBestList : ${selectRecProductList}" th:object="${productBestList}">
-                        <div class="img-wrap">
-                            <img th:src="|*{uploadImgPath}*{uploadImgOgName}|" style="height: 200px; width: 180px;">
-                        </div>
-                        <div>
-                            <h4 th:text="*{productName}">상품제목</h4>
-                        </div>
-                        <div style="display: flex; margin-top: 8px;">
-                            <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
-                            <h3 style="font-weight: 600;" th:text="*{productPrice}" class="productPrice">상품가격</h3>
-                        </div>
-                        <div style="display: flex; margin-top: 8px;">
-                            <img src="/images/main/star.png" style="height: 10px;">
-                            <h5 style="margin-right: 5px;">4.1</h5>
-                            <h5 style="color: #9B9B9B;">리뷰 78개</h5>
-                        </div>
+                        <a th:href="@{'/eCommerce/list/' + *{bigCategoryNo} + '/' + *{categoryNo} + '/' + *{productNo} + '/detail'}">
+                            <div class="img-wrap">
+                                <img th:src="|*{uploadImgPath}*{uploadImgOgName}|" style="height: 200px; width: 180px;">
+                            </div>
+                            <div>
+                                <h4 th:text="*{productName}">상품제목</h4>
+                            </div>
+                            <div style="display: flex; margin-top: 8px;">
+                                <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+                                <h3 style="font-weight: 600;" th:text="*{productPrice}" class="productPrice">상품가격</h3>
+                            </div>
+                            <div style="display: flex; margin-top: 8px;">
+                                <img src="/images/main/star.png" style="height: 10px;">
+                                <h5 style="margin-right: 5px;">4.1</h5>
+                                <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
