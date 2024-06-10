@@ -91,10 +91,12 @@ public class eCommerceController {
 		return "/eCommerce/eCommerceList";
 	}
 	
+	
 	@GetMapping("list/{bigcategoryNo:[0-9]+}/{smallcategoryNo:[0-9]+}/{productNo:[0-9]+}/detail")
 	public String eCommerceDetail(@PathVariable("bigcategoryNo") int bigcategoryNo,
 								@PathVariable("smallcategoryNo") int smallcategoryNo,
 								@PathVariable("productNo") int productNo,
+								@RequestParam Map<String, Object> paramMap,
 									Model model) {
 		
 		DetailProduct productInfo = service.selectOneProduct(productNo);
@@ -123,6 +125,7 @@ public class eCommerceController {
 		
 		return "eCommerce/eCommerceDetail";
 	}
+	
 	
 	@RequestMapping("payment")
 	public String eCommercePayment() {

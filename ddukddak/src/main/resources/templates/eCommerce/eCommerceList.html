@@ -48,18 +48,18 @@
                                 <a th:href="@{'/eCommerce/list/' + ${selectProductList[col].bigCategoryNo} + '/' + ${selectProductList[col].categoryNo} + '/' + ${selectProductList[col].productNo} + '/detail'}">
                                     <div><img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgOgName}|"></div>
                                     <div>
-                                    <h4 th:text="${selectProductList[col].productName}">상품이름</h4>
+                                        <h4 th:text="${selectProductList[col].productName}">상품이름</h4>
                                     </div>
                                     <div>
-                                    <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
-                                    <h3 th:text="${selectProductList[col].productPrice} + '원'" class="productPrice">상품가격</h3>
+                                        <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+                                        <h3 th:text="${selectProductList[col].productPrice} + '원'" class="productPrice">상품가격</h3>
                                     </div>
                                     <div>
-                                    <img src="/images/main/star.png" style="height: 10px;">
-                                    <h5 style="margin-right: 5px;">4.1</h5>
-                                    <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+                                        <img src="/images/main/star.png" style="height: 10px;">
+                                        <h5 style="margin-right: 5px;">4.1</h5>
+                                        <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+                                    </div>
                                 </a>
-                                </div>
                             </div>
                         </td>
                     </tr>
