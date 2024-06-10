@@ -41,18 +41,21 @@
 
               <span class="title">집들이</span>
               <span>
-                <form class="searchForm">
-                  <input type="text" placeholder="집들이 검색" name="keyword" class="searchBox">
-                  <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
+                <form th:action="@{/myHouse/main}" method="GET" class="searchForm">
+                  <input type="text" placeholder="집들이(제목, 작성자) 검색" name="query" class="searchBox" id="searchQuery">
+                  <button  id="searchBtn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </button>
                 </form>
               </span>
 
           </section>
           
           <section class="sortingArea">
-            <select>
-              <option>최신순</option>
-              <option>조회순</option>
+            <select id="sortingSelect">
+              <option value="latest">최신순</option>
+              <option value="views">조회순</option>
+              <option value="lickCount">좋아요순</option>
             </select>
           </section>
           
@@ -64,10 +67,13 @@
 
             <th:block th:unless="${#lists.isEmpty(myHouseList)}">
 
-              <div th:each="myHouse : ${myHouseList}" th:object="${myHouse}" class="myHouseList" id="myHouseDetail">
+              <a th:each="myHouse : ${myHouseList}"
+                 class="myHouseList" 
+                 id="myHouseDetail"
+                 th:href="@{/myHouse/detail/{boardNo} (boardNo=${myHouse.boardNo})}">
                 
                 <span class="myHouseThumbnail">
-                  <img src="/images/board/myHouse/myHouseDetailImg2.jpg">
+                  <img th:src="|${myHouse.thumbnail}|">
                 </span>
                 <span class="myHouseInfo">
                   <div>
@@ -76,84 +82,26 @@
                   <div class="myHouseRightSide">
                     <h3 th:text="${myHouse.memberNickname}">유저일</h3>
                     <span>|</span>
-                    <h3>조회수</h3>
+                    <h3 th:text="|조회수 : ${myHouse.readCount}|">조회수</h3>
                     <span>|</span>
-                    <h3>날짜</h3>
+                    <h3 th:text="${myHouse.boardWriteDate}">날짜</h3>
+                    <span>|</span>
+                      <div class="likeArea">
+                        <i class="fa-solid fa-heart" style="color: red;"></i>
+                        <!-- 빈하트 : fa-regular -->
+                        <h3 th:text="${myHouse.likeCount}">10</h3>
+                      </div>
                   </div>
                 </span>
 
-              </div>
+              </a>
 
             </th:block>
-
-            <!-- <div class="myHouseList">
-              
-              <span class="myHouseThumbnail">
-                <img src="/images/board/myHouse/myHouseDetailImg2.jpg">
-              </span>
-              <span class="myHouseInfo">
-                <div>
-                  <h2>셀프인테리어 후기</h2>
-                </div>
-                <div>
-                  <h3>유저일 | 조회수 : 20 | 2024-05-30</h3>
-                </div>
-              </span>
-
-            </div>
-
-            <div class="myHouseList">
-              
-              <span class="myHouseThumbnail">
-                <img src="/images/board/myHouse/myHouseDetailImg2.jpg">
-              </span>
-              <span class="myHouseInfo">
-                <div>
-                  <h2>셀프인테리어 후기</h2>
-                </div>
-                <div>
-                  <h3>유저일 | 조회수 : 20 | 2024-05-30</h3>
-                </div>
-              </span>
-
-            </div>
-
-            <div class="myHouseList">
-              
-              <span class="myHouseThumbnail">
-                <img src="/images/board/myHouse/myHouseDetailImg2.jpg">
-              </span>
-              <span class="myHouseInfo">
-                <div>
-                  <h2>셀프인테리어 후기</h2>
-                </div>
-                <div>
-                  <h3>유저일 | 조회수 : 20 | 2024-05-30</h3>
-                </div>
-              </span>
-
-            </div>
-
-            <div class="myHouseList">
-              
-              <span class="myHouseThumbnail">
-                <img src="/images/board/myHouse/myHouseDetailImg2.jpg">
-              </span>
-              <span class="myHouseInfo">
-                <div>
-                  <h2>셀프인테리어 후기</h2>
-                </div>
-                <div>
-                  <h3>유저일 | 조회수 : 20 | 2024-05-30</h3>
-                </div>
-              </span>
-
-            </div> -->
 
           </section>
           
           <section class="btnArea">
-            <button type="button" class="boardCreateBtn" id="boardCreateBtn">작성하기</button>
+            <button type="button" class="boardCreateBtn" id="boardCreateBtn" th:if="${session.loginMember}">작성하기</button>
           </section>
           
           <section class="paginationArea">

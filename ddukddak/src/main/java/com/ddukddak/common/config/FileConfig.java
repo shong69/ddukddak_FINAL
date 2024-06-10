@@ -39,6 +39,11 @@ public class FileConfig implements WebMvcConfigurer{
 	@Value("${my.board.resource-handler}")
 	private String boardResourceHandler;
 	
+//	집들이 요청 주소
+	@Value("${my.myHouse.resource-handler}")
+	private String myHouseResourceHandler;
+	@Value("${my.myHouse.resource-location}")
+	private String myhouseResourceLocation;
 	
 	@Value("${spring.servlet.multipart.location}")
 	private String location;
@@ -58,6 +63,10 @@ public class FileConfig implements WebMvcConfigurer{
 				
 //		게시글 이미 추가
 		registry.addResourceHandler(boardResourceHandler).addResourceLocations("file:///" + classPath + "/board/");
+		
+//		집들이 이미지 요청
+		registry.addResourceHandler(myHouseResourceHandler) 
+		.addResourceLocations(myhouseResourceLocation);
 		
 //		기타 메인 이미지
 		//registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
