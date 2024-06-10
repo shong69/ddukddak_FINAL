@@ -70,7 +70,8 @@ for (let i = 0; i < productPriceElements.length; i++) {
 
 /* 베스트 상품 클릭했을 때 */
 const selectBest = document.querySelectorAll(".selectBest");
-const bestContainer = document.querySelector("#bestContainer");
+const bestContainer = document.querySelector("#best-items");
+const plusProduct = document.querySelector("#plusProduct");
 
 selectBest.forEach(elements => {
 
@@ -80,21 +81,68 @@ selectBest.forEach(elements => {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(valueNo)
-        })
-        .then(resp => resp.text())
+            })
+            .then(resp => resp.text())
         .then(result => {
 
             const bestList = JSON.parse(result);
-
+            
             bestContainer.innerHTML = "";
-
+            
             bestList.forEach( (product) => {
-                let arr = [product.productName,
-                            product.productPrice];
+                    plusProduct.href = `/eCommerce/list/${valueNo}/${product.categoryNo}`;
 
-                    for(let key of arr){
-                        bestContainer.innerHTML = key;
-                    }
+
+                    const div = document.createElement("div");
+                    const aTag = document.createElement("a");
+                    aTag.href = `/eCommerce/list/${product.bigCategoryNo}/${product.categoryNo}/${product.productNo}/detail`
+
+                    const imgWrap = document.createElement("div");
+                    imgWrap.classList.add("img-wrap");
+                    const uploadImg = document.createElement("img");
+                    uploadImg.src = `${product.uploadImgPath}${product.uploadImgOgName}`
+                    imgWrap.append(uploadImg);
+
+
+                    const titleWrap = document.createElement("div");
+                    titleWrap.classList.add("title-wrap");
+                    const title = document.createElement("h4");
+                    title.innerText = product.productName;
+                    titleWrap.append(title);
+
+
+                    const priceWrap = document.createElement("div");
+                    priceWrap.classList.add("price-wrap");
+                    const sale = document.createElement("h3");
+                    sale.innerText = "32%"
+                    const priceText = document.createElement("h3");
+                    priceText.classList.add("productPrice");
+                    priceText.innerText = `${formatNumberWithCommas(product.productPrice)}원`;
+                    priceWrap.append(sale);
+                    priceWrap.append(priceText);
+
+
+                    const reviewWrap = document.createElement("div");
+                    reviewWrap.classList.add("review-wrap");
+                    const star = document.createElement("img");
+                    star.src = "/images/main/star.png";
+                    const h51 = document.createElement("h5");
+                    h51.innerText = "4.1"
+                    const h52 = document.createElement("h5");
+                    h52.innerText = "리뷰 78개";
+                    reviewWrap.append(star);
+                    reviewWrap.append(h51);
+                    reviewWrap.append(h52);
+
+
+                    aTag.append(imgWrap);
+                    aTag.append(titleWrap);
+                    aTag.append(priceWrap);
+                    aTag.append(reviewWrap);
+
+                    div.append(aTag);
+
+                    bestContainer.append(div);
                 });
 
         })

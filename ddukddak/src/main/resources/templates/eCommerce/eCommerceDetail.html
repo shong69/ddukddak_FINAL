@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="/css/common/fragments/footer.css">
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/eCommerce/eCommerceDetail.css">
-    <link rel="stylesheet" href="/css/common/button.css">
     <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
 
     <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
@@ -31,10 +30,9 @@
         <div id="detailContainer">
             <!-- 메인 이미지/ 가격 -->
             <div id="productContainer">
-                <div id="imgContainer" th:each="img : ${productInfo.imgList}" th:if="${img.uploadImgOrder == 1}">
-                    <img th:src="|${img.uploadImgPath}${img.uploadImgOgName}|"
-                         class="mainImg">
-                    <div class="arrow-container">
+                <div id="imgContainer" th:each="img : ${productInfo.imgList}" th:if="${img.uploadImgOrder == 0}">
+                    <div>
+                        <img th:src="|${img.uploadImgPath}${img.uploadImgOgName}|" class="mainImg">
                         <div class="arrow left-arrow">&lt;</div>
                         <div class="arrow right-arrow">&gt;</div>
                     </div>
@@ -56,7 +54,7 @@
                         </div>
 
                         <div>
-                            <h1 style="font-weight: 600;" class="mainProductPrice" th:text="${productInfo.productPrice}">상품가격</h1>
+                            <h1 style="font-weight: 600;" id="mainProductPrice" class="mainProductPrice" th:text="${productInfo.productPrice}" th:value="${productInfo.productPrice}">상품가격</h1>
                             <h2 style="font-weight: 500;">28%</h2>
                         </div>
                     </div>
@@ -76,32 +74,34 @@
 
                     <!-- 옵션선택칸 -->
                     <div>
-                        <select th:each="optionNameList : ${optionList}" th:object="${optionNameList}">
-                            <option th:text="${optionNameList.optionName}">옵션명</option>
+                        <select class="selectOption" th:each="optionNameList : ${optionList}" th:object="${optionNameList}">
+                            <option th:text="${optionNameList.optionName}" value="0">옵션명</option>
                             <block  th:each="option : ${productInfo.optionList}" th:if="${option.optionName == optionNameList.optionName}">
-                                <option th:text="${option.optionValue}">옵션</option>
+                                <option th:text="${option.optionValue}" th:value="${option.optionValue}">옵션</option>
                             </block>
                         </select>
                     </div>
+
+                    <div id="optionProductBox"></div>
 
                     <!-- 총 가격칸 -->
                     <div>
                         <div style="margin-bottom: 10px;"><h3>총 상품 금액</h3></div>
                         <div>
-                            <h2>0원</h2>
-                            <h4>총 수량 0개</h4>
+                            <h2 id="total">0원</h2>
+                            <h4 id="totalCount">총 수량 0개</h4>
                         </div>
                     </div>
 
                     <!-- 버튼 -->
                     <div>
                         <button class="eCommerBuyDetailConfirmBtn" onclick="location.href='/eCommerce/payment';">구매하기</button>
-                        <button class="eCommerBuyDetailConfirmBtn">찜하기</button>
+                        <button class="eCommerBuyDetailConfirmBtn" style="margin-bottom: 50px;">찜하기</button>
                     </div>
                 </div>
             </div>
 
-            <div style="width: 1050px; border: 1px #bbbbbb solid; margin: 50px 0;"></div>
+            <div style="width: 1100px; border: 1px #bbbbbb solid; margin: 50px 0;"></div>
     
             <!-- 관련상품 -->
             <div id="shoping-list">
@@ -137,7 +137,7 @@
                 </div>
             </div>
 
-            <div style="width: 1050px; border: 1px #bbbbbb solid; margin: 50px 0;"></div>
+            <div style="width: 1100px; border: 1px #bbbbbb solid; margin: 50px 0;"></div>
     
             <!-- 상세정보 -->
             <div id="detailBox">

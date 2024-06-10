@@ -179,6 +179,34 @@ public class eCommerceServiceImpl implements eCommerceService{
 	public List<ProductOption> selectOptionListName(int productNo) {
 		return mapper.selectOptionListName(productNo);
 	}
+
+	// 검색으로 찾은 상품리스트 출력
+	@Override
+	public Map<String, Object> searchList(String query, int cp) {
+		
+		//1.검색조건 맞고, 삭제 안된 게시글 수 조회
+		int listCount = mapper.getSearchCount(query);
+		
+		//2. + cp 사용해서 Pagination 생성하기
+		eCommercePagination pagination = new eCommercePagination(cp, listCount);
+		
+		//3. 페이지 목록 조회하기
+		int limit = pagination.getLimit();
+		int offset =(cp-1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<Product> productList = mapper.selectSearchList(query, rowBounds);
+		
+		//4. 목록 조회 결과 + pagination 객체를 map으로 묶어서 결과로 반환
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("productList", productList);
+		
+		
+		return map;
+		
+	}
 	
 	
 
