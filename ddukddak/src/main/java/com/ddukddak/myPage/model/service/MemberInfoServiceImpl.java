@@ -70,6 +70,10 @@ public class MemberInfoServiceImpl implements MemberInfoService{
 	public int changePassword(Map<String, String> map, int memberNo) {
 		//현재 비밀번호 확인
 		String originPw = mapper.selectPw(memberNo);
+		log.info(originPw);
+		log.info( map.get("newPw"));
+		log.info(map.get("currentPw"));
+		log.info( bcrypt.encode(map.get("currentPw")));
 		
 		if(!bcrypt.matches(map.get("currentPw"), originPw)) {
 			return 0;
@@ -102,22 +106,37 @@ public class MemberInfoServiceImpl implements MemberInfoService{
 	//닉네임 업데이트
 	@Override
 	public int updateNickname(Map<String, Object> map) {
+		int result = 0;
+		
+		int dupNickname = mapper.dupNickname(map.get("memberNickname"));
+		
+		if(dupNickname>0) {
+			log.info("중복닉넴",1);
+			result = -2;
+			return result;
+		}
+		
 		//닉네임 변경횟수 조회
 		int changeCount = mapper.changeCount(map.get("memberNo"));
 		
+		//한 달 내 이미 4번 변경했을 때
 		if(changeCount >= 4) {
-			return -1;
-		}		
-		//4회 미만 시 변경하면서 횟수도 바꾸기
-		String oldNickname = mapper.getOldNickname(map.get("memberNo")); //이전 닉네임
-		map.put("oldNickname", oldNickname);
+			log.debug("변경횟수 : "+changeCount);
+			result= -1;
+			return result;
+		}	
+		
+
+		//닉네임 업데이트		
 		int updateRows = mapper.updateNickname(map); //닉네임 업데이트
 		
-		if(updateRows > 0) {
-			mapper.insertNicknameChangeLog(map); //닉네임 테이블 insert
-			changeCount ++;
+		if(updateRows != 0) {
+			mapper.insertNicknameChangeLog(map); //닉네임 로그 테이블 insert
+			log.info("닉넴 변경");
+			result = changeCount +1;
+			
 		}
-		return changeCount;
+		return result;
 	}
 
 	//휴대폰 번호 중복 체크

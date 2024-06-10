@@ -5,12 +5,23 @@
     align-items: center;
 }
 
-#serch input {
-    margin-left: 50px;
+#serchBox {
     width: 1000px;
-    height: 40px;
+    margin-left: 50px;
+    height: 45px;
     border-radius: 10px;
-    border: 1px solid #9B9B9B;
+    border: 1px solid var(--gray4);
+    display: flex;
+    align-items: center;
+
+}
+
+#serch input {
+    width: 950px;
+    height: 30px;
+    padding-left: 15px;
+    border: none;
+    outline: none;
 }
 
 #serch input::placeholder {
@@ -61,7 +72,10 @@
 <!-- 검색헤더 -->
 <div id="serch">
     <h2 style="cursor: pointer;" onclick="location.href='/eCommerce/main';">쇼핑</h2>
-    <input placeholder="쇼핑상품 검색">
+    <div id="serchBox">
+        <input type="text" name="query" id="searchQuery" placeholder="쇼핑상품 검색">
+        <i class="fa-solid fa-magnifying-glass" style="font-size: 20px; color: var(--gray4); cursor: pointer;"></i>
+    </div>
 
     <!-- 인기 검색어 -->
     <div id="slide">

@@ -97,6 +97,14 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 		return boardNo;
 	}
 
+	
+	// 집들이 게시판 리스트 조회
+	@Override
+	public List<Board> selectMyHouseList(int boardType) {
+		
+		return mapper.selectMyHouseList(boardType);
+	}
+
 }
 
 

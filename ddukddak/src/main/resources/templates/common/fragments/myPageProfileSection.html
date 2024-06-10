@@ -1,22 +1,24 @@
 <section class="myPage-row1">
     <div>
-        <img class="profile-img" src="/images/profile/main.jpg">
+        <img class="profile-img" 
+        th:with="user=#{user.default.image}"
+        th:src="${session.loginMember.profileImg?:user}">
         <table class="profile-content">
             <tr>
                 <td>닉네임</td>
-                <td>Squid</td>
+                <td th:text="${session.loginMember.memberNickname}">닉네임</td>
             </tr>
             <tr>
                 <td>이메일</td>
-                <td>squid@gmail.com</td>
+                <td th:text="${session.loginMember.memberEmail}">squid@gmail.com</td>
             </tr>
             <tr>
                 <td>가입일</td>
-                <td>2024.05.27</td>
+                <td th:text="${session.enrollDate}">2024.05.27</td>
             </tr>
             <tr>
                 <td>휴대전화</td>
-                <td>010-1234-1234</td>
+                <td th:text="${session.loginMember.memberTel}">010-1234-1234</td>
             </tr>
         </table>
     </div>
@@ -63,5 +65,6 @@
    function closePointModal(){
         modal.classList.add("display-none");
    }
+
 
 </script>

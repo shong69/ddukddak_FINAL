@@ -65,6 +65,7 @@ public class SmsController {
     	}
     	
     	SingleMessageSentResponse response = service.sendSms(phoneNum);
+    	log.info("결과:"+ response);
     	if(response != null) return ResponseEntity.ok().build(); //비동기 여부에 대한 http응답 반환
     	else				 return ResponseEntity.badRequest().build();
     }

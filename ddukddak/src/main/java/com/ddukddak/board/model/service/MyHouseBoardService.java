@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.board.model.dto.Board;
+import com.ddukddak.member.model.dto.Member;
 
 public interface MyHouseBoardService {
 
@@ -16,5 +17,14 @@ public interface MyHouseBoardService {
 	 * @return boardNo
 	 */
 	int insertBoard(Board board, List<MultipartFile> imgList) throws IOException;
+
+	
+	
+	/** 집들이 게시판 리스트
+	 * @param boardType
+	 * @return myHouseList
+	 */
+	List<Board> selectMyHouseList(int boardType);
+
 
 }

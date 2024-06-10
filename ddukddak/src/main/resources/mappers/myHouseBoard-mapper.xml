@@ -17,7 +17,7 @@
 				 NULL,
 				 DEFAULT,
 				 DEFAULT,
-				 1,
+				 #{memberNo},
 				 1)
 		
 	</insert>
@@ -25,13 +25,13 @@
 	<!-- 게시글 이미지 삽입 -->
 	<insert id="insertUploadList" parameterType="list">
 		
-		INSERT ALL
+		INSERT INTO "UPLOAD_FILE"
 		
 		<foreach collection="list" item="img"
-				separator="">
+				open="(" close=")" separator=" UNION ">
 		
-		INTO "UPLOAD_FILE" VALUES(
-				SEQ_UPLOAD_IMG_NO.NEXTVAL,
+		
+				SELECT NEXT_UPLOAD_IMG_NO(),
 					   #{img.uploadImgPath},
 					   #{img.uploadImgOgName},
 					   #{img.uploadImgRename},
@@ -41,11 +41,27 @@
 					   #{img.boardNo},
 					   NULL,
 					   NULL
-			  )
+			  	FROM DUAL
 				   
 		</foreach>
-		SELECT 1 FROM DUAL
+		
 	</insert>
+	
+	
+	<select id="selectMyHouseList">
+		SELECT BOARD_NO, 
+			 BOARD_TITLE, 
+			 BOARD_CONTENT, 
+			 BOARD_WRITE_DATE, 
+			 BOARD_UPDATE_DATE, 
+			 READ_COUNT,
+			 MEMBER_NO,
+			 MEMBER_NICKNAME
+		FROM COMMUNITY
+		JOIN "MEMBER" USING (MEMBER_NO)
+		WHERE BOARD_DEL_FL ='N'
+		AND   BOARD_CODE = #{boardType}
+	</select>
 	
 	
 </mapper>

@@ -114,6 +114,7 @@ function formatNumberWithCommas(number) {
 }
 
 const productPriceElements = document.getElementsByClassName("mainProductPrice");
+const ProductPrice = document.querySelectorAll(".productPrice");
 const point = document.querySelector("#point");
 
 
@@ -126,3 +127,10 @@ for (let i = 0; i < productPriceElements.length; i++) {
 
     point.innerHTML = `최대 +${Math.floor(priceNum*0.01)}pt`;
 }
+
+ProductPrice.forEach(elements => {
+    let productPrice = elements.textContent.trim(); // 요소의 텍스트 내용 가져오기
+
+    elements.textContent = formatNumberWithCommas(productPrice);
+    elements.innerHTML += '원';
+})

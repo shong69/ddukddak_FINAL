@@ -10,11 +10,12 @@ import com.ddukddak.common.util.Utility;
 import com.ddukddak.sms.model.mapper.SmsMapper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SmsServiceImpl implements SmsService {
@@ -31,7 +32,7 @@ public class SmsServiceImpl implements SmsService {
 		
 		SingleMessageSentResponse response;
 		String smsAuthKey = Utility.RandomNumber6();
-		
+		log.info("list : " + smsAuthKey);
 		try {
 			
 			Message message = new Message();

@@ -24,7 +24,7 @@ public interface eCommerceService {
 	 * @param categoryNo 
 	 * @return
 	 */
-	List<Product> selectProductList(int smallcategoryNo);
+	Map<String, Object> selectProductList(int smallcategoryNo, int cp);
 
 	/** 대분류 카테고리 선택
 	 * @return
@@ -58,7 +58,7 @@ public interface eCommerceService {
 	/** 상품별 추천상품 출력
 	 * @return
 	 */
-	List<Product> selectRecProduct(int smallcategoryNo);
+	List<Product> selectRecProduct(int productNo, int smallcategoryNo);
 
 	/** 상품의 옵션개수 출력
 	 * @param productNo

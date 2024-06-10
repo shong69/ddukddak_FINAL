@@ -46,4 +46,18 @@ public class MyChatController {
 	//채팅 읽음 표시
 	
 	
+	/** 채팅 목록 조회 및 페이지 전환
+	 * @return
+	 */
+	@GetMapping("chatWithManager")
+	public String chatWithManager(@SessionAttribute("loginMember") Member loginMember,
+			Model model) {
+		
+		List<ChattingRoom> roomList = service.selectRoomList(loginMember.getMemberNo());
+		
+		
+		return "myPage/chatWithManager";
+	}
+	
+	
 }

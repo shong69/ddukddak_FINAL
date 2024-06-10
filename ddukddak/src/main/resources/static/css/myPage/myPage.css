@@ -301,9 +301,11 @@ input{
 }
 .delete-image{
     position: absolute;
+    left:200px;
+    top:100px;
     font-size: 20px;
     cursor: pointer;
-    color:#fff;
+    color:black;
 }
 
 

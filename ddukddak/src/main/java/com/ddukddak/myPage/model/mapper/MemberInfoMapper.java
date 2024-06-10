@@ -78,6 +78,12 @@ public interface MemberInfoMapper {
 	 */
 	int updatePhoneNum(Map<String, Object> map);
 
+	/** 닉네임 중복 체크
+	 * @param object
+	 * @return
+	 */
+	int dupNickname(Object object);
+
 
 
 

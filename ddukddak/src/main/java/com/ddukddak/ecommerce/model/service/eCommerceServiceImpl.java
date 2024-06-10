@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import com.ddukddak.ecommerce.model.dto.Category;
@@ -13,6 +14,7 @@ import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.ecommerce.model.mapper.eCommerceMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -69,8 +71,27 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	// 카테고리별 상품목록 띄우기
 	@Override
-	public List<Product> selectProductList(int smallcategoryNo) {
-		return mapper.selectProductList(smallcategoryNo);
+	public Map<String, Object> selectProductList(int smallcategoryNo, int cp) {
+		
+		log.debug("cp : " + cp);
+		//1. 전체 게시글 수 조회
+		int productCount = mapper.selectProductListCount(smallcategoryNo);
+		
+		//2. pagination 객체 생성하기
+		eCommercePagination pagination = new eCommercePagination(cp, productCount);
+		//3. 페이지 목록 조회
+		int limit = pagination.getLimit(); //제한된 크기
+		int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<Product> productList = mapper.selectProductList(smallcategoryNo, rowBounds);
+		//4. 목록조회 결과 + pagination객체 map으로 묶어서 반환
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("pagination", pagination);
+		map.put("productList", productList);
+		
+		return map;
 	}
 
 	// 대분류 카테고리 선택
@@ -124,8 +145,13 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	// 상품별 추천상품 출력
 	@Override
-	public List<Product> selectRecProduct(int smallcategoryNo) {
-		List<Product> list = mapper.recProduct(smallcategoryNo);
+	public List<Product> selectRecProduct(int productNo, int smallcategoryNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("productNo", productNo);
+		map.put("smallcategoryNo", smallcategoryNo);
+		
+		List<Product> list = mapper.recProduct(map);
         
         List<Product> randomList = new ArrayList<Product>();
         

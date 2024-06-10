@@ -145,12 +145,12 @@
     document.addEventListener('DOMContentLoaded', function() {
         var currentUrl = window.location.href;
         var extractedNumber = currentUrl.match(/\/\d+\/(\d+)\/?/)[1];  
-
+ 
         const categoryNos = document.querySelectorAll(".data-category-no");
 
         categoryNos.forEach(elements => {
 
-            if(elements.attributes[0].value === extractedNumber[0]) {
+            if(elements.attributes[0].value === extractedNumber) {
                 elements.classList.add("highlight");
             }
         })
