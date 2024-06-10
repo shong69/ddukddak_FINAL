@@ -65,6 +65,28 @@ function disabledCheckButton() {
     }
 }
 
+function resetAuthStates() {
+
+    if(!emailAuthHidden.classList.contains('hidden')) {
+        // 이메일 인증 상태 초기화
+        checkEmailObj.emailAuth = false;
+        emailAuthHidden.classList.add('hidden');
+        emailAuthInput.value = "";
+        emailAuthMsg.innerText = "";
+    }
+
+
+    if(!telAuthHidden.classList.contains('hidden')) {
+
+        // 전화번호 인증 상태 초기화
+        checkTelObj.telAuth = false;
+        telAuthHidden.classList.add('hidden');
+        telAuthInput.value = "";
+        telAuthMsg.innerText = "";
+    }
+}
+
+
 
 // ****************** 이메일 ******************
 
@@ -110,6 +132,8 @@ emailNm.addEventListener('input', e => {
     checkEmailObj.emailNm = true;
     
     disabledCheckButton();
+    resetAuthStates();
+
 });
 
 
@@ -172,6 +196,7 @@ inputEmail.addEventListener('input', e => {
     checkEmailObj.email = true;
 
     disabledCheckButton();
+    resetAuthStates();
 })
 
 
@@ -325,34 +350,34 @@ emailAuthInput.addEventListener('input', e => {
 });
 
 // blur로 이메일 인증번호 검증하기
-emailAuthInput.addEventListener('blur', () => {
+// emailAuthInput.addEventListener('blur', () => {
     
 
-    const obj = {
-        "email" : inputEmail.value,
-        "authKey" : emailAuthInput.value
-    }
+//     const obj = {
+//         "email" : inputEmail.value,
+//         "authKey" : emailAuthInput.value
+//     }
 
-    fetch("/email/checkAuthKey", {
-        method : "POST",
-        headers : {"Content-Type" : "application/json"},
-        body : JSON.stringify(obj)
-    })
-    .then(resp => resp.text())
-    .then(result => {
+//     fetch("/email/checkAuthKey", {
+//         method : "POST",
+//         headers : {"Content-Type" : "application/json"},
+//         body : JSON.stringify(obj)
+//     })
+//     .then(resp => resp.text())
+//     .then(result => {
 
-        if(result == 0) {
-            checkEmailObj.emailAuth = false;
-            return;
-        }
+//         if(result == 0) {
+//             checkEmailObj.emailAuth = false;
+//             return;
+//         }
 
-        checkEmailObj.emailAuth = true;
+//         checkEmailObj.emailAuth = true;
 
-    })
+//     })
 
-    disabledCheckButton();
+//     disabledCheckButton();
 
-});
+// });
 
 
 // ****************** SMS *****************
@@ -396,6 +421,7 @@ telNm.addEventListener('input', e => {
     checkTelObj.telNm = true;
     
     disabledCheckButton();
+    resetAuthStates();
 });
 
 
@@ -460,6 +486,7 @@ inputTel.addEventListener('input', e => {
     checkTelObj.tel = true;
     
     disabledCheckButton();
+    resetAuthStates();
 });
 
 
@@ -493,6 +520,10 @@ telAuthBtn.addEventListener('click', async () => {
         return;
     }
 
+    // 버튼 비활성화(다중 클릭 방지)
+    telAuthBtn.disabled = true; // 버튼 비활성화
+    
+    
     const memberNTCheck = {
         "memberName" : telNm.value,
         "memberTel" : inputTel.value
@@ -509,11 +540,12 @@ telAuthBtn.addEventListener('click', async () => {
 
         if(memberNTCheckResult == 0) {
             alert("입력하신 정보와 일치하는 회원이 존재하지 않습니다.");
+            telAuthBtn.disabled = false; // 버튼 활성화
             return;
         }
 
         // sms 발송 결과 요청
-        const smsSendResp = await fetch("/sms/findId", {
+        const smsSendResp = await fetch("/sms/sendOne", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: inputTel.value
@@ -536,6 +568,8 @@ telAuthBtn.addEventListener('click', async () => {
 
     } catch(err) {
         console.log('Error', err)
+    } finally {
+        telAuthBtn.disabled = false; // 버튼 활성화
     }
 
 
@@ -607,32 +641,32 @@ telAuthInput.addEventListener('input', e => {
 
 // blur로 휴대폰 인증번호 검증
 
-telAuthInput.addEventListener('blur', () => {
+// telAuthInput.addEventListener('blur', () => {
 
-    const obj = {
-        "smsTel" : inputTel.value,
-        "smsAuthKey" : telAuthInput.value
-    }
+//     const obj = {
+//         "smsTel" : inputTel.value,
+//         "smsAuthKey" : telAuthInput.value
+//     }
 
-    fetch("/sms/checkSmsAuthKey", {
-        method : "POST",
-        headers : {"Content-Type" : "application/json"},
-        body : JSON.stringify(obj)
-    })
-    .then(resp => resp.text())
-    .then(result => {
+//     fetch("/sms/checkSmsAuthKey", {
+//         method : "POST",
+//         headers : {"Content-Type" : "application/json"},
+//         body : JSON.stringify(obj)
+//     })
+//     .then(resp => resp.text())
+//     .then(result => {
 
-        if(result == 0) {
-            checkTelObj.telAuth = false;
-            return;
-        }
+//         if(result == 0) {
+//             checkTelObj.telAuth = false;
+//             return;
+//         }
 
-        checkTelObj.telAuth = true;
+//         checkTelObj.telAuth = true;
 
-    })
+//     })
 
-    disabledCheckButton();
-});
+//     disabledCheckButton();
+// });
 
 
 

@@ -22,6 +22,7 @@ const telAuthMsg = document.getElementById('telAuthMsg');
 // SMS 인증요청 버튼
 const telAuthBtn = document.getElementById('telAuthBtn');
 
+
 // SMS 인증키 입력(선 히든)
 const telAuthHidden = document.getElementById('telAuthHidden');
 
@@ -40,6 +41,22 @@ function disabledCheckButton() {
         findIdBtn.disabled = true;
     }
 }
+
+// 인증 요청 후 내용 수정 시 리셋 함수
+function resetAuthStates() {
+
+    if(!telAuthHidden.classList.contains('hidden')) {
+
+        // 전화번호 인증 상태 초기화
+        checkTelObj.telAuth = false;
+        telAuthHidden.classList.add('hidden');
+        telAuthInput.value = "";
+        telAuthMsg.innerText = "";
+
+    }
+
+}
+
 
 // 이름 유효성
 const regExpName = /^[가-힣]{2,10}$/; // 특문 제외 2~10
@@ -82,6 +99,7 @@ telNm.addEventListener('input', e => {
     checkTelObj.telNm = true;
     
     disabledCheckButton();
+    resetAuthStates();
 });
 
 
@@ -101,6 +119,8 @@ inputTel.addEventListener('focus', e => {
         inputTel.classList.add('errorB');
         checkTelObj.tel = false;
     }
+
+
 });
 
 // 포커스 벗어나면
@@ -146,6 +166,7 @@ inputTel.addEventListener('input', e => {
     checkTelObj.tel = true;
     
     disabledCheckButton();
+    resetAuthStates();
 });
 
 
@@ -179,10 +200,14 @@ telAuthBtn.addEventListener('click', async () => {
         return;
     }
 
+    // 버튼 비활성화(다중 클릭 방지)
+    telAuthBtn.disabled = true; // 버튼 비활성화
+
     const partnerNTCheck = {
         "partnerCeoName" : telNm.value,
         "partnerTel" : inputTel.value
     }
+
 
     try {
         const partnerNTCheckResp = await fetch("/partner/partnerNTCheck", {
@@ -195,11 +220,12 @@ telAuthBtn.addEventListener('click', async () => {
 
         if(partnerNTCheckResult == 0) {
             alert("입력하신 정보와 일치하는 파트너가 존재하지 않습니다.");
+            telAuthBtn.disabled = false; // 버튼 활성화
             return;
         }
 
         // sms 발송 결과 요청
-        const smsSendResp = await fetch("/sms/findId", {
+        const smsSendResp = await fetch("/sms/sendOne", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: inputTel.value
@@ -222,6 +248,8 @@ telAuthBtn.addEventListener('click', async () => {
 
     } catch(err) {
         console.log('Error', err)
+    } finally {
+        telAuthBtn.disabled = false; // 버튼 활성화
     }
 
 
@@ -292,32 +320,32 @@ telAuthInput.addEventListener('input', e => {
 
 // blur로 휴대폰 인증번호 검증
 
-telAuthInput.addEventListener('blur', () => {
+// telAuthInput.addEventListener('blur', () => {
 
-    const obj = {
-        "smsTel" : inputTel.value,
-        "smsAuthKey" : telAuthInput.value
-    }
+//     const obj = {
+//         "smsTel" : inputTel.value,
+//         "smsAuthKey" : telAuthInput.value
+//     }
 
-    fetch("/sms/checkSmsAuthKey", {
-        method : "POST",
-        headers : {"Content-Type" : "application/json"},
-        body : JSON.stringify(obj)
-    })
-    .then(resp => resp.text())
-    .then(result => {
+//     fetch("/sms/checkSmsAuthKey", {
+//         method : "POST",
+//         headers : {"Content-Type" : "application/json"},
+//         body : JSON.stringify(obj)
+//     })
+//     .then(resp => resp.text())
+//     .then(result => {
 
-        if(result == 0) {
-            checkTelObj.telAuth = false;
-            return;
-        }
+//         if(result == 0) {
+//             checkTelObj.telAuth = false;
+//             return;
+//         }
 
-        checkTelObj.telAuth = true;
+//         checkTelObj.telAuth = true;
 
-    })
+//     })
 
-    disabledCheckButton();
-});
+//     disabledCheckButton();
+// });
 
 
 
