@@ -3,8 +3,11 @@ package com.ddukddak.board.model.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ import com.ddukddak.board.model.dto.BoardImg;
 import com.ddukddak.board.model.exception.BoardInsertException;
 import com.ddukddak.board.model.mapper.MyHouseBoardMapper;
 import com.ddukddak.common.util.Utility;
+import com.ddukddak.main.model.dto.Pagination;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -98,12 +102,57 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 	}
 
 	
-	// 집들이 게시판 리스트 조회
+//	// 집들이 게시판 리스트 조회
+//	@Override
+//	public List<Board> selectMyHouseList(int boardType) {
+//		
+//		return mapper.selectMyHouseList(boardType);
+//	}
+
 	@Override
-	public List<Board> selectMyHouseList(int boardType) {
+	public Map<String, Object> selectMyHouseList(int boardCode, int cp) {
 		
-		return mapper.selectMyHouseList(boardType);
+		int listCount = mapper.getListCount(boardCode);
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		List<Board> myHouseList = mapper.selectMyHouseList(boardCode, rowBounds);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("myHouseList", myHouseList);
+		
+		return map;
 	}
+
+
+	// 검색 서비스
+	@Override
+	public Map<String, Object> searchList(Map<String, Object> paramMap, int cp) {
+		
+		int listCount = mapper.getSearchCount(paramMap);
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<Board> myHouseList = mapper.selectSearchList(paramMap, rowBounds);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("myHouseList", myHouseList);
+		
+		return map;
+	}
+
 
 }
 

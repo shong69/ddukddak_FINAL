@@ -3,10 +3,12 @@ package com.ddukddak.board.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +20,8 @@ import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.board.model.service.MyHouseBoardService;
 import com.ddukddak.member.model.dto.Member;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,19 +34,40 @@ public class MyHouseBoardController {
 	private final MyHouseBoardService service;
 
 	@GetMapping("main")
-	public String myHouseMain(@RequestParam("boardType") int boardType,
+	public String myHouseMain(@RequestParam("boardCode") int boardCode,
 							  @RequestParam(value="cp", required = false, defaultValue = "1") int cp,
-							  Model model) {
+							  Model model,
+							  @RequestParam Map<String, Object> paramMap) {
 		
-		List<Board> myHouseList = service.selectMyHouseList(boardType);
+		Map<String, Object> map = null;
 		
-		model.addAttribute("myHouseList", myHouseList);
+		if(paramMap.get("query") == null) {
+			
+			map = service.selectMyHouseList(boardCode, cp);
+			
+		} else {
+			log.info("boardCode : " + boardCode);
+			
+			paramMap.put("boardCode", boardCode);
+			
+			map = service.searchList(paramMap, cp);
+			
+		}
+		
+//		List<Board> myHouseList = service.selectMyHouseList(boardType);			
+		
+		model.addAttribute("myHouseList", map.get("myHouseList"));
 		
 		return "board/myHouseBoard/myHouseBoard";
 	}
 	
-	@GetMapping("detail")
-	public String myHouseDetail() {
+	@GetMapping("detail/{boardNo:[0-9]+}")
+	public String myHouseDetail(@PathVariable("boardNo") int boardNo,
+								Model model,
+								RedirectAttributes ra,
+								HttpServletRequest req,
+								HttpServletResponse resp) {
+		
 		return "board/myHouseBoard/myHouseBoardDetail";
 	}
 	
