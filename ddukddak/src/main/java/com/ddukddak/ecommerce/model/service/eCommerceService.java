@@ -66,4 +66,11 @@ public interface eCommerceService {
 	 */
 	List<ProductOption> selectOptionListName(int productNo);
 
+	/** 검색으로 찾은 상품리스트
+	 * @param paramMap
+	 * @param cp
+	 * @return
+	 */
+	Map<String, Object> searchList(String query, int cp);
+
 }

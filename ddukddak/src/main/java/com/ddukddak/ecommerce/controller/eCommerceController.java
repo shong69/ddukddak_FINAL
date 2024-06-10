@@ -33,20 +33,41 @@ public class eCommerceController {
 	private final eCommerceService service;
 
 	@GetMapping("main")
-	public String eCommerceMain(Model model) {
-
-		List<Product> list = service.selectProduct();
-		List<Product> bestList = service.selectBestProduct();
+	public String eCommerceMain(@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+								@RequestParam(value="query", required=false) String query,
+								Model model) {
 		
 		// 대분류 카테고리 선택
 		List<Category> categoryList = service.selectCategory();
 		
-		model.addAttribute("selectProductList", list);
-		model.addAttribute("selectBestProductList", bestList);
 		model.addAttribute("categoryList", categoryList);
 		
+		if(query != null) {
+			Map<String, Object> map = service.searchList(query, cp);
+			
+			int bigcategoryNo = 1;
+			int smallcategoryNo = 1;
+			
+			model.addAttribute("selectProductList", map.get("productList"));
+			model.addAttribute("pagination", map.get("pagination"));
+			model.addAttribute("bigCategoryNo", bigcategoryNo);
+			model.addAttribute("smallCategoryNo", smallcategoryNo);
+			model.addAttribute("query", query);
+			
+			return "/eCommerce/eCommerceList";
+		} else {
+			List<Product> list = service.selectProduct();
+			List<Product> bestList = service.selectBestProduct();
+			
+			
+			model.addAttribute("selectProductList", list);
+			model.addAttribute("selectBestProductList", bestList);
+			
+			
+			return "/eCommerce/eCommerceMain";		
+		}
 		
-		return "/eCommerce/eCommerceMain";
+
 	}
 	
 	@PostMapping("selectBestProduct")
@@ -67,10 +88,20 @@ public class eCommerceController {
 	public String eCommerceList(@PathVariable("bigcategoryNo") int bigcategoryNo,
 								@PathVariable("smallcategoryNo") int smallcategoryNo,
 								@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+								@RequestParam(value="query", required=false) String query,
 								Model model) {
 		
-		Map<String, Object> map = service.selectProductList(smallcategoryNo, cp);
-		log.info("map" + map);
+		Map<String, Object> map = null;
+		
+		if(query == null) { //검색 X(그냥 목록 조회)
+
+			map = service.selectProductList(smallcategoryNo, cp);
+			
+		}else { //검색 O
+			
+			map = service.searchList(query, cp);
+			
+		}
 		
 		// 대분류 카테고리 선택
 		List<Category> categoryList = service.selectCategory();
@@ -87,6 +118,7 @@ public class eCommerceController {
 		model.addAttribute("bigCategoryName", bigCategoryName);
 		model.addAttribute("bigCategoryNo", bigcategoryNo);
 		model.addAttribute("smallCategoryNo", smallcategoryNo);
+		model.addAttribute("query", query);
 		
 		return "/eCommerce/eCommerceList";
 	}
@@ -96,11 +128,11 @@ public class eCommerceController {
 	public String eCommerceDetail(@PathVariable("bigcategoryNo") int bigcategoryNo,
 								@PathVariable("smallcategoryNo") int smallcategoryNo,
 								@PathVariable("productNo") int productNo,
-								@RequestParam Map<String, Object> paramMap,
+								@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+								@RequestParam(value="query", required=false) String query,
 									Model model) {
 		
 		DetailProduct productInfo = service.selectOneProduct(productNo);
-		log.info("productInfo : " + productInfo);
 		
 		// 대분류 카테고리 선택
 		List<Category> categoryList = service.selectCategory();

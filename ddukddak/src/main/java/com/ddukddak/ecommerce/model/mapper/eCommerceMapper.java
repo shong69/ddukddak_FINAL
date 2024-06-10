@@ -11,6 +11,7 @@ import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 
 @Mapper
 public interface eCommerceMapper {
@@ -89,5 +90,18 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	int selectProductListCount(int smallcategoryNo);
+
+	/** 검색으로 찾은 상품개수
+	 * @param paramMap
+	 * @return
+	 */
+	int getSearchCount(String query);
+
+	/** 검색으로 찾은 상품 리스트
+	 * @param paramMap
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Product> selectSearchList(String query, RowBounds rowBounds);
 
 }
