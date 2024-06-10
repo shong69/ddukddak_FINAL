@@ -26,92 +26,82 @@
 
             <section class="myPage-main">
                 <h2 class="category-name">장바구니</h2>
-
-                <table class="cartList">
-                    <thead>
-                        <th>전체(N개)</th>
-                        <th><input type="checkbox"></th>
-                        <th>상품이미지</th>
-                        <th>상품정보[옵션]</th>
-                        <th>주문수량</th>
-                        <th>주문금액</th>
-                        <th>주문관리</th>
-                    </thead>
-                    <tbody>
-                        <!--<th:block th:if="${skuList} != null">
-                                <th:block th:foreach 어쩌구>
-                                    <tr>
-
-                                    </tr>
+                <form action="" method="POST" name = "cartForm" enctype="multipart/form-data">
+                    <table class="cartList">
+                        <thead>
+                            <th>전체(N개)</th>
+                            <th><input name = "check" id="totalCheck" type="checkbox"></th>
+                            <th>상품이미지</th>
+                            <th>상품정보[옵션]</th>
+                            <th>주문수량</th>
+                            <th>주문금액</th>
+                            <th>주문관리</th>
+                        </thead>
+                        <tbody>
+                            <!--<th:block th:if="${skuList} != null">
+                                    <th:block th:foreach 어쩌구>
+                                        <tr>
+    
+                                        </tr>
+                                    </th>
                                 </th>
-                            </th>
-                        -->
+                            -->
+    
+                            <th:object th:if="${#lists.isEmpty(cartList)}">
+                                <tr>
+                                    <td>텅~</td>
+                                </tr>
+                            </th:object>
+                            <th:object th:unless="${#lists.isEmpty(cartList)}">
+                                <tr th:each = "list, listStat : ${cartList}" th:object="${list}"> <!--상품으로 나눠서 나열-->
+                                    <td th:text="${listStat.count}">1</td>
+                                    <td><input name="check" type="checkbox"></td>
+                                    <td><a><img th:src="@{productImg}" class="product-image"></a></td>
+                                    <td th:text="|*{productName}[*{optionValue}]|">
+                                        포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용
+                                        [캐슬(사각)/마블/1200*600]
+                                    </td>
+                                    <td>
+                                        <div class="adjustCount">
+                                            <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
+                                            <input type="text" th:name="'quantity'+${listStat.count} "th:value="*{productCount}" class="quantity-input" readonly>
+                                            <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
+                                        </div>
+                                    </td>
+                                    <td th:text="|*{productPrice}원|">25,150 원</td>
+                                    <td>
+                                        <button th:data-productNo =*{productNo} th:data-optionNo=*{optionNo} type="button" class="myPageDelUpdateBtn">삭제</button>
+                                    </td>
+                                </tr>
+                            </th:object>
 
-                        <tr> <!--상품으로 나눠서 나열-->
-                            <td>1</td>
-                            <td><input type="checkbox"></td>
-                            <td><a><img class="product-image"></a></td>
-                            <td>
-                                포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용
-                                [캐슬(사각)/마블/1200*600]
-                            </td>
-                            <td>1</td>
-                            <td>25,150 원</td>
-                            <td>
-                                <button class="myPageDelUpdateBtn">삭제</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><input type="checkbox"></td>
-                            <td><a><img class="product-image" ></a></td>
-                            <td>
-                                포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용
-                                [캐슬(사각)/마블/1200*600]
-                            </td>
-                            <td>1</td>
-                            <td>25,150 원</td>
-                            <td>
-                                <button class="myPageDelUpdateBtn">삭제</button>
-                            </td>
-                        </tr>
-                        <tr> <!--상품으로 나눠서 나열-->
-                            <td>3</td>
-                            <td><input type="checkbox"></td>
-                            <td><a><img class="product-image" ></a></td>
-                            <td>
-                                포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용
-                                [캐슬(사각)/마블/1200*600]
-                            </td>
-                            <td>1</td>
-                            <td>25,150 원</td>
-                            <td>
-                                <button class="myPageDelUpdateBtn">삭제</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div>
-                    <table>
-                        <tr>
-                            <td>
-                                <span>총 N건</span>
-                            </td>
-                            <td>
-                                <span>합계금액 10,000,000 원</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <button>구매하기</button>
-                            </td>
-                        </tr>
+                        </tbody>
                     </table>
-                </div>
+    
+                    <div class="infoArea">
+                        <div class="totalCount">총 <span>N</span>건</div>
+                        <div class="totalPrice">합계 <span>100000</span> 원</div>
+                    </div>
+                    <div class="pointArea">총 예상 포인트 <span>100</span>원</div>
+                    <div class="purchaseArea">
+                        <button class="selectedPurchage">선택상품 구매</button>
+                        <button class="wholePurchase">전체상품 구매</button>
+                    </div>
+                </form>
+                
             </section>
         </section>
 
         <th:block th:replace="~{common/fragments/footer}"></th:block>
+        <script th:inline="javascript">
+            function changeQuantity(button, change) {
+            const input = button.parentElement.querySelector('.quantity-input');
+            let currentQuantity = parseInt(input.value);
+            currentQuantity += change;
+            if (currentQuantity < 1) currentQuantity = 1;
+            input.value = currentQuantity;
+}
+        </script>
+        <script src="/js/myPage/shopping.js"></script>
 </body>
 </html>

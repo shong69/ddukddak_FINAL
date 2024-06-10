@@ -107,11 +107,65 @@
 
 /*장바구니*/
 .cartList{
-    margin-bottom: 50px;
+    margin-bottom: 100px;
     margin-left: 50px;
 }
+.adjustCount{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.adjustCount>input{
+    width : 30px;
+    margin:0 5px;
+}
+.adjustCount>button{
+    width:20px;
+}
+.infoArea{
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    border-top: 3px solid #757575;
+    align-items: end;
+    height: 80px;
+}
+.infoArea span{
+    font-size: 30px;
+    font-weight: bold;
+    margin:auto 6px;
+}
+.pointArea{
+    text-align: end;
+    margin:10px 30px 30px 0;
+    color: #757575;
+    font-size: 14px;
 
-
+}
+.totalCount{
+    margin-left: auto;
+    font-size: 20px;
+    margin-right: 10px;
+}
+.totalPrice{
+    font-size: 20px;
+    margin-right: 30px;
+}
+.purchaseArea{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin-left: auto;
+}
+.purchaseArea button {
+    margin-left: 10px;
+    width:300px;
+    height:60px;
+    border-radius: 18px !important;
+    color:black;
+    font-size: 17px;
+    background-color: var(--white);
+}
 /*내 집들이*/
 .homeBoard-list{
     list-style-type: none;

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.myPage.model.service.CartAndWishListService;
 import com.ddukddak.myPage.model.service.MemberInfoService;
 
 import jakarta.servlet.http.HttpSession;
@@ -32,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class MyPageController {
 	private final MemberInfoService infoService;
+	private final CartAndWishListService service;
 	//주문내역 진입
 	@GetMapping("")
 	public String main(@SessionAttribute("loginMember") Member loginMember,
@@ -58,18 +61,13 @@ public class MyPageController {
 	public String wishList() {
 		return"myPage/wishList";
 	}
-	//장바구니 진입
-	@GetMapping("cart")
-	public String cart() {
-		return "myPage/cart";
-	}
 	//회원정보 진입
 	@GetMapping("memberInfo")
 	public String memberInfo() {
 		return"myPage/memberInfo";
 	}
 	
-
+	//--------------------------------------------------------------
 	
 	/**[회원정보] 프로필 이미지 변경 - 비동기
 	 * @param file
@@ -91,12 +89,7 @@ public class MyPageController {
 		
 		return "myPage/memberInfo";
 	}
-		
-	
-	
-	
-	
-	
+
 	/**[회원정보]비밀번호 변경 -비동기
 	 * @return
 	 */
@@ -119,9 +112,6 @@ public class MyPageController {
 		return response;
 		
 	}
-	
-	
-	
 	
 	/**[회원정보] 이메일 중복 확인
 	 * @param memberEmail
@@ -150,10 +140,7 @@ public class MyPageController {
 		return infoService.updateEmail(map);
 	}
 	
-	
-	
-	
-	/**닉네임 변경하기
+	/**[회원정보]닉네임 변경하기
 	 * @param memberNickname
 	 * @param member
 	 * @return
@@ -172,12 +159,8 @@ public class MyPageController {
 		
 		return infoService.updateNickname(map);
 	}
-	
-	
-	
-	
-	
-	/** 휴대폰 번호 중복 체크
+
+	/**[회원정보]휴대폰 번호 중복 체크
 	 * @return
 	 */
 	@ResponseBody
@@ -186,7 +169,7 @@ public class MyPageController {
 		return infoService.checkPhonNum(map.get("phoneNum"));
 	}
 	
-	/** 휴대폰 번호 업데이트하기
+	/**[회원정보]휴대폰 번호 업데이트하기
 	 * @param map{updatePhoneNum}
 	 * @param member
 	 * @return
@@ -200,4 +183,40 @@ public class MyPageController {
 		map.put("memberNo", memberNo);
 		return infoService.updatePhoneNum(map);
 	}
+	
+	
+	//----------------------------------------------------------------
+	
+	//장바구니 상품 목록 조회
+	@GetMapping("cart")
+	public String selectCartList(@SessionAttribute("loginMember") Member loginMember,
+			Model model) {
+		//로그인한 회원에 알맞는 장바구니 상품 목록 불러오기
+		Map<String, Object> map = service.selectCartList(loginMember);
+		
+		model.addAttribute("cartList", map.get("cartList"));
+		
+		return"myPage/cart";
+	}
+	//장바구니 추가
+	
+	
+	//장바구니 수량 수정
+	
+	
+	//장바구니 삭제
+	@PostMapping("cart/delProduct")
+	@ResponseBody
+	public int delProduct(@SessionAttribute("loginMember")Member loginMember,
+			@RequestBody Map<String, Object> map) {
+		
+		int memberNo = loginMember.getMemberNo();
+		map.put("memberNo", memberNo);
+		
+		return service.delProduct(map);
+		
+	}
+	
+	
+	//주문으로 이동
 }

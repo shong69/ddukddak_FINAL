@@ -150,7 +150,7 @@ if(profile != null){
 
     //*x버튼 클릭 시 기본 이미지로 변경하기
     deleteImage.addEventListener("click", ()=>{
-        profileImg.src = "/images/profile/main.jpg";;
+        profileImg.src = "/images/default/main.jpg";
         imageInput.value = "";
         backupInput = undefined;
         statusCheck = 0; //삭제 상태
@@ -162,11 +162,13 @@ if(profile != null){
         if(loginMemberProfileImg == null && statusCheck==1) flag=false;
         if(loginMemberProfileImg != null && statusCheck ==0) flag = false;
         if(loginMemberProfileImg != null && statusCheck == 1) flag = false;
-        alert("이미지가 변경되었습니다.");
+        
         if(flag){
             e.preventDefault();
             alert("이미지가 변경되지 않았습니다.");
+            return;
         }
+        alert("이미지가 변경되었습니다.");
     });
 
 }

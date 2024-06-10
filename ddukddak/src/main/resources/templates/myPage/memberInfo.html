@@ -34,10 +34,10 @@
                                     <th>사진</th>
                                     <td>
                                         <label class="image-label">
-                                            <img th:with="user=#{user.default.image}"
-                                            th:src="${session.loginMember.profileImg?:user}">
+                                            <img 
+                                            th:with="user=#{user.default.image}"
+                                            th:src="${session.loginMember.profileImg ?:user}">
                                         </label>
-
                                     </td>
                                     <td>
                                         <span>회원님을 알릴 수 있는 사진을 등록해 주세요. <br>등록된 사진은 회원님의 게시물이나 댓글들에 사용됩니다.</span>
@@ -61,7 +61,7 @@
                                             <span>회원님을 알릴 수 있는 사진을 등록해 주세요. <br>등록된 사진은 회원님의 게시물이나 댓글들에 사용됩니다.</span>
                                         </td>                                    
                                         <td class="profile-area">
-                                            <button class="profile-del-btn myPageDelUpdateBtn" type="button">삭제</button>
+                                            <button class="profile-del-btn myPageDelUpdateBtn" type="button">취소</button>
                                             <button class="confirm myPageDelUpdateBtn" type="submit">수정</button>
                                         </td>
                                     </form>
@@ -257,7 +257,7 @@
     <script th:inline="javascript"><!--타임리프 적용해서 자바스크립트 사용함 알림-->
         const loginMemberProfileImg = /*[[${session.loginMember.profileImg}]]*/ "회원프로필이미지";
     </script>
-    <script src="/js/myPage/myPage.js"></script> 
+    <script src="/js/myPage/memberInfo.js"></script> 
 </body>
 
 </html>
