@@ -203,7 +203,12 @@ public class MemberController {
 		model.addAttribute("enrollDate", member.getEnrollDate());
 		
 		return "/common/resultId";
+		
+		
 	}
 	
+	
 	// * 비밀번호 찾기는 common.controller 에서 공통 처리
+	
+	
 }

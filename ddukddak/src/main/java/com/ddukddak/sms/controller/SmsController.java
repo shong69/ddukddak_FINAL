@@ -25,11 +25,11 @@ public class SmsController {
     
     private final SmsService service;
     
-    /** 아이디 찾기 SMS 발송
+    /** SMS 발송 - 단일 메시지
      * @param toNumber
      * @return
      */
-    @PostMapping("/findId")
+    @PostMapping("/sendOne")
     public int sendOne(@RequestBody String toNumber) {
     
     
