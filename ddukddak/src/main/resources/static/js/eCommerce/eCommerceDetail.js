@@ -216,9 +216,17 @@ function updateTotalCount() {
             close.innerText = "X";
             close.classList.add("closeButton");
 
+            
             const options = document.createElement("h4");
             options.classList.add("options");
             selectTags.forEach(elements => {
+                const optionValue = document.createElement("input");
+                optionValue.classList.add("optionValue");
+                optionValue.type = 'hidden';
+
+                div1.append(optionValue);
+
+                optionValue.value = elements.value;
                 options.innerText += elements.options[elements.selectedIndex].text + ',';
             })
             options.innerText = options.innerText.slice(0, -1);

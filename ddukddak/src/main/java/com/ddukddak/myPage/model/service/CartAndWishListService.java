@@ -1,5 +1,6 @@
 package com.ddukddak.myPage.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.ddukddak.member.model.dto.Member;
@@ -17,5 +18,13 @@ public interface CartAndWishListService {
 	 * @return
 	 */
 	int delProduct(Map<String, Object> map);
+
+	/** 장바구니 상품 추가
+	 * @param productNo
+	 * @param option
+	 * @param quantity
+	 * @return
+	 */
+	int addCart(Member loginMember, int productNo, List<Integer> option, int quantity);
 
 }
