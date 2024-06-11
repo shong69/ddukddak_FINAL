@@ -1,5 +1,6 @@
 package com.ddukddak.ecommerce.controller;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,17 +95,18 @@ public class eCommerceController {
 								@PathVariable("smallcategoryNo") int smallcategoryNo,
 								@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 								@RequestParam(value="query", required=false) String query,
+								@RequestParam(value="sort", required=false, defaultValue="1") int sort,
 								Model model) {
 		
 		Map<String, Object> map = null;
 		
 		if(query == null) { //검색 X(그냥 목록 조회)
 
-			map = service.selectProductList(smallcategoryNo, cp);
+			map = service.selectProductList(smallcategoryNo, cp, sort);
 			
 		}else { //검색 O
 			
-			map = service.searchList(query, cp);
+			map = service.searchList(query, cp, sort);
 			
 		}
 		
@@ -170,6 +172,7 @@ public class eCommerceController {
 		
 		return "eCommerce/eCommerceDetail";
 	}
+	
 	
 	
 	@RequestMapping("payment")

@@ -25,73 +25,32 @@
 
             <section class="myPage-main">
                 <h2 class="category-name">내 집들이</h2>
-                <!--
-                    <th:block th:if=${"myHomeBoardList != null"}>
-                        <li>
-                        </li>
-                    </th>
-                -->
                 <ul class="homeBoard-list">
-                    <li>
-                        <img class="homeBoard-img">
+                    <th:object th:if="${#lists.isEmpty(myHouseBoardList)}">
+                        <li>
+                            텅~~
+                        </li>
+                    </th:object>
+                    <th:object th:unless="${#lists.isEmpty(myHouseBoardList)}">
+                        <li class="myHouseBoardList" th:each = "list : ${myHouseBoardList}" th:object="${list}">
+                            <img th:src="@{thumbnail}" class="homeBoard-img">
+    
+                            <h3 th:text="*{boardTitle}" class="homeboard-title" ><a>게시글 제목</a></h3>
+                            <div class="homeBoard-info">
+                                <div>
+                                    <a th:href="|/myHouse/detail/*{boardNo}|">방문하기 ></a>
+                                </div>
+                                <div>
+                                    <span th:text="${session.loginMember.memberNickname}"></span>
+                                    <span th:text="|조회수 *{readCount}|">조회수</span>
+                                    <span th:if="*{boardUpdateDate != null}"  th:text="*{boardUpdateDate}">업데이트날짜</span>
+                                    <span th:unless="${boardUpdateDate!=null}" th:text="*{boardWriteDate}">작성일</span>
+                                </div>
+                            </div>
+                        </li>
+                    </th:object>
 
-                        <h3 class="homeboard-title"><a href="#">셀프 인테리어 후기</a></h3>
-                        <div class="homeBoard-info">
-                            <div>
-                                <a href="#">방문하기 ></a>
-                            </div>
-                            <div>
-                                <span>유저일 |</span>
-                                <span>조회수 30 |</span>
-                                <span>2025-01-01</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <img class="homeBoard-img">
 
-                        <h3 class="homeboard-title"><a href="#">셀프 인테리어 후기</a></h3>
-                        <div class="homeBoard-info">
-                            <div>
-                                <a href="#">방문하기 ></a>
-                            </div>
-                            <div>
-                                <span>유저일 |</span>
-                                <span>조회수 30 |</span>
-                                <span>2025-01-01</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <img class="homeBoard-img">
-
-                        <h3 class="homeboard-title"><a href="#">셀프 인테리어 후기</a></h3>
-                        <div class="homeBoard-info">
-                            <div>
-                                <a href="#">방문하기 ></a>
-                            </div>
-                            <div>
-                                <span>유저일 |</span>
-                                <span>조회수 30 |</span>
-                                <span>2025-01-01</span>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <img class="homeBoard-img">
-
-                        <h3 class="homeboard-title"><a href="#">셀프 인테리어 후기</a></h3>
-                        <div class="homeBoard-info">
-                            <div>
-                                <a href="#">방문하기 ></a>
-                            </div>
-                            <div>
-                                <span>유저일 |</span>
-                                <span>조회수 30 |</span>
-                                <span>2025-01-01</span>
-                            </div>
-                        </div>
-                    </li>
 
                 </ul>
 

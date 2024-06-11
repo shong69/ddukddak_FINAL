@@ -6,7 +6,7 @@ const checkTelObj = {
 
 const checkPwObj = {
     "newPw" : false,
-    "newConfirmPw" : false
+    "newPwConfirm" : false
 }
 
 
@@ -68,6 +68,8 @@ function disabledCheckButton2() {
         findPwBtn.disabled = true;
     }
 }
+
+
 
 // 인증 요청 후 내용 수정 시 리셋 함수
 function resetAuthStates() {
@@ -376,13 +378,23 @@ const telDiv = document.getElementById('telDiv');
 // 4. 비밀번호 변경
 const changePwDiv = document.getElementById('changePwDiv');
 const changePwBtnDiv = document.getElementById('changePwBtnDiv');
+const changePwBtn = document.getElementById('changePwBtn'); // 변경 버튼
 
 const newPw = document.getElementById('newPw'); // 새 비밀번호 인풋
 const pwMsg = document.getElementById('pwMsg');
 
-const newConfirmPw = document.getElementById('newConfirmPw'); // 새 비밀번호 확인 인풋
+const newPwConfirm = document.getElementById('newPwConfirm'); // 새 비밀번호 확인 인풋
 const pwConfirmMsg = document.getElementById('pwConfirmMsg');
 
+
+// 비밀번호 변경하기
+function disabledCheckButton3() {
+    if(checkPwObj.newPw && checkPwObj.newPwConfirm) {
+        changePwBtn.disabled = false;
+    } else {
+        changePwBtn.disabled = true;
+    }
+}
 
 
 // 비밀번호 찾기 버튼 클릭 시
@@ -417,18 +429,23 @@ findPwBtn.addEventListener('click', () => {
 const checkPwFn = () => {
 
     // 같을 경우
-    if(newPw.value === newConfirmPw.value) {
-        pwConfirmMsg.innerText ='\u2713 비밀번호가 일치합니다.';
+    if(newPw.value === newPwConfirm.value) {
+        pwConfirmMsg.innerText ='\u2713';
         pwConfirmMsg.classList.remove("errorC");
         pwConfirmMsg.classList.add('confirm');
-        checkPwObj.newConfirmPw = true;
+        newPwConfirm.classList.add('confirmB');
+        checkPwObj.newPwConfirm = true;
         return;
     }
 
-    pwConfirmMsg.innerText = '\u00D7 비밀번호가 일치하지 않습니다.';
+    pwConfirmMsg.innerText = '비밀번호가 일치하지 않습니다.';
     pwConfirmMsg.classList.add("errorC");
+    // newPwConfirm.classList.add("errorB");
     pwConfirmMsg.classList.remove('confirm');
-    checkPwObj.newConfirmPw = false;
+    newPwConfirm.classList.remove('confirmB');
+    checkPwObj.newPwConfirm = false;
+    
+
 
 }  
 
@@ -443,8 +460,12 @@ newPw.addEventListener('input', e => {
         pwMsg.classList.add("errorC");
         newPw.classList.add("errorB");
         pwMsg.classList.remove('confirm');
+        newPw.classList.remove('confirmB');
         checkPwObj.newPw = false;
         newPw.value = ""; // 처음 공백 방지
+        
+        checkPwFn();
+        disabledCheckButton3();
 
         return;
     }
@@ -455,47 +476,59 @@ newPw.addEventListener('input', e => {
 
     // 정규식 미통과
     if(!regExp.test(inputPw)) {
-        pwMsg.innerText = '\u00D7 비밀번호가 유효하지 않습니다.';
+        pwMsg.innerText = '비밀번호가 유효하지 않습니다.';
         pwMsg.classList.add("errorC");
         pwMsg.classList.remove('confirm');
+        newPw.classList.remove('confirmB');
         checkPwObj.newPw = false;
+
+        disabledCheckButton3();
         return;
     }
 
-    //
+    // 공백 및 정규식 통과
     pwMsg.innerText = '\u2713';
     pwMsg.classList.remove("errorC");
     pwMsg.classList.add('confirm');
+
+    newPw.classList.add('confirmB');
+
     checkPwObj.newPw = true;
 
-    if(newConfirmPw.value.length > 0) {
+    if(newPwConfirm.value.length > 0) {
         checkPwFn();
     }
+
+    disabledCheckButton3();
 
 });
 
 
-newConfirmPw.addEventListener('input', e => {
+newPwConfirm.addEventListener('input', e => {
 
     const inputConfirmPw = e.target.value;
 
     if(newPw.value.length > 0 && inputConfirmPw.trim().length === 0) {
         pwConfirmMsg.innerText = '새 비밀번호 확인을 입력해 주세요.';
         pwConfirmMsg.classList.add("errorC");
-        newConfirmPw.classList.add('errorB');
+        newPwConfirm.classList.add('errorB');
         pwConfirmMsg.classList.remove('confirm');
-        checkPwObj.newConfirmPw = false;
+        newPwConfirm.classList.remove('confirmB');
+        checkPwObj.newPwConfirm = false;
         return;
     }
 
-    newConfirmPw.classList.remove("errorB");
+    newPwConfirm.classList.remove("errorB");
 
     if(checkPwObj.newPw) {
         checkPwFn();
+        disabledCheckButton3();
         return;
     }
 
-    checkPwObj.newConfirmPw = false;
+    checkPwObj.newPwConfirm = false;
+
+    
 
 })
 
@@ -515,7 +548,7 @@ findPwForm.addEventListener('submit', (e) => {
         return;
     }
 
-    if (!checkPwObj.newPw || !checkPwObj.newConfirmPw) {
+    if (!checkPwObj.newPw || !checkPwObj.newPwConfirm) {
         e.preventDefault();
 
         if(!checkPwObj.pw) {
@@ -523,7 +556,7 @@ findPwForm.addEventListener('submit', (e) => {
             return;
         }
 
-        if (!checkPwObj.newConfirmPw) {
+        if (!checkPwObj.newPwConfirm) {
             alert('유효한 전화번호를 입력해 주세요.');
             return;
         }
@@ -547,6 +580,13 @@ document.getElementById('findPwForm').addEventListener('keypress', function(even
         const findPwBtn = document.getElementById('findPwBtn');
         if (!findPwBtn.classList.contains('hidden')) {
             findPwBtn.click();
+            return;
+        }
+
+        // "비밀번호 변경" 버튼이 표시되어 있고 활성화된 경우
+        const changePwBtn = document.getElementById('changePwBtn');
+        if (!changePwBtn.classList.contains('hidden')) {
+            document.getElementById('findPwForm').submit();
             return;
         }
     }

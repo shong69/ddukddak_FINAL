@@ -19,5 +19,25 @@ public interface CommonMapper {
 	 */
 	String commonITCheck(Map<String, String> map);
 
+	/** 기존 비밀번호와 동일 여부 확인
+	 * @param inputId
+	 * @return
+	 */
+	String pwCheck(String inputId);
+ 
+	/** 비밀번호 업데이트(회원 선시도)
+	 * @param changeMap
+	 * @return
+	 */
+	int changeMemberPw(Map<String, String> changeMap);
+
+	/** 비밀번호 업데이트(파트너)
+	 * @param changeMap
+	 * @return
+	 */
+	int changePartnerPw(Map<String, String> changeMap);
+
+
+
 
 }

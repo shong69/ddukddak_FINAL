@@ -29,5 +29,11 @@ public class CartItem {
 	private int productCount;
 
 	// 상품 썸네일 이미지
-	private String productImg;
+	private int uploadImgNo;
+	private String uploadImgPath;
+	private String uploadImgOgName;
+	private String uploadImgRename;
+	private int uploadImgOrder;
+	private String category;
+
 }

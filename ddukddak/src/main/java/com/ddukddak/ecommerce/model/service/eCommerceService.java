@@ -73,4 +73,20 @@ public interface eCommerceService {
 	 */
 	Map<String, Object> searchList(String query, int cp);
 
+	/** 검색 없이 정렬순서 바꾸기
+	 * @param smallcategoryNo
+	 * @param cp
+	 * @param sort
+	 * @return
+	 */
+	Map<String, Object> selectProductList(int smallcategoryNo, int cp, int sort);
+
+	/** 검색한 상품 정렬순서 바꾸기
+	 * @param query
+	 * @param cp
+	 * @param sort
+	 * @return
+	 */
+	Map<String, Object> searchList(String query, int cp, int sort);
+
 }

@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MyPageController {
 	private final MemberInfoService infoService;
 	private final CartAndWishListService service;
+	
 	//주문내역 진입
 	@GetMapping("")
 	public String main(@SessionAttribute("loginMember") Member loginMember,
@@ -61,8 +62,13 @@ public class MyPageController {
 	//위시리스트 진입
 	@GetMapping("wishList")
 	public String wishList() {
+		
+		
+		
 		return"myPage/wishList";
 	}
+	
+	
 	//회원정보 진입
 	@GetMapping("memberInfo")
 	public String memberInfo() {
@@ -194,9 +200,11 @@ public class MyPageController {
 	public String selectCartList(@SessionAttribute("loginMember") Member loginMember,
 			Model model) {
 		//로그인한 회원에 알맞는 장바구니 상품 목록 불러오기
-		Map<String, Object> map = service.selectCartList(loginMember);
+		List<CartItem> cartItem = service.selectCartList(loginMember);
 		
-		model.addAttribute("cartList", map.get("cartList"));
+		log.info("cartItem : " + cartItem);
+		
+		model.addAttribute("cartList", cartItem);
 		
 		return"myPage/cart";
 	}
@@ -225,6 +233,14 @@ public class MyPageController {
 	
 	
 	//장바구니 수량 수정
+	@PostMapping("modifyCount")
+	@ResponseBody
+	public int modifyCount(@RequestBody Map<String, Object> obj) {
+		int cartId = (Integer)obj.get("cartId");
+		int quantity = (Integer)obj.get("quantity");
+		
+		return 0;
+	}
 	
 	
 	//장바구니 삭제

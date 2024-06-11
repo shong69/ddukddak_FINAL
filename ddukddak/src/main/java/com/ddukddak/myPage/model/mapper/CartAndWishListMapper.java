@@ -15,6 +15,18 @@ public interface CartAndWishListMapper {
 	 * @return
 	 */
 	List<CartItem> selectCartList(int memberNo);
+	
+	/** 장바구니 상품의 옵션아이디 불러오기
+	 * @param cartId
+	 * @return
+	 */
+	List<Integer> selectCartListOptionNo(int cartId);
+	
+	/** 장바구니 상품의 옵션값 불러오기
+	 * @param cartId
+	 * @return
+	 */
+	List<String> selectCartListOptionValue(int cartId);
 
 	/** 장바구니 상품 삭제
 	 * @param map
@@ -32,6 +44,10 @@ public interface CartAndWishListMapper {
 	 * @param map2
 	 * @return
 	 */
-	int insertOption(int oneOption);
+	int insertOption(Object oneOption);
+
+	
+
+	
 
 }
