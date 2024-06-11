@@ -19,8 +19,8 @@ public class BoardMainServiceImpl implements BoardMainService{
 
 	private final BoardMainMapper mapper;
 	
-	@Value("${my.board.web-path}")
-	private String webPath;
+//	@Value("${my.board.web-path}")
+//	private String webPath;
 
 	@Override
 	public List<Map<String, Object>> selectBoardTypeList() {
