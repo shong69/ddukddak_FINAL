@@ -55,7 +55,12 @@
                                 <div th:if="${col < selectProductList.size()}">
                                     <!-- 검색 X -->
                                     <a th:unless="${query}" th:href="@{'/eCommerce/list/' + ${selectProductList[col].bigCategoryNo} + '/' + ${selectProductList[col].categoryNo} + '/' + ${selectProductList[col].productNo} + '/detail'}">
-                                        <div><img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgRename}|"></div>
+                                        <div th:value="${selectProductList[col].productNo}">
+                                            <img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgRename}|">
+
+                                            <i th:if="${loginMember != null}" class="fa-regular fa-heart" id="noHerat" onclick="showHert(event);" th:value="${selectProductList[col].productNo}"></i>
+                                            <i th:if="${loginMember != null}" class="fa-solid fa-heart" id="heart" onclick="noshowHert(event);" th:value="${selectProductList[col].productNo}"></i>
+                                        </div>
                                         <div>
                                             <h4 th:text="${selectProductList[col].productName}">상품이름</h4>
                                         </div>
@@ -158,5 +163,68 @@
     <th:block th:replace="~{common/fragments/footer}"></th:block>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/js/eCommerce/eCommerceList.js"></script>
+
+    <script th:inline="javascript">
+        
+        
+        // 찜하기 눌렀을 때
+        function showHert(event) {
+            var memberNo = /*[[${loginMember.memberNo}]]*/ "loginMember";
+            event.preventDefault();
+            alert("위시리스트에 추가되었습니다");
+
+            console.log(memberNo);
+
+            event.target.style.display = 'none';
+            event.target.nextElementSibling.style.display = 'block';
+            
+
+            var obj = {
+                "memberNo" : memberNo,
+                "productNo" : event.target.attributes[3].value
+            }
+
+
+            fetch("/myPage/addWish", {
+                    method : "PUT",
+                    headers : {"Content-Type": "application/json"},
+                    body : JSON.stringify(obj)
+                })
+                .then(resp => resp.text())
+                .then(temp => {
+
+                });
+
+            return false;
+        }
+        function noshowHert(event) {
+            var memberNo = /*[[${loginMember.memberNo}]]*/ "loginMember";
+            event.preventDefault();
+            alert("위시리스트에서 삭제되었습니다");
+
+            event.target.style.display = 'none';
+            event.target.previousElementSibling.style.display = 'block';
+
+            console.log(memberNo);
+
+
+            var obj = {
+                "memberNo" : memberNo,
+                "productNo" : event.target.attributes[3].value
+            }
+
+
+            fetch("/myPage/delWish", {
+                    method : "POST",
+                    headers : {"Content-Type": "application/json"},
+                    body : JSON.stringify(obj)
+                })
+                .then(resp => resp.text())
+                .then(temp => {
+
+                });
+            return false;
+        }
+    </script>
 </body>
 </html>

@@ -53,8 +53,8 @@
                                 </tr>
                             </th:object>
                             <th:object th:unless="${#lists.isEmpty(cartList)}">
-                                <tr th:each = "list, listStat : ${cartList}" th:object="${list}"> <!--상품으로 나눠서 나열-->
-                                    <td th:text="${listStat.count}">1</td>
+                                <tr class="boxCount" th:each = "list, listStat : ${cartList}" th:object="${list}"> <!--상품으로 나눠서 나열-->
+                                    <td class="countBox" th:text="${listStat.count}">1</td>
                                     <td><input name="check" type="checkbox"></td>
                                     <td><a><img th:src="|*{uploadImgPath}*{uploadImgRename}|" class="product-image"></a></td>
                                     <td>
@@ -69,9 +69,9 @@
                                             <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
                                         </div>
                                     </td>
-                                    <td th:text="|*{productPrice}원|">상품가격</td>
+                                    <td class="price-input" th:text="|*{productPrice}원|" th:value="*{productPrice}">상품가격</td>
                                     <td>
-                                        <button th:data-productNo =*{productNo} th:data-optionNo=*{optionNo} type="button" class="myPageDelUpdateBtn">삭제</button>
+                                        <button th:data-cartId =*{cartId} type="button" class="myPageDelUpdateBtn">삭제</button>
                                     </td>
                                 </tr>
                             </th:object>
@@ -80,10 +80,10 @@
                     </table>
     
                     <div class="infoArea">
-                        <div class="totalCount">총 <span>N</span>건</div>
-                        <div class="totalPrice">합계 <span>100000</span> 원</div>
+                        <div class="totalCount">총 <span id="totalCount">N</span>건</div>
+                        <div class="totalPrice">합계 <span id="totalPrice">100000</span> 원</div>
                     </div>
-                    <div class="pointArea">총 예상 포인트 <span>100</span>원</div>
+                    <div class="pointArea">총 예상 포인트 <span id="pointArea">100</span>원</div>
                     <div class="purchaseArea">
                         <button class="selectedPurchage">선택상품 구매</button>
                         <button class="wholePurchase">전체상품 구매</button>
@@ -114,9 +114,16 @@
                     headers : {"Content-Type" : "application/json"},
                     body : JSON.stringify(obj)
                 })
-                .then(resp => resp.text())
+                .then(resp => resp.json())
                 .then(temp => {
+                    console.log(temp);
                 });
+
+                calculateTotalCount();
+                calculateTotalPrice();
+                calculatePrice();
+                calculatePoint();
+                formatNumber();
             }
         </script>
         <script src="/js/myPage/shopping.js"></script>

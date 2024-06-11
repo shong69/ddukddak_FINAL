@@ -33,6 +33,7 @@
     display: flex;
     justify-content: center;
     margin-bottom: 5px;
+    position: relative;
 }
 
 #productList table td > div > a > div:first-child > img {
@@ -47,6 +48,17 @@
 #productList table td > div > a > div:nth-child(3) {
     display: flex;
     margin-top: 8px;
+}
+
+.fa-heart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#heart {
+    color: red;
+    display: none;
 }
 
 #noneOfList{
