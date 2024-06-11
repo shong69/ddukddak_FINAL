@@ -66,7 +66,7 @@ public class CartAndWishListServiceImpl implements CartAndWishListService{
 			insertOption = mapper.insertOption(oneOption);
 		}
 		
-		return 0;
+		return insertCartItem + insertOption;
 	}
 	
 }
