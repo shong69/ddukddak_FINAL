@@ -54,4 +54,67 @@
 		AND SOCIAL_LOGIN_TYPE = 'D'
 	</select>
 
+	<!-- 회원가입 - 아이디 중복 체크 -->
+	<select id="checkId">
+		SELECT COUNT(*)
+		FROM (
+		    SELECT MEMBER_ID
+		    FROM "MEMBER"
+		    WHERE MEMBER_ID = #{inputId}
+		    AND MEMBER_DEL_FL = 'N'
+		    
+		    UNION ALL
+		    
+		    SELECT PARTNER_ID
+		    FROM PARTNER
+		    WHERE PARTNER_ID = #{inputId}
+		    AND PARTNER_DEL_FL = 'N'
+		)
+	</select>
+	
+	
+	
+	<!-- 회원가입 - 닉네임 중복 체크 -->
+	<select id="checkNickname">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_NICKNAME = #{inputNickname}
+		AND MEMBER_DEL_FL = 'N'
+	</select>
+	
+	<!-- 회원가입 - 이메일 중복 체크 -->
+	<select id="checkEmail">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_EMAIL = #{inputEmail}
+		AND MEMBER_DEL_FL = 'N'
+	</select>
+	
+	<!-- 회원가입 - 휴대폰 중복 체크 -->
+	<select id="checkTel">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_TEL = #{inputTel}
+		AND MEMBER_DEL_FL = 'N'
+	</select>
+	
+	<!-- [회원가입 제출] -->
+	<insert id="signup">
+		INSERT INTO "MEMBER"
+		VALUES(SEQ_MEMBER_NO.NEXTVAL, 
+			#{memberId}, 
+			#{memberEmail}, 
+			#{memberPw}, 
+			#{memberName},
+			#{memberNickname},
+			#{memberTel}, 
+			#{memberAddr},
+			DEFAULT,
+			DEFAULT, 
+			DEFAULT, 
+			DEFAULT, 
+			DEFAULT, 
+			DEFAULT)
+	</insert>
+	
 </mapper>

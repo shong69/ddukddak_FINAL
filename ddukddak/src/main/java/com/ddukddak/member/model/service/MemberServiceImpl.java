@@ -74,6 +74,71 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	/** 회원가입 - 아이디 중복 체크
+	 *
+	 */
+	@Override
+	public int checkId(String inputId) {
+		
+		return mapper.checkId(inputId);
+	}
+
+
+	/** 회원가입 - 닉네임 중복 체크
+	 *
+	 */
+	@Override
+	public int checkNickname(String inputNickname) {
+		return mapper.checkNickname(inputNickname);
+	}
+
+
+	/** 회원가입 - 이메일 중복 체크
+	 *
+	 */
+	@Override
+	public int checkEmail(String inputEmail) {
+		return mapper.checkEmail(inputEmail);
+	}
+
+
+	/** 회원가입 - 휴대폰 중복 체크
+	 *
+	 */
+	@Override
+	public int checkTel(String inputTel) {
+		return mapper.checkTel(inputTel);
+	}
+
+
+	/** [회원가입 제출]
+	 *
+	 */
+	@Override
+	public int signup(Member inputMember, String[] memberAddr) {
+		
+		if(!inputMember.getMemberAddr().equals(",,")) {
+			
+			String address = String.join("^^^", memberAddr);
+			
+			// inputMember 주소로 합쳐진 주소를 세팅 
+			inputMember.setMemberAddr(address);
+			
+			
+		} else { // 주소 입력 X
+			
+			inputMember.setMemberAddr(null); // null 저장
+		}
+		
+		// 비밀번호를 암호화 하여 input member에 세팅
+		String encPw = bcrypt.encode(inputMember.getMemberPw()); 
+		
+		inputMember.setMemberPw(encPw);
+		
+		return mapper.signup(inputMember);
+	}
+
+
 	
 	
 }

@@ -30,6 +30,38 @@ public interface MemberService {
 
 	Member login(Member member);
 
+	/** 회원가입 - 아이디 중복 체크
+	 * @param inputId
+	 * @return
+	 */
+	int checkId(String inputId);
+
+	
+	/** 회원가입 - 닉네임 중복 체크
+	 * @param inputNickname
+	 * @return
+	 */
+	int checkNickname(String inputNickname);
+
+	/** 회원가입 - 이메일 중복 체크
+	 * @param inputEmail
+	 * @return
+	 */
+	int checkEmail(String inputEmail);
+
+	/** 회원가입 - 휴대폰 중복 체크
+	 * @param inputTel
+	 * @return
+	 */
+	int checkTel(String inputTel);
+
+	/** [회원가입 제출]
+	 * @param inputMember
+	 * @param memberAddress
+	 * @return
+	 */
+	int signup(Member inputMember, String[] memberAddr);
+
 
 
 }

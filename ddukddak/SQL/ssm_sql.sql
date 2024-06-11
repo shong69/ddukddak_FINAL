@@ -93,7 +93,7 @@ FROM (
     WHERE MEMBER_ID = 'soomin'
     AND MEMBER_DEL_FL = 'N'
     
-    UNION
+    UNION ALL 
     
     SELECT PARTNER_ID
     FROM PARTNER
@@ -135,3 +135,15 @@ FROM (
 	    AND PARTNER_DEL_FL = 'N'
 	    
 	);
+
+-- 닉네임 중복 체크
+SELECT COUNT(*)
+FROM "MEMBER"
+WHERE MEMBER_NICKNAME = '닉네임신수민'
+AND MEMBER_DEL_FL = 'N';
+
+-- 이메일 중복 체크
+SELECT COUNT(*)
+FROM "MEMBER"
+WHERE MEMBER_EMAIL = 'soowagger@gmal.com'
+AND MEMBER_DEL_FL = 'N';

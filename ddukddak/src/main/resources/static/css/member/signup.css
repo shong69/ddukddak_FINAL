@@ -4,7 +4,7 @@ main {
     justify-content: center;
     align-items: center;
     width: 1440px;
-    height: 1100px;
+    height: 1200px;
     color: var(--gray1);
 }
 
@@ -53,6 +53,11 @@ span {
     margin-left: 12px;
     font-weight: 400;
     letter-spacing: 0.015em;
+
+    display: inline-block;
+    height: 20px; /* 필요에 따라 높이 조정 */
+    line-height: 20px; /* 필요에 따라 줄 높이 조정 */
+    font-size: 12px;
 }
 
 
@@ -200,7 +205,7 @@ span {
 /* 주소 부분 */
 .address-container {
     width: 300px;
-    height: 100%;
+    height: auto;
     margin-right: 60px;
 }
 

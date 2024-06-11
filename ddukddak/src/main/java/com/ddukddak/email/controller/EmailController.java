@@ -12,35 +12,34 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ddukddak.email.model.service.EmailService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("email")
+@Slf4j
 public class EmailController {
 	
 	private final EmailService service;
 	
-	// 회원가입 추후 구현 sendEmail 활용
 	
+	/** 회원가입 메일 발송 
+	 * @param email
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("signup")
+	public int signup(@RequestBody String email) {
+		
+		
+		service.sendEmailAsync("signup", email);
+		
+		
+		return 1; // 성공
+
+	}
 	
-//	/** [회원] 아이디 찾기 메일 발송
-//	 * @return
-//	 */
-//	@ResponseBody
-//	@PostMapping("findId")	
-//	public int findId(@RequestBody String email) {
-//		
-//		
-//		String authKey = service.sendEmail("findId", email);
-//		
-//		if(authKey != null) {
-//			
-//			return 1; // 성공
-//		}
-//		
-//		return 0; // 실패
-//	}
 	
     /** 아이디 찾기 메일 발송
      * @return
