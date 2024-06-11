@@ -55,6 +55,8 @@ public class MyHouseBoardController {
 		}
 		
 //		List<Board> myHouseList = service.selectMyHouseList(boardType);			
+		
+		model.addAttribute("boardCode", boardCode);
 		model.addAttribute("myHouseList", map.get("myHouseList"));
 		
 		return "board/myHouseBoard/myHouseBoard";
@@ -118,7 +120,7 @@ public class MyHouseBoardController {
 	 
 	    if(boardNo > 0) {
 	    	
-	    	// 후에 리스트, 상세페이지 다 되면 상세페이지로 넘억가게 수정
+	    	// 후에 리스트, 상세페이지 다 되면 상세페이지로 넘어가게 수정
 	    	path= "/myHouse/main";
 	    	
 	    	
