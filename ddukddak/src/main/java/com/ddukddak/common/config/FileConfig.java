@@ -46,11 +46,19 @@ public class FileConfig implements WebMvcConfigurer{
 	private String myHouseResourceHandler;
 	@Value("${my.myHouse.resource-location}")
 	private String myhouseResourceLocation;
+
 	
+//	쇼핑
+	@Value("${my.ecommerce.resource-location}")
+	private String eCommerceResourceLocation;
+	@Value("${my.ecommerce.resource-handler}")
+	private String eCommerceResourceHandler;
+
+	
+//	임시저장 경로
 	@Value("${spring.servlet.multipart.location}")
 	private String location;
-	
-
+  
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		
@@ -67,6 +75,10 @@ public class FileConfig implements WebMvcConfigurer{
 //		집들이 이미지 요청
 		registry.addResourceHandler(myHouseResourceHandler) 
 		.addResourceLocations(myhouseResourceLocation);
+		
+//		쇼핑 이미지
+		registry.addResourceHandler(eCommerceResourceHandler)
+		.addResourceLocations(eCommerceResourceLocation);
 		
 //		기타 메인 이미지
 //		registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");

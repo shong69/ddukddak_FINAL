@@ -2,6 +2,8 @@ package com.ddukddak.myPage.model.dto;
 
 
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,8 +23,8 @@ public class CartItem {
 	private int memberNo;
 	private int productNo;
 	private String productName;
-	private int optionNo;
-	private String optionValue;
+	private List<Integer> optionNo;
+	private List<String> optionValue;
 	private int productPrice;
 	private int productCount;
 

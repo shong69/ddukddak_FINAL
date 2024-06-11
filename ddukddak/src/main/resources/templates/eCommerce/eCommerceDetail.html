@@ -95,7 +95,7 @@
 
                     <!-- 버튼 -->
                     <div>
-                        <button class="eCommerBuyDetailConfirmBtn" id="buyButton">구매하기</button>
+                        <button class="eCommerBuyDetailConfirmBtn" id="buyButton">장바구니 추가</button>
                         <button class="eCommerBuyDetailConfirmBtn" id="wishButton" style="margin-bottom: 50px;">찜하기</button>
                     </div>
                 </div>
@@ -224,8 +224,12 @@
 
     <script th:inline="javascript">
         var loginMember = /*[[${loginMember}]]*/ "loginMember";
+        var productNo = /*[[${productNo}]]*/ "productNo";
         const buyButton = document.querySelector("#buyButton");
         const wishButton = document.querySelector("#wishButton");
+        const box = document.getElementsByClassName("selectOptionProduct")
+        const optionValue = document.getElementsByClassName("optionValue");
+        const count = document.getElementsByClassName("count");
 
         buyButton.addEventListener("click", e => {
             if(loginMember == null) {
@@ -234,11 +238,43 @@
                 location.href = "/member/login";
             } 
             else {
-                // fetch("/myPage/addCart", {
-                //     method : "POST",
-                //     headers : {"Content-Type": "application/json"},
-                //     body : 
-                // })
+
+                var obj = [];
+
+                for (let i = 0; i < box.length; i++) {
+                    var optionArray = [];
+                    var optionValues = box[i].getElementsByClassName("optionValue");
+
+                    for (let j = 0; j < optionValues.length; j++) {
+                        optionArray.push(optionValues[j].value);
+                    }
+
+                    var el = {
+                        "productNo": productNo,
+                        "option": optionArray,
+                        "quantity": parseInt(count[i].innerHTML)
+                    };
+
+                    obj.push(el);
+                }
+
+                console.log(obj);
+
+                fetch("/myPage/addCart", {
+                    method : "POST",
+                    headers : {"Content-Type": "application/json"},
+                    body : JSON.stringify(obj)
+                })
+                .then(resp => resp.text())
+                .then(temp => {
+                    
+                    if(temp > 0) {
+                        alert("장바구니에 상품이 추가되었습니다.");
+                        location.href = '/myPage/cart';
+                    } else {
+                        alert("장바구니에 추가되지 않았습니다.")
+                    }
+                })
             }
         });
 
@@ -254,3 +290,6 @@
     </script>
 </body>
 </html>
+
+
+

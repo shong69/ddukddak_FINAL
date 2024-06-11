@@ -47,5 +47,26 @@ public class CartAndWishListServiceImipl implements CartAndWishListService{
 		}
 
 	}
+
+	// 장바구니 상품 추가
+	@Override
+	public int addCart(Member loginMember, int productNo, List<Integer> option, int quantity) {
+		
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		
+		map1.put("memberNo", loginMember.getMemberNo());
+		map1.put("productNo", productNo);
+		map1.put("quantity", quantity);
+		
+		int insertCartItem = mapper.insertCartItem(map1);
+		
+		int insertOption = 0;
+		
+		for(int oneOption : option) {			
+			insertOption = mapper.insertOption(oneOption);
+		}
+		
+		return 0;
+	}
 	
 }
