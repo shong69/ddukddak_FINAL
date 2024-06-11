@@ -429,12 +429,18 @@ findPwBtn.addEventListener('click', () => {
 const checkPwFn = () => {
 
     // 같을 경우
-    if(newPw.value === newPwConfirm.value) {
+    if(newPw.value === newPwConfirm.value && newPwConfirm.value.length > 0) {
         pwConfirmMsg.innerText ='\u2713';
         pwConfirmMsg.classList.remove("errorC");
         pwConfirmMsg.classList.add('confirm');
         newPwConfirm.classList.add('confirmB');
         checkPwObj.newPwConfirm = true;
+        return;
+    }
+
+    if(newPwConfirm.value.length === 0) {
+
+        checkPwObj.newPwConfirm = false;
         return;
     }
 
@@ -449,7 +455,7 @@ const checkPwFn = () => {
 
 }  
 
-
+// 새 비밀번호 입력 시
 newPw.addEventListener('input', e => {
 
     const inputPw = e.target.value;
@@ -472,7 +478,7 @@ newPw.addEventListener('input', e => {
 
     newPw.classList.remove("errorB");
 
-    const regExp = /^[a-zA-Z0-9!@#_-]{6,20}$/;
+    const regExp = /^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/;
 
     // 정규식 미통과
     if(!regExp.test(inputPw)) {
@@ -482,6 +488,7 @@ newPw.addEventListener('input', e => {
         newPw.classList.remove('confirmB');
         checkPwObj.newPw = false;
 
+        checkPwFn();
         disabledCheckButton3();
         return;
     }
@@ -503,10 +510,19 @@ newPw.addEventListener('input', e => {
 
 });
 
-
+// 새 비밀번호 확인 입력 시
 newPwConfirm.addEventListener('input', e => {
 
     const inputConfirmPw = e.target.value;
+
+    if(newPw.value.trim().length === 0) {
+        pwConfirmMsg.innerText = '비밀번호를 먼저 입력해 주세요.';
+        pwConfirmMsg.classList.add('errorC');
+        pwConfirmMsg.classList.remove('confirm');
+
+        return;
+    }
+
 
     if(newPw.value.length > 0 && inputConfirmPw.trim().length === 0) {
         pwConfirmMsg.innerText = '새 비밀번호 확인을 입력해 주세요.';
@@ -515,10 +531,18 @@ newPwConfirm.addEventListener('input', e => {
         pwConfirmMsg.classList.remove('confirm');
         newPwConfirm.classList.remove('confirmB');
         checkPwObj.newPwConfirm = false;
+        memberPwConfirm.value = "";
+
         return;
     }
 
     newPwConfirm.classList.remove("errorB");
+
+    if(!checkPwObj.newPw) {
+        pwConfirmMsg.innerText = '비밀번호를 먼저 확인해 주세요.';
+        pwConfirmMsg.classList.add('errorC');
+        return;
+    }
 
     if(checkPwObj.newPw) {
         checkPwFn();
@@ -531,8 +555,6 @@ newPwConfirm.addEventListener('input', e => {
     
 
 })
-
-
 
 
 
@@ -591,14 +613,4 @@ document.getElementById('findPwForm').addEventListener('keypress', function(even
         }
     }
 });
-
-// 다음 버튼이 있을 때 엔터키 누를 경우에 대한 방지
-// document.getElementById('inputId').addEventListener('keypress', function(event) {
-//     if (event.key === 'Enter') {
-//         event.preventDefault();  // Enter 키에 의한 폼 제출을 막음
-//         if(!nextBtn.classList.contains('hidden')) document.getElementById('nextBtn').click();  // "다음" 버튼 클릭 이벤트 트리거
-//     }
-// });
-
-
 

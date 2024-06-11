@@ -51,7 +51,7 @@
                         </div>
                         <span id="telMsg" class="msgSpan"></span>
                         <div id="telAuthHidden" class="authArea hidden">
-                            <input id="telAuthInput" type="tel" placeholder="인증번호(숫자 6자리)" name="smsAuthKey" maxlength="6">
+                            <input id="telAuthInput" type="text" placeholder="인증번호(숫자 6자리)" name="smsAuthKey" maxlength="6">
                         </div>
                         <span id="telAuthMsg" class="msgSpan"></span>
                     </div>
@@ -60,15 +60,15 @@
                     <div id="changePwDiv" class="changePwDiv hidden">
                         <div class="changePwBox">
                             <h3>비밀번호 재설정</h3>
-                            <h4>6~20자의 영문 대/소문자, 숫자, 특수문자를 입력해 주세요.</h4>
+                            <h4>8~16자의 영문 대/소문자, 숫자, 특수문자(필수) 사용해 주세요</h4>
                             <div>
                                 <!-- <h4>새 비밀번호</h4> -->
-                                <input id="newPw" type="password" placeholder="새 비밀번호" name="newPw">
+                                <input id="newPw" type="password" placeholder="새 비밀번호" name="newPw" maxlength="16">
                                 <span id="pwMsg" class="msgSpan"></span>
                             </div>
                             <div>
                                 <!-- <h4>새 비밀번호 확인</h4> -->
-                                <input id="newPwConfirm" type="password" placeholder="새 비밀번호 확인" name="newConfirmPw">
+                                <input id="newPwConfirm" type="password" placeholder="새 비밀번호 확인" name="newConfirmPw" maxlength="16">
                                 <span id="pwConfirmMsg" class="msgSpan"></span>
                             </div>
                         </div>
