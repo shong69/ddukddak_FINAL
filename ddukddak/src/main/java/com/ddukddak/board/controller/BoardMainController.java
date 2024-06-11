@@ -25,17 +25,17 @@ public class BoardMainController {
 	@GetMapping("main")
 	public String boardMain(Model model) {
 		
-		Map<String, Object> map = new HashMap<>();
-		
-		List<Map<String, Object>> boardTypeList = service.selectBoardTypeList();
-		
-		for(Map<String, Object> boardType : boardTypeList) {
-			map.put(boardType.get("boardCode").toString(), boardType.get("boardName"));
-		}
-		
-		log.info("map : " + map); 
-		
-		model.addAttribute("boardTypeMap", map);
+//		Map<String, Object> map = new HashMap<>();
+//		
+//		List<Map<String, Object>> boardTypeList = service.selectBoardTypeList();
+//		
+//		for(Map<String, Object> boardType : boardTypeList) {
+//			map.put(boardType.get("boardCode").toString(), boardType.get("boardName"));
+//		}
+//		
+//		log.info("map : " + map); 
+//		
+//		model.addAttribute("boardTypeMap", map);
 		
 		return "board/boardMainPage";
 	}
