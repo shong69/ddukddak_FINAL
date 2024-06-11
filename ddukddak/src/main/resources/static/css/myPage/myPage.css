@@ -170,7 +170,7 @@
 .homeBoard-list{
     list-style-type: none;
 }
-.homeBoard-list > li {
+.myHouseBoardList {
     width : 900px;
     margin: 50px 0;
     padding: 15px;
@@ -185,23 +185,21 @@
 
 
 .homeboard-title{
-    flex-basis: 40%;
     font-size : 18px;
     margin-top: 20px;
     margin-left: 15px;
     height: 30px;
     text-align: start;
 }
-.homeboard-title>a:hover{
+.homeboard-title:hover{
     font-weight: 600;
     cursor: pointer;
 }
 .homeBoard-info{
-    flex-basis: 30%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
+    margin-left: auto;
 }
 .homeBoard-info>div:first-child{
     margin-left: auto;
@@ -246,26 +244,37 @@
     margin:5px 0;
     margin-right: auto;
 }
-.tipBoard-item span:nth-child(3){
+.tipBoard-item>span:nth-child(3){
     font-weight: 600;
 }
 
-.tipBoard-item span:nth-child(2){
+.tipBoard-item>span:nth-child(2){
     margin-top: 16px;
     font-size: 14px;
 }
 
-.tipBoard-item span:nth-child(4){
+.tipBoard-item>span:nth-child(4){
     font-size: 12px;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 }
 
-.tipBoard-item span:last-child{
-    line-height: 25px;
+.tipBoard-item>span:last-child{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* 5 줄로 제한 */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+    text-align: start;
+    margin: auto 0;
 }
 .tipBoard-img{
     width:330px;
     height: 240px;
+}
+.fa-heart {
+    color : red;
+    margin-right: 5px;
 }
 
 /*좋아요한 게시글*/
