@@ -8,6 +8,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ddukddak.board.model.dto.Board;
+import com.ddukddak.board.model.dto.BoardImg;
 import com.ddukddak.board.model.mapper.BoardMainMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -17,18 +19,25 @@ import lombok.RequiredArgsConstructor;
 @PropertySource("classpath:config.properties")
 public class BoardMainServiceImpl implements BoardMainService{
 
-	private final BoardMainMapper mapper;
 	
-//	@Value("${my.board.web-path}")
-//	private String webPath;
+	private final BoardMainMapper mapper;
 
 	@Override
 	public List<Map<String, Object>> selectBoardTypeList() {
 		return mapper.selectBoardTypeList();
+	}
+
+	@Override
+	public List<BoardImg> selectBoardMainAd() {
+
+		return mapper.selectBoardMainAd();
+	}
+
+	@Override
+	public List<Board> selectBoard() {
+		return mapper.selectBoard();
 	} 
-	
-//	@Value("${my.board.folder-path}")
-//	private String folderPath;
+
 	
 	
 }

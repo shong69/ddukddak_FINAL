@@ -25,7 +25,6 @@
             <!-- 사이드 카테고리 버튼 -->
             <th:block th:replace="~{common/fragments/board/side-category}"></th:block>
 
-            <th:block th:each="boardType : ${application.boardTypeList}" th:with="url = ${boardType.boardCode == 1} ? '/myHouse/main' : '/tip/main'">
                 <section class="mainArea">
 
                 
@@ -39,21 +38,20 @@
                     </section>
                     <!-- 광고 -->
                     <div class="boardAdContainer">
-                        <img src="/images/board/boardMainAd.png" alt="" class="boardAd mySlides">
-                        <img src="/images/board/boardMainAd2.png" alt="" class="boardAd mySlides">
-                        <img src="/images/board/boardMainAd3.jpg" alt="" class="boardAd mySlides">
-                        <img src="/images/board/boardMainAd4.jpg" alt="" class="boardAd mySlides">
-                        <img src="/images/board/boardMainAd5.jpg" alt="" class="boardAd mySlides">
-                        <img src="/images/board/boardMainAd6.png" alt="" class="boardAd mySlides">
-                        <h4 class="adViewMore">1/6+</h4>
-                        <a class="prev"><i class="fa-solid fa-chevron-left"></i></a>
-                        <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
+                        <th:block th:each="boardImg : ${boardImg}" th:object="${boardImg}">
+                            <img th:src="@{|${boardImg.uploadImgPath}${boardImg.uploadImgRename}|}" class="boardAd mySlides">
+                            <h4 class="adViewMore">1/6+</h4>
+                            <a class="prev" onclick="plusSlides(-1)"><i class="fa-solid fa-chevron-left"></i></a>
+                            <a class="next" onclick="plusSlides(1)"><i class="fa-solid fa-chevron-right"></i></a>
+                        </th:block>
                     </div>
                     <!-- 집들이 -->
                     <div class="myHouseMainContainer">
                         <div class="titleContainer">
-                            <a th:href="@{${url}(boardCode=${boardType.boardCode})}" class="myHouseViewMore"><h1 th:text="${boardType.boardName}">집들이</h1></a>
-                            <a th:href="@{${url}(boardCode=${boardType.boardCode})}" class="myHouseViewMore">+ 더 보기</a>
+                            <th:block th:each="boardType : ${application.boardTypeList}">
+                                <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="tipViewMore"><h1 th:text="${boardType.boardName}">노하우</h1></a>
+                                <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="myHouseViewMore">+ 더 보기</a>
+                            </th:block>
 
                         </div>
                         <th:block th:replace="~{common/fragments/board/boardMainMyHouse}"></th:block>
@@ -62,15 +60,16 @@
                     <!-- 노하우 -->
                     <div class="tipMainContainer">
                         <div class="titleContainer">
-                            <a th:href="@{${url}(boardCode=${boardType.boardCode})}" class="tipViewMore"><h1 th:text="${boardType.boardName}">노하우</h1></a>
-                            <a th:href="@{${url}(boardCode=${boardType.boardCode})}" class="tipViewMore">+ 더 보기</a>
+                            <th:block th:each="boardType : ${application.boardTypeList}">
+                            <a th:if="${boardType.boardCode != 1}" th:href="@{/tip/main(boardCode=${boardType.boardCode})}" class="tipViewMore"><h1 th:text="${boardType.boardName}">노하우</h1></a>
+                            <a th:if="${boardType.boardCode != 1}" th:href="@{/tip/main(boardCode=${boardType.boardCode})}" class="tipViewMore">+ 더 보기</a>
+                        </th:block>
 
                         </div>
                         <th:block th:replace="~{common/fragments/board/boardMainTip}"></th:block>
 
                     </div>
                 </section>
-            </th:block>
         </div>
 
     </main>
