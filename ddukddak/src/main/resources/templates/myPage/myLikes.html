@@ -32,13 +32,15 @@
                     </select>
                 </div>
 
-                <th:block>
+                <div id="postArea"></div>
+
+                <div id="myHouse">
                     <h2 class="category-name">내 집들이</h2>
                     <ul class="homeBoard-list">
                         <th:object th:if="${#lists.isEmpty(myHouseBoardList)}">
     
                             <div class="noHouseData">
-                                게시글이 존재하지 않습니다.
+                                좋아요 한 게시글이 존재하지 않습니다.
                             </div>
     
     
@@ -62,9 +64,9 @@
                             </li>
                         </th:object>
                     </ul>
-                </th:block>
+                </div>
 
-                <th:block>
+                <div id="myTip">
                     <h2 class="category-name">내 노하우</h2>
 
                     <table class="tipBoard-table">
@@ -72,7 +74,7 @@
                             <th:object th:if="${#lists.isEmpty(myTipBoardList)}">
                                 <tr>
                                     <div class="noTipData">
-                                        작성한 게시글이 존재하지 않습니다.
+                                        좋아요 한 게시글이 존재하지 않습니다.
                                     </div>
                                 </tr>
                             </th:object>
@@ -103,7 +105,7 @@
     
                         </tbody>
                     </table>
-                </th:block>
+                </div>
                 
 
 
@@ -114,5 +116,6 @@
 
         <th:block th:replace="~{common/fragments/footer}"></th:block>
         <script src="/js/myPage/myLike.js"></script>
+
 </body>
 </html>

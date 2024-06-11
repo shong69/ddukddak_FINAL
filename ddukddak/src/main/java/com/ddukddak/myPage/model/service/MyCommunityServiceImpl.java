@@ -44,6 +44,27 @@ public class MyCommunityServiceImpl implements MyCommunityService{
 		
 		return map;
 	}
+
+	@Override
+	public Map<String, Object> selectLikeHouseBoardList(Member loginMember) {
+		int memberNo = loginMember.getMemberNo();
+		
+		Map<String, Object> map = new HashMap<>();
+		List<Board> likeHouseBoardList = mapper.likeHouseBoardList(memberNo);
+		
+		map.put("likeHouseBoardList", likeHouseBoardList);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> selectLikeTipBoardList(Member loginMember) {
+		int memberNo =loginMember.getMemberNo();
+		
+		Map<String, Object> map = new HashMap<>();
+		List<Board> likeTipBoardList = mapper.likeTipBoardList(memberNo);
+		map.put("likeTipBoardList", likeTipBoardList);
+		return map;
+	}
 	
 
 }

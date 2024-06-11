@@ -38,7 +38,7 @@
                         <li class="myHouseBoardList" th:each = "list : ${myHouseBoardList}" th:object="${list}">
                             <img th:src="*{thumbnail}" class="homeBoard-img">
                             
-                            <h3 th:text="*{boardTitle}" class="homeboard-title" ><a>게시글 제목</a></h3>
+                            <h3 th:text="*{boardTitle}" class="homeboard-title" ><a th:href="|myHouse/detail/*{boardNo}|">게시글 제목</a></h3>
                             <div class="homeBoard-info">
                                 <div>
                                     <a th:href="|/myHouse/detail/*{boardNo}|">방문하기 ></a>
@@ -88,6 +88,8 @@
                         }
                 });
             });
+
+
         </script>
 </body>
 </html>
