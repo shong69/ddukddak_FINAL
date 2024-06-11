@@ -68,7 +68,21 @@
 		JOIN "MEMBER" USING (MEMBER_NO)
 		WHERE BOARD_DEL_FL = 'N'
 		AND BOARD_CODE = #{boardCode}
-		ORDER BY BOARD_NO DESC
+		ORDER BY 
+			<choose>
+            <when test="sortMethod == 'latest'">
+                BOARD_NO DESC
+            </when>
+            <when test="sortMethod == 'views'">
+                READ_COUNT DESC
+            </when>
+            <when test="sortMethod == 'likeCount'">
+                LIKE_COUNT DESC
+            </when>
+            <otherwise>
+                BOARD_NO DESC
+            </otherwise>
+        </choose>
 	</select>
 	
 	
@@ -112,7 +126,21 @@
 		WHERE BOARD_DEL_FL = 'N'
 		AND BOARD_CODE = #{boardCode}
 		AND (BOARD_TITLE LIKE '%' || #{query} || '%' OR MEMBER_NICKNAME LIKE '%' || #{query} || '%')
-		ORDER BY BOARD_WRITE_DATE DESC
+		ORDER BY
+			<choose>
+            <when test="sortMethod == 'latest'">
+                BOARD_NO DESC
+            </when>
+            <when test="sortMethod == 'views'">
+                READ_COUNT DESC
+            </when>
+            <when test="sortMethod == 'likeCount'">
+                LIKE_COUNT DESC
+            </when>
+            <otherwise>
+                BOARD_NO DESC
+            </otherwise>
+        </choose>
 	</select>
 	
 	

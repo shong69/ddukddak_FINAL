@@ -10,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -36,19 +38,23 @@ public class MyHouseBoardController {
 	@GetMapping("main")
 	public String myHouseMain(@RequestParam("boardCode") int boardCode,
 							  @RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+							  @RequestParam(value="sortMethod", required = false, defaultValue = "latest") String sortMethod,
 							  Model model,
 							  @RequestParam Map<String, Object> paramMap) {
 		
 		Map<String, Object> map = null;
 		
+		paramMap.put("sortMethod", sortMethod);
+		paramMap.put("boardCode", boardCode);
+		
 		if(paramMap.get("query") == null) {
 			
-			map = service.selectMyHouseList(boardCode, cp);
+			log.info("sortMethod : " + sortMethod);
+			
+			map = service.selectMyHouseList(paramMap, cp);
 			
 		} else {
 			log.info("boardCode : " + boardCode);
-			
-			paramMap.put("boardCode", boardCode);
 			
 			map = service.searchList(paramMap, cp);
 			
@@ -141,6 +147,7 @@ public class MyHouseBoardController {
 		
 		return "redirect:" + path;
 	}
+	
 	
 }
 

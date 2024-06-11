@@ -41,7 +41,7 @@ public interface MyHouseBoardMapper {
 	 * @param boardType
 	 * @return listCount
 	 */
-	int getListCount(int boardCode);
+	int getListCount(Map<String, Object> paramMap);
 
 
 
@@ -50,7 +50,7 @@ public interface MyHouseBoardMapper {
 	 * @param rowBounds
 	 * @return myHoustList
 	 */
-	List<Board> selectMyHouseList(int boardCode, RowBounds rowBounds);
+	List<Board> selectMyHouseList(Map<String, Object> paramMap, RowBounds rowBounds);
 
 
 

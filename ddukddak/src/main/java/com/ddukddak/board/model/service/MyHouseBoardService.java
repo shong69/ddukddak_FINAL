@@ -24,15 +24,17 @@ public interface MyHouseBoardService {
 	/** 집들이 게시판 지정된 페이지 목록 조회
 	 * @param boardType
 	 * @param cp
+	 * @param sortMethod 
 	 * @return map
 	 */
-	Map<String, Object> selectMyHouseList(int boardCode, int cp);
+	Map<String, Object> selectMyHouseList(Map<String, Object> paramMap, int cp);
 
 	
 	
 	/** 검색 서비스
 	 * @param paramMap
 	 * @param cp
+	 * @param sortMethod 
 	 * @return map
 	 */
 	Map<String, Object> searchList(Map<String, Object> paramMap, int cp);
