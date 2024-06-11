@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ddukddak.common.model.CommonService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("common")
 @RequiredArgsConstructor
+@Slf4j
 public class CommonController {
 	
 	private final CommonService service;
@@ -49,6 +52,7 @@ public class CommonController {
 	@ResponseBody
 	public int commonITCheck(@RequestBody Map<String, String> map) {
 		
+		log.info("map : " + map);
 		/* 
 		 	const commonITCheck = {
         		"id" : telNm.value,
@@ -59,8 +63,17 @@ public class CommonController {
 		
 		id = service.commonITCheck(map);
 		
+		if(id != null) return 1; // id 조회 성공 시
+		
 		
 		return 0;
+	}
+	
+	@PostMapping
+	@ResponseBody
+	public String changePw() {
+		
+		return "common/changePw";
 	}
 	
 }
