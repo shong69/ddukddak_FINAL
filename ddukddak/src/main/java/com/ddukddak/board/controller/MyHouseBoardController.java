@@ -38,18 +38,18 @@ public class MyHouseBoardController {
 	@GetMapping("main")
 	public String myHouseMain(@RequestParam("boardCode") int boardCode,
 							  @RequestParam(value="cp", required = false, defaultValue = "1") int cp,
-							  @RequestParam(value="sortMethod", required = false, defaultValue = "latest") String sortMethod,
+							  @RequestParam(value="sort", required = false, defaultValue = "latest") String sort,
 							  Model model,
 							  @RequestParam Map<String, Object> paramMap) {
 		
 		Map<String, Object> map = null;
 		
-		paramMap.put("sortMethod", sortMethod);
+		paramMap.put("sort", sort);
 		paramMap.put("boardCode", boardCode);
 		
 		if(paramMap.get("query") == null) {
 			
-			log.info("sortMethod : " + sortMethod);
+			log.info("sort : " + sort);
 			
 			map = service.selectMyHouseList(paramMap, cp);
 			

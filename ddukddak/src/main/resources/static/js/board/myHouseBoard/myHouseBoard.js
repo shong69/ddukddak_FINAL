@@ -21,12 +21,12 @@ if (boardCreateBtn != null) {
 // ===============================================================================
 const sortMethod = document.querySelector("#sortingSelect");
 
-sortMethod.addEventListener("change", () => {
+sortMethod.addEventListener("change", function () {
 
-    const selectedOption = sortMethod.value;
+    const selectedOption = this.value;
     console.log(selectedOption);
     const currentUrl = new URL(window.location.href);
-    currentUrl.searchParams.set('sortMethod', selectedOption);
+    currentUrl.searchParams.set('sort', selectedOption);
     window.location.href = currentUrl;
 
 });
@@ -45,7 +45,7 @@ if (queryString) {
 
             var sortValue = queryParams[i].split('=')[3];
 
-            orderSorting.value = sortValue;
+            sortMethod.value = sortValue;
 
         }
     }

@@ -55,9 +55,9 @@
           
           <section class="sortingArea">
             <select id="sortingSelect">
-              <option value="latest">최신순</option>
-              <option value="views">조회순</option>
-              <option value="lickCount">좋아요순</option>
+              <option value="latest" th:selected="${sort == 'latest'}">최신순</option>
+              <option value="views" th:selected="${sort == 'views'}">조회순</option>
+              <option value="likeCount" th:selected="${sort == 'likeCount'}">좋아요순</option>
             </select>
           </section>
           

@@ -70,13 +70,13 @@
 		AND BOARD_CODE = #{boardCode}
 		ORDER BY 
 			<choose>
-            <when test="sortMethod == 'latest'">
+            <when test="sort == 'latest'">
                 BOARD_NO DESC
             </when>
-            <when test="sortMethod == 'views'">
+            <when test="sort == 'views'">
                 READ_COUNT DESC
             </when>
-            <when test="sortMethod == 'likeCount'">
+            <when test="sort == 'likeCount'">
                 LIKE_COUNT DESC
             </when>
             <otherwise>
