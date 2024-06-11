@@ -113,6 +113,8 @@ registMyHouseForm.addEventListener("submit", e => {
 
     const boardTitle = document.querySelector("#boardTitle");
     const boardContent = document.querySelector("#boardContent");
+    const images = document.getElementById('imageUpload').files;
+    const mainImg = document.getElementById('mainImgHidden').value;
 
     if(boardTitle.value.trim().length == 0) {
         alert("집들이 제목을 입력해주세요.");
@@ -125,6 +127,17 @@ registMyHouseForm.addEventListener("submit", e => {
         alert("집들이 내용을 입력해주세요.");
         boardContent.focus();
         e.preventDefault();
+        return;
+    }
+
+
+    if (images.length === 0) {
+        alert('사진을 1장 이상 업로드해주세요.');
+        event.preventDefault();
+        return;
+    } else if (mainImg === "") {
+        alert('메인이미지를 선택해주세요.');
+        event.preventDefault();
         return;
     }
 

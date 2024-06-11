@@ -227,6 +227,7 @@
 .myHouseRightSide {
     display: flex;
     justify-content: end;
+    align-items: baseline;
 }
 
 .myHouseRightSide h3 {
