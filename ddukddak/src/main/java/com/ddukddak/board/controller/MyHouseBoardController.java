@@ -33,7 +33,7 @@ public class MyHouseBoardController {
 	
 	private final MyHouseBoardService service;
 
-	@GetMapping("main")
+	@GetMapping("main/")
 	public String myHouseMain(@RequestParam("boardCode") int boardCode,
 							  @RequestParam(value="cp", required = false, defaultValue = "1") int cp,
 							  Model model,

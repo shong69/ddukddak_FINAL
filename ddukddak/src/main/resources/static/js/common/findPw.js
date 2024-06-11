@@ -37,9 +37,10 @@ const telAuthMsg = document.getElementById('telAuthMsg');
 
 
 
-// 5. 비밀번호 찾기 버튼(초기 disabled)
+// 5. 비밀번호 찾기 히든
 const findPwBtnDiv = document.getElementById('findPwBtnDiv');
 
+const findPwBtn = document.getElementById('findPwBtn');
 
 // -------------------------------------------------------------------------
 
@@ -56,7 +57,11 @@ function disabledCheckButton1() {
 
 // 비밀번호 찾기 버튼
 function disabledCheckButton2() {
-
+    if(telAuthInput.value.trim().length == 6) {
+        findPwBtn.disabled = false;
+    } else {
+        findPwBtn.disabled = true;
+    }
 }
 
 // 인증 요청 후 내용 수정 시 리셋 함수
@@ -82,6 +87,14 @@ inputId.addEventListener('input', e => {
 
     const inputIdValue = e.target.value;
     
+    if(inputIdValue.trim().length === 0) {
+        inputId.classList.add('errorB');
+        checkTelObj.id = false;
+        return;
+    }
+
+    inputId.classList.remove('errorB');
+
     try {
         fetch("/common/idCheck", {
             method : "POST",
@@ -191,7 +204,7 @@ inputTel.addEventListener('input', e => {
     inputTel.classList.remove('errorB');
     checkTelObj.tel = true;
     
-    disabledCheckButton();
+    disabledCheckButton2();
     resetAuthStates();
 });
 
@@ -231,7 +244,7 @@ telAuthBtn.addEventListener("click", async () => {
 
     // * 멤버, 파트너 전체 ID, TEL 일치 여부 확인 필요 *
     const commonITCheck = {
-        "id" : telNm.value,
+        "id" : inputId.value,
         "tel" : inputTel.value
     }
 
@@ -345,7 +358,7 @@ telAuthInput.addEventListener('input', e => {
 
     })
 
-    disabledCheckButton();
+    disabledCheckButton2();
 });
 
 
@@ -354,6 +367,11 @@ const findPwForm = document.getElementById('findPwForm');
 
 findPwForm.addEventListener('submit', (e) => {
 
+    if(!nextBtn.classList.contains('hidden')) {
+        e.preventDefault();
+        nextBtn.click();
+        return;
+    }
 
     if (!checkTelObj.tel || !checkTelObj.telAuth || !checkTelObj.id ) {
         e.preventDefault();
@@ -374,4 +392,12 @@ findPwForm.addEventListener('submit', (e) => {
     }
     
 
+});
+
+// 다음 버튼이 있을 때 엔터키 누를 경우에 대한 방지
+document.getElementById('inputId').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();  // Enter 키에 의한 폼 제출을 막음
+        if(!nextBtn.classList.contains('hidden')) document.getElementById('nextBtn').click();  // "다음" 버튼 클릭 이벤트 트리거
+    }
 });

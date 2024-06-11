@@ -185,7 +185,7 @@ function updateTotalCount() {
 
     // 선택된 옵션 값이 이미 존재하는지 확인하는 함수
     function checkDuplicateOption() {
-        const selectedOptions = Array.from(selectTags).map(select => select.value).join(',');
+        const selectedOptions = Array.from(selectTags).map(select => select.options[select.selectedIndex].text).join(',');
         const optionElements = document.querySelectorAll('.options');
         let isDuplicate = false;
 
@@ -203,6 +203,9 @@ function updateTotalCount() {
         if (checkAllSelectValues()) {
             if (checkDuplicateOption()) {
                 alert('이미 같은 옵션이 선택되었습니다.');
+                selectTags.forEach(elements => {
+                    elements.value = 0;
+                })
                 return;
             }
 
@@ -216,7 +219,7 @@ function updateTotalCount() {
             const options = document.createElement("h4");
             options.classList.add("options");
             selectTags.forEach(elements => {
-                options.innerText += elements.value + ',';
+                options.innerText += elements.options[elements.selectedIndex].text + ',';
             })
             options.innerText = options.innerText.slice(0, -1);
 

@@ -20,6 +20,20 @@
 	</select>
 	
 	<select id="commonITCheck" parameterType="map" resultType="string">
+		SELECT id
+		FROM (
+		    SELECT MEMBER_ID AS id
+		    FROM "MEMBER"
+		    WHERE MEMBER_ID = #{id}
+		    AND MEMBER_TEL = #{tel}
+		
+		    UNION
+		
+		    SELECT PARTNER_ID AS id
+		    FROM PARTNER
+		    WHERE PARTNER_ID = #{id}
+		    AND PARTNER_TEL = #{tel}
+		)
 		
 	</select>
 

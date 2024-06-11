@@ -77,7 +77,7 @@
                         <select class="selectOption" th:each="optionNameList : ${optionList}" th:object="${optionNameList}">
                             <option th:text="${optionNameList.optionName}" value="0">옵션명</option>
                             <block  th:each="option : ${productInfo.optionList}" th:if="${option.optionName == optionNameList.optionName}">
-                                <option th:text="${option.optionValue}" th:value="${option.optionValue}">옵션</option>
+                                <option th:text="${option.optionValue}" th:value="${option.optionNo}">옵션</option>
                             </block>
                         </select>
                     </div>
@@ -95,8 +95,8 @@
 
                     <!-- 버튼 -->
                     <div>
-                        <button class="eCommerBuyDetailConfirmBtn" onclick="location.href='/eCommerce/payment';">구매하기</button>
-                        <button class="eCommerBuyDetailConfirmBtn" style="margin-bottom: 50px;">찜하기</button>
+                        <button class="eCommerBuyDetailConfirmBtn" id="buyButton">구매하기</button>
+                        <button class="eCommerBuyDetailConfirmBtn" id="wishButton" style="margin-bottom: 50px;">찜하기</button>
                     </div>
                 </div>
             </div>
@@ -221,5 +221,36 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/js/eCommerce/eCommerceDetail.js"></script>
+
+    <script th:inline="javascript">
+        var loginMember = /*[[${loginMember}]]*/ "loginMember";
+        const buyButton = document.querySelector("#buyButton");
+        const wishButton = document.querySelector("#wishButton");
+
+        buyButton.addEventListener("click", e => {
+            if(loginMember == null) {
+                alert("로그인이 필요한 서비스입니다");
+                e.preventDefault();
+                location.href = "/member/login";
+            } 
+            else {
+                // fetch("/myPage/addCart", {
+                //     method : "POST",
+                //     headers : {"Content-Type": "application/json"},
+                //     body : 
+                // })
+            }
+        });
+
+        wishButton.addEventListener("click", e => {
+            if(loginMember == null) {
+                alert("로그인이 필요한 서비스입니다");
+                e.preventDefault();
+                location.href = "/member/login";
+            }
+        });
+
+        console.log(loginMember);
+    </script>
 </body>
 </html>
