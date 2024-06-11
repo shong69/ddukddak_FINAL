@@ -23,6 +23,8 @@ public class Board {
 	private int readCount;
 	private String boardDelFl;
 	private int memberNo;
+	private String memberId;
+	
 	
 //	커뮤니티 타입 -> 1: 집들이 / 2: 노하우
 	private int boardCode;

@@ -69,6 +69,7 @@ if (slideshow != null) {
     let slideInterval;
     
     function showSlides(n) {
+        console.log("Showing slide number:", n);
         let i;
         let slides = document.getElementsByClassName("mySlides");
         if (n > slides.length) { slideIndex = 1; }
@@ -90,6 +91,7 @@ if (slideshow != null) {
     }
 
     function plusSlides(n) {
+        console.log("Moving slides by:", n);
         slideIndex += n;
         showSlides(slideIndex);
         resetInterval();
@@ -102,6 +104,7 @@ if (slideshow != null) {
     }
 
     function resetInterval() {
+        console.log("Resetting interval");
         clearInterval(slideInterval);
         slideInterval = setInterval(() => {
             plusSlides(1);
@@ -113,6 +116,7 @@ if (slideshow != null) {
     resetInterval();
     if (next != null) {
         next.addEventListener('click', () => {
+            console.log("Next button clicked");
              plusSlides(1);
              resetInterval();
          });
