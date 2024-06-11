@@ -56,19 +56,20 @@
                                 <tr th:each = "list, listStat : ${cartList}" th:object="${list}"> <!--상품으로 나눠서 나열-->
                                     <td th:text="${listStat.count}">1</td>
                                     <td><input name="check" type="checkbox"></td>
-                                    <td><a><img th:src="@{productImg}" class="product-image"></a></td>
-                                    <td th:text="|*{productName}[*{optionValue}]|">
-                                        포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용
-                                        [캐슬(사각)/마블/1200*600]
+                                    <td><a><img th:src="|*{uploadImgPath}*{uploadImgRename}|" class="product-image"></a></td>
+                                    <td>
+                                        <h4 th:text="*{productName}"></h4>
+                                        <h4 th:text="*{optionValue}" style="color: var(--gray2);"></h4>
                                     </td>
                                     <td>
                                         <div class="adjustCount">
                                             <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
                                             <input type="text" th:name="'quantity'+${listStat.count} "th:value="*{productCount}" class="quantity-input" readonly>
+                                            <input type="hidden" th:value="*{cartId}" id="optionIdInput">
                                             <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
                                         </div>
                                     </td>
-                                    <td th:text="|*{productPrice}원|">25,150 원</td>
+                                    <td th:text="|*{productPrice}원|">상품가격</td>
                                     <td>
                                         <button th:data-productNo =*{productNo} th:data-optionNo=*{optionNo} type="button" class="myPageDelUpdateBtn">삭제</button>
                                     </td>
@@ -95,12 +96,28 @@
         <th:block th:replace="~{common/fragments/footer}"></th:block>
         <script th:inline="javascript">
             function changeQuantity(button, change) {
-            const input = button.parentElement.querySelector('.quantity-input');
-            let currentQuantity = parseInt(input.value);
-            currentQuantity += change;
-            if (currentQuantity < 1) currentQuantity = 1;
-            input.value = currentQuantity;
-}
+                const input = button.parentElement.querySelector('.quantity-input');
+                let currentQuantity = parseInt(input.value);
+                currentQuantity += change;
+                if (currentQuantity < 1) currentQuantity = 1;
+                input.value = currentQuantity;
+
+                const cartIdInput = input.parentElement.querySelector("#optionIdInput").value;
+
+                const obj = {
+                    "cartId" : cartIdInput,
+                    "quantity" : currentQuantity
+                }
+
+                fetch("/myPage/modifyCount", {
+                    method: "PUT",
+                    headers : {"Content-Type" : "application/json"},
+                    body : JSON.stringify(obj)
+                })
+                .then(resp => resp.text())
+                .then(temp => {
+                });
+            }
         </script>
         <script src="/js/myPage/shopping.js"></script>
 </body>

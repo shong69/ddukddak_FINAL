@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.myPage.model.dto.CartItem;
 
 public interface CartAndWishListService {
 
@@ -11,7 +12,7 @@ public interface CartAndWishListService {
 	 * @param loginMember
 	 * @return
 	 */
-	Map<String, Object> selectCartList(Member loginMember);
+	List<CartItem> selectCartList(Member loginMember);
 
 	/** 장바구니 상품 삭제
 	 * @param map

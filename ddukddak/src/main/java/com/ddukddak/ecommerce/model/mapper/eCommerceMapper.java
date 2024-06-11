@@ -104,4 +104,18 @@ public interface eCommerceMapper {
 	 */
 	List<Product> selectSearchList(String query, RowBounds rowBounds);
 
+	/** 검색 없이 정렬순서 바꾸기
+	 * @param newMap
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Product> selectProductListOrder(Map<String, Object> newMap, RowBounds rowBounds);
+
+	/** 검색으로 찾은 상품 정렬순서 바꾸기
+	 * @param newMap
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Product> selectSearchListOrder(Map<String, Object> newMap, RowBounds rowBounds);
+
 }
