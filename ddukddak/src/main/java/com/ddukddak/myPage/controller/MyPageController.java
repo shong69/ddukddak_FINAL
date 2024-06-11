@@ -37,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MyPageController {
 	private final MemberInfoService infoService;
 	private final CartAndWishListService service;
+	
 	//주문내역 진입
 	@GetMapping("")
 	public String main(@SessionAttribute("loginMember") Member loginMember,
@@ -61,8 +62,13 @@ public class MyPageController {
 	//위시리스트 진입
 	@GetMapping("wishList")
 	public String wishList() {
+		
+		
+		
 		return"myPage/wishList";
 	}
+	
+	
 	//회원정보 진입
 	@GetMapping("memberInfo")
 	public String memberInfo() {
