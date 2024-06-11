@@ -95,7 +95,7 @@
 
                     <!-- 버튼 -->
                     <div>
-                        <button class="eCommerBuyDetailConfirmBtn" onclick="location.href='/eCommerce/payment';">구매하기</button>
+                        <button class="eCommerBuyDetailConfirmBtn" id="buyButton">구매하기</button>
                         <button class="eCommerBuyDetailConfirmBtn" style="margin-bottom: 50px;">찜하기</button>
                     </div>
                 </div>
@@ -221,5 +221,26 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/js/eCommerce/eCommerceDetail.js"></script>
+
+    <script th:inline="javascript">
+        var loginMember = /*[[${loginMember}]]*/ "loginMember";
+        const buyButton = document.querySelector("#buyButton");
+
+        buyButton.addEventListener("click", e => {
+            if(loginMember == null) {
+                alert("로그인 후 이용해주세요");
+                e.preventDefault();
+                location.href = "/member/login";
+            } //else {
+            //     fetch("/myPage/addCart", {
+            //         method : "POST",
+            //         headers : {"Content-Type": "application/json"},
+            //         body : 
+            //     })
+            // }
+        });
+
+        console.log(loginMember);
+    </script>
 </body>
 </html>

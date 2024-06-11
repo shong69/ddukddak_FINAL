@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,13 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
+import com.ddukddak.member.model.dto.Member;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -130,6 +135,7 @@ public class eCommerceController {
 								@PathVariable("productNo") int productNo,
 								@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 								@RequestParam(value="query", required=false) String query,
+								HttpServletRequest req,
 									Model model) {
 		
 		DetailProduct productInfo = service.selectOneProduct(productNo);
@@ -153,6 +159,12 @@ public class eCommerceController {
 		model.addAttribute("bigcategoryNo", bigcategoryNo);
 		model.addAttribute("selectRecProductList", recList);
 		model.addAttribute("optionList", optionList);
+
+
+		HttpSession session = req.getSession();
+		
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		model.addAttribute("loginMember", loginMember);
 		
 		
 		return "eCommerce/eCommerceDetail";
