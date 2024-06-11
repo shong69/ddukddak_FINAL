@@ -52,11 +52,5 @@
 		VALUES(SEQ_CART_ID.NEXTVAL,#{quantity},#{memberNo},#{productNo})
 	</insert>
 	
-	<!-- 장바구니 상품 옵션 추가 -->
-	<insert id="insertCartItem">
-		INSERT "CARTITEM_OPTION"
-		VALUES(SEQ_CART_ID.CURRVAL,#{oneOption},SEQ_CARTITEM_OPTION_ID.NEXTVAL)
-	</insert>
-	
 
 </mapper>
