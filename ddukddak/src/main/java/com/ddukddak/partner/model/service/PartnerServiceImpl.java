@@ -1,5 +1,6 @@
 package com.ddukddak.partner.model.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,11 +15,22 @@ import lombok.RequiredArgsConstructor;
 public class PartnerServiceImpl implements PartnerService{
 
 	private final PartnerMapper mapper;
+	private final BCryptPasswordEncoder bcrypt;
 	
 	@Override
 	public Partner login(Partner partner) {
 		
-		return mapper.login(partner);
+		Partner loginPartnerMember = mapper.login(partner.getPartnerId());
+		
+		if(loginPartnerMember == null) return null;
+		
+		if(!bcrypt.matches(partner.getPartnerPw(), loginPartnerMember.getPartnerPw())) {
+			return null;
+		}
+		
+		loginPartnerMember.setPartnerPw(null);
+		
+		return loginPartnerMember;
 	}
 
 	

@@ -44,6 +44,8 @@ public class PartnerController {
 		
 		String path = null;
 		
+		log.info("loginPartnerMember : " + loginPartnerMember);
+		
 		if(loginPartnerMember == null) {
 			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
 			path = "login";

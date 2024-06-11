@@ -16,4 +16,10 @@ public interface CommonService {
 	 */
 	String commonITCheck(Map<String, String> map);
 
+	/** 비밀번호 재설정
+	 * @param map
+	 * @return
+	 */
+	int changePw(Map<String, String> map);
+
 }
