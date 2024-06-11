@@ -22,4 +22,16 @@ public interface CartAndWishListMapper {
 	 */
 	int deleteProduct(Map<String, Object> map);
 
+	/** 장바구니 상품 추가
+	 * @param map1
+	 * @return
+	 */
+	int insertCartItem(Map<String, Object> map1);
+
+	/** 장바구니 상품 옵션 추가
+	 * @param map2
+	 * @return
+	 */
+	int insertOption(int oneOption);
+
 }
