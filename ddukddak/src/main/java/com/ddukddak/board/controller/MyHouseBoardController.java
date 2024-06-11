@@ -33,7 +33,7 @@ public class MyHouseBoardController {
 	
 	private final MyHouseBoardService service;
 
-	@GetMapping("main")
+	@GetMapping("main/")
 	public String myHouseMain(@RequestParam("boardCode") int boardCode,
 							  @RequestParam(value="cp", required = false, defaultValue = "1") int cp,
 							  Model model,
@@ -55,7 +55,6 @@ public class MyHouseBoardController {
 		}
 		
 //		List<Board> myHouseList = service.selectMyHouseList(boardType);			
-		
 		model.addAttribute("myHouseList", map.get("myHouseList"));
 		
 		return "board/myHouseBoard/myHouseBoard";
