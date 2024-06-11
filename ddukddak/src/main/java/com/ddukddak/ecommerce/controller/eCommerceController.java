@@ -159,6 +159,7 @@ public class eCommerceController {
 		model.addAttribute("bigcategoryNo", bigcategoryNo);
 		model.addAttribute("selectRecProductList", recList);
 		model.addAttribute("optionList", optionList);
+		model.addAttribute("productNo", productNo);
 
 
 		HttpSession session = req.getSession();
