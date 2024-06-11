@@ -38,6 +38,8 @@ public class FileConfig implements WebMvcConfigurer{
 //	보드 요청 주소
 	@Value("${my.board.resource-handler}")
 	private String boardResourceHandler;
+	 @Value("${my.board.resource-location}")
+    private String boardResourceLocation;
 	
 //	집들이 요청 주소
 	@Value("${my.myHouse.resource-handler}")
@@ -48,11 +50,7 @@ public class FileConfig implements WebMvcConfigurer{
 	@Value("${spring.servlet.multipart.location}")
 	private String location;
 	
-	// classpath"/static/temp/ 하위 폴더 경로
-	String fullClassPath = System.getProperty("java.class.path");
-	int idx = fullClassPath.indexOf("bin");
-	String classPath = fullClassPath.substring(0, idx) + "src/main/resources/static/images/";
-	
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		
@@ -62,14 +60,16 @@ public class FileConfig implements WebMvcConfigurer{
 		.addResourceLocations(profilResourceLocation);
 				
 //		게시글 이미 추가
-		registry.addResourceHandler(boardResourceHandler).addResourceLocations("file:///" + classPath + "/board/");
+		registry.addResourceHandler(boardResourceHandler)
+		.addResourceLocations(boardResourceLocation);
+		
 		
 //		집들이 이미지 요청
 		registry.addResourceHandler(myHouseResourceHandler) 
 		.addResourceLocations(myhouseResourceLocation);
 		
 //		기타 메인 이미지
-		//registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
+//		registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
 		
 	}
 	
