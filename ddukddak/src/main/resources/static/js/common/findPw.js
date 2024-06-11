@@ -418,14 +418,14 @@ const checkPwFn = () => {
 
     // 같을 경우
     if(newPw.value === newConfirmPw.value) {
-        pwConfirmMsg.innerText ='\u2713 비밀번호가 일치합니다.';
+        pwConfirmMsg.innerText ='\u2713';
         pwConfirmMsg.classList.remove("errorC");
         pwConfirmMsg.classList.add('confirm');
         checkPwObj.newConfirmPw = true;
         return;
     }
 
-    pwConfirmMsg.innerText = '\u00D7 비밀번호가 일치하지 않습니다.';
+    pwConfirmMsg.innerText = '비밀번호가 일치하지 않습니다.';
     pwConfirmMsg.classList.add("errorC");
     pwConfirmMsg.classList.remove('confirm');
     checkPwObj.newConfirmPw = false;
@@ -455,7 +455,7 @@ newPw.addEventListener('input', e => {
 
     // 정규식 미통과
     if(!regExp.test(inputPw)) {
-        pwMsg.innerText = '\u00D7 비밀번호가 유효하지 않습니다.';
+        pwMsg.innerText = '비밀번호가 유효하지 않습니다.';
         pwMsg.classList.add("errorC");
         pwMsg.classList.remove('confirm');
         checkPwObj.newPw = false;
