@@ -41,8 +41,9 @@
 
               <span class="title">집들이</span>
               <span>
-                <form th:action="@{/myHouse/main}" method="GET" class="searchForm">
-                  <input type="text" placeholder="집들이(제목, 작성자) 검색" name="query" class="searchBox" id="searchQuery">
+                <form th:action="@{/myHouse/main}" class="searchForm">
+                  <input type="text" placeholder="집들이(제목, 작성자) 검색" name="query" class="searchBox" id="query">
+                  <input type="hidden" th:value="${boardCode}" name="boardCode">
                   <button  id="searchBtn">
                     <i class="fa-solid fa-magnifying-glass"></i>
                   </button>

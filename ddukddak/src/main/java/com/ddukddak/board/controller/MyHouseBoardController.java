@@ -56,6 +56,7 @@ public class MyHouseBoardController {
 		
 //		List<Board> myHouseList = service.selectMyHouseList(boardType);			
 		
+		model.addAttribute("boardCode", boardCode);
 		model.addAttribute("myHouseList", map.get("myHouseList"));
 		
 		return "board/myHouseBoard/myHouseBoard";
