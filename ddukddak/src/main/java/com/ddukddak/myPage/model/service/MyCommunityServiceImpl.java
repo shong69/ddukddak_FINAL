@@ -28,7 +28,7 @@ public class MyCommunityServiceImpl implements MyCommunityService{
 		int memberNo = loginMember.getMemberNo();
 		
 		List<Board>myHouseBoardList = mapper.selectMyHouseBoardList(memberNo);
-		log.info("글 리스트{}",myHouseBoardList);
+
 		map.put("myHouseBoardList", myHouseBoardList);
 		return map;
 	}
@@ -39,7 +39,7 @@ public class MyCommunityServiceImpl implements MyCommunityService{
 		int memberNo = loginMember.getMemberNo();
 		
 		List<Board>myTipBoardList = mapper.selectMyTipBoardList(memberNo);
-		log.info("글 리스트{}",myTipBoardList);
+
 		map.put("myTipBoardList", myTipBoardList);
 		
 		return map;

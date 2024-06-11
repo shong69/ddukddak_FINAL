@@ -40,23 +40,8 @@ public class MyPageController {
 	
 	//주문내역 진입
 	@GetMapping("")
-	public String main(@SessionAttribute("loginMember") Member loginMember,
-						HttpSession session ) {
-        
-        // enrollDate가 String일 경우 Date 객체로 변환
-        if (loginMember != null && loginMember.getEnrollDate() instanceof String) {
-            try {
-                SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                SimpleDateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = originalFormat.parse((String) loginMember.getEnrollDate());
-                String formattedDate = targetFormat.format(date);
-                session.setAttribute("enrollDate", formattedDate);
+	public String main() {
                 
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        
 		return"myPage/myPageMain";
 	}
 	//위시리스트 진입
