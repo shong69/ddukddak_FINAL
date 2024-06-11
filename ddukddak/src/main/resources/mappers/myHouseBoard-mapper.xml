@@ -112,6 +112,7 @@
 		WHERE BOARD_DEL_FL = 'N'
 		AND BOARD_CODE = #{boardCode}
 		AND (BOARD_TITLE LIKE '%' || #{query} || '%' OR MEMBER_NICKNAME LIKE '%' || #{query} || '%')
+		ORDER BY BOARD_WRITE_DATE DESC
 	</select>
 	
 	

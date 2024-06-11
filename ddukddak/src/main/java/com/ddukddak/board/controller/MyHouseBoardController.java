@@ -54,9 +54,8 @@ public class MyHouseBoardController {
 			
 		}
 		
-//		List<Board> myHouseList = service.selectMyHouseList(boardType);			
-		
 		model.addAttribute("boardCode", boardCode);
+		model.addAttribute("pagination", map.get("pagination"));
 		model.addAttribute("myHouseList", map.get("myHouseList"));
 		
 		return "board/myHouseBoard/myHouseBoard";
@@ -98,38 +97,47 @@ public class MyHouseBoardController {
 
 	    MultipartFile mainImg = null;
 	    
-	    for (MultipartFile image : images) {
-	        if (image.getOriginalFilename().equals(mainImgFileName)) {
-	            mainImg = image;
-	            log.info("mainImg : " + mainImg);
-	            break;
-	        }
-	    }
-	    
-	    List<MultipartFile> imgList = new ArrayList<>(images);
-	    
-	    imgList.remove(mainImg);
-	    
-	    imgList.add(0, mainImg);
-	    
-	    int boardNo = service.insertBoard(board, imgList);
-	    
-	    log.info("imgList : " + imgList);
-	    
+	    String message = null;
 	    String path = null;
-	 
-	    if(boardNo > 0) {
-	    	
-	    	// 후에 리스트, 상세페이지 다 되면 상세페이지로 넘어가게 수정
-	    	path= "/myHouse/detail/" + boardNo;
-	    	
-	    	
-	    } else {
-	    	
-	    	path = "/myHouse/registMyHouse";
 	    
-	    }
 	    
+    	for (MultipartFile image : images) {
+    		if (image.getOriginalFilename().equals(mainImgFileName)) {
+    			mainImg = image;
+    			log.info("mainImg : " + mainImg);
+    			break;
+    		}
+    	}
+    	
+    	List<MultipartFile> imgList = new ArrayList<>(images);
+    	
+    	imgList.remove(mainImg);
+    	
+    	imgList.add(0, mainImg);
+    	
+    	int boardNo = service.insertBoard(board, imgList);
+    	
+    	log.info("imgList : " + imgList);
+    	
+    	
+    	if(boardNo > 0) {
+  		
+    		// 후에 리스트, 상세페이지 다 되면 상세페이지로 넘어가게 수정
+    		path= "/myHouse/detail/" + boardNo;
+    		message = "집들이 게시글 등록이 완료되었습니다.";
+    		
+    		
+    	} else {
+    		
+    		path = "/myHouse/main";
+    		message = "집들이 게시글 등록에 실패하였습니다.";
+    		
+    	}
+	    
+
+	    	
+	    
+	    ra.addFlashAttribute("message", message);
 		
 		return "redirect:" + path;
 	}

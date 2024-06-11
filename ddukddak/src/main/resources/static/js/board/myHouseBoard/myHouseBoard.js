@@ -19,3 +19,9 @@ if (boardCreateBtn != null) {
 }
 
 // ===============================================================================
+
+document.querySelector("#sortingSelect").addEventListener("change", () => {
+
+    
+
+});
