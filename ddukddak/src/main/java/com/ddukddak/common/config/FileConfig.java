@@ -58,8 +58,8 @@ public class FileConfig implements WebMvcConfigurer{
 //	임시저장 경로
 	@Value("${spring.servlet.multipart.location}")
 	private String location;
-	
-	@Override
+
+  @Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		
 		

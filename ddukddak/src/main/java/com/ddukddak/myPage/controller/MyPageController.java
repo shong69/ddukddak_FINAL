@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.myPage.model.dto.CartItem;
 import com.ddukddak.myPage.model.service.CartAndWishListService;
 import com.ddukddak.myPage.model.service.MemberInfoService;
 
@@ -198,7 +200,28 @@ public class MyPageController {
 		
 		return"myPage/cart";
 	}
+	
 	//장바구니 추가
+	@PostMapping("addCart")
+	@ResponseBody
+	public int addCart(@RequestBody List<Object> obj,
+						@SessionAttribute("loginMember") Member loginMember) {
+		log.info("obj : " + obj);
+		
+		int result = 0;
+		
+		for (Object item : obj) {
+		    Map<String, Object> map = (Map<String, Object>) item;
+		    
+		    int productNo = (Integer)map.get("productNo");
+		    List<Integer> option = (List<Integer>)map.get("option");
+		    int quantity = (Integer)map.get("quantity");
+		    
+		    result += service.addCart(loginMember, productNo, option, quantity);
+		}
+		
+		return result;
+	}
 	
 	
 	//장바구니 수량 수정
