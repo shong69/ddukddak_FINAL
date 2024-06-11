@@ -21,7 +21,6 @@ public class CartItem {
 	private int memberNo;
 	private int productNo;
 	private String productName;
-	private int optionNo;
 	private String optionValue;
 	private int productPrice;
 	private int productCount;
