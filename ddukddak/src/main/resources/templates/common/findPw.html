@@ -56,18 +56,30 @@
                         <span id="telAuthMsg" class="msgSpan"></span>
                     </div>
 
+                    <!-- 비밀번호 변경 -->
+                    <div class="changePwDiv">
+                        <div>
+                            <label>새 비밀번호</label>
+                            <input type="password">
+
+                            <label>새 비밀번호 확인</label>
+                            <input type="password">
+                        </div>
+                    </div>
+
                     <!-- 버튼 -->
                     <div class="btnDiv1">
                         <button type="button" id="nextBtn" class="nextBtn" disabled>다음</button>
                     </div>
 
                     <div id="findPwBtnDiv" class="btnDiv2 hidden">
-                        <button id="findPwBtn" class="findPwBtn">비밀번호 찾기</button>
+                        <button type="button" id="findPwBtn" class="findPwBtn" disabled>비밀번호 찾기</button>
                     </div>
 
                     <div class="findPwMoveDiv">
                         <a href="/member/findId"><i class="fa-solid fa-angle-left"></i> 아이디 찾기</i></a>
                     </div>
+
                 </div>
             </form>
         </section>
