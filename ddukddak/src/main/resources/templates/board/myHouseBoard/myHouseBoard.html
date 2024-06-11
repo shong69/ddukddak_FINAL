@@ -75,7 +75,7 @@
                  th:href="@{/myHouse/detail/{boardNo} (boardNo=${myHouse.boardNo})}">
                 
                 <span class="myHouseThumbnail">
-                  <img th:src="|${myHouse.thumbnail}|">
+                  <img th:src="${myHouse.thumbnail}">
                 </span>
                 <span class="myHouseInfo">
                   <div>
