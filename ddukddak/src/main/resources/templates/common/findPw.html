@@ -29,10 +29,10 @@
             </header>
 
             <!-- 컨텐츠 -->
-            <form id="findPwForm" action="#">
+            <form id="findPwForm" action="/common/changePw">
                 <div class="content">
                     <!-- ID 입력 영역 -->
-                    <div class="inputIdDiv">
+                    <div id="inputIdDiv" class="inputIdDiv">
                         <div class="inputInfoDiv">
                             <h4>비밀번호를 찾으시려는 아이디를 입력하세요.</h4>
                         </div>
@@ -44,7 +44,7 @@
                     </div>
 
                     <!-- 휴대폰 -->
-                    <div class="telDiv">
+                    <div id="telDiv" class="telDiv">
                         <div id="telHiddenDiv" class="authArea hidden">
                             <input id="inputTel" type="tel" placeholder="전화번호(-없이)" name="inputTel" maxlength="11">
                             <button type="button" id="telAuthBtn" >인증 요청</button>
@@ -57,13 +57,20 @@
                     </div>
 
                     <!-- 비밀번호 변경 -->
-                    <div class="changePwDiv">
-                        <div>
-                            <label>새 비밀번호</label>
-                            <input type="password">
-
-                            <label>새 비밀번호 확인</label>
-                            <input type="password">
+                    <div id="changePwDiv" class="changePwDiv hidden">
+                        <div class="changePwBox">
+                            <h3>비밀번호 재설정</h3>
+                            <h4>6~20자의 영문 대/소문자, 숫자, 특수문자를 입력해 주세요.</h4>
+                            <div>
+                                <!-- <h4>새 비밀번호</h4> -->
+                                <input id="newPw" type="password" placeholder="새 비밀번호" name="newPw">
+                                <span id="pwMsg" class="msgSpan"></span>
+                            </div>
+                            <div>
+                                <!-- <h4>새 비밀번호 확인</h4> -->
+                                <input id="newConfirmPw" type="password" placeholder="새 비밀번호 확인" name="newConfirmPw">
+                                <span id="pwConfirmMsg" class="msgSpan"></span>
+                            </div>
                         </div>
                     </div>
 
@@ -76,7 +83,11 @@
                         <button type="button" id="findPwBtn" class="findPwBtn" disabled>비밀번호 찾기</button>
                     </div>
 
-                    <div class="findPwMoveDiv">
+                    <div id="changePwBtnDiv" class="btnDiv3 hidden">
+                        <button id="changePwBtn" class="changePwBtn" disabled>변경하기</button>
+                    </div>
+
+                    <div class="findIdMoveDiv">
                         <a href="/member/findId"><i class="fa-solid fa-angle-left"></i> 아이디 찾기</i></a>
                     </div>
 

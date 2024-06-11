@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CartAndWishListServiceImipl implements CartAndWishListService{
+public class CartAndWishListServiceImpl implements CartAndWishListService{
 
 	private final CartAndWishListMapper mapper;
 
@@ -66,7 +66,7 @@ public class CartAndWishListServiceImipl implements CartAndWishListService{
 			insertOption = mapper.insertOption(oneOption);
 		}
 		
-		return 0;
+		return insertCartItem + insertOption;
 	}
 	
 }

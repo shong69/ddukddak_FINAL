@@ -25,51 +25,52 @@
             <!-- 사이드 카테고리 버튼 -->
             <th:block th:replace="~{common/fragments/board/side-category}"></th:block>
 
-            <section class="mainArea">
+            <th:block th:each="boardType : ${application.boardTypeList}" th:with="url = ${boardType.boardCode == 1} ? '/myHouse/main' : '/tip/main'">
+                <section class="mainArea">
 
-            
-                <section class="searchArea">
+                
+                    <section class="searchArea">
 
-                    <span>
-                        <input type="text" placeholder="집들이 검색" class="searchBox">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </span>
-                    
+                        <span>
+                            <input type="text" placeholder="집들이 검색" class="searchBox">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                        
+                    </section>
+                    <!-- 광고 -->
+                    <div class="boardAdContainer">
+                        <img src="/images/board/boardMainAd.png" alt="" class="boardAd mySlides">
+                        <img src="/images/board/boardMainAd2.png" alt="" class="boardAd mySlides">
+                        <img src="/images/board/boardMainAd3.jpg" alt="" class="boardAd mySlides">
+                        <img src="/images/board/boardMainAd4.jpg" alt="" class="boardAd mySlides">
+                        <img src="/images/board/boardMainAd5.jpg" alt="" class="boardAd mySlides">
+                        <img src="/images/board/boardMainAd6.png" alt="" class="boardAd mySlides">
+                        <h4 class="adViewMore">1/6+</h4>
+                        <a class="prev"><i class="fa-solid fa-chevron-left"></i></a>
+                        <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
+                    </div>
+                    <!-- 집들이 -->
+                    <div class="myHouseMainContainer">
+                        <div class="titleContainer">
+                            <a th:href="@{${url}(boardCode=${boardType.boardCode})}" class="myHouseViewMore"><h1 th:text="${boardType.boardName}">집들이</h1></a>
+                            <a th:href="@{${url}(boardCode=${boardType.boardCode})}" class="myHouseViewMore">+ 더 보기</a>
+
+                        </div>
+                        <th:block th:replace="~{common/fragments/board/boardMainMyHouse}"></th:block>
+
+                    </div>
+                    <!-- 노하우 -->
+                    <div class="tipMainContainer">
+                        <div class="titleContainer">
+                            <a th:href="@{${url}(boardCode=${boardType.boardCode})}" class="tipViewMore"><h1 th:text="${boardType.boardName}">노하우</h1></a>
+                            <a th:href="@{${url}(boardCode=${boardType.boardCode})}" class="tipViewMore">+ 더 보기</a>
+
+                        </div>
+                        <th:block th:replace="~{common/fragments/board/boardMainTip}"></th:block>
+
+                    </div>
                 </section>
-                <!-- 광고 -->
-                <div class="boardAdContainer">
-                    <img src="/images/board/boardMainAd.png" alt="" class="boardAd mySlides">
-                    <img src="/images/board/boardMainAd2.png" alt="" class="boardAd mySlides">
-                    <img src="/images/board/boardMainAd3.jpg" alt="" class="boardAd mySlides">
-                    <img src="/images/board/boardMainAd4.jpg" alt="" class="boardAd mySlides">
-                    <img src="/images/board/boardMainAd5.jpg" alt="" class="boardAd mySlides">
-                    <img src="/images/board/boardMainAd6.png" alt="" class="boardAd mySlides">
-                    <h4 class="adViewMore">1/6+</h4>
-                    <a class="prev"><i class="fa-solid fa-chevron-left"></i></a>
-                    <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
-                </div>
-                <!-- 집들이 -->
-                <div class="myHouseMainContainer">
-                    <div class="titleContainer">
-                        <a href="/myHouse/main" class="myHouseViewMore"><h1>집들이</h1></a>
-                        <a href="/myHouse/main" class="myHouseViewMore">+ 더 보기</a>
-
-                    </div>
-                    <th:block th:replace="~{common/fragments/board/boardMainMyHouse}"></th:block>
-
-                </div>
-                <!-- 노하우 -->
-                <div class="tipMainContainer">
-                    <div class="titleContainer">
-                        <a href="/tip/main" class="tipViewMore"><h1>노하우</h1></a>
-                        <a href="/tip/main" class="tipViewMore">+ 더 보기</a>
-
-                    </div>
-                    <th:block th:replace="~{common/fragments/board/boardMainTip}"></th:block>
-
-                </div>
-            </section>
-
+            </th:block>
         </div>
 
     </main>
