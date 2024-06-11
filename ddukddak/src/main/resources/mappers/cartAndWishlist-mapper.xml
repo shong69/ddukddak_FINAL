@@ -52,6 +52,4 @@
 		VALUES(SEQ_CART_ID.NEXTVAL,#{quantity},#{memberNo},#{productNo})
 	</insert>
 
-	
-
 </mapper>
