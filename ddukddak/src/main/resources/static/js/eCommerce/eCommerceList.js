@@ -9,22 +9,34 @@ for (let i = 0; i < productPriceElements.length; i++) {
     productPriceElements[i].textContent = formatNumberWithCommas(productPrice); // 포맷팅된 내용으로 설정
 }
 
-// 정렬순서 변경
-const orderSorting = document.querySelector("#orderSorting");
-const products = document.querySelectorAll(".products");
+const orderSorting = document.getElementById('orderSorting');
 
-orderSorting.addEventListener("change", e => {
-    ordervalue = e.target.value;
+orderSorting.addEventListener('change', function() {
+    const selectedOption = this.value;
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set('sort', selectedOption);
+    window.location.href = currentUrl;
+});
 
-    console.log(products);
 
-    if(ordervalue == 1) {
-        console.log("1");
-    } else if(ordervalue == 2) {
-        console.log("2");
-    } else if(ordervalue == 3) {
-        console.log("3");
-    } else if(ordervalue == 4) {
-        console.log("4");
+var currentUrl = window.location.href
+
+var queryString = currentUrl.split('?')[1];
+
+if (queryString) {
+
+    var queryParams = queryString.split('&');
+
+
+    for (var i = 0; i < queryParams.length; i++) {
+        if (queryParams[i].indexOf('sort=') !== -1) {
+
+            var sortValue = queryParams[i].split('=')[1];
+
+            orderSorting.value = sortValue;
+
+        }
     }
-})
+} else {
+    console.log("쿼리 파라미터가 없습니다.");
+}

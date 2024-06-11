@@ -1,5 +1,6 @@
 package com.ddukddak.myPage.model.service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,23 +13,32 @@ import com.ddukddak.myPage.model.dto.CartItem;
 import com.ddukddak.myPage.model.mapper.CartAndWishListMapper;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class CartAndWishListServiceImpl implements CartAndWishListService{
 
 	private final CartAndWishListMapper mapper;
 
 	//장바구니 상품 목록 불러오기
 	@Override
-	public Map<String, Object> selectCartList(Member loginMember) {
+	public List<CartItem> selectCartList(Member loginMember) {
 		int memberNo = loginMember.getMemberNo();
-		List<CartItem> cartList = mapper.selectCartList(memberNo);
-		Map<String, Object> map = new HashMap<>();
-		map.put("cartList", cartList);
 		
-		return map;
+		List<CartItem> cartList = mapper.selectCartList(memberNo);
+		
+		for(CartItem item : cartList) {
+			List<Integer> optionNo = mapper.selectCartListOptionNo(item.getCartId());
+			item.setOptionNo(optionNo);
+			
+			List<String> optionValue = mapper.selectCartListOptionValue(item.getCartId());
+			item.setOptionValue(optionValue);		
+		}
+		
+		return cartList;
 	}
 
 	//장바구니 상품 삭제
@@ -62,8 +72,10 @@ public class CartAndWishListServiceImpl implements CartAndWishListService{
 		
 		int insertOption = 0;
 		
-		for(int oneOption : option) {			
+		for(Object oneOption : option) {	
+			log.info("type : " + oneOption);
 			insertOption = mapper.insertOption(oneOption);
+			log.info("insertOption : " + insertOption);
 		}
 		
 		return insertCartItem + insertOption;

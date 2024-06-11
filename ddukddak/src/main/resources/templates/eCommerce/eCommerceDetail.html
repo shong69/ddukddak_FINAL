@@ -32,14 +32,14 @@
             <div id="productContainer">
                 <div id="imgContainer" th:each="img : ${productInfo.imgList}" th:if="${img.uploadImgOrder == 0}">
                     <div>
-                        <img th:src="|${img.uploadImgPath}${img.uploadImgOgName}|" class="mainImg">
+                        <img th:src="|${img.uploadImgPath}${img.uploadImgRename}|" class="mainImg">
                         <div class="arrow left-arrow">&lt;</div>
                         <div class="arrow right-arrow">&gt;</div>
                     </div>
 
                     <div id="imgSubContainer" >
                         <span th:each="img : ${productInfo.imgList}">
-                            <img th:src="|${img.uploadImgPath}${img.uploadImgOgName}|" class="subImg">
+                            <img th:src="|${img.uploadImgPath}${img.uploadImgRename}|" class="subImg">
                         </span>
                     </div>
 

@@ -40,10 +40,10 @@
             <th:block th:unless="${#lists.isEmpty(selectProductList)}">
                 <div id="selectProduct">
                     <select id="orderSorting">
-                        <option value="1">최신순</option>
-                        <option value="2">오래된순</option>
-                        <option value="3">가격 높은순</option>
-                        <option value="4">가격 낮은순</option>
+                        <option value="1" th:selected="${sort == 1}">최신순</option>
+                        <option value="2" th:selected="${sort == 2}">오래된순</option>
+                        <option value="3" th:selected="${sort == 3}">가격 높은순</option>
+                        <option value="4" th:selected="${sort == 4}">가격 낮은순</option>
                     </select>
                 </div>
     
@@ -55,7 +55,7 @@
                                 <div th:if="${col < selectProductList.size()}">
                                     <!-- 검색 X -->
                                     <a th:unless="${query}" th:href="@{'/eCommerce/list/' + ${selectProductList[col].bigCategoryNo} + '/' + ${selectProductList[col].categoryNo} + '/' + ${selectProductList[col].productNo} + '/detail'}">
-                                        <div><img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgOgName}|"></div>
+                                        <div><img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgRename}|"></div>
                                         <div>
                                             <h4 th:text="${selectProductList[col].productName}">상품이름</h4>
                                         </div>
@@ -72,7 +72,7 @@
                                     <!-- 검색 O -->
                                     <a th:if="${query}" th:href="@{'/eCommerce/list/' + ${selectProductList[col].bigCategoryNo} + '/' + ${selectProductList[col].categoryNo} + '/' + ${selectProductList[col].productNo} + '/detail'}",
                                         query="${query}">
-                                        <div><img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgOgName}|"></div>
+                                        <div><img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgRename}|"></div>
                                         <div>
                                             <h4 th:text="${selectProductList[col].productName}">상품이름</h4>
                                         </div>

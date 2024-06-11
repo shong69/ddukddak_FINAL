@@ -15,7 +15,7 @@ import lombok.ToString;
 @Builder
 public class ProductImg {
 	
-	private int uploadImgmgNo;
+	private int uploadImgNo;
 	private String uploadImgPath;
 	private String uploadImgOgName;
 	private String uploadImgRename;
