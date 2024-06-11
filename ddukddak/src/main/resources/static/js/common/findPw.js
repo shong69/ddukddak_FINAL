@@ -4,6 +4,11 @@ const checkTelObj = {
     "telAuth" : false
 }
 
+const checkPwObj = {
+    "newPw" : false,
+    "newConfirmPw" : false
+}
+
 
 
 // 1. 아이디 입력 인풋
@@ -80,6 +85,8 @@ function resetAuthStates() {
 }
 
 
+
+// ----------------------------------------------------------
 
 
 // 1. 아이디 입력창 입력 시
@@ -362,6 +369,141 @@ telAuthInput.addEventListener('input', e => {
 });
 
 
+// 숨길 영역 추가
+const inputIdDiv = document.getElementById('inputIdDiv');
+const telDiv = document.getElementById('telDiv');
+
+// 4. 비밀번호 변경
+const changePwDiv = document.getElementById('changePwDiv');
+const changePwBtnDiv = document.getElementById('changePwBtnDiv');
+
+const newPw = document.getElementById('newPw'); // 새 비밀번호 인풋
+const pwMsg = document.getElementById('pwMsg');
+
+const newConfirmPw = document.getElementById('newConfirmPw'); // 새 비밀번호 확인 인풋
+const pwConfirmMsg = document.getElementById('pwConfirmMsg');
+
+
+
+// 비밀번호 찾기 버튼 클릭 시
+findPwBtn.addEventListener('click', () => {
+
+    if(!checkTelObj.id) {
+        alert('유효한 아이디를 입력해 주세요.');
+        return;
+    }
+
+    if (!checkTelObj.tel) {
+        alert('유효한 전화번호를 입력해 주세요.');
+        return;
+    }
+    if (!checkTelObj.telAuth) {
+        alert('SMS 인증번호를 정확히 확인해 주세요.');
+        return;
+    }
+    
+    inputIdDiv.classList.add('hidden');
+    telDiv.classList.add('hidden');
+    telHiddenDiv.classList.add('hidden');
+    findPwBtnDiv.classList.add('hidden');
+    findPwBtn.classList.add('hidden');
+    changePwDiv.classList.remove('hidden');
+    changePwBtnDiv.classList.remove('hidden');
+
+});
+
+
+// 비밀번호 체크 함수
+const checkPwFn = () => {
+
+    // 같을 경우
+    if(newPw.value === newConfirmPw.value) {
+        pwConfirmMsg.innerText ='\u2713 비밀번호가 일치합니다.';
+        pwConfirmMsg.classList.remove("errorC");
+        pwConfirmMsg.classList.add('confirm');
+        checkPwObj.newConfirmPw = true;
+        return;
+    }
+
+    pwConfirmMsg.innerText = '\u00D7 비밀번호가 일치하지 않습니다.';
+    pwConfirmMsg.classList.add("errorC");
+    pwConfirmMsg.classList.remove('confirm');
+    checkPwObj.newConfirmPw = false;
+
+}  
+
+
+newPw.addEventListener('input', e => {
+
+    const inputPw = e.target.value;
+
+    if(inputPw.trim().length === 0) {
+        
+        pwMsg.innerText = '새 비밀번호를 입력해 주세요.';
+        pwMsg.classList.add("errorC");
+        newPw.classList.add("errorB");
+        pwMsg.classList.remove('confirm');
+        checkPwObj.newPw = false;
+        newPw.value = ""; // 처음 공백 방지
+
+        return;
+    }
+
+    newPw.classList.remove("errorB");
+
+    const regExp = /^[a-zA-Z0-9!@#_-]{6,20}$/;
+
+    // 정규식 미통과
+    if(!regExp.test(inputPw)) {
+        pwMsg.innerText = '\u00D7 비밀번호가 유효하지 않습니다.';
+        pwMsg.classList.add("errorC");
+        pwMsg.classList.remove('confirm');
+        checkPwObj.newPw = false;
+        return;
+    }
+
+    //
+    pwMsg.innerText = '\u2713';
+    pwMsg.classList.remove("errorC");
+    pwMsg.classList.add('confirm');
+    checkPwObj.newPw = true;
+
+    if(newConfirmPw.value.length > 0) {
+        checkPwFn();
+    }
+
+});
+
+
+newConfirmPw.addEventListener('input', e => {
+
+    const inputConfirmPw = e.target.value;
+
+    if(newPw.value.length > 0 && inputConfirmPw.trim().length === 0) {
+        pwConfirmMsg.innerText = '새 비밀번호 확인을 입력해 주세요.';
+        pwConfirmMsg.classList.add("errorC");
+        newConfirmPw.classList.add('errorB');
+        pwConfirmMsg.classList.remove('confirm');
+        checkPwObj.newConfirmPw = false;
+        return;
+    }
+
+    newConfirmPw.classList.remove("errorB");
+
+    if(checkPwObj.newPw) {
+        checkPwFn();
+        return;
+    }
+
+    checkPwObj.newConfirmPw = false;
+
+})
+
+
+
+
+
+
 // 폼 제출 시 유효성 검사
 const findPwForm = document.getElementById('findPwForm');
 
@@ -373,20 +515,16 @@ findPwForm.addEventListener('submit', (e) => {
         return;
     }
 
-    if (!checkTelObj.tel || !checkTelObj.telAuth || !checkTelObj.id ) {
+    if (!checkPwObj.newPw || !checkPwObj.newConfirmPw) {
         e.preventDefault();
 
-        if(!checkTelObj.id) {
+        if(!checkPwObj.pw) {
             alert('유효한 아이디를 입력해 주세요.');
             return;
         }
 
-        if (!checkTelObj.tel) {
+        if (!checkPwObj.newConfirmPw) {
             alert('유효한 전화번호를 입력해 주세요.');
-            return;
-        }
-        if (!checkTelObj.telAuth) {
-            alert('SMS 인증번호를 정확히 확인해 주세요.');
             return;
         }
     }
@@ -394,10 +532,33 @@ findPwForm.addEventListener('submit', (e) => {
 
 });
 
-// 다음 버튼이 있을 때 엔터키 누를 경우에 대한 방지
-document.getElementById('inputId').addEventListener('keypress', function(event) {
+document.getElementById('findPwForm').addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         event.preventDefault();  // Enter 키에 의한 폼 제출을 막음
-        if(!nextBtn.classList.contains('hidden')) document.getElementById('nextBtn').click();  // "다음" 버튼 클릭 이벤트 트리거
+        
+        // "다음" 버튼이 표시되어 있고 활성화된 경우
+        const nextBtn = document.getElementById('nextBtn');
+        if (!nextBtn.classList.contains('hidden')) {
+            nextBtn.click();
+            return;
+        }
+
+        // "비밀번호 찾기" 버튼이 표시되어 있고 활성화된 경우
+        const findPwBtn = document.getElementById('findPwBtn');
+        if (!findPwBtn.classList.contains('hidden')) {
+            findPwBtn.click();
+            return;
+        }
     }
 });
+
+// 다음 버튼이 있을 때 엔터키 누를 경우에 대한 방지
+// document.getElementById('inputId').addEventListener('keypress', function(event) {
+//     if (event.key === 'Enter') {
+//         event.preventDefault();  // Enter 키에 의한 폼 제출을 막음
+//         if(!nextBtn.classList.contains('hidden')) document.getElementById('nextBtn').click();  // "다음" 버튼 클릭 이벤트 트리거
+//     }
+// });
+
+
+
