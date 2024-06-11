@@ -41,10 +41,6 @@ public class MemberController {
 	@PostMapping("login")
 	public String memberLogin(Member member, RedirectAttributes ra, Model model, @RequestParam(value="saveId", required=false) String saveId, HttpServletResponse resp) {
 		
-//		String smsAuthKey = Utility.RandomNumber6();
-//		
-//		log.info("인증 번호 테스트 : {}", smsAuthKey);
-
 		
 		Member loginMember = service.login(member);
 		

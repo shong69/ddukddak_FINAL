@@ -7,7 +7,7 @@ import com.ddukddak.partner.model.dto.Partner;
 @Mapper
 public interface PartnerMapper {
 
-	Partner login(Partner partner);
+	Partner login(String string);
 
 
 
