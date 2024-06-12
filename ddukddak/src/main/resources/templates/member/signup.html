@@ -39,22 +39,23 @@
                         <!-- 비밀번호 -->
                         <label for="memberPw"><em style="color: red;">*</em> 비밀번호</label>                                               
                         <div class="signUp-input-area">
-                            <input type="password" name="memberPw" id="memberPw" maxlength="20">
+                            <input type="password" name="memberPw" id="memberPw" maxlength="16">
                         </div>
-                        <span id="pwMsg">6~20자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.</span>                        
+                        <span id="pwMsg">8~16자의 영문 대/소문자, 숫자, 특수문자(필수) 사용해 주세요.</span>
 
-                        <!-- 비밀번호  확인 -->
+                        <!-- 비밀번호 확인 -->
                         <label for="memberPwConfirm"><em style="color: red;">*</em> 비밀번호 확인</label>                        
                         <div class="signUp-input-area">
-                            <input type="password" name="memberPwConfirm" id="memberPwConfirm" maxlength="20">
+                            <input type="password" name="memberPwConfirm" id="memberPwConfirm" maxlength="16">
                         </div>
                         <span id="pwConfirmMsg"></span>
                         
                         <!-- 이름 -->
-                        <label for="memberName"><em style="color: red;">*</em> 이름</label>                        
+                        <label for="memberName"><em style="color: red;" >*</em> 이름</label>                        
                         <div class="signUp-input-area">
-                            <input type="text" name="memberName" id="memberName" maxlength="10" autocomplete="off">
+                            <input type="text" name="memberName" id="memberName" maxlength="10" autocomplete="off" required>
                         </div>
+                        <span></span>
 
                         <!-- 닉네임 -->
                         <label for="memberNickname"><em style="color: red;">*</em> 닉네임</label>                        
@@ -68,14 +69,14 @@
                         <label for="memberEmail"><em style="color: red;">*</em> 이메일</label>                        
                         <div class="signUp-input-area auth-btn-area1">
                             <input type="email" name="memberEmail" id="memberEmail" maxlength="30" autocomplete="off">
-                            <button type="button" id="emailAuth">인증하기</button>
+                            <button type="button" id="emailAuth" disabled>인증하기</button>
 
                             <!-- 이메일 인증 -->
                             <!-- <label for="memberEmail"><em style="color: red;">*</em> 이메일</label> -->
                             <div id="emailAuthDiv" class="authCheckArea1 hidden">
-                                <input>
+                                <input id="emailAuthKey" name="emailAuthKey" maxlength="6" placeholder="인증번호(6자리)">
                                 <button type="button" id="emailAuthCheck" class="authCheck">확인</button>
-                                <span id="emailAuthTime" class="authMsg">05:00</span>
+                                <span id="emailAuthTime" class="authMsg"></span>
                             </div>
 
                         </div>
@@ -86,34 +87,34 @@
                         <label for="memberTel"><em style="color: red;">*</em> 휴대전화</label>                        
                         <div class="signUp-input-area auth-btn-area2">
                             <input type="tel" name="memberTel" id="memberTel" placeholder="휴대폰 번호(-없이)" maxlength="11">
-                            <button type="button" id="telAuth">인증하기</button>
+                            <button type="button" id="telAuth" disabled>인증하기</button>
 
                             <!-- 전화번호 인증 -->
                             <div id="telAuthDiv" class="authCheckArea2 hidden">
-                                <input type="tel">
+                                <input id="smsAuthKey" name="smsAuthKey" maxlength="6" placeholder="인증번호(6자리)">
                                 <button type="button" id="telAuthCheck" class="authCheck">확인</button>
-                                <span id="telAuthTime" class="authMsg">05:00</span>
+                                <span id="telAuthTime" class="authMsg"></span>
                             </div>
                         </div>
                         <span id="telMsg"></span>
 
                         <!-- 주소 -->
-                        <label for="memberAddress">주소</label>   
+                        <label for="memberAddr">주소</label>   
                         <div class="address-input-area">
-                            <input type="text" name="memberAddress" placeholder="우편번호" maxlength="6" id="postcode" readonly>                       
+                            <input type="text" name="memberAddr" placeholder="우편번호" maxlength="6" id="postcode" readonly>                       
                         
                             <button type="button" onclick="sample6_execDaumPostcode()" id="searchAddress">검색</button>
                         </div>
 
                         <div class="address-input-area">
-                            <input type="text" name="memberAddress" placeholder="도로명/지번 주소" id="address" readonly>
+                            <input type="text" name="memberAddr" placeholder="도로명/지번 주소" id="address" readonly>
                         </div>
                         
                         <div class="address-input-area">
-                            <input type="text" name="memberAddress" placeholder="상세 주소" id="detailAddress">
+                            <input type="text" name="memberAddr" placeholder="상세 주소" id="detailAddress" readonly>
                         </div>
 
-                        <button id="signUpBtn">가입하기</button>
+                        <button id="signUpBtn" disabled>가입하기</button>
                     </div>
                 </form>
             </div>

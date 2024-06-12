@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.member.model.service.MemberService;
-import com.ddukddak.partner.model.dto.Partner;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -201,5 +201,85 @@ public class MemberController {
 	
 	// * 비밀번호 찾기는 common.controller 에서 공통 처리
 	
+	
+	/** 회원가입 - 아이디 중복 체크
+	 * @param inputId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("checkId")
+	public int checkId(@RequestParam("memberId") String inputId) {
+		
+		return service.checkId(inputId);
+	}
+	
+	
+	/** 회원가입 - 닉네임 중복 체크
+	 * @param inputNickname
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("checkNickname")
+	public int checkNickname(@RequestParam("memberNickname") String inputNickname) {
+		
+		return service.checkNickname(inputNickname);
+	}
+	
+	/** 회원가입 - 이메일 중복 체크
+	 * @param inputEmail
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("checkEmail")
+	public int checkEmail(@RequestParam("memberEmail") String inputEmail) {
+		
+		return service.checkEmail(inputEmail);
+		
+	}
+	
+	/** 회원가입 - 휴대폰 중복 체크
+	 * @param inputTel
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("checkTel")
+	public int checkTel(@RequestParam("memberTel") String inputTel) {
+		
+		return service.checkTel(inputTel);
+	}
+	
+	
+	
+	/** 회원가입[제출]
+	 * @param inputMember
+	 * @param memberAddress
+	 * @param ra
+	 * @return
+	 */
+	@PostMapping("signup")
+	public String signup(@ModelAttribute Member inputMember,
+						@RequestParam("memberAddr") String[] memberAddr,
+						RedirectAttributes ra) {
+		
+		
+		// 회원가입 서비스 호출
+		int result = service.signup(inputMember, memberAddr);
+		
+		String path = null;
+		String message = null;
+		
+		if(result > 0) { // 성공 시
+			message = inputMember.getMemberNickname() + "님의 가입을 환영합니다 :)";
+			path = "/";
+			
+		} else { // 실패
+			message = "회원가입 실패";
+			path = "/member/signup";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
+	}
 	
 }
