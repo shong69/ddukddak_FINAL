@@ -191,3 +191,22 @@ if (slideshow != null) {
         });
     }
 }
+
+
+// =================================================================================
+
+// 코멘트 유효성 검사
+const insertComment = document.querySelector("#insertComment");
+const commentContent = document.querySelector("#commentContent");
+
+insertComment.addEventListener("click", () => {
+
+  if(commentContent.value.trim().length == 0) {
+
+    alert("댓글 내용을 입력해주세요.");
+    commentContent.focus();
+    return;
+
+  }
+
+});

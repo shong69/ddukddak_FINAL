@@ -1,0 +1,49 @@
+<div class="commentArea">
+
+  <div class="inputCommentArea">
+
+    
+    <div class="topArea">
+      <h2 th:text="|댓글 0개|">댓글수</h2>
+      <button class="boardDetailSubmitChatBtn" id="insertComment">등록</button>
+    </div>
+      
+    <div class="commentTextArea">
+      <textarea id="commentContent" name="commentContent" cols="120" rows="5"></textarea>
+    </div>
+    
+
+  </div>
+
+  <div class="comment">
+  
+    <div class="commentUser">
+  
+      <div class="leftArea">
+        <div>
+          <img src="/images/profile/main.jpg">
+          <h3>유저이</h3>
+        </div>
+  
+      </div>
+  
+      <div class="rightArea">
+  
+        <div class="commentBtnArea">
+          <div th:onclick="|showInsertComment(this)|">답글</div>
+          <div>수정</div>
+          <div>삭제</div>
+        </div>
+  
+      </div>
+  
+    </div>
+  
+    <div class="commentContent" id="commentContent">
+      <h3>댓글 내용</h3>
+    </div>
+  
+  </div>
+
+</div>
+
