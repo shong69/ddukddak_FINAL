@@ -150,13 +150,7 @@ public class eCommerceController {
 		model.addAttribute("bigCategoryName", bigCategoryName);
 		model.addAttribute("bigCategoryNo", bigcategoryNo);
 		model.addAttribute("smallCategoryNo", smallcategoryNo);
-		model.addAttribute("query", query);
-		
-		HttpSession session = req.getSession();
-		
-		Member loginMember = (Member)session.getAttribute("loginMember");
-		log.info("loginMember" + loginMember);
-		
+		model.addAttribute("query", query);		
 		model.addAttribute("loginMember", loginMember);
 		
 		return "/eCommerce/eCommerceList";
