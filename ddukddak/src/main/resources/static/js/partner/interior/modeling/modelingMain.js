@@ -14,7 +14,16 @@ let isViewerExpanded = false;
 
 
 // 카테고리 버튼 누르면 해당 가구들 표시
-const addButton = document.getElementsByClassName(".add-element-button");
+const addButton = document.querySelectorAll(".add-element-button");
+
+addButton.forEach(elements => {
+    elements.addEventListener("click", e => {
+        for(let i = 0; i < addButton.length; i ++) {
+            addButton[i].style.backgroundColor = '#dae1e6';
+        }
+        e.target.style.backgroundColor = '#edf3f5';
+    })
+})
 
 
 // 이벤트 리스너 추가
