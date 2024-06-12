@@ -141,7 +141,6 @@ emailNm.addEventListener('input', e => {
 // 정규식 이메일
 const regExpEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-
 // 이메일 입력 창 포커스
 inputEmail.addEventListener('focus', e => {
 

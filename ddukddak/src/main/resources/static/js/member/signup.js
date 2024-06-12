@@ -1,3 +1,26 @@
+// 주소 검색 버튼 클릭 시
+document.querySelector("#searchAddress").addEventListener("click", () => {
+
+    const memberAddr = document.querySelectorAll("[name='memberAddress']");
+    const postcode = document.getElementById('postcode');
+    const address = document.getElementById('address');
+    const detailAddress = document.getElementById('detailAddress');
+    const searchButton = document.getElementById('searchAddress');
+
+    // 주소 필드에 값이 있는지 확인
+    if (postcode.value || address.value || detailAddress.value) {
+        // 값이 있으면 필드 비우기 및 버튼 텍스트 변경
+        postcode.value = '';
+        address.value = '';
+        detailAddress.value = '';
+        detailAddress.readOnly = true;
+        searchButton.innerText = '검색';
+    } else {
+        // 값이 없으면 주소 검색 함수 호출
+        execDaumPostcode();
+    }
+});
+
 /* 다음 주소 API 활용*/
 function execDaumPostcode() {
     new daum.Postcode({
@@ -22,13 +45,16 @@ function execDaumPostcode() {
             document.getElementById('postcode').value = data.zonecode;
             document.getElementById("address").value = addr;
             // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("detailAddress").readOnly = false;
             document.getElementById("detailAddress").focus();
+
+            // 검색 버튼 텍스트 변경
+            document.getElementById('searchAddress').innerText = '초기화';
         }
     }).open();
 }
 
-// 주소 검색 버튼 클릭 시
-document.querySelector("#searchAddress").addEventListener("click", execDaumPostcode);
+
 
 
 // ***************** 회원 가입 유효성 검사 ***********************
@@ -98,7 +124,7 @@ memberId.addEventListener("input", e => {
     .then(resp => resp.text()) 
     .then(count => {
 
-        if(count == 1) { // 중복 O
+        if(count > 0) { // 중복 O - 유니온 때문에 샘플아이디 겹치면 최대 2
             
             idMsg.innerText = "이미 사용중인 아이디입니다.";
             idMsg.classList.add('error');
@@ -212,6 +238,13 @@ memberPwConfirm.addEventListener("input", e => {
     
     const inputConfirmPw = e.target.value;
 
+    if(memberPw.value.trim().length === 0 && inputConfirmPw.trim().length === 0) {
+        pwConfirmMsg.innerText = '';
+        pwConfirmMsg.classList.remove('confirm', 'error');
+        checkObj.memberPw = false;
+        return;
+    }
+
     if(memberPw.value.trim().length === 0) {
         pwConfirmMsg.innerText = '비밀번호를 먼저 입력해 주세요.';
         pwConfirmMsg.classList.add('error');
@@ -219,7 +252,10 @@ memberPwConfirm.addEventListener("input", e => {
         checkObj.memberPw = false;
         
         return;
+
     }
+
+
 
     if(memberPw.value.length > 0 && inputConfirmPw.trim().length === 0) {
         pwConfirmMsg.innerText = '비밀번호 확인을 입력해 주세요.';
@@ -377,19 +413,20 @@ const telAuthTime = document.getElementById('telAuthTime'); // 05:00 타이머
 const telMsg = document.getElementById('telMsg'); // 휴대폰 span
 
 
-const authDisabledCheck = () => {
+const disabledAuthBtnCheck = () => {
     
-    if(!emailAuthDiv.classList.contains('hidden')) {
-        telAuth.disabled = true;
+    if(checkObj.memberEmail) {
+        emailAuth.disabled = false;
     } else {
-        telAuth.disabled = false;
+        emailAuth.disabled = true;
     }
 
-    if(!telAuthDiv.classList.contains('hidden')) {
-        emailAuth.disabled = true;
+    if(checkObj.memberTel) {
+        telAuth.disabled = false;
     } else {
-        emailAuth.disabled = false;
+        telAuth.disabled = true;
     }
+
 }
 
 
@@ -412,11 +449,12 @@ memberEmail.addEventListener('input', e => {
         emailMsg.classList.remove('confirm', 'error');
         checkObj.memberEmail = false;
         memberEmail.value = "";
+        disabledAuthBtnCheck();
         return;
     }
 
-    const regExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+    const regExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     // 입력 받은 이메일이 정규식과 일치하지 않는 경우
     // (알맞은 이메일 형태가 아닌 경우)
     if( !regExp.test(inputEmail) ) {
@@ -424,6 +462,7 @@ memberEmail.addEventListener('input', e => {
         emailMsg.classList.add('error'); 
         emailMsg.classList.remove('confirm');
         checkObj.memberEmail = false; 
+        disabledAuthBtnCheck();
         return;
     }
 
@@ -435,20 +474,23 @@ memberEmail.addEventListener('input', e => {
             emailMsg.innerText = "이미 사용중인 이메일입니다.";
             emailMsg.classList.add('error');
             emailMsg.classList.remove('confirm');
-            checkObj.memberEmail = false; 
+            checkObj.memberEmail = false;
+            disabledAuthBtnCheck();
             return;
         }
         
-        // 중복 X 경우
+        // 중복 X 경우 
         emailMsg.innerText = "사용 가능한 이메일입니다. '인증하기' 버튼을 클릭하여 계정을 인증해주세요.";
         emailMsg.classList.add('confirm');
         emailMsg.classList.remove('error'); 
         checkObj.memberEmail = true;
+        disabledAuthBtnCheck();
     })
     .catch(error => {
         console.log(error); 
     });
 
+    disabledAuthBtnCheck();
     disabledCheck();
     
 })
@@ -480,20 +522,31 @@ emailAuth.addEventListener('click', () => {
 
     // 재클릭 시 처리
     checkObj.emailAuth = false;
-    memberEmail.value = "";
+    emailAuthKey.value = "";
     emailMsg.innerText = "";
 
     
 
     // 핸드폰 인증 중에 클릭할 경우
     if(!telAuthDiv.classList.contains('hidden')) {
+
+        alert('인증 진행 중 다른 시도가 감지되어 종료합니다. 다시 시도해 주세요.');
+        checkObj.memberEmail = false;
+        checkObj.emailAuth = false;
         checkObj.memberTel = false;
         checkObj.telAuth = false;
+        memberEmail.value = "";
         memberTel.value = "";
-        smsAuthKey.value = ""; // 인증키 입력 인풋
+        emailAuthKey.value = ""; // 이메일 인증키 입력 인풋
+        smsAuthKey.value = ""; // sms 인증키 입력 인풋
+        emailMsg.innerText = "";
         telMsg.innerText = "";
+        emailAuthDiv.classList.add('hidden');
+        emailAuth.classList.remove('hidden');
         telAuthDiv.classList.add('hidden');
         telAuth.classList.remove('hidden');
+
+        disabledAuthBtnCheck();
 
         return;
     }
@@ -508,6 +561,7 @@ emailAuth.addEventListener('click', () => {
         emailMsg.innerText = "";
         emailAuthDiv.classList.add('hidden');
 
+        disabledAuthBtnCheck();
         return;
     }
 
@@ -518,6 +572,7 @@ emailAuth.addEventListener('click', () => {
         emailMsg.classList.add('error');
         emailMsg.classList.remove('confirm');
         checkObj.memberEmail = false; 
+        disabledAuthBtnCheck();
         return;
     }
 
@@ -607,7 +662,7 @@ emailAuthCheck.addEventListener('click', () => {
 
     const obj = {
         "email" : memberEmail.value,
-        "emailAuth" : emailAuthKey.value
+        "authKey" : emailAuthKey.value
     };
 
     fetch("/email/checkAuthKey", {
@@ -635,6 +690,9 @@ emailAuthCheck.addEventListener('click', () => {
                 emailAuth.classList.remove('hidden');
 
                 count = 0;
+                
+                emailMsg.innerText = "실제 사용하고 계신 이메일을 입력해 주세요.";
+                emailMsg.classList.remove('error', 'confirm');
 
                 return;
             }
@@ -642,25 +700,56 @@ emailAuthCheck.addEventListener('click', () => {
             alert(`인증번호가 일치하지 않습니다. ${count}회 (3회 실패 시 종료)`);
 
             checkObj.emailAuth = false;
-            
+            emailAuth.disabled = true;
+
 
             return;
         }
         
         clearInterval(authTimer);
 
-        emailMsg.innerText = '\u2713 인증 완료되었습니다.'
+        emailMsg.innerText = '\u2713 인증 완료'
         emailMsg.classList.remove('error');
         emailMsg.classList.add('confirm');
         
         checkObj.emailAuth = true;
 
+        emailAuthDiv.classList.add('hidden');
+        // emailAuth.classList.remove('hidden');
+        // emailAuth.disabled = true;
+        
+        memberEmail.readOnly = true;
+
+        disabledCheck();
+
+
+
     })
     
-    disabledCheck();
 });
 
 
+memberEmail.addEventListener('click', () => {
+
+    if(memberEmail.readOnly) {
+        if(confirm('다시 입력하시겠습니까?')) {
+        
+            memberEmail.readOnly = false;
+            memberEmail.value = "";
+            emailAuthKey.value = "";
+            emailMsg.innerText = "실제 사용하고 계신 이메일을 입력해 주세요.";
+            checkObj.emailAuth = false;
+            checkObj.email = false;
+            emailMsg.classList.remove('error', 'confirm');
+            emailAuth.classList.remove('hidden');
+            emailAuth.disabled = true;
+            
+        } 
+    } 
+    
+    return;
+    
+})
 
 
 
@@ -693,16 +782,17 @@ memberTel.addEventListener('input', e => {
         return;
     }
 
-    const regExp = /^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
+    const regExp = /^01[0-9]{1}[0-9]{4}[0-9]{4}$/;
 
     if(!regExp.test(inputTel)) {
         telMsg.innerText = "유효한 휴대폰 번호를 입력해 주세요."
         telMsg.classList.add('error');
         telMsg.classList.remove('confirm');
         checkObj.memberTel = false;
-
+        disabledAuthBtnCheck();
         return;
     }
+
 
     try {
 
@@ -717,7 +807,7 @@ memberTel.addEventListener('input', e => {
                 telMsg.classList.remove('confirm');
 
                 checkObj.memberTel = false;
-                
+                disabledAuthBtnCheck();
                 return;
         
             }
@@ -727,12 +817,13 @@ memberTel.addEventListener('input', e => {
             telMsg.classList.add('confirm');
             telMsg.classList.remove('error'); 
             checkObj.memberTel = true;
+            disabledAuthBtnCheck();
         })
 
     } catch(err) {
         console.log(err);
     }
-
+    disabledAuthBtnCheck();
     disabledCheck();
 });
 
@@ -748,20 +839,30 @@ telAuth.addEventListener('click', () => {
 
     // 재클릭 시 처리
     checkObj.telAuth = false;
-    memberTel.value = "";
+    smsAuthKey.value = "";
     telMsg.innerText = "";
 
 
     // 이메일 인증 중 시도
     if(!emailAuthDiv.classList.contains('hidden')) {
         
+        alert('인증 진행 중 다른 시도가 감지되어 종료합니다. 다시 시도해 주세요.');
         checkObj.memberEmail = false;
         checkObj.emailAuth = false;
+        checkObj.memberTel = false;
+        checkObj.telAuth = false;
         memberEmail.value = "";
-        emailAuthKey.value = ""; // 인증키 입력 인풋
+        memberTel.value = "";
+        emailAuthKey.value = ""; // 이메일 인증키 입력 인풋
+        smsAuthKey.value = ""; // sms 인증키 입력 인풋
         emailMsg.innerText = "";
+        telMsg.innerText = "";
         emailAuthDiv.classList.add('hidden');
         emailAuth.classList.remove('hidden');
+        telAuthDiv.classList.add('hidden');
+        telAuth.classList.remove('hidden');
+
+        disabledAuthBtnCheck();
 
         return;
     }
@@ -785,10 +886,10 @@ telAuth.addEventListener('click', () => {
         telMsg.classList.add('error');
         telMsg.classList.remove('confirm');
         checkObj.memberTel = false; 
-
+        disabledAuthBtnCheck();
         return;
     }
-
+    
 
     // 인증하기 없어지고, 확인 버튼 노출
     telAuthDiv.classList.remove('hidden');
@@ -872,8 +973,8 @@ telAuthCheck.addEventListener('click', () => {
 
     
     const obj = {
-        "tel" : memberTel.value,
-        "telAuth" : smsAuthKey.value
+        "smsTel" : memberTel.value,
+        "smsAuthKey" : smsAuthKey.value
     };
 
     fetch("/sms/checkSmsAuthKey", {
@@ -901,32 +1002,59 @@ telAuthCheck.addEventListener('click', () => {
                 telAuth.classList.remove('hidden');
 
                 count2 = 0;
+                
 
                 return;
             }
 
             alert(`인증번호가 일치하지 않습니다. ${count2}회 (3회 실패 시 종료)`);
-
-            checkObj.telAuth = false;
             
+            checkObj.telAuth = false;
+            telAuth.disabled = true;
 
             return;
         }
         
         clearInterval(authTimer);
 
-        telMsg.innerText = '\u2713 인증 완료되었습니다.'
+        telMsg.innerText = '\u2713 인증 완료'
         telMsg.classList.remove('error');
         telMsg.classList.add('confirm');
         
         checkObj.telAuth = true;
 
+        telAuthDiv.classList.add('hidden');
+
+        memberTel.readOnly = true;
+
+        disabledCheck();
+
     })
 
-
-    disabledCheck();
 });
 
+
+memberTel.addEventListener('click', () => {
+
+    if(memberTel.readOnly) {
+        if(confirm('다시 입력하시겠습니까?')) {
+        
+            memberTel.readOnly = false;
+            memberTel.value = "";
+            smsAuthKey.value = "";
+            telMsg.innerText = "";
+            checkObj.memberTel = false;
+            checkObj.telAuth = false;
+            telMsg.classList.remove('error', 'confirm');
+            telAuth.classList.remove('hidden');
+            telAuth.disabled = true;
+            
+        } 
+    } 
+    
+    return;
+    
+})
 
 // ------------------------------------------------------
 
@@ -948,10 +1076,10 @@ signUpForm.addEventListener("submit" , e => {
                     str = "아이디가 올바른 형식이 아니거나, 중복된 아이디입니다."; break;
                 
                 case "memberPw" : 
-                    str = "비밀번호가 올바르게 입력되지 않았습니다."; break;
+                    str = "비밀번호가 형식에 맞게 입력되지 않았습니다."; break;
                 
                 case "memberPwConfirm" :
-                    str = "비밀번호가 일치하지 않습니다."; break;
+                    str = "비밀번호와 비밀번호 확인이 일치하지 않습니다."; break;
                 
                 case "memberName" : 
                     str = "이름이 올바른 형식이 아닙니다."; break;
@@ -963,7 +1091,7 @@ signUpForm.addEventListener("submit" , e => {
                     str = "이메일이 올바른 형식이 아니거나, 중복된 이메일입니다."; break;
     
                 case "memberTel" :
-                    str = "전화번호가 유효하지 않습니다."; break;
+                    str = "휴대폰 번호가 올바른 형식이 아니거나, 중복된 휴대폰 번호입니다."; break;
 
                 case "emailAuth" :
                     str = "이메일 인증이 정상적으로 진행되지 않았습니다."; break;
@@ -982,10 +1110,10 @@ signUpForm.addEventListener("submit" , e => {
         }
     }
 
-    const memberAddress = document.querySelectorAll("[name='memberAddress']");
-    const addr0 = memberAddress[0].value.trim().length == 0; // true / false
-    const addr1 = memberAddress[1].value.trim().length == 0;
-    const addr2 = memberAddress[2].value.trim().length == 0;
+    const memberAddr = document.querySelectorAll("[name='memberAddr']");
+    const addr0 = memberAddr[0].value.trim().length == 0; // true / false
+    const addr1 = memberAddr[1].value.trim().length == 0;
+    const addr2 = memberAddr[2].value.trim().length == 0;
 
     // 모두 true 인 경우만 true 저장
     const result1 = addr0 && addr1 && addr2; // 아무것도 입력 x
