@@ -13,6 +13,10 @@ let rectY = 0;
 let isViewerExpanded = false;
 
 
+// 카테고리 버튼 누르면 해당 가구들 표시
+const addButton = document.getElementsByClassName(".add-element-button");
+
+
 // 이벤트 리스너 추가
 function addDragAndDropListeners(element) {
     element.setAttribute("draggable", true);

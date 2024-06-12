@@ -150,8 +150,9 @@ public class eCommerceController {
 		model.addAttribute("bigCategoryName", bigCategoryName);
 		model.addAttribute("bigCategoryNo", bigcategoryNo);
 		model.addAttribute("smallCategoryNo", smallcategoryNo);
-		model.addAttribute("query", query);
-		
+
+		model.addAttribute("query", query);		
+
 		model.addAttribute("loginMember", loginMember);
 		
 		return "/eCommerce/eCommerceList";

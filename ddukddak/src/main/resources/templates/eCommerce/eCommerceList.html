@@ -191,7 +191,6 @@
         // 찜하기 눌렀을 때
         function showHert(event) {
             event.preventDefault();
-            alert("위시리스트에 추가되었습니다");
 
 
             event.target.style.display = 'none';
@@ -211,7 +210,11 @@
             })
             .then(resp => resp.text())
             .then(temp => {
-
+                if(temp > 0) {
+                    alert("위시리스트에 추가되었습니다");
+                }else {
+                    alert("위시리스트 추가 실패");
+                }
             });
 
                 
@@ -242,7 +245,11 @@
             })
             .then(resp => resp.text())
             .then(temp => {
-
+                if(temp > 0) {
+                    alert("위시리스트에서 삭제되었습니다");
+                }else {
+                    alert("위시리스트 삭제 실패");
+                }
             });
 
 

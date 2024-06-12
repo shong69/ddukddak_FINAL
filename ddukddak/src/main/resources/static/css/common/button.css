@@ -613,21 +613,20 @@ button:active {
 .interior3dCategory {
     width: 100px;
     height: 40px;
-    border: 1px solid var(--white);
+    background-color: #dae1e6;
     font-family: 'main';
-    color: white;
+    color: var(--gray1);
 }
 .interior3dCategory:hover {
     transform: none;
     box-shadow: none;
-    background-color: var(--white);
+    background-color: #edf3f5;
     color: var(--gray1);
 
     transition: 0.3s;
 }
 .interior3dCategory:active {
-    background-color: var(--gray1);
-    color: var(--white);
+    background-color: #c7d0d6;
 }
 
 
