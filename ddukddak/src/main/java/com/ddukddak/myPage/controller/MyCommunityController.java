@@ -1,12 +1,16 @@
 package com.ddukddak.myPage.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -14,7 +18,9 @@ import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.service.MyCommunityService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequestMapping("myCommunity")
 @Controller
 @RequiredArgsConstructor
@@ -61,7 +67,7 @@ public class MyCommunityController {
 	
 	
 	@ResponseBody
-	@GetMapping("myLikes/House")
+	@GetMapping("House")
 	public Object likeHouses(@SessionAttribute("loginMember")Member loginMember,
 			Model model) {
 		
@@ -71,11 +77,13 @@ public class MyCommunityController {
 	}
 	
 	@ResponseBody
-	@GetMapping("myLikes/Tip")
+	@GetMapping("Tip")
 	public Object likeTips(@SessionAttribute("loginMember")Member loginMember,
 			Model model) {
 		Map<String, Object> map = service.selectLikeTipBoardList(loginMember);
 
 		return map.get("likeTipBoardList");
 	}
+	
+
 }

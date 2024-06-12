@@ -17,6 +17,7 @@
 
     <!-- 헤더 -->
     <div id="modelingHeader">
+      <img src="/images/main/main-logo.png" style="height: 50px; margin-left: 20px; opacity: 70%;">
       <h2>내 방 디자인하기</h2>
 
       <h3 onclick="location.href='/';" style="cursor: pointer;">나가기</h3>
@@ -40,70 +41,76 @@
               <button id="add-no1" class="add-element-button interior3dCategory">벽걸이</button>
               <button id="add-no2" class="add-element-button interior3dCategory">러그/매트</button>
             </div>
-          </div>
 
-          <!-- 가구 아이템들 -->
-          <div></div>
+
+            
+            <!-- 가구 아이템들 -->
+            <div></div>
+          </div>
+        </div>
+
 
         <!-- 평면도 그리기 -->
-        </div>
           <div id="floor-plan">
-            <table>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
-          </div>
-        <div class="right-panel">
+            <div>
+              <table>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+              <div class="right-panel">
+      
+                <!--3d 모델링-->
+                <div id="viewer">
+                  <button id="open">[  ]</button>
+                </div>
+      
+                <!-- 견적조회 container -->
+                <div id="searchContainer">
+                  <h3>스크린샷 저장하기</h3>
+                  <h3>3D 모델링 저장하기</h3>
+                  <h3>내 게시판에 공유하기</h3>
+                  <h3>공유</h3>
+      
+                  <button class="interiorViewPrice" onclick="location.href='/partner/interior/modeling/estimate';">예상견적 조회 (가구 미포함)</button>
+                  <button class="interiorViewPrice">예상견적 조회 (가구 포함)</button>
+                </div>
+              </div>
 
-          <!--3d 모델링-->
-          <div id="viewer">
-            <button id="open">[  ]</button>
+            </div>
           </div>
-
-          <!-- 견적조회 container -->
-          <div id="searchContainer">
-            <h3>스크린샷 저장하기</h3>
-            <h3>3D 모델링 저장하기</h3>
-            <h3>내 게시판에 공유하기</h3>
-            <h3>공유</h3>
-
-            <button class="interiorViewPrice" onclick="location.href='/partner/interior/modeling/estimate';">예상견적 조회 (가구 미포함)</button>
-            <button class="interiorViewPrice">예상견적 조회 (가구 포함)</button>
-          </div>
-        </div>
       </div>
 
     </div>

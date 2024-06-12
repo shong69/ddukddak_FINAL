@@ -236,10 +236,9 @@ public class MyPageController {
 		
 		Map<String, Object> map = service.selectWishList(loginMember, cp);
 		
-		log.info("wishList" + map.get("wishList"));
-		
 		model.addAttribute("wishList", map.get("wishList"));
 		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("loginMember", loginMember);
 	
 		return"myPage/wishList";
 	}
