@@ -71,27 +71,35 @@ public interface MyHouseBoardMapper {
 
 
 
-//	/** 게시글 상세 조회
-//	 * @param boardNo
-//	 * @return board
-//	 */
-//	Board selectBoard(Map<String, Object> map);
-//
-//
-//
-//	/** 조회수 1 증가
-//	 * @param boardNo
-//	 * @return
-//	 */
-//	int updateReadCount(int boardNo);
-//
-//
-//
-//	/** 조회수 조회
-//	 * @param boardNo
-//	 * @return
-//	 */
-//	int selectReadCount(int boardNo);
+	/** 게시글 상세 조회
+	 * @param boardNo
+	 * @return board
+	 */
+	Board selectBoard(Map<String, Object> map);
+
+
+
+	/** 조회수 1 증가
+	 * @param boardNo
+	 * @return
+	 */
+	int updateReadCount(int boardNo);
+
+
+
+	/** 조회수 조회
+	 * @param boardNo
+	 * @return
+	 */
+	int selectReadCount(int boardNo);
+
+
+
+	/** 이미지 리스트 조회
+	 * @param boardNo
+	 * @return imgList
+	 */
+	List<BoardImg> selectImageList(int boardNo);
 
 
 }

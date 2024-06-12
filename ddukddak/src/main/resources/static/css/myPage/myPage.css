@@ -77,7 +77,8 @@
     height: 150px;
     width: 150px;
 }
-.wish-item{
+.wish-a{
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -87,7 +88,7 @@
     margin:20px 20px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
-.wish-item>div{
+.wish-item> a > div{
     display: flex;
     flex-direction: column;
     width:200px;
@@ -95,14 +96,49 @@
     margin:5px 10px;
     line-height: 30px;
 }
-
-.item-title{
-    font-weight: 600;
+.delButton {
+    background-color: var(--gray1);
+    border: none;
+    transition-duration: 0.2s;
+    color: white;
+    border-radius: 10px;
+    height: 20px;
+    width: 40px;
+    cursor: pointer;
 }
-.heart{
+
+.wish-a > div {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.wish-a > div > div {
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+}
+
+.delButton:hover {
+    background-color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: 3px 3px 3px var(--gray5);
+    color: black;
+}
+
+.item-title {
+    font-weight: 600;
+    font-size: 14px;
     text-align: start;
-    position:relative;
-    left:-40px;
+    height: 90px;
+    width: 200px;
+}
+
+.heart{
+    position: absolute;
+    font-size: 15px;
+    top: 20px;
+    left: 20px;
 }
 
 .pagination{
@@ -210,10 +246,7 @@
     height: 30px;
     text-align: start;
 }
-.homeboard-title:hover{
-    font-weight: 600;
-    cursor: pointer;
-}
+
 .homeBoard-info{
     display: flex;
     flex-direction: column;

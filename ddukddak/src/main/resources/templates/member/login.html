@@ -97,9 +97,6 @@
     <script src="/js/common/login.js"></script>
     <script type="text/javascript" th:inline="javascript">
 
-		const clientId = /*[[${clientId}]]*/ "클라이언트 키값";
-
-		console.log(clientId);
         var naver_id_login = new naver_id_login("uoiYUgBnF7qZ2w07iyBY", "http://localhost:8080/naverLogin");
         var state = naver_id_login.getUniqState();
         naver_id_login.setButton("green", 3,50);
@@ -107,7 +104,8 @@
         naver_id_login.setState(state);
         naver_id_login.setPopup();
         naver_id_login.init_naver_id_login();
-    </script>
 
+    </script>
+    <script src="/js/common/redirectToLogin.js"></script>
 </body>
 </html>

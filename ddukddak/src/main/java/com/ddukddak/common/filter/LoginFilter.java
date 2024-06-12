@@ -15,12 +15,13 @@ import jakarta.servlet.http.HttpSession;
 
 public class LoginFilter implements Filter{
 
+
 //	필터 제거 해야하는 주소들
 	 private static final List<String> EXCLUDED_URLS = Arrays.asList("/partner/login", 
 			 																									"/partner/signup", 
 			 																									"/partner/interiorList", 
 			 																									"/partner/interior/modeling/main");
-	
+
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {

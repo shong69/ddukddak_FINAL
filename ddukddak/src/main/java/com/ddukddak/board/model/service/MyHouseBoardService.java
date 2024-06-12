@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.board.model.dto.Board;
+import com.ddukddak.board.model.dto.BoardImg;
 import com.ddukddak.member.model.dto.Member;
 
 public interface MyHouseBoardService {
@@ -42,29 +43,27 @@ public interface MyHouseBoardService {
 
 
 	
-//	/** 게시글 상세 조회
-//	 * @param boardNo
-//	 * @return board
-//	 */
-//	Board selectBoard(Map<String, Object> map);
-//
-//
-//
-//	/** 조회수 증가
-//	 * @param boardNo
-//	 * @return result
-//	 */
-//	int updateReadCount(int boardNo);
-	
-	
-//	/** 집들이 게시판 리스트
-//	 * @param boardType
-//	 * @return myHouseList
-//	 */
-//	List<Board> selectMyHouseList(int boardType);
+	/** 게시글 상세 조회
+	 * @param boardNo
+	 * @return board
+	 */
+	Board selectBoard(Map<String, Object> map);
 
 
 
+	/** 조회수 증가
+	 * @param boardNo
+	 * @return result
+	 */
+	int updateReadCount(int boardNo);
+
+
+
+	/** 이미지 리스트 조회
+	 * @param boardNo
+	 * @return imgList
+	 */
+	List<BoardImg> selectImageList(int boardNo);
 
 
 }

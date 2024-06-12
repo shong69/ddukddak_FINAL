@@ -430,18 +430,51 @@ const disabledAuthBtnCheck = () => {
 }
 
 
+// 이메일 인증 시도 횟수
+let authCount = 0;
+
+
+// 휴대폰 인증 시도 횟수
+let authCount2 = 0;
+
 
 // ***************** 5. 이메일 인증 ***********************
+
 
 // 이메일 유효성 먼저
 memberEmail.addEventListener('input', e => {
 
+    const inputEmail = e.target.value;
+
+    // 인증 요청 후 이메일 입력 수정 시 인증 초기화 + 바로 정규식 한 번 더 점검
+    if(!emailAuthDiv.classList.contains('hidden')) {
+        checkObj.emailAuth = false;
+        checkObj.memberEmail = false;
+        authCount = 0;
+        emailAuthKey.value = '';
+        
+        emailAuthDiv.classList.add('hidden'); // 인증 입력 영역
+        emailAuth.classList.remove('hidden'); // 인증하기 버튼
+        
+        const regExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        // 입력 받은 이메일이 정규식과 일치하지 않는 경우
+        // (알맞은 이메일 형태가 아닌 경우)
+        if( !regExp.test(inputEmail) ) {
+            emailMsg.innerText = "올바른 이메일 형식으로 입력해 주세요.";
+            emailMsg.classList.add('error'); 
+            emailMsg.classList.remove('confirm');
+            checkObj.memberEmail = false; 
+            disabledAuthBtnCheck();
+            return;
+        }
+
+        return;
+    }
     
     // 이메일 인증 후 이메일이 변경될 경우
     checkObj.emailAuth = false;
     emailMsg.innerText = "";
 
-    const inputEmail = e.target.value;
 
     if(inputEmail.trim().length === 0) {
 
@@ -545,6 +578,8 @@ emailAuth.addEventListener('click', () => {
         emailAuth.classList.remove('hidden');
         telAuthDiv.classList.add('hidden');
         telAuth.classList.remove('hidden');
+        authCount = 0;
+        authCount2 = 0;
 
         disabledAuthBtnCheck();
 
@@ -560,7 +595,7 @@ emailAuth.addEventListener('click', () => {
         emailAuthKey.value = ""; // 인증키 입력 인풋
         emailMsg.innerText = "";
         emailAuthDiv.classList.add('hidden');
-
+        authCount = 0;
         disabledAuthBtnCheck();
         return;
     }
@@ -637,7 +672,7 @@ emailAuth.addEventListener('click', () => {
 
 });
 
-let count = 0;
+
 
 // 확인 버튼
 emailAuthCheck.addEventListener('click', () => {
@@ -675,9 +710,9 @@ emailAuthCheck.addEventListener('click', () => {
 
         if(result == 0) {
             
-            count++;
+            authCount++;
 
-            if (count == 3) {
+            if (authCount == 3) {
                 alert("인증 실패 횟수가 3회를 초과하여 종료됩니다.");
                 // 여기에 필요한 종료 로직을 추가합니다. 예: 페이지 이동, 입력 비활성화 등.
                 checkObj.memberEmail = false;
@@ -689,7 +724,7 @@ emailAuthCheck.addEventListener('click', () => {
                 emailAuthDiv.classList.add('hidden');
                 emailAuth.classList.remove('hidden');
 
-                count = 0;
+                authCount = 0;
                 
                 emailMsg.innerText = "실제 사용하고 계신 이메일을 입력해 주세요.";
                 emailMsg.classList.remove('error', 'confirm');
@@ -697,7 +732,7 @@ emailAuthCheck.addEventListener('click', () => {
                 return;
             }
 
-            alert(`인증번호가 일치하지 않습니다. ${count}회 (3회 실패 시 종료)`);
+            alert(`인증번호가 일치하지 않습니다.\n3회 이상 인증 실패 시 인증이 종료됩니다. (현재 ${authCount}회 실패)`);
 
             checkObj.emailAuth = false;
             emailAuth.disabled = true;
@@ -742,6 +777,7 @@ memberEmail.addEventListener('click', () => {
             checkObj.email = false;
             emailMsg.classList.remove('error', 'confirm');
             emailAuth.classList.remove('hidden');
+            authCount = 0;
             emailAuth.disabled = true;
             
         } 
@@ -760,20 +796,43 @@ memberEmail.addEventListener('click', () => {
 
 
 
-
-
-
-
 // 입력 유효성 부터
 
 memberTel.addEventListener('input', e => {
 
-    // 텔 인증 후 이메일이 변경될 경우
+    inputTel = e.target.value;
+
+    // 인증 요청 후 휴대폰 수정 시 인증 초기화 + 바로 정규식 한 번 더 점검
+    if(!telAuthDiv.classList.contains('hidden')) {
+        checkObj.telAuth = false;
+        checkObj.memberTel = false;
+        
+        smsAuthKey.value = '';
+        authCount2 = 0;
+        telAuthDiv.classList.add('hidden'); // 인증 입력 영역
+        telAuth.classList.remove('hidden'); // 인증하기 버튼
+        
+        const regExp = /^01[0-9]{1}[0-9]{4}[0-9]{4}$/;
+
+        if(!regExp.test(inputTel)) {
+            telMsg.innerText = "유효한 휴대폰 번호를 입력해 주세요."
+            telMsg.classList.add('error');
+            telMsg.classList.remove('confirm');
+            checkObj.memberTel = false;
+            disabledAuthBtnCheck();
+            
+            return;
+        }
+    
+        return;
+
+    }
+
+    
     checkObj.telAuth = false;
     telMsg.innerText = "";
 
-    inputTel = e.target.value;
-
+    
     if(inputTel.trim().length === 0) {
 
         checkObj.memberTel = false;
@@ -790,8 +849,11 @@ memberTel.addEventListener('input', e => {
         telMsg.classList.remove('confirm');
         checkObj.memberTel = false;
         disabledAuthBtnCheck();
+
         return;
     }
+
+
 
 
     try {
@@ -861,6 +923,8 @@ telAuth.addEventListener('click', () => {
         emailAuth.classList.remove('hidden');
         telAuthDiv.classList.add('hidden');
         telAuth.classList.remove('hidden');
+        authCount = 0;
+        authCount2 = 0;
 
         disabledAuthBtnCheck();
 
@@ -875,6 +939,7 @@ telAuth.addEventListener('click', () => {
         smsAuthKey.value = ""; // 인증키 입력 인풋
         telMsg.innerText = "";
         telAuthDiv.classList.add('hidden');
+        authCount2 = 0;
 
         return;
     }
@@ -949,7 +1014,7 @@ telAuth.addEventListener('click', () => {
 
 });
 
-let count2 = 0;
+
 
 // 확인 버튼
 telAuthCheck.addEventListener('click', () => {
@@ -987,9 +1052,9 @@ telAuthCheck.addEventListener('click', () => {
 
         if(result == 0) {
             
-            count2++;
+            authCount2++;
 
-            if (count2 == 3) {
+            if (authCount2 == 3) {
                 alert("인증 실패 횟수가 3회를 초과하여 종료됩니다.");
                 // 여기에 필요한 종료 로직을 추가합니다. 예: 페이지 이동, 입력 비활성화 등.
                 checkObj.memberTel = false;
@@ -1001,13 +1066,13 @@ telAuthCheck.addEventListener('click', () => {
                 telAuthDiv.classList.add('hidden');
                 telAuth.classList.remove('hidden');
 
-                count2 = 0;
+                authCount2 = 0;
                 
 
                 return;
             }
 
-            alert(`인증번호가 일치하지 않습니다. ${count2}회 (3회 실패 시 종료)`);
+            alert(`인증번호가 일치하지 않습니다.\n3회 이상 인증 실패 시 인증이 종료됩니다. (현재 ${authCount2}회 실패)`);
             
             checkObj.telAuth = false;
             telAuth.disabled = true;
@@ -1048,7 +1113,7 @@ memberTel.addEventListener('click', () => {
             telMsg.classList.remove('error', 'confirm');
             telAuth.classList.remove('hidden');
             telAuth.disabled = true;
-            
+            authCount2 = 0;
         } 
     } 
     

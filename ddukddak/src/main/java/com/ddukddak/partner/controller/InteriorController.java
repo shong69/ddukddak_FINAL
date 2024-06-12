@@ -29,16 +29,6 @@ public class InteriorController {
 		return "partner/interior/interiorPortfolio";
 	}
 
-	//모델링
-	@GetMapping("interior/modeling/main")
-	public String modelingMain() {
-		return "partner/interior/modeling/modelingMain";
-	}
-	
-	@GetMapping("interior/modeling/estimate")
-	public String modelingEstimate() {
-		return "partner/interior/modeling/modelingEstimate";
-	}
 	
 	@GetMapping("interiorPortfolioDetail")
 	public String interiorPortfolioDetail() {
