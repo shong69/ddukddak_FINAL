@@ -104,7 +104,7 @@ memberId.addEventListener("input", e => {
         checkObj.memberId = false;
 
         memberId.value = "";
-
+        disabledCheck();
         return;
 
     }
@@ -117,6 +117,9 @@ memberId.addEventListener("input", e => {
         idMsg.classList.add('error');
         idMsg.classList.remove('confirm');
         checkObj.memberId = false;
+
+        disabledCheck();
+
         return;
     }
 
@@ -130,6 +133,7 @@ memberId.addEventListener("input", e => {
             idMsg.classList.add('error');
             idMsg.classList.remove('confirm');
             checkObj.memberId = false;
+            disabledCheck();
             return;
         }
 
@@ -137,7 +141,7 @@ memberId.addEventListener("input", e => {
         idMsg.classList.add('confirm');
         idMsg.classList.remove('error');
         checkObj.memberId = true;
-
+        disabledCheck();
     })    
     .catch(error => {
         console.log(error); 
@@ -168,12 +172,14 @@ const checkPw = () => {
         pwConfirmMsg.classList.add("confirm");
         pwConfirmMsg.classList.remove("error");
         checkObj.memberPwConfirm = true;
+        disabledCheck();
         return;
     }
 
     if(memberPwConfirm.value.trim().length === 0) {
 
         checkObj.memberPwConfirm = false;
+        disabledCheck();
         return;
     }
 
@@ -200,7 +206,6 @@ memberPw.addEventListener("input", e => {
         pwMsg.classList.remove("confirm", "error");
         checkObj.memberPw = false;
         memberPw.value = ""; // 처음 공백 방지
-
 
         checkPw();
 
@@ -230,6 +235,7 @@ memberPw.addEventListener("input", e => {
     if(memberPwConfirm.value.length > 0) {
         checkPw();
     } 
+
     disabledCheck();
 });
 
@@ -242,6 +248,8 @@ memberPwConfirm.addEventListener("input", e => {
         pwConfirmMsg.innerText = '';
         pwConfirmMsg.classList.remove('confirm', 'error');
         checkObj.memberPw = false;
+        disabledCheck();
+
         return;
     }
 
@@ -250,6 +258,7 @@ memberPwConfirm.addEventListener("input", e => {
         pwConfirmMsg.classList.add('error');
         pwConfirmMsg.classList.remove('confirm');
         checkObj.memberPw = false;
+        disabledCheck();
         
         return;
 
@@ -262,6 +271,7 @@ memberPwConfirm.addEventListener("input", e => {
         pwConfirmMsg.classList.add('error');
         pwConfirmMsg.classList.remove('confirm');
         checkObj.memberPwConfirm = false;
+        disabledCheck();
 
         return;
     }
@@ -304,6 +314,7 @@ memberName.addEventListener('input', e => {
     if(inputName.trim().length === 0) {
         checkObj.memberName = false;
         memberName.value = ''; // 공백 방지
+        disabledCheck();
         return;
     }
 
@@ -312,11 +323,11 @@ memberName.addEventListener('input', e => {
 
     if(!regExp.test(inputName)) {
         checkObj.memberName = false;
+        disabledCheck();
         return;
     }
 
     checkObj.memberName = true;
-
     disabledCheck();
 });
 
@@ -344,6 +355,8 @@ memberNickname.addEventListener("input", e => {
         
         checkObj.memberNickname = false;
         nickMsg.value = "";
+        disabledCheck();
+
         return;
 
     }
@@ -356,6 +369,7 @@ memberNickname.addEventListener("input", e => {
         nickMsg.classList.add("error");
         nickMsg.classList.remove("confirm");
         checkObj.memberNickname = false;
+        disabledCheck();
         return;
     }
 
@@ -368,6 +382,7 @@ memberNickname.addEventListener("input", e => {
             nickMsg.classList.add("error");
             nickMsg.classList.remove("confirm");
             checkObj.memberNickname = false;
+            disabledCheck();
             return;
         }
 
@@ -375,7 +390,7 @@ memberNickname.addEventListener("input", e => {
         nickMsg.classList.add("confirm");
         nickMsg.classList.remove("error");
         checkObj.memberNickname = true;
-
+        disabledCheck();
     });
     disabledCheck();
 });
@@ -463,8 +478,9 @@ memberEmail.addEventListener('input', e => {
             emailMsg.innerText = "올바른 이메일 형식으로 입력해 주세요.";
             emailMsg.classList.add('error'); 
             emailMsg.classList.remove('confirm');
-            checkObj.memberEmail = false; 
+            checkObj.memberEmail = false;
             disabledAuthBtnCheck();
+            disabledCheck();
             return;
         }
 
@@ -473,7 +489,6 @@ memberEmail.addEventListener('input', e => {
     
     // 이메일 인증 후 이메일이 변경될 경우
     checkObj.emailAuth = false;
-    emailMsg.innerText = "";
 
 
     if(inputEmail.trim().length === 0) {
@@ -483,6 +498,7 @@ memberEmail.addEventListener('input', e => {
         checkObj.memberEmail = false;
         memberEmail.value = "";
         disabledAuthBtnCheck();
+        disabledCheck();
         return;
     }
 
@@ -496,6 +512,7 @@ memberEmail.addEventListener('input', e => {
         emailMsg.classList.remove('confirm');
         checkObj.memberEmail = false; 
         disabledAuthBtnCheck();
+        disabledCheck();
         return;
     }
 
@@ -509,6 +526,7 @@ memberEmail.addEventListener('input', e => {
             emailMsg.classList.remove('confirm');
             checkObj.memberEmail = false;
             disabledAuthBtnCheck();
+            disabledCheck();
             return;
         }
         
@@ -518,6 +536,7 @@ memberEmail.addEventListener('input', e => {
         emailMsg.classList.remove('error'); 
         checkObj.memberEmail = true;
         disabledAuthBtnCheck();
+        disabledCheck();
     })
     .catch(error => {
         console.log(error); 
@@ -582,6 +601,7 @@ emailAuth.addEventListener('click', () => {
         authCount2 = 0;
 
         disabledAuthBtnCheck();
+        disabledCheck();
 
         return;
     }
@@ -596,7 +616,10 @@ emailAuth.addEventListener('click', () => {
         emailMsg.innerText = "";
         emailAuthDiv.classList.add('hidden');
         authCount = 0;
+
         disabledAuthBtnCheck();
+        disabledCheck();
+
         return;
     }
 
@@ -608,6 +631,7 @@ emailAuth.addEventListener('click', () => {
         emailMsg.classList.remove('confirm');
         checkObj.memberEmail = false; 
         disabledAuthBtnCheck();
+        disabledCheck();
         return;
     }
 
@@ -656,6 +680,8 @@ emailAuth.addEventListener('click', () => {
             clearInterval(authTimer);
             emailAuthTime.classList.add('error');
             emailAuthTime.classList.remove('confirm');
+            disabledAuthBtnCheck();
+            disabledCheck();
             return;
         }
 
@@ -669,6 +695,8 @@ emailAuth.addEventListener('click', () => {
         
     }, 1000);
 
+    disabledAuthBtnCheck();
+    disabledCheck();
 
 });
 
@@ -728,6 +756,8 @@ emailAuthCheck.addEventListener('click', () => {
                 
                 emailMsg.innerText = "실제 사용하고 계신 이메일을 입력해 주세요.";
                 emailMsg.classList.remove('error', 'confirm');
+                disabledAuthBtnCheck();
+                disabledCheck();
 
                 return;
             }
@@ -736,7 +766,8 @@ emailAuthCheck.addEventListener('click', () => {
 
             checkObj.emailAuth = false;
             emailAuth.disabled = true;
-
+            disabledAuthBtnCheck();
+            disabledCheck();
 
             return;
         }
@@ -755,8 +786,8 @@ emailAuthCheck.addEventListener('click', () => {
         
         memberEmail.readOnly = true;
 
+        disabledAuthBtnCheck();
         disabledCheck();
-
 
 
     })
@@ -779,7 +810,8 @@ memberEmail.addEventListener('click', () => {
             emailAuth.classList.remove('hidden');
             authCount = 0;
             emailAuth.disabled = true;
-            
+            disabledAuthBtnCheck();
+            disabledCheck();
         } 
     } 
     
@@ -794,13 +826,11 @@ memberEmail.addEventListener('click', () => {
 
 // ***************** 6. 전화번호 인증 ***********************
 
-
-
 // 입력 유효성 부터
 
 memberTel.addEventListener('input', e => {
 
-    inputTel = e.target.value;
+    const inputTel = e.target.value;
 
     // 인증 요청 후 휴대폰 수정 시 인증 초기화 + 바로 정규식 한 번 더 점검
     if(!telAuthDiv.classList.contains('hidden')) {
@@ -820,7 +850,8 @@ memberTel.addEventListener('input', e => {
             telMsg.classList.remove('confirm');
             checkObj.memberTel = false;
             disabledAuthBtnCheck();
-            
+            disabledCheck();
+
             return;
         }
     
@@ -830,14 +861,16 @@ memberTel.addEventListener('input', e => {
 
     
     checkObj.telAuth = false;
-    telMsg.innerText = "";
-
+    
     
     if(inputTel.trim().length === 0) {
 
         checkObj.memberTel = false;
         memberTel.value = "";
+        telMsg.innerText = '';
 
+        disabledAuthBtnCheck();
+        disabledCheck();
         return;
     }
 
@@ -849,6 +882,7 @@ memberTel.addEventListener('input', e => {
         telMsg.classList.remove('confirm');
         checkObj.memberTel = false;
         disabledAuthBtnCheck();
+        disabledCheck();
 
         return;
     }
@@ -870,6 +904,7 @@ memberTel.addEventListener('input', e => {
 
                 checkObj.memberTel = false;
                 disabledAuthBtnCheck();
+                disabledCheck();
                 return;
         
             }
@@ -880,6 +915,7 @@ memberTel.addEventListener('input', e => {
             telMsg.classList.remove('error'); 
             checkObj.memberTel = true;
             disabledAuthBtnCheck();
+            disabledCheck();
         })
 
     } catch(err) {
@@ -927,6 +963,7 @@ telAuth.addEventListener('click', () => {
         authCount2 = 0;
 
         disabledAuthBtnCheck();
+        disabledCheck();
 
         return;
     }
@@ -940,11 +977,13 @@ telAuth.addEventListener('click', () => {
         telMsg.innerText = "";
         telAuthDiv.classList.add('hidden');
         authCount2 = 0;
+        disabledAuthBtnCheck();
+        disabledCheck();
 
         return;
     }
 
-    // 이메일 유효성 X
+    // 휴대폰 유효성 X
     if(!checkObj.memberTel) {
         alert("휴대폰 번호를 다시 확인 후 요청해 주세요.");
         telMsg.innerText = "올바른 휴대폰 번호 형식으로 입력해 주세요.";
@@ -952,6 +991,8 @@ telAuth.addEventListener('click', () => {
         telMsg.classList.remove('confirm');
         checkObj.memberTel = false; 
         disabledAuthBtnCheck();
+        disabledCheck();
+
         return;
     }
     
@@ -999,6 +1040,8 @@ telAuth.addEventListener('click', () => {
             clearInterval(authTimer);
             telAuthTime.classList.add('error');
             telAuthTime.classList.remove('confirm');
+            disabledAuthBtnCheck();
+            disabledCheck();
             return;
         }
 
@@ -1012,6 +1055,8 @@ telAuth.addEventListener('click', () => {
         
     }, 1000);
 
+    disabledAuthBtnCheck();
+    disabledCheck();
 });
 
 
@@ -1068,6 +1113,8 @@ telAuthCheck.addEventListener('click', () => {
 
                 authCount2 = 0;
                 
+                disabledAuthBtnCheck();
+                disabledCheck();
 
                 return;
             }
@@ -1076,6 +1123,9 @@ telAuthCheck.addEventListener('click', () => {
             
             checkObj.telAuth = false;
             telAuth.disabled = true;
+            disabledAuthBtnCheck();
+            disabledCheck();
+
 
             return;
         }
@@ -1087,11 +1137,10 @@ telAuthCheck.addEventListener('click', () => {
         telMsg.classList.add('confirm');
         
         checkObj.telAuth = true;
-
         telAuthDiv.classList.add('hidden');
-
         memberTel.readOnly = true;
 
+        disabledAuthBtnCheck();
         disabledCheck();
 
     })
@@ -1114,6 +1163,8 @@ memberTel.addEventListener('click', () => {
             telAuth.classList.remove('hidden');
             telAuth.disabled = true;
             authCount2 = 0;
+            disabledAuthBtnCheck();
+            disabledCheck();
         } 
     } 
     

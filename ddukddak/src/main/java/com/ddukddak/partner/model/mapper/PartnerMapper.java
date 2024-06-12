@@ -22,5 +22,37 @@ public interface PartnerMapper {
 	 * @return
 	 */
 	Partner findIdByTel(Partner telFindPartner);
+
+
+
+	/** 파트너 회원가입 - 사업자등록번호 중복 체크
+	 * @param inputBN
+	 * @return
+	 */
+	int checkBusinessNum(String inputBN);
+
+
+
+	/** 파트너 회원가입 - 상호명 중복 체크
+	 * @param inputBName
+	 * @return
+	 */
+	int checkBusinessName(String inputBName);
+
+
+
+	/** 파트너 회원가입 - 아이디 중복 체크
+	 * @param inputId
+	 * @return
+	 */
+	int checkId(String inputId);
+
+
+
+	/** 파트너 회원가입 - 휴대폰 중복 체크
+	 * @param inputTel
+	 * @return
+	 */
+	int checkTel(String inputTel);
 	
 }

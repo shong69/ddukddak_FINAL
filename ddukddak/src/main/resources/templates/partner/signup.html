@@ -88,7 +88,7 @@
                                 <div>
                                     <div class="authArea">
                                         <h3 style="font-size: 18px; font-weight: 700;">사업자 인증</h3>
-                                        <button type="button" id="bsNumAuthBtn" href="#" class="authBtn">인증</button>
+                                        <button type="button" id="bsNumAuthBtn" class="authBtn">인증</button>
                                     </div>
                                 </div>
                                 <div class="businessNumArea">
@@ -127,18 +127,19 @@
                                 
                                 <!-- SMS인증 요청 -->
                                 <div class="inputWithButton">
-                                    <input id="partnerTel" type="tel" placeholder="휴대폰 번호" name="partnerTel" maxlength="11">
+                                    <input id="partnerTel" type="tel" placeholder="휴대폰 번호(-없이)" name="partnerTel" maxlength="11">
                                     <button id="sendAuthBtn" type="button" class="authBtn" disabled>인증요청</button>
                                 </div>
                                 <span id="telMsg">실제 사용하고 계신 휴대폰 번호를 입력해 주세요.</span>
                                 
                                 <!-- 인증번호 입력 -->
                                 <div class="inputWithButton">
-                                    <input id="authKey" placeholder="인증번호(6자리)" maxlength="6">
+                                    <input id="smsAuthKey" placeholder="인증번호(6자리)" maxlength="6">
                                     <button id="checkAuthBtn" class="authBtn" type="button" disabled>인증하기</button>
+                                    <span id="telAuthTime" class="authMsg"></span>
                                 </div>
                                 <div class="telAuthMsgArea">
-                                    <span id="telAuthMsg">인증되었습니다.</span>
+                                    <span id="telAuthMsg"></span>
                                 </div>
                             </div>
                         </div>
@@ -146,7 +147,7 @@
                 </div>
                 <!-- 파트너 등록 요청 -->
                 <div class="partnerRequestArea">
-                    <button id="signupBtn" class="mainPageBtn">파트너 등록 요청</button>
+                    <button id="signUpBtn" class="mainPageBtn" disabled>파트너 등록 요청</button>
                 </div>      
             </div>
         </form>

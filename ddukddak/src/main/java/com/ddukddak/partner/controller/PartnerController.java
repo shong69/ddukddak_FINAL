@@ -188,8 +188,46 @@ public class PartnerController {
 		
 	}
 	
+	/** 파트너 회원가입 - 사업자등록번호 중복 체크
+	 * @param inputBN
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("checkBusinessNum")
+	public int checkBusinessNum(@RequestParam("partnerBusinessNum") String inputBN) {
+		
+		log.info("inputBN : " + inputBN);
+		
+		return service.checkBusinessNum(inputBN);
+	}
 	
-	 
+	/** 파트너 회원가입 - 상호명 중복 체크
+	 * @param inputBName
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("checkBusinessName")
+	public int checkBusinessName(@RequestParam("partnerBusinessName") String inputBName) {
+		return service.checkBusinessName(inputBName);
+	}
 	
+	/** 파트너 회원가입 - 아이디 중복 체크
+	 * @param inputId
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("checkId")
+	public int checkId(@RequestParam("partnerId") String inputId) {
+		return service.checkId(inputId);
+	}
 	
+	/** 파트너 회원가입 - 휴대폰 중복 체크
+	 * @param inputTel
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("checkTel")
+	public int checkTel(@RequestParam("partnerTel") String inputTel) {
+		return service.checkTel(inputTel);
+	}
 }
