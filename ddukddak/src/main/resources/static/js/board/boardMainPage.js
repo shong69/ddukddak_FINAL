@@ -69,7 +69,7 @@ if (slideshow != null) {
     let slideInterval;
     
     function showSlides(n) {
-        console.log("Showing slide number:", n);
+        // console.log("Showing slide number:", n);
         let i;
         let slides = document.getElementsByClassName("mySlides");
         if (n > slides.length) { slideIndex = 1; }
@@ -91,7 +91,7 @@ if (slideshow != null) {
     }
 
     function plusSlides(n) {
-        console.log("Moving slides by:", n);
+        // console.log("Moving slides by:", n);
         slideIndex += n;
         showSlides(slideIndex);
         resetInterval();
@@ -104,7 +104,7 @@ if (slideshow != null) {
     }
 
     function resetInterval() {
-        console.log("Resetting interval");
+        // console.log("Resetting interval");
         clearInterval(slideInterval);
         slideInterval = setInterval(() => {
             plusSlides(1);
@@ -116,7 +116,7 @@ if (slideshow != null) {
     resetInterval();
     if (next != null) {
         next.addEventListener('click', () => {
-            console.log("Next button clicked");
+            // console.log("Next button clicked");
              plusSlides(1);
              resetInterval();
          });
@@ -160,27 +160,36 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    const portListMainContainers = document.querySelectorAll('.portListMainContainer');
-    const viewMoreBtn = document.querySelector("#portListViewMore");
-    let currentVisibleIndex = 0; // Tracks the currently visible list
+    function loadMoreChunks(containerClass, buttonId) {
+        const hiddenContainers = document.querySelectorAll(`${containerClass}.hidden`);
+        const button = document.getElementById(buttonId);
 
-    // Show the first container
-    if (portListMainContainers.length > 0) {
-        portListMainContainers[0].classList.remove('hidden');
+        if (hiddenContainers.length > 0) {
+            hiddenContainers[0].classList.remove('hidden');
+            if (hiddenContainers.length === 1 && button != null) {
+                button.style.display = 'none';
+            }
+        } else if (button != null) {
+            button.style.display = 'none';
+        }
     }
 
-    // Handle "View More" button click
-    if (viewMoreBtn != null) {
-        viewMoreBtn.addEventListener("click", () => {
-            if (currentVisibleIndex < portListMainContainers.length - 1) {
-                currentVisibleIndex++;
-                portListMainContainers[currentVisibleIndex].classList.remove('hidden'); // Show the next hidden list
-                
-                // If all lists are shown, hide the button
-                if (currentVisibleIndex >= portListMainContainers.length - 1) {
-                    viewMoreBtn.style.display = 'none';
-                }
-            }
+    const loadMoreMyHouseBtn = document.getElementById('loadMoreMyHouseBtn');
+    const loadMoreTipBtn = document.getElementById('loadMoreTipBtn');
+
+    if (loadMoreMyHouseBtn != null) {
+        loadMoreMyHouseBtn.addEventListener('click', () => {
+            loadMoreChunks('.portListMainContainer', 'loadMoreMyHouseBtn');
         });
     }
+
+    if (loadMoreTipBtn != null) {
+        loadMoreTipBtn.addEventListener('click', () => {
+            loadMoreChunks('.tipBoardMainContainer', 'loadMoreTipBtn');
+        });
+    }
+
+    // Initially show the first chunk
+    loadMoreChunks('.portListMainContainer', 'loadMoreMyHouseBtn');
+    loadMoreChunks('.tipBoardMainContainer', 'loadMoreTipBtn');
 });

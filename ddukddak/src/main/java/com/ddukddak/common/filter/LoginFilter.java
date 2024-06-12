@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 
 public class LoginFilter implements Filter{
 
-	 private static final List<String> EXCLUDED_URLS = Arrays.asList("/partner/login", "/partner/signup");
+	 private static final List<String> EXCLUDED_URLS = Arrays.asList("/partner/login", "/partner/signup", "/partner/interiorList");
 	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

@@ -40,10 +40,10 @@
                     <div class="boardAdContainer">
                         <th:block th:each="boardImg : ${boardImg}" th:object="${boardImg}">
                             <img th:src="@{|${boardImg.uploadImgPath}${boardImg.uploadImgRename}|}" class="boardAd mySlides">
-                            <h4 class="adViewMore">1/6+</h4>
                             <a class="prev" onclick="plusSlides(-1)"><i class="fa-solid fa-chevron-left"></i></a>
                             <a class="next" onclick="plusSlides(1)"><i class="fa-solid fa-chevron-right"></i></a>
                         </th:block>
+                        <h4 class="adViewMore"></h4>
                     </div>
                     <!-- 집들이 -->
                     <div class="myHouseMainContainer">
@@ -61,13 +61,13 @@
                     <div class="tipMainContainer">
                         <div class="titleContainer">
                             <th:block th:each="boardType : ${application.boardTypeList}">
-                            <a th:if="${boardType.boardCode != 1}" th:href="@{/tip/main(boardCode=${boardType.boardCode})}" class="tipViewMore"><h1 th:text="${boardType.boardName}">노하우</h1></a>
-                            <a th:if="${boardType.boardCode != 1}" th:href="@{/tip/main(boardCode=${boardType.boardCode})}" class="tipViewMore">+ 더 보기</a>
+                            <a th:if="${boardType.boardCode == 2}" th:href="@{/tip/main(boardCode=${boardType.boardCode})}" class="tipViewMore"><h1 th:text="${boardType.boardName}">노하우</h1></a>
+                            <a th:if="${boardType.boardCode == 2}" th:href="@{/tip/main(boardCode=${boardType.boardCode})}" class="tipViewMore">+ 더 보기</a>
                         </th:block>
 
                         </div>
+                        
                         <th:block th:replace="~{common/fragments/board/boardMainTip}"></th:block>
-
                     </div>
                 </section>
         </div>
@@ -84,6 +84,7 @@
 
     <script src="/js/board/boardMainPage.js"></script>
     <script src="/js/common/fragments/board/side-category.js"></script>
+    <script src="/js/common/redirectToLogin.js"></script>
 
     <!-- 아이콘 -->
     <script src="https://kit.fontawesome.com/7f3fe5627c.js" crossorigin="anonymous"></script>

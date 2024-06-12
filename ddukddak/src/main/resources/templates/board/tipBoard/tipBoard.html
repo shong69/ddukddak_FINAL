@@ -52,15 +52,17 @@
 
                 <!-- 작성하기 버튼 -->
                 <form action="/tip/registTipBoard" method="get" class="btn-form">
-                  <div class="btn-container">
-                    <button class="boardCreateBtn">작성하기</button>
-                  </div>
+                  <th:block th:if="${session.loginMember != null}">
+                    <div class="btn-container">
+                      <button class="boardCreateBtn">작성하기</button>
+                    </div>
+                  </th:block>
                 </form>
 
                 <!-- 노하우 -->
                 <div class="tipMainContainer">
                     
-                    <th:block th:replace="~{common/fragments/board/boardMainTip}"></th:block>
+                    <th:block th:replace="~{common/fragments/board/boardListTip}"></th:block>
                     <div class="tipBoardMoreBtnContainer">
                       <button class="tipBoardMoreBtn" id="tipBoardViewMore">더보기 +</button>
                     </div>
@@ -83,7 +85,7 @@
     <script src="/js/common/fragments/board/side-category.js"></script>
     <script src="/js/board/tipBoard/tipBoard-DOM.js"></script>
     <script src="/js/board/tipBoard/tipBoard.js"></script>
-
+    <script src="/js/common/redirectToLogin.js"></script>
     <!-- 아이콘 -->
     <script src="https://kit.fontawesome.com/7f3fe5627c.js" crossorigin="anonymous"></script>
 </body>
