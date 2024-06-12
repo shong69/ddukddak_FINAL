@@ -28,7 +28,7 @@ public class MyCommunityServiceImpl implements MyCommunityService{
 		int memberNo = loginMember.getMemberNo();
 		
 		List<Board>myHouseBoardList = mapper.selectMyHouseBoardList(memberNo);
-		log.info("글 리스트{}",myHouseBoardList);
+
 		map.put("myHouseBoardList", myHouseBoardList);
 		return map;
 	}
@@ -39,9 +39,30 @@ public class MyCommunityServiceImpl implements MyCommunityService{
 		int memberNo = loginMember.getMemberNo();
 		
 		List<Board>myTipBoardList = mapper.selectMyTipBoardList(memberNo);
-		log.info("글 리스트{}",myTipBoardList);
+
 		map.put("myTipBoardList", myTipBoardList);
 		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> selectLikeHouseBoardList(Member loginMember) {
+		int memberNo = loginMember.getMemberNo();
+		
+		Map<String, Object> map = new HashMap<>();
+		List<Board> likeHouseBoardList = mapper.likeHouseBoardList(memberNo);
+		
+		map.put("likeHouseBoardList", likeHouseBoardList);
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> selectLikeTipBoardList(Member loginMember) {
+		int memberNo =loginMember.getMemberNo();
+		
+		Map<String, Object> map = new HashMap<>();
+		List<Board> likeTipBoardList = mapper.likeTipBoardList(memberNo);
+		map.put("likeTipBoardList", likeTipBoardList);
 		return map;
 	}
 	

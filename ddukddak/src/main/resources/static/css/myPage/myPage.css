@@ -217,6 +217,11 @@
     color: #757575;
 }
 
+.noHouseData{
+    font-size: 50px;
+    margin-top: 461px;
+    color:#9b9b9b;
+}
 /*내 노하우*/
 
 .tipBoard-table{
@@ -276,7 +281,11 @@
     color : red;
     margin-right: 5px;
 }
-
+.noTipData{
+    font-size: 50px;
+    margin: auto auto;
+    color : #9b9b9b;
+}
 /*좋아요한 게시글*/
 .select-area{
     margin-left: auto;
@@ -419,13 +428,19 @@ input{
 }
 .password-area2 input{
     width : 400px;
-    height: 30px;
-    border-radius: 8px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 8px;
+    font-family: 'main';
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    border: 1px solid var(--gray5);
 }
 .fa-eye,
 .fa-eye-slash{
     position: relative;
-    top:8px;
+    top:12px;
     right: 30px;
     z-index: 10;
     cursor:pointer;
@@ -461,9 +476,15 @@ input{
 
 .email-input{
     width : 400px;
-    height: 30px;
-    border-radius: 8px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 8px;
     margin-bottom: 20px;
+    font-family: 'main';
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    border: 1px solid var(--gray5);
 }
 input::placeholder{
     color: #9c9c9cdd;
@@ -497,8 +518,14 @@ input::placeholder{
 
 .nickname-input-area>input{
     width : 400px;
-    height: 30px;
-    border-radius: 8px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 8px;
+    font-family: 'main';
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    border: 1px solid var(--gray5);
     margin-bottom: 20px;
     margin-left: 80px;
 }
@@ -518,8 +545,14 @@ input::placeholder{
 }
 .phonNum-input-area input{
     width : 400px;
-    height: 30px;
-    border-radius: 8px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 8px;
+    font-family: 'main';
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    border: 1px solid var(--gray5);
     margin-bottom: 20px;
 
 }

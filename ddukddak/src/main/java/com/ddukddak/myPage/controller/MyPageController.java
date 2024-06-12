@@ -42,7 +42,6 @@ public class MyPageController {
 	//주문내역 진입
 	@GetMapping("")
 	public String main() {
-		
 		return"myPage/myPageMain";
 	}
 	//위시리스트 진입
