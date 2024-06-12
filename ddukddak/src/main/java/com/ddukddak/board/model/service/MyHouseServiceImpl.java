@@ -197,6 +197,13 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 	}
 
 
+	// 메인페이지용 집들이 게시물 조회
+	@Override
+	public List<Board> selectMyHouseList() {
+		return mapper.selectMyHouseList2();
+	}
+
+
 }
 
 

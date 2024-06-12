@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/css/common/first.css">
 
   <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+  <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -87,131 +88,52 @@
       </div>
     </div>
 
-    <!-- 쇼핑 -->
-    <div id="shopping">
-      <!-- 쇼핑 카테고리 -->
+    <!-- 카테고리 -->
+    <div style="margin-top: 50px;"><h3>카테고리별 상품보기</h3></div>
+    <th:block th:replace="~{eCommerce/common/category}"></th:block>
+
+    <!-- 쇼핑 목록 -->
+    <div class="shoping-list" style="margin-top: 100px;">
       <div>
-        <div style="margin-left: 30px;"><h3>카테고리별 상품보기</h3></div>
-        <div id="category-circle">
-          <div>
-            <div><img src="/images/main/category-1.png"></div>
-            <h3>가구</h3>
-          </div>
-
-          <div>
-            <div><img src="/images/main/category-2.png"></div>
-            <h3>가전/디지털</h3>
-          </div>
-
-          <div>
-            <div><img src="/images/main/category-3.png"></div>
-            <h3>주방용품</h3>
-          </div>
-
-          <div>
-            <div><img src="/images/main/category-4.png"></div>
-            <h3>데코/식물</h3>
-          </div>
-
-          <div>
-            <div><img src="/images/main/category-5.png"></div>
-            <h3>수납/정리</h3>
-          </div>
-
-          <div>
-            <div><img src="/images/main/category-6.png"></div>
-            <h3>생활용품</h3>
-          </div>
-
-          <div>
-            <div><img src="/images/main/category-7.png"></div>
-            <h3>유아/아동</h3>
-          </div>
-        </div>
+        <h3 style="font-weight: bold;">쇼핑</h3>
       </div>
 
-      <!-- 쇼핑 목록 -->
-      <div id="shoping-list">
-        <div>
-          <h3 style="font-weight: bold;">쇼핑</h3>
-        </div>
+      <div style="margin-bottom: 10px;">
+        <h4 style="cursor: pointer;" onclick="location.href='/eCommerce/list/1/1';">+ 더보기</h4>
+      </div>
 
-        <div style="margin-bottom: 10px;">
-          <h4>+ 더보기</h4>
-        </div>
+      <!-- 쇼핑 아이템들 -->
+      <div class="shopping-items">
+        <div th:each="productList : ${selectProductList}" th:object="${productList}">
+          <a th:href="@{'/eCommerce/list/' + *{bigCategoryNo} + '/' + *{categoryNo} + '/' + *{productNo} + '/detail'}">
+            <div class="img-wrap">
+              <img th:src="|*{uploadImgPath}*{uploadImgRename}|">
 
-        <!-- 쇼핑 아이템들 -->
-        <div id="shopping-items">
-          <div style="margin-right: 120px;">
-            <div><img src="/images/main/shopping-1.jpg" style="height: 300px; width: 250px;"></div>
-            <div>
-              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
-                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+              <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                  th:style="*{wish == 0} ? 'display:block;' : 'display:none;'"
+                  class="fa-regular fa-heart" id="noHerat" onclick="showHert(event);"
+                  th:value="*{productNo}">
+              </i>
+              <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                  th:style="*{wish == 0} ? 'display:none;' : 'display:block;'"
+                  class="fa-solid fa-heart" id="heart" onclick="noshowHert(event);"
+                  th:value="*{productNo}">
+              </i>
+              <h5 class="sample"></h5>
             </div>
-            <div style="display: flex; margin-top: 8px;">
-              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
-              <h3 style="font-weight: 600;">32,700</h3>
+            <div class="title-wrap">
+              <h4 th:text="*{productName}">상품제목</h4>
             </div>
-            <div style="display: flex; margin-top: 8px;">
-              <img src="/images/main/star.png" style="height: 10px;">
-              <h5 style="margin-right: 5px;">4.1</h5>
-              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+            <div class="price-wrap">
+              <h3>32%</h3>
+              <h3 th:text="*{productPrice} + '원'" class="productPrice">상품가격</h3>
             </div>
-          </div>
-
-
-          <div style="margin-right: 120px;">
-            <div><img src="/images/main/shopping-2.jpg" style="height: 300px; width: 250px;"></div>
-            <div>
-              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
-                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
+            <div class="review-wrap">
+              <img src="/images/main/star.png">
+              <h5>4.1</h5>
+              <h5>리뷰 78개</h5>
             </div>
-            <div style="display: flex; margin-top: 8px;">
-              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
-              <h3 style="font-weight: 600;">32,700</h3>
-            </div>
-            <div style="display: flex; margin-top: 8px;">
-              <img src="/images/main/star.png" style="height: 10px;">
-              <h5 style="margin-right: 5px;">4.1</h5>
-              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
-            </div>
-          </div>
-
-
-          <div style="margin-right: 120px;">
-            <div><img src="/images/main/shopping-3.jpg" style="height: 300px; width: 250px;"></div>
-            <div>
-              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
-                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
-            </div>
-            <div style="display: flex; margin-top: 8px;">
-              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
-              <h3 style="font-weight: 600;">32,700</h3>
-            </div>
-            <div style="display: flex; margin-top: 8px;">
-              <img src="/images/main/star.png" style="height: 10px;">
-              <h5 style="margin-right: 5px;">4.1</h5>
-              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
-            </div>
-          </div>
-
-
-          <div>
-            <div><img src="/images/main/shopping-4.jpg" style="height: 300px; width: 250px;"></div>
-            <div>
-              <h4>[최대10%쿠폰+사은품][맞춤]비침없는 도톰<br>
-                레이스/쉬폰커튼(나비주름/핀형/봉집)</h4>
-            </div>
-            <div style="display: flex; margin-top: 8px;">
-              <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
-              <h3 style="font-weight: 600;">32,700</h3>
-            </div>
-            <div style="display: flex; margin-top: 8px;">
-              <img src="/images/main/star.png" style="height: 10px;">
-              <h5 style="margin-right: 5px;">4.1</h5>
-              <h5 style="color: #9B9B9B;">리뷰 78개</h5>
-            </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -228,25 +150,17 @@
           </div>
   
           <div style="margin-bottom: 10px;">
-            <h4>+ 더보기</h4>
+            <h4 onclick="location.href='/myHouse/main?boardCode=1';" style="cursor: pointer;">+ 더보기</h4>
           </div>
         </div>
 
-        <div class="comeHome-box">
-          <img src="/images/main/interior-1.jpg" style="width: 150px;">
-          <h2 style="display: flex; align-items: center; width: 1100px; padding-left: 30px;">셀프인테리어 3년차에요 평가 부탁드려요</h2>
-          <h5 style="color: #9B9B9B;">유저삼  |  조회수 30  |  2024-05-11</h5>
-        </div>
-        <div class="comeHome-box">
-          <img src="/images/main/interior-2.jpg" style="width: 150px;">
-          <h2 style="display: flex; align-items: center; width: 1100px; padding-left: 30px;">나만의 공간을 꾸몄어요</h2>
-          <h5 style="color: #9B9B9B;">유저사  |  조회수 30  |  2024-05-11</h5>
-        </div>
-        <div class="comeHome-box">
-          <img src="/images/main/interior-3.jpeg" style="width: 150px;">
-          <h2 style="display: flex; align-items: center; width: 1100px; padding-left: 30px;">5년만에 이사했어요! 셀프로 인테리어 해봤습니다</h2>
-          <h5 style="color: #9B9B9B;">유저삼  |  조회수 30  |  2024-05-11</h5>
-        </div>
+        <th:block th:each="myHouse : ${myHouseList}">
+          <a class="comeHome-box" th:href="@{/myHouse/detail/{boardNo} (boardNo=${myHouse.boardNo})}">
+            <img th:src="${myHouse.thumbnail}" style="width: 150px;">
+            <h2 style="display: flex; align-items: center; width: 1100px; padding-left: 30px;" th:text="${myHouse.boardTitle}">집들이 제목</h2>
+            <h5 style="color: #9B9B9B;" th:text="|${myHouse.memberNickname} / 조회수 ${myHouse.readCount} / ${myHouse.boardWriteDate}|">유저삼  |  조회수 30  |  2024-05-11</h5>
+          </a>
+        </th:block>
       </div>
 
       <!-- 노하우 -->
@@ -372,6 +286,75 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="/js/common/main.js"></script>
   <script src="/js/common/redirectToLogin.js"></script>
+
+  <script th:inline="javascript">
+        
+    // 찜하기 눌렀을 때
+    function showHert(event) {
+        event.preventDefault();
+
+
+        event.target.style.display = 'none';
+        event.target.nextElementSibling.style.display = 'block';
+        
+
+        var obj = {
+            "memberNo" : event.target.attributes[0].value,
+            "productNo" : event.target.attributes[5].value
+        }
+
+
+        fetch("/myPage/addWish", {
+            method : "PUT",
+            headers : {"Content-Type": "application/json"},
+            body : JSON.stringify(obj)
+        })
+        .then(resp => resp.text())
+        .then(temp => {
+          if(temp > 0) {
+                  alert("위시리스트에 추가되었습니다");
+              }else {
+                  alert("위시리스트 추가 실패");
+              }
+        });
+
+
+
+        return false;
+    }
+    function noshowHert(event) {
+        event.preventDefault();
+
+        event.target.style.display = 'none';
+        event.target.previousElementSibling.style.display = 'block';
+
+
+        var obj = {
+            "memberNo" : event.target.attributes[0].value,
+            "productNo" : event.target.attributes[5].value
+        }
+
+        console.log(event.target.attributes);
+
+
+        fetch("/myPage/delWish", {
+            method : "POST",
+            headers : {"Content-Type": "application/json"},
+            body : JSON.stringify(obj)
+        })
+        .then(resp => resp.text())
+        .then(temp => {
+          if(temp > 0) {
+                  alert("위시리스트에서 삭제되었습니다");
+              }else {
+                  alert("위시리스트 삭제 실패");
+              }
+        });
+
+
+        return false;
+    }
+  </script>
 
   
 </body>
