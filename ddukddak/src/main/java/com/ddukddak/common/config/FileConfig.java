@@ -47,6 +47,11 @@ public class FileConfig implements WebMvcConfigurer{
 	@Value("${my.myHouse.resource-location}")
 	private String myhouseResourceLocation;
 
+//	노하우 요청 주소
+	@Value("${my.tip.resource-handler}")
+	private String tipResourceHandler;
+	@Value("${my.tip.resource-location}")
+	private String tipResourceLocation;
 	
 //	쇼핑
 	@Value("${my.ecommerce.resource-location}")
@@ -76,9 +81,17 @@ public class FileConfig implements WebMvcConfigurer{
 		registry.addResourceHandler(myHouseResourceHandler) 
 		.addResourceLocations(myhouseResourceLocation);
 		
+//		노하우 이미지 오청
+		registry.addResourceHandler(tipResourceHandler)
+		.addResourceLocations(tipResourceLocation);
+		
+		
 //		쇼핑 이미지
 		registry.addResourceHandler(eCommerceResourceHandler)
 		.addResourceLocations(eCommerceResourceLocation);
+		
+		
+		
 		
 //		기타 메인 이미지
 //		registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");

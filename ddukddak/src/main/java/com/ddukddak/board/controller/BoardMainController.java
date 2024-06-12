@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,33 +43,39 @@ public class BoardMainController {
 			
 		}
 		
-		List<Board> board = service.selectBoard();
+		List<Board> allBoard = service.selectBoard();
 		
 	
-		if (board != null) {
+		List<Board> houseBoard = allBoard.stream().filter(board -> board.getBoardCode() == 1).collect(Collectors.toList());
+		List<Board> tipBoard = allBoard.stream().filter(board -> board.getBoardCode() == 2).collect(Collectors.toList());
+		
+//		log.info("tipBoard : " + tipBoard.toString());
+//		log.info("houseBoard : " + houseBoard.toString());
+		
+		 // Chunk the filtered boards
+        List<List<Board>> houseBoardChunks = chunkBoards(houseBoard, 6);
+        List<List<Board>> tipBoardChunks = chunkBoards(tipBoard, 6);
+		
+		if (allBoard != null) {
 			
-			List<List<Board>> boardChunks = new ArrayList<>();
-			int chunkSize = 6;
-			for (int i = 0; i < board.size(); i += chunkSize) {
-				boardChunks.add(board.subList(i, Math.min(i + chunkSize, board.size())));
-			}
 			
-			model.addAttribute("board",board);
-			model.addAttribute("boardChunks",boardChunks);
+			 // Add the board chunks to the model
+	        model.addAttribute("houseBoardChunks", houseBoardChunks);
+	        model.addAttribute("tipBoardChunks", tipBoardChunks);
+	        
+//	        log.info("tipBoardChunks : " + tipBoardChunks.toString());
+//	        log.info("houseBoardChunks : " + houseBoardChunks.toString());
 		}
-		
-		
-		
-		for(Map<String, Object> boardType : boardTypeList) {
-			map.put(boardType.get("boardCode").toString(), boardType.get("boardName"));
-		}
-		
-//		log.info("map : " + map); 
-		
-		model.addAttribute("boardTypeMap", map);
-		
 		
 		return "board/boardMainPage";
 	}
+	
+	private List<List<Board>> chunkBoards(List<Board> boards, int chunkSize) {
+        List<List<Board>> boardChunks = new ArrayList<>();
+        for (int i = 0; i < boards.size(); i += chunkSize) {
+            boardChunks.add(boards.subList(i, Math.min(i + chunkSize, boards.size())));
+        }
+        return boardChunks;
+    }
 	
 }

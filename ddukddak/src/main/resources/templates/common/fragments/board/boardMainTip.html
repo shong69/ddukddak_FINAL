@@ -1,30 +1,8 @@
-<th:block th:each="boardType : ${application.boardTypeList}">
-    <th:block th:if="${boardType.boardCode != 2}">
-        <div th:each="board : ${board}">
-            <div class="tipBoardMainContainer" th:classappend="${board.boardCode == 2} ? 'hidden'">
-                <div class="tipBoardContainer fade">
-                    <img th:src="@{|${board.thumbnail}|}" alt="" class="tipBoardImg">
-                    <div class="tipBoardUserInfoContainer">
-                        <div class="tipBoardUserName" th:text="${board.memberNickname}">닉네임</div>
-                        <div class="tipBoardTitle" th:text="${board.boardTitle}">제목</div>
-                        <div class="tipBoardLikeContainer">
-                            <a href="#">
-                                <i class="fa-regular fa-heart"></i>
-                                <h4 th:text="${board.likeCount}"></h4>
-                            </a>
-                        </div>
-                        <div class="tipBoardContent" th:text="${board.boardContent}">내용</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </th:block>
-</th:block>
 
-<!-- <div class="tipBoardMainContainer hidden" th:each="chunk, iterStat : ${boardChunks}" th:classappend="${iterStat.index == 0} ? '' : 'hidden'">
+<div class="tipBoardMainContainer" th:each="chunk, iterStat : ${tipBoardChunks}" th:classappend="${iterStat.index == 0} ? '' : 'hidden'">
     <th:block th:each="board : ${chunk}">
-        <div class="tipBoardContainer fade" th:onclick="|location.href='@{/myHouse/detail/{boardNo}(boardNo=${board.boardNo})}'|">
-            <img th:src="@{|${board.thumbnail}|}" alt="Portfolio Image">
+        <div class="tipBoardContainer fade" th:onclick="|location.href='@{/tip/detail/{boardNo}(boardNo=${board.boardNo})}'|">
+            <img th:src="@{|${board.thumbnail}|}" alt="Portfolio Image" class="tipBoardImg">
             <div class="tipBoardUserInfoContainer">
                 <div class="tipBoardUserName" th:text="${board.memberNickname}">닉네임</div>
                 <div class="tipBoardTitle" th:text="${board.boardTitle}">제목</div>
@@ -38,4 +16,4 @@
             </div>
         </div>
     </th:block>
-</div> -->
+</div>
