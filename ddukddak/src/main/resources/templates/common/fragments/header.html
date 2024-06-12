@@ -21,7 +21,7 @@
     <!-- 로그인/회원가입 -->
     <th:block th:if="${session.loginMember == null}">
         <div>
-            <a th:href="@{/member/login}"><h4>로그인</h4></a>
+            <a href="#" onclick="redirectToLogin()"><h4>로그인</h4></a>
             <a href="/signup"><h4>회원가입</h4></a>
         </div>
     </th:block>
