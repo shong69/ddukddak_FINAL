@@ -180,6 +180,7 @@
 
 .like > i {
     margin:0 5px;
+    cursor: pointer;
 }
 
 .comment {

@@ -166,27 +166,35 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 
 
 	// 게시글 상세 조회
-//	@Override
-//	public Board selectBoard(Map<String, Object> map) {
-//		
-//		return mapper.selectBoard(map);
-//	}
-//
-//
-//	// 조회수 증가
-//	@Override
-//	public int updateReadCount(int boardNo) {
-//		
-//		// 조회수 증가
-//		int result = mapper.updateReadCount(boardNo);
-//		
-//		// 현재 조회수 카운트 조회 (증가한 현재 조회수 다시 조회)
-//		if(result > 0) {
-//			return mapper.selectReadCount(boardNo);
-//		}
-//		
-//		return -1;
-//	}
+	@Override
+	public Board selectBoard(Map<String, Object> map) {
+		
+		return mapper.selectBoard(map);
+	}
+
+
+	// 조회수 증가
+	@Override
+	public int updateReadCount(int boardNo) {
+		
+		// 조회수 증가
+		int result = mapper.updateReadCount(boardNo);
+		
+		// 현재 조회수 카운트 조회 (증가한 현재 조회수 다시 조회)
+		if(result > 0) {
+			return mapper.selectReadCount(boardNo);
+		}
+		
+		return -1;
+	}
+
+
+	// 이미지 리스트 조회
+	@Override
+	public List<BoardImg> selectImageList(int boardNo) {
+		
+		return mapper.selectImageList(boardNo);
+	}
 
 
 }
