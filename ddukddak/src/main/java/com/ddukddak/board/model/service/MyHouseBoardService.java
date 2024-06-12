@@ -27,7 +27,7 @@ public interface MyHouseBoardService {
 	 * @param sortMethod 
 	 * @return map
 	 */
-	Map<String, Object> selectMyHouseList(Map<String, Object> paramMap, int cp);
+	Map<String, Object> selectMyHouseList(int boardCode, String sort, int cp);
 
 	
 	
@@ -37,7 +37,24 @@ public interface MyHouseBoardService {
 	 * @param sortMethod 
 	 * @return map
 	 */
-	Map<String, Object> searchList(Map<String, Object> paramMap, int cp);
+	Map<String, Object> searchList(int boardCode, String sort, String query, int cp);
+
+
+
+	
+//	/** 게시글 상세 조회
+//	 * @param boardNo
+//	 * @return board
+//	 */
+//	Board selectBoard(Map<String, Object> map);
+//
+//
+//
+//	/** 조회수 증가
+//	 * @param boardNo
+//	 * @return result
+//	 */
+//	int updateReadCount(int boardNo);
 	
 	
 //	/** 집들이 게시판 리스트

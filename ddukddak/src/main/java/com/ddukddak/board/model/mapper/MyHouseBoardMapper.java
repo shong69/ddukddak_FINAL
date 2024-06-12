@@ -41,7 +41,7 @@ public interface MyHouseBoardMapper {
 	 * @param boardType
 	 * @return listCount
 	 */
-	int getListCount(Map<String, Object> paramMap);
+	int getListCount(int boardCode);
 
 
 
@@ -58,7 +58,7 @@ public interface MyHouseBoardMapper {
 	 * @param paramMap
 	 * @return count
 	 */
-	int getSearchCount(Map<String, Object> paramMap);
+	int getSearchCount(int boardCode);
 
 
 
@@ -68,6 +68,30 @@ public interface MyHouseBoardMapper {
 	 * @return
 	 */
 	List<Board> selectSearchList(Map<String, Object> paramMap, RowBounds rowBounds);
+
+
+
+//	/** 게시글 상세 조회
+//	 * @param boardNo
+//	 * @return board
+//	 */
+//	Board selectBoard(Map<String, Object> map);
+//
+//
+//
+//	/** 조회수 1 증가
+//	 * @param boardNo
+//	 * @return
+//	 */
+//	int updateReadCount(int boardNo);
+//
+//
+//
+//	/** 조회수 조회
+//	 * @param boardNo
+//	 * @return
+//	 */
+//	int selectReadCount(int boardNo);
 
 
 }
