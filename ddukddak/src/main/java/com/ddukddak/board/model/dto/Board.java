@@ -1,5 +1,7 @@
 package com.ddukddak.board.model.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,6 +47,8 @@ public class Board {
 	private String profileImg;
 //	게시글 썸네일
 	private String thumbnail;
+//	이미지 리스트
+	private List<BoardImg> imageList;
 	
 	
 //	게시글 좋아요 0: 체크 안됨 / 1: 체크 됨

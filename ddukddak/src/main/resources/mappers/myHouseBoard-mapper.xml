@@ -128,13 +128,13 @@
 		AND (BOARD_TITLE LIKE '%' || #{query} || '%' OR MEMBER_NICKNAME LIKE '%' || #{query} || '%')
 		ORDER BY
 			<choose>
-            <when test="sortMethod == 'latest'">
+            <when test="sort == 'latest'">
                 BOARD_NO DESC
             </when>
-            <when test="sortMethod == 'views'">
+            <when test="sort == 'views'">
                 READ_COUNT DESC
             </when>
-            <when test="sortMethod == 'likeCount'">
+            <when test="sort == 'likeCount'">
                 LIKE_COUNT DESC
             </when>
             <otherwise>
@@ -142,6 +142,44 @@
             </otherwise>
         </choose>
 	</select>
+	
+	
+	<!-- 게시글 상세조회 -->
+	<!--  
+	<select id="selectBoard">
+		SELECT BOARD_NO, BOARD_TITLE, BOARD_CONTENT, MEMBER_NO, MEMBER_NICKNAME, READ_COUNT, PROFILE_IMG,
+				TO_CHAR(BOARD_WRITE_DATE, 'YYYY-MM-DD HH24:MI:SS') BOARD_WRITE_DATE,
+				TO_CHAR(BOARD_UPDATE_DATE, 'YYYY-MM-DD HH24:MI:SS') BOARD_UPDATE_DATE
+				
+				(SELECT COUNT(*) FROM "BOARD_LIKE"
+				WHERE BOARD_NO = #{boardNo}) LIKE_COUNT,
+				
+				(SELECT COUNT(*) FROM "BOARD_LIKE"
+				WHERE MEMBER_NO = #{memberNo}
+				AND BOARD_NO = #{boardNo}) LIKE_CHECK
+		
+		FROM "COMMUNITY"
+		JOIND "MEMBER" USING (MEMBER_NO)
+		WHERE BOARD_DEL_FL = 'N'
+		AND BOARD_NO = #{boardNo}
+	</select>
+	-->
+	
+	<!-- 조회수 1 증가 -->
+	<!-- 
+	<update id="updateReadCount">
+		UPDATE "COMMUNITY" SET READ_COUNT = READ_COUNT + 1
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	 -->
+	
+	<!-- 조회수 조회 -->
+	<!--
+	<select id="selectReadCount">
+		SELECT READ_COUNT FROM "COMMUNITY"
+		WHERE BOARD_NO = #{boardNo}
+	</select>
+	 -->
 	
 	
 </mapper>
