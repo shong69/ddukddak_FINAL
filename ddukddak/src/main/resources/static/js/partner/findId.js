@@ -33,6 +33,7 @@ const telAuthInput = document.getElementById('telAuthInput');
 const findIdBtn = document.getElementById('findIdBtn');
 
 
+
 // submit 버튼의 disabled 상태를 토글하는 함수
 function disabledCheckButton() {
     if (checkTelObj.telNm && checkTelObj.tel && telAuthInput.value.trim().length == 6) {
@@ -52,10 +53,16 @@ function resetAuthStates() {
         telAuthHidden.classList.add('hidden');
         telAuthInput.value = "";
         telAuthMsg.innerText = "";
-
+        authCount2 = 0;
+        disabledCheckButton();
     }
 
 }
+
+
+// 휴대폰 인증 시도 횟수
+let authCount2 = 0;
+
 
 
 // 이름 유효성
@@ -392,7 +399,8 @@ findIdForm.addEventListener('submit', (e) => {
                 return;
             }
             if (!checkTelObj.telAuth) {
-                alert('SMS 인증번호를 정확히 확인해 주세요.');
+                authCount2++;
+                alert(`SMS 인증번호가 일치하지 않습니다.\n3회 이상 인증 실패 시 인증이 종료됩니다. (현재 ${authCount2}회 실패)`);
                 return;
             }
         }

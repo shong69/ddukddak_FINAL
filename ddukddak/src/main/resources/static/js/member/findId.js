@@ -52,6 +52,13 @@ const telAuthInput = document.getElementById('telAuthInput');
 // 아이디 찾기 버튼
 const findIdBtn = document.getElementById('findIdBtn');
 
+// 이메일 인증 시도 횟수
+let authCount = 0;
+
+
+// 휴대폰 인증 시도 횟수
+let authCount2 = 0;
+
 
 
 // submit 버튼의 disabled 상태를 토글하는 함수 (전화번호와 이메일 모두 체크)
@@ -73,6 +80,8 @@ function resetAuthStates() {
         emailAuthHidden.classList.add('hidden');
         emailAuthInput.value = "";
         emailAuthMsg.innerText = "";
+        authCount = 0;
+        disabledCheckButton();
     }
 
 
@@ -83,6 +92,8 @@ function resetAuthStates() {
         telAuthHidden.classList.add('hidden');
         telAuthInput.value = "";
         telAuthMsg.innerText = "";
+        authCount2 = 0;
+        disabledCheckButton();
     }
 }
 
@@ -215,6 +226,7 @@ emailAuthBtn.addEventListener('click', async () => {
         inputEmail.value = "";
         emailAuthMsg.innerText ="";
         emailAuthHidden.classList.add('hidden');
+        authCount = 0;
 
         return;
     }
@@ -335,7 +347,9 @@ emailAuthInput.addEventListener('input', e => {
     .then(result => {
 
         if(result == 0) {
+            
             checkEmailObj.emailAuth = false;
+
             return;
         }
 
@@ -685,12 +699,13 @@ findIdForm.addEventListener('submit', (e) => {
             }
 
             if(!checkEmailObj.email) {
-                alert('유효한 이메일을 입력해 주세요.')
+                alert('유효한 이메일을 입력해 주세요.');
                 return;
             }  
 
             if(!checkEmailObj.emailAuth) {
-                alert('메일 인증번호를 정확히 확인해 주세요.')
+                authCount++;
+                alert(`메일 인증번호가 일치하지 않습니다.\n3회 이상 인증 실패 시 인증이 종료됩니다. (현재 ${authCount}회 실패)`);
                 return;
             }
         }
@@ -712,7 +727,8 @@ findIdForm.addEventListener('submit', (e) => {
                 return;
             }
             if (!checkTelObj.telAuth) {
-                alert('SMS 인증번호를 정확히 확인해 주세요.');
+                authCount2++;
+                alert(`SMS 인증번호가 일치하지 않습니다.\n3회 이상 인증 실패 시 인증이 종료됩니다. (현재 ${authCount2}회 실패)`);
                 return;
             }
         }
