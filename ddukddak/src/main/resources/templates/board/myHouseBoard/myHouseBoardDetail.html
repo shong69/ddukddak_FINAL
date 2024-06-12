@@ -42,11 +42,9 @@
 
         
         <div class="boardAdContainer">
-          <img src="/images/board/myHouse/myHouseDetailImg1.jpg" alt="" class="boardAd mySlides">
-          <img src="/images/board/myHouse/myHouseDetailImg2.jpg" alt="" class="boardAd mySlides">
-          <img src="/images/board/myHouse/myHouseDetailImg3.jpg" alt="" class="boardAd mySlides">
-          <img src="/images/board/myHouse/myHouseDetailImg4.jpg" alt="" class="boardAd mySlides">
-          <img src="/images/board/myHouse/myHouseDetailImg5.jpg" alt="" class="boardAd mySlides">
+          <th:block th:unless="${#lists.isEmpty(board.imageList)}" th:each="image : ${board.imageList}">
+            <img th:src="|${image.uploadImgPath}${image.uploadImgRename}|" class="boardAd mySlides">
+          </th:block>
           <h4 class="adViewMore">1/6+</h4>
           <a class="prev"><i class="fa-solid fa-chevron-left"></i></a>
           <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
@@ -59,9 +57,9 @@
             <h2>셀프인테리어 후기</h2>
 
             <div class="like">
-              <i class="fa-solid fa-heart" style="color: red;"></i>
+              <i id="boardLike" class="fa-heart" th:classappend="${board.likeCheck == 1} ? fa-solid : fa-regular" style="color: red;"></i>
               <!-- 빈하트 : fa-regular -->
-              <div class="like-count">10</div>
+              <div th:text="${board.likeCount}" class="like-count">10</div>
             </div>
           </div>
         </div>
@@ -69,16 +67,24 @@
         <div class="userProfileArea">
           <div class="leftSide">
             <div class="profileImg">
-              <img src="/images/profile/main.jpg">
+              <!-- 프로필 이미지가 없을 때 (기본 이미지) -->
+              <th:block th:if="${board.profileImg == null}">
+                <img th:src="#{user.default.image}">
+              </th:block>
+
+              <!-- 프로필 이미지가 있을 경우 -->
+               <th:block th:unless="${board.profileImg == null}">
+                <img th:src="${board.profileImg}">
+               </th:block>
             </div>
             <div class="userNickname">
-              <h3>유저일</h3>
+              <h3 th:text="${board.memberNickname}">유저일</h3>
             </div>
           </div>
 
           <div class="rightSide">
             <div class="date">
-              <h3>2024.05.31</h3>
+              <h3 th:text="${board.boardWriteDate}">2024.05.31</h3>
             </div>
             <div class="reportBtn" id="reportBtn">
               <i class="fa-solid fa-bullhorn"></i>
@@ -89,7 +95,7 @@
         
         <div class="contentArea">
 
-          <div class="myHouseContent">
+          <div class="myHouseContent" th:text="${board.boardContent}">
 
             안녕하세요, 여러분! 오늘은 제가 최근에 진행한 셀프 인테리어 프로젝트에 대해 공유하려고 합니다.
             몇 주 동안의 노력 끝에, 저의 작은 아파트가 어떻게 변화했는지 여러분께 보여드리고자 해요.

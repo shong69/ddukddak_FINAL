@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddukddak.board.model.dto.Board;
+import com.ddukddak.board.model.dto.BoardImg;
 import com.ddukddak.board.model.service.MyHouseBoardService;
 import com.ddukddak.member.model.dto.Member;
 
@@ -73,92 +74,98 @@ public class MyHouseBoardController {
 	
 	@GetMapping("detail/{boardNo:[0-9]+}")
 	public String myHouseDetail(@PathVariable("boardNo") int boardNo,
+			@SessionAttribute(value="loginMember", required=false) Member loginMember,
 								Model model,
 								RedirectAttributes ra,
 								HttpServletRequest req,
-								@SessionAttribute(value="loginMember", required=false) Member loginMember,
 								HttpServletResponse resp) {
 		
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("boardNo", boardNo);
-//		
-//		if(loginMember != null) {
-//			map.put("memberNo", loginMember.getMemberNo());
-//		}
-//		
-//		Board board = service.selectBoard(map);
-//		
-//		String path = null;
-//		
-//		// 조회 결과 X
-//		if(board == null) {
-//			
-//			path = "/myHouse/main";		// 집들이 게시판 재요청
-//			ra.addFlashAttribute("message", "게시글이 존재하지 않습니다.");
-//			
-//		} else {	// 조회 결과 O (게시글 있는 경우)
-//			
-//			// 로그인 상태가 아니거나 로그인한 회원의 게시글이 아닌 경우
-//			if(loginMember == null || loginMember.getMemberNo() != board.getMemberNo()) {
-//				
-//				Cookie[] cookies = req.getCookies();
-//				
-//				Cookie c = null;
-//				
-//				for(Cookie temp : cookies) {
-//					// 요청에 담긴 쿠키에 "readBoardNo" 가 존재할 때
-//					if(temp.getName().equals("readBoardNo")) {
-//						c = temp;
-//						break;
-//					}
-//					
-//				}
-//				
-//				int result = 0;		// 조회수 증가 결과 저장 변수
-//				
-//				if(c == null) {	// 쿠키에 "readBoardNo" 값이 없을 때
-//					
-//					c = new Cookie("readBoardNo", "["+boardNo+"]");
-//					result = service.updateReadCount(boardNo);
-//					
-//				} else {	// "readBoardNo" 값이 있을 때
-//					
-//					if(c.getValue().indexOf("[" + boardNo + "]") == -1) {
-//						// indexOf("문자열") : 찾는 문자열의 인덱스 번호를 반환, 찾는 문자열이 없다면 -1 반환
-//						
-//						// 해당 글을 처음 읽은 경우
-//						c.setValue(c.getValue() + "[" + boardNo + "]");
-//						result = service.updateReadCount(boardNo);
-//					}
-//					
-//				}
-//				
-//				// 조회수 증가 성공 / 조회 성공
-//				if(result > 0) {
-//					
-//					// 먼저 조회된 board 의 readCount 값을 result 값으로 변환(재대입)
-//					board.setReadCount(result);
-//					
-//					// 적용 경로 설정
-//					c.setPath("/");		// "/" 이하 경로 요청시 쿠키 서버로 전달
-//					
-//					LocalDateTime now = LocalDateTime.now(); 
-//					
-//					LocalDateTime nextDayMidnight = now.plusDays(1).withHour(0).withMinute(0).withSecond(result).withNano(0);
-//					
-//					long secondsUntilNextDay = Duration.between(now, nextDayMidnight).getSeconds();
-//					
-//					c.setMaxAge( (int) secondsUntilNextDay );
-//					
-//					resp.addCookie(c);
-//					
-//				}
-//				
-//			}
-//			
-//		}
+		Map<String, Object> map = new HashMap<>();
+		map.put("boardNo", boardNo);
+		
+		if(loginMember != null) {
+			map.put("memberNo", loginMember.getMemberNo());
+		}
+		
+		Board board = service.selectBoard(map);
+		
+		String path = null;
+		
+		// 조회 결과 X
+		if(board == null) {
+			
+			path = "redirect:/myHouse/main";		// 집들이 게시판 재요청
+			ra.addFlashAttribute("message", "게시글이 존재하지 않습니다.");
+			
+		} else {	// 조회 결과 O (게시글 있는 경우)
+			
+			// 로그인 상태가 아니거나 로그인한 회원의 게시글이 아닌 경우
+			if(loginMember == null || loginMember.getMemberNo() != board.getMemberNo()) {
 				
-		return "board/myHouseBoard/myHouseBoardDetail";
+				Cookie[] cookies = req.getCookies();
+				
+				Cookie c = null;
+				
+				for(Cookie temp : cookies) {
+					// 요청에 담긴 쿠키에 "readBoardNo" 가 존재할 때
+					if(temp.getName().equals("readBoardNo")) {
+						c = temp;
+						break;
+					}
+					
+				}
+				
+				int result = 0;		// 조회수 증가 결과 저장 변수
+				
+				if(c == null) {	// 쿠키에 "readBoardNo" 값이 없을 때
+					
+					c = new Cookie("readBoardNo", "["+boardNo+"]");
+					result = service.updateReadCount(boardNo);
+					
+				} else {	// "readBoardNo" 값이 있을 때
+					
+					if(c.getValue().indexOf("[" + boardNo + "]") == -1) {
+						// indexOf("문자열") : 찾는 문자열의 인덱스 번호를 반환, 찾는 문자열이 없다면 -1 반환
+						
+						// 해당 글을 처음 읽은 경우
+						c.setValue(c.getValue() + "[" + boardNo + "]");
+						result = service.updateReadCount(boardNo);
+					}
+					
+				}
+				
+				// 조회수 증가 성공 / 조회 성공
+				if(result > 0) {
+					
+					// 먼저 조회된 board 의 readCount 값을 result 값으로 변환(재대입)
+					board.setReadCount(result);
+					
+					// 적용 경로 설정
+					c.setPath("/");		// "/" 이하 경로 요청시 쿠키 서버로 전달
+					
+					LocalDateTime now = LocalDateTime.now(); 
+					
+					LocalDateTime nextDayMidnight = now.plusDays(1).withHour(0).withMinute(0).withSecond(result).withNano(0);
+					
+					long secondsUntilNextDay = Duration.between(now, nextDayMidnight).getSeconds();
+					
+					c.setMaxAge( (int) secondsUntilNextDay );
+					
+					resp.addCookie(c);
+					
+				}
+				
+			}
+			
+			// ==============================================================================================
+			
+			path = "board/myHouseBoard/myHouseBoardDetail";
+			
+			model.addAttribute("board", board);
+			
+		}
+				
+		return path;
 	}
 	
 	@GetMapping("registMyHouse")
