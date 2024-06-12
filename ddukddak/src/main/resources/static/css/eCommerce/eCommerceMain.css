@@ -59,6 +59,16 @@
     width: 250px;
 }
 
+.fa-heart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#heart {
+    color: red;
+}
+
 .price-wrap {
     display: flex;
     margin-top: 8px;

@@ -4,6 +4,7 @@ const review = document.querySelector("#review");
 const qna = document.querySelector("#qna");
 const changeInfo = document.querySelector("#changeInfo");
 
+const explain = document.querySelector("#explain");
 const change = document.querySelector("#change");
 
 
@@ -13,6 +14,7 @@ detailInfo.addEventListener("click", () => {
     qna.style.backgroundColor = 'var(--white)';
     changeInfo.style.backgroundColor = 'var(--white)';
 
+    explain.style.display = 'flex';
     change.style.display = 'none';
 });
 
@@ -22,6 +24,7 @@ review.addEventListener("click", () => {
     qna.style.backgroundColor = 'var(--white)';
     changeInfo.style.backgroundColor = 'var(--white)';
 
+    explain.style.display = 'none';
     change.style.display = 'none';
 });
 
@@ -31,6 +34,7 @@ qna.addEventListener("click", () => {
     qna.style.backgroundColor = 'var(--primary3)';
     changeInfo.style.backgroundColor = 'var(--white)';
 
+    explain.style.display = 'none';
     change.style.display = 'none';
 });
 
@@ -40,6 +44,7 @@ changeInfo.addEventListener("click", () => {
     qna.style.backgroundColor = 'var(--white)';
     changeInfo.style.backgroundColor = 'var(--primary3)';
 
+    explain.style.display = 'none';
     change.style.display = 'flex';
 });
 

@@ -100,7 +100,7 @@ selectBest.forEach(elements => {
                     const imgWrap = document.createElement("div");
                     imgWrap.classList.add("img-wrap");
                     const uploadImg = document.createElement("img");
-                    uploadImg.src = `${product.uploadImgPath}${product.uploadImgOgName}`
+                    uploadImg.src = `${product.uploadImgPath}${product.uploadImgRename}`
                     imgWrap.append(uploadImg);
 
 

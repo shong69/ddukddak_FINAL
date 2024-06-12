@@ -29,9 +29,9 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	// 쇼핑몰 메인페이지 오늘의 상품 고르기
 	@Override
-	public List<Product> selectProduct() {
+	public List<Product> selectProduct(int memberNo) {
 		
-		List<Product> list = mapper.selectProduct();
+		List<Product> list = mapper.selectProduct(memberNo);
         
         List<Product> randomList = new ArrayList<Product>();
         
@@ -56,9 +56,9 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	// 베스트상품
 	@Override
-	public List<Product> selectBestProduct() {
+	public List<Product> selectBestProduct(int memberNo) {
 		
-		List<Product> list = mapper.selectBestProduct();
+		List<Product> list = mapper.selectBestProduct(memberNo);
 		
 		List<Product> bestList = new ArrayList<Product>();
 		
@@ -72,8 +72,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 	// 카테고리별 상품목록 띄우기
 	@Override
 	public Map<String, Object> selectProductList(int smallcategoryNo, int cp) {
-		
-		log.debug("cp : " + cp);
+
 		//1. 전체 게시글 수 조회
 		int productCount = mapper.selectProductListCount(smallcategoryNo);
 		
@@ -108,9 +107,13 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	// 상품의 상세정보
 	@Override
-	public DetailProduct selectOneProduct(int productNo) {
+	public DetailProduct selectOneProduct(int memberNo, int productNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		DetailProduct detailProduct = mapper.selectOneProduct(productNo);
+		map.put("memberNo", memberNo);
+		map.put("productNo", productNo);
+		
+		DetailProduct detailProduct = mapper.selectOneProduct(map);
 		
 		List<ProductImg> imgList = mapper.selectImgList(productNo);
 		
@@ -145,11 +148,12 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	// 상품별 추천상품 출력
 	@Override
-	public List<Product> selectRecProduct(int productNo, int smallcategoryNo) {
+	public List<Product> selectRecProduct(int memberNo, int productNo, int smallcategoryNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("productNo", productNo);
 		map.put("smallcategoryNo", smallcategoryNo);
+		map.put("memberNo", memberNo);
 		
 		List<Product> list = mapper.recProduct(map);
         
@@ -182,7 +186,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	// 검색으로 찾은 상품리스트 출력
 	@Override
-	public Map<String, Object> searchList(String query, int cp) {
+	public Map<String, Object> searchList(int memberNo, String query, int cp) {
 		
 		//1.검색조건 맞고, 삭제 안된 게시글 수 조회
 		int listCount = mapper.getSearchCount(query);
@@ -195,7 +199,12 @@ public class eCommerceServiceImpl implements eCommerceService{
 		int offset =(cp-1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		List<Product> productList = mapper.selectSearchList(query, rowBounds);
+		Map<String, Object> newMap = new HashMap<String, Object>();
+		
+		newMap.put("query", query);
+		newMap.put("memberNo", memberNo);
+		
+		List<Product> productList = mapper.selectSearchList(newMap, rowBounds);
 		
 		//4. 목록 조회 결과 + pagination 객체를 map으로 묶어서 결과로 반환
 		Map<String, Object> map = new HashMap<>();
@@ -210,7 +219,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	// 검색 없이 정렬순서 바꾸기
 	@Override
-	public Map<String, Object> selectProductList(int smallcategoryNo, int cp, int sort) {
+	public Map<String, Object> selectProductList(int memberNo, int smallcategoryNo, int cp, int sort) {
 		log.debug("cp : " + cp);
 		//1. 전체 게시글 수 조회
 		int productCount = mapper.selectProductListCount(smallcategoryNo);
@@ -227,6 +236,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		
 		newMap.put("smallcategoryNo", smallcategoryNo);
 		newMap.put("sort", sort);
+		newMap.put("memberNo", memberNo);
 		List<Product> productList = mapper.selectProductListOrder(newMap, rowBounds);
 		//4. 목록조회 결과 + pagination객체 map으로 묶어서 반환
 		
@@ -239,7 +249,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	// 검색한 상품 정렬순서 바꾸기
 	@Override
-	public Map<String, Object> searchList(String query, int cp, int sort) {
+	public Map<String, Object> searchList(int memberNo, String query, int cp, int sort) {
 		///1.검색조건 맞고, 삭제 안된 게시글 수 조회
 		int listCount = mapper.getSearchCount(query);
 		
@@ -255,6 +265,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		
 		newMap.put("query", query);
 		newMap.put("sort", sort);
+		newMap.put("memberNo", memberNo);
 		
 		List<Product> productList = mapper.selectSearchListOrder(newMap, rowBounds);
 		

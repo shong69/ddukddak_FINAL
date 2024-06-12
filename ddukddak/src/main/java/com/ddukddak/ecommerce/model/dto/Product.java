@@ -24,6 +24,7 @@ public class Product {
 	private int categoryNo;
 	private int bigCategoryNo;
 	private int partnerNo;
+	private int wish;
 	
 	
 	// 상품 썸네일 이미지

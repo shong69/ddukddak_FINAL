@@ -13,12 +13,12 @@ public interface eCommerceService {
 	/** 오늘의 상품 4개 고르기
 	 * @return
 	 */
-	List<Product> selectProduct();
+	List<Product> selectProduct(int memberNo);
 
 	/** 베스트상품
 	 * @return
 	 */
-	List<Product> selectBestProduct();
+	List<Product> selectBestProduct(int memberNo);
 
 	/** 카테고리별 상품목록 띄우기
 	 * @param categoryNo 
@@ -41,7 +41,7 @@ public interface eCommerceService {
 	 * @param productNo
 	 * @return
 	 */
-	DetailProduct selectOneProduct(int productNo);
+	DetailProduct selectOneProduct(int memberNo, int productNo);
 
 	/** 대분류 카테고리 이름
 	 * @param bigcategoryNo
@@ -58,7 +58,7 @@ public interface eCommerceService {
 	/** 상품별 추천상품 출력
 	 * @return
 	 */
-	List<Product> selectRecProduct(int productNo, int smallcategoryNo);
+	List<Product> selectRecProduct(int memberNo, int productNo, int smallcategoryNo);
 
 	/** 상품의 옵션개수 출력
 	 * @param productNo
@@ -71,7 +71,7 @@ public interface eCommerceService {
 	 * @param cp
 	 * @return
 	 */
-	Map<String, Object> searchList(String query, int cp);
+	Map<String, Object> searchList(int memberNo, String query, int cp);
 
 	/** 검색 없이 정렬순서 바꾸기
 	 * @param smallcategoryNo
@@ -79,7 +79,7 @@ public interface eCommerceService {
 	 * @param sort
 	 * @return
 	 */
-	Map<String, Object> selectProductList(int smallcategoryNo, int cp, int sort);
+	Map<String, Object> selectProductList(int memberNo, int smallcategoryNo, int cp, int sort);
 
 	/** 검색한 상품 정렬순서 바꾸기
 	 * @param query
@@ -87,6 +87,6 @@ public interface eCommerceService {
 	 * @param sort
 	 * @return
 	 */
-	Map<String, Object> searchList(String query, int cp, int sort);
+	Map<String, Object> searchList(int memberNo, String query, int cp, int sort);
 
 }

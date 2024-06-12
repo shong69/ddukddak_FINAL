@@ -3,6 +3,7 @@ package com.ddukddak.myPage.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.CartItem;
 
@@ -46,5 +47,11 @@ public interface CartAndWishListService {
 	 * @return
 	 */
 	int delWish(Map<String, Object> obj);
+
+	/** 위시리스트 목록조회
+	 * @param loginMember
+	 * @return
+	 */
+	Map<String, Object> selectWishList(Member loginMember, int cp);
 
 }

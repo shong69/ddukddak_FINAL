@@ -19,12 +19,12 @@ public interface eCommerceMapper {
 	/** 쇼핑몰 메인페이지의 오늘의 상품 추출
 	 * @return
 	 */
-	List<Product> selectProduct();
+	List<Product> selectProduct(int memberNo);
 
 	/** 베스트상품
 	 * @return
 	 */
-	List<Product> selectBestProduct();
+	List<Product> selectBestProduct(int memberNo);
 	
 	/** 베스트상품
 	 * @param categoryNo 
@@ -47,7 +47,7 @@ public interface eCommerceMapper {
 	 * @param productNo
 	 * @return
 	 */
-	DetailProduct selectOneProduct(int productNo);
+	DetailProduct selectOneProduct(Map<String, Object> map);
 
 	/** 상품 상세정보 이미지리스트
 	 * @param productNo
@@ -102,7 +102,7 @@ public interface eCommerceMapper {
 	 * @param rowBounds
 	 * @return
 	 */
-	List<Product> selectSearchList(String query, RowBounds rowBounds);
+	List<Product> selectSearchList(Map<String, Object> newMap, RowBounds rowBounds);
 
 	/** 검색 없이 정렬순서 바꾸기
 	 * @param newMap

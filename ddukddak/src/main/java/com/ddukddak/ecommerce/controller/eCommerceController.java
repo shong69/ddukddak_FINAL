@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,15 +43,27 @@ public class eCommerceController {
 	@GetMapping("main")
 	public String eCommerceMain(@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 								@RequestParam(value="query", required=false) String query,
+								HttpServletRequest req,
 								Model model) {
+		
+		HttpSession session = req.getSession();
+		
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		
+		int memberNo = 0;
+		
+		if(loginMember != null) {
+			memberNo = loginMember.getMemberNo();
+		}
 		
 		// 대분류 카테고리 선택
 		List<Category> categoryList = service.selectCategory();
 		
 		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("loginMember", loginMember);
 		
 		if(query != null) {
-			Map<String, Object> map = service.searchList(query, cp);
+			Map<String, Object> map = service.searchList(memberNo, query, cp);
 			
 			int bigcategoryNo = 1;
 			int smallcategoryNo = 1;
@@ -63,8 +76,8 @@ public class eCommerceController {
 			
 			return "/eCommerce/eCommerceList";
 		} else {
-			List<Product> list = service.selectProduct();
-			List<Product> bestList = service.selectBestProduct();
+			List<Product> list = service.selectProduct(memberNo);
+			List<Product> bestList = service.selectBestProduct(memberNo);
 			
 			
 			model.addAttribute("selectProductList", list);
@@ -102,13 +115,23 @@ public class eCommerceController {
 		
 		Map<String, Object> map = null;
 		
+		HttpSession session = req.getSession();
+		
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		
+		int memberNo = 0;
+		
+		if(loginMember != null) {
+			memberNo = loginMember.getMemberNo();
+		}	
+		
 		if(query == null) { //검색 X(그냥 목록 조회)
 
-			map = service.selectProductList(smallcategoryNo, cp, sort);
+			map = service.selectProductList(memberNo, smallcategoryNo, cp, sort);
 			
 		}else { //검색 O
 			
-			map = service.searchList(query, cp, sort);
+			map = service.searchList(memberNo, query, cp, sort);
 			
 		}
 		
@@ -128,11 +151,6 @@ public class eCommerceController {
 		model.addAttribute("bigCategoryNo", bigcategoryNo);
 		model.addAttribute("smallCategoryNo", smallcategoryNo);
 		model.addAttribute("query", query);
-		HttpSession session = req.getSession();
-		
-		Member loginMember = (Member)session.getAttribute("loginMember");
-		log.info("loginMember" + loginMember);
-		
 		model.addAttribute("loginMember", loginMember);
 		
 		return "/eCommerce/eCommerceList";
@@ -148,7 +166,22 @@ public class eCommerceController {
 								HttpServletRequest req,
 									Model model) {
 		
-		DetailProduct productInfo = service.selectOneProduct(productNo);
+
+
+		HttpSession session = req.getSession();
+		
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		
+		log.info("loginMember" + loginMember);
+		
+		int memberNo = 0;
+		
+		if(loginMember != null) {
+			memberNo = loginMember.getMemberNo();
+		}
+		model.addAttribute("loginMember", loginMember);
+		
+		DetailProduct productInfo = service.selectOneProduct(memberNo, productNo);
 		
 		// 대분류 카테고리 선택
 		List<Category> categoryList = service.selectCategory();
@@ -157,7 +190,7 @@ public class eCommerceController {
 		List<Category> smallCategoryList = service.selectSmallCategory(bigcategoryNo);
 		
 		// 추천상품 선택
-		List<Product> recList = service.selectRecProduct(productNo, smallcategoryNo);
+		List<Product> recList = service.selectRecProduct(memberNo, productNo, smallcategoryNo);
 		
 		// 옵션 개수 선택
 		List<ProductOption> optionList = service.selectOptionListName(productNo);
@@ -171,16 +204,6 @@ public class eCommerceController {
 		model.addAttribute("optionList", optionList);
 		model.addAttribute("productNo", productNo);
 
-
-		HttpSession session = req.getSession();
-		
-		Member loginMember = (Member)session.getAttribute("loginMember");
-		
-		log.info("loginMember" + loginMember);
-		
-		if(loginMember != null) {
-			model.addAttribute("loginMember", loginMember);
-		}
 		
 		
 		return "eCommerce/eCommerceDetail";

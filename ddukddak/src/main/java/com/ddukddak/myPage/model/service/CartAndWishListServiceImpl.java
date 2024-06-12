@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ddukddak.ecommerce.model.dto.Product;
+import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.CartItem;
 import com.ddukddak.myPage.model.mapper.CartAndWishListMapper;
@@ -102,6 +105,33 @@ public class CartAndWishListServiceImpl implements CartAndWishListService{
 		int result = mapper.delWish(obj);
 		log.info("result1 : " + result);
 		return result;
+	}
+
+	// 위시리스트 목록조회
+	@Override
+	public Map<String, Object> selectWishList(Member loginMember, int cp) {
+		
+		int memberNo = loginMember.getMemberNo();
+		
+		//1. 전체 게시글 수 조회
+		int productCount = mapper.selectWishListCount(memberNo);
+		
+		//2. pagination 객체 생성하기
+		eCommercePagination pagination = new eCommercePagination(cp, productCount);
+		//3. 페이지 목록 조회
+		int limit = pagination.getLimit(); //제한된 크기
+		int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<Product> wishList = mapper.selectWishList(memberNo, rowBounds);
+		//4. 목록조회 결과 + pagination객체 map으로 묶어서 반환
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("pagination", pagination);
+		map.put("wishList", wishList);
+
+		
+		return map;
 	}
 	
 }
