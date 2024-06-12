@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +26,7 @@
             <section class="myPage-main">
                 <h2 class="category-name">좋아요한 게시글</h2>
                 <div class="select-area">
-                    <select class="select-box" onChange="selectBoardCode(this.value)">
+                    <select class="select-box">
                         <option value="1">집들이</option>
                         <option value="2">노하우</option>
                     </select>
@@ -34,83 +34,9 @@
 
                 <div id="postArea"></div>
 
-                <div id="myHouse">
-                    <h2 class="category-name">내 집들이</h2>
-                    <ul class="homeBoard-list">
-                        <th:object th:if="${#lists.isEmpty(myHouseBoardList)}">
-    
-                            <div class="noHouseData">
-                                좋아요 한 게시글이 존재하지 않습니다.
-                            </div>
-    
-    
-                        </th:object>
-                        <th:object th:unless="${#lists.isEmpty(myHouseBoardList)}">
-                            <li class="myHouseBoardList" th:each = "list : ${myHouseBoardList}" th:object="${list}">
-                                <img th:src="*{thumbnail}" class="homeBoard-img">
-                                
-                                <h3 th:text="*{boardTitle}" class="homeboard-title" ><a>게시글 제목</a></h3>
-                                <div class="homeBoard-info">
-                                    <div>
-                                        <a th:href="|/myHouse/detail/*{boardNo}|">방문하기 ></a>
-                                    </div>
-                                    <div>
-                                        <span th:text="${session.loginMember.memberNickname}"></span>
-                                        <span th:text="|조회수 *{readCount}|">조회수</span>
-                                        <span th:if="*{boardUpdateDate != null}"  th:text="*{boardUpdateDate}">업데이트날짜</span>
-                                        <span th:unless="${boardUpdateDate!=null}" th:text="*{boardWriteDate}">작성일</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </th:object>
-                    </ul>
-                </div>
-
-                <div id="myTip">
-                    <h2 class="category-name">내 노하우</h2>
-
-                    <table class="tipBoard-table">
-                        <tbody>
-                            <th:object th:if="${#lists.isEmpty(myTipBoardList)}">
-                                <tr>
-                                    <div class="noTipData">
-                                        좋아요 한 게시글이 존재하지 않습니다.
-                                    </div>
-                                </tr>
-                            </th:object>
-                            <th:object th:unless="${#lists.isEmpty(myTipBoardList)}">
-                                <th:block th:each="rowIndex : ${#numbers.sequence(0,(myTipBoardList.size()+2)/3 -1)}"><!--행 반복 -->
-                                    <tr class="tipBoard-row">
-                                        <th:block th:each="colIndex: ${#numbers.sequence(0,2)}" th:with="listIndex=${rowIndex * 3 + colIndex}">
-                                            <td th:if="${rowIndex*3 + colIndex < myTipBoardList.size()}" th:object="${myTipBoardList[listIndex]}">
-                                                <!--3개로 주어진 myTipBoardList의 인덱스 -->
-                                                <section class="tipBoard-item">
-                                                    <img th:src="@{thumbnail}" class="tipBoard-img">
-                                                    <span th:text="|@${session.loginMember.memberNickname}|">@USER01</span>
-                                                    <span th:text="*{boardTitle}">베란다 가구배치 꿀팁</span>
-                                                    <span><i class="fa-solid fa-heart"></i><span class="likeCount" th:text="*{likeCount}"/></span>
-                                                    <span th:text="*{boardContent}">헌법개정은 국회재적의원 과반수 또는 대통령의 발의로 제안된다. 
-                                                        국회의원과 정부는 법률안을 제출할 수 있다. 
-                                                        국가는 농업 및 어업을 보호·육성하기 위하여 농·어촌종합개발과...</span>
-                
-                                                </section>
-                                            </td>
-                                        </th:block> 
-    
-            
-                                    </tr>
-                                </th:block>
-    
-                            </th:object>
-    
-                        </tbody>
-                    </table>
-                </div>
-                
 
 
-
-
+                <!--페이지 네이션 추가-->
             </section>
         </section>
 

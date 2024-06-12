@@ -210,10 +210,7 @@
     height: 30px;
     text-align: start;
 }
-.homeboard-title:hover{
-    font-weight: 600;
-    cursor: pointer;
-}
+
 .homeBoard-info{
     display: flex;
     flex-direction: column;
