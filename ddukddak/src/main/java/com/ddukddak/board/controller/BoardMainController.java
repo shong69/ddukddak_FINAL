@@ -54,7 +54,7 @@ public class BoardMainController {
 		
 		 // Chunk the filtered boards
         List<List<Board>> houseBoardChunks = chunkBoards(houseBoard, 6);
-        List<List<Board>> tipBoardChunks = chunkBoards(tipBoard, 6);
+        List<List<Board>> tipBoardChunks = chunkBoards(tipBoard, 4);
 		
 		if (allBoard != null) {
 			
