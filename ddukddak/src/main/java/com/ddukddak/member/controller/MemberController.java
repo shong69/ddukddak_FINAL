@@ -34,44 +34,39 @@ public class MemberController {
 	
 	
 	@GetMapping("login")
-	public String memberLogin() {
-		return "member/login";
+	public String memberLogin(@RequestParam(value = "returnUrl", required = false) String returnUrl, Model model) {
+	    model.addAttribute("returnUrl", returnUrl);
+	    return "member/login";
 	}
 	
 	@PostMapping("login")
-	public String memberLogin(Member member, RedirectAttributes ra, Model model, @RequestParam(value="saveId", required=false) String saveId, HttpServletResponse resp) {
-		
-		
-		Member loginMember = service.login(member);
-		
-		String path = null;
-		
-		if(loginMember == null) {
-			ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
-			path = "login";
-		}
-		if(loginMember != null) {
-			ra.addFlashAttribute("message", loginMember.getMemberId()+"님 환영합니다");
-			
-			model.addAttribute("loginMember", loginMember);
-			path="/";
-			
-			Cookie cookie = new Cookie("saveId", loginMember.getMemberId());
-			
-			cookie.setPath("/");
-			
-			if(saveId != null) {
-				cookie.setMaxAge(60 *60 * 24 * 30);
-				
-			} else { // 미체크시 
-				cookie.setMaxAge(0);
-			}
-			
-			resp.addCookie(cookie);
-
-		
-		}
-		return "redirect:" + path;
+	public String memberLogin(Member member, RedirectAttributes ra, Model model,
+	                          @RequestParam(value="saveId", required=false) String saveId,
+	                          @RequestParam(value="returnUrl", required=false) String returnUrl,
+	                          HttpServletResponse resp) {
+	    
+	    Member loginMember = service.login(member);
+	    String path = null;
+	    
+	    if(loginMember == null) {
+	        ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
+	        path = "login";
+	    } else {
+	        ra.addFlashAttribute("message", loginMember.getMemberId() + "님 환영합니다");
+	        model.addAttribute("loginMember", loginMember);
+	        
+	        path = (returnUrl != null && !returnUrl.isEmpty()) ? returnUrl : "/";
+	        
+	        Cookie cookie = new Cookie("saveId", loginMember.getMemberId());
+	        cookie.setPath("/");
+	        if(saveId != null) {
+	            cookie.setMaxAge(60 * 60 * 24 * 30);
+	        } else {
+	            cookie.setMaxAge(0);
+	        }
+	        resp.addCookie(cookie);
+	    }
+	    return "redirect:" + path;
 	}
 	
 	@GetMapping("logout")
