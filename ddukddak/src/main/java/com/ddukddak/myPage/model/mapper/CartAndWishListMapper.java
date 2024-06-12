@@ -29,10 +29,16 @@ public interface CartAndWishListMapper {
 	List<String> selectCartListOptionValue(int cartId);
 
 	/** 장바구니 상품 삭제
-	 * @param map
+	 * @param cartId
 	 * @return
 	 */
-	int deleteProduct(Map<String, Object> map);
+	int deleteProduct(int cartId);
+	
+	/** 장바구니 상품 옵션 삭제
+	 * @param cartId
+	 * @return
+	 */
+	int deleteProductOption(int cartId);
 
 	/** 장바구니 상품 추가
 	 * @param map1
@@ -45,6 +51,24 @@ public interface CartAndWishListMapper {
 	 * @return
 	 */
 	int insertOption(Object oneOption);
+
+	/** 장바구니 상품 수량 변경
+	 * @param map
+	 * @return
+	 */
+	int modifyCount(Map<String, Object> map);
+
+	/** 위시리스트 추가
+	 * @param obj
+	 * @return
+	 */
+	int addWish(Map<String, Object> obj);
+
+	/** 위시리스트 삭제
+	 * @param obj
+	 * @return
+	 */
+	int delWish(Map<String, Object> obj);
 
 	
 

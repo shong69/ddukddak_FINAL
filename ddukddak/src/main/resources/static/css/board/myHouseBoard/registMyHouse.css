@@ -39,6 +39,10 @@
     border-radius: 10px;
 }
 
+.titleInput > input:focus {
+    outline: none;
+}
+
 .contentInput textarea {
     width: 900px;
     resize: none;
@@ -46,6 +50,10 @@
     height: 300px;
     padding: 10px;
     font-size: 15px;
+}
+
+.contentInput textarea:focus {
+    outline: none;
 }
 
 /* 파일첨부 */

@@ -155,16 +155,16 @@
                                     <th>닉네임</th>
                                     <td colspan="3">
                                         <div class="before-modify">
-                                            <div class="nickname" id ="nicknameDiv1" th:text="${session.loginMember.memberNickname}">닉네임</div>
+                                            <div class="nickname" id ="nicknameDiv1" th:text="${session.loginMember.memberNickname}">회원 닉네임</div>
                                             <div ><button class="myPageSubBtn" type="button">닉네임 변경</button></div>
                                         </div>
                                     </td>
                                 </tr>
                 
                                 <tr style='display: none;'class="change-nickname-area">
-                                    <th  th:text="${session.loginMember.memberNickname}">닉네임</th>
+                                    <th >닉네임</th>
                                     <td class="nickname-area2" colspan="3">
-                                        <div id ="nicknameDiv2" class="nickname" style="margin-left: 80px;" th:text="${session.loginMember.memberNickname}">김송</div>
+                                        <div id ="nicknameDiv2" class="nickname" style="margin-left: 80px;" th:text="${session.loginMember.memberNickname}">회원 닉네임</div>
                                         <ul class="nickname-alarm">
                                             <li>이번달 수정 가능 횟수(월 최대 4회까지만 변경 가능합니다.)</li>
                                             <li>길이는 최대 8자 이내로 작성해주세요.</li>

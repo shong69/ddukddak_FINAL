@@ -5,7 +5,9 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ddukddak.member.model.dto.Member;
@@ -27,8 +29,7 @@ public class MyCommunityController {
 	@GetMapping("myPageHouseBoard")
 	public String myPageHouseBoard(
 			@SessionAttribute("loginMember")Member loginMember,
-			Model model
-				) {
+			Model model) {
 		Map<String, Object> map = service.selectMyHouseBoardList(loginMember);
 		model.addAttribute("myHouseBoardList", map.get("myHouseBoardList"));
 		
@@ -50,9 +51,31 @@ public class MyCommunityController {
 	
 	//내가 좋아요 한 게시글
 	@GetMapping("myLikes")
-	public String myLikes() {
+	public String myLikes(@SessionAttribute("loginMember")Member loginMember,
+			Model model) {
 		
-		
+		Map<String, Object> map = service.selectMyHouseBoardList(loginMember);
+		model.addAttribute("myHouseBoardList", map.get("myHouseBoardList"));
 		return "myPage/myLikes";
+	}
+	
+	
+	@ResponseBody
+	@GetMapping("myLikes/House")
+	public Object likeHouses(@SessionAttribute("loginMember")Member loginMember,
+			Model model) {
+		
+		Map<String, Object> map = service.selectLikeHouseBoardList(loginMember);
+
+		return map.get("likeHouseBoardList");
+	}
+	
+	@ResponseBody
+	@GetMapping("myLikes/Tip")
+	public Object likeTips(@SessionAttribute("loginMember")Member loginMember,
+			Model model) {
+		Map<String, Object> map = service.selectLikeTipBoardList(loginMember);
+
+		return map.get("likeTipBoardList");
 	}
 }

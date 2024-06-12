@@ -55,9 +55,9 @@
           
           <section class="sortingArea">
             <select id="sortingSelect">
-              <option value="latest">최신순</option>
-              <option value="views">조회순</option>
-              <option value="lickCount">좋아요순</option>
+              <option value="latest" th:selected="${sort == 'latest'}">최신순</option>
+              <option value="views" th:selected="${sort == 'views'}">조회순</option>
+              <option value="likeCount" th:selected="${sort == 'likeCount'}">좋아요순</option>
             </select>
           </section>
           
@@ -180,7 +180,7 @@
                 <li><a th:href="@{/myHouse/main(boardCode=${boardCode}, cp=*{prevPage}), query=${param.query}}">&lt;</a></li>
 
                 <!-- 특정 페이지로 이동 -->
-                <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+                <th:block th:if="*{startPage lt endPage}" th:each="i : *{#numbers.sequence(startPage, endPage)}">
 
                     <!-- 현재 보고있는 페이지 -->
                     <li th:if="${i} == *{currentPage}">
@@ -192,6 +192,15 @@
                         <a th:href="@{/myHouse/main(boardCode=${boardCode}, cp=${i}), query=${param.query}}"
                            th:text="${i}">2</a>
                     </li>
+                </th:block>
+
+                <!-- 일치하는 게시글이 없을 겨우 -->
+                <th:block th:unless="*{startPage lt endPage}">
+
+                  <li>
+                    <a class="current">1</a>
+                  </li>
+
                 </th:block>
 
                 <!-- 다음 목록 시작 번호로 이동 -->
@@ -214,6 +223,10 @@
     <div id="top">↑</div>
           
     <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+    <script>
+      const boardCode = /*[[${boardCode}]]*/ "게시판 코드 번호";
+    </script>
 
     <script src="/js/common/fragments/board/side-category.js"></script>
     <script src="/js/board/myHouseboard/myHouseBoard.js"></script>

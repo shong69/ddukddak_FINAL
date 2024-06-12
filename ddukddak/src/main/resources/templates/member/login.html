@@ -28,7 +28,8 @@
         <h1 class="loginPageTitle1">뚝딱뚝딱</h1>
         
         <div class="loginBox">
-            <form id="loginForm" method="post" action="/member/login">
+            <form id="loginForm" method="post" th:action="@{/member/login}" th:object="${member}">
+                <input type="hidden" th:name="returnUrl" th:value="${returnUrl}">
                 <div class="boxInDiv">
                     <h4 class="loginPageTitle2">회원 로그인</h4>
                     

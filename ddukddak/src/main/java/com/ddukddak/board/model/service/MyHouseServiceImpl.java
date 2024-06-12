@@ -110,9 +110,9 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 //	}
 
 	@Override
-	public Map<String, Object> selectMyHouseList(int boardCode, int cp) {
+	public Map<String, Object> selectMyHouseList(Map<String, Object> paramMap, int cp) {
 		
-		int listCount = mapper.getListCount(boardCode);
+		int listCount = mapper.getListCount(paramMap);
 		
 		Pagination pagination = new Pagination(cp, listCount);
 		
@@ -120,7 +120,12 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 		int offset = (cp - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		
-		List<Board> myHouseList = mapper.selectMyHouseList(boardCode, rowBounds);
+		Map<String, Object> newMap = new HashMap<>();
+		
+//		newMap.put("boardCode", boardCode);
+//		newMap.put("sortMethod", sortMethod);
+		
+		List<Board> myHouseList = mapper.selectMyHouseList(paramMap, rowBounds);
 		
 		Map<String, Object> map = new HashMap<>();
 		
@@ -142,6 +147,8 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 		int limit = pagination.getLimit();
 		int offset = (cp - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+//		paramMap.put("sortMethod", sortMethod);
 		
 		List<Board> myHouseList = mapper.selectSearchList(paramMap, rowBounds);
 		

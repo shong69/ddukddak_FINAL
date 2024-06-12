@@ -118,7 +118,7 @@
                     <div th:each="productBestList : ${selectRecProductList}" th:object="${productBestList}">
                         <a th:href="@{'/eCommerce/list/' + *{bigCategoryNo} + '/' + *{categoryNo} + '/' + *{productNo} + '/detail'}">
                             <div class="img-wrap">
-                                <img th:src="|*{uploadImgPath}*{uploadImgOgName}|" style="height: 200px; width: 180px;">
+                                <img th:src="|*{uploadImgPath}*{uploadImgRename}|" style="height: 200px; width: 180px;">
                             </div>
                             <div>
                                 <h4 th:text="*{productName}">상품제목</h4>
