@@ -1021,7 +1021,7 @@ telAuth.addEventListener('click', () => {
             alert("입력해 주신 휴대폰 번호로 인증번호가 발송되었습니다.");
         } else {
             console.log("인증번호 발송 실패");
-            alert("인증 번호 발송에 실패했습니다. 다시 시도해 주세요.");
+            alert("금일 발송량 초과 혹은 서버 문제로 인해 인증 번호 발송에 실패했습니다.");
         }
     }).catch(error => {
         console.log(error);
@@ -1244,4 +1244,16 @@ signUpForm.addEventListener("submit" , e => {
         return;
     }
 
+});
+
+
+// checkObj 현재 상태 확인
+const checkObjBtn = document.getElementById('checkObjBtn');
+
+checkObjBtn.addEventListener('click', () => {
+    console.clear(); // 이전 콘솔 값을 비웁니다
+    console.log("Current state of checkObj:");
+    for (let key in checkObj) {
+        console.log(`${key}: ${checkObj[key]}`);
+    }
 });

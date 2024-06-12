@@ -31,10 +31,12 @@ agreeAllBtn.addEventListener('change', function() {
         agreeButtons.forEach(function(button) {
             button.checked = true;
         });
+        checkObj.agree = true;
     } else {
         agreeButtons.forEach(function(button) {
             button.checked = false;
         });
+        checkObj.agree = false;
     }
 });
 
@@ -42,8 +44,10 @@ agreeButtons.forEach(function(button) {
     button.addEventListener('change', function() {
         if (document.querySelectorAll('.agreeBtn:checked').length === agreeButtons.length) {
             agreeAllBtn.checked = true;
+            checkObj.agree = true;
         } else {
             agreeAllBtn.checked = false;
+            checkObj.agree = false;
         }
     });
 });
@@ -468,16 +472,19 @@ const telAuthTime = document.getElementById('telAuthTime');
 // 인증 관련 span
 const telAuthMsg = document.getElementById('telAuthMsg');
 
+// 발송 여부 boolean
+let sendSmsAuthkey = false;
 
 const disabledAuthBtnCheck = () => {
 
-    if(checkObj.partnerTel) {
+    // 발송여부가 false / 이미 발송했다면 살아나는거 막기
+    if(checkObj.partnerTel && !sendSmsAuthkey) {
         sendAuthBtn.disabled = false;
     } else {
         sendAuthBtn.disabled = true;
     }
 
-    if(smsAuthKey.value.length == 6) {
+    if(checkObj.partnerTel && smsAuthKey.value.length == 6 && sendSmsAuthkey)  {
         checkAuthBtn.disabled = false;
     } else {
         checkAuthBtn.disabled = true;
@@ -519,8 +526,11 @@ partnerTel.addEventListener('input', e => {
     // 인증 요청 후 휴대폰 번호 수정 시 인증 초기화
     checkObj.telAuth = false;
     telAuthMsg.innerText = '';
+    smsAuthKey.value = '';
+    sendSmsAuthkey = false;
+    clearInterval(authTimer);
+    telAuthTime.innerText = '';
 
-    
     if(inputTel.trim().length === 0) {
 
         checkObj.partnerTel = false;
@@ -590,7 +600,7 @@ sendAuthBtn.addEventListener('click', () => {
     checkObj.telAuth = false;
     smsAuthKey.value = "";
     telAuthMsg.innerText = "";
-
+    sendSmsAuthkey = false; // 발송 성공 시 boolean
 
     // 휴대폰 유효성 X
     if(!checkObj.partnerTel) {
@@ -622,11 +632,16 @@ sendAuthBtn.addEventListener('click', () => {
     .then(resp => resp.text())
     .then(result => {
         if(result == 1) {
+            smsAuthKey.readOnly = false; // 인증 입력창 풀기
+            sendSmsAuthkey = true; // 발송 성공 시 boolean
+            sendAuthBtn.disabled = true; // 재발송 막기
+            telMsg.innerText = '아래 입력창에 인증 번호를 입력 후 인증하기 버튼을 눌러주세요.'
+            telMsg.classList.remove('error', 'confirm');
             console.log("인증 번호 발송 성공");
             alert("입력해 주신 휴대폰 번호로 인증번호가 발송되었습니다.");
         } else {
             console.log("인증번호 발송 실패");
-            alert("인증 번호 발송에 실패했습니다. 다시 시도해 주세요.");
+            alert("금일 발송량 초과 혹은 서버 문제로 인해 인증 번호 발송에 실패했습니다.");
         }
     }).catch(error => {
         console.log(error);
@@ -669,6 +684,13 @@ sendAuthBtn.addEventListener('click', () => {
 // 인증하기 버튼
 checkAuthBtn.addEventListener('click', () => {
 
+    // 인증이 완료된 상태에서 수정 후 틀린 값으로 인증하기 재클릭 시
+    if(checkObj.telAuth) {
+        alert(`이미 인증이 완료되었으나, 잘못된 인증번호로 인증 시도하였습니다.\n인증번호를 올바르게 입력 후 다시 시도해 주세요.`);
+        telMsg.innerText = '아래 입력창에 인증 번호를 입력 후 인증하기 버튼을 눌러주세요.'
+        telMsg.classList.remove('error', 'confirm');
+    }
+    
     checkObj.telAuth = false;
     telAuthMsg.innerText = "";
 
@@ -712,6 +734,11 @@ checkAuthBtn.addEventListener('click', () => {
                 partnerTel.value = "";
                 smsAuthKey.value = ""; // 인증키 입력 인풋
                 telAuthMsg.innerText = "";
+                sendSmsAuthkey = false;
+                clearInterval(authTimer);
+                telAuthTime.innerText = '';
+                telMsg.innerText = '실제 사용하고 계신 휴대폰 번호를 입력해 주세요.';
+                telMsg.classList.remove('error', 'confirm')
 
                 authCount2 = 0;
                 
@@ -721,8 +748,10 @@ checkAuthBtn.addEventListener('click', () => {
                 return;
             }
 
+
             alert(`인증번호가 일치하지 않습니다.\n3회 이상 인증 실패 시 인증이 종료됩니다. (현재 ${authCount2}회 실패)`);
             
+
             checkObj.telAuth = false;
 
             disabledAuthBtnCheck();
@@ -731,11 +760,19 @@ checkAuthBtn.addEventListener('click', () => {
             return;
         }
         
+
+        // 인증 전체 완료 시
         clearInterval(authTimer);
+        telAuthTime.innerText = "";
+
+        telMsg.innerText = '\u2713 인증 완료'
+        telMsg.classList.remove('error');
+        telMsg.classList.add('confirm');
 
         telAuthMsg.innerText = '\u2713 인증 완료'
         telAuthMsg.classList.remove('error');
         telAuthMsg.classList.add('confirm');
+        
         
         checkObj.telAuth = true;
         
@@ -749,10 +786,74 @@ checkAuthBtn.addEventListener('click', () => {
 // 인증 키 입력 시 버튼 활성화 확인
 smsAuthKey.addEventListener('input', () => {
 
-    if(!sendAuthBtn.disabled) {
-        disabledAuthBtnCheck();
-    }
-    
+    disabledAuthBtnCheck();
+
 });
 
 
+// ********** 회원 가입 버튼 클릭 시 **************** / 
+
+const signUpForm = document.getElementById('signUpForm');
+
+// form 제출
+signUpForm.addEventListener("submit" , e => {
+
+    for(let key in checkObj) {
+        if(!checkObj[key]) {
+            let str;
+
+            switch(key) {
+                case "partnerId" : 
+                    str = "아이디가 올바른 형식이 아니거나, 중복된 아이디입니다."; break;
+                
+                case "partnerPw" : 
+                    str = "비밀번호가 형식에 맞게 입력되지 않았습니다."; break;
+                
+                case "partnerPwConfirm" :
+                    str = "비밀번호와 비밀번호 확인이 일치하지 않습니다."; break;
+                
+                case "partnerCeoName" : 
+                    str = "대표자명이 올바른 형식이 아닙니다."; break;
+
+                case "partnerBusinessName" : 
+                    str = "상호명이 올바른 형식이 아니거나, 중복된 닉네임입니다."; break;
+
+                case "partnerBusinessNum" :
+                    str = "사업자등록번호가 올바른 형식이 아니거나, 중복된 이메일입니다."; break;
+    
+                case "partnerTel" :
+                    str = "휴대폰 번호가 올바른 형식이 아니거나, 중복된 휴대폰 번호입니다."; break;
+                    
+                case "telAuth" :
+                    str = "휴대폰 인증이 정상적으로 진행되지 않았습니다."; break;
+
+                case "agree" :
+                    str = "파트너 등록 요청 시 약관 동의는 필수입니다. 모든 약관에 동의해 주세요."; break;
+                    
+            }
+
+            alert(str);
+
+            document.getElementById(key).focus();
+
+            e.preventDefault();
+
+            return;
+        }
+    }
+
+
+});
+
+
+
+// checkObj 현재 상태 확인
+const checkObjBtn = document.getElementById('checkObjBtn');
+
+checkObjBtn.addEventListener('click', () => {
+    console.clear(); // 이전 콘솔 값을 비웁니다
+    console.log("Current state of checkObj:");
+    for (let key in checkObj) {
+        console.log(`${key}: ${checkObj[key]}`);
+    }
+});

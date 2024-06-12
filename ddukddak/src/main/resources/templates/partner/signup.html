@@ -21,7 +21,7 @@
     <th:block th:replace="~{common/fragments/header}"></th:block>
 
     <main>
-        <form action="#" method="post" id="signupForm" name="signUpForm">
+        <form action="#" method="post" id="signUpForm" name="signUpForm">
             <div class="signupContainer">
                 <!-- 약관 동의, 정보 입력 영역 -->
                 <div class="signupContainer2">
@@ -71,7 +71,7 @@
                             </div>
                             <div class="agreeAllArea">
                                 <input type="checkbox" id="agreeAllBtn">
-                                <label for="agreeAll" class="agreeAllBtnLabel">약관 전체 동의</label>
+                                <label for="agreeAllBtn" class="agreeAllBtnLabel">약관 전체 동의</label>
                             </div>
                         </div>
                     </div>
@@ -134,13 +134,16 @@
                                 
                                 <!-- 인증번호 입력 -->
                                 <div class="inputWithButton">
-                                    <input id="smsAuthKey" placeholder="인증번호(6자리)" maxlength="6">
+                                    <input id="smsAuthKey" class="smsAuthKey" placeholder="인증번호(6자리)" maxlength="6" readonly>
                                     <button id="checkAuthBtn" class="authBtn" type="button" disabled>인증하기</button>
                                     <span id="telAuthTime" class="authMsg"></span>
                                 </div>
                                 <div class="telAuthMsgArea">
                                     <span id="telAuthMsg"></span>
                                 </div>
+
+                                <!-- 테스트용 버튼 -->
+                                <button id="checkObjBtn" type="button" style="height: 40px;">현재 유효성 콘솔로 확인(테스트용)</button>
                             </div>
                         </div>
                     </div>
