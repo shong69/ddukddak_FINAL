@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
+import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.myPage.model.dto.CartItem;
 
 @Mapper
@@ -69,6 +71,19 @@ public interface CartAndWishListMapper {
 	 * @return
 	 */
 	int delWish(Map<String, Object> obj);
+	
+	/** 위시리스트 목록개수 조회
+	 * @param memberNo
+	 * @return
+	 */
+	int selectWishListCount(int memberNo);
+
+	/** 위시리스트 목록조회
+	 * @param memberNo
+	 * @return
+	 */
+	List<Product> selectWishList(int memberNo, RowBounds rowBounds);
+
 
 	
 

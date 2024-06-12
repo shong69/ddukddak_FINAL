@@ -26,156 +26,55 @@
                 <h2 class="category-name">위시리스트</h2>
 
                 <table class="wishList-table">
-                    <!--
-                    <th:block th:if="${skuList != null}"></th>
-                        <tr th:each="wishList:${wishList}">
-                            <td>
-                            </td>
-                        </tr>
-                    -->
-                    <tr class="item-row">
-                        <td>
-                            <section class="wish-item">
-                                <img class="item_img">
+                    <tr class="item-row" th:each="row : ${#numbers.sequence(0, 3)}">
+                        <td  th:each="col : ${#numbers.sequence(row * 3, (row + 1) * 3 - 1)}">
+                            <section class="wish-item" th:if="${col lt wishList.size()}">
+                                <img class="item_img" th:src="|${wishList[col].uploadImgPath}${wishList[col].uploadImgRename}|">
                                 <div>
-                                    <span class="item-title">포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용</span>
-                                    <span>캐슬(사각)/마블/1200*600</span>
-                                    <span>25,150 원</span>
-                                    <i class="fa-regular fa-heart heart"></i>
-                                </div>
-                            </section>
-                        </td>
-                        <td>
-                            <section class="wish-item">
-                                <img class="item_img">
-                                <div>
-                                    <span class="item-title">포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용</span>
-                                    <span>캐슬(사각)/마블/1200*600</span>
-                                    <span>25,150 원</span>
-                                    <i class="fa-regular fa-heart heart"></i>
-                                </div>
-                            </section>
-                        </td>
-                        <td >
-                            <section class="wish-item">
-                                <img class="item_img">
-                                <div>
-                                    <span class="item-title">포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용</span>
-                                    <span>캐슬(사각)/마블/1200*600</span>
-                                    <span>25,150 원</span>
-                                    <i class="fa-regular fa-heart heart"></i>
-                                </div>
-                            </section>
-                        </td>
-                    </tr>
-                    <tr class="item-row">
-                        <td >
-                            <section class="wish-item">
-                                <img class="item_img">
-                                <div>
-                                    <span class="item-title">포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용</span>
-                                    <span>캐슬(사각)/마블/1200*600</span>
-                                    <span>25,150 원</span>
-                                    <i class="fa-regular fa-heart heart"></i>
-                                </div>
-                            </section>
-                        </td>
-                        <td >
-                            <section class="wish-item">
-                                <img class="item_img">
-                                <div>
-                                    <span class="item-title">포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용</span>
-                                    <span>캐슬(사각)/마블/1200*600</span>
-                                    <span>25,150 원</span>
-                                    <i class="fa-regular fa-heart heart"></i>
-                                </div>
-                            </section>
-                        </td>
-                        <td >
-                            <section class="wish-item">
-                                <img class="item_img">
-                                <div>
-                                    <span class="item-title">포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용</span>
-                                    <span>캐슬(사각)/마블/1200*600</span>
-                                    <span>25,150 원</span>
-                                    <i class="fa-regular fa-heart heart"></i>
-                                </div>
-                            </section>
-                        </td>
-                    </tr>
-                    <tr class="item-row">
-                        <td >
-                            <section class="wish-item">
-                                <img class="item_img">
-                                <div>
-                                    <span class="item-title">포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용</span>
-                                    <span>캐슬(사각)/마블/1200*600</span>
-                                    <span>25,150 원</span>
-                                    <i class="fa-regular fa-heart heart"></i>
-                                </div>
-                            </section>
-                        </td>
-                        <td >
-                            <section class="wish-item">
-                                <img class="item_img">
-                                <div>
-                                    <span class="item-title">포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용</span>
-                                    <span>캐슬(사각)/마블/1200*600</span>
-                                    <span>25,150 원</span>
-                                    <i class="fa-regular fa-heart heart"></i>
-                                </div>
-                            </section>
-                        </td>
-                        <td >
-                            <section class="wish-item">
-                                <img class="item_img">
-                                <div>
-                                    <span class="item-title">포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용</span>
-                                    <span>캐슬(사각)/마블/1200*600</span>
-                                    <span>25,150 원</span>
-                                    <i class="fa-regular fa-heart heart"></i>
-                                </div>
-                            </section>
-                        </td>
-                    </tr>
-                    <tr class="item-row">
-                        <td >
-                            <section class="wish-item">
-                                <img class="item_img">
-                                <div>
-                                    <span class="item-title">포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용</span>
-                                    <span>캐슬(사각)/마블/1200*600</span>
-                                    <span>25,150 원</span>
-                                    <i class="fa-regular fa-heart heart"></i>
-                                </div>
-                            </section>
-                        </td>
-                        <td >
-                            <section class="wish-item">
-                                <img class="item_img">
-                                <div>
-                                    <span class="item-title">포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용</span>
-                                    <span>캐슬(사각)/마블/1200*600</span>
-                                    <span>25,150 원</span>
-                                    <i class="fa-regular fa-heart heart"></i>
-                                </div>
-                            </section>
-                        </td>
-                        <td >
-                            <section class="wish-item">
-                                <img class="item_img">
-                                <div>
-                                    <span class="item-title">포세린 세라믹 식탁 테이블 상판 2인용 4인용 6인용</span>
-                                    <span>캐슬(사각)/마블/1200*600</span>
-                                    <span>25,150 원</span>
-                                    <i class="fa-regular fa-heart heart"></i>
+                                    <span class="item-title" th:text="${wishList[col].productName}">상품제목</span>
+                                    <span th:text="${wishList[col].productPrice}" class="productPrice">상품가격</span>
+                                    <i class="fa-solid fa-heart heart"></i>
                                 </div>
                             </section>
                         </td>
                     </tr>
                 </table>
+
+                <!-- 페이지네이션 -->
+                <div class="pagination">
+                    <ul class = "pagination" th:object="${pagination}">
+                        <li><a th:href="@{|/myPage/wishList?cp=1|}">&lt;&lt;</a></li>
+                        <li><a th:href="@{|/myPage/wishList?cp=*{prevPage}|}">&lt;</a></li>
+            
+                        <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+    
+                            <li th:if="${i} == *{currentPage}">
+                                <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                            </li>
+    
+                            <li th:unless="${i} == *{currentPage}">
+                                <a th:href="@{|/myPage/wishList?cp=${i}|}"
+                                th:text="${i}">이동할 페이지</a>
+                            </li>
+                            
+                        </th:block>
+            
+                    
+                        <li>
+                            <a th:href="@{|/myPage/wishList?cp=*{nextPage}|}">&gt;</a>
+                        </li>
+                        <li><a th:href="@{|/myPage/wishList?cp=*{maxPage}|}">&gt;&gt;</a></li>
+                    </ul>
+                
+                </div>
+
             </section>
         </section>
         <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+
+        <script src="/js/myPage/wishList.js"></script>
+    </main>
+
 </body>
 </html>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.CartItem;
 import com.ddukddak.myPage.model.service.CartAndWishListService;
@@ -44,14 +45,7 @@ public class MyPageController {
 	public String main() {
 		return"myPage/myPageMain";
 	}
-	//위시리스트 진입
-	@GetMapping("wishList")
-	public String wishList() {
-		
-		
-		
-		return"myPage/wishList";
-	}
+	
 	
 	
 	//회원정보 진입
@@ -183,7 +177,7 @@ public class MyPageController {
 	//장바구니 상품 목록 조회
 	@GetMapping("cart")
 	public String selectCartList(@SessionAttribute("loginMember") Member loginMember,
-			Model model) {
+								Model model) {
 		//로그인한 회원에 알맞는 장바구니 상품 목록 불러오기
 		List<CartItem> cartItem = service.selectCartList(loginMember);
 		
@@ -234,6 +228,21 @@ public class MyPageController {
 		
 	}
 	
+	//위시리스트 진입
+	@GetMapping("wishList")
+	public String wishList(@SessionAttribute("loginMember") Member loginMember,
+							@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+							Model model) {
+		
+		Map<String, Object> map = service.selectWishList(loginMember, cp);
+		
+		log.info("wishList" + map.get("wishList"));
+		
+		model.addAttribute("wishList", map.get("wishList"));
+		model.addAttribute("pagination", map.get("pagination"));
+	
+		return"myPage/wishList";
+	}
 	
 	
 	//위시리스트 추가
