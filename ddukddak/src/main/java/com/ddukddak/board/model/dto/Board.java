@@ -49,6 +49,8 @@ public class Board {
 	private String thumbnail;
 //	이미지 리스트
 	private List<BoardImg> imageList;
+//	특정 게시글에 작성된 댓글 목록
+	private List<Comment> commentList;
 	
 	
 //	게시글 좋아요 0: 체크 안됨 / 1: 체크 됨
