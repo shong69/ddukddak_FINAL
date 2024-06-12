@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +42,6 @@ public class MyPageController {
 	//주문내역 진입
 	@GetMapping("")
 	public String main() {
-                
 		return"myPage/myPageMain";
 	}
 	//위시리스트 진입
@@ -187,8 +187,6 @@ public class MyPageController {
 		//로그인한 회원에 알맞는 장바구니 상품 목록 불러오기
 		List<CartItem> cartItem = service.selectCartList(loginMember);
 		
-		log.info("cartItem : " + cartItem);
-		
 		model.addAttribute("cartList", cartItem);
 		
 		return"myPage/cart";
@@ -199,7 +197,6 @@ public class MyPageController {
 	@ResponseBody
 	public int addCart(@RequestBody List<Object> obj,
 						@SessionAttribute("loginMember") Member loginMember) {
-		log.info("obj : " + obj);
 		
 		int result = 0;
 		
@@ -218,27 +215,43 @@ public class MyPageController {
 	
 	
 	//장바구니 수량 수정
-	@PostMapping("modifyCount")
+	@PutMapping("modifyCount")
 	@ResponseBody
 	public int modifyCount(@RequestBody Map<String, Object> obj) {
-		int cartId = (Integer)obj.get("cartId");
+		String cartId = (String)obj.get("cartId");
 		int quantity = (Integer)obj.get("quantity");
 		
-		return 0;
+		return service.modifyCount(cartId, quantity);
 	}
 	
 	
 	//장바구니 삭제
 	@PostMapping("cart/delProduct")
 	@ResponseBody
-	public int delProduct(@SessionAttribute("loginMember")Member loginMember,
-			@RequestBody Map<String, Object> map) {
+	public int delProduct(@RequestBody int cartId) {
 		
-		int memberNo = loginMember.getMemberNo();
-		map.put("memberNo", memberNo);
+		return service.delProduct(cartId);
 		
-		return service.delProduct(map);
+	}
+	
+	
+	
+	//위시리스트 추가
+	@PutMapping("addWish")
+	@ResponseBody
+	public int addWich(@RequestBody Map<String, Object> obj) {
 		
+		return service.addWish(obj);
+	}
+	
+	
+	//위시리스트 삭제
+	@PostMapping("delWish")
+	@ResponseBody
+	public int delWish(@RequestBody Map<String, Object> obj) {
+		int result = service.delWish(obj);
+		log.info("result2 : " + result);
+		return result;
 	}
 	
 	
