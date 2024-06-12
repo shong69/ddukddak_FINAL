@@ -23,4 +23,5 @@
 		WHERE UPLOAD_IMG_ORDER = 0 AND MEMBER_DEL_FL = 'N'
 		ORDER BY BOARD_WRITE_DATE DESC
 	</select>
+	
 </mapper>

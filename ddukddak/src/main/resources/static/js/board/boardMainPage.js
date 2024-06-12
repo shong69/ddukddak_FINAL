@@ -160,36 +160,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    function loadMoreChunks(containerClass, buttonId) {
-        const hiddenContainers = document.querySelectorAll(`${containerClass}.hidden`);
-        const button = document.getElementById(buttonId);
+    const portListMainContainers = document.querySelectorAll('.portListMainContainer');
+    const tipBoardMainContainer = document.querySelectorAll('.tipBoardMainContainer');
+    const viewMoreBtn = document.querySelector("#portListViewMore");
+    let currentVisibleIndex = 0; // Tracks the currently visible list
 
-        if (hiddenContainers.length > 0) {
-            hiddenContainers[0].classList.remove('hidden');
-            if (hiddenContainers.length === 1 && button != null) {
-                button.style.display = 'none';
+    // Show the first container
+    if (portListMainContainers.length > 0) {
+        portListMainContainers[0].classList.remove('hidden');
+    }
+
+    if (tipBoardMainContainer.length > 0) {
+        tipBoardMainContainer[0].classList.remove('hidden');
+    }
+
+    // Handle "View More" button click
+    if (viewMoreBtn != null) {
+        viewMoreBtn.addEventListener("click", () => {
+            if (currentVisibleIndex < portListMainContainers.length - 1 && currentVisibleIndex < tipBoardMainContainer.length) {
+                currentVisibleIndex++;
+                portListMainContainers[currentVisibleIndex].classList.remove('hidden'); // Show the next hidden list
+                tipBoardMainContainer[currentVisibleIndex].classList.remove('hidden');
+                // If all lists are shown, hide the button
+                if (currentVisibleIndex >= portListMainContainers.length - 1 && tipBoardMainContainer >= tipBoardMainContainer.length - 1) {
+                    viewMoreBtn.style.display = 'none';
+                }
             }
-        } else if (button != null) {
-            button.style.display = 'none';
-        }
-    }
-
-    const loadMoreMyHouseBtn = document.getElementById('loadMoreMyHouseBtn');
-    const loadMoreTipBtn = document.getElementById('loadMoreTipBtn');
-
-    if (loadMoreMyHouseBtn != null) {
-        loadMoreMyHouseBtn.addEventListener('click', () => {
-            loadMoreChunks('.portListMainContainer', 'loadMoreMyHouseBtn');
+            
         });
     }
-
-    if (loadMoreTipBtn != null) {
-        loadMoreTipBtn.addEventListener('click', () => {
-            loadMoreChunks('.tipBoardMainContainer', 'loadMoreTipBtn');
-        });
-    }
-
-    // Initially show the first chunk
-    loadMoreChunks('.portListMainContainer', 'loadMoreMyHouseBtn');
-    loadMoreChunks('.tipBoardMainContainer', 'loadMoreTipBtn');
 });
