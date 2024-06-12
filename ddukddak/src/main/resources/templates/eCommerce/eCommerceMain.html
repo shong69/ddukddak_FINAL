@@ -85,6 +85,17 @@
             <a th:href="@{'/eCommerce/list/' + *{bigCategoryNo} + '/' + *{categoryNo} + '/' + *{productNo} + '/detail'}">
               <div class="img-wrap">
                 <img th:src="|*{uploadImgPath}*{uploadImgRename}|">
+
+                <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                    th:style="*{wish == 0} ? 'display:block;' : 'display:none;'"
+                    class="fa-regular fa-heart" id="noHerat" onclick="showHert(event);"
+                    th:value="*{productNo}">
+                </i>
+                <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                    th:style="*{wish == 0} ? 'display:none;' : 'display:block;'"
+                    class="fa-solid fa-heart" id="heart" onclick="noshowHert(event);"
+                    th:value="*{productNo}">
+                </i>
                 <h5 class="sample"></h5>
               </div>
               <div class="title-wrap">
@@ -123,6 +134,17 @@
             <a th:href="@{'/eCommerce/list/' + *{bigCategoryNo} + '/' + *{categoryNo} + '/' + *{productNo} + '/detail'}">
               <div class="img-wrap">
                 <img th:src="|*{uploadImgPath}*{uploadImgRename}|">
+
+                <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                    th:style="*{wish == 0} ? 'display:block;' : 'display:none;'"
+                    class="fa-regular fa-heart" id="noHerat" onclick="showHert(event);"
+                    th:value="*{productNo}">
+                </i>
+                <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                    th:style="*{wish == 0} ? 'display:none;' : 'display:block;'"
+                    class="fa-solid fa-heart" id="heart" onclick="noshowHert(event);"
+                    th:value="*{productNo}">
+                </i>
               </div>
               <div class="title-wrap">
                 <h4 th:text="*{productName}">상품제목</h4>
@@ -147,5 +169,68 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/js/eCommerce/eCommerce.js"></script>
     <script src="/js/common/redirectToLogin.js"></script>
+
+    <script th:inline="javascript">
+        
+      // 찜하기 눌렀을 때
+      function showHert(event) {
+          event.preventDefault();
+          alert("위시리스트에 추가되었습니다");
+
+
+          event.target.style.display = 'none';
+          event.target.nextElementSibling.style.display = 'block';
+          
+
+          var obj = {
+              "memberNo" : event.target.attributes[0].value,
+              "productNo" : event.target.attributes[5].value
+          }
+
+
+          fetch("/myPage/addWish", {
+              method : "PUT",
+              headers : {"Content-Type": "application/json"},
+              body : JSON.stringify(obj)
+          })
+          .then(resp => resp.text())
+          .then(temp => {
+
+          });
+
+
+
+          return false;
+      }
+      function noshowHert(event) {
+          event.preventDefault();
+          alert("위시리스트에서 삭제되었습니다");
+
+          event.target.style.display = 'none';
+          event.target.previousElementSibling.style.display = 'block';
+
+
+          var obj = {
+              "memberNo" : event.target.attributes[0].value,
+              "productNo" : event.target.attributes[5].value
+          }
+
+          console.log(event.target.attributes);
+
+
+          fetch("/myPage/delWish", {
+              method : "POST",
+              headers : {"Content-Type": "application/json"},
+              body : JSON.stringify(obj)
+          })
+          .then(resp => resp.text())
+          .then(temp => {
+
+          });
+
+
+          return false;
+      }
+  </script>
 </body>
 </html>

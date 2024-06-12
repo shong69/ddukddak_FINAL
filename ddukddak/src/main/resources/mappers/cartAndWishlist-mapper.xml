@@ -69,10 +69,16 @@
 	
 	<!-- 위시리스트 추가 -->
 	<insert id="addWish">
-		INSERT INTO "WISHLIST"
-		VALUES(#{memberNo}, #{productNo})
+		INSERT INTO WISHLIST (MEMBER_NO, PRODUCT_NO)
+		SELECT #{memberNo}, #{productNo}
+		FROM DUAL
+		WHERE NOT EXISTS (
+		    SELECT 1 
+		    FROM WISHLIST 
+		    WHERE MEMBER_NO = #{memberNo}
+		      AND PRODUCT_NO = #{productNo}
+		)
 	</insert>
-	
 	
 	<!-- 위시리스트 삭제 -->
 	<delete id="delWish" parameterType="map">
@@ -80,6 +86,28 @@
 	    WHERE MEMBER_NO = #{memberNo}
 	    AND PRODUCT_NO = #{productNo}
 	</delete>
+	
+	<!-- 위시리스트 목록개수 조회 -->
+	<select id="selectWishListCount">
+		SELECT COUNT(*)
+		FROM "WISHLIST"
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!-- 위시리스트 목록조회 -->
+	<select id="selectWishList">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, BIG_CATEGORY_NO, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		LEFT JOIN "WISHLIST" w ON(p.PRODUCT_NO = w.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE p.PRODUCT_NO = w.PRODUCT_NO
+		AND w.MEMBER_NO = #{memberNo}
+		AND UPLOAD_IMG_ORDER = 0
+	</select>
 	
 
 </mapper>

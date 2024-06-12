@@ -38,7 +38,7 @@
                     </div>
 
                     <div id="imgSubContainer" >
-                        <span th:each="img : ${productInfo.imgList}">
+                        <span th:each="img : ${productInfo.imgList}" th:if="${img.uploadImgOrder == 0 or img.uploadImgOrder == 1}">
                             <img th:src="|${img.uploadImgPath}${img.uploadImgRename}|" class="subImg">
                         </span>
                     </div>
@@ -96,7 +96,9 @@
                     <!-- 버튼 -->
                     <div>
                         <button class="eCommerBuyDetailConfirmBtn" id="buyButton">장바구니 추가</button>
-                        <button class="eCommerBuyDetailConfirmBtn" id="wishButton" style="margin-bottom: 50px;">찜하기</button>
+                        <button class="eCommerBuyDetailConfirmBtn" id="wishButton" style="margin-bottom: 50px;"
+                                th:member-data="${loginMember != null} ? ${loginMember.memberNo} : ''"
+                                th:productNo-data="${productInfo.productNo}">찜하기</button>
                     </div>
                 </div>
             </div>
@@ -119,6 +121,16 @@
                         <a th:href="@{'/eCommerce/list/' + *{bigCategoryNo} + '/' + *{categoryNo} + '/' + *{productNo} + '/detail'}">
                             <div class="img-wrap">
                                 <img th:src="|*{uploadImgPath}*{uploadImgRename}|" style="height: 200px; width: 180px;">
+                                <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                                    th:style="*{wish == 0} ? 'display:block;' : 'display:none;'"
+                                    class="fa-regular fa-heart" id="noHerat" onclick="showHert(event);"
+                                    th:value="*{productNo}">
+                                </i>
+                                <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                                    th:style="*{wish == 0} ? 'display:none;' : 'display:block;'"
+                                    class="fa-solid fa-heart" id="heart" onclick="noshowHert(event);"
+                                    th:value="*{productNo}">
+                                </i>
                             </div>
                             <div>
                                 <h4 th:text="*{productName}">상품제목</h4>
@@ -150,6 +162,12 @@
                     </div>
 
                     <div id="detailUnder">
+
+                        <div id="explain">
+                            <img src="/images/eCommerce/ex-main1.png">
+                            <img src="/images/eCommerce/ex-main2.png">
+                            <img src="/images/eCommerce/ex-main3.png">
+                        </div>
 
 
                         <!-- 교환/반품 -->
@@ -284,10 +302,93 @@
                 alert("로그인이 필요한 서비스입니다");
                 e.preventDefault();
                 location.href = "/member/login";
+            } else { 
+
+                var obj = {
+                    "memberNo" : event.target.attributes[3].value,
+                    "productNo" : event.target.attributes[4].value
+                }
+
+
+                fetch("/myPage/addWish", {
+                    method : "PUT",
+                    headers : {"Content-Type": "application/json"},
+                    body : JSON.stringify(obj)
+                })
+                .then(resp => resp.text())
+                .then(temp => {
+                    if(temp > 0) {
+                        alert("위시리스트에 추가되었습니다");
+                    } else {
+                        alert("이미 위시리스트에 존재합니다");
+                    }
+                });
             }
         });
 
         console.log(loginMember);
+
+
+        // 찜하기 눌렀을 때
+        function showHert(event) {
+            event.preventDefault();
+            alert("위시리스트에 추가되었습니다");
+
+
+            event.target.style.display = 'none';
+            event.target.nextElementSibling.style.display = 'block';
+            
+
+            var obj = {
+                "memberNo" : event.target.attributes[0].value,
+                "productNo" : event.target.attributes[5].value
+            }
+
+
+            fetch("/myPage/addWish", {
+                method : "PUT",
+                headers : {"Content-Type": "application/json"},
+                body : JSON.stringify(obj)
+            })
+            .then(resp => resp.text())
+            .then(temp => {
+
+            });
+
+                
+
+
+            return false;
+        }
+        function noshowHert(event) {
+            event.preventDefault();
+            alert("위시리스트에서 삭제되었습니다");
+
+            event.target.style.display = 'none';
+            event.target.previousElementSibling.style.display = 'block';
+
+
+            var obj = {
+                "memberNo" : event.target.attributes[0].value,
+                "productNo" : event.target.attributes[5].value
+            }
+
+            console.log(event.target.attributes);
+
+
+            fetch("/myPage/delWish", {
+                method : "POST",
+                headers : {"Content-Type": "application/json"},
+                body : JSON.stringify(obj)
+            })
+            .then(resp => resp.text())
+            .then(temp => {
+
+            });
+
+
+            return false;
+        }
     </script>
 </body>
 </html>

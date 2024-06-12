@@ -83,6 +83,11 @@
     margin-bottom: 5px;
 }
 
+.myHouseTitle div {
+    display: flex;
+    align-items: center;
+}
+
 /* 유저 프로필 */
 .userProfileArea {
     display: flex;
@@ -169,8 +174,12 @@
     padding: 10px;
 }
 
+.like {
+    margin-left: 10px;
+}
+
 .like > i {
-    margin-right: 3px;
+    margin:0 5px;
 }
 
 .comment {

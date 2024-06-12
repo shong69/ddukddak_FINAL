@@ -149,42 +149,42 @@ public class PartnerController {
 						@RequestParam Map<String, String> map,
 						Model model) {
 		
-	/* 휴대폰 찾기 시 파라미터 (매핑, 액션 post -> get 임시 확인)
-	 	http://localhost/member/resultId
-	 	?userType=member
-	 	&authType=tel
-	 	&telNm=%EC%8B%A0%EC%88%98%EB%AF%BC
-	 	&memberTel=01031235555
-	 	&smsAuthKey=123456 
-	 */
-	
-	
-    // 파라미터 맵에서 authType과 userType 값을 추출
-    String authType = map.get("authType");
-    String userType = map.get("userType");
-    String telNm = map.get("telNm");
-    String partnerTel = map.get("partnerTel");
-	
-    // 휴대폰 찾기용 파트너 객체
-    Partner telFindPartner = new Partner();
-    telFindPartner.setPartnerCeoName(telNm);
-    telFindPartner.setPartnerTel(partnerTel);
-    
-    // 조회 결과 값 저장할 파트너  객체
-    Partner partner = new Partner();
-	
-    partner = service.findIdByTel(telFindPartner);
-	
-    log.info("partner 정보 : " + partner);
-    
-	model.addAttribute("authType", authType);
-	model.addAttribute("userType", userType);
-	model.addAttribute("partnerId", partner.getPartnerId());
-	model.addAttribute("enrollDate", partner.getEnrollDate());
-	model.addAttribute("partnerType", partner.getPartnerType());
+		/* 휴대폰 찾기 시 파라미터 (매핑, 액션 post -> get 임시 확인)
+		 	http://localhost/member/resultId
+		 	?userType=member
+		 	&authType=tel
+		 	&telNm=%EC%8B%A0%EC%88%98%EB%AF%BC
+		 	&memberTel=01031235555
+		 	&smsAuthKey=123456 
+		 */
 		
 		
-	return "/common/resultId";
+	    // 파라미터 맵에서 authType과 userType 값을 추출
+	    String authType = map.get("authType");
+	    String userType = map.get("userType");
+	    String telNm = map.get("telNm");
+	    String partnerTel = map.get("partnerTel");
+		
+	    // 휴대폰 찾기용 파트너 객체
+	    Partner telFindPartner = new Partner();
+	    telFindPartner.setPartnerCeoName(telNm);
+	    telFindPartner.setPartnerTel(partnerTel);
+	    
+	    // 조회 결과 값 저장할 파트너  객체
+	    Partner partner = new Partner();
+		
+	    partner = service.findIdByTel(telFindPartner);
+		
+	    log.info("partner 정보 : " + partner);
+	    
+		model.addAttribute("authType", authType);
+		model.addAttribute("userType", userType);
+		model.addAttribute("partnerId", partner.getPartnerId());
+		model.addAttribute("enrollDate", partner.getEnrollDate());
+		model.addAttribute("partnerType", partner.getPartnerType());
+			
+			
+		return "/common/resultId";
 		
 	}
 	

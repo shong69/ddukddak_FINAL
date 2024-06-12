@@ -19,36 +19,44 @@ if (boardCreateBtn != null) {
 }
 
 // ===============================================================================
+
+
 const sortMethod = document.querySelector("#sortingSelect");
 
-sortMethod.addEventListener("change", function () {
+if(sortMethod != null) {
 
-    const selectedOption = this.value;
-    console.log(selectedOption);
-    const currentUrl = new URL(window.location.href);
-    currentUrl.searchParams.set('sort', selectedOption);
-    window.location.href = currentUrl;
-
-});
-
-var currentUrl = window.location.href
-
-var queryString = currentUrl.split('?')[1];
-
-if (queryString) {
-
-    var queryParams = queryString.split('&');
-
-
-    for (var i = 0; i < queryParams.length; i++) {
-        if (queryParams[i].indexOf('sort=') !== -1) {
-
-            var sortValue = queryParams[i].split('=')[3];
-
-            sortMethod.value = sortValue;
-
+    sortMethod.addEventListener("change", function () {
+    
+        const selectedOption = this.value;
+        console.log(selectedOption);
+        const currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('sort', selectedOption);
+        window.location.href = currentUrl;
+    
+    });
+    
+    var currentUrl = window.location.href
+    
+    var queryString = currentUrl.split('?')[1];
+    console.log(queryString);
+    if (queryString) {
+    
+        var queryParams = queryString.split('&');
+    
+    
+        for (var i = 0; i < queryParams.length; i++) {
+            if (queryParams[i].indexOf('sort=') !== -1) {
+    
+                var sortValue = queryParams[i].split('=')[1];
+    
+                sortMethod.value = sortValue;
+    
+            }
         }
+    } else {
+        console.log("쿼리 파라미터가 없습니다.");
     }
-} else {
-    console.log("쿼리 파라미터가 없습니다.");
-}
+
+
+};
+

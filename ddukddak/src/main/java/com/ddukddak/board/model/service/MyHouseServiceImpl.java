@@ -110,9 +110,9 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 //	}
 
 	@Override
-	public Map<String, Object> selectMyHouseList(Map<String, Object> paramMap, int cp) {
+	public Map<String, Object> selectMyHouseList(int boardCode, String sort, int cp) {
 		
-		int listCount = mapper.getListCount(paramMap);
+		int listCount = mapper.getListCount(boardCode);
 		
 		Pagination pagination = new Pagination(cp, listCount);
 		
@@ -122,10 +122,10 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 		
 		Map<String, Object> newMap = new HashMap<>();
 		
-//		newMap.put("boardCode", boardCode);
-//		newMap.put("sortMethod", sortMethod);
+		newMap.put("boardCode", boardCode);		
+		newMap.put("sort", sort);
 		
-		List<Board> myHouseList = mapper.selectMyHouseList(paramMap, rowBounds);
+		List<Board> myHouseList = mapper.selectMyHouseList(newMap, rowBounds);
 		
 		Map<String, Object> map = new HashMap<>();
 		
@@ -138,9 +138,9 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 
 	// 검색 서비스
 	@Override
-	public Map<String, Object> searchList(Map<String, Object> paramMap, int cp) {
+	public Map<String, Object> searchList(int boardCode, String sort, String query, int cp) {
 		
-		int listCount = mapper.getSearchCount(paramMap);
+		int listCount = mapper.getSearchCount(boardCode);
 		
 		Pagination pagination = new Pagination(cp, listCount);
 		
@@ -148,9 +148,13 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 		int offset = (cp - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-//		paramMap.put("sortMethod", sortMethod);
+		Map<String, Object> newMap = new HashMap<>();
 		
-		List<Board> myHouseList = mapper.selectSearchList(paramMap, rowBounds);
+		newMap.put("boardCode", boardCode);
+		newMap.put("sort", sort);
+		newMap.put("query", query);
+		
+		List<Board> myHouseList = mapper.selectSearchList(newMap, rowBounds);
 		
 		Map<String, Object> map = new HashMap<>();
 		
@@ -159,6 +163,30 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 		
 		return map;
 	}
+
+
+	// 게시글 상세 조회
+//	@Override
+//	public Board selectBoard(Map<String, Object> map) {
+//		
+//		return mapper.selectBoard(map);
+//	}
+//
+//
+//	// 조회수 증가
+//	@Override
+//	public int updateReadCount(int boardNo) {
+//		
+//		// 조회수 증가
+//		int result = mapper.updateReadCount(boardNo);
+//		
+//		// 현재 조회수 카운트 조회 (증가한 현재 조회수 다시 조회)
+//		if(result > 0) {
+//			return mapper.selectReadCount(boardNo);
+//		}
+//		
+//		return -1;
+//	}
 
 
 }
