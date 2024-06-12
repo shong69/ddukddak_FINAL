@@ -15,10 +15,10 @@ public interface CartAndWishListService {
 	List<CartItem> selectCartList(Member loginMember);
 
 	/** 장바구니 상품 삭제
-	 * @param map
+	 * @param cartId
 	 * @return
 	 */
-	int delProduct(Map<String, Object> map);
+	int delProduct(int cartId);
 
 	/** 장바구니 상품 추가
 	 * @param productNo
@@ -27,5 +27,24 @@ public interface CartAndWishListService {
 	 * @return
 	 */
 	int addCart(Member loginMember, int productNo, List<Integer> option, int quantity);
+
+	/** 장바구니 상품 수량 변경
+	 * @param cartId
+	 * @param quantity
+	 * @return
+	 */
+	int modifyCount(String cartId, int quantity);
+
+	/** 위시리스트 추가
+	 * @param obj
+	 * @return
+	 */
+	int addWish(Map<String, Object> obj);
+
+	/** 위시리스트 삭제
+	 * @param obj
+	 * @return
+	 */
+	int delWish(Map<String, Object> obj);
 
 }

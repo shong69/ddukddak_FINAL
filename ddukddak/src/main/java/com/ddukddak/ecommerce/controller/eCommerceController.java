@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
@@ -96,6 +97,7 @@ public class eCommerceController {
 								@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 								@RequestParam(value="query", required=false) String query,
 								@RequestParam(value="sort", required=false, defaultValue="1") int sort,
+								HttpServletRequest req,
 								Model model) {
 		
 		Map<String, Object> map = null;
@@ -126,6 +128,12 @@ public class eCommerceController {
 		model.addAttribute("bigCategoryNo", bigcategoryNo);
 		model.addAttribute("smallCategoryNo", smallcategoryNo);
 		model.addAttribute("query", query);
+		HttpSession session = req.getSession();
+		
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		log.info("loginMember" + loginMember);
+		
+		model.addAttribute("loginMember", loginMember);
 		
 		return "/eCommerce/eCommerceList";
 	}
@@ -167,7 +175,12 @@ public class eCommerceController {
 		HttpSession session = req.getSession();
 		
 		Member loginMember = (Member)session.getAttribute("loginMember");
-		model.addAttribute("loginMember", loginMember);
+		
+		log.info("loginMember" + loginMember);
+		
+		if(loginMember != null) {
+			model.addAttribute("loginMember", loginMember);
+		}
 		
 		
 		return "eCommerce/eCommerceDetail";

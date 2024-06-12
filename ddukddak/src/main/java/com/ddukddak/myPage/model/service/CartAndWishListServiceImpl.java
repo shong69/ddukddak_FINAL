@@ -43,10 +43,12 @@ public class CartAndWishListServiceImpl implements CartAndWishListService{
 
 	//장바구니 상품 삭제
 	@Override
-	public int delProduct(Map<String, Object> map) {
+	public int delProduct(int cartId) {
 		try {
-			int result = mapper.deleteProduct(map);
-			if(result==1) {
+			int result2 = mapper.deleteProductOption(cartId);
+			int result1 = mapper.deleteProduct(cartId);
+			
+			if(result1 + result2 > 0) {
 				return 1;
 			}else {
 				return -1;
@@ -73,12 +75,33 @@ public class CartAndWishListServiceImpl implements CartAndWishListService{
 		int insertOption = 0;
 		
 		for(Object oneOption : option) {	
-			log.info("type : " + oneOption);
 			insertOption = mapper.insertOption(oneOption);
-			log.info("insertOption : " + insertOption);
 		}
 		
 		return insertCartItem + insertOption;
+	}
+
+	// 장바구니 상품 수량 변경
+	@Override
+	public int modifyCount(String cartId, int quantity) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("cartId", cartId);
+		map.put("quantity", quantity);
+		return mapper.modifyCount(map);
+	}
+
+	// 위시리스트 추가
+	@Override
+	public int addWish(Map<String, Object> obj) {
+		return mapper.addWish(obj);
+	}
+
+	@Override
+	public int delWish(Map<String, Object> obj) {
+		int result = mapper.delWish(obj);
+		log.info("result1 : " + result);
+		return result;
 	}
 	
 }
