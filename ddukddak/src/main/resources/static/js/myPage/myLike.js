@@ -63,15 +63,15 @@ function loadHouseBoards() {
                 const div2 = document.createElement("div");
                 const a2 = document.createElement("a");
                 a2.innerText = "방문하기>";
-                a2.href = `myHouse/detail/${board.boardNo}`;
+                a2.href = `/myHouse/detail/${board.boardNo}`;
                 div2.append(a2);
 
                 const div3 = document.createElement("div");
                 const span1 =document.createElement("span");
                 const span2 =document.createElement("span");
                 const span3 =document.createElement("span");
-                span1.innerText = board.memberNickname;
-                span2.innerText = board.readCount;
+                span1.innerText = board.memberNickname
+                span2.innerText = '조회수 ' +board.readCount;
                 if(board.boardUpdateDate != null){
                     span3.innerText = board.boardUpdateDate;
                 }else{
@@ -168,10 +168,14 @@ function loadTipBoards() {
                         const section = document.createElement('section');
                         section.className = 'tipBoard-item';
 
+                        const imgA = document.createElement("a");
+                        imgA.href =  "/tip/deatil/" + myTipBoardList[listIndex].boardNo;
                         const img = document.createElement('img');
                         img.className = 'tipBoard-img';
                         img.src = myTipBoardList[listIndex].thumbnail;
-                        section.appendChild(img);
+
+                        imgA.append(img);
+                        section.appendChild(imgA);
 
                         const userSpan = document.createElement('span');
                         userSpan.textContent = '@' + myTipBoardList[listIndex].memberNickname;
@@ -179,6 +183,7 @@ function loadTipBoards() {
 
                         const titleSpan = document.createElement('span');
                         titleSpan.textContent = myTipBoardList[listIndex].boardTitle;
+                        titleSpan.href = "/tip/deatil/" + myTipBoardList[listIndex].boardNo;
                         section.appendChild(titleSpan);
 
                         const likeSpan = document.createElement('span');
