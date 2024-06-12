@@ -126,6 +126,8 @@ span {
     top: 3;
     bottom: 0;
     right: -10px;
+    width: 250px;
+    
 }
 
 #telAuthDiv {
@@ -133,6 +135,7 @@ span {
     top: 3;
     bottom: 0;
     right: -10px;
+    width: 250px;
 }
 
 
@@ -141,7 +144,7 @@ span {
     border: none;
     border: 1px solid #E1E1E1;
     padding: 6px;
-    width: 35%;
+    width: 200px;
     font-size: 12px;
 }
 
