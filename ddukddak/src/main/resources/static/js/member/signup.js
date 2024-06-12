@@ -864,7 +864,7 @@ memberTel.addEventListener('input', e => {
 
             if(count == 1) { // 중복
 
-                telMsg.innerText = "이미 사용중인 휴대폰 번호입니다. 해당 번호를 계속 사용하시려면 아이디/비밀번호 찾기를 이용해 주세요."
+                telMsg.innerText = "이미 사용중인 휴대폰 번호입니다."
                 telMsg.classList.add('error');
                 telMsg.classList.remove('confirm');
 
