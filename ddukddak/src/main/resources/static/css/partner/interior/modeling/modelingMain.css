@@ -36,6 +36,7 @@
   display: flex;
   flex-direction: column;
   border-right: 2px solid #b3bcc2;
+  border-bottom: 2px solid #b3bcc2
 }
 
 .left-panel > div:first-child {
@@ -49,7 +50,7 @@
 
 
 .left-panel > div:last-child {
-  height: 880px;
+  height: 850px;
   background-color: #f7f7f7;
 }
 
@@ -88,6 +89,18 @@
   padding: 0;
   width: 76px;
   height: 76px;
+}
+
+
+.item {
+  height: 100%;
+  width: 100%;
+  display: none;
+}
+
+.item img {
+  height: 145px;
+  border: 1px solid #b3bcc2;
 }
 
 

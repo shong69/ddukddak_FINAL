@@ -623,7 +623,7 @@ button:active {
     background-color: #edf3f5;
     color: var(--gray1);
 
-    transition: 0.3s;
+    transition: 0.2s;
 }
 .interior3dCategory:active {
     background-color: #c7d0d6;
