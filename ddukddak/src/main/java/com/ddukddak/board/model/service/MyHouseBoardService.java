@@ -66,4 +66,11 @@ public interface MyHouseBoardService {
 	List<BoardImg> selectImageList(int boardNo);
 
 
+
+	/** 메인페이지용 집들이 게시물 조회
+	 * @return
+	 */
+	List<Board> selectMyHouseList();
+
+
 }
