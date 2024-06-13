@@ -26,4 +26,25 @@
 		<!-- 동일한 부모를 가지는 댓글들 간의 순서를 COMMENT_NO 기준으로 정렬합니다. -->
 	</select>
 	
+	
+	<!-- 답글 / 댓글 등록 -->
+	<insert id="insert">
+		INSERT INTO "COMMENT" 
+		VALUES (SEQ_COMMENT_NO.NEXTVAL,
+				#{memberNo},
+				#{boardNo},
+				DEFAULT,
+				#{commentContent},
+				DEFAULT,
+					<!-- 자식 댓글 -->
+					<if test="parentCommentNo != 0">
+						#{parentCommentNo}
+					</if>
+					<!-- 부모 댓글 -->
+					<if test="parentCommentNo == 0">
+						NULL
+					</if>
+				)
+	</insert>
+	
 </mapper>

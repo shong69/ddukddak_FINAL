@@ -4,22 +4,18 @@
 
     
     <div class="topArea">
-      <h2 th:text="|댓글 ${board.commentList.size()}개|">댓글수</h2>
+      <h2 id="commentCount" th:text="|댓글 ${board.commentList.size()}개|">댓글수</h2>
       <button class="boardDetailSubmitChatBtn" id="insertComment">등록</button>
     </div>
       
     <div class="commentTextArea">
-      <textarea id="inputCommentContent" name="inputCommentContent" cols="120" rows="5"></textarea>
+      <textarea id="inputCommentContent" cols="120" rows="5"></textarea>
     </div>
     
 
   </div>
 
-  <div class="commentList" th:if="${#lists.isEmpty(board.commentList)}">
-    <h2>작성된 댓글이 없습니다.</h2>
-  </div>
-
-  <ul class="commentList" th:unless="${#lists.isEmpty(board.commentList)}">
+  <ul id="commentList" class="commentList">
   
     <li class="commentContainer"
          th:each="comment : ${board.commentList}"

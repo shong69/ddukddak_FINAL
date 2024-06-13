@@ -24,4 +24,11 @@ public class CommentServiceImpl implements CommentService {
 		return mapper.select(boardNo);
 	}
 
+	// 답글 / 댓글 등록
+	@Override
+	public int insert(Comment comment) {
+		
+		return mapper.insert(comment);
+	}
+
 }
