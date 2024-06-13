@@ -185,25 +185,40 @@
     cursor: pointer;
 }
 
-.comment {
+.commentList {
     margin-top: 30px;
     border-top: 1px solid black;
 }
 
-.commentUser {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px;
+.commentList h2 {
+    text-align: center;
+    margin: 30px;
 }
 
-.commentUser div {
+.commentContainer {
+    display: flex;
+    margin: 20px 10px;
+    flex-direction: column;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.commentContainer div {
     display: flex;
     align-items: center;
     margin-right: 10px;
     width: auto;
+    justify-content: space-between;
+    
 }
 
-.leftArea img {
+.userInfo h4 {
+    margin-left: 10px;
+}
+
+.commentUser img {
     width: 30px;
     margin-right: 10px;
     border-radius: 9999px;
@@ -215,7 +230,7 @@
 }
 
 
-.commentContent {
+.displayComment {
     margin: 20px 30px;
 }
 
