@@ -1,129 +1,141 @@
-const showInsertComment = (btn) => {
+const selectCommentList = () => {
 
-    // ** 답글 작성 textarea가 한 개만 열릴 수 있도록 만들기 **
-    const temp = document.getElementsByClassName("commentInsertContent");
-  
-    if(temp.length > 0){ // 답글 작성 textara가 이미 화면에 존재하는 경우
-  
-      if(confirm("다른 답글을 작성 중입니다. 현재 댓글에 답글을 작성 하시겠습니까?")){
-        temp[0].nextElementSibling.remove(); // 버튼 영역부터 삭제
-        temp[0].remove(); // textara 삭제 (기준점은 마지막에 삭제해야 된다!)
-      
-      } else{
-        return; // 함수를 종료시켜 답글이 생성되지 않게함.
+  fetch("/comment?boardNo=" + boardNo)
+  .then(resp => resp.json())
+  .then(commentList => {
+
+    console.log(commentList);
+
+    // ul 태그(댓글 목록 감싸는 요소)
+    const ul = document.querySelector("#commentList");
+    ul.innerHTML = ""; // 기존 댓글 목록 삭제
+
+    // commentList 안에 comment 에 각각 접근하는 반복문
+    for(let comment of commentList) {
+
+      // 행 생성
+      const commentContainer = document.createElement("li");
+      commentContainer.classList.add("commentContainer");
+
+      if(comment.parentCommentNo != 0) {
+        commentContainer.classList.add("child-comment");
       }
+
+      if(comment.commentDelFl == 'Y') {
+        commentContainer.innerText = "삭제된 댓글입니다.";
+      } else {  // 삭제되지 않은 댓글
+
+        // 프로필 이미지, 닉네임, 날짜 감싸는 요소
+        const userInfo = document.createElement("div");
+        userInfo.classList.add("userInfo");
+
+        const profileImg = document.createElement("img");
+
+        if(comment.profileImg == null) profileImg.src = userDefaultImage; // 기본이미지
+        else profileImg.src = comment.profileImg;
+
+        // 닉네임
+        const nickname = document.createElement("h3");
+        nickname.innerText = comment.memberNickname;
+
+        // 날짜(작성일)
+        const commentDate = document.createElement("h4");
+        commentDate.innerText = comment.commentWriteDate;
+
+        // 작성자 영역(userInfo) 에 프로필 닉네임 날짜 추가
+        userInfo.append(profileImg, nickname, commentDate);
+
+        // 작성자 영역 포함하는 div 생성, class 추가
+        const commentUser = document.createElement("div");
+        commentUser.classList.add("commentUser");
+
+        // 영역 합치기
+        commentUser.append(userInfo);
+        commentContainer.append(commentUser);
+
+        // ========================================================================
+
+        // 댓글 + 버튼 Area 담을 div 생성, class 추가
+        const commentContentArea = document.createElement("div");
+        commentContentArea.classList.add("commentContentArea");
+
+        // 댓글 담을 div 생성, class 추가
+        const displayComment = document.createElement("div");
+        displayComment.classList.add("displayComment");
+
+        // 버튼 담을 div 생성, class 추가
+        const commentBtnArea = document.querySelector("div");
+        commentBtnArea.classList.add("commentBtnArea");
+
+        // 댓글 내용
+
+        const content = document.createElement("h3");
+        content.classList.add("commentContent");
+        content.innerText = comment.commentContent;
+        
+        displayComment.append(content);
+
+        // -----------------------------------------------------
+
+        // 로그인한 회원번호가 댓글 작성자 회원번호와 같을 때
+        // 댓글 수정/삭제 버튼 출력
+        if(loginMember != null && loginMemberNo == comment.memberNo) {
+
+          // 수정 버튼
+          const updateBtn = document.createElement("div");
+          updateBtn.innerText = "수정";
+
+          updateBtn.setAttribute("onclick", 
+            `showUpdateComment(${comment.commentNo}, this)`);
+
+          // 삭제 버튼
+          const deleteBtn = document.createElement("div");
+          deleteBtn.innerText = "삭제";
+
+          deleteBtn.setAttribute("onclick", 
+            `deleteComment(${comment.commentNo})`);
+
+          // 버튼 영역에 수정, 삭제 버튼 추가
+          commentBtnArea.append(updateBtn, deleteBtn);
+
+        }
+
+        // 답글 버튼
+        const childCommentBtn = document.createElement("div");
+        childCommentBtn.innerText = "답글";
+
+        commentBtnArea.append(childCommentBtn);
+
+        // 댓글 + 버튼 영역 담기
+        commentContentArea.append(displayComment, commentBtnArea);
+
+      }
+
+      ul.append(commentContainer);
+
     }
 
-    // 답글을 작성할 textarea 요소 생성
-  const textarea = document.createElement("textarea");
-  textarea.classList.add("commentInsertContent");
-
-  const commentContent = document.querySelector("#commentContent");
-  
-  // 답글 버튼의 부모의 뒤쪽에 textarea 추가
-  // after(요소) : 뒤쪽에 추가
-  commentContent.parentElement.after(textarea);
-
-
-  // 답글 버튼 영역 + 등록/취소 버튼 생성 및 추가
-  const commentBtnArea = document.createElement("div");
-  commentBtnArea.classList.add("comment-btn-area");
-
-  const insertBtn = document.createElement("button");
-  insertBtn.innerText = "등록";
-  insertBtn.setAttribute("onclick", "insertChildComment(this)");
-
-  const cancelBtn = document.createElement("button");
-  cancelBtn.innerText = "취소";
-  cancelBtn.setAttribute("onclick", "insertCancel(this)");
-
-
-  // 답글 버튼 영역의 자식으로 등록/취소 버튼 추가
-  commentBtnArea.append(insertBtn, cancelBtn);
-
-  // 답글 버튼 영역을 화면에 추가된 textarea 뒤쪽에 추가
-  textarea.after(commentBtnArea);
-}
-
-/* 답글 작성 취소 */
-const insertCancel = (cancelBtn) => {
-
-    // 취소 버튼 부모의 이전 요소(textarea) 삭제
-    cancelBtn.parentElement.previousElementSibling.remove();
-  
-    // 취소 버튼이 존재하는 버튼영역 삭제
-    cancelBtn.parentElement.remove();
-}
-
-/** 답글 (자식 댓글) 등록
- * @param {*} parentCommentNo : 부모 댓글 번호
- * @param {*} btn  :  클릭된 등록 버튼
- */
-const insertChildComment = (parentCommentNo, btn) => {
-
-    // 답글 내용이 작성된 textarea
-    const textarea = btn.parentElement.previousElementSibling;
-  
-    // 유효성 검사
-    if(textarea.value.trim().length == 0){
-      alert("내용 작성 후 등록 버튼을 클릭해 주세요");
-      textarea.focus();
-      return;
-    }
-
-    // ajax를 이용해 댓글 등록 요청
-  const data = {
-    "commentContent" : textarea.value,
-    "boardNo"        : boardNo,
-    "memberNo"       : loginMemberNo,  // 또는 Session 회원 번호 이용도 가능
-    "parentCommentNo" : parentCommentNo // 부모 댓글 번호
-  };
-
-  fetch("/comment", {
-    method : "POST",
-    headers : {"Content-Type" : "application/json"},
-    body : JSON.stringify(data) // data 객체를 JSON 문자열로 변환
   })
 
-  .then(response => response.text())
-  .then(result => {
-
-    if(result > 0){
-      alert("답글이 등록 되었습니다");
-      selectCommentList(); // 댓글 목록을 다시 조회해서 화면에 출력
-  
-    } else{
-      alert("답글 등록 실패");
-    }
-
-  })
-  .catch(err => console.log(err));
-
 }
+    
+// =================================================================================
+  
+// 코멘트 유효성 검사
+const insertComment = document.querySelector("#insertComment");
+const inputCommentContent = document.querySelector("#inputCommentContent");
 
-// const thumbnails = Array.from(document.getElementsByClassName('thumbnail'));
+insertComment.addEventListener("click", () => {
 
-// function swapImage(clickedThumbnail) {
-//     const mainImage = document.getElementById('mainImage');
-//     const mainImageSrc = mainImage.src;
+  if(inputCommentContent.value.trim().length == 0) {
 
-//     // 큰 이미지와 클릭된 작은 이미지의 src를 교환합니다.
-//     mainImage.src = clickedThumbnail.src;
-//     clickedThumbnail.src = mainImageSrc;
+    alert("댓글 내용을 입력해주세요.");
+    inputCommentContent.focus();
+    return;
 
-//     // 클릭된 작은 이미지의 index를 가져옵니다.
-//     const index = parseInt(clickedThumbnail.getAttribute('data-index'));
-
-//     // 배열에서 해당 index의 이미지를 변경합니다.
-//     thumbnails[index].src = mainImageSrc;
-// }
-
-// // 페이지 로드 시 초기 설정
-// document.addEventListener('DOMContentLoaded', () => {
-//     thumbnails.forEach((thumbnail, index) => {
-//         thumbnail.setAttribute('data-index', index);
-//     });
-// });
+  }
+  
+});
 
 /* 이미지 */
 const slideshow = document.querySelector(".boardAdContainer");
@@ -190,23 +202,5 @@ if (slideshow != null) {
             resetInterval();
         });
     }
-}
+} 
 
-
-// =================================================================================
-
-// 코멘트 유효성 검사
-const insertComment = document.querySelector("#insertComment");
-const commentContent = document.querySelector("#commentContent");
-
-insertComment.addEventListener("click", () => {
-
-  if(commentContent.value.trim().length == 0) {
-
-    alert("댓글 내용을 입력해주세요.");
-    commentContent.focus();
-    return;
-
-  }
-
-});

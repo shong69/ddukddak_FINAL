@@ -30,7 +30,7 @@
 
         <div class="searchArea">
 
-          <span class="title">집들이</span>
+          <span th:text="${application.boardTypeList[0].boardName}" class="title">집들이</span>
             <!-- <span>
               <form class="searchForm">
                 <input type="text" placeholder="집들이 검색" class="searchBox">
@@ -130,6 +130,18 @@
   <th:block th:replace="~{common/fragments/board/reportModal}"></th:block>
 
   <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+  <script th:inline="javascript">
+    
+    const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원번호";
+
+    const boardNo = /*[[${board.boardNo}]]*/ "게시글 번호";
+
+    let likeCheck = /*[[${board.likeCheck}]]*/ "좋아요 여부";
+
+    const userDefaultImage = /*[[#{user.default.image}]]*/ "기본 이미지";
+    
+  </script>
 
   <script src="/js/common/fragments/board/reportModal.js"></script>
   <script src="/js/common/fragments/board/side-category.js"></script>

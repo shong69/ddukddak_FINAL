@@ -159,8 +159,6 @@ public class MyHouseBoardController {
 			
 			path = "board/myHouseBoard/myHouseBoardDetail";
 			
-			// 댓글에 보여줄 멤버 리스트 조회
-			
 			model.addAttribute("board", board);
 			
 		}
