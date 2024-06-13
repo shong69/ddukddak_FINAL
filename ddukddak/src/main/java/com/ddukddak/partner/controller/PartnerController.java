@@ -232,4 +232,35 @@ public class PartnerController {
 	public int checkTel(@RequestParam("partnerTel") String inputTel) {
 		return service.checkTel(inputTel);
 	}
+	
+	/** [파트너 회원가입 제출]
+	 * @param inputPatner
+	 * @param ra
+	 * @return
+	 */
+	@PostMapping("signup")
+	public String signup(Partner inputPartner, RedirectAttributes ra) {
+		
+		
+		int result = service.signup(inputPartner);
+		
+		String path = null;
+		String message = null;
+		
+		// 성공
+		if(result > 0) {
+			message = "파트너 등록 요청이 정상적으로 완료되었습니다.\n" + "가입 승인 결과는 문자로 발송될 예정입니다.";
+			
+			path = "/";
+			
+		} else {
+			message = "파트너 등록 요청 실패";
+			path = "/partner/signup";
+		}
+		
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
+	}
 }

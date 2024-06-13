@@ -24,7 +24,7 @@
     <th:block th:replace="~{common/fragments/signupLoginMove}"></th:block>
 
     <main>
-        <form action="#" method="get" id="signUpForm" name="signUpForm">
+        <form action="/partner/signup" method="post" id="signUpForm" name="signUpForm">
             <input id="partnerType" type="hidden" name="partnerType" th:value="${choice}">
             <div class="signupContainer">
                 <!-- 약관 동의, 정보 입력 영역 -->

@@ -96,5 +96,31 @@ public class PartnerServiceImpl implements PartnerService{
 	public int checkTel(String inputTel) {
 		return mapper.checkTel(inputTel);
 	}
+
+
+
+	/** [파트너 회원가입 제출]
+	 *
+	 */
+	@Override
+	public int signup(Partner inputPartner) {
+		
+		// 비밀번호를 암호화 하여 input member에 세팅
+		String encPw = bcrypt.encode(inputPartner.getPartnerPw()); 
+		
+		inputPartner.setPartnerPw(encPw);
+		
+		log.info("사업자등록번호 기존 : " + inputPartner.getPartnerBusinessNum());
+		
+		// 123-12-12345 형식 (-) 제거
+        String bsNum = inputPartner.getPartnerBusinessNum().replace("-", "");
+        
+        log.info("사업자등록번호 형식 변경 : " + bsNum);
+        
+        // Partner 객체의 사업자 등록번호 업데이트
+        inputPartner.setPartnerBusinessNum(bsNum);
+		
+		return mapper.signup(inputPartner);
+	}
 	
 }

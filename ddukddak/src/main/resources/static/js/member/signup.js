@@ -805,7 +805,7 @@ memberEmail.addEventListener('click', () => {
             emailAuthKey.value = "";
             emailMsg.innerText = "실제 사용하고 계신 이메일을 입력해 주세요.";
             checkObj.emailAuth = false;
-            checkObj.email = false;
+            checkObj.memberEmail = false;
             emailMsg.classList.remove('error', 'confirm');
             emailAuth.classList.remove('hidden');
             authCount = 0;
