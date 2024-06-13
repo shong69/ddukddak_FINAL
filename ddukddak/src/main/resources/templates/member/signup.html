@@ -17,6 +17,10 @@
 </head>
 <body>
     <th:block th:replace="~{common/fragments/header}"></th:block>
+
+    <!-- 회원가입 경로에서 로그인 시도 시 회원가입 경로 노출되지 않게 -->
+    <th:block th:replace="~{common/fragments/signupLoginMove}"></th:block>
+
     <main>
         <section>
             <div class="logo-div">
@@ -124,6 +128,7 @@
         </section>
     </main>
     <th:block th:replace="~{common/fragments/footer}"></th:block>
+    
 
     <!-- 다음 주소 API -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

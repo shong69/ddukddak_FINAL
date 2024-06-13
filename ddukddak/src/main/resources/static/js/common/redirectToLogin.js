@@ -2,6 +2,7 @@ function redirectToLogin() {
     const currentUrl = window.location.href;
     
     window.location.href = `/member/login?returnUrl=${encodeURIComponent(currentUrl)}`;
+    
 }
 
 document.addEventListener('DOMContentLoaded', () => {

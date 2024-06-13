@@ -25,7 +25,11 @@ public class Partner {
 	private String enrollDate;
 	private String partnerDelFl;
 	
-//	파트너 타입 -> 1: 시공사 /2: 판매사
+	// 파트너 등록 요청 관리자 승인여부
+	// -1 : 거절 / 0 : 대기 / 1: 승인
+	private int partnerPass;
+	
+	//	파트너 타입 -> 1: 시공사 /2: 판매사
 	private int partnerType;
 	
 }

@@ -68,7 +68,7 @@
 		    SELECT PARTNER_ID
 		    FROM PARTNER
 		    WHERE PARTNER_ID = #{inputId}
-		    AND PARTNER_DEL_FL = 'N'
+		    AND PARTNER_DEL_FL != 'Y'
 		)
 	</select>
 	
