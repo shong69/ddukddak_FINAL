@@ -65,6 +65,11 @@
     margin: 30px 0;
 }
 
+.guideText {
+    color: var(--secondary);
+    margin: 20px 0;
+}
+
 .preview-container {
     display: flex;
     overflow-x: scroll;
