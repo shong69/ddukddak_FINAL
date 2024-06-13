@@ -147,13 +147,13 @@ bsName.addEventListener('input', e => {
     if(inputBsName.trim().length === 0) {
         checkObj.partnerBusinessName = false;
         bsName.value = '';
-        bsNameMsg.innerText = "2~30자의 한글, 대/소문자, 숫자, 특수문자(& . , - · ') 사용해 주세요.";
+        bsNameMsg.innerText = "2~30자의 한글, 대/소문자, 숫자, 특수문자(& . ( ) , - · ') 사용해 주세요.";
         bsNameMsg.classList.remove('error', 'confirm');
         disabledCheck();
         return;
     }
 
-    const regExp = /^[가-힣a-zA-Z0-9&',.·-\s]{2,30}$/;
+    const regExp = /^[가-힣a-zA-Z0-9&',.·\-()\s]{2,30}$/;
 
     if(!regExp.test(inputBsName)) {
         checkObj.partnerBusinessName = false;

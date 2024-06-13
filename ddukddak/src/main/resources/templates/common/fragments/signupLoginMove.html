@@ -1,0 +1,28 @@
+<!-- 푸터 블록까지 안가기 때문에 메시지 넣어주고, 로케이션 처리 -->
+<th:block th:if="${session.loginMember != null}">
+    <script th:inline="javascript">
+
+        const message1 = /*[[${message}]]*/ "전달받은메세지";
+        
+        if(message1 != null){
+            alert(message1);
+        }
+
+        window.location.href = '/myPage';
+
+    </script>
+</th:block>
+
+<!-- 푸터 블록까지 안가기 때문에 메시지 넣어주고, 로케이션 처리 -->
+<th:block th:if="${session.loginPartnerMember != null}">
+    <script th:inline="javascript">
+
+        const message2 = /*[[${message}]]*/ "전달받은메세지";
+        
+        if(message2 != null){
+            alert(message2);
+        }
+
+        window.location.href = '/partner/main';
+    </script>
+</th:block>
