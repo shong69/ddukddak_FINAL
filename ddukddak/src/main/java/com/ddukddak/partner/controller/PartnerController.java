@@ -18,13 +18,15 @@ import com.ddukddak.partner.model.dto.Partner;
 import com.ddukddak.partner.model.service.PartnerService;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("partner")
-@SessionAttributes({"loginPartnerMember"})
+@SessionAttributes("{loginPartnerMember}")
 @RequiredArgsConstructor
 @Slf4j
 public class PartnerController {

@@ -24,6 +24,7 @@
     border-radius: 10px;
     transition-duration: 0.2s;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 #sellerButton button:hover {
@@ -67,14 +68,22 @@
     box-shadow: 3px 3px 3px var(--gray5);
 }
 
+#selectAll {
+    display: flex;
+}
+
+#selectAll > label {
+    margin-left: 5px;
+}
+
 
 
 /* 모달창 */
 .modal {
     display: none;
     position: fixed;
-    top: 150px;
-    left: 400px;
+    top: 20%;
+    left: 30%;
     width: 800px;
     height: 600px;
     background-color: white;
@@ -108,17 +117,39 @@
     margin: 30px;
 }
 
-#createProduct > div:first-child img {
+.fileBox {
+    position: relative;
     height: 350px;
     width: 300px;
+    border: 1px solid var(--gray5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
+
+.fileBox > h2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+#preview {
+    height: 100%;
+    width: 100%;
+}
+
+#file {
+    display: none;
+}
+
 
 #createProduct > div:first-child > div {
     display: flex;
     margin-top: 10px;
 }
 
-#createProduct > div:first-child > div img {
+#createProduct > div:first-child > div input {
     margin-right: 10px;
     height: 50px;
     width: 50px;
@@ -132,6 +163,14 @@
     justify-content: center;
     align-items: center;
     margin-right: 10px;
+}
+
+#createProduct input[type="file"] {
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
 }
 
 #productEx {

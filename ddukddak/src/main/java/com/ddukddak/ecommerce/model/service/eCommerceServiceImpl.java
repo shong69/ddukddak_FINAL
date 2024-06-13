@@ -278,6 +278,12 @@ public class eCommerceServiceImpl implements eCommerceService{
 		
 		return map;
 	}
+
+	// 판매사 페이지용 소분류 카테고리 조회
+	@Override
+	public List<Category> selectSmallCategory() {
+		return mapper.selectSmallCategory2();
+	}
 	
 	
 

@@ -118,4 +118,9 @@ public interface eCommerceMapper {
 	 */
 	List<Product> selectSearchListOrder(Map<String, Object> newMap, RowBounds rowBounds);
 
+	/** 판매사 페이지용 소분류 카테고리 조회
+	 * @return
+	 */
+	List<Category> selectSmallCategory2();
+
 }

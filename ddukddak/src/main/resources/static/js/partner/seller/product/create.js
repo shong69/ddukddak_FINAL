@@ -8,7 +8,77 @@ const bigCategory = document.querySelector("#bigCategory");
 const smallcategory = document.querySelector("#smallCategory");
 const price = document.querySelector("#price");
 
+/* 전체선택버튼 */
+const selectAll = document.querySelector('#selectAllCheckBox');
+const checkboxes = document.getElementsByName('selectProduct');
 
+selectAll.addEventListener('change', () => {
+    if(selectAll.checked == true) {
+        checkboxes.forEach(elements => {
+          elements.checked = true;
+        })
+    } else {
+        checkboxes.forEach(elements => {
+            elements.checked = false;
+        })
+    }
+});
+
+// 상품가격 포맷
+function formatNumberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const productPriceElements = document.getElementsByClassName("productPrice");
+
+for (let i = 0; i < productPriceElements.length; i++) {
+    let productPrice = productPriceElements[i].textContent.trim();
+    productPriceElements[i].textContent = formatNumberWithCommas(productPrice);
+    productPriceElements[i].innerText += '원';
+}
+
+
+// 판매등록 버튼 클릭
+const productApplyButton = document.querySelector("#productApplyButton");
+
+productApplyButton.addEventListener("click", () => {
+    var checkboxes = document.getElementsByName('selectProduct');
+    var selectedValues = [];
+
+    checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+            selectedValues.push(checkbox.value);
+        }
+    });
+
+    console.log(selectedValues);
+
+    if(selectedValues.length == 0) {
+        alert("선택된 상품이 없습니다");
+    }else {
+        if(confirm("선택한 상품을 판매등록 하시겠습니까?")) {
+            fetch("/partner/seller/product/sellApplyProduct", {
+                method: "PUT",
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify(selectedValues)
+            })
+            .then(resp => resp.text())
+            .then(result => {
+                if(result > 0) {
+                    alert("판매등록이 완료되었습니다");
+                    window.location.reload();
+                }else {
+                    alert("판매등록 실패");
+                }
+            })
+        } else {
+            alert("판매등록이 취소되었습니다");
+        }
+    }
+});
+
+
+// 재고생성 모달창
 productCreateButton.addEventListener("click", () => {
     modal.style.display = "flex";
     productName.value = "";
@@ -18,6 +88,21 @@ productCreateButton.addEventListener("click", () => {
     optionBox.innerHTML = "";
 });
 
+// 등록 이미지 미리보기
+const file = document.querySelector("file");
+function readURL(file) {
+    if (file.files && file.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('preview').src = e.target.result;
+        document.getElementById('filePlus').style.display = 'none';
+      };
+      reader.readAsDataURL(file.files[0]);
+    } else {
+      document.getElementById('preview').src = "";
+      
+    }
+  }
 
 let selectOption = 1;
 
@@ -163,77 +248,6 @@ closeButton.addEventListener("click", () => {
 })
 
 
-const categoryOptions = {
-  'furniture': ['침대',
-            '매트리스/토퍼',
-            '테이블/식탁/책상',
-            '소파',
-            '서랍/수납장',
-            '거실장/TV장',
-            '선반',
-            '진열장/책장',
-            '의자',
-            '행거/옷장'],
-
-  'electronic': ['냉장고',
-                'TV',
-                '세탁기/건조기',
-                '청소기',
-                '주방가전',
-                '에어컨',
-                '계절가전',
-                '컴퓨터/노트북',
-                '모니터',
-                '복합기/프린터/스캐너'],
-  'kitchenware': ['그릇/식기',
-                '냄비/프라이팬/솥',
-                '컵/잔/텀블러',
-                '수저/커트러리',
-                '주방수납/정리',
-                '식기건조대',
-                '보관/용기/도시락',
-                '주방잡화',
-                '조리도구',
-                '칼/도마/커팅기구'],
-    'deco' : ['디퓨저/캔들',
-            '플라워/식물',
-            '홈갤러리',
-            '인테리어소품',
-            '시계',
-            '월데코/장식',
-            '데스크/디자인문구',
-            'DIY/취미/공예',
-            '파티/완구',
-            '크리스마스'],
-    'storage' : ['서랍장/트롤리',
-                '리빙박스/바구니',
-                '빨래바구니/햄퍼',
-                '행거',
-                '선반',
-                '옷걸이',
-                '옷정리/이불정리',
-                '화장대/테이블정리',
-                '현관/신발정리',
-                '후크/수납걸이'],
-    'household' : ['욕실용품',
-                    '수건/타월',
-                    '청소용품',
-                    '세탁용품',
-                    '생활잡화',
-                    '자동차용품'],
-    'baby' : ['완구/교구',
-                '유아동침구/패브릭',
-                '매트/안전용품',
-                '유아동가구',
-                '유아의류/잡화',
-                '기저귀/기저귀용품',
-                '세탁/위생용품',
-                '수유용품',
-                '유아/아동식기',
-                '스킨케어/욕실용품'
-    ]
-};
-
 
 bigCategory.addEventListener('change', () => {
   // 기존 소분류 옵션을 모두 제거
@@ -241,16 +255,25 @@ bigCategory.addEventListener('change', () => {
 
   const selectedCategory = bigCategory.value;
 
-  console.log(selectedCategory);
+  fetch("/partner/seller/product/selectSmallCategory", {
+        method: "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(selectedCategory)
+    })
+    .then(resp => resp.text())
+    .then(result => {
+        
+        const smallCategoryList = JSON.parse(result);
 
-  if (categoryOptions != 'none') {
-      categoryOptions[selectedCategory].forEach(sub => {
-        const option = document.createElement('option');
-        option.value = sub;
-        option.textContent = sub;
-        smallcategory.appendChild(option);
-    });
-  }
+        
+        smallCategoryList.forEach(elements => {
+            const option = document.createElement('option');
+            option.value = elements.categoryNo;
+            option.textContent = elements.categoryName;
+            smallcategory.appendChild(option);
+        })
+    })
+
 });
 
 
