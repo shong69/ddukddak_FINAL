@@ -7,18 +7,18 @@ const checkObj = {
     "partnerBusinessNum" : false, // 사업자등록번호
     "partnerCeoName" : false,
     "telAuth" : false,
-    "agree" : false
+    "allAgree" : false
 }
 
 // 가입하기 버튼
 const signUpBtn = document.getElementById('signUpBtn');
 
-const disabledCheck = () => {
-    // 모든 입력 필드가 유효한지 확인
-    const allValid = Object.values(checkObj).every(value => value === true);
-    // 가입하기 버튼의 disabled 속성 업데이트
-    signUpBtn.disabled = !allValid;
-}
+// const disabledCheck = () => {
+//     // 모든 입력 필드가 유효한지 확인
+//     const allValid = Object.values(checkObj).every(value => value === true);
+//     // 가입하기 버튼의 disabled 속성 업데이트
+//     signUpBtn.disabled = !allValid;
+// }
 
 
 
@@ -30,13 +30,16 @@ agreeAllBtn.addEventListener('change', function() {
     if (this.checked) {
         agreeButtons.forEach(function(button) {
             button.checked = true;
+            
         });
-        checkObj.agree = true;
+        checkObj.allAgree = true;
     } else {
         agreeButtons.forEach(function(button) {
             button.checked = false;
+            
         });
-        checkObj.agree = false;
+        checkObj.allAgree = false;
+        
     }
 });
 
@@ -44,10 +47,10 @@ agreeButtons.forEach(function(button) {
     button.addEventListener('change', function() {
         if (document.querySelectorAll('.agreeBtn:checked').length === agreeButtons.length) {
             agreeAllBtn.checked = true;
-            checkObj.agree = true;
+            checkObj.allAgree = true;
         } else {
             agreeAllBtn.checked = false;
-            checkObj.agree = false;
+            checkObj.allAgree = false;
         }
     });
 });
@@ -106,7 +109,7 @@ bsNumAuthBtn.addEventListener('click', () => {
                 businessNumAuthMsg.classList.remove('confirm');
                 checkObj.partnerBusinessNum = false;
                 bsNum.value = '';
-                disabledCheck();
+                // disabled 체크 삭제
                 return;
             }
 
@@ -115,7 +118,7 @@ bsNumAuthBtn.addEventListener('click', () => {
             businessNumAuthMsg.classList.add('confirm');
             checkObj.partnerBusinessNum = true;
             bsNum.value = businessNumShow; // 인증 시에만 값 넣기
-            disabledCheck();
+            // disabled 체크 삭제
         })
         .catch(err => {
             console.error('Fetch error:', err);
@@ -125,7 +128,7 @@ bsNumAuthBtn.addEventListener('click', () => {
         console.log(err);
     }
 
-    disabledCheck();
+    // disabled 체크 삭제
     
     // 123-12-1245 형식
     // 서버에서 - 제거하고 DB에 넣을 예정
@@ -149,7 +152,7 @@ bsName.addEventListener('input', e => {
         bsName.value = '';
         bsNameMsg.innerText = "2~30자의 한글, 대/소문자, 숫자, 특수문자(& . ( ) , - · ') 사용해 주세요.";
         bsNameMsg.classList.remove('error', 'confirm');
-        disabledCheck();
+        // disabled 체크 삭제
         return;
     }
 
@@ -161,7 +164,7 @@ bsName.addEventListener('input', e => {
         bsNameMsg.classList.add('error');
         bsNameMsg.classList.remove('confirm');
 
-        disabledCheck();
+        // disabled 체크 삭제
 
         return;
     }
@@ -177,7 +180,7 @@ bsName.addEventListener('input', e => {
                 bsNameMsg.classList.add('error');
                 bsNameMsg.classList.remove('confirm');
                 checkObj.partnerBusinessName = false;
-                disabledCheck();
+                // disabled 체크 삭제
                 return;
             }
 
@@ -185,10 +188,10 @@ bsName.addEventListener('input', e => {
             bsNameMsg.classList.remove('error');
             bsNameMsg.classList.add('confirm');
             checkObj.partnerBusinessName = true;
-            disabledCheck();
+            // disabled 체크 삭제
         })
 
-        disabledCheck();
+        // disabled 체크 삭제
     } catch(err) {
         console.log(err);
     }
@@ -210,7 +213,7 @@ ceoName.addEventListener('input', e => {
     if(inputCeoName.trim().length === 0) {
         checkObj.partnerCeoName = false;
         ceoName.value = ''; // 공백 방지
-        disabledCheck();
+        // disabled 체크 삭제
         return;
     }
 
@@ -219,12 +222,12 @@ ceoName.addEventListener('input', e => {
 
     if(!regExp.test(inputCeoName)) {
         checkObj.partnerCeoName = false;
-        disabledCheck();
+        // disabled 체크 삭제
         return;
     }
 
     checkObj.partnerCeoName = true;
-    disabledCheck();
+    // disabled 체크 삭제
 
 });
 
@@ -251,7 +254,7 @@ partnerId.addEventListener("input", e => {
         idMsg.classList.remove('confirm', 'error');
         checkObj.partnerId = false;
         partnerId.value = "";
-        disabledCheck();
+        // disabled 체크 삭제
 
         return;
 
@@ -266,7 +269,7 @@ partnerId.addEventListener("input", e => {
         idMsg.classList.remove('confirm');
         checkObj.partnerId = false;
 
-        disabledCheck();
+        // disabled 체크 삭제
 
         return;
     }
@@ -281,7 +284,7 @@ partnerId.addEventListener("input", e => {
             idMsg.classList.add('error');
             idMsg.classList.remove('confirm');
             checkObj.partnerId = false;
-            disabledCheck();
+            // disabled 체크 삭제
 
             return;
         }
@@ -290,14 +293,14 @@ partnerId.addEventListener("input", e => {
         idMsg.classList.add('confirm');
         idMsg.classList.remove('error');
         checkObj.partnerId = true;
-        disabledCheck();
+        // disabled 체크 삭제
 
     })    
     .catch(error => {
         console.log(error); 
     });
 
-    disabledCheck();
+    // disabled 체크 삭제
 });
 
 // ========================================================================
@@ -320,14 +323,14 @@ const checkPw = () => {
         pwConfirmMsg.classList.add("confirm");
         pwConfirmMsg.classList.remove("error");
         checkObj.partnerPwConfirm = true;
-        disabledCheck();
+        // disabled 체크 삭제
         return;
     }
 
     if(partnerPwConfirm.value.trim().length === 0) {
 
         checkObj.partnerPwConfirm = false;
-        disabledCheck();
+        // disabled 체크 삭제
         return;
     }
 
@@ -335,7 +338,7 @@ const checkPw = () => {
     pwConfirmMsg.classList.add("error");
     pwConfirmMsg.classList.remove("confirm");
     checkObj.partnerPwConfirm = false;
-    disabledCheck();
+    // disabled 체크 삭제
 
 };
 
@@ -384,7 +387,7 @@ partnerPw.addEventListener("input", e => {
         checkPw();
     } 
     
-    disabledCheck();
+    // disabled 체크 삭제
 });
 
 // 비밀번호 확인 입력 시
@@ -396,7 +399,7 @@ partnerPwConfirm.addEventListener("input", e => {
         pwConfirmMsg.innerText = '';
         pwConfirmMsg.classList.remove('confirm', 'error');
         checkObj.partnerPw = false;
-        disabledCheck();
+        // disabled 체크 삭제
         
         return;
     }
@@ -406,7 +409,7 @@ partnerPwConfirm.addEventListener("input", e => {
         pwConfirmMsg.classList.add('error');
         pwConfirmMsg.classList.remove('confirm');
         checkObj.partnerPw = false;
-        disabledCheck();
+        // disabled 체크 삭제
 
         return;
 
@@ -419,7 +422,7 @@ partnerPwConfirm.addEventListener("input", e => {
         pwConfirmMsg.classList.add('error');
         pwConfirmMsg.classList.remove('confirm');
         checkObj.partnerPwConfirm = false;
-        disabledCheck();
+        // disabled 체크 삭제
 
         return;
     }
@@ -440,7 +443,7 @@ partnerPwConfirm.addEventListener("input", e => {
 
     // partnerPw = false
     checkObj.partnerPwConfirm = false;
-    disabledCheck();
+    // disabled 체크 삭제
     
 }); 
 
@@ -482,6 +485,10 @@ const disabledAuthBtnCheck = () => {
         sendAuthBtn.disabled = false;
     } else {
         sendAuthBtn.disabled = true;
+    }
+
+    if(checkObj.partnerTel && checkObj.telAuth ) {
+        checkAuthBtn.disabled = true;
     }
 
     if(checkObj.partnerTel && smsAuthKey.value.length == 6 && sendSmsAuthkey)  {
@@ -539,7 +546,7 @@ partnerTel.addEventListener('input', e => {
         telMsg.classList.remove('error', 'confrim');
 
         disabledAuthBtnCheck();
-        disabledCheck();
+        // disabled 체크 삭제
         return;
     }
 
@@ -552,7 +559,7 @@ partnerTel.addEventListener('input', e => {
         telMsg.classList.remove('confirm');
         checkObj.partnerTel = false;
         disabledAuthBtnCheck();
-        disabledCheck();
+        // disabled 체크 삭제
 
         return;
     }
@@ -571,7 +578,7 @@ partnerTel.addEventListener('input', e => {
 
                 checkObj.partnerTel = false;
                 disabledAuthBtnCheck();
-                disabledCheck();
+                // disabled 체크 삭제
                 return;
         
             }
@@ -582,14 +589,14 @@ partnerTel.addEventListener('input', e => {
             telMsg.classList.remove('error'); 
             checkObj.partnerTel = true;
             disabledAuthBtnCheck();
-            disabledCheck();
+            // disabled 체크 삭제
         })
 
     } catch(err) {
         console.log(err);
     }
     disabledAuthBtnCheck();
-    disabledCheck();
+    // disabled 체크 삭제
 });
 
 
@@ -610,11 +617,13 @@ sendAuthBtn.addEventListener('click', () => {
         telMsg.classList.remove('confirm');
         checkObj.partnerTel = false; 
         disabledAuthBtnCheck();
-        disabledCheck();
+        // disabled 체크 삭제
 
         return;
     }
     
+
+    sendAuthBtn.disabled = true; // 재발송 막기
 
     // 클릭시 타이머 숫자 초기화
     min = initMin;
@@ -634,7 +643,7 @@ sendAuthBtn.addEventListener('click', () => {
         if(result == 1) {
             smsAuthKey.readOnly = false; // 인증 입력창 풀기
             sendSmsAuthkey = true; // 발송 성공 시 boolean
-            sendAuthBtn.disabled = true; // 재발송 막기
+            // sendAuthBtn.disabled = true; // 재발송 막기
             telMsg.innerText = '아래 입력창에 인증 번호를 입력 후 인증하기 버튼을 눌러주세요.'
             telMsg.classList.remove('error', 'confirm');
             console.log("인증 번호 발송 성공");
@@ -661,7 +670,7 @@ sendAuthBtn.addEventListener('click', () => {
             telAuthTime.classList.add('error');
             telAuthTime.classList.remove('confirm');
             disabledAuthBtnCheck();
-            disabledCheck();
+            // disabled 체크 삭제
             return;
         }
 
@@ -676,7 +685,7 @@ sendAuthBtn.addEventListener('click', () => {
     }, 1000);
 
     disabledAuthBtnCheck();
-    disabledCheck();
+    // disabled 체크 삭제
 });
 
 
@@ -743,7 +752,7 @@ checkAuthBtn.addEventListener('click', () => {
                 authCount2 = 0;
                 
                 disabledAuthBtnCheck();
-                disabledCheck();
+                // disabled 체크 삭제
 
                 return;
             }
@@ -755,7 +764,7 @@ checkAuthBtn.addEventListener('click', () => {
             checkObj.telAuth = false;
 
             disabledAuthBtnCheck();
-            disabledCheck();
+            // disabled 체크 삭제
 
             return;
         }
@@ -777,7 +786,7 @@ checkAuthBtn.addEventListener('click', () => {
         checkObj.telAuth = true;
         
         disabledAuthBtnCheck();
-        disabledCheck();
+        // disabled 체크 삭제
 
     })
 
@@ -803,6 +812,16 @@ signUpForm.addEventListener("submit" , e => {
             let str;
 
             switch(key) {
+
+                case "partnerBusinessName" : 
+                str = "상호명이 올바른 형식이 아니거나, 중복된 상호명입니다."; break;
+
+                case "partnerCeoName" : 
+                    str = "대표자명이 올바른 형식이 아닙니다."; break;
+
+                case "partnerBusinessNum" :
+                    str = "사업자등록번호가 올바른 형식이 아니거나, 중복된 사업자등록번호입니다."; break;
+                
                 case "partnerId" : 
                     str = "아이디가 올바른 형식이 아니거나, 중복된 아이디입니다."; break;
                 
@@ -812,29 +831,26 @@ signUpForm.addEventListener("submit" , e => {
                 case "partnerPwConfirm" :
                     str = "비밀번호와 비밀번호 확인이 일치하지 않습니다."; break;
                 
-                case "partnerCeoName" : 
-                    str = "대표자명이 올바른 형식이 아닙니다."; break;
-
-                case "partnerBusinessName" : 
-                    str = "상호명이 올바른 형식이 아니거나, 중복된 닉네임입니다."; break;
-
-                case "partnerBusinessNum" :
-                    str = "사업자등록번호가 올바른 형식이 아니거나, 중복된 이메일입니다."; break;
-    
                 case "partnerTel" :
                     str = "휴대폰 번호가 올바른 형식이 아니거나, 중복된 휴대폰 번호입니다."; break;
-                    
+
                 case "telAuth" :
                     str = "휴대폰 인증이 정상적으로 진행되지 않았습니다."; break;
 
-                case "agree" :
+                case "allAgree" :
                     str = "파트너 등록 요청 시 약관 동의는 필수입니다. 모든 약관에 동의해 주세요."; break;
                     
             }
 
             alert(str);
 
-            document.getElementById(key).focus();
+            // document.getElementById(key).focus();
+
+            // 첫 번째 요소에 포커스 설정
+            const element = document.getElementsByName(key)[0];
+            if (element) {
+                element.focus();
+            }
 
             e.preventDefault();
 
@@ -852,6 +868,7 @@ const checkObjBtn = document.getElementById('checkObjBtn');
 
 checkObjBtn.addEventListener('click', () => {
     console.clear(); // 이전 콘솔 값을 비웁니다
+    console.log(document.getElementById('partnerType').value);
     console.log("Current state of checkObj:");
     for (let key in checkObj) {
         console.log(`${key}: ${checkObj[key]}`);

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("manager")
 public class ManagerController {
 
-	@GetMapping("")
+	@GetMapping("main")
 	public String managerMain() {
 		return"manager/managerMain";
 	}
@@ -26,4 +26,15 @@ public class ManagerController {
 	public String registerLiveCommerce() {
 		return"manager/registerLiveCommerce";
 	}
+	
+	@GetMapping("partnerList")
+	public String partnerList() {
+		return "manager/partnerList";
+	}
+	
+	@GetMapping("partnerPass")
+	public String partnerPass() {
+		return "manager/partnerPass";
+	}
+	
 }

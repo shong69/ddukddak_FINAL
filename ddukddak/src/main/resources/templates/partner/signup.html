@@ -24,7 +24,8 @@
     <th:block th:replace="~{common/fragments/signupLoginMove}"></th:block>
 
     <main>
-        <form action="#" method="post" id="signUpForm" name="signUpForm">
+        <form action="#" method="get" id="signUpForm" name="signUpForm">
+            <input id="partnerType" type="hidden" name="partnerType" th:value="${choice}">
             <div class="signupContainer">
                 <!-- 약관 동의, 정보 입력 영역 -->
                 <div class="signupContainer2">
@@ -73,7 +74,7 @@
                                 </div>
                             </div>
                             <div class="agreeAllArea">
-                                <input type="checkbox" id="agreeAllBtn">
+                                <input type="checkbox" id="agreeAllBtn" name="allAgree">
                                 <label for="agreeAllBtn" class="agreeAllBtnLabel">약관 전체 동의</label>
                             </div>
                         </div>
@@ -137,7 +138,7 @@
                                 
                                 <!-- 인증번호 입력 -->
                                 <div class="inputWithButton">
-                                    <input id="smsAuthKey" class="smsAuthKey" placeholder="인증번호(6자리)" maxlength="6" readonly>
+                                    <input id="smsAuthKey" name="telAuth" class="smsAuthKey" placeholder="인증번호(6자리)" maxlength="6" readonly>
                                     <button id="checkAuthBtn" class="authBtn" type="button" disabled>인증하기</button>
                                     <span id="telAuthTime" class="authMsg"></span>
                                 </div>
@@ -153,7 +154,7 @@
                 </div>
                 <!-- 파트너 등록 요청 -->
                 <div class="partnerRequestArea">
-                    <button id="signUpBtn" class="mainPageBtn" disabled>파트너 등록 요청</button>
+                    <button id="signUpBtn" class="mainPageBtn">파트너 등록 요청</button>
                 </div>      
             </div>
         </form>

@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("partner")
-@SessionAttributes("{loginPartnerMember}")
+@SessionAttributes({"loginPartnerMember"})
 @RequiredArgsConstructor
 @Slf4j
 public class PartnerController {
