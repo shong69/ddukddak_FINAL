@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddukddak.partner.model.mapper.ProductMapper">
+	
+	<!-- 재고등록 재고상품 조회 -->
+	<select id="selectCreateList">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, TO_CHAR(PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, CATEGORY_NAME, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NULL
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+	
+	<!-- 재고상품 판매등록 -->
+	<update id="sellApplyProduct">
+		UPDATE PRODUCT
+		SET PRODUCT_UPDATE_DATE  = SYSDATE
+		WHERE PRODUCT_NO = #{value}
+	</update>
+	
+	<!-- 대분류에 따른 소분류 조회 -->
+	<select id="selectSmallCategory">
+		SELECT CATEGORY_NO, CATEGORY_NAME
+		FROM CATEGORY
+		WHERE BIG_CATEGORY_NO = #{selectedCategory}
+	</select>
+	
+</mapper>

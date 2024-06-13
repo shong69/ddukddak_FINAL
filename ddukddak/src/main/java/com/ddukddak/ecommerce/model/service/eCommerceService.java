@@ -89,4 +89,9 @@ public interface eCommerceService {
 	 */
 	Map<String, Object> searchList(int memberNo, String query, int cp, int sort);
 
+	/** 판매사 페이지용 소분류 카테고리 조회
+	 * @return
+	 */
+	List<Category> selectSmallCategory();
+
 }
