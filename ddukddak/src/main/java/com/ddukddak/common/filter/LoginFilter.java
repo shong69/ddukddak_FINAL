@@ -25,7 +25,8 @@ public class LoginFilter implements Filter{
 														            "/partner/checkBusinessNum",
 														            "/partner/checkBusinessName",
 														            "/partner/checkId",
-														            "/partner/checkTel");
+														            "/partner/checkTel"
+														            );
 			 				
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

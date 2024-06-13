@@ -4,23 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
-    <title>관리자 : 메인페이지</title>
+    <title>관리자 : 가입승인</title>
 
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/common/fragments/header.css">
     <link rel="stylesheet" href="/css/common/fragments/admin/leftheader.css">
+    <link rel="stylesheet" href="/css/manager/partnerPass.css">
 </head>
 <body>
+    <!-- 헤더 -->
     <th:block th:replace="~{manager/common/header}"></th:block>
-    <main>
-        <section>
-            <th:block th:replace="~{common/fragments/admin/leftheader}"></th:block>
-            <div>
 
-                
-            </div>
-        </section>
-    </main>
-
+    <!-- 왼쪽 네비 posion -->
+    <th:block th:replace="~{common/fragments/admin/leftheader}"></th:block>
+    <div class="content">
+        <!-- 타이틀 -->
+        <div class="titleBox">
+            <h3>파트너 가입 승인 관리</h3>
+        </div>
+        <!-- 테이블 -->
+        <div>
+            
+        </div>
+        <!-- 페이지네이션 -->
+        <div></div>
+    </div>
 </body>
 </html>

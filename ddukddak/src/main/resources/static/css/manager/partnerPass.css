@@ -1,0 +1,46 @@
+/* 네비바 스타일 참고
+
+#leftheaderContainer {
+    width: 200px;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-right: 1px solid var(--gray5);
+}
+
+#leftheaderContainer h2 {
+    margin-bottom: 50px;
+}
+
+#leftheaderContainer h3 {
+    margin-bottom: 30px;
+}
+
+*/
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 1060px;
+    height: auto;
+}
+
+
+.titleBox {
+    width: 100%;
+    border-bottom: 1px solid var(--gray3);
+}
+
+.titleBox h3 {
+    padding: 10px 0;
+    font-weight: 700;
+    
+} 
