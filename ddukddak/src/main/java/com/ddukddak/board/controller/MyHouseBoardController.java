@@ -157,9 +157,9 @@ public class MyHouseBoardController {
 				
 			}
 			
-			// ==============================================================================================
-			
 			path = "board/myHouseBoard/myHouseBoardDetail";
+			
+			// 댓글에 보여줄 멤버 리스트 조회
 			
 			model.addAttribute("board", board);
 			
@@ -208,9 +208,9 @@ public class MyHouseBoardController {
     	
     	List<MultipartFile> imgList = new ArrayList<>(images);
     	
-    	imgList.remove(mainImg);
+    	imgList.remove(mainImg);	// 중복된 mainImg 리스트에서 삭제
     	
-    	imgList.add(0, mainImg);
+    	imgList.add(0, mainImg);	// 다시 mainImg 를 배열 0번째 자리에 추가
     	
     	int boardNo = service.insertBoard(board, imgList);
     	

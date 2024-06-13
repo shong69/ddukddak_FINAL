@@ -61,19 +61,31 @@ function updateMainImage(src, selectedImg) {
 const largeImage = document.querySelector("#largeImage");
 const mainImgText = document.querySelector("#mainImgText");
 const mainImgHidden = document.querySelector("#mainImgHidden");
+const imageUpload = document.getElementById('imageUpload');
 
-document.getElementById('imageUpload').addEventListener('change', function(event) {
+imageUpload.addEventListener('change', function(event) {
+    
+    
+    if(mainImgHidden.value != "") {
+        mainImgHidden.value = '';
+        largeImage.style.display = 'none';
+        mainImgText.style.display = 'none';
+        largeImage.src = '';
+    }
+        
     const files = event.target.files;
     let existingPreviewContainer = document.querySelector('.preview-container');
-    largeImage.style.display = 'none';
-    mainImgText.style.display = 'none';
-    largeImage.src = '';
+    let guideText;
 
     if (existingPreviewContainer) {
         existingPreviewContainer.innerHTML = '';
     } else {
         existingPreviewContainer = document.createElement('div');
         existingPreviewContainer.classList.add('preview-container');
+        guideText = document.createElement('h3');
+        guideText.classList.add('guideText');
+        guideText.innerText = '* 메인이미지를 선택해주세요(이미지 클릭)';
+        event.target.parentElement.appendChild(guideText);
         event.target.parentElement.appendChild(existingPreviewContainer);
     }
 
