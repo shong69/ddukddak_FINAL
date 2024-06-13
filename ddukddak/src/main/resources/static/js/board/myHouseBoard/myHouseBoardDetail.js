@@ -1,37 +1,51 @@
+
+// ul 태그(댓글 목록 감싸는 요소)
+const ul = document.getElementById("commentList");
+
 const selectCommentList = () => {
 
   fetch("/comment?boardNo=" + boardNo)
-  .then(resp => resp.json())
-  .then(commentList => {
+    .then(resp => resp.json())
+    .then(commentList => {
 
-    console.log(commentList);
+      console.log(commentList);
 
-    // ul 태그(댓글 목록 감싸는 요소)
-    const ul = document.querySelector("#commentList");
-    ul.innerHTML = ""; // 기존 댓글 목록 삭제
+      console.log(ul);
 
-    // commentList 안에 comment 에 각각 접근하는 반복문
-    for(let comment of commentList) {
+      ul.innerHTML = ""; // 기존 댓글 목록 삭제
 
-      // 행 생성
-      const commentContainer = document.createElement("li");
-      commentContainer.classList.add("commentContainer");
+      // commentList 안에 comment 에 각각 접근하는 반복문
+      for (let comment of commentList) {
 
-      if(comment.parentCommentNo != 0) {
-        commentContainer.classList.add("child-comment");
-      }
+        // 행 생성
+        const commentContainer = document.createElement("li");
+        commentContainer.classList.add("commentContainer");
+        // console.log(commentContainer);
 
-      if(comment.commentDelFl == 'Y') {
-        commentContainer.innerText = "삭제된 댓글입니다.";
-      } else {  // 삭제되지 않은 댓글
+        if (comment.parentCommentNo != 0) {
+          commentContainer.classList.add("child-comment");
+        }
+
+        if (comment.commentDelFl == 'Y') {
+          commentContainer.innerText = "삭제된 댓글입니다.";
+        }
+        // 삭제되지 않은 댓글
+
+        // 작성자 영역 포함하는 div 생성, class 추가
+        const commentUser = document.createElement("div");
+        commentUser.classList.add("commentUser");
 
         // 프로필 이미지, 닉네임, 날짜 감싸는 요소
         const userInfo = document.createElement("div");
         userInfo.classList.add("userInfo");
 
+        commentUser.append(userInfo);
+
+        //console.log(commentUser);
+
         const profileImg = document.createElement("img");
 
-        if(comment.profileImg == null) profileImg.src = userDefaultImage; // 기본이미지
+        if (comment.profileImg == null) profileImg.src = userDefaultImage; // 기본이미지
         else profileImg.src = comment.profileImg;
 
         // 닉네임
@@ -45,14 +59,7 @@ const selectCommentList = () => {
         // 작성자 영역(userInfo) 에 프로필 닉네임 날짜 추가
         userInfo.append(profileImg, nickname, commentDate);
 
-        // 작성자 영역 포함하는 div 생성, class 추가
-        const commentUser = document.createElement("div");
-        commentUser.classList.add("commentUser");
-
-        // 영역 합치기
-        commentUser.append(userInfo);
-        commentContainer.append(commentUser);
-
+        // console.log("userInfo : ",userInfo);
         // ========================================================================
 
         // 댓글 + 버튼 Area 담을 div 생성, class 추가
@@ -63,36 +70,39 @@ const selectCommentList = () => {
         const displayComment = document.createElement("div");
         displayComment.classList.add("displayComment");
 
+        //   // 댓글 내용
+
+        const commentContent = document.createElement("h3");
+        commentContent.classList.add("commentContent");
+        commentContent.innerText = comment.commentContent;
+
+        displayComment.append(commentContent);
+
         // 버튼 담을 div 생성, class 추가
-        const commentBtnArea = document.querySelector("div");
+        const commentBtnArea = document.createElement("div");
         commentBtnArea.classList.add("commentBtnArea");
 
-        // 댓글 내용
 
-        const content = document.createElement("h3");
-        content.classList.add("commentContent");
-        content.innerText = comment.commentContent;
-        
-        displayComment.append(content);
+
 
         // -----------------------------------------------------
 
         // 로그인한 회원번호가 댓글 작성자 회원번호와 같을 때
         // 댓글 수정/삭제 버튼 출력
-        if(loginMember != null && loginMemberNo == comment.memberNo) {
+        if (loginMemberNo != null && loginMemberNo == comment.memberNo) {
 
           // 수정 버튼
           const updateBtn = document.createElement("div");
           updateBtn.innerText = "수정";
 
-          updateBtn.setAttribute("onclick", 
+          updateBtn.setAttribute("onclick",
             `showUpdateComment(${comment.commentNo}, this)`);
 
           // 삭제 버튼
           const deleteBtn = document.createElement("div");
           deleteBtn.innerText = "삭제";
 
-          deleteBtn.setAttribute("onclick", 
+          deleteBtn.setAttribute("onclick",
             `deleteComment(${comment.commentNo})`);
 
           // 버튼 영역에 수정, 삭제 버튼 추가
@@ -100,41 +110,79 @@ const selectCommentList = () => {
 
         }
 
-        // 답글 버튼
+        //   // 답글 버튼
         const childCommentBtn = document.createElement("div");
         childCommentBtn.innerText = "답글";
 
         commentBtnArea.append(childCommentBtn);
 
-        // 댓글 + 버튼 영역 담기
+
+
+        // 영역 합치기
         commentContentArea.append(displayComment, commentBtnArea);
+        commentContainer.append(commentUser, commentContentArea);
+
+        // }
+
+        ul.append(commentContainer);
 
       }
 
-      ul.append(commentContainer);
-
-    }
-
-  })
+    })
 
 }
-    
+
 // =================================================================================
-  
-// 코멘트 유효성 검사
+
+// ** 댓글 등록(Ajax) **
+
 const insertComment = document.querySelector("#insertComment");
 const inputCommentContent = document.querySelector("#inputCommentContent");
+const commentCount = document.querySelector("#commentCount");
 
 insertComment.addEventListener("click", () => {
 
-  if(inputCommentContent.value.trim().length == 0) {
+  if (loginMemberNo == null) {
+    alert("로그인 후 이용해주세요.");
+    return;
+  }
+
+  if (inputCommentContent.value.trim().length == 0) {
 
     alert("댓글 내용을 입력해주세요.");
     inputCommentContent.focus();
     return;
 
   }
-  
+
+  const data = {
+    "commentContent": inputCommentContent.value,
+    "boardNo": boardNo,
+    "memberNo": loginMemberNo
+  };
+
+  fetch("/comment", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  })
+    .then(resp => resp.text())
+    .then(result => {
+
+      if (result > 0) {
+        console.log(result);
+        alert("댓글이 등록되었습니다.");
+        inputCommentContent.value = "";
+        
+        selectCommentList();
+      } else {
+        console.log(result);
+        alert("댓글 등록에 실패하였습니다.");
+      }
+
+    })
+    .catch(err => console.log(err));
+
 });
 
 /* 이미지 */
@@ -145,62 +193,62 @@ const next = document.querySelector('.next');
 const prev = document.querySelector('.prev');
 
 if (slideshow != null) {
-    let slideIndex = 1;
-    let slideInterval;
-    
-    function showSlides(n) {
-        let i;
-        let slides = document.getElementsByClassName("mySlides");
-        if (n > slides.length) { slideIndex = 1; }
-        if (n < 1) { slideIndex = slides.length; }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-            slides[i].style.opacity = 0.4;
-        }
-        slides[slideIndex - 1].style.display = "block";
-        setTimeout(() => {
-            slides[slideIndex - 1].style.opacity = 1;
-        }, 30);
-        if (adViewMore != null) {
-            
-            adViewMore.textContent = `${slideIndex} / ${slides.length}`;
-        }
-    }
+  let slideIndex = 1;
+  let slideInterval;
 
-    function plusSlides(n) {
-        slideIndex += n;
-        showSlides(slideIndex);
-        resetInterval();
+  function showSlides(n) {
+    let i;
+    let slides = document.getElementsByClassName("mySlides");
+    if (n > slides.length) { slideIndex = 1; }
+    if (n < 1) { slideIndex = slides.length; }
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+      slides[i].style.opacity = 0.4;
     }
+    slides[slideIndex - 1].style.display = "block";
+    setTimeout(() => {
+      slides[slideIndex - 1].style.opacity = 1;
+    }, 30);
+    if (adViewMore != null) {
 
-    function currentSlide(n) {
-        slideIndex = n;
-        showSlides(slideIndex);
-        resetInterval();
+      adViewMore.textContent = `${slideIndex} / ${slides.length}`;
     }
+  }
 
-    function resetInterval() {
-        clearInterval(slideInterval);
-        slideInterval = setInterval(() => {
-            plusSlides(1);
-        }, 5000);
-    }
-    
+  function plusSlides(n) {
+    slideIndex += n;
     showSlides(slideIndex);
-
     resetInterval();
-    if (next != null) {
-        next.addEventListener('click', () => {
-             plusSlides(1);
-             resetInterval();
-         });
-    }
+  }
 
-    if (prev != null) {
-        prev.addEventListener('click', () => {
-            plusSlides(-1);
-            resetInterval();
-        });
-    }
-} 
+  function currentSlide(n) {
+    slideIndex = n;
+    showSlides(slideIndex);
+    resetInterval();
+  }
+
+  function resetInterval() {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(() => {
+      plusSlides(1);
+    }, 5000);
+  }
+
+  showSlides(slideIndex);
+
+  resetInterval();
+  if (next != null) {
+    next.addEventListener('click', () => {
+      plusSlides(1);
+      resetInterval();
+    });
+  }
+
+  if (prev != null) {
+    prev.addEventListener('click', () => {
+      plusSlides(-1);
+      resetInterval();
+    });
+  }
+}
 
