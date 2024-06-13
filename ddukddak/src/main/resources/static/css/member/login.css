@@ -9,6 +9,7 @@ main {
     color: var(--secondary);
     margin-bottom: 60px;
     font-size: 34px;
+    letter-spacing: 0.3em;
 }
 
 .loginPageTitle2 {

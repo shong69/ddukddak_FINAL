@@ -16,18 +16,75 @@
     <th:block th:replace="~{manager/common/header}"></th:block>
 
     <!-- 왼쪽 네비 posion -->
-    <th:block th:replace="~{common/fragments/admin/leftheader}"></th:block>
-    <div class="content">
-        <!-- 타이틀 -->
-        <div class="titleBox">
-            <h3>파트너 가입 승인 관리</h3>
+    <section class="mainBox">
+        <div class="navBar">
+            <th:block th:replace="~{common/fragments/admin/leftheader}"></th:block>
         </div>
-        <!-- 테이블 -->
-        <div>
-            
+        <div class="content">
+            <!-- 타이틀 -->
+            <div class="titleBox">
+                <h3>파트너 가입 승인 관리</h3>
+            </div>
+
+            <!-- 테이블 -->
+            <div class="listBox">
+                <table>
+                    <thead>
+                        <tr>
+                            <!-- * 추후 전체 선택, 행마다 선택 클래스 지정해야 함!!* -->
+                            <th><input type="checkbox"></th>
+                            <th>파트너 번호</th>
+                            <th>파트너 아이디</th>
+                            <th>상호명</th>
+                            <th>사업자등록번호</th>
+                            <th>등록 요청일</th>
+                            <th colspan="2"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 게시글이 존재 X-->
+                        <!-- 타임리프 수정 필요 th:if="${#lists.isEmpty(boardList)}" -->
+                        <th:block th:unless="${#lists.isEmpty(boardList)}">
+                            <tr>
+                                <td colspan="6">파트너 등록 요청이 없습니다.</td>
+                            </tr>
+                        </th:block>
+
+                        <!-- 게시글이 존재 O -->
+                        <th:block >
+                            <tr class="deleteBtn-tr">
+                                <td colspan="8"><button type="button" class="deleteBtn">삭 제</button></td>
+                            </tr>
+                            <tr>
+                                 <!-- * 추후 전체 선택, 행마다 선택 클래스 지정해야 함!!* -->
+                                <td><input type="checkbox"></td>
+
+                                <!-- 파트너번호 -->
+                                <td>3</td>
+
+                                <!-- 파트너 아이디 -->
+                                <td>soowagger</td>
+
+                                <!-- 상호명 -->
+                                <td>주식회사 뚝딱뚝딱</td>
+
+                                <!-- 사업자등록번호 -->
+                                <td>123-12-12345</td>
+
+                                <!-- 요청일 -->
+                                <td>2024-06-27</td>
+                                <td class="btn-td"><button type="button" class="confirmBtn">승인</button></td>
+                                <td class="btn-td"><button type="button" class="refuseBtn">거절</button></td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+                </table>    
+            </div>
+            <!-- 페이지네이션 -->
+            <div>
+                
+            </div>
         </div>
-        <!-- 페이지네이션 -->
-        <div></div>
-    </div>
+    </section>
 </body>
 </html>

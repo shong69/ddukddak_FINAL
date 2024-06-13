@@ -1,6 +1,7 @@
 package com.ddukddak.manager.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,14 +28,27 @@ public class ManagerController {
 		return"manager/registerLiveCommerce";
 	}
 	
+	
+	/** 파트너 관리
+	 * @return
+	 */
 	@GetMapping("partnerList")
 	public String partnerList() {
 		return "manager/partnerList";
 	}
 	
+	
+	/** 파트너 가입 승인 관리
+	 * @return
+	 */
 	@GetMapping("partnerPass")
-	public String partnerPass() {
+	public String partnerPass(Model model) {
+		
+		
+		
 		return "manager/partnerPass";
 	}
+	
+	
 	
 }
