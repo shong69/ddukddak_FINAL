@@ -5,10 +5,14 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ddukddak.manager.model.service.ManagerService;
+import com.ddukddak.partner.model.dto.Partner;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,6 +74,23 @@ public class ManagerController {
 		return "manager/partnerPass";
 	}
 	
+	/** 파트너 가입 승인
+	 * @param partNo
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("partner/confirm")
+	public int passConfirm(@RequestBody Partner partner) {
+		
+		int partnerNo = partner.getPartnerNo();
+		String partnerTel = partner.getPartnerTel();
+		
+		
+//		int result = service.passConfirm(partnerNo);
+		
+		// 1 : 성공, 0 : 실패
+		return 0;
+	}
 	
 	
 }

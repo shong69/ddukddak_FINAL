@@ -13,10 +13,12 @@ import com.ddukddak.manager.model.mapper.ManagerMapper;
 import com.ddukddak.partner.model.dto.Partner;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Transactional(rollbackFor = Exception.class)
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ManagerServiceImpl implements ManagerService {
 
 	private final ManagerMapper mapper;
@@ -44,6 +46,22 @@ public class ManagerServiceImpl implements ManagerService {
 		map.put("passList", passList);
 		
 		return map;
+	}
+	
+	
+	/** 파트너 가입 승인
+	 *
+	 */
+	@Override
+	public int passConfirm(String partnerNo) {
+		
+		
+		// 파트너 가입 승인부터 승인
+		int updateConfrim = mapper.updateConfrim(partnerNo);
+		
+	
+		
+		return updateConfrim;
 	}
 	
 }
