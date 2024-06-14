@@ -18,6 +18,7 @@ import com.ddukddak.common.chatting.model.dto.ChattingRoom;
 import com.ddukddak.common.chatting.model.dto.Message;
 import com.ddukddak.common.chatting.model.service.ChattingService;
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.partner.model.dto.Partner;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,7 @@ public class ChattingController {
     //채팅 상대 검색
     @GetMapping("selectTarget")
     @ResponseBody
-    public List<Member> selectTarget(@RequestParam("query") String query,
+    public List<Partner> selectTarget(@RequestParam("query") String query,
     								@SessionAttribute("loginMember") Member loginMember){
     	Map<String, Object> map = new HashMap<>();
     	
@@ -62,7 +63,7 @@ public class ChattingController {
         Map<String, Integer> map = new HashMap<String, Integer>();
         
         map.put("targetNo", targetNo);
-        map.put("loginMemberNo", loginMember.getMemberNo());
+        map.put("memberNo", loginMember.getMemberNo());
         
         // 채팅방번호 체크 서비스 호출 및 반환(기존 생성된 방이 있는지)
         int chattingNo = service.checkChattingNo(map);

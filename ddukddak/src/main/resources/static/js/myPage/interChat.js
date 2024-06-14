@@ -72,29 +72,28 @@ targetInput.addEventListener("input", e => {
 				// li요소 생성(한 행을 감싸는 요소)
 				const li = document.createElement("li");
 				li.classList.add("result-row");
-				li.setAttribute("data-id", member.memberNo);
+				li.setAttribute("data-id", member.partnerNo);
 
 				// 프로필 이미지 요소
 				const img = document.createElement("img");
 				img.classList.add("result-row-img");
 				
-				// 프로필 이미지 여부에 따른 src 속성 선택
-				if(member.profileImg == null) img.setAttribute("src", "/images/user.png");
-				else	img.setAttribute("src", member.profileImg);
+				img.setAttribute("src", "/images/default/main.png");
 
-				let nickname = member.memberNickname;/*닉네임 말고 업체명으로 바꾸기 */
-				let email = member.memberEmail;/*email 말고 전화번호로 바꾸기*/
+				let businessName = member.partnerBusinessName;/*닉네임 말고 업체명으로 바꾸기 */
+				let tel = member.partnerTel;/*email 말고 전화번호로 바꾸기*/
 
 				const div = document.createElement("div");
 				div.classList.add("interInfo");
 				const nameSpan = document.createElement("span");
+				nameSpan.classList.add("nameSpan");
 				const phoneNumSpan = document.createElement("span");
-				
+				phoneNumSpan.classList.add("phoneNumSpan");
 				/*span.innerHTML = `${nickname} ${email}`.replace(query, `<mark>${query}</mark>`);*/
-				nameSpan.innerHTML = nickname.replace(query, `<mark>${query}</mark>`);
-				phoneNumSpan.innerHTML = email.replace(query, `<mark>${query}</mark>`);
+				nameSpan.innerHTML = businessName.replace(query, `<mark>${query}</mark>`);
+				phoneNumSpan.innerHTML = tel.replace(query, `<mark>${query}</mark>`);
 				
-				div.append("nameSpan", "phoneNumSpan");
+				div.append(nameSpan, phoneNumSpan);
 
 				// 요소 조립(화면에 추가)
 				li.append(img, div);
@@ -178,10 +177,7 @@ function selectRoomList(){
 			const listProfile = document.createElement("img");
 			listProfile.classList.add("list-profile");
 
-			if(room.targetProfile == undefined)	
-				listProfile.setAttribute("src", "/images/user.png");
-			else								
-				listProfile.setAttribute("src", room.targetProfile);
+			listProfile.setAttribute("src", "/images/default/main.jpg");
 
 			itemHeader.append(listProfile);
 
@@ -230,7 +226,7 @@ function selectRoomList(){
 				fetch("/chatting/updateReadFlag",{
 					method : "PUT",
 					headers : {"Content-Type": "application/json"},
-					body : JSON.stringify({"chattingNo" : selectChattingNo, "memberNo" : loginMemberNo})
+					body : JSON.stringify({"chattingNo" : selectChattingNo})
 				})
 				.then(resp => resp.text())
 				.then(result => console.log(result))
@@ -298,7 +294,7 @@ function roomListAddEvent(){
 // 비동기로 메세지 목록을 조회하는 함수
 function selectChattingFn() {
 
-	fetch("/chatting/selectMessage?"+`chattingNo=${selectChattingNo}&memberNo=${loginMemberNo}`)
+	fetch("/chatting/selectMessage?"+`chattingNo=${selectChattingNo}`)
 	.then(resp => resp.json())
 	.then(messageList => {
 		console.log(messageList);
@@ -406,16 +402,16 @@ const sendMessage = () => {
 
 // 엔터 == 제출
 // 쉬프트 + 엔터 == 줄바꿈
-inputChatting.addEventListener("keyup", e => {
-	if(e.key == "Enter"){ 
-		if (!e.shiftKey) {
-			sendMessage();
-		}
-	}
-})
+// inputChatting.addEventListener("keyup", e => {
+// 	if(e.key == "Enter"){ 
+// 		if (!e.shiftKey) {
+// 			sendMessage();
+// 		}
+// 	}
+// })
 
 
-/*
+
 // WebSocket 객체 chattingSock이 서버로 부터 메세지를 통지 받으면 자동으로 실행될 콜백 함수
 chattingSock.onmessage = function(e) {
 	// 메소드를 통해 전달받은 객체값을 JSON객체로 변환해서 obj 변수에 저장.
@@ -492,4 +488,3 @@ document.addEventListener("DOMContentLoaded", ()=>{
 	send.addEventListener("click", sendMessage);
 });
 
-*/

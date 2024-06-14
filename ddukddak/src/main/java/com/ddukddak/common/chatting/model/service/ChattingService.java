@@ -6,6 +6,7 @@ import java.util.Map;
 import com.ddukddak.common.chatting.model.dto.ChattingRoom;
 import com.ddukddak.common.chatting.model.dto.Message;
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.partner.model.dto.Partner;
 
 public interface ChattingService {
 
@@ -51,7 +52,7 @@ public interface ChattingService {
 	 * @param map
 	 * @return
 	 */
-	List<Member> selectTarget(Map<String, Object> map);
+	List<Partner> selectTarget(Map<String, Object> map);
 
 
 	
