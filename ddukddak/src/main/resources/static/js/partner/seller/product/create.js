@@ -8,6 +8,59 @@ const bigCategory = document.querySelector("#bigCategory");
 const smallcategory = document.querySelector("#smallCategory");
 const price = document.querySelector("#price");
 
+var mainCategory = document.getElementById('mainCategory');
+var subCategory = document.getElementById('subCategory');
+
+function getSortValueFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sortValue = urlParams.get('sort');
+    return sortValue;
+}
+
+// 예시: 페이지 로딩 시 sort 파라미터 값 출력
+const sortValue = getSortValueFromUrl();
+console.log('sort 파라미터 값:', sortValue);
+
+/* 상품분류 선택 시 해당 상품 나오게 */
+if(sortValue == null) {
+    mainCategory.value = 0;
+}else {
+    mainCategory.value = sortValue;
+}
+
+mainCategory.addEventListener('change', () => {
+
+    const options = mainCategory.getElementsByTagName('option');
+
+    for(let i = 0; i < options.length; i ++) {
+        var optionSelected = "${sort ==" + (i) + "}"
+        options[i].setAttribute('th:selected', optionSelected);
+        options[i].setAttribute('value', i);
+    }
+
+    const selectedOption = mainCategory.value;
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set('sort', selectedOption);
+    window.location.href = currentUrl;
+});
+
+subCategory.addEventListener('change', () => {
+
+    const options = subCategory.getElementsByTagName('option');
+
+    for(let i = 0; i < options.length; i ++) {
+        var optionSelected = "${sort ==" + options[i].value + "}"
+        options[i].setAttribute('th:selected', optionSelected);
+    }
+
+    const selectedOption = subCategory.value;
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set('sort', selectedOption);
+    window.location.href = currentUrl;
+});
+
+
+
 /* 전체선택버튼 */
 const selectAll = document.querySelector('#selectAllCheckBox');
 const checkboxes = document.getElementsByName('selectProduct');
@@ -86,7 +139,16 @@ productCreateButton.addEventListener("click", () => {
     smallcategory.value = 'none';
     price.value = "";
     optionBox.innerHTML = "";
-    document.querySelector("file").value = "";
+    document.querySelector("#preview").removeAttribute('src');
+    document.querySelector("#filePlus").style.display = 'block';
+    const subImgBox = document.getElementById('subImgBox');
+    subImgBox.innerHTML = '';
+
+    subImageFiles = [];
+
+    // Clear preview image
+    const preview = document.getElementById('preview');
+    preview.src = '';
 });
 
 // 대표 이미지 미리보기
@@ -99,7 +161,7 @@ function readMainURL(fileInput) {
         };
         reader.readAsDataURL(fileInput.files[0]);
     } else {
-        document.getElementById('preview').src = "";
+        document.getElementById('preview').removeAttribute('src');
     }
 }
 
@@ -290,24 +352,6 @@ plusButton.addEventListener("click", () => {
 });
 
 
-
-createButton.addEventListener("click", e => {
-    console.log(document.querySelector("#subFile"));
-    if(productName.value.trim().length === 0 ||
-        bigCategory.options[bigCategory.selectedIndex].value == 'none' ||
-        smallcategory.options[smallcategory.selectedIndex].value == 'none' ||
-        price.value.trim().length === 0 ||
-        selectOption == 0
-        ) {
-            alert("입력을 완료해주세요");
-            e.preventDefault();
-        } else if(document.querySelector("#preview").src == 0) {
-            alert("대표사진을 등록해주세요");
-            e.preventDefault();
-        } else {
-            alert("등록 완료");
-        }
-})
 
 
 const closeButton = document.querySelector("#closeButton");

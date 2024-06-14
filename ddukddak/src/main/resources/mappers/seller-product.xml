@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ddukddak.partner.model.mapper.ProductMapper">
+
+	<!-- 재고등록 재고상품 개수조회 -->
+	<select id="selectCreateListCount">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NULL
+	</select>
 	
 	<!-- 재고등록 재고상품 조회 -->
 	<select id="selectCreateList">
@@ -14,6 +22,58 @@
 		WHERE UPLOAD_IMG_ORDER = 0
 		AND PRODUCT_FL = 'N'
 		AND PRODUCT_UPDATE_DATE IS NULL
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+
+	<!-- 재고등록 재고상품 개수조회 메인카테고리 -->
+	<select id="selectCreateListCountMainSort">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		NATURAL JOIN CATEGORY
+		NATURAL JOIN BIG_CATEGORY
+		WHERE PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NULL
+		AND BIG_CATEGORY_NO = #{sort}
+	</select>
+	
+	<!-- 재고등록 재고상품 조회 메인카테고리 -->
+	<select id="selectCreateListMainSort">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, TO_CHAR(PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, CATEGORY_NAME, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NULL
+		AND BIG_CATEGORY_NO = #{sort}
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+
+	<!-- 재고등록 재고상품 개수조회 카테고리 -->
+	<select id="selectCreateListCountSort">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NULL
+		AND CATEGORY_NO = #{sort}
+	</select>
+	
+	<!-- 재고등록 재고상품 조회 카테고리 -->
+	<select id="selectCreateListSort">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, TO_CHAR(PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, CATEGORY_NAME, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NULL
+		AND CATEGORY_NO = #{sort}
 		ORDER BY p.PRODUCT_NO DESC
 	</select>
 	
