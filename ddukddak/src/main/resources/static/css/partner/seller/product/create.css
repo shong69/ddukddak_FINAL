@@ -134,27 +134,11 @@
     left: 50%;
 }
 
-.fileBox2 {
-    position: relative;
-    height: 50px;
-    width: 50px;
-    margin-right: 7px;
-    border: 1px solid var(--gray5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-
-.fileBox2 > h4 {
-    color: var(--secondary);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-}
 
 .file {
-    display: none;
+    visibility: hidden;
+    height: 0px;
+    width: 0px;
 }
 
 #mainImg {
@@ -168,16 +152,6 @@
     font-weight: bold;
 }
 
-#preview {
-    height: 100%;
-    width: 100%;
-}
-
-.preview {
-    height: 100%;
-    width: 100%;
-}
-
 #subImgContainer {
     display: flex;
     flex-direction: column;
@@ -185,6 +159,7 @@
 }
 
 #subImgPlus {
+    font-size: 12px;
     background: none;
     border: 1px solid var(--secondary);
     color: var(--secondary);
@@ -195,6 +170,7 @@
     width: 50px;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 5px;
 }
 
 #subImgBox {
@@ -203,9 +179,38 @@
     flex-wrap: wrap;
 }
 
-#subImgBox .fileBox2 {
-    margin: 10px; /* 요소 간의 간격 설정 */
-    box-sizing: border-box;
+#preview {
+    width: 100%;
+    height: 100%;
+}
+
+.preview-image-container {
+    position: relative;
+    margin: 5px;
+    width: 50px;
+    height: 50px;
+}
+
+.preview-image {
+    margin: 5px;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.delete-button {
+    position: absolute;
+    font-size: 10px;
+    top: 7px;
+    right: 1px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    cursor: pointer;
 }
 
 #subImgContainer  h1 {
@@ -223,14 +228,6 @@
     margin-right: 10px;
     height: 50px;
     width: 50px;
-}
-
-#createProduct input[type="file"] {
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
 }
 
 #productEx {

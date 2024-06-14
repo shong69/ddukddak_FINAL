@@ -83,7 +83,7 @@
         </div>
 
 
-        <form>
+        <form action="/partner/seller/product/create" method="POST" enctype="multipart/form-data">
             <div id="createProduct">
     
                 <div>
@@ -92,27 +92,23 @@
                         <img id="preview" />
                         <h4 id="mainImg">대표사진</h4>
                     </label>
-                    <input type="file"  onchange="readURL(this);" class="file" id="file" accept="image/*">
-
+                    <input type="file" onchange="readMainURL(this);" class="file" id="file" accept="image/*" name="thumbnailImg">
+                
                     <div id="subImgContainer">
                         <div id="subImgBox">
-                            <label class="fileBox2" for="file2">
-                                <h4 class="filePlus">+</h4>
-                                <img id="preview2" class="preview" />
-                            </label>
-                            <input type="file" onchange="readURL(this);" class="file" id="file2" accept="image/*">
-
                         </div>
-
-                        <button type="button" id="subImgPlus">사진추가</button>
+                
+                        <label type="button" id="subImgPlus" for="subFile">사진추가</label>
+                        <input type="file" multiple class="file" name="subImgs" id="subFile" onchange="readSubURLs(this);">
                     </div>
                 </div>
+                
     
                 <div id="productEx">
                     <table>
                         <tr>
                             <td><h4>상품명</h4></td>
-                            <td><input id="productName"></td>
+                            <td><input id="productName" name="productName"></td>
                         </tr>
                         <tr>
                             <td><h4>상품 분류</h4></td>
@@ -124,7 +120,7 @@
                                     </th:block>
                                 </select>
     
-                                <select id="smallCategory">
+                                <select id="smallCategory" name="smallCategory">
                                     <option value="none">소분류</option>
                                 </select>
                             </td>
@@ -132,7 +128,7 @@
     
                         <tr>
                             <td><h4>판매가</h4></td>
-                            <td><input id="price"></td>
+                            <td><input id="price" name="productPrice"></td>
                         </tr>
                     </table>
     
@@ -150,11 +146,56 @@
                 </div>
     
             </div>
-        </div>
-
+        
         </form>
+    </div>
 
     <script src="/js/partner/seller/product/create.js"></script>
+    <script>
+        function readSubURLs(input) {
+            if (input.files && input.files.length > 0) {
+                const subImgBox = document.getElementById('subImgBox');
+                const totalSubImages = subImgBox.children.length + input.files.length;
+
+                if (totalSubImages > 7) {
+                    alert('서브이미지는 최대 7개까지 추가할 수 있습니다.');
+                    return;
+                }
+
+                Array.from(input.files).forEach(file => {
+                    // 이미지 파일인지 확인
+                    if (!file.type.startsWith('image/')) {
+                        alert('이미지 파일만 선택할 수 있습니다.');
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const previewContainer = document.createElement('div');
+                        previewContainer.classList.add('preview-image-container');
+
+                        const preview = document.createElement('img');
+                        preview.classList.add('preview-image');
+                        preview.src = e.target.result;
+                        previewContainer.appendChild(preview);
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.classList.add('delete-button');
+                        deleteButton.textContent = 'X';
+                        deleteButton.onclick = function() {
+                            if(confirm("해당 사진을 삭제하시겠습니까?")) {
+                                previewContainer.remove(); // 이미지 삭제
+                            }
+                        };
+                        previewContainer.appendChild(deleteButton);
+
+                        subImgBox.appendChild(previewContainer);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+    </script>
 
     
 </body>

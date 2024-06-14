@@ -57,4 +57,12 @@
 				)
 	</insert>
 	
+	
+	<!-- 해당 게시글 댓글수 조회 -->
+	<select id="getCommentCount">
+		SELECT COUNT(*) FROM "COMMENT" 
+		WHERE BOARD_NO = #{boardNo} 
+		AND COMMENT_DEL_FL = 'N'
+	</select>
+	
 </mapper>

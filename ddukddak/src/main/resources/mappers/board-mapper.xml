@@ -43,4 +43,15 @@
 		WHERE BOARD_NO = #{boardNo}
 	</select>
 	
+	<!-- 신고 등록 -->
+	<insert id="insertReport">
+		INSERT INTO "REPORT" 
+		VALUES (SEQ_REPORT_NO.NEXTVAL,
+				#{reportedMemberNo},
+				#{reportReason},
+				DEFAULT,
+				#{memberNo},
+				#{boardNo})
+	</insert>
+	
 </mapper>

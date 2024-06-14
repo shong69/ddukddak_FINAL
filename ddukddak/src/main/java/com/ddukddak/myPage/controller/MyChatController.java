@@ -19,7 +19,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("myChat")
 @RequiredArgsConstructor
 public class MyChatController {
+	
 	private final ChattingService service;
+	
 	/** 채팅 목록 조회 및 페이지 전환
 	 * @return
 	 */

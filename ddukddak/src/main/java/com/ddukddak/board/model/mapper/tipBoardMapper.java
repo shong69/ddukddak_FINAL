@@ -12,4 +12,10 @@ public interface tipBoardMapper {
 
 	List<Board> selectTipList(Map<String, Object> map);
 
+	int tipLikeDelete(Map<String, Integer> map);
+
+	int tipLikeInsert(Map<String, Integer> map);
+
+	int selectLikeCount(Integer boardNo);
+
 }

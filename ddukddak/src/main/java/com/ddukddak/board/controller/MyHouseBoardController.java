@@ -162,6 +162,7 @@ public class MyHouseBoardController {
 			model.addAttribute("board", board);
 			
 		}
+		
 				
 		return path;
 	}
