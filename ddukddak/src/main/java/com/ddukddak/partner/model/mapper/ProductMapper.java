@@ -4,17 +4,46 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 
 @Mapper
 public interface ProductMapper {
-
-	/** 재고등록 재고상품 조회
+	
+	/** 재고등록 재고상품 개수조회
 	 * @return
 	 */
-	List<Product> selectCreateList();
+	int selectCreateListCount();
+	
+	/** 재고등록 재고상품 조회
+	 * @param rowBounds 
+	 * @return
+	 */
+	List<Product> selectCreateList(RowBounds rowBounds);
+	
+	/** 재고등록 재고상품 개수조회 메인카테고리
+	 * @return
+	 */
+	int selectCreateListCountMainSort(int mainSort);
+	
+	/** 재고등록 재고상품 조회 메인카테고리
+	 * @param rowBounds 
+	 * @return
+	 */
+	List<Product> selectCreateListMainSort(int mainSort, RowBounds rowBounds);
+
+	/** 재고등록 재고상품 개수조회 카테고리
+	 * @return
+	 */
+	int selectCreateListCountSort(int sort);
+
+	/** 재고등록 재고상품 조회 카테고리
+	 * @param rowBounds 
+	 * @return
+	 */
+	List<Product> selectCreateListSort(int sort, RowBounds rowBounds);
 
 	/** 재고상품 판매등록
 	 * @param value

@@ -9,10 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ddukddak.common.chatting.model.dto.ChattingRoom;
 import com.ddukddak.common.chatting.model.dto.Message;
 import com.ddukddak.common.chatting.model.mapper.ChattingMapper;
-import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.partner.model.dto.Partner;
 
 import lombok.RequiredArgsConstructor;
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -48,7 +49,8 @@ public class ChattingServiceImpl implements ChattingService{
 	//메시지 기록 불러오기
 	@Override
 	public List<Message> selectMessageList(Map<String, Integer> paramMap) {
-		
+		log.info("{}", paramMap.get("chattingNo"));
+		log.info("메시지 리스트{}",mapper.selectMessageList(paramMap.get("chattingNo")));
 		List<Message> list = mapper.selectMessageList(paramMap.get("chattingNo"));
 		if(!list.isEmpty()) {
 			int result = mapper.updateReadFlag(paramMap);
@@ -59,7 +61,8 @@ public class ChattingServiceImpl implements ChattingService{
 	
 	//채팅 상대 검색
 	@Override
-	public List<Member> selectTarget(Map<String, Object> map) {
+	public List<Partner> selectTarget(Map<String, Object> map) {
+		log.info("채팅상대검색:{}:",mapper.selectTarget(map));
 		return mapper.selectTarget(map);
 	}
 

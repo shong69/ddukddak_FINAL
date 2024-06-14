@@ -12,9 +12,12 @@ import com.ddukddak.ecommerce.model.dto.Product;
 public interface ProductService {
 
 	/** 재고등록 재고상품 조회
+	 * @param cp 
+	 * @param cp2 
+	 * @param cp2 
 	 * @return
 	 */
-	List<Product> selectCreateList();
+	Map<String, Object> selectCreateList(int mainSort, int sort, int cp);
 
 	/** 재고상품 판매등록
 	 * @param selectedValues

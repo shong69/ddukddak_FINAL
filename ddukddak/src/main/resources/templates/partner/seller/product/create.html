@@ -69,7 +69,32 @@
         </div>
 
         <!-- 페이지네이션 -->
-        <div><h3 style="text-align: center; margin: 30px 0;"><<&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;>></h3></div>
+        <div class="pagination">
+            <ul class = "pagination" th:object="${pagination}">
+                <li><a th:href="@{|/partner/seller/product/create?cp=1|}">&lt;&lt;</a></li>
+                <li><a th:href="@{|/partner/seller/product/create?cp=*{prevPage}|}">&lt;</a></li>
+    
+                <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+
+                    <li th:if="${i} == *{currentPage}">
+                        <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                    </li>
+
+                    <li th:unless="${i} == *{currentPage}">
+                        <a th:href="@{|/partner/seller/product/create?cp=${i}|}"
+                        th:text="${i}">이동할 페이지</a>
+                    </li>
+                    
+                </th:block>
+    
+            
+                <li>
+                    <a th:href="@{|/partner/seller/product/create?cp=*{nextPage}|}">&gt;</a>
+                </li>
+                <li><a th:href="@{|/partner/seller/product/create?cp=*{maxPage}|}">&gt;&gt;</a></li>
+            </ul>
+        
+        </div>
 
     </div>
 
@@ -83,7 +108,7 @@
         </div>
 
 
-        <form action="/partner/seller/product/create" method="POST" enctype="multipart/form-data">
+        <form id="uploadForm" action="/partner/seller/product/create" method="POST" enctype="multipart/form-data">
             <div id="createProduct">
     
                 <div>
@@ -95,9 +120,7 @@
                     <input type="file" onchange="readMainURL(this);" class="file" id="file" accept="image/*" name="thumbnailImg">
                 
                     <div id="subImgContainer">
-                        <div id="subImgBox">
-                        </div>
-                
+                        <div id="subImgBox"></div>
                         <label type="button" id="subImgPlus" for="subFile">사진추가</label>
                         <input type="file" multiple class="file" name="subImgs" id="subFile" onchange="readSubURLs(this);">
                     </div>
@@ -132,7 +155,6 @@
                         </tr>
                     </table>
     
-    
                     <h4>옵션명</h4>
                     <div id="option">
                         <div id="optionBox"></div>
@@ -141,61 +163,142 @@
                         </div>
                     </div>
     
-    
-                    <div id="buttonBox"><button id="createButton">등록하기</button></div>
+                    <div id="buttonBox"><button type="submit" id="createButton" onclick="handleFormSubmission(event)">등록하기</button></div>
                 </div>
     
             </div>
-        
         </form>
-    </div>
-
-    <script src="/js/partner/seller/product/create.js"></script>
-    <script>
-        function readSubURLs(input) {
-            if (input.files && input.files.length > 0) {
-                const subImgBox = document.getElementById('subImgBox');
-                const totalSubImages = subImgBox.children.length + input.files.length;
-
-                if (totalSubImages > 7) {
-                    alert('서브이미지는 최대 7개까지 추가할 수 있습니다.');
-                    return;
-                }
-
-                Array.from(input.files).forEach(file => {
-                    // 이미지 파일인지 확인
-                    if (!file.type.startsWith('image/')) {
-                        alert('이미지 파일만 선택할 수 있습니다.');
+    
+        <script>
+            let subImageFiles = [];
+    
+            function readSubURLs(input) {
+                if (input.files && input.files.length > 0) {
+                    const subImgBox = document.getElementById('subImgBox');
+                    const totalSubImages = subImgBox.children.length + input.files.length;
+    
+                    if (totalSubImages > 7) {
+                        alert('서브이미지는 최대 7개까지 추가할 수 있습니다.');
                         return;
                     }
-
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const previewContainer = document.createElement('div');
-                        previewContainer.classList.add('preview-image-container');
-
-                        const preview = document.createElement('img');
-                        preview.classList.add('preview-image');
-                        preview.src = e.target.result;
-                        previewContainer.appendChild(preview);
-
-                        const deleteButton = document.createElement('button');
-                        deleteButton.classList.add('delete-button');
-                        deleteButton.textContent = 'X';
-                        deleteButton.onclick = function() {
-                            if(confirm("해당 사진을 삭제하시겠습니까?")) {
-                                previewContainer.remove(); // 이미지 삭제
-                            }
+    
+                    Array.from(input.files).forEach(file => {
+                        // 이미지 파일인지 확인
+                        if (!file.type.startsWith('image/')) {
+                            alert('이미지 파일만 선택할 수 있습니다.');
+                            return;
+                        }
+    
+                        subImageFiles.push(file); // 파일을 배열에 추가
+    
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const previewContainer = document.createElement('div');
+                            previewContainer.classList.add('preview-image-container');
+    
+                            const preview = document.createElement('img');
+                            preview.classList.add('preview-image');
+                            preview.src = e.target.result;
+                            previewContainer.appendChild(preview);
+    
+                            const deleteButton = document.createElement('button');
+                            deleteButton.classList.add('delete-button');
+                            deleteButton.textContent = 'X';
+                            deleteButton.onclick = function() {
+                                if (confirm("해당 사진을 삭제하시겠습니까?")) {
+                                    const index = Array.from(subImgBox.children).indexOf(previewContainer);
+                                    subImageFiles.splice(index, 1); // 배열에서 파일 제거
+                                    previewContainer.remove(); // 이미지 삭제
+                                }
+                            };
+                            previewContainer.appendChild(deleteButton);
+    
+                            subImgBox.appendChild(previewContainer);
                         };
-                        previewContainer.appendChild(deleteButton);
-
-                        subImgBox.appendChild(previewContainer);
-                    };
-                    reader.readAsDataURL(file);
-                });
+                        reader.readAsDataURL(file);
+                    });
+    
+                    // 리셋 input file field to allow adding the same file again
+                    input.value = '';
+                }
             }
-        }
-    </script>
+    
+            function handleFormSubmission(event) {
+                const form = document.getElementById('uploadForm');
+                event.preventDefault(); // 기본 제출 동작 막기
+
+                // FormData 객체 생성
+                const formData = new FormData(form);
+
+                // subImageFiles를 FormData에 추가
+                subImageFiles.forEach(file => {
+                    formData.append('subImgs', file);
+                });
+    
+                // Remove old subImgs if present
+                const subImgsInput = form.querySelector('input[name="subImgs"]');
+                if (subImgsInput) {
+                    subImgsInput.remove();
+                }
+    
+                // Create new input elements for each file
+                subImageFiles.forEach(file => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.setAttribute('name', 'subImgs');
+                    input.value = file; // This won't work for file objects, so we need to use FormData instead
+                    form.appendChild(input);
+                });
+                const productName = document.querySelector("#productName");
+                const bigCategory = document.querySelector("#bigCategory");
+                const smallcategory = document.querySelector("#smallCategory");
+                const price = document.querySelector("#price");
+
+                const contentCountInputVisual = document.getElementsByClassName(".contentCountInput");
+                var temp = true;
+
+                for(let i = 0; i < contentCountInputVisual.length; i ++) {
+                    if(contentCountInputVisual[i].type != 'hidden') {
+                        temp = false;
+                        break;
+                    }
+                }
+
+                if(productName.value.trim().length === 0 ||
+                    bigCategory.options[bigCategory.selectedIndex].value == 'none' ||
+                    smallcategory.options[smallcategory.selectedIndex].value == 'none' ||
+                    price.value.trim().length === 0 ||
+                    selectOption == 0
+                    ) {
+                        alert("입력을 완료해주세요");
+                        event.preventDefault();
+                    } else if(document.querySelector("#preview").src == 0) {
+                        alert("대표사진을 등록해주세요");
+                        event.preventDefault();
+                    } else if (!temp) {
+                        alert("옵션 등록을 완료해주세요");
+                        event.preventDefault();
+                    } else {
+                        // 서브 이미지 파일들이 FormData에 추가되었으므로 이제 submit을 호출
+                        fetch('/partner/seller/product/create', {
+                            method: 'POST',
+                            body: formData
+                        }).then(response => response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                            alert("등록 완료");
+                            location.href='/partner/seller/product/create';
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            alert("등록 실패");
+                        });
+                    }
+    
+                // Allow form to submit
+            }
+        </script>
+        <script src="/js/partner/seller/product/create.js"></script>
 
     
 </body>

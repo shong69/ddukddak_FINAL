@@ -152,55 +152,58 @@ const insertComment = document.querySelector("#insertComment");
 const inputCommentContent = document.querySelector("#inputCommentContent");
 const commentCount = document.querySelector("#commentCount");
 
-insertComment.addEventListener("click", () => {
+if (insertComment != null) {
+  insertComment.addEventListener("click", () => {
 
-  if (loginMemberNo == null) {
-    alert("로그인 후 이용해주세요.");
-
-    redirectToLogin();
-
-    return;
-  }
-
-  if (inputCommentContent.value.trim().length == 0) {
-
-    alert("댓글 내용을 입력해주세요.");
-    inputCommentContent.focus();
-    return;
-
-  }
-
-  const data = {
-    "commentContent": inputCommentContent.value,
-    "boardNo": boardNo,
-    "memberNo": loginMemberNo
-  };
-
-  fetch("/comment/listAndCount", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  })
-    .then(resp => resp.json())
-    .then(result => {
-
-      console.log(result.success);
-
-      if (result.success) {
-        console.log(result);
-        alert("댓글이 등록되었습니다.");
-        inputCommentContent.value = "";
-        commentCount.innerText = `댓글 ${result.count}개`;  // Update the comment count
-        selectCommentList();
-      } else {
-        console.log(result);
-        alert("댓글 등록에 실패하였습니다.");
-      }
-
+    if (loginMemberNo == null) {
+      alert("로그인 후 이용해주세요.");
+  
+      redirectToLogin();
+  
+      return;
+    }
+  
+    if (inputCommentContent.value.trim().length == 0) {
+  
+      alert("댓글 내용을 입력해주세요.");
+      inputCommentContent.focus();
+      return;
+  
+    }
+  
+    const data = {
+      "commentContent": inputCommentContent.value,
+      "boardNo": boardNo,
+      "memberNo": loginMemberNo
+    };
+  
+    fetch("/comment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
     })
-    .catch(err => console.log(err));
+      .then(resp => resp.json())
+      .then(result => {
+  
+        console.log(result.success);
+  
+        if (result.success) {
+          console.log(result);
+          alert("댓글이 등록되었습니다.");
+          inputCommentContent.value = "";
+          commentCount.innerText = `댓글 ${result.count}개`;  // Update the comment count
+          selectCommentList();
+        } else {
+          console.log(result);
+          alert("댓글 등록에 실패하였습니다.");
+        }
+  
+      })
+      .catch(err => console.log(err));
+  
+  });
+}
 
-});
 
 /** 답글 작성 화면 추가
  * @param {*} parentCommentNo
@@ -396,43 +399,46 @@ if (slideshow != null) {
 // 좋아요
 
 const likeCount = document.querySelector("#likeCount");
+const boardLike = document.querySelector("#boardLike")
 
-document.querySelector("#boardLike").addEventListener("click", e => {
+if(boardLike != null) {
+  boardLike.addEventListener("click", e => {
 
-  if(loginMemberNo == null) {
-    alert("로그인 후 이용해주세요.");
-    return;
-  }
-
-  const obj = {
-    "memberNo" : loginMemberNo,
-    "boardNo" : boardNo,
-    "likeCheck" : likeCheck
-  }
-
-  // 좋아요 INSERT / DELETE 비동기 요청
-  fetch("/board/like", {
-    method : "POST",
-    headers : {"Content-Type" : "application/json"},
-    body : JSON.stringify(obj)
-  })
-  .then(resp => resp.text())
-  .then(count => {
-
-    console.log(count);
-
-    if(count == -1) {
-      console.log("좋아요 실패");
+    if(loginMemberNo == null) {
+      alert("로그인 후 이용해주세요.");
       return;
     }
-
-    likeCheck = likeCheck == 0 ? 1 : 0;
-
-    e.target.classList.toggle("fa-regular");
-    e.target.classList.toggle("fa-solid");
-
-    likeCount.innerText = count;
-
-  });
-
-})
+  
+    const obj = {
+      "memberNo" : loginMemberNo,
+      "boardNo" : boardNo,
+      "likeCheck" : likeCheck
+    }
+  
+    // 좋아요 INSERT / DELETE 비동기 요청
+    fetch("/board/like", {
+      method : "POST",
+      headers : {"Content-Type" : "application/json"},
+      body : JSON.stringify(obj)
+    })
+    .then(resp => resp.text())
+    .then(count => {
+  
+      console.log(count);
+  
+      if(count == -1) {
+        console.log("좋아요 실패");
+        return;
+      }
+  
+      likeCheck = likeCheck == 0 ? 1 : 0;
+  
+      e.target.classList.toggle("fa-regular");
+      e.target.classList.toggle("fa-solid");
+  
+      likeCount.innerText = count;
+  
+    });
+  
+  })
+}

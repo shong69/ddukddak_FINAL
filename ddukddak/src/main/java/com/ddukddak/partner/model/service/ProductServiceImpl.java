@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ import com.ddukddak.common.util.Utility;
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
+import com.ddukddak.ecommerce.model.dto.eCommercePagination;
+import com.ddukddak.partner.model.dto.ProductPagination;
 import com.ddukddak.partner.model.mapper.ProductMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -41,8 +44,70 @@ public class ProductServiceImpl implements ProductService{
 
 	// 재고등록 재고상품 조회
 	@Override
-	public List<Product> selectCreateList() {
-		return mapper.selectCreateList();
+	public Map<String, Object> selectCreateList(int mainSort, int sort, int cp) {
+		
+		if(mainSort == 0) {
+			//1. 전체 재고상품개수 조회
+			int productCount = mapper.selectCreateListCount();
+			
+			//2. pagination 객체 생성하기
+			ProductPagination pagination = new ProductPagination(cp, productCount);
+			//3. 페이지 목록 조회
+			int limit = pagination.getLimit(); //제한된 크기
+			int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+			
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			
+			List<Product> createList = mapper.selectCreateList(rowBounds);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("pagination", pagination);
+			map.put("createList", createList);
+			
+			return map;
+		} else {
+			if(sort == 0) {
+				//1. 전체 재고상품개수 조회
+				int productCount = mapper.selectCreateListCountMainSort(mainSort);
+				
+				//2. pagination 객체 생성하기
+				ProductPagination pagination = new ProductPagination(cp, productCount);
+				//3. 페이지 목록 조회
+				int limit = pagination.getLimit(); //제한된 크기
+				int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+				
+				RowBounds rowBounds = new RowBounds(offset, limit);
+				
+				List<Product> createList = mapper.selectCreateListMainSort(mainSort, rowBounds);
+				
+				Map<String, Object> map = new HashMap<>();
+				map.put("pagination", pagination);
+				map.put("createList", createList);
+				
+				return map;
+			} else {
+				//1. 전체 재고상품개수 조회
+				int productCount = mapper.selectCreateListCountSort(sort);
+				
+				//2. pagination 객체 생성하기
+				ProductPagination pagination = new ProductPagination(cp, productCount);
+				//3. 페이지 목록 조회
+				int limit = pagination.getLimit(); //제한된 크기
+				int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+				
+				RowBounds rowBounds = new RowBounds(offset, limit);
+				
+				List<Product> createList = mapper.selectCreateListSort(sort, rowBounds);
+				
+				Map<String, Object> map = new HashMap<>();
+				map.put("pagination", pagination);
+				map.put("createList", createList);
+				
+				return map;	
+			}
+		}
+		
+		
 	}
 
 	// 재고상품 판매등록

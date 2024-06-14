@@ -10,4 +10,6 @@ public interface ManagerService {
 	 */
 	Map<String, Object> selectPassList(int cp);
 
+	int passConfirm(String partnerNo);
+
 }

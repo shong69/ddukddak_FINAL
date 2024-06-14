@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'main';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+*{
+    font-family: 'main';
+}
+
 /*전체 페이지*/
 .myPage-row2{
 	background-color: #eee;
@@ -55,8 +65,8 @@
 
 #closeBtn{
     position: absolute;
-	top: -10px;
-    right: -25px;
+	right:5px;
+	top: -0;
     font-size:25px;
     cursor: pointer;
 }
@@ -65,11 +75,14 @@
 .interInfo{
 	display : flex;
 	justify-content: space-between;
+	width : 400px;
 }
 
 .target-input-area{
 	width: 100%;
 	height: 40px;
+	margin-top:30px;
+	margin-left: 25px;
 	display:flex;
 	flex-direction: row;
 }
@@ -77,17 +90,20 @@
 
 
 #targetInput{
-	width: 100%;
+	width: 90%;
     height: 100%;
     outline: none;
     border: none;
-    padding: 3px 10px;
+    padding: 10px 10px;
     font-size: 15px;
 }
 #inputCloseBtn{
 	position:absolute;
-	left:440px;
-
+	right:30px;
+	top:40px;
+	width: 18px;
+	margin : auto;
+	color:#a3a3a3;
 }
 input::-webkit-search-cancel-button{
 	opacity: 0;
@@ -95,28 +111,37 @@ input::-webkit-search-cancel-button{
 #resultArea{list-style: none;}
 
 .result-row{
-	width: 100%;
+	width: 90%;
 	height: 50px;
 	padding: 5px;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
+	margin: auto;
 }
 
 .result-row:hover{	background-color: #dadada;}
 
 .result-row > *{ 
-	margin-right: 10px;
 	user-select: none;
 }
 
 
 .result-row-img{ 
-	width: 40px;
-	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	border-radius: 100%;
+	margin-right: 15px;
 }
 
-
+.phoneNumSpan{
+	font-size: 12px;
+	font-weight: 300;
+	color:#5a5a5a;
+	margin-left: auto;
+	margin-top: 5px;
+	letter-spacing: 1px;
+}
 /* 채팅창 영역 */
 .chatting-area-box{
 	display: flex;

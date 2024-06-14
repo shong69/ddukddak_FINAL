@@ -1,4 +1,4 @@
-package com.ddukddak.board.controller;
+ package com.ddukddak.board.controller;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -163,7 +163,7 @@ public class TipBoardController {
 			}
 			
 			model.addAttribute("board", board);
-			
+			log.info("board : " + board.toString());
 		}
 		
 		return "board/tipBoard/tipBoardDetail";

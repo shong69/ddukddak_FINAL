@@ -102,13 +102,13 @@
 		    (R.OPEN_MEMBER_NO = #{memberNo} OR R.OPEN_CONTRACTOR_NO = #{memberNo})
 		    OR (R.PARTICIPANT_MEMBER_NO = #{memberNo} OR R.PARTICIPANT_CONTRACTOR_NO =#{memberNo})
 		ORDER BY
-		    MAX_MESSAGE_NO DESC NULLS LAST;
+		    MAX_MESSAGE_NO DESC NULLS LAST
 
 	</select>
 	
 	<!-- [일반회원]채팅 상대 검색 -->
 	<select id="selectTarget">
-		SELECT PARNER_NO, PARTNER_TEL, PARTNER_BUSINESS_NAME, '기본이미지'  FROM "PARTNER"
+		SELECT PARTNER_NO, PARTNER_TEL, PARTNER_BUSINESS_NAME FROM "PARTNER"
 		WHERE (PARTNER_TEL LIKE '%${query}%' OR PARTNER_BUSINESS_NAME LIKE '%${query}%')
 		AND PARTNER_DEL_FL = 'N'
 	</select>
@@ -131,7 +131,7 @@
 	
 	<!-- [일반회원]채팅 기록 불러오기 -->
 	<select id="selectMessageList">
-		SELECT MESSAGE_NO, MESSAGE_CONTENT, READ_FL, SENDER_NO, CHATTING_NO,
+		SELECT MESSAGE_NO, MESSAGE_CONTENT, READ_FL,SENDER_MEMBER_NO, SENDER_CONTRACTOR_NO, CHATTING_NO,
 		TO_CHAR(SEND_TIME, 'YYYY.MM.DD HH24:MI') SEND_TIME 
 		FROM MESSAGE
 		WHERE CHATTING_NO  = #{chattingNo}
@@ -143,11 +143,11 @@
 		UPDATE "MESSAGE" SET
 		READ_FL = 'Y'
 		WHERE CHATTING_NO = #{chattingNo}
-		AND SENDER_NO != #{memberNo}
 	</update>
+	
 	<!-- 메시지 보내기 -->
 	<insert id = "insertMessage">
 		INSERT INTO "MESSAGE"
-		VALUES(SEQ_MESSAGE_NO.NEXTVAL, #{messageContent}, DEFAULT, DEFAULT, #{senderNo}, #{chattingNo})
+		VALUES(SEQ_MESSAGE_NO.NEXTVAL, #{messageContent}, DEFAULT, DEFAULT,NULL, #{senderNo}, #{chattingNo})
 	</insert>
 </mapper>
