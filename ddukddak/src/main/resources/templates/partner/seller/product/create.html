@@ -90,14 +90,21 @@
                     <label class="fileBox" for="file">
                         <h2 id="filePlus">+</h2>
                         <img id="preview" />
-                        </label>
-                        <input type="file"  onchange="readURL(this);" name="file" id="file" accept="image/*">
-                    <div>
-                        <input type="file" id="imageInput" accept="image/*">
-                        <input type="file" id="imageInput" accept="image/*">
-                        <input type="file" id="imageInput" accept="image/*">
-                        <div>+</div>
-                        <div>+</div>
+                        <h4 id="mainImg">대표사진</h4>
+                    </label>
+                    <input type="file"  onchange="readURL(this);" class="file" id="file" accept="image/*">
+
+                    <div id="subImgContainer">
+                        <div id="subImgBox">
+                            <label class="fileBox2" for="file2">
+                                <h4 class="filePlus">+</h4>
+                                <img id="preview2" class="preview" />
+                            </label>
+                            <input type="file" onchange="readURL(this);" class="file" id="file2" accept="image/*">
+
+                        </div>
+
+                        <button type="button" id="subImgPlus">사진추가</button>
                     </div>
                 </div>
     
