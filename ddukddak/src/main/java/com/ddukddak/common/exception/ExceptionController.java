@@ -20,5 +20,4 @@ public class ExceptionController {
 //		
 //		return "error/500";
 //	}
-
 }

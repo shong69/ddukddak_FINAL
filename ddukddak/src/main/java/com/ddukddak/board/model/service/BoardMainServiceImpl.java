@@ -36,6 +36,25 @@ public class BoardMainServiceImpl implements BoardMainService{
 	@Override
 	public List<Board> selectBoard() {
 		return mapper.selectBoard();
+	}
+
+	// 좋아요 체크 / 해제
+	@Override
+	public int boardLike(Map<String, Integer> map) {
+		
+		int result = 0;
+		
+		if(map.get("likeCheck") == 1) {
+			result = mapper.deleteBoardLike(map);
+		} else {
+			result = mapper.insertBoardLike(map);
+		}
+		
+		if(result > 0) {
+			return mapper.selectLikeCount(map.get("boardNo"));
+		}
+		
+		return -1;
 	} 
 
 	

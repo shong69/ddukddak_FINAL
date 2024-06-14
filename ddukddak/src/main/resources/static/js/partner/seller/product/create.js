@@ -89,20 +89,72 @@ productCreateButton.addEventListener("click", () => {
 });
 
 // 등록 이미지 미리보기
-const file = document.querySelector("file");
 function readURL(file) {
+    console.log(file);
     if (file.files && file.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        document.getElementById('preview').src = e.target.result;
-        document.getElementById('filePlus').style.display = 'none';
-      };
-      reader.readAsDataURL(file.files[0]);
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            file.previousElementSibling.children[1].src = e.target.result;
+            file.previousElementSibling.children[0].style.display = 'none';
+        };
+        reader.readAsDataURL(file.files[0]);
     } else {
-      document.getElementById('preview').src = "";
-      
+        file.previousElementSibling.children[1].src = "";
     }
-  }
+}
+
+
+// 서브 이미지 추가 버튼 클릭 이벤트
+const subImgPlus = document.querySelector("#subImgPlus");
+const subImgBox = document.querySelector("#subImgBox");
+
+const preview1 = document.querySelector("#preview");
+const preview2 = document.querySelector("#preview2");
+
+subImgPlus.addEventListener("click", () => {
+
+    if(preview1.src == "" || preview2.src == "") {
+        alert("사진등록을 모두 완료 후 추가해주세요");
+    }else {
+
+        if (subImgBox.getElementsByClassName("fileBox2").length == 7) {
+            alert("사진은 최대 8개까지 등록 가능합니다");
+        } else {
+            const label = document.createElement("label");
+            label.classList.add("fileBox2");
+    
+            const h4 = document.createElement("h4");
+            h4.classList.add("filePlus");
+            h4.innerText = '+';
+    
+            const img = document.createElement("img");
+            img.classList.add("preview");
+    
+            const input = document.createElement("input");
+            input.type = 'file';
+            input.classList.add("file");
+    
+    
+            label.append(h4);
+            label.append(img);
+    
+            subImgBox.append(label);
+            subImgBox.append(input);
+    
+            const elementLength = document.getElementsByClassName('fileBox2').length;
+
+            input.id = elementLength;
+            label.setAttribute('for', elementLength);
+    
+            input.addEventListener('change', e => {
+                readURL(e.target);
+            })
+    
+        }
+
+    }
+
+});
 
 let selectOption = 1;
 
@@ -116,6 +168,10 @@ plusButton.addEventListener("click", () => {
     const optionName = document.createElement("input");
     optionName.classList.add("optionName");
     optionName.placeholder = "예시 : 컬러";
+
+    const delButton = document.createElement("button");
+    delButton.classList.add("delButton");
+    delButton.innerText = "삭제";
 
     const optionContentBox = document.createElement("div");
     optionContentBox.classList.add("optionContentBox");
@@ -178,6 +234,7 @@ plusButton.addEventListener("click", () => {
     optionContentBox.append(applyButton);
 
     box.append(optionName);
+    box.append(delButton);
     box.append(optionContentBox);
 
     optionBox.append(box);
@@ -188,6 +245,10 @@ plusButton.addEventListener("click", () => {
     /* 옵션 내용 추가 */
     addOption.addEventListener("click", () => {
         const clone = tr2.cloneNode(true);
+        console.log(clone);
+        console.log(clone.querySelector('.contentInput'));
+        clone.querySelector('.contentInput').value = "";
+        clone.querySelector('.contentCountInput').value = "";
         table.append(clone);
 
         // 새로 추가된 minusOption 버튼에 이벤트 리스너 추가
@@ -209,15 +270,54 @@ plusButton.addEventListener("click", () => {
     // 적용 버튼 눌렀을 떄
     applyButton.addEventListener("click", () => {
 
-        if(optionName.value.trim().length === 0 ||
-        contentInput.value.trim().length === 0 ||
-        contentCountInput.value.trim().length === 0) {
-            alert("작성을 완료해주세요");
-        } else {
+        let temp = true;
+
+        const allInput = document.getElementsByClassName("contentInput");
+        const allCount = document.getElementsByClassName("contentCountInput");
+
+        if(optionName.value.trim().length === 0) {
+            alert("옵션명을 입력해주세요");
+            temp = false;
+
+            return;
+        }
+
+        for(let i = 0; i < allInput.length; i ++) {
+            if(allInput[i].value.trim().length == 0) {
+                alert("옵션값 작성을 완료해주세요");
+                temp = false;
+
+                return;
+            }
+            
+        }
+
+        for(let i = 0; i < allCount.length; i ++) {
+            if(allCount[i].value.trim().length == 0) {
+                alert("재고개수 작성을 완료해주세요");
+                temp = false;
+
+                return;
+            }
+            
+        }       
+        
+        if(temp) {
             selectOption = 1;
             plusButton.style.display = "block";
             table.style.display = "none";
             applyButton.style.display = "none";
+            delButton.style.display = "block";
+        }
+    })
+
+
+    // 옵션 삭제버튼 눌렀을 떄
+    delButton.addEventListener("click", e => {
+        if(confirm(`'${e.target.parentElement.querySelector(".optionName").value}'옵션을 삭제하시겠습니까?`)) {
+            e.target.parentElement.remove();
+        } else {
+            e.preventDefault();
         }
     })
 });

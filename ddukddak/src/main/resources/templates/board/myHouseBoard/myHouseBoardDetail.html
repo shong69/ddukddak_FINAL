@@ -59,8 +59,7 @@
             <h2 th:text="${board.boardTitle}">게시글 제목</h2>
 
             <div class="like">
-              <i id="boardLike" class="fa-heart" th:classappend="${board.likeCheck == 1} ? fa-solid : fa-regular"
-                style="color: red;"></i>
+              <i id="boardLike" class="fa-heart" th:classappend="${board.likeCheck == 1} ? fa-solid : fa-regular"></i>
               <!-- 빈하트 : fa-regular -->
               <div th:text="${board.likeCount}" class="like-count">10</div>
             </div>
