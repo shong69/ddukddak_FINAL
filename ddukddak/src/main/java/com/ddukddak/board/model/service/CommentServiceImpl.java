@@ -31,4 +31,11 @@ public class CommentServiceImpl implements CommentService {
 		return mapper.insert(comment);
 	}
 
+	// 게시글 댓글 수 조회
+	@Override
+	public int getCommentCount(int boardNo) {
+		
+		return mapper.getCommentCount(boardNo);
+	}
+
 }

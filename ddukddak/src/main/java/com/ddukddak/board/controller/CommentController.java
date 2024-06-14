@@ -1,6 +1,8 @@
 package com.ddukddak.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,9 +36,24 @@ public class CommentController {
 	
 	
 	@PostMapping("")
-	public int insert(@RequestBody Comment comment) {
-		log.info("comment : " + comment);
+	public Map<String, Object> insert(@RequestBody Comment comment) {
 		
-		return service.insert(comment);
+		int result = service.insert(comment);
+		
+	    Map<String, Object> response = new HashMap<>();
+	    
+	    if (result > 0) {
+	    	
+	        int count = service.getCommentCount(comment.getBoardNo());
+	        response.put("success", true);
+	        response.put("count", count);
+	        
+	    } else {
+	    	
+	        response.put("success", false);
+	        
+	    }
+	    
+	    return response;
 	};
 }

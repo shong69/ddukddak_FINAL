@@ -113,10 +113,12 @@ const selectCommentList = () => {
         //   // 답글 버튼
         const childCommentBtn = document.createElement("div");
         childCommentBtn.innerText = "답글";
+        childCommentBtn.setAttribute("onclick", 
+          `showUpdateComment(${comment.commentNo}, this)`); 
 
         commentBtnArea.append(childCommentBtn);
 
-
+        console.log(commentContentArea);
 
         // 영역 합치기
         commentContentArea.append(displayComment, commentBtnArea);
@@ -167,14 +169,16 @@ insertComment.addEventListener("click", () => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   })
-    .then(resp => resp.text())
+    .then(resp => resp.json())
     .then(result => {
 
-      if (result > 0) {
+      console.log(result.success);
+
+      if (result.success) {
         console.log(result);
         alert("댓글이 등록되었습니다.");
         inputCommentContent.value = "";
-        
+        commentCount.innerText = `댓글 ${result.count}개`;  // Update the comment count
         selectCommentList();
       } else {
         console.log(result);
@@ -185,6 +189,72 @@ insertComment.addEventListener("click", () => {
     .catch(err => console.log(err));
 
 });
+
+/** 답글 작성 화면 추가
+ * @param {*} parentCommentNo
+ * @param {*} area
+ */
+const showInsertComment = (parentCommentNo, area) => {
+
+  console.log(parentCommentNo);
+  console.log(area);
+
+  const temp = document.getElementsByClassName("commentInsertContent");
+
+  if(temp.length > 0) { // 답글 작성 textarea 가 이미 화면에 존재하는 경우
+
+    if(confirm("다른 답글을 작성 중... 현재 댓글에 답글을 작성하시겠습니까?")) {
+      temp[0].nextElementSibling.remove();    // 버튼 영역부터 삭제
+      temp[0].remove();                       // textarea 삭제 (기준점은 마지막에 삭제!!)
+    } else {
+      return;   // 함수를 종료시켜 답글 생성되지 않게함
+    }
+
+  } 
+
+  // 답글을 작성할 textarea 요소 생성
+  const textarea = document.createElement("textarea");
+  textarea.classList.add("commentInsertContent");
+
+  // contentArea 뒤쪽에 textarea 추가
+  // after(요소) : 뒤쪽에 추가
+  area.parentElement.parentElement.after(textarea);
+
+  // 답글 버튼 영역 + 등록/취소 버튼 생성 및 추가
+  const commentBtnArea = document.createElement("div");
+  commentBtnArea.classList.add("commentBtnArea");
+
+  const insertBtn = document.createElement("div");
+  insertBtn.innerText = "등록";
+  insertBtn.setAttribute("onclick", "insertChildComment(" + parentCommentNo + ", this");
+
+  const cancelBtn = document.createElement("div");
+  cancelBtn.innerText = "취소";
+  cancelBtn.setAttribute("onclick", "insertCancel(this)");
+
+  // 답글 버튼 영역의 자식으로 등록/취소 버튼 추가
+  commentBtnArea.append(insertBtn, cancelBtn);
+
+  // 답글 버튼 영역을 화면에 추가된 textarea 뒤쪽에 추가
+  textarea.after(commentBtnArea);
+
+};
+
+//-------------------------------------------------------------------------------
+
+/** 답글 (자식 댓글) 작성 취소
+ * @param {*} cancelBtn : 취소버튼
+ */
+const insertCancel = (cancelBtn) => {
+
+  cancelBtn.parentElement.previousElementSibling.remove();
+
+  // 취소 버튼이 존재하는 버튼영역 삭제
+  cancelBtn.parentElement.remove();
+
+}
+
+// ===========================================================================================
 
 /* 이미지 */
 const slideshow = document.querySelector(".boardAdContainer");
@@ -256,6 +326,8 @@ if (slideshow != null) {
 // ===============================================================
 // 좋아요
 
+const likeCount = document.querySelector("#likeCount");
+
 document.querySelector("#boardLike").addEventListener("click", e => {
 
   if(loginMemberNo == null) {
@@ -278,6 +350,8 @@ document.querySelector("#boardLike").addEventListener("click", e => {
   .then(resp => resp.text())
   .then(count => {
 
+    console.log(count);
+
     if(count == -1) {
       console.log("좋아요 실패");
       return;
@@ -288,7 +362,7 @@ document.querySelector("#boardLike").addEventListener("click", e => {
     e.target.classList.toggle("fa-regular");
     e.target.classList.toggle("fa-solid");
 
-    e.target.nextElementSibiling.innerText = count;
+    likeCount.innerText = count;
 
   });
 

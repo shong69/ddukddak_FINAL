@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.board.model.dto.BoardImg;
+import com.ddukddak.board.model.dto.Report;
 
 public interface BoardMainService {
 
@@ -20,4 +21,12 @@ public interface BoardMainService {
 	 * @return count
 	 */
 	int boardLike(Map<String, Integer> map);
+
+	
+	
+	/** 신고 등록
+	 * @param report
+	 * @return result
+	 */
+	int insertReport(Report report);
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.board.model.dto.BoardImg;
+import com.ddukddak.board.model.dto.Report;
 
 @Mapper
 public interface BoardMainMapper {
@@ -37,5 +38,13 @@ public interface BoardMainMapper {
 	 * @return count
 	 */
 	int selectLikeCount(Integer integer);
+
+	
+	
+	/** 신고 등록
+	 * @param report
+	 * @return result
+	 */
+	int insertReport(Report report);
 
 }
