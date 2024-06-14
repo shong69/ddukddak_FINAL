@@ -65,4 +65,16 @@
         </choose>
 	</select>
 	
+	<delete id="tipLikeDelete">
+		DELETE FROM "BOARD_LIKE" WHERE MEMBER_NO = #{memberNo} AND BOARD_NO = #{boardNo}
+	</delete>
+	
+	<insert id="tipLikeInsert">
+		INSERT INTO "BOARD_LIKE" VALUES (#{memberNo}, #{boardNo})
+	</insert>
+	
+	<select id="selectLikeCount">
+		SELECT COUNT(*) FROM "BOARD_LIKE" WHERE BOARD_NO = #{boardNo}
+	</select>
+	
 </mapper>
