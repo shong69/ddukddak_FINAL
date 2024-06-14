@@ -22,4 +22,12 @@ public interface CommentService {
 	 */
 	int insert(Comment comment);
 
+
+
+	/** 게시글 총 댓글수
+	 * @param boardNo
+	 * @return count
+	 */
+	int getCommentCount(int boardNo);
+
 }

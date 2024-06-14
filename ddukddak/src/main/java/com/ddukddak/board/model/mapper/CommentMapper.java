@@ -25,4 +25,12 @@ public interface CommentMapper {
 	 */
 	int insert(Comment comment);
 
+
+
+	/** 게시글 댓글 수 조회
+	 * @param boardNo
+	 * @return count
+	 */
+	int getCommentCount(int boardNo);
+
 }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.board.model.dto.BoardImg;
+import com.ddukddak.board.model.dto.Report;
 import com.ddukddak.board.model.mapper.BoardMainMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -55,6 +56,14 @@ public class BoardMainServiceImpl implements BoardMainService{
 		}
 		
 		return -1;
+	}
+
+	
+	// 신고 등록
+	@Override
+	public int insertReport(Report report) {
+		
+		return mapper.insertReport(report);
 	} 
 
 	

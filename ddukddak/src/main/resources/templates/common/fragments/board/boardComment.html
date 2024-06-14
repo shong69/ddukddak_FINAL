@@ -53,10 +53,10 @@
           <div class="commentBtnArea">
             <!-- 로그인 회원과 댓글 작성자가 같은 경우 -->
             <th:block th:if="${session.loginMember != null and session.loginMember.memberNo == comment.memberNo}">
-              <div>수정</div>
-              <div>삭제</div>
+              <div th:onclick="|showUpdateComment(*{commentNo}, this)|">수정</div>
+              <div th:onclick="|deleteComment(*{commentNo})|">삭제</div>
             </th:block>
-            <div>답글</div>
+            <div th:onclick="|showInsertComment(*{commentNo}, this)|">답글</div>
           </div>
     
         </div>

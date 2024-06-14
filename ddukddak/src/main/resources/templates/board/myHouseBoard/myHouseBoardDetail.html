@@ -61,7 +61,7 @@
             <div class="like">
               <i id="boardLike" class="fa-heart" th:classappend="${board.likeCheck == 1} ? fa-solid : fa-regular"></i>
               <!-- 빈하트 : fa-regular -->
-              <div th:text="${board.likeCount}" class="like-count">10</div>
+              <div th:text="${board.likeCount}" class="like-count" id="likeCount">10</div>
             </div>
           </div>
         </div>
@@ -138,6 +138,8 @@
     const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원번호";
 
     const boardNo = /*[[${board.boardNo}]]*/ "게시글 번호";
+
+    const writerNo = /*[[${board.memberNo}]]*/ "작성자 번호";
 
     let likeCheck = /*[[${board.likeCheck}]]*/ "좋아요 여부";
 
