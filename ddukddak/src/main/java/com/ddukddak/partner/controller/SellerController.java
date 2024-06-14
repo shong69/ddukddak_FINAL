@@ -47,7 +47,9 @@ public class SellerController {
 
 	@GetMapping("product/create")
 	public String ProductCreate(
-			//@SessionAttribute("loginPartnerMember") Partner loginPartnerMember, 
+			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+			@RequestParam(value="sort", required=false, defaultValue="0") int mainSort,
+			@RequestParam(value="sort", required=false, defaultValue="0") int sort,
 			RedirectAttributes ra,
 			Model model) {
 		
@@ -67,9 +69,10 @@ public class SellerController {
 		model.addAttribute("smallCategoryList", smallCategoryList);
 		
 		// 재고상품 조회
-		List<Product> createList = service.selectCreateList();
+		Map<String, Object> map = service.selectCreateList(mainSort, sort, cp);
 		
-		model.addAttribute("createList", createList);
+		model.addAttribute("createList", map.get("createList"));
+		model.addAttribute("pagination", map.get("pagination"));
 
         
         return "partner/seller/product/create";
@@ -94,7 +97,8 @@ public class SellerController {
 	}
 	
 	@PostMapping("product/create")
-	public String registMyHouse(@RequestParam ("productName") String productName,
+	@ResponseBody
+	public int registMyHouse(@RequestParam ("productName") String productName,
 								@RequestParam ("smallCategory") int smallCategory,
 								@RequestParam ("productPrice") int productPrice,
 								@RequestParam ("thumbnailImg") MultipartFile thumbnailImg,
@@ -136,7 +140,7 @@ public class SellerController {
 		log.info("imgList : " + imgList);
 		
 		
-		
+		int result3 = 0;
 		// 옵션
 		if(optionContent != null) {
 			List<List<String>> resultList1 = new ArrayList<>();
@@ -181,7 +185,6 @@ public class SellerController {
 			
 			
 			// OPTION 삽입
-			int result3 = 0;
 			
 			for (int i = 0; i < resultList1.size(); i ++) {
 				if(!resultList1.get(i).isEmpty()) {
@@ -192,7 +195,7 @@ public class SellerController {
 		}
 
 
-		return "redirect:/partner/seller/product/create";
+		return result1 + result2 + result3;
 	}
 
 	
