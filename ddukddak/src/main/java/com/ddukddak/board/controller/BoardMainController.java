@@ -33,9 +33,6 @@ public class BoardMainController {
 	@GetMapping("main")
 	public String boardMain(Model model) {
 		
-		Map<String, Object> map = new HashMap<>();
-		
-		List<Map<String, Object>> boardTypeList = service.selectBoardTypeList();
 		
 		List<BoardImg> boardImg = service.selectBoardMainAd();
 		

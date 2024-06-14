@@ -37,5 +37,22 @@ public class tipBoardServiceImpl implements tipBoardService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int tipLike(Map<String, Integer> map) {
+		int result = 0;
+		
+		if (map.get("likeCheck") == 1) {
+			result = mapper.tipLikeDelete(map);
+		} else {
+			result = mapper.tipLikeInsert(map);
+		}
+		
+		if(result > 0) {
+			return mapper.selectLikeCount(map.get("boardNo"));
+		}
+		
+		return result;
+	}
 	
 }

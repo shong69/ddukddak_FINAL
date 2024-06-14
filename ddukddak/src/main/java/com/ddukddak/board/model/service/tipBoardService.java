@@ -11,4 +11,6 @@ public interface tipBoardService {
 
 	List<Board> searchList(int boardCode, String sort, String query);
 
+	int tipLike(Map<String, Integer> map);
+
 }
