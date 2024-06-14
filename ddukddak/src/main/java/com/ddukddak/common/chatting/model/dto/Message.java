@@ -17,7 +17,8 @@ public class Message {
 	private int messageNo;
     private String messageContent;
     private String readFlag;
-    private int senderNo; //파트너, 멤버
+    private int senderMemberNo; //멤버
+    private int senderCotractorNo; //파트너
     private int targetNo; //파트너, 멤버
     private int chattingNo;
     private String sendTime;

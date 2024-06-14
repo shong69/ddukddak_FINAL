@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.ddukddak.common.chatting.model.dto.ChattingRoom;
 import com.ddukddak.common.chatting.model.dto.Message;
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.partner.model.dto.Partner;
 
 @Mapper
 public interface ChattingMapper {
@@ -47,7 +48,7 @@ public interface ChattingMapper {
 	 * @param map
 	 * @return
 	 */
-	List<Member> selectTarget(Map<String, Object> map);
+	List<Partner> selectTarget(Map<String, Object> map);
 
 	/** 메시지 보내기
 	 * @param msg
