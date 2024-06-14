@@ -1,5 +1,6 @@
 package com.ddukddak.manager.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -85,6 +86,12 @@ public class ManagerController {
 		int partnerNo = partner.getPartnerNo();
 		String partnerTel = partner.getPartnerTel();
 		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("partnerNo", partnerNo);
+		map.put("partnerTel", partnerTel);
+		
+		int result = service.passConfirm(map);
 		
 //		int result = service.passConfirm(partnerNo);
 		

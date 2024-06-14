@@ -53,7 +53,7 @@ public class ManagerServiceImpl implements ManagerService {
 	 *
 	 */
 	@Override
-	public int passConfirm(String partnerNo) {
+	public int passConfirm(Map<String, Object> map) {
 		
 		
 		// 파트너 가입 승인부터 승인
