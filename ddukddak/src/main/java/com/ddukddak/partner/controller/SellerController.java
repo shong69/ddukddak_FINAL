@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-//@SessionAttributes("{loginPartnerMember}")
+@SessionAttributes("{loginPartnerMember}")
 public class SellerController {
 	
 	private final ProductService service;
@@ -47,14 +47,14 @@ public class SellerController {
 
 	@GetMapping("product/create")
 	public String ProductCreate(
-			//@SessionAttribute("loginPartnerMember") Partner loginPartnerMember, 
+			@SessionAttribute("loginPartnerMember") Partner loginPartnerMember, 
 			RedirectAttributes ra,
 			Model model) {
 		
-//		if (loginPartnerMember.getPartnerType() != 2) {
-//            ra.addFlashAttribute("message", "접근 제한된 서비스 입니다");
-//            return "redirect:/partner/main";
-//        } 
+		if (loginPartnerMember.getPartnerType() != 2) {
+            ra.addFlashAttribute("message", "접근 제한된 서비스 입니다");
+            return "redirect:/partner/main";
+        } 
 		
 		// 대분류 카테고리 선택
 		List<Category> categoryList = eCommerceService.selectCategory();

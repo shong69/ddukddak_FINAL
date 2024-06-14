@@ -17,7 +17,7 @@ public class FilterConfig {
 	@Bean
 	public FilterRegistrationBean<LoginFilter> loginFilter() {
 		
-		log.info("loginFilter");
+//		log.info("loginFilter");
 		
 		FilterRegistrationBean<LoginFilter> filter 
 				= new FilterRegistrationBean<>(); 
@@ -34,4 +34,6 @@ public class FilterConfig {
 		
 		return filter; 
 	}
+	
+	
 }

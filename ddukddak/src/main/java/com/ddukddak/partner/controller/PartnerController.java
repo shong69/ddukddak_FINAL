@@ -34,10 +34,19 @@ public class PartnerController {
 	private final PartnerService service;
 	
 	@GetMapping("login")
-	public String partnerLogin() {		
+	public String partnerLogin(HttpServletRequest req) {		
 		
-		return "/partner/login";
+		HttpSession session = req.getSession();
+		
+		Partner loginPartnerMember = (Partner)session.getAttribute("loginPartnerMember");
+		
+		int memberNo = 0;
+		
+		if(loginPartnerMember != null) {
+			memberNo = loginPartnerMember.getPartnerNo();
 	}
+		return "/partner/login";
+}
 	
 	@PostMapping("login")
 	public String partnerLogin(Partner partner, RedirectAttributes ra, Model model, @RequestParam(value="saveId", required=false) String partnerSaveId, HttpServletResponse resp) {
