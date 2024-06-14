@@ -50,7 +50,7 @@
                         <div class="titleContainer">
                             <th:block th:each="boardType : ${application.boardTypeList}">
                                 <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="tipViewMore"><h1 th:text="${boardType.boardName}">노하우</h1></a>
-                                <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="myHouseViewMore">+ 더 보기</a>
+                                <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="myHouseViewMore">+더 보기</a>
                             </th:block>
 
                         </div>
@@ -62,7 +62,7 @@
                         <div class="titleContainer">
                             <th:block th:each="boardType : ${application.boardTypeList}">
                             <a th:if="${boardType.boardCode == 2}" th:href="@{/tip/main(boardCode=${boardType.boardCode})}" class="tipViewMore"><h1 th:text="${boardType.boardName}">노하우</h1></a>
-                            <a th:if="${boardType.boardCode == 2}" th:href="@{/tip/main(boardCode=${boardType.boardCode})}" class="tipViewMore">+ 더 보기</a>
+                            <a th:if="${boardType.boardCode == 2}" th:href="@{/tip/main(boardCode=${boardType.boardCode})}" class="tipViewMore">+더 보기</a>
                         </th:block>
 
                         </div>

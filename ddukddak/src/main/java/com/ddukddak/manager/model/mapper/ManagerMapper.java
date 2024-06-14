@@ -21,4 +21,10 @@ public interface ManagerMapper {
 	 */
 	List<Partner> selectPassList(RowBounds rowBounds);
 
+	/** 파트너 가입 승인 업데이트
+	 * @param partnerNo
+	 * @return
+	 */
+	int updateConfrim(String partnerNo);
+
 }
