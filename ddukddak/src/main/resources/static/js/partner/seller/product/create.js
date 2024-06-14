@@ -86,75 +86,25 @@ productCreateButton.addEventListener("click", () => {
     smallcategory.value = 'none';
     price.value = "";
     optionBox.innerHTML = "";
+    document.querySelector("file").value = "";
 });
 
-// 등록 이미지 미리보기
-function readURL(file) {
-    console.log(file);
-    if (file.files && file.files[0]) {
+// 대표 이미지 미리보기
+function readMainURL(fileInput) {
+    if (fileInput.files && fileInput.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
-            file.previousElementSibling.children[1].src = e.target.result;
-            file.previousElementSibling.children[0].style.display = 'none';
+            document.getElementById('preview').src = e.target.result;
+            document.getElementById('filePlus').style.display = 'none';
         };
-        reader.readAsDataURL(file.files[0]);
+        reader.readAsDataURL(fileInput.files[0]);
     } else {
-        file.previousElementSibling.children[1].src = "";
+        document.getElementById('preview').src = "";
     }
 }
 
 
-// 서브 이미지 추가 버튼 클릭 이벤트
-const subImgPlus = document.querySelector("#subImgPlus");
-const subImgBox = document.querySelector("#subImgBox");
 
-const preview1 = document.querySelector("#preview");
-const preview2 = document.querySelector("#preview2");
-
-subImgPlus.addEventListener("click", () => {
-
-    if(preview1.src == "" || preview2.src == "") {
-        alert("사진등록을 모두 완료 후 추가해주세요");
-    }else {
-
-        if (subImgBox.getElementsByClassName("fileBox2").length == 7) {
-            alert("사진은 최대 8개까지 등록 가능합니다");
-        } else {
-            const label = document.createElement("label");
-            label.classList.add("fileBox2");
-    
-            const h4 = document.createElement("h4");
-            h4.classList.add("filePlus");
-            h4.innerText = '+';
-    
-            const img = document.createElement("img");
-            img.classList.add("preview");
-    
-            const input = document.createElement("input");
-            input.type = 'file';
-            input.classList.add("file");
-    
-    
-            label.append(h4);
-            label.append(img);
-    
-            subImgBox.append(label);
-            subImgBox.append(input);
-    
-            const elementLength = document.getElementsByClassName('fileBox2').length;
-
-            input.id = elementLength;
-            label.setAttribute('for', elementLength);
-    
-            input.addEventListener('change', e => {
-                readURL(e.target);
-            })
-    
-        }
-
-    }
-
-});
 
 let selectOption = 1;
 
@@ -168,6 +118,7 @@ plusButton.addEventListener("click", () => {
     const optionName = document.createElement("input");
     optionName.classList.add("optionName");
     optionName.placeholder = "예시 : 컬러";
+    optionName.setAttribute('name', 'optionName');
 
     const delButton = document.createElement("button");
     delButton.classList.add("delButton");
@@ -194,8 +145,10 @@ plusButton.addEventListener("click", () => {
 
     contentInput.classList.add("contentInput");
     contentInput.placeholder = "예시 : 빨강";
+    contentInput.setAttribute('name', 'optionContent');
 
     contentCountInput.classList.add("contentCountInput");
+    contentCountInput.setAttribute('name', 'optionCount');
 
     td1.innerText = "옵션 내용";
     td1.style.fontSize = "12px";
@@ -303,6 +256,20 @@ plusButton.addEventListener("click", () => {
         }       
         
         if(temp) {
+            const cutInput1 = document.createElement("input");
+            cutInput1.type = 'hidden';
+            cutInput1.value = '/';
+            cutInput1.setAttribute('name', 'optionContent');
+
+            optionContentBox.append(cutInput1);
+
+            const cutInput2 = document.createElement("input");
+            cutInput2.type = 'hidden';
+            cutInput2.value = '/';
+            cutInput2.setAttribute('name', 'optionCount');
+
+            optionContentBox.append(cutInput2);
+
             selectOption = 1;
             plusButton.style.display = "block";
             table.style.display = "none";
@@ -325,16 +292,20 @@ plusButton.addEventListener("click", () => {
 
 
 createButton.addEventListener("click", e => {
+    console.log(document.querySelector("#subFile"));
     if(productName.value.trim().length === 0 ||
         bigCategory.options[bigCategory.selectedIndex].value == 'none' ||
         smallcategory.options[smallcategory.selectedIndex].value == 'none' ||
         price.value.trim().length === 0 ||
-        selectOption == 0) {
+        selectOption == 0
+        ) {
             alert("입력을 완료해주세요");
+            e.preventDefault();
+        } else if(document.querySelector("#preview").src == 0) {
+            alert("대표사진을 등록해주세요");
             e.preventDefault();
         } else {
             alert("등록 완료");
-            modal.style.display = "none";
         }
 })
 

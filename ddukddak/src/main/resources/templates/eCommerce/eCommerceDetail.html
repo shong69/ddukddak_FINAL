@@ -38,7 +38,7 @@
                     </div>
 
                     <div id="imgSubContainer" >
-                        <span th:each="img : ${productInfo.imgList}" th:if="${img.uploadImgOrder == 0 or img.uploadImgOrder == 1}">
+                        <span th:each="img : ${productInfo.imgList}" th:if="${img.uploadImgOrder > 0}">
                             <img th:src="|${img.uploadImgPath}${img.uploadImgRename}|" class="subImg">
                         </span>
                     </div>
