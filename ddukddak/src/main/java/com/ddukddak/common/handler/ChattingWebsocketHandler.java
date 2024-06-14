@@ -73,14 +73,14 @@ public class ChattingWebsocketHandler extends TextWebSocketHandler{
 				int loginMemberNo = ((Member)temp.getAttribute("loginMember")).getMemberNo();
 				
 				//로그인 상태인 회원 중 targetNo가 일치하는 회원에게 메시지 전달하기
-				if(loginMemberNo == msg.getTargetNo() || loginMemberNo == msg.getSenderNo()) {
-					//보낸 사람이거나 받은 대상인 경우 메세지를 전달한다
-					
-					//다시 DTO Object를 JSON으로 변환하여 js보내기
-					String jsonData = objectMapper.writeValueAsString(msg);
-					
-					s.sendMessage(new TextMessage(jsonData));
-				}
+//				if(loginMemberNo == msg.getTargetNo() || loginMemberNo == msg.getSenderNo()) {
+//					//보낸 사람이거나 받은 대상인 경우 메세지를 전달한다
+//					
+//					//다시 DTO Object를 JSON으로 변환하여 js보내기
+//					String jsonData = objectMapper.writeValueAsString(msg);
+//					
+//					s.sendMessage(new TextMessage(jsonData));
+//				}
 			}
 						
 			
