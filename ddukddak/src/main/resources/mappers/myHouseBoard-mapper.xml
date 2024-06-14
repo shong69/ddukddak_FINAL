@@ -165,18 +165,18 @@
 		AND (BOARD_TITLE LIKE '%' || #{query} || '%' OR MEMBER_NICKNAME LIKE '%' || #{query} || '%')
 		ORDER BY
 			<choose>
-            <when test="sort == 'latest'">
-                BOARD_NO DESC
-            </when>
-            <when test="sort == 'views'">
-                READ_COUNT DESC
-            </when>
-            <when test="sort == 'likeCount'">
-                LIKE_COUNT DESC
-            </when>
-            <otherwise>
-                BOARD_NO DESC
-            </otherwise>
+	            <when test="sort == 'latest'">
+	                BOARD_NO DESC
+	            </when>
+	            <when test="sort == 'views'">
+	                READ_COUNT DESC
+	            </when>
+	            <when test="sort == 'likeCount'">
+	                LIKE_COUNT DESC
+	            </when>
+	            <otherwise>
+	                BOARD_NO DESC
+	            </otherwise>
         </choose>
 	</select>
 	
@@ -245,7 +245,7 @@
 						AND COMMENT_DEL_FL = 'N')
 		START WITH PARENT_COMMENT_NO IS NULL
 		CONNECT BY PRIOR COMMENT_NO = PARENT_COMMENT_NO
-		ORDER SIBLINGS BY COMMENT_NO DESC
+		ORDER SIBLINGS BY COMMENT_NO
 	</select>
 	
 	

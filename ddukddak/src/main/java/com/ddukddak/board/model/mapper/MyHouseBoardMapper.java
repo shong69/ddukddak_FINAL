@@ -58,7 +58,7 @@ public interface MyHouseBoardMapper {
 	 * @param paramMap
 	 * @return count
 	 */
-	int getSearchCount(int boardCode);
+	int getSearchCount(Map<String, Object> countMap);
 
 
 

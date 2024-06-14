@@ -110,6 +110,8 @@ const selectCommentList = () => {
 
         }
 
+        
+
         //   // 답글 버튼
         const childCommentBtn = document.createElement("div");
         childCommentBtn.innerText = "답글";
@@ -119,6 +121,7 @@ const selectCommentList = () => {
         commentBtnArea.append(childCommentBtn);
 
         console.log(commentContentArea);
+       
 
         // 영역 합치기
         commentContentArea.append(displayComment, commentBtnArea);
@@ -208,37 +211,50 @@ if (insertComment != null) {
  */
 const showInsertComment = (parentCommentNo, area) => {
 
-  console.log(parentCommentNo);
-  console.log(area);
+  if(loginMemberNo == null) {
+    alert("로그인이 필요한 서비스입니다.");
+    return;
+  }
 
-  const temp = document.getElementsByClassName("commentInsertContent");
+  // console.log(parentCommentNo);
+  // console.log(area);
+
+  const temp = document.getElementsByClassName("childCommentArea");
 
   if(temp.length > 0) { // 답글 작성 textarea 가 이미 화면에 존재하는 경우
 
     if(confirm("다른 답글을 작성 중... 현재 댓글에 답글을 작성하시겠습니까?")) {
-      temp[0].nextElementSibling.remove();    // 버튼 영역부터 삭제
+      // temp[0].nextElementSibling.remove();    // 버튼 영역부터 삭제
+      temp[0].nextElementSibling.remove();
       temp[0].remove();                       // textarea 삭제 (기준점은 마지막에 삭제!!)
+
     } else {
       return;   // 함수를 종료시켜 답글 생성되지 않게함
     }
 
   } 
 
+  // childCommentInsertContent 답은 div 생성
+  const childCommentArea = document.createElement("div");
+  childCommentArea.classList.add("childCommentArea");
+
   // 답글을 작성할 textarea 요소 생성
   const textarea = document.createElement("textarea");
-  textarea.classList.add("commentInsertContent");
+  textarea.classList.add("childCommentInsertContent");
+
+  childCommentArea.append(textarea);
 
   // contentArea 뒤쪽에 textarea 추가
   // after(요소) : 뒤쪽에 추가
-  area.parentElement.parentElement.after(textarea);
+  area.parentElement.parentElement.after(childCommentArea);
 
   // 답글 버튼 영역 + 등록/취소 버튼 생성 및 추가
   const commentBtnArea = document.createElement("div");
-  commentBtnArea.classList.add("commentBtnArea");
+  commentBtnArea.classList.add("childCommentBtnArea");
 
   const insertBtn = document.createElement("div");
   insertBtn.innerText = "등록";
-  insertBtn.setAttribute("onclick", "insertChildComment(" + parentCommentNo + ", this");
+  insertBtn.setAttribute("onclick", "insertChildComment(" + parentCommentNo + ", this)");
 
   const cancelBtn = document.createElement("div");
   cancelBtn.innerText = "취소";
@@ -248,7 +264,7 @@ const showInsertComment = (parentCommentNo, area) => {
   commentBtnArea.append(insertBtn, cancelBtn);
 
   // 답글 버튼 영역을 화면에 추가된 textarea 뒤쪽에 추가
-  textarea.after(commentBtnArea);
+  childCommentArea.after(commentBtnArea);
 
 };
 
@@ -265,6 +281,50 @@ const insertCancel = (cancelBtn) => {
   cancelBtn.parentElement.remove();
 
 }
+
+/** 답글 (자식 댓글) 등록
+ * @param {*} parentCommentNo : 부모 댓글 번호
+ * @param {*} btn : 클릭된 등록 버튼
+ */
+const insertChildComment = (parentCommentNo, btn) => {
+  console.log(parentCommentNo);
+  console.log(btn);
+
+  const textarea = btn.parentElement.previousElementSibling.querySelector(".childCommentInsertContent");
+  console.log(textarea.value);
+
+  if(textarea.value.trim().length == 0) {
+    alert("답글 내용 작성 후 등록 버튼을 클릭해 주세요.");
+    textarea.focus();
+    return;
+  }
+
+  
+  const data = {
+    "commentContent" : textarea.value,
+    "boardNo" : boardNo,
+    "memberNo" : loginMemberNo,
+    "parentCommentNo" : parentCommentNo
+  };
+
+  fetch("/comment", {
+    method : "POST",
+    headers : {"Content-Type" : "application/json"},
+    body : JSON.stringify(data)
+  })
+  .then(resp => resp.text())
+  .then(result => {
+
+    if(result > 0) {
+      selectCommentList();
+    } else {
+      alert("답글 등록에 실패하였습니다.");
+    }
+
+  })
+  .catch(err => console.log(err));
+
+};
 
 // ===========================================================================================
 

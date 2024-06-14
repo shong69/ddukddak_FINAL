@@ -197,7 +197,13 @@
 }
 
 .commentContent {
+    white-space: pre-wrap;
     width: 600px;
+}
+
+.commentContentArea {
+    display: flex;
+    justify-content: space-between;
 }
 
 .commentContainer {
@@ -216,7 +222,6 @@
     align-items: center;
     margin-right: 10px;
     width: auto;
-    justify-content: space-between;
     
 }
 
@@ -248,6 +253,33 @@
 
 .displayComment {
     margin: 20px 30px;
+}
+
+.child-comment {
+    margin-left: 100px;
+}
+
+.childCommentInsertContent {
+    resize: none;
+    width: 750px;
+    margin: auto;
+    padding: 5px;
+}
+
+.childCommentBtnArea {
+    width: 750px;
+    display: flex;
+    justify-content: flex-end;
+    color: var(--gray4);
+    margin: 10px 0;
+    padding-right: 10px;
+
+}
+
+.childCommentBtnArea div:hover {
+    cursor: pointer;
+    color: var(--secondary);
+    text-decoration: underline;
 }
 
 .commentInsertContent {
