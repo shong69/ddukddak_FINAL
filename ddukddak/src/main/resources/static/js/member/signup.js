@@ -591,7 +591,7 @@ emailAuth.addEventListener('click', () => {
         memberTel.value = "";
         emailAuthKey.value = ""; // 이메일 인증키 입력 인풋
         smsAuthKey.value = ""; // sms 인증키 입력 인풋
-        emailMsg.innerText = "";
+        emailMsg.innerText = "실제 사용하고 계신 이메일을 입력해 주세요.";
         telMsg.innerText = "";
         emailAuthDiv.classList.add('hidden');
         emailAuth.classList.remove('hidden');
@@ -1247,13 +1247,13 @@ signUpForm.addEventListener("submit" , e => {
 });
 
 
-// checkObj 현재 상태 확인
-const checkObjBtn = document.getElementById('checkObjBtn');
+// // checkObj 현재 상태 확인
+// const checkObjBtn = document.getElementById('checkObjBtn');
 
-checkObjBtn.addEventListener('click', () => {
-    console.clear(); // 이전 콘솔 값을 비웁니다
-    console.log("Current state of checkObj:");
-    for (let key in checkObj) {
-        console.log(`${key}: ${checkObj[key]}`);
-    }
-});
+// checkObjBtn.addEventListener('click', () => {
+//     console.clear(); // 이전 콘솔 값을 비웁니다
+//     console.log("Current state of checkObj:");
+//     for (let key in checkObj) {
+//         console.log(`${key}: ${checkObj[key]}`);
+//     }
+// });

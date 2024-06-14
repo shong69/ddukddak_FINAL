@@ -851,15 +851,15 @@ signUpForm.addEventListener("submit" , e => {
 
 
 
-// checkObj 현재 상태 확인
-const checkObjBtn = document.getElementById('checkObjBtn');
+// // checkObj 현재 상태 확인
+// const checkObjBtn = document.getElementById('checkObjBtn');
 
-checkObjBtn.addEventListener('click', () => {
-    console.clear(); // 이전 콘솔 값을 비웁니다
-    console.log("sendSmsAuthkey : " +sendSmsAuthkey);
-    console.log(document.getElementById('partnerType').value);
+// checkObjBtn.addEventListener('click', () => {
+//     console.clear(); // 이전 콘솔 값을 비웁니다
+//     console.log("sendSmsAuthkey : " +sendSmsAuthkey);
+//     console.log(document.getElementById('partnerType').value);
     
-    for (let key in checkObj) {
-        console.log(`${key}: ${checkObj[key]}`);
-    }
-});
+//     for (let key in checkObj) {
+//         console.log(`${key}: ${checkObj[key]}`);
+//     }
+// });

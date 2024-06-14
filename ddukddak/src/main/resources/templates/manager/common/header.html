@@ -15,9 +15,20 @@
     </div>
 
     <!-- 로그인/회원가입 -->
-    <th:block th:if="${session.loginPartnerMember}" th:object="${session.loginPartnerMember}">
+    <th:block th:if="${session.loginMember == null}">
         <div>
-            <a href="/partner/logout"><h4>로그아웃</h4></a>
+            <!-- 빈 a 간격 -->
+            <a></a>
+            <a></a>
+            <a style="cursor: pointer;" onclick="redirectToLogin()"><h4>로그인</h4></a>
+        </div>
+    </th:block>
+
+    <th:block th:if="${session.loginMember}" th:object="${session.loginMember}">
+        <div>
+            <a href="/member/logout"><h4>신고관리</h4></a>
+            <a href="/member/logout"><h4>1:1문의</h4></a>
+            <a href="/member/logout"><h4>로그아웃</h4></a>
         </div>
     </th:block>
 </header>

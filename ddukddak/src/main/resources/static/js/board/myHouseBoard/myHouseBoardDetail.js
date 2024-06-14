@@ -136,6 +136,13 @@ const selectCommentList = () => {
 
 // ** 댓글 등록(Ajax) **
 
+function redirectToLogin() {
+  const currentUrl = window.location.href;
+  
+  window.location.href = `/member/login?returnUrl=${encodeURIComponent(currentUrl)}`;
+  
+}
+
 const insertComment = document.querySelector("#insertComment");
 const inputCommentContent = document.querySelector("#inputCommentContent");
 const commentCount = document.querySelector("#commentCount");
@@ -144,7 +151,7 @@ insertComment.addEventListener("click", () => {
 
   if (loginMemberNo == null) {
     alert("로그인 후 이용해주세요.");
-    location.href = "/member/login";
+    redirectToLogin();
     return;
   }
 
