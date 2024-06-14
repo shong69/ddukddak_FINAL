@@ -35,8 +35,8 @@ public class CommentController {
 	};
 	
 	
-	@PostMapping("")
-	public Map<String, Object> insert(@RequestBody Comment comment) {
+	@PostMapping("listAndCount")
+	public Map<String, Object> listAndCount(@RequestBody Comment comment) {
 		
 		int result = service.insert(comment);
 		
@@ -56,4 +56,10 @@ public class CommentController {
 	    
 	    return response;
 	};
+	
+	@PostMapping("")
+	public int insert(@RequestBody Comment comment) {
+		
+		return service.insert(comment);
+	}
 }

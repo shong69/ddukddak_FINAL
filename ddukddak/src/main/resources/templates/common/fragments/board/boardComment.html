@@ -56,7 +56,7 @@
               <div th:onclick="|showUpdateComment(*{commentNo}, this)|">수정</div>
               <div th:onclick="|deleteComment(*{commentNo})|">삭제</div>
             </th:block>
-            <div th:onclick="|showInsertComment(*{commentNo}, this)|">답글</div>
+            <div th:if="${session.loginMember != null}" th:onclick="|showInsertComment(*{commentNo}, this)|">답글</div>
           </div>
     
         </div>

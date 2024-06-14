@@ -140,7 +140,14 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 	@Override
 	public Map<String, Object> searchList(int boardCode, String sort, String query, int cp) {
 		
-		int listCount = mapper.getSearchCount(boardCode);
+		Map<String, Object> countMap = new HashMap<>();
+		
+		countMap.put("boardCode", boardCode);
+		countMap.put("query", query);
+		
+		int listCount = mapper.getSearchCount(countMap);
+		
+		log.info("listCount : " + listCount);
 		
 		Pagination pagination = new Pagination(cp, listCount);
 		

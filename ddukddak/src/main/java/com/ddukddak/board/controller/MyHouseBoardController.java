@@ -53,12 +53,10 @@ public class MyHouseBoardController {
 		// 검색 X
 		if(query == null) {
 			
-			log.info("sort : " + sort);
 			
 			map = service.selectMyHouseList(boardCode, sort, cp);
 			
 		} else {	// 검색 O
-			log.info("boardCode : " + boardCode);
 			
 			map = service.searchList(boardCode, sort, query, cp);
 			
@@ -187,10 +185,7 @@ public class MyHouseBoardController {
 	    board.setBoardTitle(inputTitle);
 	    board.setBoardContent(inputContent);
 	    board.setMemberNo(loginMember.getMemberNo());
-	    
-	    
-	    log.info("images : " + images);
-
+	
 	    MultipartFile mainImg = null;
 	    
 	    String message = null;
