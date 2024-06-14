@@ -8,7 +8,77 @@ const bigCategory = document.querySelector("#bigCategory");
 const smallcategory = document.querySelector("#smallCategory");
 const price = document.querySelector("#price");
 
+/* 전체선택버튼 */
+const selectAll = document.querySelector('#selectAllCheckBox');
+const checkboxes = document.getElementsByName('selectProduct');
 
+selectAll.addEventListener('change', () => {
+    if(selectAll.checked == true) {
+        checkboxes.forEach(elements => {
+          elements.checked = true;
+        })
+    } else {
+        checkboxes.forEach(elements => {
+            elements.checked = false;
+        })
+    }
+});
+
+// 상품가격 포맷
+function formatNumberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const productPriceElements = document.getElementsByClassName("productPrice");
+
+for (let i = 0; i < productPriceElements.length; i++) {
+    let productPrice = productPriceElements[i].textContent.trim();
+    productPriceElements[i].textContent = formatNumberWithCommas(productPrice);
+    productPriceElements[i].innerText += '원';
+}
+
+
+// 판매등록 버튼 클릭
+const productApplyButton = document.querySelector("#productApplyButton");
+
+productApplyButton.addEventListener("click", () => {
+    var checkboxes = document.getElementsByName('selectProduct');
+    var selectedValues = [];
+
+    checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+            selectedValues.push(checkbox.value);
+        }
+    });
+
+    console.log(selectedValues);
+
+    if(selectedValues.length == 0) {
+        alert("선택된 상품이 없습니다");
+    }else {
+        if(confirm("선택한 상품을 판매등록 하시겠습니까?")) {
+            fetch("/partner/seller/product/sellApplyProduct", {
+                method: "PUT",
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify(selectedValues)
+            })
+            .then(resp => resp.text())
+            .then(result => {
+                if(result > 0) {
+                    alert("판매등록이 완료되었습니다");
+                    window.location.reload();
+                }else {
+                    alert("판매등록 실패");
+                }
+            })
+        } else {
+            alert("판매등록이 취소되었습니다");
+        }
+    }
+});
+
+
+// 재고생성 모달창
 productCreateButton.addEventListener("click", () => {
     modal.style.display = "flex";
     productName.value = "";
@@ -18,6 +88,73 @@ productCreateButton.addEventListener("click", () => {
     optionBox.innerHTML = "";
 });
 
+// 등록 이미지 미리보기
+function readURL(file) {
+    console.log(file);
+    if (file.files && file.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            file.previousElementSibling.children[1].src = e.target.result;
+            file.previousElementSibling.children[0].style.display = 'none';
+        };
+        reader.readAsDataURL(file.files[0]);
+    } else {
+        file.previousElementSibling.children[1].src = "";
+    }
+}
+
+
+// 서브 이미지 추가 버튼 클릭 이벤트
+const subImgPlus = document.querySelector("#subImgPlus");
+const subImgBox = document.querySelector("#subImgBox");
+
+const preview1 = document.querySelector("#preview");
+const preview2 = document.querySelector("#preview2");
+
+subImgPlus.addEventListener("click", () => {
+
+    if(preview1.src == "" || preview2.src == "") {
+        alert("사진등록을 모두 완료 후 추가해주세요");
+    }else {
+
+        if (subImgBox.getElementsByClassName("fileBox2").length == 7) {
+            alert("사진은 최대 8개까지 등록 가능합니다");
+        } else {
+            const label = document.createElement("label");
+            label.classList.add("fileBox2");
+    
+            const h4 = document.createElement("h4");
+            h4.classList.add("filePlus");
+            h4.innerText = '+';
+    
+            const img = document.createElement("img");
+            img.classList.add("preview");
+    
+            const input = document.createElement("input");
+            input.type = 'file';
+            input.classList.add("file");
+    
+    
+            label.append(h4);
+            label.append(img);
+    
+            subImgBox.append(label);
+            subImgBox.append(input);
+    
+            const elementLength = document.getElementsByClassName('fileBox2').length;
+
+            input.id = elementLength;
+            label.setAttribute('for', elementLength);
+    
+            input.addEventListener('change', e => {
+                readURL(e.target);
+            })
+    
+        }
+
+    }
+
+});
 
 let selectOption = 1;
 
@@ -31,6 +168,10 @@ plusButton.addEventListener("click", () => {
     const optionName = document.createElement("input");
     optionName.classList.add("optionName");
     optionName.placeholder = "예시 : 컬러";
+
+    const delButton = document.createElement("button");
+    delButton.classList.add("delButton");
+    delButton.innerText = "삭제";
 
     const optionContentBox = document.createElement("div");
     optionContentBox.classList.add("optionContentBox");
@@ -93,6 +234,7 @@ plusButton.addEventListener("click", () => {
     optionContentBox.append(applyButton);
 
     box.append(optionName);
+    box.append(delButton);
     box.append(optionContentBox);
 
     optionBox.append(box);
@@ -103,6 +245,10 @@ plusButton.addEventListener("click", () => {
     /* 옵션 내용 추가 */
     addOption.addEventListener("click", () => {
         const clone = tr2.cloneNode(true);
+        console.log(clone);
+        console.log(clone.querySelector('.contentInput'));
+        clone.querySelector('.contentInput').value = "";
+        clone.querySelector('.contentCountInput').value = "";
         table.append(clone);
 
         // 새로 추가된 minusOption 버튼에 이벤트 리스너 추가
@@ -124,15 +270,54 @@ plusButton.addEventListener("click", () => {
     // 적용 버튼 눌렀을 떄
     applyButton.addEventListener("click", () => {
 
-        if(optionName.value.trim().length === 0 ||
-        contentInput.value.trim().length === 0 ||
-        contentCountInput.value.trim().length === 0) {
-            alert("작성을 완료해주세요");
-        } else {
+        let temp = true;
+
+        const allInput = document.getElementsByClassName("contentInput");
+        const allCount = document.getElementsByClassName("contentCountInput");
+
+        if(optionName.value.trim().length === 0) {
+            alert("옵션명을 입력해주세요");
+            temp = false;
+
+            return;
+        }
+
+        for(let i = 0; i < allInput.length; i ++) {
+            if(allInput[i].value.trim().length == 0) {
+                alert("옵션값 작성을 완료해주세요");
+                temp = false;
+
+                return;
+            }
+            
+        }
+
+        for(let i = 0; i < allCount.length; i ++) {
+            if(allCount[i].value.trim().length == 0) {
+                alert("재고개수 작성을 완료해주세요");
+                temp = false;
+
+                return;
+            }
+            
+        }       
+        
+        if(temp) {
             selectOption = 1;
             plusButton.style.display = "block";
             table.style.display = "none";
             applyButton.style.display = "none";
+            delButton.style.display = "block";
+        }
+    })
+
+
+    // 옵션 삭제버튼 눌렀을 떄
+    delButton.addEventListener("click", e => {
+        if(confirm(`'${e.target.parentElement.querySelector(".optionName").value}'옵션을 삭제하시겠습니까?`)) {
+            e.target.parentElement.remove();
+        } else {
+            e.preventDefault();
         }
     })
 });
@@ -163,77 +348,6 @@ closeButton.addEventListener("click", () => {
 })
 
 
-const categoryOptions = {
-  'furniture': ['침대',
-            '매트리스/토퍼',
-            '테이블/식탁/책상',
-            '소파',
-            '서랍/수납장',
-            '거실장/TV장',
-            '선반',
-            '진열장/책장',
-            '의자',
-            '행거/옷장'],
-
-  'electronic': ['냉장고',
-                'TV',
-                '세탁기/건조기',
-                '청소기',
-                '주방가전',
-                '에어컨',
-                '계절가전',
-                '컴퓨터/노트북',
-                '모니터',
-                '복합기/프린터/스캐너'],
-  'kitchenware': ['그릇/식기',
-                '냄비/프라이팬/솥',
-                '컵/잔/텀블러',
-                '수저/커트러리',
-                '주방수납/정리',
-                '식기건조대',
-                '보관/용기/도시락',
-                '주방잡화',
-                '조리도구',
-                '칼/도마/커팅기구'],
-    'deco' : ['디퓨저/캔들',
-            '플라워/식물',
-            '홈갤러리',
-            '인테리어소품',
-            '시계',
-            '월데코/장식',
-            '데스크/디자인문구',
-            'DIY/취미/공예',
-            '파티/완구',
-            '크리스마스'],
-    'storage' : ['서랍장/트롤리',
-                '리빙박스/바구니',
-                '빨래바구니/햄퍼',
-                '행거',
-                '선반',
-                '옷걸이',
-                '옷정리/이불정리',
-                '화장대/테이블정리',
-                '현관/신발정리',
-                '후크/수납걸이'],
-    'household' : ['욕실용품',
-                    '수건/타월',
-                    '청소용품',
-                    '세탁용품',
-                    '생활잡화',
-                    '자동차용품'],
-    'baby' : ['완구/교구',
-                '유아동침구/패브릭',
-                '매트/안전용품',
-                '유아동가구',
-                '유아의류/잡화',
-                '기저귀/기저귀용품',
-                '세탁/위생용품',
-                '수유용품',
-                '유아/아동식기',
-                '스킨케어/욕실용품'
-    ]
-};
-
 
 bigCategory.addEventListener('change', () => {
   // 기존 소분류 옵션을 모두 제거
@@ -241,16 +355,25 @@ bigCategory.addEventListener('change', () => {
 
   const selectedCategory = bigCategory.value;
 
-  console.log(selectedCategory);
+  fetch("/partner/seller/product/selectSmallCategory", {
+        method: "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(selectedCategory)
+    })
+    .then(resp => resp.text())
+    .then(result => {
+        
+        const smallCategoryList = JSON.parse(result);
 
-  if (categoryOptions != 'none') {
-      categoryOptions[selectedCategory].forEach(sub => {
-        const option = document.createElement('option');
-        option.value = sub;
-        option.textContent = sub;
-        smallcategory.appendChild(option);
-    });
-  }
+        
+        smallCategoryList.forEach(elements => {
+            const option = document.createElement('option');
+            option.value = elements.categoryNo;
+            option.textContent = elements.categoryName;
+            smallcategory.appendChild(option);
+        })
+    })
+
 });
 
 

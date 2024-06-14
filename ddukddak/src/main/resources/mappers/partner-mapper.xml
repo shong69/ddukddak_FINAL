@@ -4,11 +4,13 @@
 	
 	<select id="login">
 		SELECT PARTNER_NO, PARTNER_ID, PARTNER_PW, PARTNER_TEL, 
-		PARTNER_BUSINESS_NAME, PARTNER_CEO_NAME, PARTNER_BUSINESS_NUM, PARTNER_TYPE,
-		TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초"') ENROLL_DATE
+		PARTNER_BUSINESS_NAME, PARTNER_CEO_NAME, PARTNER_BUSINESS_NUM, 
+		TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일"') ENROLL_DATE,
+		PARTNER_DEL_FL, PARTNER_PASS, PARTNER_TYPE
 		FROM "PARTNER"
 		WHERE PARTNER_ID = #{partnerId}
 		AND PARTNER_DEL_FL = 'N'
+		AND PARTNER_PASS = 1
 	</select>
 	
 	<!-- [SMS] 이름, 이메일 일치 여부 확인 -->
@@ -30,6 +32,48 @@
 		AND PARTNER_DEL_FL = 'N'
 	</select>
 	
+	<!-- 사업자등록번호 중복 체크 -->
+	<select id="checkBusinessNum">
+		SELECT COUNT(*)
+		FROM "PARTNER"
+		WHERE PARTNER_BUSINESS_NUM = #{inputBN}
+		AND PARTNER_DEL_FL != 'Y'
+	</select>
+	
+	<!-- 상호명 중복 체크 -->
+	<select id="checkBusinessName">
+		SELECT COUNT(*)
+		FROM "PARTNER"
+		WHERE PARTNER_BUSINESS_NAME = #{inputBName}
+		AND PARTNER_DEL_FL != 'Y'
+	</select>
+	
+	<!-- 아이디 중복 체크 -->
+	<select id="checkId">
+		SELECT COUNT(*)
+		FROM (
+		    SELECT MEMBER_ID
+		    FROM "MEMBER"
+		    WHERE MEMBER_ID = #{inputId}
+		    AND MEMBER_DEL_FL = 'N'
+		    
+		    UNION ALL
+		    
+		    SELECT PARTNER_ID
+		    FROM PARTNER
+		    WHERE PARTNER_ID = #{inputId}
+		    AND PARTNER_DEL_FL != 'Y'
+		)
+	</select>
+	
+	
+	<!-- 휴대폰 중복 체크 -->
+	<select id="checkTel">
+		SELECT COUNT(*)
+		FROM "PARTNER"
+		WHERE PARTNER_TEL = #{inputTel}
+		AND PARTNER_DEL_FL != 'Y'
+	</select>
 
 
 </mapper>

@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>뚝딱뚝딱 : 커뮤니티</title>
 
-    <link rel="stylesheet" href="/css/board/myHouseBoard/myHouseBoard.css">
-    <link rel="stylesheet" href="/css/board/myHouseBoard/myHouseBoardDetail.css">
-    <link rel="stylesheet" href="/css/common/main.css"> 
-    <link rel="stylesheet" href="/css/common/fragments/header.css">  
-    <link rel="stylesheet" href="/css/common/fragments/footer.css"> 
-    <link rel="stylesheet" href="/css/common/fragments/board/side-category.css"> 
-    <link rel="stylesheet" href="/css/common/button.css"> 
-    <link rel="stylesheet" href="/css/common/fragments/board/reportModal.css">
-    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
-    <script src="https://kit.fontawesome.com/fa0ef5fd68.js" crossorigin="anonymous"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>뚝딱뚝딱 : 커뮤니티</title>
+
+  <link rel="stylesheet" href="/css/board/myHouseBoard/myHouseBoard.css">
+  <link rel="stylesheet" href="/css/board/myHouseBoard/myHouseBoardDetail.css">
+  <link rel="stylesheet" href="/css/common/main.css">
+  <link rel="stylesheet" href="/css/common/fragments/header.css">
+  <link rel="stylesheet" href="/css/common/fragments/footer.css">
+  <link rel="stylesheet" href="/css/common/fragments/board/side-category.css">
+  <link rel="stylesheet" href="/css/common/button.css">
+  <link rel="stylesheet" href="/css/common/fragments/board/reportModal.css">
+  <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+  <script src="https://kit.fontawesome.com/fa0ef5fd68.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
 
   <th:block th:replace="~{common/fragments/header}"></th:block>
-    
+
   <div class="topContainer">
 
     <div class="mainContainer">
@@ -30,8 +32,8 @@
 
         <div class="searchArea">
 
-          <span class="title">집들이</span>
-            <!-- <span>
+          <span th:text="${application.boardTypeList[0].boardName}" class="title">집들이</span>
+          <!-- <span>
               <form class="searchForm">
                 <input type="text" placeholder="집들이 검색" class="searchBox">
                 <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
@@ -40,7 +42,7 @@
 
         </div>
 
-        
+
         <div class="boardAdContainer">
           <th:block th:unless="${#lists.isEmpty(board.imageList)}" th:each="image : ${board.imageList}">
             <img th:src="|${image.uploadImgPath}${image.uploadImgRename}|" class="boardAd mySlides">
@@ -51,13 +53,13 @@
         </div>
 
         <div class="myHouseTitle">
-          <h4>[집들이]</h4>
+          <h4 th:text="|[${application.boardTypeList[0].boardName}]|">게시판이름</h4>
 
           <div>
-            <h2>셀프인테리어 후기</h2>
+            <h2 th:text="${board.boardTitle}">게시글 제목</h2>
 
             <div class="like">
-              <i id="boardLike" class="fa-heart" th:classappend="${board.likeCheck == 1} ? fa-solid : fa-regular" style="color: red;"></i>
+              <i id="boardLike" class="fa-heart" th:classappend="${board.likeCheck == 1} ? fa-solid : fa-regular"></i>
               <!-- 빈하트 : fa-regular -->
               <div th:text="${board.likeCount}" class="like-count">10</div>
             </div>
@@ -73,9 +75,9 @@
               </th:block>
 
               <!-- 프로필 이미지가 있을 경우 -->
-               <th:block th:unless="${board.profileImg == null}">
+              <th:block th:unless="${board.profileImg == null}">
                 <img th:src="${board.profileImg}">
-               </th:block>
+              </th:block>
             </div>
             <div class="userNickname">
               <h3 th:text="${board.memberNickname}">유저일</h3>
@@ -92,7 +94,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="contentArea">
 
           <div class="myHouseContent" th:text="${board.boardContent}">
@@ -105,113 +107,43 @@
             심했죠. 가장 중점을 둔 부분은 베란다였습니다. 작지만 활용도가 높은 공간으로 바꾸고 싶었어요.
 
 
-            최근 집을 아늑한 느낌의 인테리어로 꾸몄습니다. 따뜻한 베이지 톤의 벽지와 부드러운 질감의 패브릭 
+            최근 집을 아늑한 느낌의 인테리어로 꾸몄습니다. 따뜻한 베이지 톤의 벽지와 부드러운 질감의 패브릭
             소파를 배치해 편안한 분위기를 만들었어요. 조명은 은은한 노란빛을 선택해 눈이 편안하고, 책장을 채운
-            다양한 책들이 공간을 더욱 풍성하게 합니다. 커다란 러그와 여러 개의 쿠션들이 더해져 공간이 더욱 
-            포근해졌습니다. 창가에는 초록 식물들을 놓아 생기를 불어넣었고, 벽에는 가족사진과 작은 액자들로 
-            장식해 개인적인 터치를 더했어요. 이 모든 요소들이 어우러져 집에 들어설 때마다 따뜻한 포옹을 
+            다양한 책들이 공간을 더욱 풍성하게 합니다. 커다란 러그와 여러 개의 쿠션들이 더해져 공간이 더욱
+            포근해졌습니다. 창가에는 초록 식물들을 놓아 생기를 불어넣었고, 벽에는 가족사진과 작은 액자들로
+            장식해 개인적인 터치를 더했어요. 이 모든 요소들이 어우러져 집에 들어설 때마다 따뜻한 포옹을
             받는 듯한 기분이 듭니다.
 
           </div>
 
         </div>
 
-        <div class="commentArea">
-
-          <div class="inputCommentArea">
-
-            <form>
-              <div class="topArea">
-                <h2>댓글수</h2>
-                <button class="boardDetailSubmitChatBtn" id="insertComment">등록</button>
-              </div>
-                
-              <div class="commentTextArea">
-                <textarea cols="120" rows="5"></textarea>
-              </div>
-            </form>
-
-          </div>
-
-          <div class="comment">
-
-            <div class="commentUser">
-
-              <div class="leftArea">
-                <div>
-                  <img src="/images/profile/main.jpg">
-                  <h3>유저이</h3>
-                </div>
-
-              </div>
-
-              <div class="rightArea">
-
-                <div class="commentBtnArea">
-                  <div th:onclick="|showInsertComment(this)|">답글</div>
-                  <div>수정</div>
-                  <div>삭제</div>
-                </div>
-
-              </div>
-
-            </div>
-
-            <div class="commentContent" id="commentContent">
-              <h3>댓글 내용</h3>
-            </div>
-
-          </div>
-
-          
-
-        </div>
-
-
+        <th:black th:replace="~{common/fragments/board/boardComment}"></th:black>
       </div>
 
     </div>
 
   </div>
+
 
   <div id="top">↑</div>
 
-  <div id="reportModal" class="reportModal" style="display: none;">
-    <div class="modal-content">
-      <div class="top-area">
-        <h2>신고하기</h2>
-        <span class="close-button">&times;</span>
-      </div>
-      <div class="mid-area">
-        <div>
-    * 아래 중 해당하는 항목을 선택하여 주세요.
-    * 허위신고일 경우, 신고자의 서비스 활동이 제한될 수 있습니다.
-        </div>
-      </div>
-      <form>
-          <div class="reportDetail">
-              <div>신고사유</div>
-              <div>
-                <label><input type="radio" name="reason" value="홍보성 게시물"> 홍보성 게시물</label><br>
-                <label><input type="radio" name="reason" value="음란성 게시물"> 음란성 게시물</label><br>
-                <label><input type="radio" name="reason" value="욕설/부적절한 언어"> 욕설/부적절한 언어</label><br>
-                <label><input type="radio" name="reason" value="회원 분란 유도"> 회원 분란 유도</label><br>
-                <label><input type="radio" name="reason" value="도배성 게시물"> 도배성 게시물</label><br>
-                <label><input type="radio" name="reason" value="정치/종교 등 부적절한 논쟁"> 정치/종교 등 부적절한 논쟁</label><br>
-                <label><input type="radio" name="reason" value="명예훼손/저작권 침해"> 명예훼손/저작권 침해</label><br>
-                <label><input type="radio" name="reason" value="개인정보/사생활 침해"> 개인정보/사생활 침해</label>
-              </div>
-          </div>
 
-          <div class="btn-area">
-            <button type="modalButton" id="confirmButton" class="myPageConfirmCancelBtn">확인</button>
-            <button type="modalButton" id="cancelButton" class="myPageConfirmCancelBtn">취소</button>
-          </div>
-      </form>
-    </div>
-  </div>
+  <th:block th:replace="~{common/fragments/board/reportModal}"></th:block>
 
   <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+  <script th:inline="javascript">
+
+    const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원번호";
+
+    const boardNo = /*[[${board.boardNo}]]*/ "게시글 번호";
+
+    let likeCheck = /*[[${board.likeCheck}]]*/ "좋아요 여부";
+
+    const userDefaultImage = /*[[#{user.default.image}]]*/ "기본 이미지";
+
+  </script>
 
   <script src="/js/common/fragments/board/reportModal.js"></script>
   <script src="/js/common/fragments/board/side-category.js"></script>
@@ -220,4 +152,5 @@
   <script src="/js/common/main.js"></script>
   <script src="/js/common/redirectToLogin.js"></script>
 </body>
+
 </html>

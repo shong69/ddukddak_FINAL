@@ -183,27 +183,54 @@
 .like > i {
     margin:0 5px;
     cursor: pointer;
+    color: red;
 }
 
-.comment {
+.commentList {
     margin-top: 30px;
     border-top: 1px solid black;
 }
 
-.commentUser {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px;
+.commentList h2 {
+    text-align: center;
+    margin: 30px;
 }
 
-.commentUser div {
+.commentContent {
+    width: 600px;
+}
+
+.commentContainer {
+    display: flex;
+    margin: 20px 10px;
+    flex-direction: column;
+    padding: 0 20px;
+    padding-top: 20px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.commentContainer div {
     display: flex;
     align-items: center;
     margin-right: 10px;
     width: auto;
+    justify-content: space-between;
+    
 }
 
-.leftArea img {
+.userInfo h4 {
+    margin-left: 10px;
+    color: var(--gray5);
+}
+
+.commentUser {
+    border-bottom: 1px solid var(--gray5);
+    padding-bottom: 8px;
+}
+
+.commentUser img {
     width: 30px;
     margin-right: 10px;
     border-radius: 9999px;
@@ -214,8 +241,12 @@
     cursor: pointer;
 }
 
+.commentBtnArea div:hover {
+    color: var(--secondary);
+    text-decoration: underline;
+}
 
-.commentContent {
+.displayComment {
     margin: 20px 30px;
 }
 
@@ -225,7 +256,7 @@
     padding: 5px;
 }
 
-.comment-btn-area {
+/* .comment-btn-area {
     display: flex;
     justify-content: flex-end;
     margin: 10px 30px;
@@ -240,7 +271,7 @@
 .comment-btn-area button:hover {
     background-color: var(--secondary);
     color: white;
-}
+} */
 
 /* 탑버튼 */
 #top {

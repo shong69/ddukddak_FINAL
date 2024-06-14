@@ -21,7 +21,12 @@ public class LoginFilter implements Filter{
 														            "/partner/signup", 
 														            "/partner/interiorList", 
 														            "/partner/interior/modeling/main",
-														            "/partner/findId");
+														            "/partner/findId",
+														            "/partner/checkBusinessNum",
+														            "/partner/checkBusinessName",
+														            "/partner/checkId",
+														            "/partner/checkTel"
+														            );
 			 				
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

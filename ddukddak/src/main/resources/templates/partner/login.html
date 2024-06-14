@@ -28,7 +28,7 @@
         <div class="loginBox">
             
             <form id="loginForm" action="/partner/login" method="post">
-                
+                <input type="hidden" th:name="returnUrl" th:value="${returnUrl}">
                 <div class="boxInDiv">
                     <h4 class="loginPageTitle2">파트너 로그인</h4>
                     
@@ -78,7 +78,7 @@
 
     <th:block th:replace="~{common/fragments/footer}"></th:block>
     <script src="/js/common/login.js"></script>
-    <script src="/js/common/redirectToLogin.js"></script>
+    <!-- <script src="/js/common/redirectToLogin.js"></script> -->
 
 </body>
 </html>

@@ -21,6 +21,7 @@
 		NATURAL JOIN BIG_CATEGORY
 		WHERE UPLOAD_IMG_ORDER = 0
 		AND PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
 	</select>
 	
 	<!-- 베스트 상품 -->
@@ -43,6 +44,7 @@
 		WHERE UPLOAD_IMG_ORDER = 0
 		AND PRODUCT_FL = 'N'
 		AND CATEGORY = 1
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		ORDER BY p.PRODUCT_NO
 	</select>
 	
@@ -58,6 +60,7 @@
 		WHERE UPLOAD_IMG_ORDER = 0
 		AND PRODUCT_FL = 'N'
 		AND BIG_CATEGORY_NO = ${categoryNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		ORDER BY p.PRODUCT_NO DESC
 	</select>
 	
@@ -72,6 +75,7 @@
 		WHERE UPLOAD_IMG_ORDER = 0
 		AND PRODUCT_FL = 'N'
 		AND CATEGORY = #{smallcategoryNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		ORDER BY p.PRODUCT_NO
 	</select>
 	
@@ -100,13 +104,14 @@
 		    uf.UPLOAD_IMG_ORDER = 0
 		    AND p.PRODUCT_FL = 'N'
 		    AND c.CATEGORY_NO = #{smallcategoryNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		ORDER BY
 				CASE 
-		        WHEN #{sort} = 1 THEN p.PRODUCT_NO
+		        WHEN #{sort} = 1 THEN p.PRODUCT_UPDATE_DATE
 		        ELSE NULL
 		    END DESC,
 		    CASE 
-		        WHEN #{sort} = 2 THEN p.PRODUCT_NO
+		        WHEN #{sort} = 2 THEN p.PRODUCT_UPDATE_DATE
 		        ELSE NULL
 		    END ASC,
 		    CASE 
@@ -142,13 +147,14 @@
 		AND (PRODUCT_NAME LIKE '%' || #{query} || '%'
 			OR CATEGORY_NAME LIKE '%' || #{query} || '%'
 			OR BIG_CATEGORY_NAME LIKE '%' || #{query} || '%')
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		ORDER BY
 			CASE 
-	        WHEN #{sort} = 1 THEN p.PRODUCT_NO
+	        WHEN #{sort} = 1 THEN p.PRODUCT_UPDATE_DATE
 	        ELSE NULL
 	    END DESC,
 	    CASE 
-	        WHEN #{sort} = 2 THEN p.PRODUCT_NO
+	        WHEN #{sort} = 2 THEN p.PRODUCT_UPDATE_DATE
 	        ELSE NULL
 	    END ASC,
 	    CASE 
@@ -162,7 +168,7 @@
 	</select>
 	
 	<select id="selectProductListCount">
-		SELECT COUNT(*) FROM "PRODUCT" WHERE CATEGORY_NO = #{smallcategoryNo}
+		SELECT COUNT(*) FROM "PRODUCT" WHERE CATEGORY_NO = #{smallcategoryNo} AND PRODUCT_UPDATE_DATE IS NOT NULL
 	</select>
 	
 	<!-- 대분류 카테고리 선택 -->
@@ -211,6 +217,7 @@
 		NATURAL JOIN CATEGORY
 		NATURAL JOIN BIG_CATEGORY
 		WHERE PRODUCT_NO = #{productNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
 	</select>
 	
 	<!-- 상품 상세정보 이미지리스트 -->
@@ -243,6 +250,7 @@
 		AND PRODUCT_FL = 'N'
 		AND CATEGORY = #{smallcategoryNo}
 		AND p.PRODUCT_NO != #{productNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
 	</select>
 	
 	<!-- 상품의 옵션이름 출력 -->
@@ -260,6 +268,7 @@
 		NATURAL JOIN CATEGORY
 		NATURAL JOIN BIG_CATEGORY
 		WHERE PRODUCT_NAME LIKE '%' || #{query} || '%'
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		OR CATEGORY_NAME LIKE '%' || #{query} || '%'
 		OR BIG_CATEGORY_NAME LIKE '%' || #{query} || '%'
 	</select>
@@ -286,9 +295,13 @@
 		AND (PRODUCT_NAME LIKE '%' || #{query} || '%'
 			OR CATEGORY_NAME LIKE '%' || #{query} || '%'
 			OR BIG_CATEGORY_NAME LIKE '%' || #{query} || '%')
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		ORDER BY PRODUCT_NO
 	</select>
 	
-	
+	<!-- 판매사 페이지용 소분류 카테고리 조회 -->
+	<select id="selectSmallCategory2">
+		SELECT * FROM "CATEGORY"
+	</select>
 	
 </mapper>

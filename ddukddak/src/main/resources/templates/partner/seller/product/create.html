@@ -26,16 +26,22 @@
         <!-- 상품등록버튼 -->
         <div id="sellerButton">
             <button id="productCreateButton" type="button">재고 등록</button>
+            <button id="productApplyButton" type="button">판매 등록</button>
+        </div>
+
+        <div id="selectAll">
+            <input type="checkbox" value="selectAll" name="select" id="selectAllCheckBox"><label>전체 선택</label>
         </div>
 
         <!-- 상품목록 -->
         <div id="productList">
             <table>
                 <thead style="height: 60px;">
+                    <td></td>
                     <td>상품</td>
-                    <td>분류</td>
-                    <td>옵션</td>
-                    <td>수량</td>
+                    <td>대분류</td>
+                    <td>소분류</td>
+                    <td>생성날짜</td>
                     <td>상품번호</td>
                     <td>상품명</td>
                     <td>판매가</td>
@@ -43,56 +49,22 @@
                 </thead>
 
 
-                <tr class="borderTr">
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                    <td><button>삭제</button></td>
-                </tr>
-                <tr class="borderTr">
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                    <td><button>삭제</button></td>
-                </tr>
-                <tr class="borderTr">
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                    <td><button>삭제</button></td>
-                </tr>
-                <tr class="borderTr">
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                    <td><button>삭제</button></td>
-                </tr>
-                <tr class="borderTr">
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                    <td><button>삭제</button></td>
-                </tr>
+                <th:block th:each="createItem : ${createList}" th:object="${createItem}">
+                    <tr class="borderTr">
+                        <td>
+                            <input type="checkbox" th:value="${createItem.productNo}" name="selectProduct">
+                        </td>
+                        <td><img th:src="|${createItem.uploadImgPath}${createItem.uploadImgRename}|"></td>
+                        <td th:text="${createItem.bigCategoryName}">대분류</td>
+                        <td th:text="${createItem.categoryName}">소분류</td>
+                        <td th:text="${createItem.productCreateDate}">생성날짜</td>
+                        <td th:text="${createItem.productNo}">상품번호</td>
+                        <td th:text="${createItem.productName}">상품제목</td>
+                        <td th:text="${createItem.productPrice}" class="productPrice">상품가격</td>
+                        <td><button>삭제</button></td>
+                    </tr>
+                </th:block>
+
             </table>
         </div>
 
@@ -115,13 +87,24 @@
             <div id="createProduct">
     
                 <div>
-                    <img src="/images/main/shopping-3.jpg">
-                    <div>
-                        <img src="/images/eCommerce/shopping-1.jpg">
-                        <img src="/images/eCommerce/shopping-2.jpg">
-                        <img src="/images/eCommerce/shopping-3.jpg">
-                        <div>+</div>
-                        <div>+</div>
+                    <label class="fileBox" for="file">
+                        <h2 id="filePlus">+</h2>
+                        <img id="preview" />
+                        <h4 id="mainImg">대표사진</h4>
+                    </label>
+                    <input type="file"  onchange="readURL(this);" class="file" id="file" accept="image/*">
+
+                    <div id="subImgContainer">
+                        <div id="subImgBox">
+                            <label class="fileBox2" for="file2">
+                                <h4 class="filePlus">+</h4>
+                                <img id="preview2" class="preview" />
+                            </label>
+                            <input type="file" onchange="readURL(this);" class="file" id="file2" accept="image/*">
+
+                        </div>
+
+                        <button type="button" id="subImgPlus">사진추가</button>
                     </div>
                 </div>
     
@@ -136,13 +119,9 @@
                             <td>
                                 <select id="bigCategory">
                                     <option value="none">대분류</option>
-                                    <option value="furniture">가구</option>
-                                    <option value="electronic">가전/디지털</option>
-                                    <option value="kitchenware">주방용품</option>
-                                    <option value="deco">데코/식물</option>
-                                    <option value="storage">수납/정리</option>
-                                    <option value="household">생활용품</option>
-                                    <option value="baby">유아/아동</option>
+                                    <th:block th:each="category : ${categoryList}" th:object="${category}">
+                                        <option th:value="${category.bigCategoryNo}" th:text="${category.bigCategoryName}">대분류값</option>
+                                    </th:block>
                                 </select>
     
                                 <select id="smallCategory">

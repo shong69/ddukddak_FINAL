@@ -24,6 +24,7 @@
     border-radius: 10px;
     transition-duration: 0.2s;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 #sellerButton button:hover {
@@ -67,16 +68,24 @@
     box-shadow: 3px 3px 3px var(--gray5);
 }
 
+#selectAll {
+    display: flex;
+}
+
+#selectAll > label {
+    margin-left: 5px;
+}
+
 
 
 /* 모달창 */
 .modal {
     display: none;
     position: fixed;
-    top: 150px;
-    left: 400px;
+    top: 20%;
+    left: 30%;
     width: 800px;
-    height: 600px;
+    height: 650px;
     background-color: white;
     border: 1px solid var(--gray5);
     box-shadow: 5px 5px 7px var(--gray5);
@@ -108,9 +117,101 @@
     margin: 30px;
 }
 
-#createProduct > div:first-child img {
+.fileBox {
+    position: relative;
     height: 350px;
-    width: 300px;
+    width: 330px;
+    border: 1px solid var(--gray5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.fileBox > h2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.fileBox2 {
+    position: relative;
+    height: 50px;
+    width: 50px;
+    margin-right: 7px;
+    border: 1px solid var(--gray5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.fileBox2 > h4 {
+    color: var(--secondary);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.file {
+    display: none;
+}
+
+#mainImg {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: white;
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+    padding: 3px;
+    font-weight: bold;
+}
+
+#preview {
+    height: 100%;
+    width: 100%;
+}
+
+.preview {
+    height: 100%;
+    width: 100%;
+}
+
+#subImgContainer {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+#subImgPlus {
+    background: none;
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    width: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#subImgBox {
+    width: 330px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#subImgBox .fileBox2 {
+    margin: 10px; /* 요소 간의 간격 설정 */
+    box-sizing: border-box;
+}
+
+#subImgContainer  h1 {
+    margin: 0 10px;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 #createProduct > div:first-child > div {
@@ -118,20 +219,18 @@
     margin-top: 10px;
 }
 
-#createProduct > div:first-child > div img {
+#createProduct > div:first-child > div input {
     margin-right: 10px;
     height: 50px;
     width: 50px;
 }
 
-#createProduct > div:first-child > div > div {
-    border: 1px solid rgb(173, 173, 173);
-    height: 50px;
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
+#createProduct input[type="file"] {
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
 }
 
 #productEx {
@@ -198,7 +297,7 @@
     display: flex;
     flex-direction: column;
     margin-left: 10px;
-    height: 250px;
+    height: 280px;
     overflow-y: auto;
     overflow-x: visible;
 }
@@ -274,6 +373,25 @@
     margin-bottom: 10px;
     cursor: pointer;
 
+}
+
+.delButton {
+    display: none;
+    margin-top: 5px;
+    background-color: var(--gray1);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 3px;
+    transition-duration: 0.2s;
+}
+
+.delButton:hover {
+    background-color: var(--white);
+    color: black;
+    box-shadow: 3px 3px 3px var(--gray5);
+    transform: translateY(-3px);
 }
 
 .applyButton:hover {
