@@ -48,6 +48,13 @@ public interface PartnerService {
 	int checkTel(String inputTel);
 
 
+	/** [파트너 회원가입 제출]
+	 * @param inputPatner
+	 * @return
+	 */
+	int signup(Partner inputPartner);
+
+
 
 
 

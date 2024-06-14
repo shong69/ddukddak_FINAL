@@ -8,6 +8,8 @@ main {
     color: var(--secondary);
     margin-bottom: 60px;
     font-size: 34px;
+    letter-spacing: 0.3em;
+    margin-left: 10.2px;
 }
 
 .loginPageTitle2 {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddukddak.manager.model.mapper.ManagerMapper">
+
+	<!-- 파트너 수 조회 -->
+	<select id="getListCount">
+		SELECT COUNT(*)
+		FROM "PARTNER"
+		WHERE PARTNER_DEL_FL = 'W'
+		AND PARTNER_PASS = 0
+	</select>
+	
+	<!-- 파트너 목록 조회 -->
+	<select id="selectPassList">
+		SELECT PARTNER_NO, PARTNER_ID, PARTNER_BUSINESS_NAME, PARTNER_BUSINESS_NUM,
+		TO_CHAR(ENROLL_DATE,'YYYY-MM-DD') ENROLL_DATE
+		FROM "PARTNER"
+		WHERE PARTNER_DEL_FL = 'W'
+		AND PARTNER_PASS = 0
+		ORDER BY PARTNER_NO DESC
+	</select>
+	
+	
+</mapper>

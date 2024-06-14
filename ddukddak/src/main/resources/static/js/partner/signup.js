@@ -480,22 +480,9 @@ let sendSmsAuthkey = false;
 
 const disabledAuthBtnCheck = () => {
 
-    // 발송여부가 false / 이미 발송했다면 살아나는거 막기
-    if(checkObj.partnerTel && !sendSmsAuthkey) {
-        sendAuthBtn.disabled = false;
-    } else {
-        sendAuthBtn.disabled = true;
-    }
 
-    if(checkObj.partnerTel && checkObj.telAuth ) {
-        checkAuthBtn.disabled = true;
-    }
 
-    if(checkObj.partnerTel && smsAuthKey.value.length == 6 && sendSmsAuthkey)  {
-        checkAuthBtn.disabled = false;
-    } else {
-        checkAuthBtn.disabled = true;
-    }
+
 }
 
 
@@ -532,11 +519,13 @@ partnerTel.addEventListener('input', e => {
 
     // 인증 요청 후 휴대폰 번호 수정 시 인증 초기화
     checkObj.telAuth = false;
+    checkAuthBtn.disabled = true;
     telAuthMsg.innerText = '';
     smsAuthKey.value = '';
     sendSmsAuthkey = false;
     clearInterval(authTimer);
     telAuthTime.innerText = '';
+    authCount2 = 0;
 
     if(inputTel.trim().length === 0) {
 
@@ -544,11 +533,12 @@ partnerTel.addEventListener('input', e => {
         partnerTel.value = "";
         telMsg.innerText = '실제 사용하고 계신 휴대폰 번호를 입력해 주세요.';
         telMsg.classList.remove('error', 'confrim');
+        sendAuthBtn.disabled = true;
 
-        disabledAuthBtnCheck();
-        // disabled 체크 삭제
         return;
     }
+
+    //// disabledAuthBtnCheck();
 
     const regExp = /^01[0-9]{1}[0-9]{4}[0-9]{4}$/;
 
@@ -558,8 +548,8 @@ partnerTel.addEventListener('input', e => {
         telMsg.classList.add('error');
         telMsg.classList.remove('confirm');
         checkObj.partnerTel = false;
-        disabledAuthBtnCheck();
-        // disabled 체크 삭제
+
+        sendAuthBtn.disabled = true;
 
         return;
     }
@@ -577,8 +567,9 @@ partnerTel.addEventListener('input', e => {
                 telMsg.classList.remove('confirm');
 
                 checkObj.partnerTel = false;
-                disabledAuthBtnCheck();
-                // disabled 체크 삭제
+                sendAuthBtn.disabled = true;
+
+
                 return;
         
             }
@@ -588,26 +579,25 @@ partnerTel.addEventListener('input', e => {
             telMsg.classList.add('confirm');
             telMsg.classList.remove('error'); 
             checkObj.partnerTel = true;
-            disabledAuthBtnCheck();
-            // disabled 체크 삭제
+            sendAuthBtn.disabled = false;
+
         })
 
     } catch(err) {
         console.log(err);
     }
-    disabledAuthBtnCheck();
-    // disabled 체크 삭제
+
 });
 
 
 // 인증요청 버튼
 sendAuthBtn.addEventListener('click', () => {
 
-    // 재클릭 시 인증 초기화
+    sendAuthBtn.disabled = true;
+    sendSmsAuthkey = true; // 발송 성공 시 boolean
     checkObj.telAuth = false;
     smsAuthKey.value = "";
     telAuthMsg.innerText = "";
-    sendSmsAuthkey = false; // 발송 성공 시 boolean
 
     // 휴대폰 유효성 X
     if(!checkObj.partnerTel) {
@@ -616,14 +606,10 @@ sendAuthBtn.addEventListener('click', () => {
         telMsg.classList.add('error');
         telMsg.classList.remove('confirm');
         checkObj.partnerTel = false; 
-        disabledAuthBtnCheck();
-        // disabled 체크 삭제
 
         return;
     }
     
-
-    sendAuthBtn.disabled = true; // 재발송 막기
 
     // 클릭시 타이머 숫자 초기화
     min = initMin;
@@ -642,8 +628,7 @@ sendAuthBtn.addEventListener('click', () => {
     .then(result => {
         if(result == 1) {
             smsAuthKey.readOnly = false; // 인증 입력창 풀기
-            sendSmsAuthkey = true; // 발송 성공 시 boolean
-            // sendAuthBtn.disabled = true; // 재발송 막기
+            sendAuthBtn.disabled = true;
             telMsg.innerText = '아래 입력창에 인증 번호를 입력 후 인증하기 버튼을 눌러주세요.'
             telMsg.classList.remove('error', 'confirm');
             console.log("인증 번호 발송 성공");
@@ -669,8 +654,8 @@ sendAuthBtn.addEventListener('click', () => {
             clearInterval(authTimer);
             telAuthTime.classList.add('error');
             telAuthTime.classList.remove('confirm');
-            disabledAuthBtnCheck();
-            // disabled 체크 삭제
+            sendAuthBtn.disabled = false;
+
             return;
         }
 
@@ -684,8 +669,6 @@ sendAuthBtn.addEventListener('click', () => {
         
     }, 1000);
 
-    disabledAuthBtnCheck();
-    // disabled 체크 삭제
 });
 
 
@@ -694,11 +677,11 @@ sendAuthBtn.addEventListener('click', () => {
 checkAuthBtn.addEventListener('click', () => {
 
     // 인증이 완료된 상태에서 수정 후 틀린 값으로 인증하기 재클릭 시
-    if(checkObj.telAuth) {
-        alert(`이미 인증이 완료되었으나, 잘못된 인증번호로 인증 시도하였습니다.\n인증번호를 올바르게 입력 후 다시 시도해 주세요.`);
-        telMsg.innerText = '아래 입력창에 인증 번호를 입력 후 인증하기 버튼을 눌러주세요.'
-        telMsg.classList.remove('error', 'confirm');
-    }
+    // if(checkObj.telAuth) {
+    //     alert(`이미 인증이 완료되었으나, 잘못된 인증번호로 인증 시도하였습니다.\n인증번호를 올바르게 입력 후 다시 시도해 주세요.`);
+    //     telMsg.innerText = '아래 입력창에 인증 번호를 입력 후 인증하기 버튼을 눌러주세요.'
+    //     telMsg.classList.remove('error', 'confirm');
+    // }
     
     checkObj.telAuth = false;
     telAuthMsg.innerText = "";
@@ -730,7 +713,7 @@ checkAuthBtn.addEventListener('click', () => {
     })
     .then(resp => resp.text())
     .then(result => {
-
+        
         if(result == 0) {
             
             authCount2++;
@@ -748,11 +731,11 @@ checkAuthBtn.addEventListener('click', () => {
                 telAuthTime.innerText = '';
                 telMsg.innerText = '실제 사용하고 계신 휴대폰 번호를 입력해 주세요.';
                 telMsg.classList.remove('error', 'confirm')
+                sendAuthBtn.disabled = true;
+                checkAuthBtn.disabled = true;
 
                 authCount2 = 0;
                 
-                disabledAuthBtnCheck();
-                // disabled 체크 삭제
 
                 return;
             }
@@ -763,8 +746,6 @@ checkAuthBtn.addEventListener('click', () => {
 
             checkObj.telAuth = false;
 
-            disabledAuthBtnCheck();
-            // disabled 체크 삭제
 
             return;
         }
@@ -774,7 +755,7 @@ checkAuthBtn.addEventListener('click', () => {
         clearInterval(authTimer);
         telAuthTime.innerText = "";
 
-        telMsg.innerText = '\u2713 인증 완료'
+        telMsg.innerText = '\u2713'
         telMsg.classList.remove('error');
         telMsg.classList.add('confirm');
 
@@ -784,18 +765,25 @@ checkAuthBtn.addEventListener('click', () => {
         
         
         checkObj.telAuth = true;
-        
-        disabledAuthBtnCheck();
-        // disabled 체크 삭제
+        sendAuthBtn.disabled = true;
+        checkAuthBtn.disabled = true;
+
 
     })
 
 });
 
 // 인증 키 입력 시 버튼 활성화 확인
-smsAuthKey.addEventListener('input', () => {
+smsAuthKey.addEventListener('input', e => {
+    
+    inputKey = e.target.value;
 
-    disabledAuthBtnCheck();
+    if(inputKey.length < 6) {
+        checkAuthBtn.disabled = true;
+        return;
+    } 
+
+    checkAuthBtn.disabled = false;
 
 });
 
@@ -863,14 +851,15 @@ signUpForm.addEventListener("submit" , e => {
 
 
 
-// checkObj 현재 상태 확인
-const checkObjBtn = document.getElementById('checkObjBtn');
+// // checkObj 현재 상태 확인
+// const checkObjBtn = document.getElementById('checkObjBtn');
 
-checkObjBtn.addEventListener('click', () => {
-    console.clear(); // 이전 콘솔 값을 비웁니다
-    console.log(document.getElementById('partnerType').value);
-    console.log("Current state of checkObj:");
-    for (let key in checkObj) {
-        console.log(`${key}: ${checkObj[key]}`);
-    }
-});
+// checkObjBtn.addEventListener('click', () => {
+//     console.clear(); // 이전 콘솔 값을 비웁니다
+//     console.log("sendSmsAuthkey : " +sendSmsAuthkey);
+//     console.log(document.getElementById('partnerType').value);
+    
+//     for (let key in checkObj) {
+//         console.log(`${key}: ${checkObj[key]}`);
+//     }
+// });

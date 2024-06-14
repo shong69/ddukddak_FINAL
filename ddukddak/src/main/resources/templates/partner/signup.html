@@ -24,7 +24,7 @@
     <th:block th:replace="~{common/fragments/signupLoginMove}"></th:block>
 
     <main>
-        <form action="#" method="get" id="signUpForm" name="signUpForm">
+        <form action="/partner/signup" method="post" id="signUpForm" name="signUpForm">
             <input id="partnerType" type="hidden" name="partnerType" th:value="${choice}">
             <div class="signupContainer">
                 <!-- 약관 동의, 정보 입력 영역 -->
@@ -147,7 +147,7 @@
                                 </div>
 
                                 <!-- 테스트용 버튼 -->
-                                <button id="checkObjBtn" type="button" style="height: 40px;">현재 유효성 콘솔로 확인(테스트용)</button>
+                                <!-- <button id="checkObjBtn" type="button" style="height: 40px;">현재 유효성 콘솔로 확인(테스트용)</button> -->
                             </div>
                         </div>
                     </div>

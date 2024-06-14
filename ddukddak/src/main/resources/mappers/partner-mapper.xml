@@ -74,6 +74,22 @@
 		WHERE PARTNER_TEL = #{inputTel}
 		AND PARTNER_DEL_FL != 'Y'
 	</select>
+	
+	<insert id="signup">
+		INSERT INTO "PARTNER"
+		VALUES(
+			SEQ_PARTNER_NO.NEXTVAL,
+			#{partnerId},
+			#{partnerPw},
+			#{partnerTel},
+			#{partnerBusinessName},
+			#{partnerCeoName},
+			#{partnerBusinessNum},
+			DEFAULT,
+			DEFAULT,
+			DEFAULT,
+			#{partnerType})
+	</insert>
 
 
 </mapper>

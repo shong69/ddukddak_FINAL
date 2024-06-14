@@ -26,6 +26,11 @@ main {
     margin-bottom: 10px;
 }
 
+.logoArea1 h1 {
+    letter-spacing: 0.3em;
+    margin-left: 10.2px;
+}
+
 .logoArea1, .logoArea2 {
     display: flex;
     align-items: center;
@@ -139,6 +144,7 @@ main {
     font-size: 24px;
     display: flex;
     align-items: center; /* 중앙 정렬 추가 */
+    letter-spacing: 0.2em;
 }
 
 
