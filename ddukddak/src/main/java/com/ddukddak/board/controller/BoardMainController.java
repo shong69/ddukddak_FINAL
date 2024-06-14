@@ -10,7 +10,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.board.model.dto.BoardImg;
@@ -78,4 +81,15 @@ public class BoardMainController {
         return boardChunks;
     }
 	
+	
+	/** 게시글 좋아요 체크/해제
+	 * @param map
+	 * @return count
+	 */
+	@ResponseBody
+	@PostMapping("like")
+	public int boardLike(@RequestBody Map<String, Integer> map) {
+		
+		return service.boardLike(map);
+	}
 }
