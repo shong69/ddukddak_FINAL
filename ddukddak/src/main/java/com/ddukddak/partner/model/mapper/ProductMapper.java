@@ -1,6 +1,7 @@
 package com.ddukddak.partner.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -26,5 +27,25 @@ public interface ProductMapper {
 	 * @return
 	 */
 	List<Category> selectSmallCategory(int selectedCategory);
+
+	/** 상품 재고등록
+	 * @param map
+	 * @return
+	 */
+	int registProduct(Map<String, Object> map);
+
+	/** 상품 재고 이미지 등록
+	 * @param map
+	 * @return
+	 */
+	int insertImg(Map<String, Object> map);
+
+	/** 상품 재고 옵션 등록
+	 * @param item1
+	 * @param string
+	 * @param string2
+	 * @return
+	 */
+	int insertOption(Map<String, Object> map);
 
 }

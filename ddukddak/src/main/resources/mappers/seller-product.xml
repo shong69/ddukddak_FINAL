@@ -31,4 +31,22 @@
 		WHERE BIG_CATEGORY_NO = #{selectedCategory}
 	</select>
 	
+	<!-- 상품 재고등록 -->
+	<insert id="registProduct">
+		INSERT INTO PRODUCT
+		VALUES(SEQ_PRODUCT_NO.NEXTVAL, #{productName}, #{productPrice}, SYSDATE, DEFAULT, 'N', #{smallCategoryNo}, #{memberNo})
+	</insert>
+	
+	<!-- 상품 재고 이미지 등록 -->
+	<insert id="insertImg">
+		INSERT INTO "UPLOAD_FILE"
+		VALUES(SEQ_UPLOAD_IMG_NO.NEXTVAL, #{uploadImgPath}, #{uploadImgOgName}, #{uploadImgRename}, #{uploadImgOrder}, #{category}, SEQ_PRODUCT_NO.CURRVAL, NULL, NULL, NULL)
+	</insert>
+	
+	<!-- 상품 재고 옵션 등록 -->
+	<insert id="insertOption">
+		INSERT INTO "OPTION"
+		VALUES(SEQ_OPTION_ID.NEXTVAL, #{optionName}, #{optionValue}, #{productCount}, SEQ_PRODUCT_NO.CURRVAL)
+	</insert>
+	
 </mapper>

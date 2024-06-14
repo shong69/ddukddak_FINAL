@@ -1,6 +1,10 @@
 package com.ddukddak.partner.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,15 +18,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
+import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.partner.model.dto.Partner;
 import com.ddukddak.partner.model.service.PartnerService;
 import com.ddukddak.partner.model.service.ProductService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -83,6 +92,110 @@ public class SellerController {
 		
 		return smallCategoryList;
 	}
+	
+	@PostMapping("product/create")
+	public String registMyHouse(@RequestParam ("productName") String productName,
+								@RequestParam ("smallCategory") int smallCategory,
+								@RequestParam ("productPrice") int productPrice,
+								@RequestParam ("thumbnailImg") MultipartFile thumbnailImg,
+								@RequestParam ("subImgs") List<MultipartFile> subImgs,
+								@RequestParam (name = "optionName", required = false) List<String> optionName,
+								@RequestParam (name = "optionContent", required = false) List<String> optionContent,
+								@RequestParam (name = "optionCount", required = false) List<String> optionCount,
+								HttpServletRequest req) throws IOException {
+		
+		HttpSession session = req.getSession();
+		
+		Member loginMember = (Member)session.getAttribute("loginMember");
+	
+		log.info("object : " + productName + smallCategory + productPrice);	
+		log.info("thumbnailImg : " + thumbnailImg);	
+		log.info("subImgs : " + subImgs);	
+		log.info("optionName : " + optionName);
+		log.info("optionContent : " + optionContent);
+		log.info("optionCount : " + optionCount);
+
+		// PRODUCT 테이블 삽입
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("memberNo", loginMember.getMemberNo());
+		map.put("productName", productName);
+		map.put("smallCategoryNo", smallCategory);
+		map.put("productPrice", productPrice);
+		
+		int result1 = service.registProduct(map);
+		
+
+		// UPLOAD_FILE 삽입
+
+		List<MultipartFile> imgList = new ArrayList<>(subImgs);
+		imgList.add(0, thumbnailImg); // 다시 mainImg 를 배열 0번째 자리에 추가
+
+		int result2 = service.insertImg(smallCategory, imgList);
+
+		log.info("imgList : " + imgList);
+		
+		
+		
+		// 옵션
+		if(optionContent != null) {
+			List<List<String>> resultList1 = new ArrayList<>();
+			List<String> optionContentList = new ArrayList<>();
+			
+			// 옵션값 리스트 나누기
+			for (String item : optionContent) {
+				if ("/".equals(item)) {
+					resultList1.add(optionContentList);
+					optionContentList = new ArrayList<>();
+				} else {
+					optionContentList.add(item);
+				}
+			}
+			
+			resultList1.add(optionContentList);
+			
+			// 결과 출력
+			for (List<String> list : resultList1) {
+				log.info("resultList1 : " + list);
+			}
+			
+			// 옵션재고 리스트 나누기
+			List<List<String>> resultList2 = new ArrayList<>();
+			List<String> optionCountList = new ArrayList<>();
+			
+			for (String item : optionCount) {
+				if ("/".equals(item)) {
+					resultList2.add(optionCountList);
+					optionCountList = new ArrayList<>();
+				} else {
+					optionCountList.add(item);
+				}
+			}
+			
+			resultList2.add(optionCountList);
+			
+			// 결과 출력
+			for (List<String> list : resultList2) {
+				log.info("resultList2 : " + list);
+			}
+			
+			
+			// OPTION 삽입
+			int result3 = 0;
+			
+			for (int i = 0; i < resultList1.size(); i ++) {
+				if(!resultList1.get(i).isEmpty()) {
+					result3 += service.insertOpion(optionName.get(i), resultList1.get(i), resultList2.get(i));
+				}
+			}
+			
+		}
+
+
+		return "redirect:/partner/seller/product/create";
+	}
+
+	
 	
 	@GetMapping("product/apply")
 	public String ProductApply() {
