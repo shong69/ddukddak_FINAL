@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const selectAllCheckbox = document.querySelector('.select-all');
-    const selectItemCheckboxes = document.querySelectorAll('.select-item');
-    const approveButton = document.querySelector('.approveBtn');
-    const rejectButton = document.querySelector('.rejectBtn');
+    const selectAllCheckbox = document.querySelector('thead input[type="checkbox"]');
+    const selectItemCheckboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+    const deleteBtn = document.querySelector('.deleteBtn');
+    const confirmButtons = document.querySelectorAll('.confirmBtn');
+    const refuseButtons = document.querySelectorAll('.refuseBtn');
 
     // 전체 선택 체크박스 클릭 이벤트
     selectAllCheckbox.addEventListener('click', () => {
@@ -24,21 +25,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 승인 버튼 클릭 이벤트
-    approveButton.addEventListener('click', () => {
-        handleApproval('approve');
+    confirmButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            handleApproval('approve', button);
+        });
     });
 
     // 거절 버튼 클릭 이벤트
-    rejectButton.addEventListener('click', () => {
-        handleApproval('reject');
+    refuseButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            handleApproval('reject', button);
+        });
     });
 
-    function handleApproval(action) {
+    function handleApproval(action, button) {
         const selectedItems = [];
         selectItemCheckboxes.forEach(checkbox => {
             if (checkbox.checked) {
                 const row = checkbox.closest('tr');
-                const partnerNo = row.querySelector('[th:text="*{partnerNo}"]').textContent;
+                const partnerNo = row.querySelector('td:nth-child(2)').textContent;
                 selectedItems.push(partnerNo);
             }
         });
@@ -57,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.success) {
                     alert(`${action === 'approve' ? '승인' : '거절'} 처리가 완료되었습니다.`);
                     // 필요한 경우 페이지 새로고침 또는 행 업데이트
+                    window.location.reload();
                 } else {
                     alert('처리 중 오류가 발생했습니다.');
                 }
