@@ -76,6 +76,36 @@ INSERT INTO "PARTNER"
 VALUES(SEQ_PARTNER_NO.NEXTVAL, 'sample', '$2a$10$YXSsczaCIZZkKbF17AdY1OBukX2ou43eBVGel7WyJD2ex87FeAiSC', '01000000000', 
 '(주)샘플 데이터', '김대기', '8888888888', DEFAULT, DEFAULT, DEFAULT, 2);
 
+
+BEGIN
+    FOR i IN 1..10 LOOP
+        INSERT INTO "PARTNER" 
+        VALUES (
+            SEQ_PARTNER_NO.NEXTVAL, 
+            'sample', 
+            '$2a$10$YXSsczaCIZZkKbF17AdY1OBukX2ou43eBVGel7WyJD2ex87FeAiSC', 
+            '01000000000', 
+            '(주)샘플 데이터' || i, 
+            '김대기', 
+            '8888888888', 
+            DEFAULT, 
+            DEFAULT, 
+            DEFAULT, 
+            2
+        );
+    END LOOP;
+END;
+
+
+SELECT * FROM "PARTNER";
+SELECT * FROM "SMS_AUTH";
+
+UPDATE "PARTNER" SET 
+PARTNER_DEL_FL = 'W',
+PARTNER_PASS = 0
+WHERE PARTNER_ID = 'sample'
+AND PARTNER_DEL_FL = 'N';
+
 COMMIT;
 ROLLBACK;
 
@@ -196,3 +226,12 @@ FROM "PARTNER"
 WHERE PARTNER_DEL_FL = 'W'
 AND PARTNER_PASS = 0
 ORDER BY PARTNER_NO DESC;
+
+--
+UPDATE "PARTNER" SET
+
+		PARTNER_DEL_FL = 'N',
+		PARTNER_PASS = 1	
+
+WHERE PARTNER_NO = 42
+AND PARTNER_DEL_FL = 'W';

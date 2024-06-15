@@ -27,7 +27,8 @@ public class LoginFilter implements Filter{
 														            "/partner/checkId",
 														            "/partner/checkTel",
 														            "/partner/confirm",
-														            "/partner/refuse"
+														            "/partner/refuse",
+														            "partner/multi"
 														            );
 			 				
 	@Override

@@ -1,8 +1,10 @@
 package com.ddukddak.sms.model.service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import net.nurigo.sdk.message.response.MultipleDetailMessageSentResponse;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 
 public interface SmsService {
@@ -18,6 +20,21 @@ public interface SmsService {
 	 * @return
 	 */
 	int checkSmsAuthKey(Map<String, Object> map);
+
+	/** 파트너 가입 여부 SMS 발송
+	 * @param string
+	 * @param toNumber
+	 * @return
+	 */
+	SingleMessageSentResponse sendPartnerSms(String passStatus, String toNumber);
+
+	/** 파트너 다수 SMS 발송 - 가입
+	 * @param action
+	 * @param partners
+	 * @return
+	 */
+	MultipleDetailMessageSentResponse sendPartnerManySms(String action, List<Map<String, String>> partners);
+
 	
 	
 }
