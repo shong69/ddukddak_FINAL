@@ -82,8 +82,7 @@ public class ManagerServiceImpl implements ManagerService {
 		
 	    for (Map<String, String> partner : partners) {
 	        
-	    	String partnerNo = partner.get("partnerNo");
-	    	String partnerTel = partner.get("partnerTel");
+	    	String partnerNo = partner.get("partnerNo");	    	
 	        
 	    	if(action.equals("confirm")) {
 	    		

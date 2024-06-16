@@ -90,11 +90,19 @@ bsNumAuthBtn.addEventListener('click', () => {
     const businessNumShow = bsNum1 + '-' + bsNum2 + '-' + bsNum3;
     const businessNum = bsNum1 +  bsNum2 + bsNum3;
 
-    if(bsNum1.length !== 3 || bsNum2.length !== 2 || bsNum3.length !== 5) {
-        alert('사업자등록번호 형식이 올바르지 않습니다. 다시 입력해 주세요.');
-        
-        return;
+    // 숫자 제외 막아주기
+    const onlyNumbers = /^[0-9]+$/;
+
+
+    if(bsNum1.length !== 3 || bsNum2.length !== 2 || bsNum3.length !== 5 || 
+        !onlyNumbers.test(bsNum1) || !onlyNumbers.test(bsNum2) || !onlyNumbers.test(bsNum3)) {
+            alert('사업자등록번호 형식이 올바르지 않습니다.다시 입력해 주세요.');
+            businessNumAuthMsg.innerText = '';
+            businessNumAuthMsg.classList.remove('error', 'confirm');
+
+            return;
     }
+
 
     try {  
 
@@ -117,7 +125,11 @@ bsNumAuthBtn.addEventListener('click', () => {
             businessNumAuthMsg.classList.remove('error');
             businessNumAuthMsg.classList.add('confirm');
             checkObj.partnerBusinessNum = true;
+
             bsNum.value = businessNumShow; // 인증 시에만 값 넣기
+            
+
+
             // disabled 체크 삭제
         })
         .catch(err => {

@@ -24,58 +24,22 @@
 	<update id="passConfirm">
 		UPDATE "PARTNER" SET
 		PARTNER_DEL_FL = 'N',
-		PARTNER_PASS = 1
+		PARTNER_PASS = 1,
+		ENROLL_DATE = SYSDATE
 		WHERE PARTNER_NO = #{partnerNo}
 		AND PARTNER_DEL_FL = 'W'
 	</update>
 	
-	<!-- 파트너 가입 승인 업데이트 -->
+	<!-- 파트너 가입 거절 업데이트 -->
 	<update id="passRefuse">
 		UPDATE "PARTNER" SET
 		PARTNER_DEL_FL = 'Y',
-		PARTNER_PASS = -1
+		PARTNER_PASS = -1,
+		ENROLL_DATE = SYSDATE
 		WHERE PARTNER_NO = #{partnerNo}
 		AND PARTNER_DEL_FL = 'W'
 	</update>
 	
-	<!-- 파트너 다중 업데이트 -->
-<!-- 	<update id="updateMulti" parameterType="java.util.List">
-		<foreach collection="partners" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
-			
-			
-			UPDATE "PARTNER" SET
-			
-			<if test='action == "confirm"'>
-				PARTNER_DEL_FL = 'N',
-		        PARTNER_PASS = 1
-	        </if>
-	        
-			<if test='action == "refuse"'>
-				PARTNER_DEL_FL = 'Y',
-		        PARTNER_PASS = -1
-	        </if>
-	        
-			WHERE PARTNER_NO = #{item.partnerNo}
-			AND PARTNER_DEL_FL = 'W'
-			
-		</foreach>
-	</update> -->
-		<!-- 파트너 가입 승인 업데이트 -->
-	<update id="passConfirm1">
-		UPDATE "PARTNER" SET
-		PARTNER_DEL_FL = 'N',
-		PARTNER_PASS = 1
-		WHERE PARTNER_NO = #{partnerNo}
-		AND PARTNER_DEL_FL = 'W'
-	</update>
-	
-	<!-- 파트너 가입 승인 업데이트 -->
-	<update id="passRefuse1">
-		UPDATE "PARTNER" SET
-		PARTNER_DEL_FL = 'Y',
-		PARTNER_PASS = -1
-		WHERE PARTNER_NO = #{partnerNo}
-		AND PARTNER_DEL_FL = 'W'
-	</update>
+
 	
 </mapper>

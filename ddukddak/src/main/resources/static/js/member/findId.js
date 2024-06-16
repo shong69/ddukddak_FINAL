@@ -130,12 +130,14 @@ emailNm.addEventListener('input', e => {
     if(emailNmValue.trim().length === 0) {
         emailNm.classList.add('errorB');
         checkEmailObj.emailNm = false;
+        resetAuthStates();
         return;
     }
 
     if(!regExpName.test(emailNmValue)) {
         emailNm.classList.add('errorB');
         checkEmailObj.emailNm = false;
+        resetAuthStates();
         return;
     }
 
@@ -162,6 +164,7 @@ inputEmail.addEventListener('focus', e => {
         emailMsg.innerText = '이메일을 입력해 주세요.';
         emailMsg.classList.add('errorC');
         checkEmailObj.email = false;
+        resetAuthStates();
     }
 })
 
@@ -188,6 +191,7 @@ inputEmail.addEventListener('input', e => {
         emailMsg.innerText = '이메일을 입력해 주세요.';
         emailMsg.classList.add('errorC');
         checkEmailObj.email = false;
+        resetAuthStates();
         return;
     }
 
@@ -197,6 +201,7 @@ inputEmail.addEventListener('input', e => {
         emailMsg.innerText = '이메일을 주소를 다시 확인해 주세요.';
         emailMsg.classList.add('errorC');
         checkEmailObj.email = false;
+        resetAuthStates();
         return;
     }
 
@@ -421,12 +426,14 @@ telNm.addEventListener('input', e => {
     if(telNmValue.trim().length === 0) {
         telNm.classList.add('errorB');
         checkTelObj.telNm = false;
+        resetAuthStates();
         return;
     }
 
     if(!regExpName.test(telNmValue)) {
         telNm.classList.add('errorB');
         checkTelObj.telNm = false;
+        resetAuthStates();
         return;
     }
 
@@ -439,7 +446,7 @@ telNm.addEventListener('input', e => {
 
 
 // 정규식: 전화번호
-const regExpTel = /^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
+const regExpTel = /^01[0-9]{1}[0-9]{4}[0-9]{4}$/;
 
 
 
@@ -478,6 +485,7 @@ inputTel.addEventListener('input', e => {
         telMsg.classList.add('errorC');
         inputTel.classList.add('errorB');
         checkTelObj.tel = false;
+        resetAuthStates();
         return;
     } 
     
@@ -488,6 +496,7 @@ inputTel.addEventListener('input', e => {
         telMsg.classList.add('errorC');
         inputTel.classList.add('errorB');
         checkTelObj.tel = false;
+        resetAuthStates();
 
         return;
     }
