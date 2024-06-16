@@ -77,4 +77,84 @@ public interface ProductMapper {
 	 */
 	int insertOption(Map<String, Object> map);
 
+	/** 판매관리 판매상품 개수조회
+	 * @return
+	 */
+	int selectApplyListCount();
+
+	/** 판매관리 판매상품 조회
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Product> selectApplyList(RowBounds rowBounds);
+	
+	/** 판매관리 판매상품 개수조회 상태
+	 * @return
+	 */
+	int selectApplyListCountStatus(String status);
+	
+	/** 판매관리 판매상품 조회 상태
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Product> selectApplyListStatus(String status, RowBounds rowBounds);
+
+	/** 판매관리 판매상품 개수조회 메인카테고리
+	 * @param mainSort
+	 * @return
+	 */
+	int selectApplyListCountMainSort(int mainSort);
+
+	/** 판매관리 판매상품 조회 메인카테고리
+	 * @param mainSort
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Product> selectApplyListMainSort(int mainSort, RowBounds rowBounds);
+	
+	/** 판매관리 판매상품 개수조회 메인카테고리 상태
+	 * @param mainSort
+	 * @return
+	 */
+	int selectApplyListCountMainSortStatus(Map<String, Object> newMap);
+	
+	/** 판매관리 판매상품 조회 메인카테고리 상태
+	 * @param mainSort
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Product> selectApplyListMainSortStatus(Map<String, Object> newMap, RowBounds rowBounds);
+
+	/** 판매관리 판매상품 개수조회 카테고리
+	 * @param sort
+	 * @return
+	 */
+	int selectApplyListCountSort(int sort);
+
+	/** 판매관리 판매상품 조회 카테고리
+	 * @param sort
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Product> selectApplyListSort(int sort, RowBounds rowBounds);
+	
+	/** 판매관리 판매상품 개수조회 카테고리 상태
+	 * @param sort
+	 * @return
+	 */
+	int selectApplyListCountSortStatus(Map<String, Object> newMap);
+	
+	/** 판매관리 판매상품 조회 카테고리 상태
+	 * @param sort
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Product> selectApplyListSortStatus(Map<String, Object> newMap, RowBounds rowBounds);
+
+	/** 판매상태 변경
+	 * @param newMap
+	 * @return
+	 */
+	int changeStatus(Map<String, Object> newMap);
+
 }

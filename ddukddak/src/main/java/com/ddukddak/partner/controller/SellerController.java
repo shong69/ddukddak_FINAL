@@ -39,25 +39,26 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-@SessionAttributes("{loginPartnerMember}")
+//@SessionAttributes("{loginPartnerMember}")
 public class SellerController {
 	
 	private final ProductService service;
 	private final eCommerceService eCommerceService;
 
+	// 재고관리
 	@GetMapping("product/create")
 	public String ProductCreate(
 			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
-			@RequestParam(value="sort", required=false, defaultValue="0") int mainSort,
+			@RequestParam(value="mainSort", required=false, defaultValue="0") int mainSort,
 			@RequestParam(value="sort", required=false, defaultValue="0") int sort,
-			@SessionAttribute("loginPartnerMember") Partner loginPartnerMember, 
+			//@SessionAttribute("loginPartnerMember") Partner loginPartnerMember, 
 			RedirectAttributes ra,
 			Model model) {
 		
-		if (loginPartnerMember.getPartnerType() != 2) {
-            ra.addFlashAttribute("message", "접근 제한된 서비스 입니다");
-            return "redirect:/partner/main";
-        } 
+//		if (loginPartnerMember.getPartnerType() != 2) {
+//            ra.addFlashAttribute("message", "접근 제한된 서비스 입니다");
+//            return "redirect:/partner/main";
+//        } 
 		
 		// 대분류 카테고리 선택
 		List<Category> categoryList = eCommerceService.selectCategory();
@@ -79,6 +80,7 @@ public class SellerController {
         return "partner/seller/product/create";
 	}
 	
+	// 판매등록
 	@PutMapping("product/sellApplyProduct")
 	@ResponseBody
 	public int sellApplyProduct(@RequestBody List<Object> selectedValues) {
@@ -96,7 +98,8 @@ public class SellerController {
 		
 		return smallCategoryList;
 	}
-	
+
+	// 재고등록
 	@PostMapping("product/create")
 	@ResponseBody
 	public int registMyHouse(@RequestParam ("productName") String productName,
@@ -200,10 +203,47 @@ public class SellerController {
 	}
 
 	
-	
+
+	// 판매관리
 	@GetMapping("product/apply")
-	public String ProductApply() {
+	public String ProductApply(
+			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+			@RequestParam(value="mainSort", required=false, defaultValue="0") int mainSort,
+			@RequestParam(value="sort", required=false, defaultValue="0") int sort,
+			@RequestParam(value="status", required=false, defaultValue="A") String status,
+			Model model
+			) {
+		
+		// 대분류 카테고리 선택
+		List<Category> categoryList = eCommerceService.selectCategory();
+		
+		model.addAttribute("categoryList", categoryList);
+		
+		// 소분류 카테고리 선택
+		List<Category> smallCategoryList = eCommerceService.selectSmallCategory();
+		
+		model.addAttribute("smallCategoryList", smallCategoryList);
+		
+		// 재고상품 조회
+		Map<String, Object> map = service.selectApplyList(mainSort, sort, status, cp);
+		
+		model.addAttribute("applyList", map.get("applyList"));
+		model.addAttribute("pagination", map.get("pagination"));
+				
+				
 		return "partner/seller/product/apply";
+	}
+	
+	// 판매상태 변경
+	@PostMapping("product/changeStatus")
+	@ResponseBody
+	public int changeStatus(@RequestBody Map<String, Object> map) {
+		
+		log.info("map : " + map);
+		
+		int result = service.changeStatus(map);
+		
+		return result;
 	}
 	
 	@GetMapping("product/applyProduct")
