@@ -16,10 +16,11 @@ import lombok.ToString;
 public class Message {
 	private int messageNo;
     private String messageContent;
-    private String readFlag;
-    private int senderMemberNo; //멤버
-    private int senderCotractorNo; //파트너
-    private int targetNo; //파트너, 멤버
+    private String readFl;
+    private int senderNo; //메시지 보낸 회원 번호
+    private int targetNo; //메세지 송신 받을 사람 회원번호(파트너 + 일반회원)
     private int chattingNo;
     private String sendTime;
+    private String senderType; // 메세지 수신 시 발신자가 일반회원인지 시공사인지 구분
+    private String targetType; //수신자 타입
 }
