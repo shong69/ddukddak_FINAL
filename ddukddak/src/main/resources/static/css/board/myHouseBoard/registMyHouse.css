@@ -17,7 +17,7 @@
 
 .mainArea {
     margin: 50px;
-    width: 900px;
+    width: 850px;
 }
 
 /* 페이지 타이틀 */
@@ -32,7 +32,7 @@
 }
 
 .titleInput > input {
-    width: 900px;
+    width: 850px;
     height: 40px;
     padding: 5px 10px;
     font-size: 18px;
@@ -44,7 +44,7 @@
 }
 
 .contentInput textarea {
-    width: 900px;
+    width: 850px;
     resize: none;
     border-radius: 10px;
     height: 300px;

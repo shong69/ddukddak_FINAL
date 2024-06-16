@@ -41,3 +41,6 @@ if (viewMoreBtn != null) {
 //     });
 // }
 
+document.querySelector("#insertBtn").addEventListener("click", () => {
+    location.href = "/partner/registProject";
+});

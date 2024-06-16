@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +49,6 @@ public class MyHouseBoardController {
 							  @RequestParam(value="query", required = false) String query) {
 		
 		Map<String, Object> map = null;
-		
 		
 		// 검색 X
 		if(query == null) {
@@ -234,7 +234,23 @@ public class MyHouseBoardController {
 	}
 	
 	
+	@DeleteMapping("deleteMyHouse")
+	@ResponseBody
+	public int deleteMyHouse(@RequestParam("boardNo") int boardNo,
+							 @RequestParam("boardCode") int boardCode,
+							 RedirectAttributes ra) {
+		
+		log.info("boardCode : " + boardCode);
+
+		return service.deleteMyHouse(boardNo);
+	}
 	
+	@GetMapping("updateMyHouse")
+	public String updateMyHouse(@RequestParam("boardNo") int boardNo) {
+		
+		return "board/myHouseBoard/updateMyHouse";
+	}
+
 	
 }
 

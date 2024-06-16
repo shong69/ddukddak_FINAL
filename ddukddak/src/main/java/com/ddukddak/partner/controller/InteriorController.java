@@ -1,6 +1,7 @@
 package com.ddukddak.partner.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -17,23 +18,23 @@ import lombok.RequiredArgsConstructor;
 @SessionAttributes({"loginPartnerMember"})
 public class InteriorController {
 	
-	@GetMapping("interiorList")
-	public String interiorList() {
-		
-		return "partner/interior/interiorList";
-		
-	}
-
-	@GetMapping("interiorPortfolio")
-	public String interiorPortfolio() {
-		return "partner/interior/interiorPortfolio";
-	}
-
-	
-	@GetMapping("interiorPortfolioDetail")
-	public String interiorPortfolioDetail() {
-		return "partner/interior/interiorPortfolioDetail";
-	}
+//	@GetMapping("interiorList")
+//	public String interiorList(Model model) {
+//		
+//		return "partner/interior/interiorList";
+//		
+//	}
+//
+//	@GetMapping("interiorPortfolio")
+//	public String interiorPortfolio() {
+//		return "partner/interior/interiorPortfolio";
+//	}
+//
+//	
+//	@GetMapping("interiorPortfolioDetail")
+//	public String interiorPortfolioDetail() {
+//		return "partner/interior/projectDetail";
+//	}
 	
 	
 	@GetMapping("interiorPortfolioEditMain")

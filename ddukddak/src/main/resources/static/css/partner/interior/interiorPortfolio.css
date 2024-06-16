@@ -92,6 +92,30 @@
     border-radius: 0px;
 }
 
+.insertBtnArea {
+    width: 100%;
+    text-align: end;
+}
+
+.insertBtn {
+    width: 150px; 
+    height: 40px;
+    border-radius: 10px;
+
+    /* 폰트 */
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.insertBtn:hover {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+.insertBtn:active {
+    background-color: var(--gray1);
+    color: var(--white);
+}
+
 .overlay {
     position: absolute;
     top: 0;

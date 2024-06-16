@@ -72,6 +72,10 @@ section {
     margin: 0 30px;
 }
 
+.interiorPrice {
+    padding: 0 10px;
+}
+
 .searchInterior table td {
     padding-bottom: 30px;
 }

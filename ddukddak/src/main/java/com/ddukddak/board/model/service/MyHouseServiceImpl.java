@@ -211,6 +211,14 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 	}
 
 
+	// 집들이 게시글 삭제
+	@Override
+	public int deleteMyHouse(int boardNo) {
+		
+		return mapper.deleteMyHouse(boardNo);
+	}
+
+
 }
 
 
