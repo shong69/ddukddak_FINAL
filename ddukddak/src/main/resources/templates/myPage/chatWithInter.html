@@ -33,8 +33,10 @@
                         <input type="search" id="targetInput" placeholder="닉네임 또는 이메일을 입력하세요" autocomplete="off">
                         <div id="inputCloseBtn" style="cursor:pointer"><i class="fa-solid fa-trash"></i></div>
                     </div>
-        
-                    <ul id="resultArea"></ul>
+                    <div class="reaultDiv">
+                        <ul id="resultArea"></ul>
+                    </div>
+                    
                 </div>
                 <div class="chatting-area-box">
                     <div class="chatting-header">
@@ -46,7 +48,7 @@
                     <div class="chatting-area">
                         <ul class="chatting-list">
                             <th:block th:each="room : ${roomList}">
-                                <!-- <li class="chatting-item" th:chat-no="${room.chattingNo}" th:target-no="${room.targetNo}">
+                                <li class="chatting-item" th:chat-no="${room.chattingNo}" th:target-no="${room.targetNo}">
                                     <div class="item-header">
             
                                         <img class="list-profile" th:if="${room.targetProfile}" src="/images/default/main.jpg">
@@ -55,15 +57,15 @@
                                     </div>
                                     <div class="item-body">
                                         <p>
-                                            <span class="target-name" th:text="${room.targetNickName}">유저이</span>
+                                            <span class="target-name" th:text="${room.targetNickName}">닉네임</span>
                                             <span class="recent-send-time" th:text="${room.sendTime}">2024.06.03</span>
                                         </p>
                                         <div>
-                                            <p class="recent-message" th:utext="${room.lastMessage}">왜</p>
+                                            <p class="recent-message" th:utext="${room.lastMessage}">채팅 내용</p>
                                             <p th:if="${room.notReadCount>0}" class="not-read-count" th:text="${room.notReadCount}"></p>
                                         </div>
                                     </div>
-                                </li> -->
+                                </li>
                             </th:block>
                         </ul>
             
@@ -71,41 +73,30 @@
                             <h1>채팅방을 선택해주세요</h1>	
                         </div>
                         
-                        <div class="chatting-content">
-                            <ul class="display-chatting display-none">
+                        <div class="chatting-content display-none">
+                            <ul class="display-chatting"></ul>
 
-                                <!-- <li class="target-chat">
-                                    <img src="/images/profile/main.jpg">
-                                    <div>
-                                        <b>유저이</b><br>
-                                        <p class="chat">야</p>
-                                        <span class="chatDate">2024.06.03 11:45</span>
-                                    </div>
-                                </li>
-
-                                <li class="my-chat">
-                                    <span class="chatDate">2024.06.03 16:33</span>
-                                    <p class="chat">왜</p>
-                                </li> 
-
-                            </ul>
-                        
                             <div class="input-area">
-                                <textarea id="inputChatting" rows="3"></textarea>
+                                <textarea id="inputChatting" rows="5"></textarea>
             
                                 <button id="send">보내기</button>
                             </div>
-                        </div>-->
+                        </div>
                     </div>
                 </div>
                 
             </section>
         </section>
-        <script src="/js/myPage/interChat.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-        <script th:inline="javascript">
-            const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원 번호";
-        </script>
-        <script src="/js/myPage/interChat.js"></script>
+    </main>
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script th:inline="javascript">
+		// 로그인한 회원 번호
+		const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원 번호";
+	</script>
+    <script src="/js/myPage/interChat.js"></script>
+
+
 </body>
+
 </html>

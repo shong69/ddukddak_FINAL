@@ -1,40 +1,3 @@
-/*전체 페이지*/
-.myPage-row2{
-	background-color: #eee;
-}
-.myPage-main{
-    min-width: 1400px;
-    min-height: 1200px;
-}
-
-
-.category-name{
-	margin-top: 30px;
-    text-align: center;
-}
-
-/* 채팅방 생성 버튼 */
-#openChatRoom {
-	width: 120px;
-}
-
-/*  채팅방 생성 모달*/
-#chat-modal {
-	justify-content: center;
-	align-items: center;
-}
-
-.modal-body {
-	text-align: center;
-	background-color: white;
-	padding: 50px;
-	border-radius: 20px;
-}
-
-#chatRoomTitle {
-	width: 250px;
-}
-
 
 /* 팝업레이어 */
 #addTargetPopupLayer{
@@ -55,8 +18,8 @@
 
 #closeBtn{
     position: absolute;
-	top: -10px;
-    right: -25px;
+	right:5px;
+	top: -0;
     font-size:25px;
     cursor: pointer;
 }
@@ -65,11 +28,14 @@
 .interInfo{
 	display : flex;
 	justify-content: space-between;
+	width : 400px;
 }
 
 .target-input-area{
 	width: 100%;
 	height: 40px;
+	margin-top:30px;
+	margin-left: 25px;
 	display:flex;
 	flex-direction: row;
 }
@@ -77,52 +43,71 @@
 
 
 #targetInput{
-	width: 100%;
+	width: 90%;
     height: 100%;
     outline: none;
     border: none;
-    padding: 3px 10px;
+    padding: 10px 10px;
     font-size: 15px;
 }
 #inputCloseBtn{
 	position:absolute;
-	left:440px;
-
+	right:30px;
+	top:40px;
+	width: 18px;
+	margin : auto;
+	color:#a3a3a3;
 }
 input::-webkit-search-cancel-button{
 	opacity: 0;
 }
-#resultArea{list-style: none;}
+.reaultDiv{
+	height: 500px;
+	overflow: auto;
+}
+
+#resultArea{
+	list-style: none;
+	height: 100%;
+}
 
 .result-row{
-	width: 100%;
+	width: 90%;
 	height: 50px;
 	padding: 5px;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
+	margin: auto;
 }
 
 .result-row:hover{	background-color: #dadada;}
 
 .result-row > *{ 
-	margin-right: 10px;
 	user-select: none;
 }
 
 
 .result-row-img{ 
-	width: 40px;
-	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	border-radius: 100%;
+	margin-right: 15px;
 }
 
-
+.phoneNumSpan,
+.emailSpan{
+	font-size: 12px;
+	font-weight: 200;
+	color:#5a5a5a;
+	margin-left: auto;
+	margin-top: 5px;
+	letter-spacing: 1px;
+}
 /* 채팅창 영역 */
 .chatting-area-box{
 	display: flex;
 	flex-direction: column;
-	margin-top: 100px;
-	margin-left: 200px;
 	height: 800px;
 	width: 1100px;
 	box-shadow: 0 3px 3px rgba(0,0,0,0.2), 0 3px 3px rgba(0,0,0,0.2);
@@ -132,11 +117,10 @@ input::-webkit-search-cancel-button{
 .chatting-header{
 	border-top-left-radius: 13px;
 	border-top-right-radius: 13px;
-    background-color: #ffffff;
 }
 .chatting-header1{
 	height: 50px;
-	
+	background-color: #46633e;
 	border-top-left-radius: 13px;
 	border-top-right-radius: 13px;
 	border-bottom: 1px solid #d4d4d4;
@@ -164,7 +148,7 @@ input::-webkit-search-cancel-button{
 #addTarget{
 	font-size: 23px;
 	background-color: transparent;
-    color: #3A732A;
+    color: #fcfcf3;
     cursor: pointer;
 	margin:15px 0 0 25px;
 }
@@ -185,7 +169,12 @@ input::-webkit-search-cancel-button{
 }
 
 .chatting-item > div{ height: 100%; text-align: center;}
-.item-header{ width : 25%; }
+.item-header{ 
+	width : 25%; 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .item-body{ 
 	width : 75%; 
 	padding : 2px 0;
@@ -193,34 +182,40 @@ input::-webkit-search-cancel-button{
 .item-body> p{ 
 	display: flex;
 	justify-content: space-between;
+	margin-top: 10px;
 }
 
 .chatting-item.select{
 	background-color: #ddd;
 }
-
+.chatting-item.select .recent-send-time{
+	color : black;
+}
 
 .list-profile{ 
 	max-width: 50px;
     max-height: 50px;
 	border-radius: 50%;
+	margin:auto 0;
 }
 
 .target-name{
 	font-size: 1em;
 	font-weight: bold;
+	display: flex;
 }
 
 .recent-send-time{
 	margin-right: 5px;
 	font-size: 12px;
-	color:#dadada;
+	color:#a0a0a0;
 }
 
 
 .item-body > div{
 	display: flex;
 	justify-content: space-between;
+	font-size: 14px;
 }
 
 .recent-message{
@@ -240,22 +235,24 @@ input::-webkit-search-cancel-button{
 }
 
 .not-read-count{
-	width: 25px;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background-color: red;
+	background-color: rgb(255, 72, 0);
     color: white;
-    font-size: 12px;
-    margin: 10px 10px 0 0;
+    font-size: 11px;
+	font-weight: 100;
+	display:flex;
+	justify-content: center;
+    align-items: center;
+	margin-left: 10px;
 }
 
 
 /* 채팅 내용 */
 .chatting-content{
 	width: 70%;
+	max-height: 750px;
 }
 
 .display-none {
@@ -264,13 +261,16 @@ input::-webkit-search-cancel-button{
 
 .prev-message{
 	width: 70%;
+	background-color: #e9e9e9;
 }
 
 .prev-message h1{
 	text-align: center;
 	align-items: center;
 	line-height: 600px;
-	color: #dadada;
+	font-weight: 400;
+	color: #1c1c1c;
+	
 }
 
 .display-chatting {
@@ -279,9 +279,18 @@ input::-webkit-search-cancel-button{
 	overflow: auto;
 	list-style: none;
 	padding: 30px;
-	background-color: #fffaf0c4;
+	background-color: #fffcf5c4;
 }
-
+.display-chatting::-webkit-scrollbar{
+	width:12px;
+}
+.display-chatting::-webkit-scrollbar-thumb{
+	background-color:#46633e;
+	border-radius: 8px;
+}
+.display-chatting::-webkit-scrollbar-track{
+	background-color: white;
+}
 .display-chatting > li{
 	margin: 10px 0;
 }
@@ -295,18 +304,17 @@ input::-webkit-search-cancel-button{
 	margin-right: 15px;
 	border-radius: 50%;
 }
-.target-name{
-	font-size: 13px;
-}
+
 .chat {
 	display: inline-block;
 	border-radius: 9px;
-	padding: 10px 15px 10px 15px;
+	padding: 8px 12px;
 	background-color: #eee;
 	text-align: left;
 	max-width: 500px;
 	word-break: break-all;
 	white-space: pre-wrap;
+	line-height: 20px;
 }
 
 
@@ -314,47 +322,47 @@ input::-webkit-search-cancel-button{
 	height: 80px;
 	width: 100%;
 	display: flex;
-    transform: translateY(-5px);
 }
 
 #inputChatting {
 	padding: 10px;
-	font-size: 1.3em;
+	font-size: 1em;
 	width: 80%;
 	resize: none;
 	border: 1px solid #dadada;
-	border-top-left-radius: 9px;
-    border-bottom-left-radius: 9px;
-    outline-color: #00663a;
-    word-wrap: normal;
-    white-space: pre-wrap;
-}
-
-#inputChatting:active {
-    padding: 10px;
+	border-radius: 9px;
+    outline-color: #aac8a2;
 }
 
 #send {
 	width: 20%;
 	font-size: 15px;
-	background-color: #00663a;
+	background-color: #aac8a2;
 	color: #fffef0;
-    border-top-right-radius: 9px;
-    border-bottom-right-radius: 9px;
+	border-radius: 9px;
 	border:none;
+	cursor: pointer;
+	animation-duration: .2s;
 }
-
+#send:active{
+	background-color: #aac8a2;
+	box-shadow: inset 0.4px 1.5px 12px #6c6c6c;
+	cursor: pointer;
+}
 .my-chat {
 	text-align: right;
 }
 
 .my-chat>p {
-	background-color: #00663a;
-	color: #fffef0;
+	background-color: #aac8a2;
+	color: #000000;
 }
 
 .chatDate {
-	font-size: 9px;
+	font-size: 11px;
 	color: rgb(90, 90, 90);
+	margin-right: 4px;
+	position: relative;
+    top: 10px;
 }
 

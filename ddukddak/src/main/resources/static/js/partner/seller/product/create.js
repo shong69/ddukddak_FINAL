@@ -8,58 +8,6 @@ const bigCategory = document.querySelector("#bigCategory");
 const smallcategory = document.querySelector("#smallCategory");
 const price = document.querySelector("#price");
 
-var mainCategory = document.getElementById('mainCategory');
-var subCategory = document.getElementById('subCategory');
-
-function getSortValueFromUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const sortValue = urlParams.get('sort');
-    return sortValue;
-}
-
-// 예시: 페이지 로딩 시 sort 파라미터 값 출력
-const sortValue = getSortValueFromUrl();
-console.log('sort 파라미터 값:', sortValue);
-
-/* 상품분류 선택 시 해당 상품 나오게 */
-if(sortValue == null) {
-    mainCategory.value = 0;
-}else {
-    mainCategory.value = sortValue;
-}
-
-mainCategory.addEventListener('change', () => {
-
-    const options = mainCategory.getElementsByTagName('option');
-
-    for(let i = 0; i < options.length; i ++) {
-        var optionSelected = "${sort ==" + (i) + "}"
-        options[i].setAttribute('th:selected', optionSelected);
-        options[i].setAttribute('value', i);
-    }
-
-    const selectedOption = mainCategory.value;
-    const currentUrl = new URL(window.location.href);
-    currentUrl.searchParams.set('sort', selectedOption);
-    window.location.href = currentUrl;
-});
-
-subCategory.addEventListener('change', () => {
-
-    const options = subCategory.getElementsByTagName('option');
-
-    for(let i = 0; i < options.length; i ++) {
-        var optionSelected = "${sort ==" + options[i].value + "}"
-        options[i].setAttribute('th:selected', optionSelected);
-    }
-
-    const selectedOption = subCategory.value;
-    const currentUrl = new URL(window.location.href);
-    currentUrl.searchParams.set('sort', selectedOption);
-    window.location.href = currentUrl;
-});
-
-
 
 /* 전체선택버튼 */
 const selectAll = document.querySelector('#selectAllCheckBox');
@@ -89,6 +37,21 @@ for (let i = 0; i < productPriceElements.length; i++) {
     productPriceElements[i].textContent = formatNumberWithCommas(productPrice);
     productPriceElements[i].innerText += '원';
 }
+
+// 상품제목 글자수제한
+function truncateText(text, maxLength) {
+    return text.length > maxLength ? text.slice(0, maxLength - 3) + "..." : text;
+}
+
+const itemTitle = document.querySelectorAll(".productName");
+
+itemTitle.forEach(elements => {
+    const longText = elements.innerHTML;
+    const truncated = truncateText(longText, 40);
+    console.log(truncated);
+
+    elements.innerHTML = truncated;
+});
 
 
 // 판매등록 버튼 클릭
