@@ -32,4 +32,7 @@ public class Partner {
 	//	파트너 타입 -> 1: 시공사 /2: 판매사
 	private int partnerType;
 	
+	// 파트너 프로필 이미지
+	private String profileImg;
+	
 }

@@ -95,7 +95,7 @@ const selectCommentList = () => {
           commentContainer.append(commentUser, commentContentArea);
         }
 
-        ul.prepend(commentContainer);
+        ul.append(commentContainer);
       }
     })
     .catch(error => console.error('Error fetching comments:', error));
@@ -126,7 +126,7 @@ if (insertComment != null) {
       "memberNo": loginMemberNo
     };
 
-    fetch("/comment", {
+    fetch("/comment/listAndCount", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -308,6 +308,6 @@ function redirectToLogin() {
   window.location.href = `/member/login?returnUrl=${encodeURIComponent(currentUrl)}`;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  selectCommentList();
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//   selectCommentList();
+// });

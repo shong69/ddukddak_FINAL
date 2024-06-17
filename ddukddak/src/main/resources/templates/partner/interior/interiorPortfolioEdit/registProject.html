@@ -25,7 +25,7 @@
                 <h1>프로젝트 추가</h1>
             </div>
 
-            <form>
+            <form action="/partner/registProject" method="POST" id="registProject" enctype="multipart/form-data">
 
                 <div class="top-container">
                     <div class="input-project-title">
@@ -33,7 +33,7 @@
                             <h3>프로젝트명</h3>
                         </div>
                         <div>
-                            <input type="text" class="inputProjectTitle" maxlength="20" required>
+                            <input type="text" name="projectName" id="inputProjectName" class="inputProjectName" maxlength="20" required>
                         </div>
                     </div>
 
@@ -46,7 +46,7 @@
                                 <tr>
                                     <td>주거형태</td>
                                     <td>
-                                        <select>
+                                        <select name="housingType" id="housingType">
                                             <option>단독주택</option>
                                             <option>아파트</option>
                                             <option>다세대 주택</option>
@@ -56,7 +56,7 @@
                                     </td>
                                     <td>작업형태</td>
                                     <td>
-                                        <select>
+                                        <select name="workForm" id="workForm">
                                             <option>리모델링</option>
                                             <option>바닥공사</option>
                                             <option>벽지도배</option>
@@ -64,11 +64,11 @@
                                     </td>
                                     <td>시공비용</td>
                                     <td>
-                                        <input type="number" step="100000" min="0">&nbsp;원
+                                        <input type="number" step="100000" min="0" name="constructionCost">&nbsp;원
                                     </td>
                                     <td>평수</td>
                                     <td>
-                                        <input type="number" min="0">&nbsp;평
+                                        <input type="number" min="0" name="workArea">&nbsp;평
                                     </td>
                                 </tr>
                             </table>
@@ -83,7 +83,7 @@
                             <tr>
                                 <td>지역</td>
                                 <td>
-                                    <select>
+                                    <select name="region" id="region">
                                         <option>서울</option>
                                         <option>경기/인천</option>
                                         <option>충청/대전</option>
@@ -97,7 +97,7 @@
 
                                 <td>시공연도</td>
                                 <td>
-                                    <select>
+                                    <select name="constructionYear">
                                         <option>2000</option>
                                         <option>2001</option>
                                         <option>2002</option>
@@ -129,7 +129,7 @@
 
                                 <td>가족형태</td>
                                 <td>
-                                    <select>
+                                    <select name="familySize" id="familySize">
                                         <option>1인 가족</option>
                                         <option>2인 가족</option>
                                         <option>4인 가족</option>
@@ -142,7 +142,7 @@
                     </div>
                 </div>
 
-                <div class="input-img-area">
+                <!-- <div class="input-img-area">
                     <div class="projectImg thumbnail">
                         <label for="img0">
                             <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가해주세요.">
@@ -236,7 +236,23 @@
                         <button type="button" class="viewMoreBtn">+</button>
 
                     </div>
+                </div> -->
+
+                <div class="midTitle">
+                    <h2>사진 첨부하기</h2>
                 </div>
+
+                <div class="inputFile">
+                    <input type="file" name="images" id="imageUpload" accept="image/*" multiple>
+                </div>
+
+                <div class="thumbnailImg">
+                    <h1 id="mainImgText" style="display: none;">메인 이미지</h1>
+                    <img id="largeImage" src="" alt="Large Image Preview" style="display: none;">
+                </div>
+
+                <!-- Hidden input for main image -->
+                <input type="hidden" id="mainImgHidden" name="mainImg">
 
                 <div class="btn-area">
                     <button class="boardCreateBtn">등록</button>
