@@ -3,6 +3,8 @@ const smallcategory = document.querySelector("#smallCategory");
 const plusButton = document.querySelector("#productPlusButton");
 const optionBox = document.querySelector("#optionBox");
 
+console.log(optionBox);
+
 let selectOption = 1;
 
 const radio2 = document.querySelector("#radio2");
@@ -61,214 +63,199 @@ bigCategory.addEventListener('change', () => {
   }
 });
 
-  const addoption = document.querySelector("#addoption");
-  addoption.style.display = 'none';
-
-  function createOption() {
-    selectOption = 0;
-    plusButton.style.display = "none";
-
-    const box = document.createElement("div")
-    box.classList.add("optionMainBox");
-
-    const optionName = document.createElement("input");
-    optionName.classList.add("optionName");
-    optionName.placeholder = "예시 : 컬러";
-
-    const optionContentBox = document.createElement("div");
-    optionContentBox.classList.add("optionContentBox");
-
-    const table = document.createElement("table");
-    const tr1 = document.createElement("tr");
-    const tr2 = document.createElement("tr");
-    const td1 = document.createElement("td");
-    const td2 = document.createElement("td");
-    const td3 = document.createElement("td");
-    const td4 = document.createElement("td");
-    const td5 = document.createElement("td");
-    const td6 = document.createElement("td");
-    const addOption = document.createElement("button");
-    const minusOption = document.createElement("button");
-    const contentInput = document.createElement("input");
-    const contentCountInput = document.createElement("input");
-
-    const applyButton = document.createElement("button");
-
-    contentInput.classList.add("contentInput");
-    contentInput.placeholder = "예시 : 빨강";
-
-    contentCountInput.classList.add("contentCountInput");
-
-    td1.innerText = "옵션 내용";
-    td1.style.fontSize = "12px";
-    td2.innerText = "재고 수량";
-    td2.style.fontSize = "12px";
-
-    applyButton.classList.add("applyButton");
-    applyButton.innerText = "등록";
-    applyButton.type = "button";
-
-    addOption.innerText = "+";
-    addOption.type = "button";
-    addOption.classList.add("addOption");
-    minusOption.innerText = "-";
-    minusOption.type = "button";
-    minusOption.classList.add("minusOption");
-
-    td3.append(contentInput);
-    td4.append(contentCountInput);
-    td5.append(addOption);
-    td6.append(minusOption);
-
-    
-    tr1.append(td1);
-    tr1.append(td2);
-    tr1.append(td5);
-    
-    tr2.append(td3);
-    tr2.append(td4);
-    tr2.append(td6);
-
-    table.append(tr1);
-    table.append(tr2);
-
-    optionContentBox.append(table);
-    optionContentBox.append(applyButton);
-
-    box.append(optionName);
-    box.append(optionContentBox);
-
-    optionBox.append(box);
-
-
-
-
-    /* 옵션 내용 추가 */
-    addOption.addEventListener("click", () => {
-        const clone = tr2.cloneNode(true);
-        table.append(clone);
-
-        // 새로 추가된 minusOption 버튼에 이벤트 리스너 추가
-        const newMinusOption = clone.querySelector(".minusOption");
-        newMinusOption.addEventListener("click", (e) => {
-            if (table.querySelectorAll('.minusOption').length > 1) {
-                e.target.closest('tr').remove();
-            }
-        });
-    });
-
-    // 기존 minusOption 버튼에 이벤트 리스너 추가
-    minusOption.addEventListener("click", (e) => {
-        if (table.querySelectorAll('.minusOption').length > 1) {
-            e.target.closest('tr').remove();
-        }
-    });
-
-    // 적용 버튼 눌렀을 떄
-    applyButton.addEventListener("click", () => {
-
-        if(optionName.value.trim().length === 0 ||
-        contentInput.value.trim().length === 0 ||
-        contentCountInput.value.trim().length === 0) {
-            alert("작성을 완료해주세요");
-        } else {
-            selectOption = 1;
-            plusButton.style.display = "block";
-            table.style.display = "none";
-            applyButton.style.display = "none";
-        }
-    })
-  }
-       
-  createOption();
-
-document.querySelectorAll('input[name="productOption"]').forEach(radio => {
-    radio.addEventListener('change', (event) => {
-      const selectedValue = event.target.value;
-      
-      if(selectedValue == 1) {
-        addoption.style.display = 'flex';
-      }else {
-        addoption.style.display = 'none';
-      }
-    });
- });
-
-
-  
-  plusButton.addEventListener("click", () => {
-    createOption();
-  });
-
-
-
-
-
-/* 메인 이미지 업로드 */
-function getMainImageFile(e) {
-  const filesMain = e.currentTarget.files;
-  const imagePreviewMain = document.querySelector('.image-preview-main');
-
-  // 파일 타입 검사
-  if (filesMain.length > 0) {
-    const file = filesMain[0];
-    if (!file.type.match("image/.*")) {
-      alert('이미지 파일만 업로드가 가능합니다.');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      imagePreviewMain.innerHTML = ''; // 기존 미리보기 초기화
-      const preview = createElement(e, file);
-      imagePreviewMain.appendChild(preview);
-    };
-    reader.readAsDataURL(file);
-  }
-}
-
-const realUploadMain = document.querySelector('.real-upload-main');
-const uploadMain = document.querySelector('.upload-main');
-
-uploadMain.addEventListener('click', () => realUploadMain.click());
-
-realUploadMain.addEventListener('change', e => {
-  getMainImageFile(e);
-});
-
-// input file 커스텀 - 파일명 붙이기
-const fileTargetMain = document.querySelector('.real-upload-main');
-
-fileTargetMain.addEventListener('change', function () { 
-  const files = this.files;
-  const fileArr = [];
-  for (let i = 0; i < files.length; i++) {
-    fileArr.push(files[i].name);
-  }
-  
-  // 파일명 노출 부분 제거
-  /*
-  const fileList = fileArr.join(', '); // 배열 값을 쉼표와 공백으로 연결
-  this.nextElementSibling.textContent = fileList;
-  */
-});
-
-
-
-
-// 상세 이미지 추가
-
-const delImgs = [];
 
 document.addEventListener('DOMContentLoaded', function() {
-  const delButton = document.querySelectorAll('.delButton');
+  const delOption = document.querySelectorAll(".delOption");
 
-  delButton.forEach(elements => {
-    elements.addEventListener("click", e=> {
-      if(confirm("해당 사진을 삭제하시겠습니까?")) {
-        delImgs.push(e.target.value);
-        e.target.parentElement.remove();
+  delOption.forEach(elements => {
+    elements.addEventListener("click", e => {
+      console.log(e.target);
+      if(confirm(`"${e.target.parentElement.parentElement.querySelector(".optionName").value}"옵션을 삭제하시겠습니까?`)) {
+        e.target.parentElement.parentElement.remove();
       }
     })
   })
+
+  const addOptionButton = document.querySelectorAll(".addOption");
+
+  addOptionButton.forEach(elements => {
+    elements.addEventListener("click", e => {
+      addOption(e.target);
+    })
+  })
+
+  const delSubOntionButton = document.querySelectorAll(".minusOption");
+
+  delSubOntionButton.forEach(elements => {
+    elements.addEventListener("click", e => {
+      delSubOption(e.target);
+    })
+  })
+
 });
+
+// 세부옵션 삭제
+function delSubOption(product) {
+  product.parentElement.parentElement.remove();
+}
+
+// 세부옵션 추가
+function addOption(product) {
+
+  var temp = true;
+
+  console.log(product);
+  const table = product.parentElement.parentElement.parentElement;
+
+  const inputs = table.querySelectorAll("input")
+
+  inputs.forEach(elements => {
+    if(elements.value.trim().length === 0) {
+      temp = false;
+    }
+  })
+
+  if(temp) {
+    const tr = document.createElement("tr");
+  
+    const td1 = document.createElement("td");
+  
+    const input1 = document.createElement("input");
+    input1.classList.add("contentInput");
+    input1.setAttribute('name', 'opionContent');
+    input1.placeholder = "예시 : 빨강";
+  
+    const td2 = document.createElement("td");
+  
+    const input2 = document.createElement("input");
+    input2.classList.add("contentCountInput");
+    input2.setAttribute('name', 'optionCount');
+  
+    const td3 = document.createElement("td");
+  
+    const button = document.createElement("button");
+    button.classList.add("minusOption");
+    button.innerText = "-";
+  
+    td1.append(input1);
+    td2.append(input2);
+    td3.append(button);
+  
+    tr.append(td1);
+    tr.append(td2);
+    tr.append(td3);
+  
+    table.append(tr);
+
+    button.addEventListener("click", () => {
+      delSubOption(button);
+    })
+  } else {
+    alert("옵션값 입력을 완료해주세요");
+  }
+  
+
+}
+
+const productPlusButton = document.querySelector("#productPlusButton");
+
+productPlusButton.addEventListener("click", e => {
+  const optionContentContainer = document.querySelector('#optionBox');
+  
+  const box1 = document.createElement("div");
+  box1.classList.add("optionMainBox");
+
+  const h4 = document.createElement("h4");
+  h4.innerText = "옵션명";
+
+  const inputBox = document.createElement("input");
+  inputBox.classList.add("optionName");
+  inputBox.setAttribute('name', 'optionName');
+  inputBox.placeholder = "예시 : 컬러";
+
+  const box2 = document.createElement("div");
+  box2.classList.add("optionContentBox");
+
+  const table = document.createElement("table");
+  const mainTr = document.createElement("tr");
+
+  const mainTd1 = document.createElement("td");
+  mainTd1.innerText = "옵션 내용";
+
+  const mainTd2 = document.createElement("td");
+  mainTd2.innerText = "재고 수량";
+
+  const mainTd3 = document.createElement("td");
+
+  const addButton = document.createElement("button");
+  addButton.classList.add("addOption");
+  addButton.innerText = "+";
+
+  mainTd3.append(addButton);
+
+  mainTr.append(mainTd1);
+  mainTr.append(mainTd2);
+  mainTr.append(mainTd3);
+  
+  const tr = document.createElement("tr");
+  
+    const td1 = document.createElement("td");
+  
+    const input1 = document.createElement("input");
+    input1.classList.add("contentInput");
+    input1.setAttribute('name', 'opionContent');
+    input1.placeholder = "예시 : 빨강";
+  
+    const td2 = document.createElement("td");
+  
+    const input2 = document.createElement("input");
+    input2.setAttribute('name', 'optionCount');
+    input2.classList.add("contentCountInput");
+  
+    const td3 = document.createElement("td");
+  
+    const button = document.createElement("button");
+    button.classList.add("minusOption");
+    button.innerText = "-";
+
+    const delButtonBox = document.createElement("button");
+    delButtonBox.classList.add("delOption");
+    delButtonBox.type = 'button';
+    delButtonBox.innerText = "삭제";
+  
+    td1.append(input1);
+    td2.append(input2);
+    td3.append(button);
+  
+    tr.append(td1);
+    tr.append(td2);
+    tr.append(td3);
+  
+    table.append(mainTr);
+    table.append(tr);
+
+    box2.append(table);
+    box2.append(delButtonBox);
+
+    box1.append(h4);
+    box1.append(inputBox);
+    box1.append(box2);
+
+    optionContentContainer.append(box1);
+
+    addButton.addEventListener("click", () => {
+      addOption(addButton);
+    })
+
+    button.addEventListener("click", () => {
+      delSubOption(button);
+    })
+
+    delButtonBox.addEventListener("click", () => {
+      
+      if(confirm(`"${inputBox.value}"옵션을 삭제하시겠습니까?`)) {
+        box1.remove();
+      }
+    })
+
+})

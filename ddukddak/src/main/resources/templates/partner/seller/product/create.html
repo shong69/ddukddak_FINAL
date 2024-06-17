@@ -61,7 +61,7 @@
                         <td th:text="${createItem.productNo}">상품번호</td>
                         <td th:text="${createItem.productName}" class="productName">상품제목</td>
                         <td th:text="${createItem.productPrice}" class="productPrice">상품가격</td>
-                        <td><button>삭제</button></td>
+                        <td><button class="delProduct" th:value="${createItem.productNo}" onclick="delProduct(this.value)" style="cursor: pointer;">삭제</button></td>
                     </tr>
                 </th:block>
 

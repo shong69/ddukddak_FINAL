@@ -9,6 +9,7 @@ import org.apache.ibatis.session.RowBounds;
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
+import com.ddukddak.ecommerce.model.dto.ProductOption;
 
 @Mapper
 public interface ProductMapper {
@@ -51,6 +52,24 @@ public interface ProductMapper {
 	 * @return
 	 */
 	int sellApplyProduct(Object value);
+
+	/** 재고상품 삭제
+	 * @param productNo
+	 * @return
+	 */
+	int delProduct(int productNo);
+	
+	/** 재고상품 삭제 이미지
+	 * @param productNo
+	 * @return
+	 */
+	int delProductImg(int productNo);
+	
+	/** 재고상품 삭제 옵션
+	 * @param productNo
+	 * @return
+	 */
+	int delProductOption(int productNo);
 
 	/** 대분류에 따른 소분류 조회
 	 * @param selectedCategory
@@ -169,5 +188,25 @@ public interface ProductMapper {
 	 * @return
 	 */
 	List<ProductImg> selectImg(int productNo);
+
+	/** 판매등록 상품 옵션명 조회
+	 * @param productNo
+	 * @return
+	 */
+	List<ProductOption> selectOptionName(int productNo);
+
+	/** 판매등록 상품 옵션 조회
+	 * @param productNo
+	 * @return
+	 */
+	List<ProductOption> selectOption(int productNo);
+
+	/** 상품 판매등록
+	 * @param map
+	 * @return
+	 */
+	int updateRegistProduct(Map<String, Object> map);
+
+
 
 }

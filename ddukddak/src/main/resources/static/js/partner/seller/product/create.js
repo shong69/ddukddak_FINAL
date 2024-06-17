@@ -356,4 +356,28 @@ bigCategory.addEventListener('change', () => {
 
 });
 
+// 상품삭제
+function delProduct(productNo) {
+
+    fetch("/partner/seller/product/delProduct", {
+        method: "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(productNo)
+    })
+    .then(resp => resp.text())
+    .then(result => {
+
+        if(confirm("해당 상품을 삭제하시겠습니까?")) {
+            if(result > 0) {
+                alert("삭제 성공");
+                window.location.reload();
+            } else {
+                alert("삭제 실패");
+            }
+        }
+        
+
+    })
+};
+
 

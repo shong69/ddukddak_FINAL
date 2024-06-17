@@ -25,6 +25,7 @@ import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
+import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.partner.model.dto.Partner;
@@ -87,6 +88,16 @@ public class SellerController {
 	public int sellApplyProduct(@RequestBody List<Object> selectedValues) {
 		
 		int result = service.sellApplyProduct(selectedValues);
+		
+		return result;
+	}
+	
+	//상품 삭제
+	@PostMapping("product/delProduct")
+	@ResponseBody
+	public int delProduct(@RequestBody int productNo) {
+		
+		int result = service.delProduct(productNo);
 		
 		return result;
 	}
@@ -253,6 +264,7 @@ public class SellerController {
 									@RequestParam(value="sort", required=false, defaultValue="0") int sort,
 										Model model) {
 		
+
 		// 대분류 카테고리 선택
 		List<Category> categoryList = eCommerceService.selectCategory();
 		
@@ -263,6 +275,13 @@ public class SellerController {
 		
 		model.addAttribute("product", product);
 		
+		// 옵션 불러오기
+		List<ProductOption> optionName = service.seletOptionName(productNo);
+		List<ProductOption> options = service.selectOpion(productNo);
+		
+		model.addAttribute("optionName", optionName);
+		model.addAttribute("option", options);
+		
 		// 이미지 불러오기
 		List<ProductImg> imgs = service.selectImg(productNo);
 		
@@ -270,6 +289,110 @@ public class SellerController {
 		
 		
 		return "partner/seller/product/applyProduct";
+	}
+	
+	// 판매등록
+	@PostMapping("product/applySellProduct")
+	@ResponseBody
+	public int ProductApplySellProduct(@RequestParam("productName") String productName,
+										@RequestParam("productNo") String productNo,
+										@RequestParam(name="bigCategory") String bigCategory,
+										@RequestParam(name="smallCategory") String smallCategory,
+										@RequestParam ("productPrice") MultipartFile productPrice,
+										@RequestParam (name="mainImg", required = false) MultipartFile thumbnailImg,
+										@RequestParam (name = "optionName", required = false) List<String> optionName,
+										@RequestParam (name = "optionContent", required = false) List<String> optionContent,
+										@RequestParam (name = "optionCount", required = false) List<String> optionCount,
+										@SessionAttribute("loginPartnerMember") Partner loginPartnerMember)  {
+		
+		int memberNo = loginPartnerMember.getPartnerNo();
+		
+		log.info("memterNo : " + memberNo);
+		
+		log.info("productName : " + productName);
+		log.info("bigCategory : " + bigCategory);
+		log.info("smallCategory : " + smallCategory);
+		
+		// PRODUCT 테이블 삽입
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("productNo", productNo);
+		map.put("memberNo", memberNo);
+		map.put("productName", productName);
+		map.put("smallCategoryNo", smallCategory);
+		map.put("productPrice", productPrice);
+		
+		int result1 = service.updateRegistProduct(map);
+		
+
+		// UPLOAD_FILE 삽입
+
+//		List<MultipartFile> imgList = new ArrayList<>(subImgs);
+//		imgList.add(0, thumbnailImg); // 다시 mainImg 를 배열 0번째 자리에 추가
+//		
+//		log.info("imgList : " + imgList);
+//
+//		int result2 = service.updateInsertImg(smallCategory, imgList);
+//
+//		
+//		
+//		int result3 = 0;
+//		// 옵션
+//		if(optionContent != null) {
+//			List<List<String>> resultList1 = new ArrayList<>();
+//			List<String> optionContentList = new ArrayList<>();
+//			
+//			// 옵션값 리스트 나누기
+//			for (String item : optionContent) {
+//				if ("/".equals(item)) {
+//					resultList1.add(optionContentList);
+//					optionContentList = new ArrayList<>();
+//				} else {
+//					optionContentList.add(item);
+//				}
+//			}
+//			
+//			resultList1.add(optionContentList);
+//			
+//			// 결과 출력
+//			for (List<String> list : resultList1) {
+//				log.info("resultList1 : " + list);
+//			}
+//			
+//			// 옵션재고 리스트 나누기
+//			List<List<String>> resultList2 = new ArrayList<>();
+//			List<String> optionCountList = new ArrayList<>();
+//			
+//			for (String item : optionCount) {
+//				if ("/".equals(item)) {
+//					resultList2.add(optionCountList);
+//					optionCountList = new ArrayList<>();
+//				} else {
+//					optionCountList.add(item);
+//				}
+//			}
+//			
+//			resultList2.add(optionCountList);
+//			
+//			// 결과 출력
+//			for (List<String> list : resultList2) {
+//				log.info("resultList2 : " + list);
+//			}
+//			
+//			
+//			// OPTION 삽입
+//			
+//			for (int i = 0; i < resultList1.size(); i ++) {
+//				if(!resultList1.get(i).isEmpty()) {
+//					result3 += service.insertOpion(optionName.get(i), resultList1.get(i), resultList2.get(i));
+//				}
+//			}
+//			
+//		}
+
+
+		return 0;
+		
 	}
 	
 	@GetMapping("product/receipt")

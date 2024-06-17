@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
+import com.ddukddak.ecommerce.model.dto.ProductOption;
 
 public interface ProductService {
 
@@ -25,6 +26,13 @@ public interface ProductService {
 	 * @return
 	 */
 	int sellApplyProduct(List<Object> selectedValues);
+	
+
+	/** 재고상품 삭제
+	 * @param productNo
+	 * @return
+	 */
+	int delProduct(int productNo);
 
 	/** 대분류에 따른 소분류 조회
 	 * @param selectedCategory
@@ -80,5 +88,32 @@ public interface ProductService {
 	 * @return
 	 */
 	List<ProductImg> selectImg(int productNo);
+
+	/** 판매등록 상품 옵션명 불러오기
+	 * @param productNo
+	 * @return
+	 */
+	List<ProductOption> seletOptionName(int productNo);
+
+	/** 판매등록 상품 옵션 불러오기
+	 * @param productNo
+	 * @return
+	 */
+	List<ProductOption> selectOpion(int productNo);
+
+	/** 상품 판매등록
+	 * @param map
+	 * @return
+	 */
+	int updateRegistProduct(Map<String, Object> map);
+
+	/** 이미지 판매등록
+	 * @param smallCategory
+	 * @param imgList
+	 * @return
+	 */
+	int updateInsertImg(String smallCategory, List<MultipartFile> imgList);
+
+
 
 }
