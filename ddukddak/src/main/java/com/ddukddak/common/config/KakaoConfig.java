@@ -18,6 +18,9 @@ public class KakaoConfig {
 	@Value("${kakao.redirect-url}")
 	private String kakaoRedirectUrl;
 	
+	@Value("${kakao.logout-redirect-url}")
+	private String kakaoLogoutRediretUrl;
+	
     public String getKakaoApiKey() {
         return kakaoApiKey;
     }
@@ -25,6 +28,11 @@ public class KakaoConfig {
     public String getKakaoRedirectUrl() {
         return kakaoRedirectUrl;
     }
+    
+    public String getKakaoLogoutRedirectUrl() {
+    	return kakaoLogoutRediretUrl;
+    }
+    
 	
     @Bean
     public RestTemplate restTemplate() {

@@ -391,4 +391,10 @@ public class ProductServiceImpl implements ProductService{
 		return result;
 	}
 
+	@Override
+	public Product selectOne(int productNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
