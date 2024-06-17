@@ -190,3 +190,48 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     }
 });
+
+const likeCount = document.querySelector("#likeCount");
+const boardLike = document.querySelector("#boardLike")
+
+if(boardLike != null) {
+  boardLike.addEventListener("click", e => {
+
+    if(loginMemberNo == null) {
+      alert("로그인 후 이용해주세요.");
+      return;
+    }
+  
+    const obj = {
+      "memberNo" : loginMemberNo,
+      "boardNo" : boardNo,
+      "likeCheck" : likeCheck
+    }
+  
+    // 좋아요 INSERT / DELETE 비동기 요청
+    fetch("/board/like", {
+      method : "POST",
+      headers : {"Content-Type" : "application/json"},
+      body : JSON.stringify(obj)
+    })
+    .then(resp => resp.text())
+    .then(count => {
+  
+      console.log(count);
+  
+      if(count == -1) {
+        console.log("좋아요 실패");
+        return;
+      }
+  
+      likeCheck = likeCheck == 0 ? 1 : 0;
+  
+      e.target.classList.toggle("fa-regular");
+      e.target.classList.toggle("fa-solid");
+  
+      likeCount.innerText = count;
+  
+    });
+  
+  })
+}

@@ -26,7 +26,7 @@
         <!-- 상품등록버튼 -->
         <div id="sellerButton">
             <button id="productCreateButton" type="button">재고 등록</button>
-            <button id="productApplyButton" type="button">판매 등록</button>
+            <button id="productApplyButton" type="button">판매관리 등록</button>
         </div>
 
         <div id="selectAll">
@@ -59,7 +59,7 @@
                         <td th:text="${createItem.categoryName}">소분류</td>
                         <td th:text="${createItem.productCreateDate}">생성날짜</td>
                         <td th:text="${createItem.productNo}">상품번호</td>
-                        <td th:text="${createItem.productName}">상품제목</td>
+                        <td th:text="${createItem.productName}" class="productName">상품제목</td>
                         <td th:text="${createItem.productPrice}" class="productPrice">상품가격</td>
                         <td><button>삭제</button></td>
                     </tr>

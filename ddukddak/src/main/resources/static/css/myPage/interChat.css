@@ -108,7 +108,14 @@
 input::-webkit-search-cancel-button{
 	opacity: 0;
 }
-#resultArea{list-style: none;}
+.reaultDiv{
+	height: 500px;
+	overflow: auto;
+}
+#resultArea{
+	list-style: none;
+	height: 100%;
+}
 
 .result-row{
 	width: 90%;
@@ -136,7 +143,7 @@ input::-webkit-search-cancel-button{
 
 .phoneNumSpan{
 	font-size: 12px;
-	font-weight: 300;
+	font-weight: 200;
 	color:#5a5a5a;
 	margin-left: auto;
 	margin-top: 5px;
@@ -160,7 +167,7 @@ input::-webkit-search-cancel-button{
 }
 .chatting-header1{
 	height: 50px;
-	background-color: #ffffff;
+	background-color: #46633e;
 	border-top-left-radius: 13px;
 	border-top-right-radius: 13px;
 	border-bottom: 1px solid #d4d4d4;
@@ -188,7 +195,7 @@ input::-webkit-search-cancel-button{
 #addTarget{
 	font-size: 23px;
 	background-color: transparent;
-    color: #3A732A;
+    color: #fcfcf3;
     cursor: pointer;
 	margin:15px 0 0 25px;
 }
@@ -209,7 +216,12 @@ input::-webkit-search-cancel-button{
 }
 
 .chatting-item > div{ height: 100%; text-align: center;}
-.item-header{ width : 25%; }
+.item-header{ 
+	width : 25%; 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .item-body{ 
 	width : 75%; 
 	padding : 2px 0;
@@ -217,34 +229,41 @@ input::-webkit-search-cancel-button{
 .item-body> p{ 
 	display: flex;
 	justify-content: space-between;
+	margin-top: 10px;
 }
 
 .chatting-item.select{
 	background-color: #ddd;
 }
-
+.chatting-item.select .recent-send-time{
+	color : black;
+}
 
 .list-profile{ 
 	max-width: 50px;
     max-height: 50px;
 	border-radius: 50%;
+	margin:auto 0;
 }
 
 .target-name{
 	font-size: 1em;
 	font-weight: bold;
+	display: flex;
+
 }
 
 .recent-send-time{
 	margin-right: 5px;
 	font-size: 12px;
-	color:#dadada;
+	color:#a0a0a0;
 }
 
 
 .item-body > div{
 	display: flex;
 	justify-content: space-between;
+	font-size: 14px;
 }
 
 .recent-message{
@@ -264,22 +283,24 @@ input::-webkit-search-cancel-button{
 }
 
 .not-read-count{
-	width: 25px;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background-color: red;
+	background-color: rgb(255, 72, 0);
     color: white;
-    font-size: 12px;
-    margin: 10px 10px 0 0;
+    font-size: 11px;
+	font-weight: 100;
+	display:flex;
+	justify-content: center;
+    align-items: center;
+	margin-right: 10px;
 }
 
 
 /* 채팅 내용 */
 .chatting-content{
 	width: 70%;
+	max-height: 750px;
 }
 
 .display-none {
@@ -288,13 +309,16 @@ input::-webkit-search-cancel-button{
 
 .prev-message{
 	width: 70%;
+	background-color: #e9e9e9;
 }
 
 .prev-message h1{
 	text-align: center;
 	align-items: center;
 	line-height: 600px;
-	color: #dadada;
+	font-weight: 400;
+	color: #1c1c1c;
+
 }
 
 .display-chatting {
@@ -303,9 +327,18 @@ input::-webkit-search-cancel-button{
 	overflow: auto;
 	list-style: none;
 	padding: 30px;
-	background-color: #fffaf0c4;
+	background-color: #fffcf5c4;
 }
-
+.display-chatting::-webkit-scrollbar{
+	width:12px;
+}
+.display-chatting::-webkit-scrollbar-thumb{
+	background-color:#46633e;
+	border-radius: 8px;
+}
+.display-chatting::-webkit-scrollbar-track{
+	background-color: white;
+}
 .display-chatting > li{
 	margin: 10px 0;
 }
@@ -319,18 +352,17 @@ input::-webkit-search-cancel-button{
 	margin-right: 15px;
 	border-radius: 50%;
 }
-.target-name{
-	font-size: 13px;
-}
+
 .chat {
 	display: inline-block;
 	border-radius: 9px;
-	padding: 10px 15px 10px 15px;
+	padding: 8px 12px;
 	background-color: #eee;
 	text-align: left;
 	max-width: 500px;
 	word-break: break-all;
 	white-space: pre-wrap;
+	line-height: 25px;
 }
 
 
@@ -341,35 +373,46 @@ input::-webkit-search-cancel-button{
 }
 
 #inputChatting {
-	padding: 3px;
-	font-size: 1.3em;
+	padding: 10px;
+	font-size: 1em;
 	width: 80%;
 	resize: none;
 	border: 1px solid #dadada;
 	border-radius: 9px;
-    outline-color: #00663a;
+    outline-color: #aac8a2;
+;
 }
 
 #send {
 	width: 20%;
 	font-size: 15px;
-	background-color: #00663a;
+	background-color: #aac8a2;
 	color: #fffef0;
 	border-radius: 9px;
 	border:none;
-}
+	cursor: pointer;
 
+}
+#send:active{
+	background-color: #aac8a2;
+	box-shadow: inset 0.4px 1.5px 12px #6c6c6c;
+	cursor: pointer;
+
+}
 .my-chat {
 	text-align: right;
 }
 
 .my-chat>p {
-	background-color: #00663a;
-	color: #fffef0;
+	background-color: #aac8a2;
+	color: #000000;
 }
 
 .chatDate {
-	font-size: 9px;
+	font-size: 11px;
 	color: rgb(90, 90, 90);
+	margin-right: 4px;
+	position: relative;
+    top: 10px;
 }
 

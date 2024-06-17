@@ -1,7 +1,10 @@
 package com.ddukddak.common.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.HandshakeInterceptor;
@@ -9,6 +12,7 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 import com.ddukddak.common.handler.ChattingWebsocketHandler;
 
 import lombok.RequiredArgsConstructor;
+
 
 @RequiredArgsConstructor
 @Configuration //서버 실행 시 작성된 메서드를 모두 수행
@@ -18,9 +22,10 @@ public class WebSocketConfig implements WebSocketConfigurer{
 	
 	//Bean으로 등록된 핸드셰이크인터셉터의 자식타입인 SessionHandshakeInterceptor가 주입된다
 	private final HandshakeInterceptor handshakeInterceptor;
-
+	
 	
 	//채팅 관련 웹소켓 처리 동작이 작성된 객체 의존성 주입
+
 	private final ChattingWebsocketHandler chattingWebsocketHandler;
 	
 	
@@ -37,7 +42,6 @@ public class WebSocketConfig implements WebSocketConfigurer{
 		
 	}
 	
-	
-	
+
 	
 }

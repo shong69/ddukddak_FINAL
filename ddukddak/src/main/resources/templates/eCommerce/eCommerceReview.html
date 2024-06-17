@@ -1,0 +1,79 @@
+<div id="reviewBox">
+
+    
+
+    <div class="reviewListArea">
+        <ul id="reviewList">
+            <li >
+                <div class="reviewInfoArea">
+                    <div class="commentCount" th:text="|전체 리뷰 N개|">
+
+                    </div>
+                    <div class="rateCount" th:text="|사용자 총 평점 n.n/5|">
+    
+                    </div>
+                </div>
+
+                	
+                <th:block th:if="${session.loginMember}">
+                    <form method ="POST" action="/eCommerce/reviewPost">
+                        <div id = "comment">
+                            <div id="id-addCommentArea">
+                        
+                                <span th:text="|@${session.loginMember?.memberId}|">아이디</span>
+                                <button id="addComment" >등록</button>
+                            </div>
+                            <textarea id="commentContent" rows="15" placeholder="다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현이나 타인의 권리를 침해하는 내용은 사용하지 않도록 주의해주세요."></textarea>
+                        </div>
+
+                    </form>
+
+                </th:block>
+            </li>
+
+            <th:object th:if="${#lists.isEmpty(reviewList)}">
+                <div id = "noReviewArea">
+                    작성된 리뷰가 존재하지 않습니다.
+                </div>
+            </th:object>
+
+            <th:object th:unless="${#lists.isEmpty(reviewList)}">
+                <li class="reviewRow" th:each="review : ${reviewList}"
+                th:object="${review}">
+                
+                <th:block th:if="*{commentDelFl}=='Y'">
+                    <div class="deleteCommentArea">- 삭제된 댓글입니다 -</div>
+                </th:block>
+                    
+                <th:block th:if="*{commentDelFl}=='N'">
+                    
+                    <div class = "commentWrite">
+                        <div class="infoArea">
+                            <span class="memberId" th:text="|@*{memberId}|">아이디</span>
+                            <span class="commentWriteDate"th:text="*{commentWriteDate}">작성일</span>
+                        </div>
+                            
+                        <div class="editArea" style="display: none;">
+                            <button class="addChildBtn" th:onclick="|showInsertComment(*{commentNo}, this)|">답글</button>
+                            
+                            <th:block th:if="${session.loginMember != null and session.loginMember?.memberNo == comment.memberNo}">
+                                <button class="updateBtn-c" th:onclick="|showUpdateComment(*{commentNo}, this)|">수정</button>
+                                <button class="deleteBtn-c" th:onclick="|deleteComment(*{commentNo})|">삭제</button>
+                            </th:block>
+                        </div>
+                        <img th:if="${session.loginMember!=null}" src="/images/addMore.png" class="editBtn">
+
+                    </div>
+                    
+                    <div class="comment-content" th:utext="*{commentContent}">댓글 내용</div>
+                    
+                
+                </th:block>
+                
+            </li>
+            </th:object>
+
+        </ul>
+    </div>
+
+</div>

@@ -1,8 +1,10 @@
 package com.ddukddak.manager.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.ddukddak.partner.model.dto.Partner;
@@ -21,10 +23,18 @@ public interface ManagerMapper {
 	 */
 	List<Partner> selectPassList(RowBounds rowBounds);
 
-	/** 파트너 가입 승인 업데이트
+	/** 파트너 승인 업데이트
 	 * @param partnerNo
 	 * @return
 	 */
-	int updateConfrim(String partnerNo);
+	int passConfirm(String partnerNo);
+
+	/** 파트너 거절 업데이트
+	 * @param partnerNo
+	 * @return
+	 */
+	int passRefuse(String partnerNo);
+
+
 
 }

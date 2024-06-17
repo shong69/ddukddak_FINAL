@@ -62,6 +62,30 @@ public interface MemberService {
 	 */
 	int signup(Member inputMember, String[] memberAddr);
 
+	/** 네이버 로그인 - 이메일로 가입한 멤버 찾기
+	 * @param naverEmail
+	 * @return
+	 */
+	Member findMemberByEmail(String naverEmail);
+
+	/** 네이버 회원가입
+	 * @param newNaverMember
+	 * @return
+	 */
+	Member naverSignup(Member newNaverMember);
+
+	/** 카카오 로그인 - 이메일 가입 멤버 찾기
+	 * @param email
+	 * @return
+	 */
+	Member findMemberByKakao(String email);
+
+	/** 카카오 회원가입
+	 * @param newKakaoMember
+	 * @return
+	 */
+	Member kakaoSignup(Member newKakaoMember);
+
 
 
 }

@@ -1,10 +1,8 @@
 package com.ddukddak.board.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ddukddak.board.model.dto.Board;
@@ -51,8 +48,8 @@ public class BoardMainController {
 		List<Board> houseBoard = allBoard.stream().filter(board -> board.getBoardCode() == 1).collect(Collectors.toList());
 		List<Board> tipBoard = allBoard.stream().filter(board -> board.getBoardCode() == 2).collect(Collectors.toList());
 		
-//		log.info("tipBoard : " + tipBoard.toString());
-//		log.info("houseBoard : " + houseBoard.toString());
+		log.info("tipBoard : " + tipBoard.toString());
+		log.info("houseBoard : " + houseBoard.toString());
 		
 		 // Chunk the filtered boards
         List<List<Board>> houseBoardChunks = chunkBoards(houseBoard, 6);
@@ -65,8 +62,8 @@ public class BoardMainController {
 	        model.addAttribute("houseBoardChunks", houseBoardChunks);
 	        model.addAttribute("tipBoardChunks", tipBoardChunks);
 	        
-//	        log.info("tipBoardChunks : " + tipBoardChunks.toString());
-//	        log.info("houseBoardChunks : " + houseBoardChunks.toString());
+	        log.info("tipBoardChunks : " + tipBoardChunks.toString());
+	        log.info("houseBoardChunks : " + houseBoardChunks.toString());
 		}
 		
 		return "board/boardMainPage";

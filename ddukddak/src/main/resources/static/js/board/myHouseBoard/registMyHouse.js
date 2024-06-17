@@ -63,49 +63,52 @@ const mainImgText = document.querySelector("#mainImgText");
 const mainImgHidden = document.querySelector("#mainImgHidden");
 const imageUpload = document.getElementById('imageUpload');
 
-imageUpload.addEventListener('change', function(event) {
-    
-    
-    if(mainImgHidden.value != "") {
-        mainImgHidden.value = '';
-        largeImage.style.display = 'none';
-        mainImgText.style.display = 'none';
-        largeImage.src = '';
-    }
+if (imageUpload != null) {
+    imageUpload.addEventListener('change', function(event) {
         
-    const files = event.target.files;
-    let existingPreviewContainer = document.querySelector('.preview-container');
-    let guideText;
-
-    if (existingPreviewContainer) {
-        existingPreviewContainer.innerHTML = '';
-    } else {
-        existingPreviewContainer = document.createElement('div');
-        existingPreviewContainer.classList.add('preview-container');
-        guideText = document.createElement('h3');
-        guideText.classList.add('guideText');
-        guideText.innerText = '* 메인이미지를 선택해주세요(이미지 클릭)';
-        event.target.parentElement.appendChild(guideText);
-        event.target.parentElement.appendChild(existingPreviewContainer);
-    }
-
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const div = document.createElement('div');
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.setAttribute('data-filename', file.name);
-            img.addEventListener('click', function() {
-                updateMainImage(e.target.result, file.name);
-            });
-            div.appendChild(img);
-            existingPreviewContainer.appendChild(div);
+        
+        if(mainImgHidden.value != "") {
+            mainImgHidden.value = '';
+            largeImage.style.display = 'none';
+            mainImgText.style.display = 'none';
+            largeImage.src = '';
         }
-        reader.readAsDataURL(file);
-    }
-});
+            
+        const files = event.target.files;
+        let existingPreviewContainer = document.querySelector('.preview-container');
+        let guideText;
+    
+        if (existingPreviewContainer) {
+            existingPreviewContainer.innerHTML = '';
+        } else {
+            existingPreviewContainer = document.createElement('div');
+            existingPreviewContainer.classList.add('preview-container');
+            guideText = document.createElement('h3');
+            guideText.classList.add('guideText');
+            guideText.innerText = '* 메인이미지를 선택해주세요(이미지 클릭)';
+            event.target.parentElement.appendChild(guideText);
+            event.target.parentElement.appendChild(existingPreviewContainer);
+        }
+    
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const div = document.createElement('div');
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.setAttribute('data-filename', file.name);
+                img.addEventListener('click', function() {
+                    updateMainImage(e.target.result, file.name);
+                });
+                div.appendChild(img);
+                existingPreviewContainer.appendChild(div);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+}
 
 function updateMainImage(src, fileName) {
     mainImgText.classList.add('mainImgText');

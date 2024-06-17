@@ -93,12 +93,14 @@ telNm.addEventListener('input', e => {
     if(telNmValue.trim().length === 0) {
         telNm.classList.add('errorB');
         checkTelObj.telNm = false;
+        resetAuthStates();
         return;
     }
 
     if(!regExpName.test(telNmValue)) {
         telNm.classList.add('errorB');
         checkTelObj.telNm = false;
+        resetAuthStates();
         return;
     }
 
@@ -111,7 +113,7 @@ telNm.addEventListener('input', e => {
 
 
 // 정규식: 전화번호
-const regExpTel = /^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
+const regExpTel = /^01[0-9]{1}[0-9]{4}[0-9]{4}$/;
 
 
 
@@ -152,6 +154,7 @@ inputTel.addEventListener('input', e => {
         telMsg.classList.add('errorC');
         inputTel.classList.add('errorB');
         checkTelObj.tel = false;
+        resetAuthStates();
         return;
     } 
     
@@ -162,6 +165,7 @@ inputTel.addEventListener('input', e => {
         telMsg.classList.add('errorC');
         inputTel.classList.add('errorB');
         checkTelObj.tel = false;
+        resetAuthStates();
 
         return;
     }
@@ -224,7 +228,7 @@ telAuthBtn.addEventListener('click', async () => {
         });
 
         const partnerNTCheckResult = await partnerNTCheckResp.text();
-
+        console.log(partnerNTCheckResult);
         if(partnerNTCheckResult == 0) {
             alert("입력하신 정보와 일치하는 파트너가 존재하지 않습니다.");
             telAuthBtn.disabled = false; // 버튼 활성화

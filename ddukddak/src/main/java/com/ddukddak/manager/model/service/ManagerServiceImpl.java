@@ -1,6 +1,7 @@
 package com.ddukddak.manager.model.service;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ddukddak.main.model.dto.Pagination;
 import com.ddukddak.manager.model.mapper.ManagerMapper;
 import com.ddukddak.partner.model.dto.Partner;
+import com.ddukddak.sms.model.service.SmsService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ManagerServiceImpl implements ManagerService {
 
 	private final ManagerMapper mapper;
+	
+	
 	/** 파트너 가입 승인 관리 - 목록 조회
 	 * 
 	 */
@@ -54,14 +58,57 @@ public class ManagerServiceImpl implements ManagerService {
 	 */
 	@Override
 	public int passConfirm(String partnerNo) {
-		
-		
-		// 파트너 가입 승인부터 승인
-		int updateConfrim = mapper.updateConfrim(partnerNo);
-		
-	
-		
-		return updateConfrim;
+		return mapper.passConfirm(partnerNo);
 	}
+
+
+	/** 파트너 가입 거절
+	 *
+	 */
+	@Override
+	public int passRefuse(String partnerNo) {
+		return mapper.passRefuse(partnerNo);
+	}
+
+
+	/** 파트너 다중 승인
+	 *
+	 */
+	@Override
+	public int updateMultiPass(String action, List<Map<String, String>> partners) {
+		
+		// 업데이트 누적 개수 추가할 변수
+		int updateResult = 0;
+		
+	    for (Map<String, String> partner : partners) {
+	        
+	    	String partnerNo = partner.get("partnerNo");	    	
+	        
+	    	if(action.equals("confirm")) {
+	    		
+	    		// 업데이트 될 때마다 변수에 누적 개수 반환
+	    		updateResult += mapper.passConfirm(partnerNo);
+	    		
+	    		
+	    		
+	    	} else if (action.equals("refuse")) {
+	    		
+	    		// 업데이트 될 때마다 변수에 누적 개수 반환
+	            updateResult += mapper.passRefuse(partnerNo);
+	            
+	        } else {
+	        	
+	        	return 0;
+	        }
+	    }
+	          
+     
+        log.info("updateResult : " + updateResult);
+            
+
+        return updateResult;
+	}
+
+
 	
 }
