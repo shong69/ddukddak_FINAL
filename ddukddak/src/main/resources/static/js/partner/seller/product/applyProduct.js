@@ -64,6 +64,7 @@ bigCategory.addEventListener('change', () => {
 });
 
 
+
 document.addEventListener('DOMContentLoaded', function() {
   const delOption = document.querySelectorAll(".delOption");
 
@@ -90,6 +91,88 @@ document.addEventListener('DOMContentLoaded', function() {
     elements.addEventListener("click", e => {
       delSubOption(e.target);
     })
+  })
+
+  const delImgButton = document.querySelectorAll(".delButton");
+
+  delImgButton.forEach(elements => {
+    elements.addEventListener("click", e => {
+      const rename = e.target.previousElementSibling.attributes[1].value
+
+      fetch("/partner/seller/product/delImgs", {
+        method: "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(rename)
+        })
+        .then(resp => resp.text())
+        .then(result => {
+          e.target.parentElement.remove();
+        })
+    })
+  })
+
+  const applyButton = document.querySelectorAll(".applyButton");
+
+  // 적용 버튼 눌렀을 떄
+  applyButton.forEach(elements => {
+    elements.addEventListener("click", e => {
+      const optionContentBox = e.target.parentElement;
+      const plusEx = e.target.parentElement.parentElement.querySelector(".plusEx");
+  
+      let temp = true;
+  
+      const optionNameInput = e.target.parentElement.parentElement.querySelector(".optionName");
+      const allInput = e.target.parentElement.getElementsByClassName("contentInput");
+      const allCount = e.target.parentElement.getElementsByClassName("contentCountInput");  
+
+      if(optionNameInput.value.trim().length === 0) {
+        alert("옵션명을 입력해주세요")
+        temp = false;
+      }
+      
+      for(let i = 0; i < allInput.length; i ++) {
+        if(allInput[i].value.trim().length === 0) {
+          alert("모든 옵션값을 입력해주세요");
+          temp = false;
+        }
+      }
+      
+      for(let i = 0; i < allCount.length; i ++) {
+        if(allCount[i].value.trim().length === 0) {
+          alert("모든 옵션값을 입력해주세요");
+        }
+      }
+      
+      if(temp) {
+          const cutInput1 = document.createElement("input");
+          cutInput1.type = 'hidden';
+          cutInput1.value = '/';
+          cutInput1.setAttribute('name', 'optionContent');
+  
+          optionContentBox.append(cutInput1);
+  
+          const cutInput2 = document.createElement("input");
+          cutInput2.type = 'hidden';
+          cutInput2.value = '/';
+          cutInput2.setAttribute('name', 'optionCount');
+  
+          optionContentBox.append(cutInput2);
+  
+          optionContentBox.style.display = 'none';
+          e.target.style.display = "none";
+          e.target.nextElementSibling.style.display = 'none';
+          plusEx.style.display = 'block';
+
+          plusEx.addEventListener('click', () => {
+            console.log(elements);
+            optionContentBox.style.display = 'flex';
+            plusEx.style.display = 'none';
+            e.target.style.display = "block";
+            e.target.nextElementSibling.style.display = 'block';
+          })
+      }
+  })
+
   })
 
 });
@@ -173,6 +256,10 @@ productPlusButton.addEventListener("click", e => {
   inputBox.setAttribute('name', 'optionName');
   inputBox.placeholder = "예시 : 컬러";
 
+  const h5 = document.createElement("h5");
+  h5.innerText = "상세보기";
+  h5.classList.add("plusEx");
+
   const box2 = document.createElement("div");
   box2.classList.add("optionContentBox");
 
@@ -218,6 +305,11 @@ productPlusButton.addEventListener("click", e => {
     button.classList.add("minusOption");
     button.innerText = "-";
 
+    const applyButton = document.createElement("button");
+    applyButton.classList.add("applyButton");
+    applyButton.type = 'button';
+    applyButton.innerText = "적용";
+
     const delButtonBox = document.createElement("button");
     delButtonBox.classList.add("delOption");
     delButtonBox.type = 'button';
@@ -235,10 +327,12 @@ productPlusButton.addEventListener("click", e => {
     table.append(tr);
 
     box2.append(table);
+    box2.append(applyButton);
     box2.append(delButtonBox);
 
     box1.append(h4);
     box1.append(inputBox);
+    box1.append(h5);
     box1.append(box2);
 
     optionContentContainer.append(box1);
@@ -257,5 +351,65 @@ productPlusButton.addEventListener("click", e => {
         box1.remove();
       }
     })
+
+    // 적용 버튼 눌렀을 떄
+
+    applyButton.addEventListener("click", e => {
+      const optionContentBox = e.target.parentElement;
+      const plusEx = e.target.parentElement.parentElement.querySelector(".plusEx");
+  
+      let temp = true;
+  
+      const optionNameInput = e.target.parentElement.parentElement.querySelector(".optionName");
+      const allInput = e.target.parentElement.getElementsByClassName("contentInput");
+      const allCount = e.target.parentElement.getElementsByClassName("contentCountInput");  
+
+      if(optionNameInput.value.trim().length === 0) {
+        alert("옵션명을 입력해주세요")
+        temp = false;
+      }
+      
+      for(let i = 0; i < allInput.length; i ++) {
+        if(allInput[i].value.trim().length === 0) {
+          alert("모든 옵션값을 입력해주세요");
+          temp = false;
+        }
+      }
+      
+      for(let i = 0; i < allCount.length; i ++) {
+        if(allCount[i].value.trim().length === 0) {
+          alert("모든 옵션값을 입력해주세요");
+        }
+      }
+      
+      if(temp) {
+          const cutInput1 = document.createElement("input");
+          cutInput1.type = 'hidden';
+          cutInput1.value = '/';
+          cutInput1.setAttribute('name', 'optionContent');
+  
+          optionContentBox.append(cutInput1);
+  
+          const cutInput2 = document.createElement("input");
+          cutInput2.type = 'hidden';
+          cutInput2.value = '/';
+          cutInput2.setAttribute('name', 'optionCount');
+  
+          optionContentBox.append(cutInput2);
+  
+          optionContentBox.style.display = 'none';
+          e.target.style.display = "none";
+          e.target.nextElementSibling.style.display = 'none';
+          plusEx.style.display = 'block';
+
+          plusEx.addEventListener('click', () => {
+            optionContentBox.style.display = 'flex';
+            plusEx.style.display = 'none';
+            e.target.style.display = "block";
+            e.target.nextElementSibling.style.display = 'block';
+          })
+      }
+  })
+
 
 })
