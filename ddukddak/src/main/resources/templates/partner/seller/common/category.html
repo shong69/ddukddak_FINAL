@@ -1,7 +1,7 @@
 <style>
     #separateCategory {
-    display: flex;
-    margin: 5px 0;
+        display: flex;
+        margin: 5px 0;
     }
 
     #separateCategory > * {
@@ -38,35 +38,86 @@
     document.addEventListener('DOMContentLoaded', function() {
         var mainCategory = document.getElementById('mainCategory');
         var subCategory = document.getElementById('subCategory');
-        
+
+        function getMainSortValueFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let sortValue = urlParams.get('mainSort');
+
+            if (sortValue === 'none' || sortValue === null) {
+                sortValue = 0;
+            }
+
+            return sortValue;
+        }
+
+        function getSortValueFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let sortValue = urlParams.get('sort');
+
+            if (sortValue === 'none' || sortValue === null) {
+                sortValue = 0;
+            }
+
+            return sortValue;
+        }
+
+        // 예시: 페이지 로딩 시 mainSort 파라미터 값 설정
+        const mainSortValue = getMainSortValueFromUrl();
+        mainCategory.value = mainSortValue != 0 ? mainSortValue : 'none';
+
+        // 예시: 페이지 로딩 시 sort 파라미터 값 설정
+        const sortValue = getSortValueFromUrl();
+        subCategory.value = sortValue != 0 ? sortValue : 'none';
+
         // 초기에는 모든 소분류 옵션을 숨깁니다.
         var subCategoryOptions = subCategory.getElementsByTagName('option');
         for (var i = 0; i < subCategoryOptions.length; i++) {
             subCategoryOptions[i].style.display = 'none';
         }
-        
-        // "소분류" 옵션만 보이게 설정합니다.
         subCategory.querySelector('option[value="none"]').style.display = 'block';
 
-        mainCategory.addEventListener('change', function() {
-            subCategory.value = 'none';
-            var selectedBigCategoryNo = this.value;
-
-            // 모든 소분류 옵션을 숨깁니다.
-            for (var i = 0; i < subCategoryOptions.length; i++) {
-                subCategoryOptions[i].style.display = 'none';
-            }
-
-            // 기본 옵션은 항상 보이게
-            subCategory.querySelector('option[value="none"]').style.display = 'block';
-
-            // 선택된 대분류와 일치하는 소분류 옵션 보이기
+        // 선택된 대분류와 일치하는 소분류 옵션 보이기
+        function updateSubCategoryOptions(selectedMainOption) {
             for (var i = 0; i < subCategoryOptions.length; i++) {
                 var option = subCategoryOptions[i];
-                if (option.dataset.bigCategoryNo === selectedBigCategoryNo) {
+                if (option.dataset.bigCategoryNo === selectedMainOption) {
                     option.style.display = 'block';
+                } else {
+                    option.style.display = 'none';
                 }
             }
+        }
+
+        // 페이지 로딩 시 소분류 옵션 설정
+        updateSubCategoryOptions(mainCategory.value);
+
+        mainCategory.addEventListener('change', () => {
+            let selectedMainOption = mainCategory.value;
+
+            if (selectedMainOption === 'none') {
+                selectedMainOption = 0;
+            }
+
+            // 소분류 값을 none으로 설정
+            subCategory.value = 'none';
+            updateSubCategoryOptions(mainCategory.value);
+
+            const mainCurrentUrl = new URL(window.location.href);
+            mainCurrentUrl.searchParams.set('mainSort', selectedMainOption);
+            mainCurrentUrl.searchParams.set('sort', 0);
+            window.location.href = mainCurrentUrl;
+        });
+
+        subCategory.addEventListener('change', () => {
+            let selectedOption = subCategory.value;
+
+            if (selectedOption === 'none') {
+                selectedOption = 0;
+            }
+
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('sort', selectedOption);
+            window.location.href = currentUrl;
         });
     });
 </script>

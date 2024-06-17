@@ -53,4 +53,25 @@ public interface ProductService {
 	 */
 	int insertOpion(String item1, List<String> list, List<String> list2);
 
+	/** 판매관리 상품 조회
+	 * @param mainSort
+	 * @param sort
+	 * @param status 
+	 * @param cp
+	 * @return
+	 */
+	Map<String, Object> selectApplyList(int mainSort, int sort, String status, int cp);
+
+	/** 판매상태 변경
+	 * @param map
+	 * @return
+	 */
+	int changeStatus(Map<String, Object> map);
+
+	/** 
+	 * @param productNo
+	 * @return
+	 */
+	Product selectOne(int productNo);
+
 }

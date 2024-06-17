@@ -1,6 +1,8 @@
 package com.ddukddak.sms.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -11,8 +13,10 @@ import com.ddukddak.sms.model.mapper.SmsMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.nurigo.sdk.message.exception.NurigoMessageNotReceivedException;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.MultipleDetailMessageSentResponse;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import net.nurigo.sdk.message.service.DefaultMessageService;
 @Slf4j
@@ -30,9 +34,14 @@ public class SmsServiceImpl implements SmsService {
 	@Override
 	public SingleMessageSentResponse sendSms(String toNumber) {
 		
+		// 응답 값 생성
 		SingleMessageSentResponse response;
+		
+		// 난수 6자리 숫자 생성
 		String smsAuthKey = Utility.RandomNumber6();
+		
 		log.info("list : " + smsAuthKey);
+		
 		try {
 			
 			Message message = new Message();
@@ -97,6 +106,114 @@ public class SmsServiceImpl implements SmsService {
 	public int checkSmsAuthKey(Map<String, Object> map) {
 		
 		return mapper.checkSmsAuthKey(map);
+	}
+
+
+	/** 파트너 가입 여부 SMS 발송
+	 *
+	 */
+	@Override
+	public SingleMessageSentResponse sendPartnerSms(String passStatus, String toNumber) {
+		
+		// 응답 값 생성
+		SingleMessageSentResponse response;
+		
+		String msg = null;
+		
+		switch(passStatus) {
+		
+			case "confirm" : msg = "[뚝딱뚝딱] 귀하의 파트너 등록 요청이 승인되었습니다. 환영합니다 :)"; break;
+			case "refuse" : msg = "[뚝딱뚝딱] 죄송합니다. 귀하의 파트너 등록 요청이 거절되었습니다."; break;
+	
+		}
+		
+		try {
+			
+			Message message = new Message();
+			// 발신번호 및 수신번호는 반드시 01012345678 형태로 입력
+			
+			message.setFrom(fromNumber);
+			message.setTo(toNumber);
+			message.setText(msg);
+			// 가입 여부에 따라 발송 메시지 바꿔주기
+			
+			response = this.messageService.sendOne(new SingleMessageSendingRequest(message)); // 실제 발송 구문
+			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		// 따로 결과만 발송이기 때문에 인증키 로직 없음
+		
+		return response;
+			
+	}
+
+
+	@Override
+	public MultipleDetailMessageSentResponse sendPartnerManySms(String action, List<Map<String, String>> partners) {
+		
+		// 응답 값 생성
+		MultipleDetailMessageSentResponse multiResponse;
+		
+		String msg = null;
+		
+		log.info("SMS 서비스단 : partners : " + partners );
+		log.info("SMS 서비스단 : action : " + action);
+		
+		switch(action) {
+		
+			case "confirm" : msg = "[뚝딱뚝딱] 귀하의 파트너 등록 요청이 승인되었습니다. 환영합니다 :)"; break;
+			case "refuse" : msg = "[뚝딱뚝딱] 죄송합니다. 귀하의 파트너 등록 요청이 거절되었습니다."; break;
+	
+		}
+		
+		ArrayList<Message> messageList = new ArrayList<>();
+		
+        for (int i = 0; i < partners.size(); i++) {
+        	
+            Map<String, String> partner = partners.get(i);
+            String toNumber = partner.get("partnerTel");
+        	
+            Message message = new Message();
+            // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+            message.setFrom(fromNumber);
+            message.setTo(toNumber);
+            message.setText(msg);
+
+            // 메시지 건건 마다 사용자가 원하는 커스텀 값(특정 주문/결제 건의 ID를 넣는등)을 map 형태로 기입하여 전송 후 확인해볼 수 있습니다!
+            /*HashMap<String, String> map = new HashMap<>();
+
+            map.put("키 입력", "값 입력");
+            message.setCustomFields(map);*/
+
+            messageList.add(message);
+        }
+        
+        try {
+        	
+            // send 메소드로 단일 Message 객체를 넣어도 동작합니다!
+            // 세 번째 파라미터인 showMessageList 값을 true로 설정할 경우 MultipleDetailMessageSentResponse에서 MessageList를 리턴하게 됩니다!
+            //MultipleDetailMessageSentResponse response = this.messageService.send(messageList, false, true);
+
+            // 중복 수신번호를 허용하고 싶으실 경우 위 코드 대신 아래코드로 대체해 사용해보세요!
+        	multiResponse = this.messageService.send(messageList, true);
+
+            System.out.println(multiResponse);
+
+            return multiResponse;
+            
+        } catch (NurigoMessageNotReceivedException exception) {
+            System.out.println(exception.getFailedMessageList());
+            System.out.println(exception.getMessage());
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+		
+		
+		return null;
 	}
     
     

@@ -75,6 +75,8 @@ public class ChattingWebsocketHandler extends TextWebSocketHandler{
 				Member loginMember = ((Member)temp.getAttribute("loginMember"));
 				Partner loginPartner = ((Partner)temp.getAttribute("loginPartnerMember"));
 				
+
+
 				//로그인 상태인 회원이 해당 메시지의 수신자 or 발신자인지 체크
 				boolean isSender;
 				boolean isTarget;

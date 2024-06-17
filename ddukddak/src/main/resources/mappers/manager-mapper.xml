@@ -21,13 +21,25 @@
 	</select>
 	
 	<!-- 파트너 가입 승인 업데이트 -->
-	<update id="updateConfrim">
+	<update id="passConfirm">
 		UPDATE "PARTNER" SET
 		PARTNER_DEL_FL = 'N',
-		PARTNER_PASS = 1
+		PARTNER_PASS = 1,
+		ENROLL_DATE = SYSDATE
 		WHERE PARTNER_NO = #{partnerNo}
 		AND PARTNER_DEL_FL = 'W'
 	</update>
 	
+	<!-- 파트너 가입 거절 업데이트 -->
+	<update id="passRefuse">
+		UPDATE "PARTNER" SET
+		PARTNER_DEL_FL = 'Y',
+		PARTNER_PASS = -1,
+		ENROLL_DATE = SYSDATE
+		WHERE PARTNER_NO = #{partnerNo}
+		AND PARTNER_DEL_FL = 'W'
+	</update>
+	
+
 	
 </mapper>

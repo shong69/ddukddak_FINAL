@@ -69,6 +69,7 @@ public class MyPageController {
 			RedirectAttributes ra,
 			HttpSession session) throws Exception{
 		int result  = infoService.updateImg(file, loginMember);
+
 		String message = null;
 		
 		if(result>0) {

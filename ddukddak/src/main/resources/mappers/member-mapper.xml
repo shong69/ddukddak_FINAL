@@ -117,4 +117,64 @@
 			DEFAULT)
 	</insert>
 	
+	<!-- 네이버 로그인 - 멤버 찾기 -->
+	<select id="findMemberByEmail">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_PW, MEMBER_NAME, 
+		MEMBER_NICKNAME, MEMBER_TEL, MEMBER_ADDR, MEMBER_POINT, PROFILE_IMG,
+		TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일"') ENROLL_DATE, 
+		MEMBER_DEL_FL, AUTHORITY, SOCIAL_LOGIN_TYPE
+		FROM "MEMBER"
+		WHERE MEMBER_EMAIL = #{naverEmail}
+		AND MEMBER_DEL_FL = 'N'
+	</select>
+	
+	<!-- 네이버 회원가입 -->
+	<insert id="naverSignup">
+		INSERT INTO "MEMBER"
+		VALUES(SEQ_MEMBER_NO.NEXTVAL, 
+				#{memberId}, 
+				#{memberEmail}, 
+				#{memberPw}, 
+				#{memberName}, 
+				#{memberNickname},
+				NULL, 
+				NULL, 
+				DEFAULT, 
+				DEFAULT, 
+				DEFAULT, 
+				DEFAULT, 
+				1, 
+				'N')
+	</insert>
+	
+	<!-- 카카오 로그인 - 멤버 찾기  -->
+	<select id="findMemberByKakao">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_PW, MEMBER_NAME, 
+		MEMBER_NICKNAME, MEMBER_TEL, MEMBER_ADDR, MEMBER_POINT, PROFILE_IMG,
+		TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일"') ENROLL_DATE, 
+		MEMBER_DEL_FL, AUTHORITY, SOCIAL_LOGIN_TYPE
+		FROM "MEMBER"
+		WHERE MEMBER_EMAIL = #{email}
+		AND MEMBER_DEL_FL = 'N'
+	</select>
+	
+	<!-- 카카오 회원가입 -->
+	<insert id="kakaoSignup">
+		INSERT INTO "MEMBER"
+		VALUES(SEQ_MEMBER_NO.NEXTVAL, 
+				#{memberId}, 
+				#{memberEmail}, 
+				#{memberPw}, 
+				#{memberName}, 
+				#{memberNickname},
+				NULL, 
+				NULL, 
+				DEFAULT, 
+				#{profileImg}, 
+				DEFAULT, 
+				DEFAULT, 
+				1, 
+				'K')
+	</insert>
+	
 </mapper>

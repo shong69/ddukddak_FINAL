@@ -593,10 +593,12 @@ emailAuth.addEventListener('click', () => {
         smsAuthKey.value = ""; // sms 인증키 입력 인풋
         emailMsg.innerText = "실제 사용하고 계신 이메일을 입력해 주세요.";
         telMsg.innerText = "";
+        emailMsg.classList.remove('error', 'confirm');
+        telMsg.classList.remove('error', 'confirm');
         emailAuthDiv.classList.add('hidden');
         emailAuth.classList.remove('hidden');
         telAuthDiv.classList.add('hidden');
-        telAuth.classList.remove('hidden');
+        telAuth.classList.remove('hidden');        
         authCount = 0;
         authCount2 = 0;
 
@@ -953,8 +955,10 @@ telAuth.addEventListener('click', () => {
         memberTel.value = "";
         emailAuthKey.value = ""; // 이메일 인증키 입력 인풋
         smsAuthKey.value = ""; // sms 인증키 입력 인풋
-        emailMsg.innerText = "";
+        emailMsg.innerText = "실제 사용하고 계신 이메일을 입력해 주세요.";
         telMsg.innerText = "";
+        emailMsg.classList.remove('error', 'confirm');
+        telMsg.classList.remove('error', 'confirm');
         emailAuthDiv.classList.add('hidden');
         emailAuth.classList.remove('hidden');
         telAuthDiv.classList.add('hidden');
