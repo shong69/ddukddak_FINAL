@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
 public class Utility {
 
 	public static int seqNum = 1; // 1 ~ 99999 반복

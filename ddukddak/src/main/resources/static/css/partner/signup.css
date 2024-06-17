@@ -241,13 +241,22 @@ main {
 }
 
 /* 인증 메시지 영역 */
-.businessNumAuthMsgArea {
+/* .businessNumAuthMsgArea {
     display: flex;
     justify-content: flex-start;
 
 }
 
+.bsNumInputs::-webkit-outer-spin-button,
+.bsNumInputs::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+} */
 
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
 
 /* 사업자 정보 인풋 div */
 .infoInputArea1 {

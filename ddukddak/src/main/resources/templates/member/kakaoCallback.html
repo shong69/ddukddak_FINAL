@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kakao Callback</title>
+
+    <script src="/js/member/kakaoCallback.js" defer></script>
+</head>
+<body>
+    
+    <!-- 사용자 정보를 숨김 필드로 전달 -->
+    <input type="hidden" id="email" th:value="${email}" />
+    <input type="hidden" id="nickname" th:value="${nickname}" />
+    <input type="hidden" id="profileImage" th:value="${profileImage}" />
+    <input type="hidden" id="pw" th:value="${pw}" />
+</body>
+</html>

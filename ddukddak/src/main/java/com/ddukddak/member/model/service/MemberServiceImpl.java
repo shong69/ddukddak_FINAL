@@ -139,6 +139,93 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 
+	/** 네이버 로그인 - 이메일로 가입한 멤버 찾기
+	 *
+	 */
+	@Override
+	public Member findMemberByEmail(String naverEmail) {
+		
+		return mapper.findMemberByEmail(naverEmail);
+	}
+
+
+	/** 네이버 회원가입
+	 *
+	 */
+	@Override
+	public Member naverSignup(Member newNaverMember) {
+		
+		// 비밀번호를 암호화
+		String encPw = bcrypt.encode(newNaverMember.getMemberPw()); 
+		
+		// 암호화 세팅
+		newNaverMember.setMemberPw(encPw);
+		
+		// 네이버 정보 업데이트하기
+		int result = mapper.naverSignup(newNaverMember);
+		
+		// 반환해줄 멤버 객체 생성
+		Member signinMember = new Member();
+		
+		if(result > 0) {
+			
+			// 넣었던 newNaverMember의 이메일로 다시 멤버 찾아서 셀렉트해줌
+			signinMember = mapper.findMemberByEmail(newNaverMember.getMemberEmail());
+			
+		} else {
+			
+			return null;
+		}
+		
+		
+		// 다시 찾아준 멤버 반환 -> 회원가입 후 로그인 시 정보 바로 적용되게
+		return signinMember;
+	}
+
+
+	/** 카카오 중복 찾기
+	 *
+	 */
+	@Override
+	public Member findMemberByKakao(String email) {
+		// TODO Auto-generated method stub
+		return mapper.findMemberByKakao(email);
+	}
+
+
+	/** 카카오 회원가입
+	 *
+	 */
+	@Override
+	public Member kakaoSignup(Member newKakaoMember) {
+		
+		// 비밀번호를 암호화
+		String encPw = bcrypt.encode(newKakaoMember.getMemberPw()); 
+		
+		// 암호화 세팅
+		newKakaoMember.setMemberPw(encPw);
+		
+		// 네이버 정보 업데이트하기
+		int result = mapper.kakaoSignup(newKakaoMember);
+		
+		// 반환해줄 멤버 객체 생성
+		Member signinMember = new Member();
+		
+		if(result > 0) {
+			
+			// 넣었던 newNaverMember의 이메일로 다시 멤버 찾아서 셀렉트해줌
+			signinMember = mapper.findMemberByKakao(newKakaoMember.getMemberEmail());
+			
+		} else {
+			
+			return null;
+		}
+		
+		
+		return signinMember;
+	}
+
+
 	
 	
 }

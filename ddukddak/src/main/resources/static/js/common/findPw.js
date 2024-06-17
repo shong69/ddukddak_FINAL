@@ -99,6 +99,7 @@ inputId.addEventListener('input', e => {
     if(inputIdValue.trim().length === 0) {
         inputId.classList.add('errorB');
         checkTelObj.id = false;
+        resetAuthStates();
         return;
     }
 
@@ -135,6 +136,16 @@ inputId.addEventListener('input', e => {
 // 2. 다음으로 버튼 
 nextBtn.addEventListener("click", () => {
 
+
+    // 한글 포함
+    const hangulRegExp = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+
+    // 한글 포함 여부 검사
+    if (hangulRegExp.test(inputId.value)) {
+        alert("네이버 또는 카카오로 가입하신 경우, 해당 계정으로 로그인해 주세요.");
+        return;
+    }
+
     // 존재하지 않는 아이디일 경우
     if(!checkTelObj.id) {
         alert('입력하신 아이디를 찾을 수 없습니다.');
@@ -147,12 +158,13 @@ nextBtn.addEventListener("click", () => {
         telHiddenDiv.classList.remove('hidden');
         findPwBtnDiv.classList.remove('hidden');
         nextBtn.classList.add('hidden');
+        inputTel.focus();
     }
 
 });
 
 // 정규식: 전화번호
-const regExpTel = /^01[0-9]{1}[0-9]{3,4}[0-9]{4}$/;
+const regExpTel = /^01[0-9]{1}[0-9]{4}[0-9]{4}$/;
 
 
 
@@ -193,6 +205,7 @@ inputTel.addEventListener('input', e => {
         telMsg.classList.add('errorC');
         inputTel.classList.add('errorB');
         checkTelObj.tel = false;
+        resetAuthStates();
         return;
     } 
     
@@ -203,6 +216,7 @@ inputTel.addEventListener('input', e => {
         telMsg.classList.add('errorC');
         inputTel.classList.add('errorB');
         checkTelObj.tel = false;
+        resetAuthStates();
 
         return;
     }

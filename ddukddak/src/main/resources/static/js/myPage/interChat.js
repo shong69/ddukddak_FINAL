@@ -78,7 +78,7 @@ targetInput.addEventListener("input", e => {
 				const img = document.createElement("img");
 				img.classList.add("result-row-img");
 				
-				img.setAttribute("src", "/images/default/main.png");
+				img.setAttribute("src", "/images/default/main.jpg");
 
 				let businessName = member.partnerBusinessName;/*닉네임 말고 업체명으로 바꾸기 */
 				let tel = member.partnerTel;/*email 말고 전화번호로 바꾸기*/
@@ -120,7 +120,7 @@ function chattingEnter(e){
 	fetch("/chatting/enter?targetNo="+targetNo)
 	.then(resp => resp.text())
 	.then(chattingNo => {
-		console.log(chattingNo);
+		console.log(chattingNo); 
 		
 		selectRoomList(); // 채팅방 목록 조회
 		
@@ -159,6 +159,9 @@ function selectRoomList(){
 		// 채팅방 목록 지우기
 		chattingList.innerHTML = "";
 
+		// 시간순으로 정렬 (최근 시간이 위로 오도록 내림차순 정렬)
+		roomList.sort((a, b) => new Date(b.sendTime) - new Date(a.sendTime));
+				
 		// 조회한 채팅방 목록을 화면에 추가
 		for(let room of roomList){
 			const li = document.createElement("li");
@@ -223,14 +226,17 @@ function selectRoomList(){
 
 				// 현재 채팅방을 보고있는 경우
 				// 비동기로 해당 채팅방 글을 읽음으로 표시
-				fetch("/chatting/updateReadFlag",{
-					method : "PUT",
-					headers : {"Content-Type": "application/json"},
-					body : JSON.stringify({"chattingNo" : selectChattingNo})
-				})
-				.then(resp => resp.text())
-				.then(result => console.log(result))
-				.catch(err => console.log(err));
+				// fetch("/chatting/updateReadFlag",{
+				// 	method : "PUT",
+				// 	headers : {"Content-Type": "application/json"},
+				// 	body : JSON.stringify({"chattingNo" : selectChattingNo,
+				// 							"memberNo" : loginMemberNo,
+				// 							"senderType" : "PARTNER"
+				// 	})
+				// })
+				// .then(resp => resp.text())
+				// .then(result => console.log(result))
+				// .catch(err => console.log(err));
 
 			}
 			
@@ -313,9 +319,10 @@ function selectChattingFn() {
 			const li = document.createElement("li");
 
 			// 보낸 시간
+			const formattedTime = formatSendTime(msg.sendTime);
 			const span = document.createElement("span");
 			span.classList.add("chatDate");
-			span.innerText = msg.sendTime;
+			span.innerText = formattedTime;
 
 			// 메세지 내용
 			const p = document.createElement("p");
@@ -323,7 +330,9 @@ function selectChattingFn() {
 			p.innerHTML = msg.messageContent; // br태그 해석을 위해 innerHTML
 
 			// 내가 작성한 메세지인 경우
-			if(loginMemberNo == msg.senderNo){ 
+			if(loginMemberNo == msg.senderNo &&
+				msg.senderType == 'MEMBER'
+			){ 
 				li.classList.add("my-chat");
 				
 				li.append(span, p);
@@ -357,7 +366,21 @@ function selectChattingFn() {
 	})
 	.catch(err => console.log(err));
 
+		// 현재 채팅방을 보고있는 경우
+	// 비동기로 해당 채팅방 글을 읽음으로 표시
+	fetch("/chatting/updateReadFlag",{
+		method : "PUT",
+		headers : {"Content-Type": "application/json"},
+		body : JSON.stringify({"chattingNo" : selectChattingNo,
+								"memberNo" : loginMemberNo,
+								"senderType" : "PARTNER"
+		})
+	})
+	.then(resp => resp.text())
+	.then(result => console.log(result))
+	.catch(err => console.log(err));
 
+	
 }
 
 
@@ -369,9 +392,10 @@ function selectChattingFn() {
 // /chattingSock 이라는 요청 주소로 통신할 수 있는  WebSocket 객체 생성
 let chattingSock;
 
-/*if(loginMemberNo != ""){
+
+if(loginMemberNo != ""){
 	chattingSock = new SockJS("/chattingSock");
-}*/
+}
 
 
 
@@ -386,7 +410,9 @@ const sendMessage = () => {
 		inputChatting.value = "";
 	} else {
 		var obj = {
+			"senderType" : "MEMBER",
 			"senderNo": loginMemberNo,
+			"targetType" : "PARTNER",
 			"targetNo": selectTargetNo,
 			"chattingNo": selectChattingNo,
 			"messageContent": inputChatting.value,
@@ -410,12 +436,29 @@ const sendMessage = () => {
 // 	}
 // })
 
+//전송 시간 형식 바꾸기
+function formatSendTime(sendTime) {
+    // '2024.06.16 01:30' -> '2024-06-16T01:30'
+    const isoDateTime = sendTime.replace(' ', 'T').replace(/\./g, '-');
+    const date = new Date(isoDateTime);
+    const now = new Date();
 
+    const isToday = date.getFullYear() === now.getFullYear() &&
+                    date.getMonth() === now.getMonth() &&
+                    date.getDate() === now.getDate();
+
+    if (isToday) {
+        return date.toTimeString().split(' ')[0].slice(0, 5); // '01:30'
+    } else {
+        return sendTime.split(' ')[0].slice(0,10); // '2024.06.16'
+    }
+}
 
 // WebSocket 객체 chattingSock이 서버로 부터 메세지를 통지 받으면 자동으로 실행될 콜백 함수
 chattingSock.onmessage = function(e) {
 	// 메소드를 통해 전달받은 객체값을 JSON객체로 변환해서 obj 변수에 저장.
 	const msg = JSON.parse(e.data);
+
 	console.log(msg);
 
 
@@ -428,11 +471,12 @@ chattingSock.onmessage = function(e) {
 		// 메세지 만들어서 출력하기
 		//<li>,  <li class="my-chat">
 		const li = document.createElement("li");
-	
+		const formattedTime = formatSendTime(msg.sendTime);
+
 		// 보낸 시간
 		const span = document.createElement("span");
 		span.classList.add("chatDate");
-		span.innerText = msg.sendTime;
+		span.innerText = formattedTime;
 	
 		// 메세지 내용
 		const p = document.createElement("p");
@@ -440,7 +484,9 @@ chattingSock.onmessage = function(e) {
 		p.innerHTML = msg.messageContent; // br태그 해석을 위해 innerHTML
 	
 		// 내가 작성한 메세지인 경우
-		if(loginMemberNo == msg.senderNo){ 
+		if(loginMemberNo == msg.senderNo &&
+			msg.senderType =='MEMBER'
+		){ 
 			li.classList.add("my-chat");
 			
 			li.append(span, p);
@@ -483,7 +529,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 	
 	// 채팅방 목록에 클릭 이벤트 추가
 	roomListAddEvent(); 
-
+	selectRoomList();
 	// 보내기 버튼에 이벤트 추가
 	send.addEventListener("click", sendMessage);
 });

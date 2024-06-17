@@ -1,10 +1,13 @@
 package com.ddukddak.manager.controller;
 
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ddukddak.manager.model.service.ManagerService;
-import com.ddukddak.partner.model.dto.Partner;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class ManagerController {
-	
+		
 	private final ManagerService service;
+	
+
 	
 	@GetMapping("main")
 	public String managerMain() {
@@ -74,22 +78,55 @@ public class ManagerController {
 		return "manager/partnerPass";
 	}
 	
-	/** 파트너 가입 승인
+	/** 파트너 승인 처리
 	 * @param partNo
 	 * @return
 	 */
 	@ResponseBody
 	@PostMapping("partner/confirm")
-	public int passConfirm(@RequestBody Partner partner) {
+	public int passConfirm(@RequestBody String partnerNo) {
 		
-		int partnerNo = partner.getPartnerNo();
-		String partnerTel = partner.getPartnerTel();
-		
-		
-//		int result = service.passConfirm(partnerNo);
+		log.info("partnerNo : " + partnerNo);
 		
 		// 1 : 성공, 0 : 실패
-		return 0;
+		return service.passConfirm(partnerNo);
+	}
+	
+	/** 파트너 승인 처리
+	 * @param partNo
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("partner/refuse")
+	public int passRefuse(@RequestBody String partnerNo) {
+		
+				
+		// 1 : 성공, 0 : 실패
+		return service.passRefuse(partnerNo);
+	}
+	
+	/** 파트너 다중 승인, 거절 처리 및 SMS 발송까지
+	 * @param action
+	 * @return
+	 */
+	@PostMapping("partner/multi/{actionForBackend}")
+	public ResponseEntity<Integer> updateMultiPass(@PathVariable("actionForBackend") String action, 
+				@RequestBody Map<String, List<Map<String, String>>> paramMap) {
+		//
+
+		List<Map<String, String>> partners = paramMap.get("partners");
+		
+		log.info("컨트롤러 partners: " + partners);
+        if (action == null || (!action.equals("confirm") && !action.equals("refuse"))) {
+        	return ResponseEntity.ok(0);  // Invalid action
+        }
+
+       
+        // 1 : 성공 / 0 실패
+        int result = service.updateMultiPass(action, partners);
+        
+
+        return ResponseEntity.ok(result);
 	}
 	
 	
