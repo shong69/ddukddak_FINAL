@@ -391,16 +391,17 @@ public class ProductServiceImpl implements ProductService{
 		return result;
 	}
 
-	// 판매등록 상품선택
-	@Override
-	public Product selectOne(int productNo) {
-		return mapper.selectOne(productNo);
-	}
 
 	// 판매등록 상품 이미지 조회
 	@Override
 	public List<ProductImg> selectImg(int productNo) {
 		return mapper.selectImg(productNo);
+
+	@Override
+	public Product selectOne(int productNo) {
+		// TODO Auto-generated method stub
+		return null;
+
 	}
 
 }

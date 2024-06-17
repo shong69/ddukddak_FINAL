@@ -18,10 +18,23 @@ myPageMainBtn.addEventListener("click",()=>{
     const parentTd = myPageMainBtn.parentElement.parentElement;
     parentTd.style.display = "none";
     parentTd.nextElementSibling.style.display = "";
+
 });
+
 myPageSubBtns.forEach(btn => {
     btn.addEventListener("click", ()=>{
+
         const parentTd = btn.parentElement.parentElement.parentElement.parentElement;
+        //소셜 로그인의 경우 이메일과 비밀번호 변경 막기
+        //memberType 이 k나 N인 경우 막기
+        if(loginMember.socialLoginType != 'D' && parentTd.className=='password-area'){
+            alert("소셜 로그인의 경우 비밀번호 변경이 불가합니다");
+            return;
+        }
+        if(loginMember.socialLoginType != 'D' && parentTd.className=='email-area'){
+            alert("소셜 로그인의 경우 이메일 변경이 불가합니다");
+            return;
+        }
         parentTd.style.display = "none";
         parentTd.nextElementSibling.style.display="";
         console.log("td가 보여요");
@@ -278,6 +291,7 @@ unviewPwBtns.forEach(btn =>{
 //*비밀번호 변경하기-비동기
 // pwObj가 모두 true인 경우 넘기기
 pwConfirmBtn.addEventListener("click", e=>{
+
     let pass="true";
     for(let key in pwObj){
         if(!pwObj[key]) pass="false";
@@ -688,3 +702,6 @@ phoneConfirmBtn.addEventListener("click", () => {
             console.log(error);
         });
 });
+
+
+
