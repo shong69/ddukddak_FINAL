@@ -6,36 +6,46 @@
         <ul id="reviewList">
             <li >
                 <div class="reviewInfoArea">
-                    <div class="commentCount" th:text="|전체 리뷰 N개|">
-
+                    <div class="commentCount" >
+                        <div th:text="|전체 리뷰 N개|"></div>
                     </div>
-                    <div class="rateCount" th:text="|사용자 총 평점 n.n/5|">
-    
+                    <div class="rateCount" >
+                        <div th:text="|사용자 총 평점 n.n/5|"></div>
                     </div>
                 </div>
 
                 	
                 <th:block th:if="${session.loginMember}">
-                    <form method ="POST" action="/eCommerce/reviewPost">
+                    <form id="reviewForm" enctype="multipart/form-data">
                         <div id = "comment">
                             <div id="id-addCommentArea">
                         
-                                <span th:text="|@${session.loginMember?.memberId}|">아이디</span>
-                                <button id="addComment" >등록</button>
+                                <span id = "reviewId" th:text="|@${session.loginMember?.memberId}|">아이디</span>
+                                <span id="productRate"> 별점 : <i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i  class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i></span>
+                                <button id="addComment" oncClick = "handleFormMission(event)" >등록</button>
                             </div>
-                            <textarea id="commentContent" rows="15" placeholder="다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현이나 타인의 권리를 침해하는 내용은 사용하지 않도록 주의해주세요."></textarea>
+                            <div id = "contentBox">
+                                <textarea id="commentContent" name = "reviewContent" rows="12" placeholder="다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현이나 타인의 권리를 침해하는 내용은 사용하지 않도록 주의해주세요."></textarea>
+                                <div id = "photoArea">
+                                    <label for="reviewFile" id="selectReviewImgBtn"><i class="fa-regular fa-images"></i>첨부하기</label>
+                                    <input sytle="display:none;" type="file" multiple class="file" name="reviewImgs" id="reviewFile" onchange="readImgURLs(this);">
+                                    <div id = "reviewImgBox"></div>
+                                </div>
+                            </div>
                         </div>
-
                     </form>
 
                 </th:block>
             </li>
 
-            <th:object th:if="${#lists.isEmpty(reviewList)}">
-                <div id = "noReviewArea">
-                    작성된 리뷰가 존재하지 않습니다.
-                </div>
-            </th:object>
+            <th:block th:if="${#lists.isEmpty(reviewList)}">
+                <li>
+                    <div id = "noReviewArea">
+                        작성된 리뷰가 존재하지 않습니다.
+                    </div>
+                </li>
+
+            </th:block>
 
             <th:object th:unless="${#lists.isEmpty(reviewList)}">
                 <li class="reviewRow" th:each="review : ${reviewList}"
