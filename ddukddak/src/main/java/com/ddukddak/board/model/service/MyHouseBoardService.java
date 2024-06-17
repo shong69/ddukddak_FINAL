@@ -73,4 +73,12 @@ public interface MyHouseBoardService {
 	List<Board> selectMyHouseList();
 
 
+
+	/** 집들이 게시글 삭제
+	 * @param boardNo
+	 * @return result
+	 */
+	int deleteMyHouse(int boardNo);
+
+
 }

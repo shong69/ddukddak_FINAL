@@ -1,5 +1,8 @@
 package com.ddukddak.partner.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -122,5 +125,13 @@ public class PartnerServiceImpl implements PartnerService{
 		
 		return mapper.signup(inputPartner);
 	}
+
+
+//	// 파트너 타입 리스트 조회
+//	@Override
+//	public List<Map<String, Object>> selectPartnerTypeList() {
+//		
+//		return mapper.selectPartnerTypeList();
+//	}
 	
 }

@@ -1,5 +1,8 @@
 package com.ddukddak.partner.model.mapper;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ddukddak.partner.model.dto.Partner;
@@ -62,5 +65,12 @@ public interface PartnerMapper {
 	 * @return
 	 */
 	int signup(Partner inputPartner);
+
+
+
+//	/** 파트너 타입 리스트 조회
+//	 * @return partnerTypeList
+//	 */
+//	List<Map<String, Object>> selectPartnerTypeList();
 	
 }

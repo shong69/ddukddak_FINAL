@@ -1,5 +1,8 @@
 package com.ddukddak.partner.model.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.ddukddak.partner.model.dto.Partner;
 
 public interface PartnerService {
@@ -53,6 +56,12 @@ public interface PartnerService {
 	 * @return
 	 */
 	int signup(Partner inputPartner);
+
+
+//	/** 파트터 타입 리스트 조회
+//	 * @return partnerTypeList
+//	 */
+//	List<Map<String, Object>> selectPartnerTypeList();
 
 
 

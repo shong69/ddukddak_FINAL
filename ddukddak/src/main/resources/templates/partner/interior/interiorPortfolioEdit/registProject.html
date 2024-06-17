@@ -33,7 +33,7 @@
                             <h3>프로젝트명</h3>
                         </div>
                         <div>
-                            <input type="text">
+                            <input type="text" class="inputProjectTitle" maxlength="20" required>
                         </div>
                     </div>
 
@@ -62,15 +62,13 @@
                                             <option>벽지도배</option>
                                         </select>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td>시공비용</td>
                                     <td>
-                                        <input type="number">
+                                        <input type="number" step="100000" min="0">&nbsp;원
                                     </td>
                                     <td>평수</td>
                                     <td>
-                                        <input type="number">
+                                        <input type="number" min="0">&nbsp;평
                                     </td>
                                 </tr>
                             </table>
@@ -81,53 +79,66 @@
                         <div>
                             <h3>세부정보</h3>
                         </div>
-                        <div>
-                            <select>
-                                <option>서울</option>
-                                <option>경기/인천</option>
-                                <option>충청/대전</option>
-                                <option>전라/광주</option>
-                                <option>경북/대구</option>
-                                <option>경남/부산/울산</option>
-                                <option>강원</option>
-                                <option>제주</option>
-                            </select>
+                        <table class="detail-info">
+                            <tr>
+                                <td>지역</td>
+                                <td>
+                                    <select>
+                                        <option>서울</option>
+                                        <option>경기/인천</option>
+                                        <option>충청/대전</option>
+                                        <option>전라/광주</option>
+                                        <option>경북/대구</option>
+                                        <option>경남/부산/울산</option>
+                                        <option>강원</option>
+                                        <option>제주</option>
+                                    </select>
+                                </td>
 
-                            <select>
-                                <option>2000</option>
-                                <option>2001</option>
-                                <option>2002</option>
-                                <option>2003</option>
-                                <option>2004</option>
-                                <option>2005</option>
-                                <option>2006</option>
-                                <option>2007</option>
-                                <option>2008</option>
-                                <option>2009</option>
-                                <option>2010</option>
-                                <option>2011</option>
-                                <option>2012</option>
-                                <option>2013</option>
-                                <option>2014</option>
-                                <option>2015</option>
-                                <option>2016</option>
-                                <option>2017</option>
-                                <option>2018</option>
-                                <option>2019</option>
-                                <option>2020</option>
-                                <option>2021</option>
-                                <option>2022</option>
-                                <option>2023</option>
-                                <option>2024</option>
-                            </select>
+                                <td>시공연도</td>
+                                <td>
+                                    <select>
+                                        <option>2000</option>
+                                        <option>2001</option>
+                                        <option>2002</option>
+                                        <option>2003</option>
+                                        <option>2004</option>
+                                        <option>2005</option>
+                                        <option>2006</option>
+                                        <option>2007</option>
+                                        <option>2008</option>
+                                        <option>2009</option>
+                                        <option>2010</option>
+                                        <option>2011</option>
+                                        <option>2012</option>
+                                        <option>2013</option>
+                                        <option>2014</option>
+                                        <option>2015</option>
+                                        <option>2016</option>
+                                        <option>2017</option>
+                                        <option>2018</option>
+                                        <option>2019</option>
+                                        <option>2020</option>
+                                        <option>2021</option>
+                                        <option>2022</option>
+                                        <option>2023</option>
+                                        <option>2024</option>
+                                    </select>&nbsp;년
+                                    
+                                </td>
 
-                            <select>
-                                <option>1인 가족</option>
-                                <option>2인 가족</option>
-                                <option>4인 가족</option>
-                                <option>기타</option>
-                            </select>
-                        </div>
+                                <td>가족형태</td>
+                                <td>
+                                    <select>
+                                        <option>1인 가족</option>
+                                        <option>2인 가족</option>
+                                        <option>4인 가족</option>
+                                        <option>기타</option>
+                                    </select>
+                                </td>
+
+                            </tr>
+                        </table>
                     </div>
                 </div>
 
