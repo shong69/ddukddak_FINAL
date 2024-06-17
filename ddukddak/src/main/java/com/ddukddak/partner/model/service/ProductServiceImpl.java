@@ -431,7 +431,6 @@ public class ProductServiceImpl implements ProductService{
 	// 상품 판매등록
 	@Override
 	public int updateRegistProduct(Map<String, Object> map) {
-		log.info("map :" + map);
 		return mapper.updateRegistProduct(map);
 	}
 
@@ -573,6 +572,12 @@ public class ProductServiceImpl implements ProductService{
 		}
 		
 		return result;
+	}
+
+	// 수정상품 등록
+	@Override
+	public int modifyRegistProduct(Map<String, Object> map) {
+		return mapper.modifyRegistProduct(map);
 	}
 
 

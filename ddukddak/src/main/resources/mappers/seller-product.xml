@@ -353,4 +353,14 @@
 		VALUES(SEQ_OPTION_ID.NEXTVAL, #{optionName}, #{optionValue}, #{productCount}, #{productNo})
 	</insert>
 	
+	<!-- 수정상품 등록 -->
+	<update id="modifyRegistProduct">
+		UPDATE "PRODUCT"
+		SET PRODUCT_NAME = #{productName},
+			CATEGORY_NO = #{smallCategoryNo},
+			PRODUCT_PRICE = #{productPrice},
+			PARTNER_NO = #{memberNo}
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
 </mapper>

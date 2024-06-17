@@ -262,6 +262,7 @@ public class SellerController {
 	public String ProductApplyProduct(@RequestParam ("productNo") int productNo,
 									@RequestParam(value="mainSort", required=false, defaultValue="0") int mainSort,
 									@RequestParam(value="sort", required=false, defaultValue="0") int sort,
+									@RequestParam("status") String status,
 										Model model) {
 		
 
@@ -286,6 +287,9 @@ public class SellerController {
 		List<ProductImg> imgs = service.selectImg(productNo);
 		
 		model.addAttribute("img", imgs);
+		
+		// 수정/등록 상태 보내기
+		model.addAttribute("status", status);
 		
 		
 		return "partner/seller/product/applyProduct";
@@ -405,6 +409,117 @@ public class SellerController {
 		}
 
 
+		return result1;
+		
+	}
+	
+	// 판매상품 수정
+	@PostMapping("product/modifySellProduct")
+	@ResponseBody
+	public int ProductModifySellProduct(@RequestParam("productName") String productName,
+			@RequestParam("productNo") String productNo,
+			@RequestParam(name="bigCategory") String bigCategory,
+			@RequestParam(name="smallCategory") String smallCategory,
+			@RequestParam ("productPrice") int productPrice,
+			@RequestParam (name="mainImg", required = false) MultipartFile thumbnailImg,
+			@RequestParam (name="subImgs", required = false) List<MultipartFile> subImgs,
+			@RequestParam (name = "optionName", required = false) List<String> optionName,
+			@RequestParam (name = "optionContent", required = false) List<String> optionContent,
+			@RequestParam (name = "optionCount", required = false) List<String> optionCount,
+			@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) throws IllegalStateException, IOException  {
+		
+		int memberNo = loginPartnerMember.getPartnerNo();
+		
+		log.info("memterNo : " + memberNo);
+		
+		log.info("productName : " + productName);
+		log.info("bigCategory : " + bigCategory);
+		log.info("smallCategory : " + smallCategory);
+		log.info("productPrice : " + productPrice);
+		log.info("optionName : " + optionName);
+		log.info("optionContent : " + optionContent);
+		log.info("optionCount : " + optionCount);
+		
+		// PRODUCT 테이블 삽입
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("productNo", productNo);
+		map.put("memberNo", memberNo);
+		map.put("productName", productName);
+		map.put("smallCategoryNo", smallCategory);
+		map.put("productPrice", productPrice);
+		
+		int result1 = service.modifyRegistProduct(map);
+		
+		
+		// UPLOAD_FILE 삽입
+		
+		// 대표사진
+		int result21 = service.updateThumbnailImg(thumbnailImg, productNo, smallCategory);
+		
+		// 상세사진
+		List<MultipartFile> imgList = new ArrayList<>(subImgs);
+		
+		int result2 = service.updateInsertImg(productNo, smallCategory, imgList);
+		
+		// 옵션 비우기
+		int result4 = service.delOption(productNo);
+		
+		int result3 = 0;
+		// 옵션
+		if(optionContent != null) {
+			List<List<String>> resultList1 = new ArrayList<>();
+			List<String> optionContentList = new ArrayList<>();
+			
+			// 옵션값 리스트 나누기
+			for (String item : optionContent) {
+				if ("/".equals(item)) {
+					resultList1.add(optionContentList);
+					optionContentList = new ArrayList<>();
+				} else {
+					optionContentList.add(item);
+				}
+			}
+			
+			resultList1.add(optionContentList);
+			
+			// 결과 출력
+			for (List<String> list : resultList1) {
+				log.info("resultList1 : " + list);
+			}
+			
+			// 옵션재고 리스트 나누기
+			List<List<String>> resultList2 = new ArrayList<>();
+			List<String> optionCountList = new ArrayList<>();
+			
+			for (String item : optionCount) {
+				if ("/".equals(item)) {
+					resultList2.add(optionCountList);
+					optionCountList = new ArrayList<>();
+				} else {
+					optionCountList.add(item);
+				}
+			}
+			
+			resultList2.add(optionCountList);
+			
+			// 결과 출력
+			for (List<String> list : resultList2) {
+				log.info("resultList2 : " + list);
+			}
+			
+			
+			// OPTION 삽입
+			
+			for (int i = 0; i < resultList1.size(); i ++) {
+				if(!resultList1.get(i).isEmpty()) {
+					result3 += service.insertOpion2(optionName.get(i), resultList1.get(i), resultList2.get(i), productNo);
+				}
+			}
+			
+		}
+		
+		
 		return result1;
 		
 	}

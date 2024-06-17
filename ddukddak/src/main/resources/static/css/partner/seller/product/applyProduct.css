@@ -347,6 +347,16 @@
     position: relative;
   }
 
+  .plusEx {
+    width: 50px;
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 2px;
+    text-align: center;
+    margin-top: 5px;
+    display: none;
+  }
+
   #buttons {
     display: flex;
     justify-content: center;

@@ -237,6 +237,12 @@ public interface ProductMapper {
 	 */
 	int insertOption2(Map<String, Object> map);
 
+	/** 수정상품 등록
+	 * @param map
+	 * @return
+	 */
+	int modifyRegistProduct(Map<String, Object> map);
+
 
 
 }

@@ -77,12 +77,20 @@
                         </td>
                         <td th:text="${applyItem.productName}" class="productName">상품제목</td>
                         <td th:text="${applyItem.productPrice}" class="productPrice">상품가격</td>
-                        <form action="/partner/seller/product/applyProduct" method="POST">
-                            <td th:switch="${applyItem.productFl}">
-                                <button th:case="'Y'" class="sellerButton" name="productNo" th:value="${applyItem.productNo}">판매등록</button>
-                                <span th:case="*"></span>
-                            </td>
-                        </form>
+                        <th:block th:switch="${applyItem.productFl}">
+                            <form th:case="'Y'" action="/partner/seller/product/applyProduct" method="POST">
+                                <td class="buttonBox">
+                                    <button class="sellerButton" name="productNo" th:value="${applyItem.productNo}">판매등록</button>
+                                    <input type="hidden" name="status" value="apply">
+                                </td>
+                            </form>
+                            <form th:case="*" action="/partner/seller/product/applyProduct" method="POST">
+                                <td class="buttonBox">
+                                    <button name="productNo" th:value="${applyItem.productNo}">수정</button>
+                                    <input type="hidden" name="status" value="modify">
+                                </td>
+                            </form>
+                        </th:block>
                     </tr>
                 </th:block>
 

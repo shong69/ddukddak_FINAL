@@ -148,6 +148,12 @@ public interface ProductService {
 	 */
 	int insertOpion2(String string, List<String> list, List<String> list2, String productNo);
 
+	/** 수정상품 등록
+	 * @param map
+	 * @return
+	 */
+	int modifyRegistProduct(Map<String, Object> map);
+
 
 
 
