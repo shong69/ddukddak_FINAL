@@ -1,72 +1,43 @@
 <div class="commentArea">
-
   <div class="inputCommentArea">
-
-    
     <div class="topArea">
       <h2 id="commentCount" th:text="|댓글 ${board.commentList.size()}개|">댓글수</h2>
       <button class="boardDetailSubmitChatBtn" id="insertComment">등록</button>
     </div>
-      
     <div class="commentTextArea">
       <textarea id="inputCommentContent" cols="120" rows="5"></textarea>
     </div>
-    
-
   </div>
-
   <ul id="commentList" class="commentList">
-  
     <li class="commentContainer"
          th:each="comment : ${board.commentList}"
-         th:classappend="${comment.parentCommentNo} != 0 ? child-comment"
+         th:classappend="${comment.parentCommentNo} != 0 ? 'child-comment' : ''"
          th:object="${comment}">
-      
       <th:block th:if="*{commentDelFl == 'Y'}">
         삭제된 댓글입니다.
       </th:block>
-
       <th:block th:if="*{commentDelFl == 'N'}">
-
         <div class="commentUser">
-          
           <div class="userInfo">
-            <!-- 프로필 이미지 X -->
             <img th:unless="*{profileImg}" th:src="#{user.default.image}">
-            <!-- 프로필 이미지 O -->
             <img th:if="*{profileImg}" th:src="*{profileImg}">
-            <h3 th:text="*{memberNickname}">유저이</h3>
+            <h3 th:text="*{memberNickname}">유저</h3>
             <h4 th:text="*{commentWriteDate}">작성일</h4>
           </div>
-    
         </div>
-    
         <div class="commentContentArea">
-
-          <div class="displayComment" id="displayComment">
-            <h3 class="commentContent" th:text="*{commentContent}">
-              댓글 내용
-              댓글 내용
-            </h3>
+          <div class="displayComment">
+            <h3 class="commentContent" th:text="*{commentContent}">댓글 내용</h3>
           </div>
-    
           <div class="commentBtnArea">
-            <!-- 로그인 회원과 댓글 작성자가 같은 경우 -->
             <th:block th:if="${session.loginMember != null and session.loginMember.memberNo == comment.memberNo}">
               <div th:onclick="|showUpdateComment(*{commentNo}, this)|">수정</div>
               <div th:onclick="|deleteComment(*{commentNo})|">삭제</div>
             </th:block>
             <div th:if="${session.loginMember != null}" th:onclick="|showInsertComment(*{commentNo}, this)|">답글</div>
           </div>
-    
         </div>
-
       </th:block>
-      
     </li>
-  
-  
   </ul>
-
 </div>
-

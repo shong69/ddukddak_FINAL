@@ -26,7 +26,6 @@
     <div id="detail">
         <!-- 상세 카테고리-->
         <th:block th:replace="~{eCommerce/common/leftCategory}"></th:block>
-
         <div id="detailContainer">
             <!-- 메인 이미지/ 가격 -->
             <div id="productContainer">
@@ -38,7 +37,7 @@
                     </div>
 
                     <div id="imgSubContainer" >
-                        <span th:each="img : ${productInfo.imgList}" th:if="${img.uploadImgOrder > 0}">
+                        <span th:each="img : ${productInfo.imgList}">
                             <img th:src="|${img.uploadImgPath}${img.uploadImgRename}|" class="subImg">
                         </span>
                     </div>
@@ -169,8 +168,8 @@
                             <img src="/images/eCommerce/ex-main3.png">
                         </div>
 
+                        <th:block th:replace="~{/eCommerce/eCommerceReview}"></th:block>
                         
-                        <th:block th:replace="~{eCommerce/eCommerceReview}"></th:block>
                         <!-- 교환/반품 -->
                         <div id="change">
                             <h2>교환/반품 정보</h2>

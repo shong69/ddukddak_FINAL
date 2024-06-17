@@ -87,6 +87,17 @@
 		WHERE PRODUCT_NO = #{value}
 	</update>
 	
+	<!-- 재고상품 삭제 -->
+	<delete id="delProduct">
+		DELETE FROM "PRODUCT" WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	<delete id="delProductImg">
+		DELETE FROM "UPLOAD_FILE" WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	<delete id="delProductOption">
+		DELETE FROM "OPTION" WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	
 	<!-- 대분류에 따른 소분류 조회 -->
 	<select id="selectSmallCategory">
 		SELECT CATEGORY_NO, CATEGORY_NAME
@@ -287,5 +298,27 @@
 		UPLOAD_FILE
 		WHERE PRODUCT_NO = #{productNo}
 	</select>
+	
+	<!-- 판매등록 옵션명조회 -->
+	<select id="selectOptionName">
+		SELECT DISTINCT OPTION_NAME
+		FROM "OPTION"
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 판매등록 옵션조회 -->
+	<select id="selectOption">
+		SELECT * FROM "OPTION" WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 상품 판매등록 -->
+	<update id="updateRegistProduct">
+		UPDATE "PRODUCT"
+		SET PRODUCT_NAME = #{productName},
+			CATEGORY = #{smallCategory},
+			PRODUCT_PRICE = #{productPrice},
+			PARTNER_NO = #{memberNo}
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
 	
 </mapper>

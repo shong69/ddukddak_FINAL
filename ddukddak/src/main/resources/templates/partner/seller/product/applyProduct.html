@@ -16,14 +16,14 @@
     <div id="applyProductContainer">
         <h1>상품관리 > 판매등록</h1>
 
-        <form>
+        <form id="uploadForm" action="/partner/seller/product/applySellProduct" method="POST" enctype="multipart/form-data">
             <div id="formContainer">
 
                 <div>
                     <h4>카테고리 선택</h4>
 
                     <div>
-                        <select id="bigCategory">
+                        <select name="bigCategory" id="bigCategory">
                             <option th:text="${product.bigCategoryName}">대분류</option>
                             <th:block th:each="category : ${categoryList}" th:object="${category}">
                                 <option th:value="${category.bigCategoryNo}" th:text="${category.bigCategoryName}">대분류값</option>
@@ -39,13 +39,13 @@
                 <div>
                     <h4>상품명</h4>
 
-                    <input name="productName" th:value="${product.productName}">
+                    <input name="productName" id="productName" th:value="${product.productName}">
                 </div>
 
                 <div>
                     <h4>판매가(원)</h4>
 
-                    <input name="productPrice" th:value="${product.productPrice}">
+                    <input name="productPrice" id="productPrice" th:value="${product.productPrice}">
                 </div>
 
                 <div>
@@ -55,14 +55,46 @@
                         <input type="radio" name="productOption" value="1" id="radio1"><label for="radio1">설정함</label>
                         <input type="radio" name="productOption" value="2" id="radio2"><label for="radio2">설정안함</label>
                     </div>
+                    
+                    <div id="optionBox">
+                        <th:block th:if="${option != null}">
+                            <th:block th:each="optionNames : ${optionName}" th:object="${optionNames}">
+                                <div class="optionMainBox">
+                                    <h4>옵션명</h4>
+                                    <input name="optionName" class="optionName" th:value="${optionNames.optionName}">
+                                    <div class="optionContentBox">
+                                        <table>
+                                            <tr>
+                                                <td style="font-size: 12px;">옵션 내용</td>
+                                                <td style="font-size: 12px;">재고 수량</td>
+                                                <td>
+                                                    <button type="button" class="addOption">+</button>
+                                                </td>
+                                            </tr>
 
-                    <div id="addoption">
-                        <h4>옵션명</h4>
-                        <div id="option">
-                            <div id="optionBox"></div>
-                            <div id="plusBox">
-                                <button type="button" id="productPlusButton">+</button>
-                            </div>
+                                            <th:block th:each="options : ${option}" th:object="${options}">
+                                                <th:block th:if="${options.optionName == optionNames.optionName}">
+                                                    <tr>
+                                                        <td>
+                                                            <input name="optionContent" class="contentInput" th:value="${options.optionValue}">
+                                                        </td>
+                                                        <td>
+                                                            <input name="optionCount" class="contentCountInput" th:value="${options.productCount}">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="minusOption">-</button>
+                                                        </td>
+                                                    </tr>
+                                                </th:block>
+                                            </th:block>
+                                        </table>
+                                        <button type="button" class="delOption">삭제</button>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </th:block>
+                        <div id="plusBox">
+                            <button type="button" id="productPlusButton">+</button>
                         </div>
                     </div>
                 </div>
@@ -70,7 +102,7 @@
                 <div>
                     <h4>상품 대표 이미지 등록</h4>
 
-                    <input type="file" class="real-upload-main" accept="image/*" required>
+                    <input type="file" name="mainImg" id="mainImg" class="real-upload-main" accept="image/*">
                     <div class="upload-main">사진 등록</div>
                     <ul class="image-preview-main">
                         <th:block th:each="imgs : ${img}" th:object="${imgs}">
@@ -114,17 +146,26 @@
 
                 <div>
                     <div id="buttons">
-                        <button>등록하기</button>
-                        <button type="button">미리보기</button>
+                        <button type="submit" id="createButton" onclick="handleFormSubmission(event)">등록하기</button>
                     </div>
                 </div>
 
             </div>
+            <input type="hidden" name="productNo" th:value="${product.productNo}">
         </form>
     </div>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/partner/seller/product/applyProduct.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // `option` 변수가 null이 아닌 경우 설정함 라디오 버튼을 선택
+            /*@th:block th:if="${option != null}"*/
+            document.getElementById('radio1').checked = true;
+            /*@end*/
+        });
+    </script>
     <script>
         let subImageFiles = [];
 
@@ -182,10 +223,9 @@
         }
 
         function handleFormSubmission(event) {
-            const form = document.getElementById('uploadForm');
             event.preventDefault(); // 기본 제출 동작 막기
 
-            // FormData 객체 생성
+            const form = document.getElementById('uploadForm');
             const formData = new FormData(form);
 
             // subImageFiles를 FormData에 추가
@@ -193,70 +233,29 @@
                 formData.append('subImgs', file);
             });
 
-            // Remove old subImgs if present
-            const subImgsInput = form.querySelector('input[name="subImgs"]');
-            if (subImgsInput) {
-                subImgsInput.remove();
+            // 폼 데이터 로그 출력 (디버깅 용도)
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
             }
 
-            // Create new input elements for each file
-            subImageFiles.forEach(file => {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.setAttribute('name', 'subImgs');
-                input.value = file; // This won't work for file objects, so we need to use FormData instead
-                form.appendChild(input);
-            });
-            const productName = document.querySelector("#productName");
-            const bigCategory = document.querySelector("#bigCategory");
-            const smallcategory = document.querySelector("#smallCategory");
-            const price = document.querySelector("#price");
+            // FormData 객체를 사용하여 서버로 POST 요청 보내기
+            fetch('/partner/seller/product/applySellProduct', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(result => {
 
-            const contentCountInputVisual = document.getElementsByClassName(".contentCountInput");
-            var temp = true;
-
-            for(let i = 0; i < contentCountInputVisual.length; i ++) {
-                if(contentCountInputVisual[i].type != 'hidden') {
-                    temp = false;
-                    break;
-                }
-            }
-
-            if(productName.value.trim().length === 0 ||
-                bigCategory.options[bigCategory.selectedIndex].value == 'none' ||
-                smallcategory.options[smallcategory.selectedIndex].value == 'none' ||
-                price.value.trim().length === 0 ||
-                selectOption == 0
-                ) {
-                    alert("입력을 완료해주세요");
-                    event.preventDefault();
-                } else if(document.querySelector("#preview").src == 0) {
-                    alert("대표사진을 등록해주세요");
-                    event.preventDefault();
-                } else if (!temp) {
-                    alert("옵션 등록을 완료해주세요");
-                    event.preventDefault();
+                if(result > 0) {
+                    alert("등록 완료");
+                    location.href = '/partner/seller/product/apply';
                 } else {
-                    // 서브 이미지 파일들이 FormData에 추가되었으므로 이제 submit을 호출
-                    fetch('/partner/seller/product/create', {
-                        method: 'POST',
-                        body: formData
-                    }).then(response => response.json())
-                    .then(data => {
-                        console.log('Success:', data);
-                        alert("등록 완료");
-                        location.href='/partner/seller/product/create';
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                        alert("등록 실패");
-                    });
+                    alert("등록 실패");
                 }
-
-            // Allow form to submit
+            })
         }
     </script>
-    <script src="/js/partner/seller/product/applyProduct.js"></script>
+
     
 </body>
 </html>
