@@ -92,6 +92,57 @@ document.addEventListener('DOMContentLoaded', function() {
     })
   })
 
+  const delImgButton = document.querySelectorAll(".delButton");
+
+  delImgButton.forEach(elements => {
+    elements.addEventListener("click", e => {
+      const rename = e.target.previousElementSibling.attributes[1].value
+
+      fetch("/partner/seller/product/delImgs", {
+        method: "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(rename)
+        })
+        .then(resp => resp.text())
+        .then(result => {
+          e.target.parentElement.remove();
+        })
+    })
+  })
+
+  const applyButton = document.querySelectorAll(".applyButton");
+
+  // 적용 버튼 눌렀을 떄
+  applyButton.forEach(elements => {
+    elements.addEventListener("click", e => {
+      const optionContentBox = e.target.parentElement;
+  
+      let temp = true;
+  
+      const allInput = document.getElementsByClassName("contentInput");
+      const allCount = document.getElementsByClassName("contentCountInput");     
+      
+      if(temp) {
+          const cutInput1 = document.createElement("input");
+          cutInput1.type = 'hidden';
+          cutInput1.value = '/';
+          cutInput1.setAttribute('name', 'optionContent');
+  
+          optionContentBox.append(cutInput1);
+  
+          const cutInput2 = document.createElement("input");
+          cutInput2.type = 'hidden';
+          cutInput2.value = '/';
+          cutInput2.setAttribute('name', 'optionCount');
+  
+          optionContentBox.append(cutInput2);
+  
+          elements.style.display = "none";
+      }
+  })
+
+  })
+
 });
 
 // 세부옵션 삭제
@@ -218,6 +269,11 @@ productPlusButton.addEventListener("click", e => {
     button.classList.add("minusOption");
     button.innerText = "-";
 
+    const applyButton = document.createElement("button");
+    applyButton.classList.add("appluButton");
+    applyButton.type = 'button';
+    applyButton.innerText = "적용";
+
     const delButtonBox = document.createElement("button");
     delButtonBox.classList.add("delOption");
     delButtonBox.type = 'button';
@@ -257,5 +313,33 @@ productPlusButton.addEventListener("click", e => {
         box1.remove();
       }
     })
+
+    // 적용 버튼 눌렀을 떄
+  applyButton.addEventListener("click", e => {
+    const optionContentBox = e.target.parentElement;
+
+    let temp = true;
+
+    const allInput = document.getElementsByClassName("contentInput");
+    const allCount = document.getElementsByClassName("contentCountInput");   
+    
+    if(temp) {
+        const cutInput1 = document.createElement("input");
+        cutInput1.type = 'hidden';
+        cutInput1.value = '/';
+        cutInput1.setAttribute('name', 'optionContent');
+
+        optionContentBox.append(cutInput1);
+
+        const cutInput2 = document.createElement("input");
+        cutInput2.type = 'hidden';
+        cutInput2.value = '/';
+        cutInput2.setAttribute('name', 'optionCount');
+
+        optionContentBox.append(cutInput2);
+
+        applyButton.style.display = "none";
+    }
+  })
 
 })

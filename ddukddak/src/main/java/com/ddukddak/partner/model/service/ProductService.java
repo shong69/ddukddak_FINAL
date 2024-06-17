@@ -101,6 +101,12 @@ public interface ProductService {
 	 */
 	List<ProductOption> selectOpion(int productNo);
 
+	/** 상세사진 삭제
+	 * @param rename
+	 * @return
+	 */
+	int delImg(String rename);
+
 	/** 상품 판매등록
 	 * @param map
 	 * @return
@@ -109,10 +115,39 @@ public interface ProductService {
 
 	/** 이미지 판매등록
 	 * @param smallCategory
+	 * @param smallCategory2 
 	 * @param imgList
 	 * @return
+	 * @throws IOException 
+	 * @throws IllegalStateException 
 	 */
-	int updateInsertImg(String smallCategory, List<MultipartFile> imgList);
+	int updateInsertImg(String proudctNo, String smallCategory, List<MultipartFile> imgList) throws IllegalStateException, IOException;
+
+	/** 대표사진 업데이트
+	 * @param thumbnailImg
+	 * @param productNo 
+	 * @param smallCategory 
+	 * @return
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	int updateThumbnailImg(MultipartFile thumbnailImg, String productNo, String smallCategory) throws IllegalStateException, IOException;
+
+	/** 옵션 비우기
+	 * @param productNo
+	 * @return
+	 */
+	int delOption(String productNo);
+
+	/** 새 옵션 추가
+	 * @param string
+	 * @param list
+	 * @param list2
+	 * @param productNo
+	 * @return
+	 */
+	int insertOpion2(String string, List<String> list, List<String> list2, String productNo);
+
 
 
 

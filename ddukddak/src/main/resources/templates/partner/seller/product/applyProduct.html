@@ -24,14 +24,14 @@
 
                     <div>
                         <select name="bigCategory" id="bigCategory">
-                            <option th:text="${product.bigCategoryName}">대분류</option>
+                            <option th:text="${product.bigCategoryName}" th:value="${product.bigCategoryNo}">대분류</option>
                             <th:block th:each="category : ${categoryList}" th:object="${category}">
                                 <option th:value="${category.bigCategoryNo}" th:text="${category.bigCategoryName}">대분류값</option>
                             </th:block>
                         </select>
 
                         <select id="smallCategory" name="smallCategory">
-                            <option th:text="${product.categoryName}">소분류</option>
+                            <option th:text="${product.categoryName}" th:value="${product.categoryNo}">소분류</option>
                         </select>
                     </div>
                 </div>
@@ -88,6 +88,7 @@
                                                 </th:block>
                                             </th:block>
                                         </table>
+                                        <button type="button" class="applyButton">적용</button>
                                         <button type="button" class="delOption">삭제</button>
                                     </div>
                                 </div>
@@ -125,7 +126,7 @@
                         <th:block th:each="imgs : ${img}" th:object="${imgs}">
                             <th:block th:if="${imgs.uploadImgOrder != 0}">
                                 <li>
-                                    <img th:src="|${imgs.uploadImgPath}${imgs.uploadImgRename}|">
+                                    <img th:src="|${imgs.uploadImgPath}${imgs.uploadImgRename}|" th:value="${imgs.uploadImgRename}">
                                     <button class="delButton" th:value="${imgs.uploadImgNo}">X</button>
                                 </li>
                             </th:block>

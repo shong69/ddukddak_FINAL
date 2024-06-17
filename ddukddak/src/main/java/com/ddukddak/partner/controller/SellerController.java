@@ -291,6 +291,13 @@ public class SellerController {
 		return "partner/seller/product/applyProduct";
 	}
 	
+	// 상세사진 삭제
+	@PostMapping("product/delImgs")
+	@ResponseBody
+	public int delImg(@RequestBody String rename) {
+		return service.delImg(rename);
+	}
+	
 	// 판매등록
 	@PostMapping("product/applySellProduct")
 	@ResponseBody
@@ -298,12 +305,13 @@ public class SellerController {
 										@RequestParam("productNo") String productNo,
 										@RequestParam(name="bigCategory") String bigCategory,
 										@RequestParam(name="smallCategory") String smallCategory,
-										@RequestParam ("productPrice") MultipartFile productPrice,
+										@RequestParam ("productPrice") int productPrice,
 										@RequestParam (name="mainImg", required = false) MultipartFile thumbnailImg,
+										@RequestParam (name="subImgs", required = false) List<MultipartFile> subImgs,
 										@RequestParam (name = "optionName", required = false) List<String> optionName,
 										@RequestParam (name = "optionContent", required = false) List<String> optionContent,
 										@RequestParam (name = "optionCount", required = false) List<String> optionCount,
-										@SessionAttribute("loginPartnerMember") Partner loginPartnerMember)  {
+										@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) throws IllegalStateException, IOException  {
 		
 		int memberNo = loginPartnerMember.getPartnerNo();
 		
@@ -312,6 +320,10 @@ public class SellerController {
 		log.info("productName : " + productName);
 		log.info("bigCategory : " + bigCategory);
 		log.info("smallCategory : " + smallCategory);
+		log.info("productPrice : " + productPrice);
+		log.info("optionName : " + optionName);
+		log.info("optionContent : " + optionContent);
+		log.info("optionCount : " + optionCount);
 		
 		// PRODUCT 테이블 삽입
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -327,71 +339,73 @@ public class SellerController {
 
 		// UPLOAD_FILE 삽입
 
-//		List<MultipartFile> imgList = new ArrayList<>(subImgs);
-//		imgList.add(0, thumbnailImg); // 다시 mainImg 를 배열 0번째 자리에 추가
-//		
-//		log.info("imgList : " + imgList);
-//
-//		int result2 = service.updateInsertImg(smallCategory, imgList);
-//
-//		
-//		
-//		int result3 = 0;
-//		// 옵션
-//		if(optionContent != null) {
-//			List<List<String>> resultList1 = new ArrayList<>();
-//			List<String> optionContentList = new ArrayList<>();
-//			
-//			// 옵션값 리스트 나누기
-//			for (String item : optionContent) {
-//				if ("/".equals(item)) {
-//					resultList1.add(optionContentList);
-//					optionContentList = new ArrayList<>();
-//				} else {
-//					optionContentList.add(item);
-//				}
-//			}
-//			
-//			resultList1.add(optionContentList);
-//			
-//			// 결과 출력
-//			for (List<String> list : resultList1) {
-//				log.info("resultList1 : " + list);
-//			}
-//			
-//			// 옵션재고 리스트 나누기
-//			List<List<String>> resultList2 = new ArrayList<>();
-//			List<String> optionCountList = new ArrayList<>();
-//			
-//			for (String item : optionCount) {
-//				if ("/".equals(item)) {
-//					resultList2.add(optionCountList);
-//					optionCountList = new ArrayList<>();
-//				} else {
-//					optionCountList.add(item);
-//				}
-//			}
-//			
-//			resultList2.add(optionCountList);
-//			
-//			// 결과 출력
-//			for (List<String> list : resultList2) {
-//				log.info("resultList2 : " + list);
-//			}
-//			
-//			
-//			// OPTION 삽입
-//			
-//			for (int i = 0; i < resultList1.size(); i ++) {
-//				if(!resultList1.get(i).isEmpty()) {
-//					result3 += service.insertOpion(optionName.get(i), resultList1.get(i), resultList2.get(i));
-//				}
-//			}
-//			
-//		}
+		// 대표사진
+		int result21 = service.updateThumbnailImg(thumbnailImg, productNo, smallCategory);
+		
+		// 상세사진
+		List<MultipartFile> imgList = new ArrayList<>(subImgs);
+
+		int result2 = service.updateInsertImg(productNo, smallCategory, imgList);
+
+		// 옵션 비우기
+		int result4 = service.delOption(productNo);
+		
+		int result3 = 0;
+		// 옵션
+		if(optionContent != null) {
+			List<List<String>> resultList1 = new ArrayList<>();
+			List<String> optionContentList = new ArrayList<>();
+			
+			// 옵션값 리스트 나누기
+			for (String item : optionContent) {
+				if ("/".equals(item)) {
+					resultList1.add(optionContentList);
+					optionContentList = new ArrayList<>();
+				} else {
+					optionContentList.add(item);
+				}
+			}
+			
+			resultList1.add(optionContentList);
+			
+			// 결과 출력
+			for (List<String> list : resultList1) {
+				log.info("resultList1 : " + list);
+			}
+			
+			// 옵션재고 리스트 나누기
+			List<List<String>> resultList2 = new ArrayList<>();
+			List<String> optionCountList = new ArrayList<>();
+			
+			for (String item : optionCount) {
+				if ("/".equals(item)) {
+					resultList2.add(optionCountList);
+					optionCountList = new ArrayList<>();
+				} else {
+					optionCountList.add(item);
+				}
+			}
+			
+			resultList2.add(optionCountList);
+			
+			// 결과 출력
+			for (List<String> list : resultList2) {
+				log.info("resultList2 : " + list);
+			}
+			
+			
+			// OPTION 삽입
+			
+			for (int i = 0; i < resultList1.size(); i ++) {
+				if(!resultList1.get(i).isEmpty()) {
+					result3 += service.insertOpion2(optionName.get(i), resultList1.get(i), resultList2.get(i), productNo);
+				}
+			}
+			
+		}
 
 
-		return 0;
+		return result1;
 		
 	}
 	

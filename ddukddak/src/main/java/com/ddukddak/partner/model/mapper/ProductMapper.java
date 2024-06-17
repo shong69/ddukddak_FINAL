@@ -207,6 +207,36 @@ public interface ProductMapper {
 	 */
 	int updateRegistProduct(Map<String, Object> map);
 
+	/** 대표사진 업로드
+	 * @param map
+	 * @return
+	 */
+	int updateThumbnail(Map<String, Object> map);
+
+	/** 상세사진 삭제
+	 * @param rename
+	 * @return
+	 */
+	int delProductImg2(String rename);
+
+	/** 상세사진 업로드
+	 * @param map
+	 * @return
+	 */
+	int insertImg2(Map<String, Object> map);
+
+	/** 옵션 비우기
+	 * @param productNo
+	 * @return
+	 */
+	int delOption(String productNo);
+
+	/** 새 옵션 추가
+	 * @param map
+	 * @return
+	 */
+	int insertOption2(Map<String, Object> map);
+
 
 
 }

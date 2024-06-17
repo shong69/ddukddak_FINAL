@@ -189,6 +189,28 @@
     padding: 0 10px;
 }
 
+.applyButton {
+    width: 40px;
+    height: 20px;
+    background-color: var(--secondary);
+    color: var(--white);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+    border: none;
+    margin-top: 5px;
+    margin-left: 750px;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+}
+
+.applyButton:hover {
+    background-color: var(--white);
+    color: var(--gray1);
+    box-shadow: 3px 3px 5px var(--gray5);
+    transform: translateY(-3px);
+}
+
 .delOption {
     width: 40px;
     height: 20px;
