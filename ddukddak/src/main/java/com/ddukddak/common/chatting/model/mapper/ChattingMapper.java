@@ -17,7 +17,7 @@ public interface ChattingMapper {
 	 * @param memberNo
 	 * @return
 	 */
-	List<ChattingRoom> selectRoomList(int memberNo);
+	List<ChattingRoom> selectRoomList(Map<String, Object> map);
 
 	/** 채팅방 생성 여부 체크
 	 * @param map
@@ -32,16 +32,16 @@ public interface ChattingMapper {
 	int createChattingRoom(Map<String, Integer> map);
 
 	/** 채팅 기록 불러오기
-	 * @param integer
+	 * @param paramMap
 	 * @return
 	 */
-	List<Message> selectMessageList(Integer integer);
+	List<Message> selectMessageList(Map<String, Object> paramMap);
 
 	/** 읽음 상태 변경
 	 * @param paramMap
 	 * @return
 	 */
-	int updateReadFlag(Map<String, Integer> paramMap);
+	int updateReadFlag(Map<String, Object> paramMap);
 
 	
 	/** 채팅 상대 검색
@@ -55,6 +55,31 @@ public interface ChattingMapper {
 	 * @return
 	 */
 	int insertMessage(Message msg);
+
+	/**[시공사]채팅 상대 검색
+	 * @param map
+	 * @return
+	 */
+	List<Member> IselectTarget(Map<String, Object> map);
+
+	/**[시공사]채팅방 검색
+	 * @param map
+	 * @return
+	 */
+	int IcheckChattingNo(Map<String, Integer> map);
+	/**[시공사]채팅방 생성
+	 * @param map
+	 * @return
+	 */
+	int IcreateChattingRoom(Map<String, Integer> map);
+
+	/**[시공사]읽음 표시 업데이트
+	 * @param paramMap
+	 * @return
+	 */
+	int IupdateReadFlag(Map<String, Object> paramMap);
+
+
 
 
 }
