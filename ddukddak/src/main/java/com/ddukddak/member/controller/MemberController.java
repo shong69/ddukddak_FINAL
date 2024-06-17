@@ -40,10 +40,9 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	private final MemberService service;
-	private final KakaoConfig kakaoApi;
 	
 	// 카카오 로그아웃 URL
-	private static final String KAKAO_LOGOUT_URL = "https://kapi.kakao.com/v1/user/logout";
+	//private static final String KAKAO_LOGOUT_URL = "https://kapi.kakao.com/v1/user/logout";
 	
 	@GetMapping("login")
 	public String memberLogin(@RequestParam(value = "returnUrl", required = false) String returnUrl, Model model) {
