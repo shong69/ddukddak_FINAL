@@ -71,11 +71,13 @@ const selectCommentList = () => {
           if (loginMemberNo != null && loginMemberNo == comment.memberNo) {
             // 수정 버튼
             const updateBtn = document.createElement("div");
+            updateBtn.classList.add("parentBtn");
             updateBtn.innerText = "수정";
             updateBtn.setAttribute("onclick", `showUpdateComment(${comment.commentNo}, this)`);
 
             // 삭제 버튼
             const deleteBtn = document.createElement("div");
+            deleteBtn.classList.add("parentBtn");
             deleteBtn.innerText = "삭제";
             deleteBtn.setAttribute("onclick", `deleteComment(${comment.commentNo})`);
 
@@ -85,6 +87,7 @@ const selectCommentList = () => {
 
           // 답글 버튼
           const childCommentBtn = document.createElement("div");
+          childCommentBtn.classList.add("parentBtn");
           childCommentBtn.innerText = "답글";
           childCommentBtn.setAttribute("onclick", `showInsertComment(${comment.commentNo}, this)`);
 
@@ -178,10 +181,12 @@ const showInsertComment = (parentCommentNo, area) => {
   commentBtnArea.classList.add("childCommentBtnArea");
 
   const insertBtn = document.createElement("div");
+  insertBtn.classList.add("childBtn");
   insertBtn.innerText = "등록";
   insertBtn.setAttribute("onclick", "insertChildComment(" + parentCommentNo + ", this)");
 
   const cancelBtn = document.createElement("div");
+  cancelBtn.classList.add("childBtn");
   cancelBtn.innerText = "취소";
   cancelBtn.setAttribute("onclick", "insertCancel(this)");
 
