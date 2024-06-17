@@ -65,14 +65,19 @@ public class MyPageController {
 	@PostMapping("memberInfo/profileImg")
 	public String changeProfileImg(
 			@RequestParam("profile-image") MultipartFile file,
-			@SessionAttribute("loginMember") Member loginMemebr,
-			RedirectAttributes ra) throws Exception{
-		int result  = infoService.updateImg(file, loginMemebr);
-		
+			@SessionAttribute("loginMember") Member loginMember,
+			RedirectAttributes ra,
+			HttpSession session) throws Exception{
+		int result  = infoService.updateImg(file, loginMember);
+
 		String message = null;
 		
-		if(result>0) message = "변경 성공";
-		else		 message = "변경 실패";
+		if(result>0) {
+			message = "변경 성공";
+		}
+		else {
+			message = "변경 실패";
+		}
 		ra.addFlashAttribute("message", message);
 		
 		return "myPage/memberInfo";
@@ -119,13 +124,19 @@ public class MyPageController {
 	@ResponseBody
 	@GetMapping("memberInfo/emailUpdate")
 	public int updateEmail(@RequestParam("memberEmail") String memberEmail,
-			@SessionAttribute("loginMember") Member member) {
+			@SessionAttribute("loginMember") Member member,
+			HttpSession session) {
 		int memberNo = member.getMemberNo();
 		Map<String, Object> map  = new HashMap<>();
 		map.put("memberEmail", memberEmail);
 		map.put("memberNo", memberNo);
 		
-		return infoService.updateEmail(map);
+		int result = infoService.updateEmail(map);
+		if(result >0) {
+			member.setMemberEmail(memberEmail);
+			session.setAttribute("loginMember", member);
+		}
+		return result;
 	}
 	
 	/**[회원정보]닉네임 변경하기
@@ -136,7 +147,8 @@ public class MyPageController {
 	@ResponseBody
 	@GetMapping("memberInfo/updateMemberNickname")
 	public int updateNickname(@RequestParam("memberNickname") String memberNickname,
-			@SessionAttribute("loginMember") Member member) {
+			@SessionAttribute("loginMember") Member member,
+			HttpSession session) {
 		int memberNo = member.getMemberNo();
 		String oldNickname = member.getMemberNickname();
 		Map<String, Object> map = new HashMap<>();
@@ -144,8 +156,12 @@ public class MyPageController {
 		map.put("memberNo", memberNo);
 		map.put("memberNickname", memberNickname);
 		map.put("oldNickname", oldNickname);
-		
-		return infoService.updateNickname(map);
+		int result = infoService.updateNickname(map);
+		if(result > 0) {
+			member.setMemberNickname(memberNickname);
+			session.setAttribute("loginMember",member);
+		}
+		return result;
 	}
 
 	/**[회원정보]휴대폰 번호 중복 체크
@@ -165,11 +181,17 @@ public class MyPageController {
 	@ResponseBody
 	@PostMapping("memberInfo/phoneNumUpdate")
 	public int updatePhoneNum(@RequestBody Map<String, Object> map,
-			@SessionAttribute("loginMember") Member member) {
+			@SessionAttribute("loginMember") Member member,
+			HttpSession session) {
 		
 		int memberNo = member.getMemberNo();
 		map.put("memberNo", memberNo);
-		return infoService.updatePhoneNum(map);
+		int result = infoService.updatePhoneNum(map);
+		if(result > 0) {
+			member.setMemberTel((String)map.get("updatePhoneNum"));
+			session.setAttribute("loginMember", member);
+		}
+		return result;
 	}
 	
 	

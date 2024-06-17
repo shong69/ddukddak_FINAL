@@ -509,8 +509,8 @@ nicknameConfirmBtn.addEventListener("click", ()=>{
             nicknameInput.value = "";
             const nicknameDiv1 = document.querySelector("#nicknameDiv1");
             const nicknameDiv2 = document.querySelector("#nicknameDiv2");
-            nicknameDiv1.innerText = inputValue;
-            nicknameDiv2.innerText = inputValue;
+            nicknameDiv1.innerHTML = inputValue;
+            nicknameDiv2.innerHTML = inputValue;
 
             // 변경 폼 숨기기
             const changePhoneNumArea = document.querySelector(".change-nickname-area");
