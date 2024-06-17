@@ -177,6 +177,6 @@
 		READ_FL = 'Y'
 		WHERE CHATTING_NO = #{chattingNo}
 		AND SENDER_TYPE = #{senderType}
-		AND SENDER_NO != #{memberNo}
+		AND TARGET_NO = #{memberNo}
 	</update>
 </mapper>

@@ -220,4 +220,10 @@ public class eCommerceController {
 	}
 	
 	
+	//[비동기]리뷰 조회하기
+//	@GetMapping("review")
+//	@RequestBody
+//	public String ecCommerceSelectReview() {
+//		return "eCommerce/
+//	}
 }

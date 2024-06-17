@@ -226,17 +226,17 @@ function selectRoomList(){
 
 				// 현재 채팅방을 보고있는 경우
 				// 비동기로 해당 채팅방 글을 읽음으로 표시
-				fetch("/chatting/updateReadFlag",{
-					method : "PUT",
-					headers : {"Content-Type": "application/json"},
-					body : JSON.stringify({"chattingNo" : selectChattingNo,
-											"memberNo" : loginMemberNo,
-											"senderType" : "PARTNER"
-					})
-				})
-				.then(resp => resp.text())
-				.then(result => console.log(result))
-				.catch(err => console.log(err));
+				// fetch("/chatting/updateReadFlag",{
+				// 	method : "PUT",
+				// 	headers : {"Content-Type": "application/json"},
+				// 	body : JSON.stringify({"chattingNo" : selectChattingNo,
+				// 							"memberNo" : loginMemberNo,
+				// 							"senderType" : "PARTNER"
+				// 	})
+				// })
+				// .then(resp => resp.text())
+				// .then(result => console.log(result))
+				// .catch(err => console.log(err));
 
 			}
 			
@@ -362,23 +362,23 @@ function selectChattingFn() {
 			ul.append(li);
 			display.scrollTop = display.scrollHeight; // 스크롤 제일 밑으로
 		}
-		// 현재 채팅방을 보고있는 경우
-		// 비동기로 해당 채팅방 글을 읽음으로 표시
-		fetch("/chatting/updateReadFlag",{
-			method : "PUT",
-			headers : {"Content-Type": "application/json"},
-			body : JSON.stringify({"chattingNo" : selectChattingNo,
-									"memberNo" : loginMemberNo,
-									"senderType" : "PARTNER"
-			})
-		})
-		.then(resp => resp.text())
-		.then(result => console.log(result))
-		.catch(err => console.log(err));
+
 	})
 	.catch(err => console.log(err));
 
-	
+		// 현재 채팅방을 보고있는 경우
+	// 비동기로 해당 채팅방 글을 읽음으로 표시
+	fetch("/chatting/updateReadFlag",{
+		method : "PUT",
+		headers : {"Content-Type": "application/json"},
+		body : JSON.stringify({"chattingNo" : selectChattingNo,
+								"memberNo" : loginMemberNo,
+								"senderType" : "PARTNER"
+		})
+	})
+	.then(resp => resp.text())
+	.then(result => console.log(result))
+	.catch(err => console.log(err));
 
 	
 }

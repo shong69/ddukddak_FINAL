@@ -6,7 +6,7 @@ const changeInfo = document.querySelector("#changeInfo");
 
 const explain = document.querySelector("#explain");
 const change = document.querySelector("#change");
-
+const reviewBox = document.querySelector("#reviewBox");
 
 detailInfo.addEventListener("click", () => {
     detailInfo.style.backgroundColor = 'var(--primary3)';
@@ -16,6 +16,7 @@ detailInfo.addEventListener("click", () => {
 
     explain.style.display = 'flex';
     change.style.display = 'none';
+    reviewBox.style.display ='none';
 });
 
 review.addEventListener("click", () => {
@@ -24,8 +25,10 @@ review.addEventListener("click", () => {
     qna.style.backgroundColor = 'var(--white)';
     changeInfo.style.backgroundColor = 'var(--white)';
 
+    reviewBox.style.display ='flex';
     explain.style.display = 'none';
     change.style.display = 'none';
+    
 });
 
 qna.addEventListener("click", () => {
@@ -36,6 +39,7 @@ qna.addEventListener("click", () => {
 
     explain.style.display = 'none';
     change.style.display = 'none';
+    reviewBox.style.display ='none';
 });
 
 changeInfo.addEventListener("click", () => {
@@ -46,6 +50,7 @@ changeInfo.addEventListener("click", () => {
 
     explain.style.display = 'none';
     change.style.display = 'flex';
+    reviewBox.style.display ='none';
 });
 
 // mainImg 요소를 선택합니다
@@ -314,3 +319,12 @@ function updateTotalCount() {
     selectTags.forEach(function(select) {
         select.addEventListener('change', showAlertIfAllValuesAreNotZero);
     });
+
+
+//리뷰 기능
+//0. 전체 별점 구해서 총 평점 내보내기
+//1. 리뷰 등록 비동기 + (사진, 텍스트, 별점)도 올리기
+
+//2. 페이지 진입 시 리뷰 리스트 불러오기
+
+//3. 내가 쓴 리뷰 삭제 가능하기 비동기
