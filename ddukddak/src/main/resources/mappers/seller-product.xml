@@ -82,7 +82,8 @@
 	<!-- 재고상품 판매등록 -->
 	<update id="sellApplyProduct">
 		UPDATE PRODUCT
-		SET PRODUCT_UPDATE_DATE  = SYSDATE
+		SET PRODUCT_UPDATE_DATE  = SYSDATE,
+			PRODUCT_FL = 'Y'
 		WHERE PRODUCT_NO = #{value}
 	</update>
 	
@@ -96,7 +97,7 @@
 	<!-- 상품 재고등록 -->
 	<insert id="registProduct">
 		INSERT INTO PRODUCT
-		VALUES(SEQ_PRODUCT_NO.NEXTVAL, #{productName}, #{productPrice}, SYSDATE, DEFAULT, 'Y', #{smallCategoryNo}, #{memberNo})
+		VALUES(SEQ_PRODUCT_NO.NEXTVAL, #{productName}, #{productPrice}, SYSDATE, DEFAULT, 'N', #{smallCategoryNo}, #{memberNo})
 	</insert>
 	
 	<!-- 상품 재고 이미지 등록 -->
