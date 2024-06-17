@@ -18,23 +18,6 @@ import lombok.RequiredArgsConstructor;
 @SessionAttributes({"loginPartnerMember"})
 public class InteriorController {
 	
-//	@GetMapping("interiorList")
-//	public String interiorList(Model model) {
-//		
-//		return "partner/interior/interiorList";
-//		
-//	}
-//
-//	@GetMapping("interiorPortfolio")
-//	public String interiorPortfolio() {
-//		return "partner/interior/interiorPortfolio";
-//	}
-//
-//	
-//	@GetMapping("interiorPortfolioDetail")
-//	public String interiorPortfolioDetail() {
-//		return "partner/interior/projectDetail";
-//	}
 	
 	
 	@GetMapping("interiorPortfolioEditMain")

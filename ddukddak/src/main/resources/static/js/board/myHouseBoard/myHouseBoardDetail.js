@@ -446,40 +446,47 @@ if(boardLike != null) {
 // ===============================================================================================
 
 // 집들이 게시글 삭제
-document.querySelector("#deleteBtn").addEventListener("click", () => {
-
-  if(!confirm("해당 집들이 게시물을 삭제하기겠습니까?")) {
-
-    alert("게시글 삭제가 취소되었습니다");
-    return;
-
-  }
-
-  fetch("/myHouse/deleteMyHouse?boardNo=" + boardNo + "&boardCode=" + boardCode, {
-    method : "DELETE"
-  })
-  .then(resp => resp.text())
-  .then(result => {
-    
-    if (result > 0) {
-      alert("게시글 삭제가 완료되었습니다.");
-      location.href = "/myHouse/main?boardCode=" + boardCode;
-    } else {
-      alert("게시글 삭제에 실패하였습니다.");
-      location.href = "/myHouse/detail/" + boardNo;
-    }
-
-  })
+const deleteBtn = document.querySelector("#deleteBtn");
+if(deleteBtn != null) {
+  deleteBtn.addEventListener("click", () => {
   
-
-});
+    if(!confirm("해당 집들이 게시물을 삭제하기겠습니까?")) {
+  
+      alert("게시글 삭제가 취소되었습니다");
+      return;
+  
+    }
+  
+    fetch("/myHouse/deleteMyHouse?boardNo=" + boardNo + "&boardCode=" + boardCode, {
+      method : "DELETE"
+    })
+    .then(resp => resp.text())
+    .then(result => {
+      
+      if (result > 0) {
+        alert("게시글 삭제가 완료되었습니다.");
+        location.href = "/myHouse/main?boardCode=" + boardCode;
+      } else {
+        alert("게시글 삭제에 실패하였습니다.");
+        location.href = "/myHouse/detail/" + boardNo;
+      }
+  
+    })
+    
+  
+  });
+}
 
 // =================================================================================================
 
 // 집들이 게시글 수정
 
-document.querySelector("#updateBtn").addEventListener("click", () => {
+const updateBtn = document.querySelector("#updateBtn");
+if (updateBtn != null) {
 
-  location.href = "/myHouse/updateMyHouse?boardNo=" + boardNo;
-
-});
+  updateBtn.addEventListener("click", () => {
+  
+    location.href = "/myHouse/updateMyHouse?boardNo=" + boardNo;
+  
+  });
+}

@@ -29,7 +29,7 @@
                 </section>
 
                 
-                <section class="searchInterior">
+                <!-- <section class="searchInterior">
 
                     <div class="titleArea">
                         <h2>시공사 찾기</h2>
@@ -90,7 +90,7 @@
                       <button class="interiorSearchBtn">시공사 찾기</button>
                     </div>
 
-                </section>
+                </section> -->
 
             
                 
@@ -105,8 +105,8 @@
                         <thead>
                             <th>시공사</th>
                             <th>전화번호</th>
-                            <th>주소</th>
-                            <th>시공가격(평당)</th>
+                            <!-- <th>주소</th>
+                            <th>시공가격(평당)</th> -->
                             <th>포트폴리오</th>
                         </thead>
 
@@ -116,11 +116,13 @@
                                 th:each="interior : ${interiorList}" th:object="${interior}">
                                 <td th:text="*{partnerBusinessName}">삶</td>
                                 <td th:text="*{partnerTel}">01012341234</td>
-                                <td>서울특별시 중랑구 면목동</td>
-                                <td>1,000,000</td>
-                                <td>
-                                    <button class="interiorDetailViewBtn">포트폴리오</button>
-                                </td>
+                                <!-- <td>서울특별시 중랑구 면목동</td>
+                                <td>1,000,000</td> -->
+                                <form action="/interior/interiorPortfolio" method="get">
+                                    <td>
+                                        <button class="interiorDetailViewBtn">포트폴리오</button>
+                                    </td>
+                                </form>
                             </tr>
 
                         </tbody>
