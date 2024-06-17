@@ -1,15 +1,18 @@
 package com.ddukddak.common.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import com.ddukddak.common.handler.ChattingWebsocketHandler;
-import com.ddukddak.common.handler.LiveCommerceWebsocketHandler;
 
 import lombok.RequiredArgsConstructor;
+
 
 @RequiredArgsConstructor
 @Configuration //서버 실행 시 작성된 메서드를 모두 수행
@@ -22,7 +25,7 @@ public class WebSocketConfig implements WebSocketConfigurer{
 	
 	
 	//채팅 관련 웹소켓 처리 동작이 작성된 객체 의존성 주입
-	private final LiveCommerceWebsocketHandler lcHandler;
+
 	private final ChattingWebsocketHandler chattingWebsocketHandler;
 	
 	
@@ -37,16 +40,8 @@ public class WebSocketConfig implements WebSocketConfigurer{
 										"http://192.168.50.200/")
 				.withSockJS();
 		
-		//전체 채팅기능
-		registry.addHandler(lcHandler, "/lcSock")
-		.addInterceptors(handshakeInterceptor)
-		.setAllowedOriginPatterns("http://localhost/", 
-								"http://127.0.0.1/", 
-								"http://192.168.50.200/")
-		.withSockJS();
 	}
 	
-	
-	
+
 	
 }
