@@ -3,6 +3,9 @@ package com.ddukddak.member.controller;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ddukddak.common.config.KakaoConfig;
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.member.model.service.KakaoService;
 import com.ddukddak.member.model.service.MemberService;
 
 import jakarta.servlet.http.Cookie;
@@ -32,8 +38,11 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class MemberController {
-
-	private final MemberService service;	
+	
+	private final MemberService service;
+	
+	// 카카오 로그아웃 URL
+	//private static final String KAKAO_LOGOUT_URL = "https://kapi.kakao.com/v1/user/logout";
 	
 	@GetMapping("login")
 	public String memberLogin(@RequestParam(value = "returnUrl", required = false) String returnUrl, Model model) {
@@ -79,7 +88,36 @@ public class MemberController {
 	
 	@GetMapping("logout")
 	public String memberLogout(SessionStatus status, 
-			 RedirectAttributes ra) {
+			 					RedirectAttributes ra, HttpSession session) {
+		
+		// 카카오 로그아웃
+		// 네이버는 정책상 불가
+		 
+		// 세션에서 카카오 액세스 토큰 가져오기
+		String accessToken = (String) session.getAttribute("kakaoAccessToken");
+	    
+	    
+        if (accessToken != null) {
+            // 카카오 연결 끊기 요청
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + accessToken);
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<String> response = restTemplate.postForEntity("https://kapi.kakao.com/v1/user/unlink", entity, String.class);
+            if (response.getStatusCode().is2xxSuccessful()) {
+                // 연결 끊기 성공
+                log.info("Kakao unlink successful");
+            } else {
+                // 연결 끊기 실패
+                log.error("Kakao unlink failed");
+            }
+
+            // 세션에서 토큰 제거
+            session.removeAttribute("kakaoAccessToken");
+        }
+
+	    // 스프링 세션 완료 처리
 		status.setComplete();
 		
 		ra.addFlashAttribute("message", "로그아웃 되었습니다.");

@@ -18,6 +18,7 @@ public class KakaoConfig {
 	@Value("${kakao.redirect-url}")
 	private String kakaoRedirectUrl;
 	
+
     public String getKakaoApiKey() {
         return kakaoApiKey;
     }
@@ -25,7 +26,8 @@ public class KakaoConfig {
     public String getKakaoRedirectUrl() {
         return kakaoRedirectUrl;
     }
-	
+    
+
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
