@@ -76,7 +76,7 @@
 
         <block id="total">
             <h3 style="margin-right: 800px;">총 주문금액</h3>
-            <h3>16,900원</h3>
+            <h3 id="amount" th:text="${totalPrice}">1,762,900원</h3>
         </block>
 
     </div>
@@ -114,9 +114,13 @@
     </div>
 
 
-    <button class="eCommerBuyDetailConfirmBtn" style="margin: 60px 0;" onclick="location.href='/eCommerce/complete';">결제하기</button>
+    <button id="payBtn" class="eCommerBuyDetailConfirmBtn" style="margin: 60px 0;">결제하기</button>
 
     
     <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <script src="/js/eCommerce/eCommercePayment.js"></script>
 </body>
 </html>

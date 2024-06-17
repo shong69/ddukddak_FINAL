@@ -210,7 +210,10 @@ public class eCommerceController {
 	
 	
 	@RequestMapping("payment")
-	public String eCommercePayment() {
+	public String eCommercePayment(Model model) {
+		
+		
+		
 		return "eCommerce/eCommercePayment";
 	}
 	

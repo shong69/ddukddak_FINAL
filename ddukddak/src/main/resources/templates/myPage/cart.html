@@ -83,11 +83,13 @@
                     <div class="infoArea">
                         <div class="totalCount">총 <span id="totalCount">N</span>건</div>
                         <div class="totalPrice">합계 <span id="totalPrice">100000</span> 원</div>
+                        <!-- 총 값 서버로 전달하기 -->
+                        <input type="hidden" name="totalPrice" id="hiddenTotalPrice">
                     </div>
                     <div class="pointArea">총 예상 포인트 <span id="pointArea">100</span>원</div>
                     <div class="purchaseArea">
-                        <button class="selectedPurchage">선택상품 구매</button>
-                        <button class="wholePurchase">전체상품 구매</button>
+                        <button class="selectedPurchage" onclick="setTotalPrice()">선택상품 구매</button>
+                        <button class="wholePurchase" onclick="setTotalPrice()">전체상품 구매</button>
                     </div>
                 </form>
                 
@@ -126,6 +128,32 @@
                 calculatePoint();
                 formatNumber();
             }
+
+
+            function calculateTotalPrice() {
+                const priceElements = document.querySelectorAll('.price-input');
+                const quantityElements = document.querySelectorAll('.quantity-input');
+                let totalPrice = 0;
+
+                priceElements.forEach((priceElement, index) => {
+                    const price = parseInt(priceElement.getAttribute('th:value'), 10);
+                    const quantity = parseInt(quantityElements[index].value, 10);
+                    totalPrice += price * quantity;
+                });
+
+                document.getElementById('totalPrice').innerText = totalPrice.toLocaleString() + " 원";
+                return totalPrice;
+            }
+            
+            function setTotalPrice() {
+                const totalPrice = calculateTotalPrice();
+                document.getElementById('hiddenTotalPrice').value = totalPrice;
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                calculateTotalPrice();
+            });
+
         </script>
         <script src="/js/myPage/shopping.js"></script>
 </body>
