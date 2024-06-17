@@ -482,20 +482,24 @@
     flex-direction: column;
 }
 
-.reviewList{
+#reviewList{
     list-style-type: none;
     width : 100%;
 }
+
 .reviewInfoArea{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     font-size: 20px;
+    line-height: 150px;
     color : #45795cdd
 }
 #comment{
     width : 100%;
     height: 300px;
+    display : flex;
+    
 }
 
 #addComment{
