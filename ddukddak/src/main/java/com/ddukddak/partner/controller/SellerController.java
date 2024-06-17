@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
+import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.partner.model.dto.Partner;
@@ -45,10 +46,11 @@ public class SellerController {
 	private final ProductService service;
 	private final eCommerceService eCommerceService;
 
+	// 재고관리
 	@GetMapping("product/create")
 	public String ProductCreate(
 			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
-			@RequestParam(value="sort", required=false, defaultValue="0") int mainSort,
+			@RequestParam(value="mainSort", required=false, defaultValue="0") int mainSort,
 			@RequestParam(value="sort", required=false, defaultValue="0") int sort,
 			@SessionAttribute("loginPartnerMember") Partner loginPartnerMember, 
 			RedirectAttributes ra,
@@ -79,6 +81,7 @@ public class SellerController {
         return "partner/seller/product/create";
 	}
 	
+	// 판매등록
 	@PutMapping("product/sellApplyProduct")
 	@ResponseBody
 	public int sellApplyProduct(@RequestBody List<Object> selectedValues) {
@@ -96,22 +99,21 @@ public class SellerController {
 		
 		return smallCategoryList;
 	}
-	
+
+	// 재고등록
 	@PostMapping("product/create")
 	@ResponseBody
 	public int registMyHouse(@RequestParam ("productName") String productName,
 								@RequestParam ("smallCategory") int smallCategory,
 								@RequestParam ("productPrice") int productPrice,
 								@RequestParam ("thumbnailImg") MultipartFile thumbnailImg,
-								@RequestParam ("subImgs") List<MultipartFile> subImgs,
+								@RequestParam (name="subImgs", required = false) List<MultipartFile> subImgs,
 								@RequestParam (name = "optionName", required = false) List<String> optionName,
 								@RequestParam (name = "optionContent", required = false) List<String> optionContent,
 								@RequestParam (name = "optionCount", required = false) List<String> optionCount,
-								HttpServletRequest req) throws IOException {
-		
-		HttpSession session = req.getSession();
-		
-		Member loginMember = (Member)session.getAttribute("loginMember");
+								@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) throws IOException {
+
+		int memberNo = loginPartnerMember.getPartnerNo();
 	
 		log.info("object : " + productName + smallCategory + productPrice);	
 		log.info("thumbnailImg : " + thumbnailImg);	
@@ -123,7 +125,7 @@ public class SellerController {
 		// PRODUCT 테이블 삽입
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("memberNo", loginMember.getMemberNo());
+		map.put("memberNo", memberNo);
 		map.put("productName", productName);
 		map.put("smallCategoryNo", smallCategory);
 		map.put("productPrice", productPrice);
@@ -135,10 +137,11 @@ public class SellerController {
 
 		List<MultipartFile> imgList = new ArrayList<>(subImgs);
 		imgList.add(0, thumbnailImg); // 다시 mainImg 를 배열 0번째 자리에 추가
+		
+		log.info("imgList : " + imgList);
 
 		int result2 = service.insertImg(smallCategory, imgList);
 
-		log.info("imgList : " + imgList);
 		
 		
 		int result3 = 0;
@@ -200,14 +203,72 @@ public class SellerController {
 	}
 
 	
-	
+
+	// 판매관리
 	@GetMapping("product/apply")
-	public String ProductApply() {
+	public String ProductApply(
+			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+			@RequestParam(value="mainSort", required=false, defaultValue="0") int mainSort,
+			@RequestParam(value="sort", required=false, defaultValue="0") int sort,
+			@RequestParam(value="status", required=false, defaultValue="A") String status,
+			Model model
+			) {
+		
+		// 대분류 카테고리 선택
+		List<Category> categoryList = eCommerceService.selectCategory();
+		
+		model.addAttribute("categoryList", categoryList);
+		
+		// 소분류 카테고리 선택
+		List<Category> smallCategoryList = eCommerceService.selectSmallCategory();
+		
+		model.addAttribute("smallCategoryList", smallCategoryList);
+		
+		// 재고상품 조회
+		Map<String, Object> map = service.selectApplyList(mainSort, sort, status, cp);
+		
+		model.addAttribute("applyList", map.get("applyList"));
+		model.addAttribute("pagination", map.get("pagination"));
+				
+				
 		return "partner/seller/product/apply";
 	}
 	
-	@GetMapping("product/applyProduct")
-	public String ProductApplyProduct() {
+	// 판매상태 변경
+	@PostMapping("product/changeStatus")
+	@ResponseBody
+	public int changeStatus(@RequestBody Map<String, Object> map) {
+		
+		log.info("map : " + map);
+		
+		int result = service.changeStatus(map);
+		
+		return result;
+	}
+	
+	// 판매등록상품
+	@PostMapping("product/applyProduct")
+	public String ProductApplyProduct(@RequestParam ("productNo") int productNo,
+									@RequestParam(value="mainSort", required=false, defaultValue="0") int mainSort,
+									@RequestParam(value="sort", required=false, defaultValue="0") int sort,
+										Model model) {
+		
+		// 대분류 카테고리 선택
+		List<Category> categoryList = eCommerceService.selectCategory();
+		
+		model.addAttribute("categoryList", categoryList);
+		
+		// 상품넘버 불러오기
+		Product product = service.selectOne(productNo);
+		
+		model.addAttribute("product", product);
+		
+		// 이미지 불러오기
+		List<ProductImg> imgs = service.selectImg(productNo);
+		
+		model.addAttribute("img", imgs);
+		
+		
 		return "partner/seller/product/applyProduct";
 	}
 	

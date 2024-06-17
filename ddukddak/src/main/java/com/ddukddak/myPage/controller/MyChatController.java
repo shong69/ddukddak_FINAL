@@ -1,6 +1,8 @@
 package com.ddukddak.myPage.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +30,11 @@ public class MyChatController {
 	@GetMapping("chatWithInter")
 	public String chatWithInter(@SessionAttribute("loginMember") Member loginMember,
 			Model model) {
-		
-		List<ChattingRoom> roomList = service.selectRoomList(loginMember.getMemberNo());
+		Map<String, Object> map = new HashMap<>();
+		int loginMemberNo = loginMember.getMemberNo();
+		map.put("isMember", "MEMBER");
+		map.put("memberNo", loginMemberNo);
+		List<ChattingRoom> roomList = service.selectRoomList(map);
 		
 		
 		return "myPage/chatWithInter";
@@ -54,8 +59,6 @@ public class MyChatController {
 	@GetMapping("chatWithManager")
 	public String chatWithManager(@SessionAttribute("loginMember") Member loginMember,
 			Model model) {
-		
-		List<ChattingRoom> roomList = service.selectRoomList(loginMember.getMemberNo());
 		
 		
 		return "myPage/chatWithManager";

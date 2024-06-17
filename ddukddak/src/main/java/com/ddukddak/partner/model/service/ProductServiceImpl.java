@@ -45,7 +45,8 @@ public class ProductServiceImpl implements ProductService{
 	// 재고등록 재고상품 조회
 	@Override
 	public Map<String, Object> selectCreateList(int mainSort, int sort, int cp) {
-		
+	
+		// 대분류 소분류 모두 선택 안했을 때
 		if(mainSort == 0) {
 			//1. 전체 재고상품개수 조회
 			int productCount = mapper.selectCreateListCount();
@@ -65,6 +66,8 @@ public class ProductServiceImpl implements ProductService{
 			map.put("createList", createList);
 			
 			return map;
+			
+		// 대분류만 선택했을 때
 		} else {
 			if(sort == 0) {
 				//1. 전체 재고상품개수 조회
@@ -85,6 +88,8 @@ public class ProductServiceImpl implements ProductService{
 				map.put("createList", createList);
 				
 				return map;
+				
+			// 대분류 소분류 모두 선택했을 때
 			} else {
 				//1. 전체 재고상품개수 조회
 				int productCount = mapper.selectCreateListCountSort(sort);
@@ -150,27 +155,31 @@ public class ProductServiceImpl implements ProductService{
 				
 				// 원본명
 				String originalName = imgList.get(i).getOriginalFilename();
-				
-				// 변경명
-				String rename = Utility.fileRename(originalName);
-				
-				map.put("uploadImgOgName", originalName);
-				map.put("uploadImgRename", rename);
-				map.put("uploadImgPath", webPath);
-				map.put("category", smallCategory);
-				map.put("uploadImgOrder", i);
-				
-				result += mapper.insertImg(map);
-				
-				ProductImg img = ProductImg.builder()
-						   .uploadImgOgName(originalName)
-						   .uploadImgRename(rename)
-						   .uploadImgPath(webPath)
-						   .uploadImgOrder(i)
-						   .uploadFile(imgList.get(i))
-						   .build();
-			
-				uploadList.add(img);
+				if(!originalName.equals("")) {
+					log.info("name : " +originalName);
+					
+					// 변경명
+					String rename = Utility.fileRename(originalName);
+					
+					map.put("uploadImgOgName", originalName);
+					map.put("uploadImgRename", rename);
+					map.put("uploadImgPath", webPath);
+					map.put("category", smallCategory);
+					map.put("uploadImgOrder", i);
+					
+					result += mapper.insertImg(map);
+					
+					ProductImg img = ProductImg.builder()
+							.uploadImgOgName(originalName)
+							.uploadImgRename(rename)
+							.uploadImgPath(webPath)
+							.uploadImgOrder(i)
+							.uploadFile(imgList.get(i))
+							.build();
+					
+					uploadList.add(img);
+					
+				}
 				
 			}
 			
@@ -179,14 +188,10 @@ public class ProductServiceImpl implements ProductService{
 		}
 		
 		// 폴더에 이미지저장
-		if(result == imgList.size()) {
-			for(ProductImg img : uploadList) {
-				img.getUploadFile().transferTo( new File(folderPath + img.getUploadImgRename()) );
-			}
-			return result;
-		} else {
-			throw new BoardInsertException("이미지가 정상 삽입되지 않음");
+		for(ProductImg img : uploadList) {
+			img.getUploadFile().transferTo( new File(folderPath + img.getUploadImgRename()) );
 		}
+		return result;
 	}
 
 	// 상품 재고등록 옵션등록
@@ -205,6 +210,198 @@ public class ProductServiceImpl implements ProductService{
 		}
 		
 		return result;
+	}
+
+	// 판매관리 상품조회
+	@Override
+	public Map<String, Object> selectApplyList(int mainSort, int sort, String status, int cp) {
+		
+		// 대분류 소분류 상태 모두 선택 안했을 때
+		if(mainSort == 0) {
+			if(status.equals("A")) {
+				//1. 전체 재고상품개수 조회
+				int productCount = mapper.selectApplyListCount();
+				
+				//2. pagination 객체 생성하기
+				ProductPagination pagination = new ProductPagination(cp, productCount);
+				//3. 페이지 목록 조회
+				int limit = pagination.getLimit(); //제한된 크기
+				int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+				
+				RowBounds rowBounds = new RowBounds(offset, limit);
+				
+				List<Product> applyList = mapper.selectApplyList(rowBounds);
+				
+				Map<String, Object> map = new HashMap<>();
+				map.put("pagination", pagination);
+				map.put("applyList", applyList);
+				
+				return map;
+				
+			// 상태만 선택했을 때
+			} else {
+				//1. 전체 재고상품개수 조회
+				int productCount = mapper.selectApplyListCountStatus(status);
+				
+				//2. pagination 객체 생성하기
+				ProductPagination pagination = new ProductPagination(cp, productCount);
+				//3. 페이지 목록 조회
+				int limit = pagination.getLimit(); //제한된 크기
+				int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+				
+				RowBounds rowBounds = new RowBounds(offset, limit);
+				
+				List<Product> applyList = mapper.selectApplyListStatus(status, rowBounds);
+				
+				Map<String, Object> map = new HashMap<>();
+				map.put("pagination", pagination);
+				map.put("applyList", applyList);
+				
+				return map;
+			}
+			
+		// 대분류만 선택했을 때
+		} else {
+			if(sort == 0) {
+				if(status.equals("A")) {	
+					//1. 전체 재고상품개수 조회
+					int productCount = mapper.selectApplyListCountMainSort(mainSort);
+					
+					//2. pagination 객체 생성하기
+					ProductPagination pagination = new ProductPagination(cp, productCount);
+					//3. 페이지 목록 조회
+					int limit = pagination.getLimit(); //제한된 크기
+					int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+					
+					RowBounds rowBounds = new RowBounds(offset, limit);
+					
+					List<Product> applyList = mapper.selectApplyListMainSort(mainSort, rowBounds);
+					
+					Map<String, Object> map = new HashMap<>();
+					map.put("pagination", pagination);
+					map.put("applyList", applyList);
+					
+					return map;	
+					
+				// 대분류와 상태 선택했을 때
+				} else {
+					Map<String, Object> newMap = new HashMap<String, Object>();
+					
+					newMap.put("mainSort", mainSort);
+					newMap.put("status", status);
+					
+					//1. 전체 재고상품개수 조회
+					int productCount = mapper.selectApplyListCountMainSortStatus(newMap);
+					
+					//2. pagination 객체 생성하기
+					ProductPagination pagination = new ProductPagination(cp, productCount);
+					//3. 페이지 목록 조회
+					int limit = pagination.getLimit(); //제한된 크기
+					int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+					
+					RowBounds rowBounds = new RowBounds(offset, limit);
+					
+					List<Product> applyList = mapper.selectApplyListMainSortStatus(newMap, rowBounds);
+					
+					Map<String, Object> map = new HashMap<>();
+					map.put("pagination", pagination);
+					map.put("applyList", applyList);
+					
+					return map;
+				}
+				
+			// 대분류 소분류 모두 선택했을 때
+			} else {
+				if(status.equals("A")) {
+					//1. 전체 재고상품개수 조회
+					int productCount = mapper.selectApplyListCountSort(sort);
+					
+					//2. pagination 객체 생성하기
+					ProductPagination pagination = new ProductPagination(cp, productCount);
+					//3. 페이지 목록 조회
+					int limit = pagination.getLimit(); //제한된 크기
+					int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+					
+					RowBounds rowBounds = new RowBounds(offset, limit);
+					
+					List<Product> applyList = mapper.selectApplyListSort(sort, rowBounds);
+					
+					Map<String, Object> map = new HashMap<>();
+					map.put("pagination", pagination);
+					map.put("applyList", applyList);
+					
+					return map;		
+					
+				// 대분류 소분류 상태 모두 선택했을 때
+				} else {
+					Map<String, Object> newMap = new HashMap<String, Object>();
+					
+					newMap.put("sort", sort);
+					newMap.put("status", status);
+					
+					//1. 전체 재고상품개수 조회
+					int productCount = mapper.selectApplyListCountSortStatus(newMap);
+					
+					//2. pagination 객체 생성하기
+					ProductPagination pagination = new ProductPagination(cp, productCount);
+					//3. 페이지 목록 조회
+					int limit = pagination.getLimit(); //제한된 크기
+					int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+					
+					RowBounds rowBounds = new RowBounds(offset, limit);
+					
+					List<Product> applyList = mapper.selectApplyListSortStatus(newMap, rowBounds);
+					
+					Map<String, Object> map = new HashMap<>();
+					map.put("pagination", pagination);
+					map.put("applyList", applyList);
+					
+					return map;
+				}
+			}
+		}
+	}
+
+	// 판매상태 변경
+	@Override
+	public int changeStatus(Map<String, Object> map) {
+		List<Object> list = (List<Object>) map.get("obj");
+		String getStatus = (String) map.get("status");
+		
+		String status = "";
+		
+		if(getStatus.equals("판매중")) {
+			status = "N";
+		} else if(getStatus.equals("판매중지")) {
+			status = "S";
+		} else {
+			status = "Y";
+		}
+		
+		int result = 0;
+		
+		for(Object productNo : list) {
+			Map<String, Object> newMap = new HashMap<String, Object>();
+			
+			newMap.put("productNo", productNo);
+			newMap.put("status", status);
+			
+			result += mapper.changeStatus(newMap);
+		}
+		return result;
+	}
+
+
+	// 판매등록 상품 이미지 조회
+	@Override
+	public List<ProductImg> selectImg(int productNo) {
+		return mapper.selectImg(productNo);
+
+	@Override
+	public Product selectOne(int productNo) {
+		// TODO Auto-generated method stub
+		return null;
+
 	}
 
 }

@@ -31,8 +31,7 @@
 #formContainer > div:first-child,
 #formContainer > div:nth-child(2),
 #formContainer > div:nth-child(3),
-#formContainer > div:nth-child(4),
-#formContainer > div:nth-child(5) {
+#formContainer > div:nth-child(4) {
   margin-left: 50px;
 }
 
@@ -53,23 +52,24 @@
     padding: 0 10px;
 }
 
-#formContainer > div:nth-child(5) > div {
+#formContainer > div:nth-child(4) > div {
     display: flex;
     margin-top: 10px;
 }
 
-#formContainer > div:nth-child(5) > div > label {
+#formContainer > div:nth-child(4) > div > label {
     margin-left: 5px;
     margin-right: 10px;
     cursor: pointer;
     font-size: 14px;
 }
 
+#formContainer > div:nth-child(6) > input,
 #formContainer > div:nth-child(7) > input {
     border: none;
 }
 
-
+#formContainer > div:nth-child(6) > input[type='file'],
 #formContainer > div:nth-child(7) input[type='file'] {
     display: block;
     width: 0;
@@ -244,16 +244,50 @@
     list-style: none;
   }
 
-  #applyProductContainer img {
-    width: 150px;
-    height: 150px;
+  .image-preview-main img {
+    width: 250px;
+    height: 250px;
   }
 
-  #applyProductContainer .real-upload {
+  .image-preview img {
+    width: 150px;
+    height: 150px;
+    position: relative;
+  }
+
+  .delButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 20px;
+    height: 20px;
+    color: black;
+    border: none;
+    font-size: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 20px;
+    height: 20px;
+    color: black;
+    border: none;
+    font-size: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  #applyProductContainer .real-upload, .real-upload-main {
     display: none;
   }
 
-  #applyProductContainer .upload {
+  #applyProductContainer .upload, .upload-main {
     font-size: 12px;
     text-align: center;
     width: 70px;
@@ -282,35 +316,6 @@
 
   .image-preview > li {
     position: relative;
-  }
-
-  .main-text {
-    position: absolute;
-    top: 5px;
-    left: 92px;
-    color: white;
-    padding: 3px;
-    border: 1px solid white;
-    opacity: 50%;
-    font-family: 'main';
-    font-size: 13px;
-    cursor: pointer;
-    transition-duration: 0.1s;
-  }
-
-  .main-text:hover {
-    opacity: 100%;
-    background-color: white;
-    color: var(--secondary);
-    border: none;
-  }
-
-
-  .first-text {
-    opacity: 100%;
-    background-color: white;
-    color: var(--secondary);
-    border: none;
   }
 
   #buttons {

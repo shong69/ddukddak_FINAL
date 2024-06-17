@@ -62,7 +62,7 @@ public class PartnerController {
 			path = "login";
 		}
 		if(loginPartnerMember != null) {
-			ra.addFlashAttribute("message", loginPartnerMember.getPartnerId()+"님 환영합니다");
+			ra.addFlashAttribute("message", loginPartnerMember.getPartnerId()+"님 환영합니다 :)");
 			
 			model.addAttribute("loginPartnerMember", loginPartnerMember);
 			path="/partner/main";

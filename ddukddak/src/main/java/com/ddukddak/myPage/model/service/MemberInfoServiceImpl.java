@@ -43,8 +43,11 @@ public class MemberInfoServiceImpl implements MemberInfoService{
 		if(!profileImg.isEmpty()) {
 			//1.파일명 rename
 			rename = Utility.fileRename(profileImg.getOriginalFilename());
+
+			
 			//서버저장위치
 			updatePath = profileWebPath + rename;
+			
 		}
 		
 		//수정된 이미지 + 회원 정보를 dto에 저장
