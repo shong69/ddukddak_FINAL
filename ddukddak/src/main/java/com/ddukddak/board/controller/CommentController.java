@@ -33,6 +33,8 @@ public class CommentController {
 		
 		// HttpMessageConverter 가 List -> JSON(문자열)로 변환해서 response
 		
+		log.info("commentList : " + service.select(boardNo));
+		
 		return service.select(boardNo);
 	};
 	

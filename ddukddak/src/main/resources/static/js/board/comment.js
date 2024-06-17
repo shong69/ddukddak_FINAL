@@ -126,7 +126,7 @@ if (insertComment != null) {
       "memberNo": loginMemberNo
     };
 
-    fetch("/comment", {
+    fetch("/comment/listAndCount", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
