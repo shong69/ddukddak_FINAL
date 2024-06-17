@@ -15,6 +15,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.ddukddak.common.chatting.model.dto.Message;
 import com.ddukddak.common.chatting.model.service.ChattingService;
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.partner.model.dto.Partner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
@@ -54,6 +55,7 @@ public class ChattingWebsocketHandler extends TextWebSocketHandler{
 		
 		log.info("msg : {}", msg);
 		
+		//메세지 보내기
 		int result = service.insertMessage(msg);
 		if(result>0) {
 			
@@ -70,8 +72,10 @@ public class ChattingWebsocketHandler extends TextWebSocketHandler{
 				//s에서 session이란 어트리뷰트를 가진 거 꺼내고 캐스팅 하기
 				
 				//로그인된 회원 정보 중 회원 번호를 꺼내오기
-				int loginMemberNo = ((Member)temp.getAttribute("loginMember")).getMemberNo();
+				Member loginMember = ((Member)temp.getAttribute("loginMember"));
+				Partner loginPartner = ((Partner)temp.getAttribute("loginPartnerMember"));
 				
+
 				//로그인 상태인 회원 중 targetNo가 일치하는 회원에게 메시지 전달하기
 //				if(loginMemberNo == msg.getTargetNo() || loginMemberNo == msg.getSenderNo()) {
 //					//보낸 사람이거나 받은 대상인 경우 메세지를 전달한다
@@ -81,6 +85,29 @@ public class ChattingWebsocketHandler extends TextWebSocketHandler{
 //					
 //					s.sendMessage(new TextMessage(jsonData));
 //				}
+
+				//로그인 상태인 회원이 해당 메시지의 수신자 or 발신자인지 체크
+				boolean isSender;
+				boolean isTarget;
+				if(loginMember != null) {
+					int loginMemberNo = loginMember.getMemberNo();
+					 isSender = loginMemberNo == msg.getSenderNo();
+					 isTarget = loginMemberNo == msg.getTargetNo();
+				}else {
+					int loginPartnerNo = loginPartner.getPartnerNo();
+					 isSender = loginPartnerNo == msg.getSenderNo();
+					 isTarget = loginPartnerNo == msg.getTargetNo();
+				}
+
+				
+				//보낸사람이거나 받은 사람인 경우 모두 메세지 전달함
+				if(isSender || isTarget) {
+					//다시 DTO Object를 JSON으로 변환하여 js보내기
+					String jsonData = objectMapper.writeValueAsString(msg);
+					s.sendMessage(new TextMessage(jsonData));
+
+				}
+
 			}
 						
 			
