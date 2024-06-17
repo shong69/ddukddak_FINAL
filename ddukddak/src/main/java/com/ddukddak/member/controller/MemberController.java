@@ -1,6 +1,7 @@
 package com.ddukddak.member.controller;
 
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +21,10 @@ import com.ddukddak.member.model.service.MemberService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 @SessionAttributes({"loginMember"})
 @RequestMapping("member")
@@ -30,8 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemberController {
 
-	private final MemberService service;
-	
+	private final MemberService service;	
 	
 	@GetMapping("login")
 	public String memberLogin(@RequestParam(value = "returnUrl", required = false) String returnUrl, Model model) {
@@ -52,8 +54,14 @@ public class MemberController {
 	        ra.addFlashAttribute("message", "아이디 또는 비밀번호가 일치하지 않습니다.");
 	        path = "login";
 	    } else {
-	        ra.addFlashAttribute("message", loginMember.getMemberId() + "님 환영합니다");
+	        ra.addFlashAttribute("message", loginMember.getMemberId() + "님 환영합니다 :)");
 	        model.addAttribute("loginMember", loginMember);
+	        
+	        // 관리자일 경우
+	        if(loginMember.getAuthority() == 2) {
+	        	
+	        	return "redirect:/manager/main";
+	        }
 	        
 	        path = (returnUrl != null && !returnUrl.isEmpty()) ? returnUrl : "/";
 	        
@@ -282,5 +290,93 @@ public class MemberController {
 		return "redirect:" + path;
 		
 	}
+	
+	// 네이버, 카카오는 각 컨트롤러에서 구현
+	// 카카오는 값 전달 받은 후 멤버 가입ㄱㄱ
+	@PostMapping("kakaoData")
+	@ResponseBody
+	public int kakaoLogin(@RequestBody Map<String, String> map, HttpSession session) {
+		
+        String email = map.get("email");
+        String nickName = map.get("nickname");
+        String pw = map.get("pw");
+        String profileImg = map.get("profileImage");
+        
+        log.info("멤버 컨트롤러단 emali : " + email);
+        
+        // 카카오 가입된 멤버 찾기
+        Member member = service.findMemberByKakao(email);
+        
+        // 이후 네이버 로직과 동일
+        
+        log.info("멤버 컨트롤러단 member 결과 : " + member);
+        
+        if(member != null) {
+        	
+        	if(member.getSocialLoginType().equals("K")) {
+        		
+        		// 카카오 가입자 로그인
+				session.setAttribute("loginMember", member);
+				
+				return 1;
+        	} else {
+        		
+        		// 일반 or 네이버
+        		return 2;
+        	}
+        } else {
+        	
+			// 1) 아이디
+			String uuid = "카카오_" + UUID.randomUUID().toString();
+        	
+			// 2) 닉네임 길면 자르고
+			if(nickName.length() > 10) {
+				nickName = nickName.substring(0, 10);
+			}
+			
+			// 3) 닉네임 중복 방지
+			String originalNickname = nickName;
+			
+			int count = 1;
+			 
+			while(service.checkId(nickName) == 1) {
+                nickName = originalNickname + count;
+                count++;
+			}
+			
+			
+			// 3) 이름은 그냥 카카오(중복 가능하니까)
+			String name = "카카오";
+			
+			Member newKakaoMember = Member.builder()
+									.memberId(uuid)
+									.memberPw(pw)
+									.memberEmail(email)
+									.memberName(name)
+									.memberNickname(nickName)
+									.profileImg(profileImg)
+									.build();
+			
+			Member signinMember = service.kakaoSignup(newKakaoMember);
+			
+			log.info("멤버 컨트롤러단 사인업 결과 : " + signinMember);
+			
+			if(signinMember != null) {
+				
+				// 회원 가입 성공
+				log.info("네이버 회원 가입 시 정보 : " + signinMember);
+				// 로그인 실어주기
+				session.setAttribute("loginMember", signinMember);
+				
+				return 3;
+			} 
+			
+			
+			log.info("멤버 컨트롤러단 사인업 결과 4번 : " + signinMember);
+			// 로그인, 중복, 회원가입 다 실패
+			return 4;
+        }
+	}
+	
 	
 }

@@ -68,6 +68,7 @@ public class MyPageController {
 			@SessionAttribute("loginMember") Member loginMemebr,
 			RedirectAttributes ra) throws Exception{
 		int result  = infoService.updateImg(file, loginMemebr);
+		
 		String message = null;
 		
 		if(result>0) message = "변경 성공";
