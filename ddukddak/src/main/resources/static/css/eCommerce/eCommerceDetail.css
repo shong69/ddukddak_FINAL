@@ -477,7 +477,6 @@
 #reviewBox{
     width : 100%;
     min-height : 1000px;
-    background-color: aliceblue;
     display: none;
     flex-direction: column;
 }
@@ -492,29 +491,132 @@
     flex-direction: row;
     justify-content: space-around;
     font-size: 20px;
-    line-height: 150px;
-    color : #45795cdd
+    height: 150px;
+    color : #45795cdd;
+    background-color: #bbbbbb;
+    margin-bottom: 20px;
+}
+.commentCount {
+    flex-basis: 50%;
+    background-color: rebeccapurple;
+}
+.rateCount{
+    flex-basis: 50%;
 }
 #comment{
     width : 100%;
-    height: 300px;
+    height: 200px;
     display : flex;
-    
+    flex-direction: column;
+    align-items: center;
 }
-
+#id-addCommentArea{
+    display : flex;
+    flex-direction: row;
+    width : 1000px;
+    height: 35px;
+}
+#reviewId{
+    line-height: 35px;
+    flex-basis: 15%;
+}
+#productRate{
+    flex-basis: 70%;
+    display : flex;
+    justify-content: end;
+    margin-right: 10px;
+    margin-top : 5px;
+}
 #addComment{
-    width : 50px;
-    height : 50px;
+    width : 60px;
+    height : 25px;
+    border-radius: 18px;
+    background-color: #c9c9c9dd;
+    border:none;
+    flex-basis: 15%;
+    display : flex;
+    justify-content: center;
+    align-items: center;
+}
+#addComment:active{
+    background-color: #6b6b6b;
+    color: white;
+    transition-duration: 0.1s;
+}
+#contentBox{
+    border : 0.4px solid #bbbbbb;
+    height: 350px;
 }
 #commentContent{
     width : 1000px;
+    padding:10px;
+    resize: none;
+    border : none;
+}
+#commentContent:focus{
+    outline:none;
 }
 #noReviewArea{
-    width: 100%;
+    width: 90%;
     height: 100%;
-    font-size: 28px;
+    font-size: 40px;
     text-align: center;
     color : white;
     background-color: #bbbbbb;
-    margin-top: 100px;
+
+    margin:0 auto;
+}
+#photoArea{
+    display: flex;
+    flex-direction: row;
+}
+#selectReviewImgBtn{
+    width : 70px;
+    height: 70px;
+    line-height: 70px;
+    border : 0.6px solid #5d90c0;
+    border-radius: 13px;
+    padding : 0 5px;
+    margin-bottom:8px;
+    margin-left: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 200;
+    font-size: 12px;
+}
+#reviewFile {
+    display : none;
+
+}
+#reviewImgBox{
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    width : 500px;
+    height: 70px;
+    margin-bottom: 8px;
+    border : none;
+    background-color: transparent;
+}
+.preview-image-container,
+.preview-image{
+    width : 70px;
+    height: 70px;
+    margin:0 auto;
+}
+.delete-button{
+    position: relative;
+    top:-23px;
+    left:10px;
+    background-color: transparent;
+    border : none;
+    font-size: 12px;
+    color: rgb(255, 248, 208);
+    cursor : pointer;
+}
+.fa-solid{
+    color : red;
+}
+.fa-star{
+    cursor: pointer;
 }

@@ -1,5 +1,6 @@
 package com.ddukddak.ecommerce.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
@@ -216,14 +219,29 @@ public class eCommerceController {
 	
 	@RequestMapping("complete")
 	public String eCommerceComplete() {
+		
 		return "eCommerce/eCommerceComplete";
 	}
 	
-	
+
 	//[비동기]리뷰 조회하기
-//	@GetMapping("review")
-//	@RequestBody
-//	public String ecCommerceSelectReview() {
-//		return "eCommerce/
-//	}
+	//[비동기]리뷰 삽입하기
+	@PostMapping("reviewPost")
+	@ResponseBody
+	public String eCommercePostReview(@RequestParam("reviewContent") String reviewContent,
+										@RequestParam("reviewRating") int reviewRating,
+										@RequestParam("reviewImgs") List<MultipartFile> reviewImgs,
+										@SessionAttribute("loginMember") Member loginMember) throws IOException {
+		return "";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 }

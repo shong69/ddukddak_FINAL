@@ -324,7 +324,189 @@ function updateTotalCount() {
 //리뷰 기능
 //0. 전체 별점 구해서 총 평점 내보내기
 //1. 리뷰 등록 비동기 + (사진, 텍스트, 별점)도 올리기
+let reviewImgFiles = [];
+function readImgURLs(input) {
+    if (input.files && input.files.length > 0) {
+        const reviewImgBox = document.getElementById('reviewImgBox');
+        const totalReviewImages = reviewImgBox.children.length + input.files.length;
+
+        if (totalReviewImages > 5) {
+            alert('리뷰 이미지는 최대 7개까지 추가할 수 있습니다.');
+            return;
+        }
+
+        Array.from(input.files).forEach(file => {
+            // 이미지 파일인지 확인
+            if (!file.type.startsWith('image/')) {
+                alert('이미지 파일만 선택할 수 있습니다.');
+                return;
+            }
+
+            reviewImgFiles.push(file); // 파일을 배열에 추가
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewContainer = document.createElement('div');
+                previewContainer.classList.add('preview-image-container');
+
+                const preview = document.createElement('img');
+                preview.classList.add('preview-image');
+                preview.src = e.target.result;
+                previewContainer.appendChild(preview);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('delete-button');
+                deleteButton.classList.add('fa-solid');
+                deleteButton.classList.add('fa-trash-can');
+                deleteButton.onclick = function() {
+                    if (confirm("해당 사진을 삭제하시겠습니까?")) {
+                        const index = Array.from(reviewImgBox.children).indexOf(previewContainer);
+                        reviewImgFiles.splice(index, 1); // 배열에서 파일 제거
+                        previewContainer.remove(); // 이미지 삭제
+                    }
+                };
+                previewContainer.appendChild(deleteButton);
+
+                reviewImgBox.appendChild(previewContainer);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // 리셋 input file field to allow adding the same file again
+        input.value = '';
+    }
+}
+function handleFormMission(event) {
+    const form = document.getElementById('uploadForm');
+    event.preventDefault(); // 기본 제출 동작 막기
+
+    // FormData 객체 생성
+    const formData = new FormData(form);
+
+    // subImageFiles를 FormData에 추가
+    subImageFiles.forEach(file => {
+        formData.append('reviewImgs', file);
+    });
+
+    // Remove old subImgs if present
+    const subImgsInput = form.querySelector('input[name="subImgs"]');
+    if (subImgsInput) {
+        subImgsInput.remove();
+    }
+
+    // Create new input elements for each file
+    subImageFiles.forEach(file => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.setAttribute('name', 'subImgs');
+        input.value = file; // This won't work for file objects, so we need to use FormData instead
+        form.appendChild(input);
+    });
+    const productName = document.querySelector("#productName");
+    const bigCategory = document.querySelector("#bigCategory");
+    const smallcategory = document.querySelector("#smallCategory");
+    const price = document.querySelector("#price");
+
+    const contentCountInputVisual = document.getElementsByClassName(".contentCountInput");
+    var temp = true;
+
+    for(let i = 0; i < contentCountInputVisual.length; i ++) {
+        if(contentCountInputVisual[i].type != 'hidden') {
+            temp = false;
+            break;
+        }
+    }
+
+    if(productName.value.trim().length === 0 ||
+        bigCategory.options[bigCategory.selectedIndex].value == 'none' ||
+        smallcategory.options[smallcategory.selectedIndex].value == 'none' ||
+        price.value.trim().length === 0 ||
+        selectOption == 0
+        ) {
+            alert("입력을 완료해주세요");
+            event.preventDefault();
+        } else if(document.querySelector("#preview").src == 0) {
+            alert("대표사진을 등록해주세요");
+            event.preventDefault();
+        } else if (!temp) {
+            alert("옵션 등록을 완료해주세요");
+            event.preventDefault();
+        } else {
+            // 서브 이미지 파일들이 FormData에 추가되었으므로 이제 submit을 호출
+            fetch('/partner/seller/product/create', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                alert("등록 완료");
+                location.href='/partner/seller/product/create';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert("등록 실패");
+            });
+        }
+
+    // Allow form to submit
+}
+
+let reviewRating;  //별점
+
+const stars = document.querySelectorAll(".fa-star");
+console.log(stars);
+stars.forEach((star, index) =>{
+    star.addEventListener("click",()=>{
+        if(!star.classList.contains("fa-solid")){ //누른 별이 비어있는 경우
+            for(let i = 0; i<=index; i++){
+                console.log(i);
+                stars[i].classList.remove('fa-regular');
+                stars[i].classList.add('fa-solid');
+                
+            }
+            reviewRating = index + 1;
+        }else{
+            console.log(star.classList);
+            for(let i = 4; i>=index; i--){
+                
+                stars[i].classList.remove('fa-solid');
+                stars[i].classList.add('fa-regular');
+            }
+            reviewRating=0;
+        }
+
+    })
+})
+
+//비동기로 리뷰 보내기
+function handleFormMission(event) {
+    event.preventDefault();
+
+    document.getElementById("reviewForm").addEventListener("submit", function(event){
+
+        event.preventDefault;
+        const formData = new FormData(this);
+        
+        formData.append("reviewRating", reviewRating);
+
+        fetch("/eCommerce/reviewPost", {
+            method : "POST",
+            body : formData
+        })
+        .then(resp => resp.json())
+        .then(result =>{
+            console.log("결과", result);
+            //리뷰 불러오기 함수
+            selectReviewList();
+        })
+    })
+}
+
+
 
 //2. 페이지 진입 시 리뷰 리스트 불러오기
+function selectReviewList() {
+    
+}
 
 //3. 내가 쓴 리뷰 삭제 가능하기 비동기
