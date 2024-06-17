@@ -246,8 +246,15 @@ public class SellerController {
 		return result;
 	}
 	
-	@GetMapping("product/applyProduct")
-	public String ProductApplyProduct() {
+	// 판매등록상품
+	@PostMapping("product/applyProduct")
+	public String ProductApplyProduct(@RequestParam ("productNo") int productNo,
+										Model model) {
+		
+		Product product = service.selectOne(productNo);
+		
+		model.addAttribute("product", product);
+		
 		return "partner/seller/product/applyProduct";
 	}
 	

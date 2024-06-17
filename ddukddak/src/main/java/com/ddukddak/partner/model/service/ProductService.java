@@ -68,4 +68,10 @@ public interface ProductService {
 	 */
 	int changeStatus(Map<String, Object> map);
 
+	/** 
+	 * @param productNo
+	 * @return
+	 */
+	Product selectOne(int productNo);
+
 }

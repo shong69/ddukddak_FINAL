@@ -35,7 +35,6 @@
 
         <!-- 상품등록버튼 -->
         <div id="sellerButton">
-            <button onclick="location.href='/partner/seller/product/applyProduct';">판매 등록</button>
             <button id="changeStatus">판매 상태 변경</button>
         </div>
 
@@ -56,6 +55,7 @@
                     <td>판매상태</td>
                     <td>상품명</td>
                     <td>판매가</td>
+                    <td>판매등록</td>
                 </thead>
 
 
@@ -77,6 +77,12 @@
                         </td>
                         <td th:text="${applyItem.productName}" class="productName">상품제목</td>
                         <td th:text="${applyItem.productPrice}" class="productPrice">상품가격</td>
+                        <form action="/partner/seller/product/applyProduct" method="POST">
+                            <td th:switch="${applyItem.productFl}">
+                                <button th:case="'Y'" class="sellerButton" name="productNo" th:value="${applyItem.productNo}">판매등록</button>
+                                <span th:case="*"></span>
+                            </td>
+                        </form>
                     </tr>
                 </th:block>
 
