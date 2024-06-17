@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,8 +60,43 @@ public class CommentController {
 	};
 	
 	@PostMapping("")
-	public int insert(@RequestBody Comment comment) {
-		
-		return service.insert(comment);
+	public Map<String, Object> insert(@RequestBody Comment comment) {
+		 Map<String, Object> response = new HashMap<>();
+	        int result = service.insert(comment);
+
+	        if (result > 0) {
+	            int count = service.getCommentCount(comment.getBoardNo());
+	            response.put("success", true);
+	            response.put("count", count);
+	        } else {
+	            response.put("success", false);
+	        }
+
+	        return response;
 	}
+	
+   @PutMapping("/update")
+    public Map<String, Object> update(@RequestBody Comment comment) {
+        int result = service.update(comment);
+        Map<String, Object> response = new HashMap<>();
+        if (result > 0) {
+            response.put("success", true);
+        } else {
+            response.put("success", false);
+        }
+        return response;
+    }
+   
+   @DeleteMapping("/delete")
+   public Map<String, Object> delete(@RequestParam("commentNo") int commentNo) {
+       int result = service.delete(commentNo);
+       Map<String, Object> response = new HashMap<>();
+       if (result > 0) {
+           response.put("success", true);
+       } else {
+           response.put("success", false);
+       }
+       return response;
+   }
+	
 }
