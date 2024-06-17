@@ -126,6 +126,8 @@ function readMainURL(fileInput) {
     } else {
         document.getElementById('preview').removeAttribute('src');
     }
+
+    console.log(fileInput.files[0]);
 }
 
 
