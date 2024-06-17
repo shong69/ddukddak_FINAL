@@ -33,4 +33,12 @@ public interface CommentMapper {
 	 */
 	int getCommentCount(int boardNo);
 
+
+
+	int update(Comment comment);
+
+
+
+	int delete(int commentNo);
+
 }

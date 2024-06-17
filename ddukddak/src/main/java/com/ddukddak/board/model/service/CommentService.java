@@ -30,4 +30,12 @@ public interface CommentService {
 	 */
 	int getCommentCount(int boardNo);
 
+
+
+	int update(Comment comment);
+
+
+
+	int delete(int commentNo);
+
 }

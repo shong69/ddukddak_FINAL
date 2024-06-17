@@ -396,6 +396,7 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<ProductImg> selectImg(int productNo) {
 		return mapper.selectImg(productNo);
+	}
 
 	@Override
 	public Product selectOne(int productNo) {
