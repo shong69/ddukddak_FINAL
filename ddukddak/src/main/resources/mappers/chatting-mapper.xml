@@ -3,151 +3,180 @@
 <mapper namespace="com.ddukddak.common.chatting.model.mapper.ChattingMapper">
 	
 	<!-- 채팅방 목록 조회 -->
-	<select id ="selectRoomList">
+	<!-- ChattingMapper.xml -->
+		
+	<select id="selectRoomList" parameterType="map">
 		SELECT
 		    R.CHATTING_NO,
-		    
-		    (SELECT MESSAGE_CONTENT
-		     FROM (
-		         SELECT *
-		         FROM MESSAGE M2
-		         WHERE M2.CHATTING_NO = R.CHATTING_NO
-		         ORDER BY M2.MESSAGE_NO DESC
-		     )
-		     WHERE ROWNUM = 1) AS LAST_MESSAGE,
-		     
-		    TO_CHAR(NVL(
-		        (SELECT MAX(M.SEND_TIME)
-		         FROM MESSAGE M
-		         WHERE R.CHATTING_NO = M.CHATTING_NO),
-		        R.CH_CREATE_DATE
-		    ), 'YYYY.MM.DD') AS SEND_TIME,
-		    
+		    (
+		        SELECT MESSAGE_CONTENT
+		        FROM MESSAGE M2
+		        WHERE M2.CHATTING_NO = R.CHATTING_NO
+		        ORDER BY M2.MESSAGE_NO DESC
+		        FETCH FIRST 1 ROWS ONLY
+		    ) AS LAST_MESSAGE,
+		    TO_CHAR(
+		        NVL(
+		            (
+		                SELECT MAX(M.SEND_TIME)
+		                FROM MESSAGE M
+		                WHERE R.CHATTING_NO = M.CHATTING_NO
+		            ),
+		            R.CH_CREATE_DATE
+		        ),
+		        'YYYY.MM.DD'
+		    ) AS SEND_TIME,
 		    CASE
-		        WHEN EXISTS (
-		            SELECT 1
-		            FROM CHATTING_ROOM R2
-		            WHERE R2.CHATTING_NO = R.CHATTING_NO
-		              AND R2.OPEN_MEMBER_NO = #{memberNo}
-		        ) THEN R.PARTICIPANT_CONTRACTOR_NO
-		        WHEN EXISTS (
-		            SELECT 1
-		            FROM CHATTING_ROOM R2
-		            WHERE R2.CHATTING_NO = R.CHATTING_NO
-		              AND R2.OPEN_CONTRACTOR_NO = #{memberNo}
-		        ) THEN R.PARTICIPANT_MEMBER_NO
-		        ELSE NULL
+		    	WHEN #{isMember} = 'PARTNER' THEN
+		    		CASE
+		    			WHEN R.OPEN_CONTRACTOR_NO = #{memberNo} THEN R.PARTICIPANT_MEMBER_NO
+		    			WHEN R.PARTICIPANT_CONTRACTOR_NO = #{memberNo} THEN R.OPEN_MEMBER_NO
+		    		END
+		    	ELSE
+		    		CASE
+		    			WHEN R.OPEN_MEMBER_NO = #{memberNo} THEN R.PARTICIPANT_CONTRACTOR_NO
+		    			WHEN R.PARTICIPANT_MEMBER_NO = #{memberNo} THEN R.OPEN_CONTRACTOR_NO 
+		    		END
 		    END AS TARGET_NO,
-		    
 		    CASE
-		        WHEN EXISTS (
-		            SELECT 1
-		            FROM CHATTING_ROOM R2
-		            WHERE R2.CHATTING_NO = R.CHATTING_NO
-		              AND R2.OPEN_MEMBER_NO = #{memberNo}
-		        ) THEN
-		        	(SELECT PARTNER_BUSINESS_NAME
-		             FROM PARTNER
-		             WHERE PARTNER_NO = R.PARTICIPANT_CONTRACTOR_NO)       
-		        WHEN EXISTS (
-		            SELECT 1
-		            FROM CHATTING_ROOM R2
-		            WHERE R2.CHATTING_NO = R.CHATTING_NO
-		              AND R2.OPEN_CONTRACTOR_NO = #{memberNo}
-		        ) THEN
-		            (SELECT MEMBER_NICKNAME
-		             FROM MEMBER
-		             WHERE MEMBER_NO = R.PARTICIPANT_MEMBER_NO)
-		        ELSE NULL
+		    	WHEN #{isMember} = 'PARTNER' THEN
+		    		CASE
+		    			WHEN R.OPEN_CONTRACTOR_NO = #{memberNo} THEN (SELECT MEMBER_NICKNAME FROM MEMBER WHERE R.PARTICIPANT_MEMBER_NO = MEMBER_NO)
+		    			WHEN R.PARTICIPANT_CONTRACTOR_NO = #{memberNo} THEN (SELECT MEMBER_NICKNAME FROM MEMBER WHERE R.OPEN_MEMBER_NO = MEMBER_NO)
+		    		END
+		    	ELSE
+		    		CASE
+		    			WHEN R.OPEN_MEMBER_NO = #{memberNo} THEN(SELECT PARTNER_BUSINESS_NAME FROM PARTNER WHERE R.PARTICIPANT_CONTRACTOR_NO = PARTNER_NO)
+		    			WHEN R.PARTICIPANT_MEMBER_NO = #{memberNo} THEN(SELECT PARTNER_BUSINESS_NAME FROM PARTNER WHERE R.OPEN_CONTRACTOR_NO = PARTNER_NO)
+		    		END
 		    END AS TARGET_NICKNAME,
-		    
 		    CASE
-		        WHEN EXISTS (
-		            SELECT 1
-		            FROM CHATTING_ROOM R2
-		            WHERE R2.CHATTING_NO = R.CHATTING_NO
-		           	AND R2.OPEN_MEMBER_NO = #{memberNo}
-		        ) THEN
-		            N'기본이미지 사용'
-		        WHEN EXISTS (
-		            SELECT 1
-		            FROM CHATTING_ROOM R2
-		            WHERE R2.CHATTING_NO = R.CHATTING_NO
-		              AND R2.OPEN_CONTRACTOR_NO = #{memberNo}
-		        ) THEN
-		            (SELECT PROFILE_IMG
-		             FROM MEMBER
-		             WHERE MEMBER_NO = R.PARTICIPANT_MEMBER_NO)
-		        ELSE NULL
+		    	WHEN #{isMember} = 'PARTNER' THEN
+		    		CASE
+		    			WHEN R.OPEN_CONTRACTOR_NO = #{memberNo} THEN(SELECT PROFILE_IMG FROM MEMBER WHERE R.PARTICIPANT_MEMBER_NO = MEMBER_NO)
+		    			WHEN R.PARTICIPANT_CONTRACTOR_NO = #{memberNo} THEN(SELECT PROFILE_IMG FROM MEMBER WHERE R.OPEN_MEMBER_NO = MEMBER_NO)
+		    		END
+		    	ELSE
+		    		N'/images/default/main.jpg'
 		    END AS TARGET_PROFILE,
-		    
 		    (SELECT COUNT(*)
-		     FROM MESSAGE M
-		     WHERE M.CHATTING_NO = R.CHATTING_NO
-		       AND M.READ_FL = 'N'
-		       AND  (
-		       			(M.SENDER_MEMBER_NO != #{memberNo}  AND M.SENDER_MEMBER_NO IS NULL)
-		       			OR 
-		       			(M.SENDER_CONTRACTOR_NO != #{memberNo} AND M.SENDER_CONTRACTOR_NO IS NULL)
-		     )) AS NOT_READ_COUNT,
-		    
-		     
-		    (SELECT MAX(MESSAGE_NO)
-		     FROM MESSAGE M
-		     WHERE R.CHATTING_NO = M.CHATTING_NO) AS MAX_MESSAGE_NO
-		     
+	        FROM MESSAGE M
+	        WHERE M.CHATTING_NO = R.CHATTING_NO
+	          AND M.READ_FL = 'N'
+	          AND (
+	                 (#{isMember} = 'PARTNER' AND M.SENDER_TYPE = 'MEMBER' AND M.TARGET_NO= #{memberNo})
+	                 OR (#{isMember}='MEMBER' AND M.SENDER_TYPE = 'PARTNER' AND M.TARGET_NO = #{memberNo})
+	              )
+		    ) AS NOT_READ_COUNT,
+		    (
+		        SELECT MAX(MESSAGE_NO)
+		        FROM MESSAGE M
+		        WHERE R.CHATTING_NO = M.CHATTING_NO
+		    ) AS MAX_MESSAGE_NO
 		FROM
 		    CHATTING_ROOM R
 		WHERE
-		    (R.OPEN_MEMBER_NO = #{memberNo} OR R.OPEN_CONTRACTOR_NO = #{memberNo})
-		    OR (R.PARTICIPANT_MEMBER_NO = #{memberNo} OR R.PARTICIPANT_CONTRACTOR_NO =#{memberNo})
+		    (
+		        #{isMember} = 'PARTNER' AND (R.OPEN_CONTRACTOR_NO = #{memberNo} OR R.PARTICIPANT_CONTRACTOR_NO = #{memberNo})
+		    )
+		    OR
+		    (
+		        #{isMember} = 'MEMBER' AND (R.OPEN_MEMBER_NO = #{memberNo} OR R.PARTICIPANT_MEMBER_NO = #{memberNo})
+		    )
 		ORDER BY
 		    MAX_MESSAGE_NO DESC NULLS LAST
 
 	</select>
-	
-	<!-- [일반회원]채팅 상대 검색 -->
-	<select id="selectTarget">
-		SELECT PARTNER_NO, PARTNER_TEL, PARTNER_BUSINESS_NAME FROM "PARTNER"
-		WHERE (PARTNER_TEL LIKE '%${query}%' OR PARTNER_BUSINESS_NAME LIKE '%${query}%')
-		AND PARTNER_DEL_FL = 'N'
-	</select>
-	
-	<!-- [일반회원]채팅 확인 -->
-	<select id="checkChattingNo">
-		SELECT NVL(SUM(CHATTING_NO),0) CHATTING_NO FROM CHATTING_ROOM
-		WHERE (OPEN_MEMBER_NO = #{memberNo} AND PARTICIPANT_CONTRACTOR_NO = #{targetNo})
-		OR (OPEN_CONTRACTOR_NO = #{targetNo} AND PARTICIPANT_MEMBER_NO = #{memberNo})
-	</select>
-	
-	<!-- [일반회원]채팅방 만들기 -->
-	<insert id = "createChattingRoom" parameterType="map" useGeneratedKeys="true">
-		<selectKey keyProperty= "chattingNo" order="BEFORE" resultType="_int">
-			SELECT SEQ_ROOM_NO.NEXTVAL FROM DUAL
-		</selectKey>
-		INSERT INTO CHATTING_ROOM
-		VALUES(SEQ_ROOM_NO.NEXTVAL, SYSDATE, #{memberNo}, NULL, NULL, #{targetNo})
+
+    
+    
+
+
+	<!-- 메시지 보내기 -->
+	<insert id = "insertMessage">
+		INSERT INTO "MESSAGE" 
+		VALUES(SEQ_MESSAGE_NO.NEXTVAL, #{messageContent}, DEFAULT,#{senderNo}, #{senderType},#{targetNo}, #{targetType}, #{chattingNo}, DEFAULT)
 	</insert>
 	
-	<!-- [일반회원]채팅 기록 불러오기 -->
-	<select id="selectMessageList">
-		SELECT MESSAGE_NO, MESSAGE_CONTENT, READ_FL,SENDER_MEMBER_NO, SENDER_CONTRACTOR_NO, CHATTING_NO,
-		TO_CHAR(SEND_TIME, 'YYYY.MM.DD HH24:MI') SEND_TIME 
-		FROM MESSAGE
-		WHERE CHATTING_NO  = #{chattingNo}
-		ORDER BY MESSAGE_NO
-	</select>
+    
+	<!--                            일반회원                       -->
+	<!-- [일반회원]채팅 상대 검색 -->
+    <select id="selectTarget">
+        SELECT PARTNER_NO, PARTNER_TEL, PARTNER_BUSINESS_NAME FROM PARTNER
+        WHERE (PARTNER_TEL LIKE '%${query}%' OR PARTNER_BUSINESS_NAME LIKE '%${query}%')
+        AND PARTNER_DEL_FL = 'N'
+    </select>
 	
-	<!-- 읽음 상태 변경 -->
+	<!-- [일반회원]채팅 확인 -->
+    <select id="checkChattingNo">
+        SELECT NVL(SUM(CHATTING_NO),0) CHATTING_NO FROM CHATTING_ROOM
+        WHERE (OPEN_MEMBER_NO = #{memberNo} AND PARTICIPANT_CONTRACTOR_NO = #{targetNo})
+        OR (OPEN_CONTRACTOR_NO = #{targetNo} AND PARTICIPANT_MEMBER_NO = #{memberNo})
+    </select>
+    
+	<!-- [일반회원]채팅방 만들기 -->
+    <insert id="createChattingRoom" parameterType="map" useGeneratedKeys="true">
+        <selectKey keyProperty="chattingNo" order="BEFORE" resultType="_int">
+            SELECT SEQ_ROOM_NO.NEXTVAL FROM DUAL
+        </selectKey>
+        
+        INSERT INTO CHATTING_ROOM (CHATTING_NO, CH_CREATE_DATE, OPEN_MEMBER_NO, PARTICIPANT_CONTRACTOR_NO)
+        VALUES (#{chattingNo},SYSDATE, #{memberNo}, #{targetNo})
+    </insert>
+	
+	<!-- [일반회원+ 시공사]채팅 기록 불러오기 -->
+    <select id="selectMessageList">
+        SELECT MESSAGE_NO, MESSAGE_CONTENT, READ_FL, SENDER_NO,SENDER_TYPE, TARGET_NO, TARGET_TYPE, CHATTING_NO,
+        TO_CHAR(SEND_TIME, 'YYYY.MM.DD HH24:MI') SEND_TIME 
+        FROM MESSAGE
+        WHERE CHATTING_NO = #{chattingNo}
+        ORDER BY MESSAGE_NO
+    </select>
+
+	<!-- [일반회원]내가 보내지 않은 글을 읽음 상태 변경 -->
 	<update id = "updateReadFlag">
 		UPDATE "MESSAGE" SET
 		READ_FL = 'Y'
 		WHERE CHATTING_NO = #{chattingNo}
+		AND SENDER_TYPE = #{senderType}
+		AND TARGET_NO = #{memberNo}
 	</update>
 	
-	<!-- 메시지 보내기 -->
-	<insert id = "insertMessage">
-		INSERT INTO "MESSAGE"
-		VALUES(SEQ_MESSAGE_NO.NEXTVAL, #{messageContent}, DEFAULT, DEFAULT,NULL, #{senderNo}, #{chattingNo})
-	</insert>
+	
+	
+	
+	
+	<!--                            시공사                       -->
+	<!-- [시공사]채팅 상대 검색(완) -->
+	<select id="IselectTarget">
+        SELECT MEMBER_NO, MEMBER_EMAIL, MEMBER_NICKNAME, PROFILE_IMG 
+        FROM MEMBER
+        WHERE (MEMBER_EMAIL LIKE '%${query}%' OR MEMBER_NICKNAME LIKE '%${query}%')
+        AND MEMBER_DEL_FL = 'N'
+    </select>
+	<!-- [시공사]채팅 확인 -->
+    <select id="IcheckChattingNo">
+        SELECT NVL(SUM(CHATTING_NO),0) CHATTING_NO FROM CHATTING_ROOM
+        WHERE (OPEN_MEMBER_NO = #{targetNo} AND PARTICIPANT_CONTRACTOR_NO = #{memberNo})
+        OR (OPEN_CONTRACTOR_NO = #{memberNo} AND PARTICIPANT_MEMBER_NO = #{targetNo})
+    </select>
+    
+	<!-- [시공사]채팅방 만들기 (완)-->
+    <insert id="IcreateChattingRoom" parameterType="map" useGeneratedKeys="true">
+        <selectKey keyProperty="chattingNo" order="BEFORE" resultType="_int">
+            SELECT SEQ_ROOM_NO.NEXTVAL FROM DUAL
+        </selectKey>
+        
+        INSERT INTO CHATTING_ROOM (CHATTING_NO, CH_CREATE_DATE, OPEN_CONTRACTOR_NO, PARTICIPANT_MEMBER_NO)
+        VALUES (#{chattingNo},SYSDATE, #{memberNo}, #{targetNo})
+    </insert>
+		
+	<!-- [시공사]내가 보내지 않은 글을 읽음 상태 변경(완) -->
+	<update id = "IupdateReadFlag">
+		UPDATE "MESSAGE" SET
+		READ_FL = 'Y'
+		WHERE CHATTING_NO = #{chattingNo}
+		AND SENDER_TYPE = #{senderType}
+		AND SENDER_NO != #{memberNo}
+	</update>
 </mapper>

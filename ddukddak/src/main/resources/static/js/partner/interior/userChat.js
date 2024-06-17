@@ -54,7 +54,7 @@ targetInput.addEventListener("input", e => {
 
 	// 입력된게 있을 때
 	if(query.length > 0){
-		fetch("/chatting/selectTarget?query="+query)
+		fetch("/chatting/I-selectTarget?query="+query)
 		.then(resp => resp.json())
 		.then(list => {
 			console.log(list);
@@ -72,28 +72,33 @@ targetInput.addEventListener("input", e => {
 				// li요소 생성(한 행을 감싸는 요소)
 				const li = document.createElement("li");
 				li.classList.add("result-row");
-				li.setAttribute("data-id", member.partnerNo);
+				li.setAttribute("data-id", member.memberNo);
 
 				// 프로필 이미지 요소
 				const img = document.createElement("img");
 				img.classList.add("result-row-img");
 				
-				img.setAttribute("src", "/images/default/main.jpg");
+                if(member.profileImg == null){
+					img.setAttribute("src", "/images/default/main.jpg");
+				}else{
+					img.setAttribute("src", member.profileImg);
+				}
+				
 
-				let businessName = member.partnerBusinessName;/*닉네임 말고 업체명으로 바꾸기 */
-				let tel = member.partnerTel;/*email 말고 전화번호로 바꾸기*/
+				let nickname = member.memberNickname;
+				let email = member.memberEmail;
 
 				const div = document.createElement("div");
 				div.classList.add("interInfo");
-				const nameSpan = document.createElement("span");
-				nameSpan.classList.add("nameSpan");
-				const phoneNumSpan = document.createElement("span");
-				phoneNumSpan.classList.add("phoneNumSpan");
+				const nicknameSpan = document.createElement("span");
+				nicknameSpan.classList.add("nicknameSpan");
+				const emailSpan = document.createElement("span");
+				emailSpan.classList.add("emailSpan");
 				/*span.innerHTML = `${nickname} ${email}`.replace(query, `<mark>${query}</mark>`);*/
-				nameSpan.innerHTML = businessName.replace(query, `<mark>${query}</mark>`);
-				phoneNumSpan.innerHTML = tel.replace(query, `<mark>${query}</mark>`);
+				nicknameSpan.innerHTML = nickname.replace(query, `<mark>${query}</mark>`);
+				emailSpan.innerHTML = email.replace(query, `<mark>${query}</mark>`);
 				
-				div.append(nameSpan, phoneNumSpan);
+				div.append(nicknameSpan, emailSpan);
 
 				// 요소 조립(화면에 추가)
 				li.append(img, div);
@@ -116,8 +121,8 @@ function chattingEnter(e){
 	console.log(e.currentTarget); // 이벤트 리스트가 설정된 요소
 
 	const targetNo = e.currentTarget.getAttribute("data-id");
-
-	fetch("/chatting/enter?targetNo="+targetNo)
+	console.log(targetNo);
+	fetch("/chatting/I-enter?targetNo="+targetNo)
 	.then(resp => resp.text())
 	.then(chattingNo => {
 		console.log(chattingNo); 
@@ -147,7 +152,6 @@ function chattingEnter(e){
 
 // 비동기로 채팅방 목록 조회
 function selectRoomList(){
-
 	fetch("/chatting/roomList")
 	.then(resp => resp.json())
 	.then(roomList => {
@@ -180,7 +184,12 @@ function selectRoomList(){
 			const listProfile = document.createElement("img");
 			listProfile.classList.add("list-profile");
 
-			listProfile.setAttribute("src", "/images/default/main.jpg");
+			if(room.targetProfile == null){
+				listProfile.setAttribute("src", "/images/default/main.jpg");
+			}else{
+				listProfile.setAttribute("src", room.targetProfile);
+			}
+			
 
 			itemHeader.append(listProfile);
 
@@ -224,19 +233,18 @@ function selectRoomList(){
 				div.append(notReadCount);
 			}else{
 
-				// 현재 채팅방을 보고있는 경우
-				// 비동기로 해당 채팅방 글을 읽음으로 표시
-				fetch("/chatting/updateReadFlag",{
-					method : "PUT",
-					headers : {"Content-Type": "application/json"},
-					body : JSON.stringify({"chattingNo" : selectChattingNo,
-											"memberNo" : loginMemberNo,
-											"senderType" : "PARTNER"
-					})
-				})
-				.then(resp => resp.text())
-				.then(result => console.log(result))
-				.catch(err => console.log(err));
+				// // 현재 채팅방을 보고있는 경우
+				// // 비동기로 해당 채팅방 글을 읽음으로 표시
+				// fetch("/chatting/I-updateReadFlag",{
+				// 	method : "PUT",
+				// 	headers : {"Content-Type": "application/json"},
+				// 	body : JSON.stringify({"chattingNo" : selectChattingNo,
+				// 							"memberNo" : loginPartnerNo,
+				// 							"senderType" : "MEMBER"})
+				// })
+				// .then(resp => resp.text())
+				// .then(result => console.log(result))
+				// .catch(err => console.log(err));
 
 			}
 			
@@ -266,7 +274,7 @@ function roomListAddEvent(){
 	
 	for(let item of chattingItemList){
 		item.addEventListener("click", e => {
-	
+			console.log(item);
 			// 클릭한 채팅방의 번호 얻어오기
 			//const id = item.getAttribute("id");
 			//const arr = id.split("-");
@@ -300,7 +308,7 @@ function roomListAddEvent(){
 // 비동기로 메세지 목록을 조회하는 함수
 function selectChattingFn() {
 
-	fetch("/chatting/selectMessage?"+`chattingNo=${selectChattingNo}`)
+	fetch("/chatting/I-selectMessage?"+`chattingNo=${selectChattingNo}&memberNo=${loginPartnerNo}`)
 	.then(resp => resp.json())
 	.then(messageList => {
 		console.log(messageList);
@@ -315,6 +323,7 @@ function selectChattingFn() {
 
 		// 메세지 만들어서 출력하기
 		for(let msg of messageList){
+			console.log(msg);
 			//<li>,  <li class="my-chat">
 			const li = document.createElement("li");
 
@@ -329,9 +338,9 @@ function selectChattingFn() {
 			p.classList.add("chat");
 			p.innerHTML = msg.messageContent; // br태그 해석을 위해 innerHTML
 
-			// 내가 작성한 메세지인 경우
-			if(loginMemberNo == msg.senderNo &&
-				msg.senderType == 'MEMBER'
+			// 내가 작성한 메세지인 경우 -> senderNo로만 따지면 안됨
+			if(loginPartnerNo == msg.senderNo &&
+				msg.senderType == 'PARTNER'
 			){ 
 				li.classList.add("my-chat");
 				
@@ -362,25 +371,24 @@ function selectChattingFn() {
 			ul.append(li);
 			display.scrollTop = display.scrollHeight; // 스크롤 제일 밑으로
 		}
-		// 현재 채팅방을 보고있는 경우
-		// 비동기로 해당 채팅방 글을 읽음으로 표시
-		fetch("/chatting/updateReadFlag",{
-			method : "PUT",
-			headers : {"Content-Type": "application/json"},
-			body : JSON.stringify({"chattingNo" : selectChattingNo,
-									"memberNo" : loginMemberNo,
-									"senderType" : "PARTNER"
-			})
-		})
-		.then(resp => resp.text())
-		.then(result => console.log(result))
-		.catch(err => console.log(err));
+
 	})
 	.catch(err => console.log(err));
 
-	
 
-	
+	// 현재 채팅방을 보고있는 경우
+	// 비동기로 해당 채팅방 글을 읽음으로 표시
+	fetch("/chatting/I-updateReadFlag",{
+		method : "PUT",
+		headers : {"Content-Type": "application/json"},
+		body : JSON.stringify({"chattingNo" : selectChattingNo,
+								"memberNo" : loginPartnerNo,
+								"senderType" : "MEMBER"})
+	})
+	.then(resp => resp.text())
+	.then(result => console.log(result))
+	.catch(err => console.log(err));
+
 }
 
 
@@ -393,7 +401,7 @@ function selectChattingFn() {
 let chattingSock;
 
 
-if(loginMemberNo != ""){
+if(loginPartnerNo != ""){
 	chattingSock = new SockJS("/chattingSock");
 }
 
@@ -410,9 +418,9 @@ const sendMessage = () => {
 		inputChatting.value = "";
 	} else {
 		var obj = {
-			"senderType" : "MEMBER",
-			"senderNo": loginMemberNo,
-			"targetType" : "PARTNER",
+			"senderType" : "PARTNER",
+			"senderNo": loginPartnerNo,
+			"targetType" : "MEMBER",
 			"targetNo": selectTargetNo,
 			"chattingNo": selectChattingNo,
 			"messageContent": inputChatting.value,
@@ -484,8 +492,8 @@ chattingSock.onmessage = function(e) {
 		p.innerHTML = msg.messageContent; // br태그 해석을 위해 innerHTML
 	
 		// 내가 작성한 메세지인 경우
-		if(loginMemberNo == msg.senderNo &&
-			msg.senderType =='MEMBER'
+		if(loginPartnerNo == msg.senderNo &&
+			msg.senderType == 'PARTNER'
 		){ 
 			li.classList.add("my-chat");
 			
