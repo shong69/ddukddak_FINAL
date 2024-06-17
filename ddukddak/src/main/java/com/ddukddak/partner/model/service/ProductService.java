@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
+import com.ddukddak.ecommerce.model.dto.ProductImg;
 
 public interface ProductService {
 
@@ -68,10 +69,16 @@ public interface ProductService {
 	 */
 	int changeStatus(Map<String, Object> map);
 
-	/** 
+	/** 판매등록 상품조회
 	 * @param productNo
 	 * @return
 	 */
 	Product selectOne(int productNo);
+
+	/** 판매등록 상품 이미지 불러오기
+	 * @param productNo
+	 * @return
+	 */
+	List<ProductImg> selectImg(int productNo);
 
 }

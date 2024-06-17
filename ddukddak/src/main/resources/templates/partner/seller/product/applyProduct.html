@@ -24,18 +24,14 @@
 
                     <div>
                         <select id="bigCategory">
-                            <option value="none">대분류</option>
-                            <option value="furniture">가구</option>
-                            <option value="electronic">가전/디지털</option>
-                            <option value="kitchenware">주방용품</option>
-                            <option value="deco">데코/식물</option>
-                            <option value="storage">수납/정리</option>
-                            <option value="household">생활용품</option>
-                            <option value="baby">유아/아동</option>
+                            <option th:text="${product.bigCategoryName}">대분류</option>
+                            <th:block th:each="category : ${categoryList}" th:object="${category}">
+                                <option th:value="${category.bigCategoryNo}" th:text="${category.bigCategoryName}">대분류값</option>
+                            </th:block>
                         </select>
 
-                        <select id="smallCategory">
-                            <option value="none">소분류</option>
+                        <select id="smallCategory" name="smallCategory">
+                            <option th:text="${product.categoryName}">소분류</option>
                         </select>
                     </div>
                 </div>
@@ -43,19 +39,13 @@
                 <div>
                     <h4>상품명</h4>
 
-                    <input>
+                    <input name="productName" th:value="${product.productName}">
                 </div>
 
                 <div>
-                    <h4>판매가</h4>
+                    <h4>판매가(원)</h4>
 
-                    <input>
-                </div>
-
-                <div>
-                    <h4>재고수량</h4>
-
-                    <input>
+                    <input name="productPrice" th:value="${product.productPrice}">
                 </div>
 
                 <div>
@@ -78,18 +68,44 @@
                 </div>
 
                 <div>
-                    <h4 style="margin-left: 50px;">상품 이미지 등록</h4>
+                    <h4>상품 대표 이미지 등록</h4>
 
-                    <input style="margin-left: 50px;" type="file" class="real-upload" accept="image/*" required multiple>
-                    <div style="margin-left: 50px;" class="upload">사진 등록</div>
-                    <ul class="image-preview"></ul>
+                    <input type="file" class="real-upload-main" accept="image/*" required>
+                    <div class="upload-main">사진 등록</div>
+                    <ul class="image-preview-main">
+                        <th:block th:each="imgs : ${img}" th:object="${imgs}">
+                            <th:block th:if="${imgs.uploadImgOrder == 0}">
+                                <li>
+                                    <img th:src="|${imgs.uploadImgPath}${imgs.uploadImgRename}|">
+                                    <input type="hidden" name="uploadedImages" th:value="${imgs.uploadImgOgName}">
+                                </li>
+                            </th:block>
+                        </th:block>
+                    </ul>
+                </div>
+
+                <div id="subImgBox">
+                    <h4>상품 상세 이미지 등록</h4>
+
+                    <input type="file" name="subImgs" id="subFile" onchange="readSubURLs(this);" class="real-upload" accept="image/*" required multiple>
+                    <label for="subFile" class="upload">사진 등록</label>
+                    <ul class="image-preview">
+                        <th:block th:each="imgs : ${img}" th:object="${imgs}">
+                            <th:block th:if="${imgs.uploadImgOrder != 0}">
+                                <li>
+                                    <img th:src="|${imgs.uploadImgPath}${imgs.uploadImgRename}|">
+                                    <button class="delButton" th:value="${imgs.uploadImgNo}">X</button>
+                                </li>
+                            </th:block>
+                        </th:block>
+                    </ul>
                 </div>
 
                 <div>
                     <h4>상품 상세설명</h4>
 
                     <div class="form__input--file_wrap">
-                        <input class="form__input--file" id="upload1" type="file" multiple>
+                        <input accept="image/*" class="form__input--file" id="upload1" type="file" multiple>
                         <label class="form__label--file" for="upload1">파일선택</label>
                         <span class="form__span--file">선택된 파일이 없습니다.</span>
                     </div>
@@ -109,6 +125,137 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        let subImageFiles = [];
+
+        function readSubURLs(input) {
+            if (input.files && input.files.length > 0) {
+                const subImgBox = document.getElementById('subImgBox');
+                const totalSubImages = subImgBox.getElementsByTagName('img').length + input.files.length;
+                const previewContainer = document.querySelector('.image-preview');
+                console.log(previewContainer);
+
+                console.log(totalSubImages);
+
+                if (totalSubImages > 7) {
+                    alert('상세이미지는 최대 7개까지 추가할 수 있습니다.');
+                    return;
+                }
+
+                Array.from(input.files).forEach(file => {
+                    // 이미지 파일인지 확인
+                    if (!file.type.startsWith('image/')) {
+                        alert('이미지 파일만 선택할 수 있습니다.');
+                        return;
+                    }
+
+                    subImageFiles.push(file); // 파일을 배열에 추가
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+
+                        const preview = document.createElement('img');
+                        const li = document.createElement('li');
+                        preview.src = e.target.result;
+
+                        li.append(preview);
+                        previewContainer.append(li);
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.classList.add('delete-button');
+                        deleteButton.textContent = 'X';
+                        deleteButton.onclick = function() {
+                            if (confirm("해당 사진을 삭제하시겠습니까?")) {
+                                const index = Array.from(subImgBox.children).indexOf(previewContainer);
+                                subImageFiles.splice(index, 1); // 배열에서 파일 제거
+                                previewContainer.remove(); // 이미지 삭제
+                            }
+                        };
+                        li.appendChild(deleteButton);
+                    };
+                    reader.readAsDataURL(file);
+                });
+
+                // 리셋 input file field to allow adding the same file again
+                input.value = '';
+            }
+        }
+
+        function handleFormSubmission(event) {
+            const form = document.getElementById('uploadForm');
+            event.preventDefault(); // 기본 제출 동작 막기
+
+            // FormData 객체 생성
+            const formData = new FormData(form);
+
+            // subImageFiles를 FormData에 추가
+            subImageFiles.forEach(file => {
+                formData.append('subImgs', file);
+            });
+
+            // Remove old subImgs if present
+            const subImgsInput = form.querySelector('input[name="subImgs"]');
+            if (subImgsInput) {
+                subImgsInput.remove();
+            }
+
+            // Create new input elements for each file
+            subImageFiles.forEach(file => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.setAttribute('name', 'subImgs');
+                input.value = file; // This won't work for file objects, so we need to use FormData instead
+                form.appendChild(input);
+            });
+            const productName = document.querySelector("#productName");
+            const bigCategory = document.querySelector("#bigCategory");
+            const smallcategory = document.querySelector("#smallCategory");
+            const price = document.querySelector("#price");
+
+            const contentCountInputVisual = document.getElementsByClassName(".contentCountInput");
+            var temp = true;
+
+            for(let i = 0; i < contentCountInputVisual.length; i ++) {
+                if(contentCountInputVisual[i].type != 'hidden') {
+                    temp = false;
+                    break;
+                }
+            }
+
+            if(productName.value.trim().length === 0 ||
+                bigCategory.options[bigCategory.selectedIndex].value == 'none' ||
+                smallcategory.options[smallcategory.selectedIndex].value == 'none' ||
+                price.value.trim().length === 0 ||
+                selectOption == 0
+                ) {
+                    alert("입력을 완료해주세요");
+                    event.preventDefault();
+                } else if(document.querySelector("#preview").src == 0) {
+                    alert("대표사진을 등록해주세요");
+                    event.preventDefault();
+                } else if (!temp) {
+                    alert("옵션 등록을 완료해주세요");
+                    event.preventDefault();
+                } else {
+                    // 서브 이미지 파일들이 FormData에 추가되었으므로 이제 submit을 호출
+                    fetch('/partner/seller/product/create', {
+                        method: 'POST',
+                        body: formData
+                    }).then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        alert("등록 완료");
+                        location.href='/partner/seller/product/create';
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        alert("등록 실패");
+                    });
+                }
+
+            // Allow form to submit
+        }
+    </script>
     <script src="/js/partner/seller/product/applyProduct.js"></script>
     
 </body>

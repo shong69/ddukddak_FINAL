@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
+import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.partner.model.dto.Partner;
@@ -39,7 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
-//@SessionAttributes("{loginPartnerMember}")
+@SessionAttributes("{loginPartnerMember}")
 public class SellerController {
 	
 	private final ProductService service;
@@ -51,14 +52,14 @@ public class SellerController {
 			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 			@RequestParam(value="mainSort", required=false, defaultValue="0") int mainSort,
 			@RequestParam(value="sort", required=false, defaultValue="0") int sort,
-			//@SessionAttribute("loginPartnerMember") Partner loginPartnerMember, 
+			@SessionAttribute("loginPartnerMember") Partner loginPartnerMember, 
 			RedirectAttributes ra,
 			Model model) {
 		
-//		if (loginPartnerMember.getPartnerType() != 2) {
-//            ra.addFlashAttribute("message", "접근 제한된 서비스 입니다");
-//            return "redirect:/partner/main";
-//        } 
+		if (loginPartnerMember.getPartnerType() != 2) {
+            ra.addFlashAttribute("message", "접근 제한된 서비스 입니다");
+            return "redirect:/partner/main";
+        } 
 		
 		// 대분류 카테고리 선택
 		List<Category> categoryList = eCommerceService.selectCategory();
@@ -106,15 +107,13 @@ public class SellerController {
 								@RequestParam ("smallCategory") int smallCategory,
 								@RequestParam ("productPrice") int productPrice,
 								@RequestParam ("thumbnailImg") MultipartFile thumbnailImg,
-								@RequestParam ("subImgs") List<MultipartFile> subImgs,
+								@RequestParam (name="subImgs", required = false) List<MultipartFile> subImgs,
 								@RequestParam (name = "optionName", required = false) List<String> optionName,
 								@RequestParam (name = "optionContent", required = false) List<String> optionContent,
 								@RequestParam (name = "optionCount", required = false) List<String> optionCount,
-								HttpServletRequest req) throws IOException {
-		
-		HttpSession session = req.getSession();
-		
-		Member loginMember = (Member)session.getAttribute("loginMember");
+								@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) throws IOException {
+
+		int memberNo = loginPartnerMember.getPartnerNo();
 	
 		log.info("object : " + productName + smallCategory + productPrice);	
 		log.info("thumbnailImg : " + thumbnailImg);	
@@ -126,7 +125,7 @@ public class SellerController {
 		// PRODUCT 테이블 삽입
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("memberNo", loginMember.getMemberNo());
+		map.put("memberNo", memberNo);
 		map.put("productName", productName);
 		map.put("smallCategoryNo", smallCategory);
 		map.put("productPrice", productPrice);
@@ -138,10 +137,11 @@ public class SellerController {
 
 		List<MultipartFile> imgList = new ArrayList<>(subImgs);
 		imgList.add(0, thumbnailImg); // 다시 mainImg 를 배열 0번째 자리에 추가
+		
+		log.info("imgList : " + imgList);
 
 		int result2 = service.insertImg(smallCategory, imgList);
 
-		log.info("imgList : " + imgList);
 		
 		
 		int result3 = 0;
@@ -249,11 +249,25 @@ public class SellerController {
 	// 판매등록상품
 	@PostMapping("product/applyProduct")
 	public String ProductApplyProduct(@RequestParam ("productNo") int productNo,
+									@RequestParam(value="mainSort", required=false, defaultValue="0") int mainSort,
+									@RequestParam(value="sort", required=false, defaultValue="0") int sort,
 										Model model) {
 		
+		// 대분류 카테고리 선택
+		List<Category> categoryList = eCommerceService.selectCategory();
+		
+		model.addAttribute("categoryList", categoryList);
+		
+		// 상품넘버 불러오기
 		Product product = service.selectOne(productNo);
 		
 		model.addAttribute("product", product);
+		
+		// 이미지 불러오기
+		List<ProductImg> imgs = service.selectImg(productNo);
+		
+		model.addAttribute("img", imgs);
+		
 		
 		return "partner/seller/product/applyProduct";
 	}

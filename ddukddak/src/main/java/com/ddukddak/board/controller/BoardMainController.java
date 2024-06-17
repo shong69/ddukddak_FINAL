@@ -48,8 +48,8 @@ public class BoardMainController {
 		List<Board> houseBoard = allBoard.stream().filter(board -> board.getBoardCode() == 1).collect(Collectors.toList());
 		List<Board> tipBoard = allBoard.stream().filter(board -> board.getBoardCode() == 2).collect(Collectors.toList());
 		
-//		log.info("tipBoard : " + tipBoard.toString());
-//		log.info("houseBoard : " + houseBoard.toString());
+		log.info("tipBoard : " + tipBoard.toString());
+		log.info("houseBoard : " + houseBoard.toString());
 		
 		 // Chunk the filtered boards
         List<List<Board>> houseBoardChunks = chunkBoards(houseBoard, 6);
@@ -62,8 +62,8 @@ public class BoardMainController {
 	        model.addAttribute("houseBoardChunks", houseBoardChunks);
 	        model.addAttribute("tipBoardChunks", tipBoardChunks);
 	        
-//	        log.info("tipBoardChunks : " + tipBoardChunks.toString());
-//	        log.info("houseBoardChunks : " + houseBoardChunks.toString());
+	        log.info("tipBoardChunks : " + tipBoardChunks.toString());
+	        log.info("houseBoardChunks : " + houseBoardChunks.toString());
 		}
 		
 		return "board/boardMainPage";

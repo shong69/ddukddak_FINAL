@@ -264,10 +264,27 @@
 		ORDER BY p.PRODUCT_NO DESC
 	</select>
 	
+	<!-- 판매상태 바꾸기 -->
 	<update id="changeStatus">
 		UPDATE "PRODUCT"
 		SET PRODUCT_FL = #{status}
 		WHERE PRODUCT_NO = #{productNo}
 	</update>
+	
+	<!-- 판매등록 재고선택 -->
+	<select id="selectOne">
+		SELECT *
+		FROM "PRODUCT"
+		NATURAL JOIN CATEGORY
+		NATURAL JOIN BIG_CATEGORY
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 판매등록 이미지조회 -->
+	<select id="selectImg">
+		SELECT * FROM
+		UPLOAD_FILE
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
 	
 </mapper>
