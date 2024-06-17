@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>뚝딱뚝딱 : 커뮤니티</title>
+
+  <link rel="stylesheet" href="/css/common/main.css">
+  <link rel="stylesheet" href="/css/common/fragments/header.css">
+  <link rel="stylesheet" href="/css/common/fragments/footer.css">
+  <link rel="stylesheet" href="/css/common/fragments/board/side-category.css">
+  <link rel="stylesheet" href="/css/common/button.css">
+  <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+</head>
+<body>
+
+  <th:block th:replace="~{common/fragments/header}"></th:block>
+
+  
+  <div class="topContainer">
+
+    <div class="mainContainer">
+
+      <th:block th:replace="~{common/fragments/board/side-category}"></th:block>
+
+      <div class="mainArea">
+
+        <div class="searchArea">
+
+          <span th:text="${application.boardTypeList[0].boardName}" class="title">집들이</span>
+          <!-- <span>
+              <form class="searchForm">
+                <input type="text" placeholder="집들이 검색" class="searchBox">
+                <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
+              </form>
+            </span> -->
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  
+
+  <th:block th:replace="~{common/fragments/footer}"></th:block>
+</body>
+</html>

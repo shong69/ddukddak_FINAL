@@ -123,14 +123,25 @@
     padding: 5px;
     height: 25px;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .reportBtn:hover {
-    border-radius: 10px;
     background-color: red;
+
+    left: 0px; 
+    top: 0px;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 5px 5px;
+    transform: translateY(-2px);
+    
+
+    /* 폰트 */
+    font-family: 'main';
     color: white;
-    transition: 0.1s;
+    text-align: center;
+    word-wrap: break-word;
 }
 
 /* 집들이 내용 */
@@ -286,6 +297,35 @@
     width: 840px;
     resize: none;
     padding: 5px;
+}
+
+.update-remove {
+    margin: 30px 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.update-remove button {
+    width: 150px;
+    margin:10px;
+    padding: 10px 50px;
+    font-size: 15px;
+    border: 1px solid var(--gray4);
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: var(--gray2);
+    color: var(--white);
+}
+
+.update-remove button:hover {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+
+.update-remove button:active {
+    background-color: var(--gray1);
+    color: var(--white);
 }
 
 /* .comment-btn-area {

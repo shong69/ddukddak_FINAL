@@ -28,16 +28,23 @@
 }
 
 .input-project-title div {
-    margin-right: 80px;
+    margin-right: 50px;
 }
 
 .input-project-info {
     padding: 10px 0;
 }
 
+.inputProjectTitle {
+    width: 300px;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
 .project-info {
     width: 100%;
-    height: 100px;
+    height: 50px;
     padding: 0 50px;
 }
 
@@ -45,19 +52,32 @@
     width: 100px;
 }
 
+.detail-info {
+    width: 100%;
+    height: 50px;
+    padding: 0 50px;
+}
+
 .input-project-detail > div:last-child {
     display: flex;
     margin-left: 155px;
 }
 
-select {
-    margin-right: 160px;
+.project-info select {
     font-size: 15px;
     padding: 5px;
     border-radius: 5px;
 }
 
-input {
+.project-info input {
+    width: 150px;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.detail-info select {
+    width: 150px;
     font-size: 15px;
     padding: 5px;
     border-radius: 5px;

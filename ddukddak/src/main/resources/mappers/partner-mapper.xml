@@ -92,4 +92,12 @@
 	</insert>
 
 
+	<!-- 파트너 타입 리스트 조회 -->
+	<!-- 
+		<select id="selectPartnerTypeList">
+			SELECT PARTNER_TYPE, PARTNER_NAME 
+			FROM "PARTNER_TYPE"
+			ORDER BY BOARD_CODE
+		</select>
+	 -->
 </mapper>
