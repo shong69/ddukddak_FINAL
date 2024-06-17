@@ -114,7 +114,7 @@
     display: flex;
     flex-direction: column;
     margin-left: 10px;
-    height: 250px;
+    height: 300px;
     overflow-y: auto;
     overflow-x: visible;
 }
@@ -136,7 +136,6 @@
     border-radius: 5px;
     height: 20px;
     width: 30px;
-    display: none;
     justify-content: center;
     align-items: center;
     border: none;
@@ -163,9 +162,17 @@
     padding: 0 10px;
 }
 
+#optionBox {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  overflow: auto;
+}
+
 .optionContentBox {
     width: 800px;
     box-shadow: 5px 5px 7px var(--gray5);
+    margin-bottom: 30px;
 }
 
 .contentInput {
@@ -182,10 +189,10 @@
     padding: 0 10px;
 }
 
-.applyButton {
+.delOption {
     width: 40px;
     height: 20px;
-    background-color: var(--secondary);
+    background-color: red;
     color: var(--white);
     border-radius: 3px;
     transition-duration: 0.2s;
@@ -197,7 +204,7 @@
 
 }
 
-.applyButton:hover {
+.delOption:hover {
     background-color: var(--white);
     color: var(--gray1);
     box-shadow: 3px 3px 5px var(--gray5);

@@ -20,6 +20,7 @@ import com.ddukddak.common.util.Utility;
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
+import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.partner.model.dto.ProductPagination;
 import com.ddukddak.partner.model.mapper.ProductMapper;
@@ -113,6 +114,17 @@ public class ProductServiceImpl implements ProductService{
 		}
 		
 		
+	}
+	
+	// 재고상품 삭제
+	@Override
+	public int delProduct(int productNo) {
+		
+		int result = mapper.delProductOption(productNo);
+		result += mapper.delProductImg(productNo);
+		result += mapper.delProduct(productNo);
+		
+		return result;
 	}
 
 	// 재고상품 판매등록
@@ -390,7 +402,13 @@ public class ProductServiceImpl implements ProductService{
 		}
 		return result;
 	}
+	
+	// 판매등록 상품 조회
+	@Override
+	public Product selectOne(int productNo) {
+		return mapper.selectOne(productNo);
 
+	}
 
 	// 판매등록 상품 이미지 조회
 	@Override
@@ -398,11 +416,81 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.selectImg(productNo);
 	}
 
+	// 판매등록 상품 옵션명 조회
 	@Override
-	public Product selectOne(int productNo) {
-		// TODO Auto-generated method stub
-		return null;
-
+	public List<ProductOption> seletOptionName(int productNo) {
+		return mapper.selectOptionName(productNo);
 	}
+
+	// 판매등록 상품 옵션 조회
+	@Override
+	public List<ProductOption> selectOpion(int productNo) {
+		return mapper.selectOption(productNo);
+	}
+
+	// 상품 판매등록
+	@Override
+	public int updateRegistProduct(Map<String, Object> map) {
+		return mapper.updateRegistProduct(map);
+	}
+
+	// 이미지 판매등록
+	@Override
+	public int updateInsertImg(String smallCategory, List<MultipartFile> imgList) {
+		List<ProductImg> uploadList = new ArrayList<>();
+		
+		log.info("uploadList" + uploadList);
+		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		
+//		int result = 0;
+//		
+//		if(!imgList.isEmpty()) {
+//			
+//			for(int i = 0; i < imgList.size(); i++) {
+//				
+//				// 원본명
+//				String originalName = imgList.get(i).getOriginalFilename();
+//				if(!originalName.equals("")) {
+//					log.info("name : " +originalName);
+//					
+//					// 변경명
+//					String rename = Utility.fileRename(originalName);
+//					
+//					map.put("uploadImgOgName", originalName);
+//					map.put("uploadImgRename", rename);
+//					map.put("uploadImgPath", webPath);
+//					map.put("category", smallCategory);
+//					map.put("uploadImgOrder", i);
+//					
+//					result += mapper.insertImg(map);
+//					
+//					ProductImg img = ProductImg.builder()
+//							.uploadImgOgName(originalName)
+//							.uploadImgRename(rename)
+//							.uploadImgPath(webPath)
+//							.uploadImgOrder(i)
+//							.uploadFile(imgList.get(i))
+//							.build();
+//					
+//					uploadList.add(img);
+//					
+//				}
+//				
+//			}
+//			
+//		} else {
+//			return 0;
+//		}
+//		
+//		// 폴더에 이미지저장
+//		for(ProductImg img : uploadList) {
+//			img.getUploadFile().transferTo( new File(folderPath + img.getUploadImgRename()) );
+//		}
+		return 0;
+	}
+
+
+
 
 }
