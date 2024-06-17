@@ -155,27 +155,31 @@ public class ProductServiceImpl implements ProductService{
 				
 				// 원본명
 				String originalName = imgList.get(i).getOriginalFilename();
-				
-				// 변경명
-				String rename = Utility.fileRename(originalName);
-				
-				map.put("uploadImgOgName", originalName);
-				map.put("uploadImgRename", rename);
-				map.put("uploadImgPath", webPath);
-				map.put("category", smallCategory);
-				map.put("uploadImgOrder", i);
-				
-				result += mapper.insertImg(map);
-				
-				ProductImg img = ProductImg.builder()
-						   .uploadImgOgName(originalName)
-						   .uploadImgRename(rename)
-						   .uploadImgPath(webPath)
-						   .uploadImgOrder(i)
-						   .uploadFile(imgList.get(i))
-						   .build();
-			
-				uploadList.add(img);
+				if(!originalName.equals("")) {
+					log.info("name : " +originalName);
+					
+					// 변경명
+					String rename = Utility.fileRename(originalName);
+					
+					map.put("uploadImgOgName", originalName);
+					map.put("uploadImgRename", rename);
+					map.put("uploadImgPath", webPath);
+					map.put("category", smallCategory);
+					map.put("uploadImgOrder", i);
+					
+					result += mapper.insertImg(map);
+					
+					ProductImg img = ProductImg.builder()
+							.uploadImgOgName(originalName)
+							.uploadImgRename(rename)
+							.uploadImgPath(webPath)
+							.uploadImgOrder(i)
+							.uploadFile(imgList.get(i))
+							.build();
+					
+					uploadList.add(img);
+					
+				}
 				
 			}
 			
@@ -184,14 +188,10 @@ public class ProductServiceImpl implements ProductService{
 		}
 		
 		// 폴더에 이미지저장
-		if(result == imgList.size()) {
-			for(ProductImg img : uploadList) {
-				img.getUploadFile().transferTo( new File(folderPath + img.getUploadImgRename()) );
-			}
-			return result;
-		} else {
-			throw new BoardInsertException("이미지가 정상 삽입되지 않음");
+		for(ProductImg img : uploadList) {
+			img.getUploadFile().transferTo( new File(folderPath + img.getUploadImgRename()) );
 		}
+		return result;
 	}
 
 	// 상품 재고등록 옵션등록
@@ -389,6 +389,18 @@ public class ProductServiceImpl implements ProductService{
 			result += mapper.changeStatus(newMap);
 		}
 		return result;
+	}
+
+	// 판매등록 상품선택
+	@Override
+	public Product selectOne(int productNo) {
+		return mapper.selectOne(productNo);
+	}
+
+	// 판매등록 상품 이미지 조회
+	@Override
+	public List<ProductImg> selectImg(int productNo) {
+		return mapper.selectImg(productNo);
 	}
 
 }

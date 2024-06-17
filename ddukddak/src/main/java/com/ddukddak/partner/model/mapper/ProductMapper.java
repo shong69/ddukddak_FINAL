@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
+import com.ddukddak.ecommerce.model.dto.ProductImg;
 
 @Mapper
 public interface ProductMapper {
@@ -156,5 +157,17 @@ public interface ProductMapper {
 	 * @return
 	 */
 	int changeStatus(Map<String, Object> newMap);
+
+	/** 판매등록 재고선택
+	 * @param productNo
+	 * @return
+	 */
+	Product selectOne(int productNo);
+
+	/** 판매등록 상품 이미지 조회
+	 * @param productNo
+	 * @return
+	 */
+	List<ProductImg> selectImg(int productNo);
 
 }
