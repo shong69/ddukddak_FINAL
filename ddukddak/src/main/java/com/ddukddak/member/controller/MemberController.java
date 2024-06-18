@@ -377,7 +377,7 @@ public class MemberController {
 			
 			int count = 1;
 			 
-			while(service.checkId(nickName) == 1) {
+			while(service.checkNickname(nickName) == 1) {
                 nickName = originalNickname + count;
                 count++;
 			}

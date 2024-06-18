@@ -27,7 +27,7 @@
             <section class="myPage-main">
                 <h2 class="category-name">장바구니</h2>
                 <!-- 일단 겟으로 파라미터부터 체크.. -->
-                <form action="/eCommerce/payment" method="get" name = "cartForm" enctype="multipart/form-data">
+                <form id="cartForm" action="/eCommerce/payment" method="get" name = "cartForm" enctype="multipart/form-data">
                     <table class="cartList">
                         <thead>
                             <th>전체(N개)</th>
@@ -59,21 +59,25 @@
                                     <td><input name="check" th:productNo-data="*{productNo}" th:productName-data="*{productName}" type="checkbox"></td>
                                     <td><a><img th:src="|*{uploadImgPath}*{uploadImgRename}|" class="product-image"></a></td>
                                     <td>
-                                        <h4 th:text="*{productName}"></h4>
+                                        <h th:text="*{productName}"></h4>
                                         <h4 th:text="*{optionValue}" style="color: var(--gray2);"></h4>
                                     </td>
                                     <td>
                                         <div class="adjustCount">
                                             <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
                                             <input type="text" th:name="'quantity'+${listStat.count} "th:value="*{productCount}" class="quantity-input" readonly>
-                                            <input type="hidden" th:value="*{cartId}" id="optionIdInput">
+                                            <!-- 카트 아이디 히든 -->
+                                            <input type="hidden" th:value="*{cartId}" id="optionIdInput" name="cartId">
                                             <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
                                         </div>
                                     </td>
-                                    <td class="price-input" th:text="|*{productPrice}원|" th:value="*{productPrice}">상품가격</td>
-                                    <td>
+                                    <td class="price-input" th:text="|*{productPrice}원|" th:value="*{productPrice}">상품가격<td>
                                         <button th:data-cartId =*{cartId} type="button" class="myPageDelUpdateBtn">삭제</button>
                                     </td>
+                                    <!-- 값 넘기기 용 -->
+                                    <input name="productNo" th:value="*{productNo}" type="hidden">
+
+
                                 </tr>
                             </th:object>
 
@@ -94,13 +98,23 @@
                         <button class="wholePurchase">전체상품 구매</button>
 
                     </div>
-                </form>
+                    
+                </form> 
                 
             </section>
         </section>
 
         <th:block th:replace="~{common/fragments/footer}"></th:block>
         <script th:inline="javascript">
+
+            
+            const cartForm = document.getElementById('cartForm');
+            
+            cartForm.addEventListener('submit', e => {
+
+
+            })
+
             function changeQuantity(button, change) {
                 const input = button.parentElement.querySelector('.quantity-input');
                 let currentQuantity = parseInt(input.value);
