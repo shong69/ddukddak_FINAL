@@ -87,10 +87,10 @@ public interface CartAndWishListMapper {
 	List<Product> selectWishList(int memberNo, RowBounds rowBounds);
 
 	/**주문 목록 조회
-	 * @param loginMember
+	 * @param memberNo
 	 * @return
 	 */
-	List<Order> selectOrderList(Member loginMember);
+	List<Order> selectOrderList(int memberNo);
 
 
 	

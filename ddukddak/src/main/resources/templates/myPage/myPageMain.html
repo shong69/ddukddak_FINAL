@@ -36,16 +36,29 @@
                         <th>주문상태</th>
                     </thead>
                     <tbody>
-                        <th:block th:if="${skuList} != null">
-                                <th:block th:foreach 어쩌구>
+                        <th:block th:if="${#lists.isEmpty(orderList)}">
+                            <div>
+                                주문 내역이 존재하지 않습니다
+                            </div>
+                        </th:block>
+                        <th:block th:unless="${#lists.isEmpty(orderList)}">
+                                <th:block th:foreach="list : ${orderList}" th:object="${list}">
                                     <tr>
-                                        <td th:text="${}"><a th:href="@{상품 상세 링크}">상품이미지</a></td>
-                                        <td th:text="${}">주문일자</td>
-                                        <td th:text="${}">주문번호</td>
-                                        <td th:text="${}">상품정보</td>
-                                        <td th:text="${}">주문금액</td>
-                                        <td th:text="${}">주문수량</td>
-                                        <td th:text="${}">주문상태</td>
+                                        <td th:href="@{productImg}">상품이미지</a></td>
+                                        <td th:text="*{orderDate}">주문일자</td>
+                                        <td th:text="*{orderNo}">주문번호</td>
+                                        <td th:text="*{|product\n[optionValue]|}">상품정보</td>
+                                        <td th:text="${orderPrice}">주문금액</td>
+                                        <td th:text="${orderQuantity}">주문수량</td>
+                                        <td><!--주문 상태 (주문 취소인 경우 주문 상태 '주문 취소'로 표시)-->
+                                            <span th:if="${orderDelFl == 'Y'}" >주문 취소</span>
+                                            <span th:if="${orderDelFl == 'N'}" th:text="${orderStatus}">
+                                                주문상태
+                                                <button>상태 변경 버튼</button>
+                                            </span>
+                                        </td>
+
+
                                     </tr>
                                 </th>
                             </th>
