@@ -36,20 +36,20 @@
                         <th>주문상태</th>
                     </thead>
                     <tbody>
-                        <!--<th:block th:if="${skuList} != null">
+                        <th:block th:if="${skuList} != null">
                                 <th:block th:foreach 어쩌구>
                                     <tr>
-                                        <td><a href="상품 상세 링크">상품이미지</a></td>
-                                        <td>주문일자</td>
-                                        <td>주문번호</td>
-                                        <td>상품정보</td>
-                                        <td>주문금액</td>
-                                        <td>주문수량</td>
-                                        <td>주문상태</td>
+                                        <td th:text="${}"><a th:href="@{상품 상세 링크}">상품이미지</a></td>
+                                        <td th:text="${}">주문일자</td>
+                                        <td th:text="${}">주문번호</td>
+                                        <td th:text="${}">상품정보</td>
+                                        <td th:text="${}">주문금액</td>
+                                        <td th:text="${}">주문수량</td>
+                                        <td th:text="${}">주문상태</td>
                                     </tr>
                                 </th>
                             </th>
-                        -->
+                        
 
                         <tr> <!--상품으로 나눠서 나열-->
                             <td><a><img class="product-image" ></a></td>

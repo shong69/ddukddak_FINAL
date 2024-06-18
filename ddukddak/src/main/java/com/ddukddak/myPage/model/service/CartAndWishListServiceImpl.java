@@ -13,6 +13,7 @@ import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.CartItem;
+import com.ddukddak.myPage.model.dto.Order;
 import com.ddukddak.myPage.model.mapper.CartAndWishListMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -132,6 +133,13 @@ public class CartAndWishListServiceImpl implements CartAndWishListService{
 
 		
 		return map;
+	}
+
+	//주문 목록 조회
+	@Override
+	public List<Order> selectOrderList(Member loginMember) {
+		
+		return mapper.selectOrderList(loginMember);
 	}
 	
 }
