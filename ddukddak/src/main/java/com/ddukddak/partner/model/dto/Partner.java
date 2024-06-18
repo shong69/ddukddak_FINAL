@@ -35,4 +35,7 @@ public class Partner {
 	// 파트너 프로필 이미지
 	private String profileImg;
 	
+// 	시공사 번호
+	private int portfolioNo;
+	
 }

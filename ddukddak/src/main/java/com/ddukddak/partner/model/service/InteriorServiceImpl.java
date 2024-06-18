@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ddukddak.partner.model.dto.Partner;
+import com.ddukddak.partner.model.dto.Project;
 import com.ddukddak.partner.model.mapper.InteriorMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,26 @@ public class InteriorServiceImpl implements InteriorService {
 	public List<Partner> selectInteriorList() {
 		
 		return mapper.selectIneriorList();
+	}
+
+
+	@Override
+	public List<Partner> selectPortfolio(int portfolioNo) {
+		return mapper.selectPortfolio(portfolioNo);
+		
+	}
+
+
+	@Override
+	public List<Partner> searchInteriorList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Project> selectMain(int portfolioNo) {
+		return mapper.selectMain(portfolioNo);
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ddukddak.partner.model.dto.Partner;
+import com.ddukddak.partner.model.dto.Project;
 
 @Mapper
 public interface InteriorMapper {
@@ -15,5 +16,9 @@ public interface InteriorMapper {
 	 * @return interiorList
 	 */
 	List<Partner> selectIneriorList();
+
+	List<Partner> selectPortfolio(int portfolioNo);
+	
+	List<Project> selectMain(int portfolioNo);
 
 }

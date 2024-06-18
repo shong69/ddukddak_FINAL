@@ -118,11 +118,9 @@
                                 <td th:text="*{partnerTel}">01012341234</td>
                                 <!-- <td>서울특별시 중랑구 면목동</td>
                                 <td>1,000,000</td> -->
-                                <form action="/interior/interiorPortfolio" method="get">
                                     <td>
-                                        <button class="interiorDetailViewBtn">포트폴리오</button>
+                                        <button class="interiorDetailViewBtn" th:attr="data-portfolio-no=*{portfolioNo}">포트폴리오</button>
                                     </td>
-                                </form>
                             </tr>
 
                         </tbody>
@@ -181,4 +179,5 @@
 
     </body>
     <script src="/js/common/redirectToLogin.js"></script>
+    <script src="/js/partner/interior/interiorList.js"></script>
 </html>

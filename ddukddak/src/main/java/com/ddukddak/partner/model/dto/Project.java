@@ -36,5 +36,5 @@ public class Project {
 	private String portfolioDetail;
 	private List<ProjectImg> imgList;
 	private String thumbnail;
-//	private String homeLink;
+	private String homeLink;
 }
