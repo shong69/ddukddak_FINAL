@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
 import com.ddukddak.ecommerce.model.dto.Product;
+import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.CartItem;
+import com.ddukddak.myPage.model.dto.Order;
 
 @Mapper
 public interface CartAndWishListMapper {
@@ -83,6 +85,12 @@ public interface CartAndWishListMapper {
 	 * @return
 	 */
 	List<Product> selectWishList(int memberNo, RowBounds rowBounds);
+
+	/**주문 목록 조회
+	 * @param loginMember
+	 * @return
+	 */
+	List<Order> selectOrderList(Member loginMember);
 
 
 	

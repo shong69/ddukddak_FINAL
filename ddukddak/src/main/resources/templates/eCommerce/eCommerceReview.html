@@ -6,11 +6,16 @@
         <ul id="reviewList">
             <li >
                 <div class="reviewInfoArea">
-                    <div class="commentCount" >
-                        <div th:text="|전체 리뷰 N개|"></div>
+                    <div class="reviewCount" >
+                        <div  th:text="|전체 리뷰 N개|"></div>
+                        <i class="totalIcon fa-solid fa-people-group" style="font-size: 45spx;"></i>
                     </div>
-                    <div class="rateCount" >
-                        <div th:text="|사용자 총 평점 n.n/5|"></div>
+                    <div id="totalRating" >
+                        <span style="margin-right: 10px;">
+                            <div class="totalIcon fa-solid fa-ranking-star" style="font-size: 50px;"></div>
+                            <div id="t-text">사용자 총 평점</div>
+                        </span>
+                        <span th:text="| n.n/5|"></span>
                     </div>
                 </div>
 
@@ -27,7 +32,7 @@
                             <div id = "contentBox">
                                 <textarea id="commentContent" name = "reviewContent" rows="12" placeholder="다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현이나 타인의 권리를 침해하는 내용은 사용하지 않도록 주의해주세요."></textarea>
                                 <div id = "photoArea">
-                                    <label for="reviewFile" id="selectReviewImgBtn"><i class="fa-regular fa-images"></i>첨부하기</label>
+                                    <label for="reviewFile" id="selectReviewImgBtn"><i class="fa-regular fa-images"></i>첨부</label>
                                     <input sytle="display:none;" type="file" multiple class="file" name="reviewImgs" id="reviewFile" onchange="readImgURLs(this);">
                                     <div id = "reviewImgBox"></div>
                                 </div>
@@ -51,22 +56,21 @@
                 <li class="reviewRow" th:each="review : ${reviewList}"
                 th:object="${review}">
                 
-                <th:block th:if="*{commentDelFl}=='Y'">
-                    <div class="deleteCommentArea">- 삭제된 댓글입니다 -</div>
+                <th:block th:if="*{reviewDelFl}=='Y'">
+                    <div class="deleteReviewArea">- 삭제된 리뷰입니다 -</div>
                 </th:block>
                     
-                <th:block th:if="*{commentDelFl}=='N'">
+                <th:block th:if="*{reviewDelFl}=='N'">
                     
-                    <div class = "commentWrite">
+                    <div class = "reviewWrite">
                         <div class="infoArea">
                             <span class="memberId" th:text="|@*{memberId}|">아이디</span>
-                            <span class="commentWriteDate"th:text="*{commentWriteDate}">작성일</span>
+                            <span class="commentWriteDate"th:text="*{reviewWriteDate}">작성일</span>
                         </div>
                             
                         <div class="editArea" style="display: none;">
-                            <button class="addChildBtn" th:onclick="|showInsertComment(*{commentNo}, this)|">답글</button>
-                            
-                            <th:block th:if="${session.loginMember != null and session.loginMember?.memberNo == comment.memberNo}">
+
+                            <th:block th:if="${session.loginMember != null and session.loginMember?.memberNo == review.memberNo}">
                                 <button class="updateBtn-c" th:onclick="|showUpdateComment(*{commentNo}, this)|">수정</button>
                                 <button class="deleteBtn-c" th:onclick="|deleteComment(*{commentNo})|">삭제</button>
                             </th:block>
@@ -75,7 +79,7 @@
 
                     </div>
                     
-                    <div class="comment-content" th:utext="*{commentContent}">댓글 내용</div>
+                    <div class="comment-content" th:utext="*{reviewContent}">댓글 내용</div>
                     
                 
                 </th:block>

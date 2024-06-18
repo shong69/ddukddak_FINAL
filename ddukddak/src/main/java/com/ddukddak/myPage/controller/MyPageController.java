@@ -1,8 +1,5 @@
 package com.ddukddak.myPage.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +18,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.CartItem;
+import com.ddukddak.myPage.model.dto.Order;
 import com.ddukddak.myPage.model.service.CartAndWishListService;
 import com.ddukddak.myPage.model.service.MemberInfoService;
 
@@ -42,7 +39,12 @@ public class MyPageController {
 	
 	//주문내역 진입
 	@GetMapping("")
-	public String main() {
+	public String main(@SessionAttribute("loginMember") Member loginMember,
+						Model model) {
+		List<Order> list = service.selectOrderList(loginMember);
+		
+		model.addAttribute("orderList", list);
+		
 		return"myPage/myPageMain";
 	}
 	
