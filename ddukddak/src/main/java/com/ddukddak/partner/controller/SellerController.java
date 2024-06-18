@@ -241,6 +241,7 @@ public class SellerController {
 		
 		model.addAttribute("applyList", map.get("applyList"));
 		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("status", status);
 				
 				
 		return "partner/seller/product/apply";

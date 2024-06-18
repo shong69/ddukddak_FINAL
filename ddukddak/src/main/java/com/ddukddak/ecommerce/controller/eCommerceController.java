@@ -213,9 +213,9 @@ public class eCommerceController {
 	
 	
 	@RequestMapping("payment")
-	public String eCommercePayment(Model model) {
+	public String eCommercePayment(@RequestParam("total") int total) {
 		
-		
+		log.info("total : " + total);
 		
 		return "eCommerce/eCommercePayment";
 	}

@@ -41,6 +41,7 @@ function updateStatus(checkbox) {
     // URL 파라미터를 업데이트합니다.
     const currentUrl = new URL(window.location.href);
     currentUrl.searchParams.set('status', checkbox.value);
+    currentUrl.searchParams.set('cp', '1');
     window.location.href = currentUrl.toString();
 }
 

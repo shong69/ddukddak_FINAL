@@ -41,9 +41,9 @@ public class MyPageController {
 	@GetMapping("")
 	public String main(@SessionAttribute("loginMember") Member loginMember,
 						Model model) {
-		List<Order> list = service.selectOrderList(loginMember);
+		//List<Order> list = service.selectOrderList(loginMember);
 		
-		model.addAttribute("orderList", list);
+		//model.addAttribute("orderList", list);
 		
 		return"myPage/myPageMain";
 	}
