@@ -6,6 +6,7 @@ import java.util.Map;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.CartItem;
+import com.ddukddak.myPage.model.dto.Order;
 
 public interface CartAndWishListService {
 
@@ -53,5 +54,11 @@ public interface CartAndWishListService {
 	 * @return
 	 */
 	Map<String, Object> selectWishList(Member loginMember, int cp);
+
+	/** 주문 목록 조회
+	 * @param loginMember
+	 * @return
+	 */
+	List<Order> selectOrderList(Member loginMember);
 
 }

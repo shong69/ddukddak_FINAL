@@ -31,10 +31,10 @@
           </div>
           <div class="commentBtnArea">
             <th:block th:if="${session.loginMember != null and session.loginMember.memberNo == comment.memberNo}">
-              <div th:onclick="|showUpdateComment(*{commentNo}, this)|">수정</div>
-              <div th:onclick="|deleteComment(*{commentNo})|">삭제</div>
+              <div class="parentBtn" th:onclick="|showUpdateComment(*{commentNo}, this)|">수정</div>
+              <div class="parentBtn" th:onclick="|deleteComment(*{commentNo})|">삭제</div>
             </th:block>
-            <div th:if="${session.loginMember != null}" th:onclick="|showInsertComment(*{commentNo}, this)|">답글</div>
+            <div class="parentBtn" th:if="${session.loginMember != null}" th:onclick="|showInsertComment(*{commentNo}, this)|">답글</div>
           </div>
         </div>
       </th:block>

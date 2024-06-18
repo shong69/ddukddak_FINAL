@@ -80,10 +80,10 @@
 }
 
 .borderTr > td:first-child {
-    width: 10px;
+   width: 10px;
 }
 
-.sellerButton {
+.buttonBox > button {
     background-color: var(--primary3);
     width: 60px;
     height: 20px;
@@ -96,7 +96,7 @@
     cursor: pointer;
 }
 
-.sellerButton:hover {
+.buttonBox > button:hover {
     background-color: var(--gray1);
     color: white;
 }

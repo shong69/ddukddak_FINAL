@@ -109,5 +109,8 @@
 		AND UPLOAD_IMG_ORDER = 0
 	</select>
 	
+	<select id="selectOrderList">
+	
+	</select>
 
 </mapper>

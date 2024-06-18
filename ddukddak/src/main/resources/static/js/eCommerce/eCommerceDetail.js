@@ -457,11 +457,13 @@ const stars = document.querySelectorAll(".fa-star");
 console.log(stars);
 stars.forEach((star, index) =>{
     star.addEventListener("click",()=>{
-        if(!star.classList.contains("fa-solid")){ //누른 별이 비어있는 경우
+        if(!star.classList.contains("fill")){ //누른 별이 비어있는 경우
             for(let i = 0; i<=index; i++){
                 console.log(i);
                 stars[i].classList.remove('fa-regular');
                 stars[i].classList.add('fa-solid');
+                stars[i].classList.add('fill');
+
                 
             }
             reviewRating = index + 1;
@@ -471,6 +473,7 @@ stars.forEach((star, index) =>{
                 
                 stars[i].classList.remove('fa-solid');
                 stars[i].classList.add('fa-regular');
+                stars[i].classList.remove('fill');
             }
             reviewRating=0;
         }

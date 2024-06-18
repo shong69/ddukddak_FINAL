@@ -120,9 +120,7 @@
 }
 
 #plusBox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 30px;
 }
 
 #addoption {
@@ -131,21 +129,19 @@
 }
 
 #productPlusButton {
-    background-color: var(--gray1);
-    color: white;
+  background: none;
+    color: var(--gray1);
+    border: 1px solid var(--gray1);
     border-radius: 5px;
     height: 20px;
     width: 30px;
     justify-content: center;
     align-items: center;
-    border: none;
     transition-duration: 0.2s;
     cursor: pointer;
 }
 
 #productPlusButton:hover {
-    background-color: var(--white);
-    color: var(--gray1);
     transform: translateY(-3px);
     box-shadow: 3px 3px 5px var(--gray5);
 }
@@ -187,6 +183,28 @@
     width: 400px;
     border:  1px solid var(--gray5);
     padding: 0 10px;
+}
+
+.applyButton {
+    width: 40px;
+    height: 20px;
+    background-color: var(--secondary);
+    color: var(--white);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+    border: none;
+    margin-top: 5px;
+    margin-left: 750px;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+}
+
+.applyButton:hover {
+    background-color: var(--white);
+    color: var(--gray1);
+    box-shadow: 3px 3px 5px var(--gray5);
+    transform: translateY(-3px);
 }
 
 .delOption {
@@ -323,6 +341,16 @@
 
   .image-preview > li {
     position: relative;
+  }
+
+  .plusEx {
+    width: 50px;
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 2px;
+    text-align: center;
+    margin-top: 5px;
+    display: none;
   }
 
   #buttons {

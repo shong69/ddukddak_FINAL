@@ -490,18 +490,34 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    font-size: 20px;
     height: 150px;
-    color : #45795cdd;
-    background-color: #bbbbbb;
+    color : #000000dd;
     margin-bottom: 20px;
 }
-.commentCount {
+.reviewCount {
     flex-basis: 50%;
-    background-color: rebeccapurple;
+    text-align: center;
+    font-size: 30px;
+    margin : auto 0;
+    border-right: 0.4px solid #6b6b6b;
 }
-.rateCount{
+#totalRating{
     flex-basis: 50%;
+    text-align: center;
+    font-size: 38px;
+    margin : auto 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+#t-text{
+    font-size: 12px;
+    margin-top: 5px;
+}
+.totalIcon{
+    color:#e6e6e6;
+    text-shadow: 1px 1px 2px gray;
 }
 #comment{
     width : 100%;
@@ -521,22 +537,25 @@
     flex-basis: 15%;
 }
 #productRate{
-    flex-basis: 70%;
+    font-size: 20px;
+    flex-basis: 77%;
     display : flex;
     justify-content: end;
     margin-right: 10px;
-    margin-top : 5px;
+
 }
 #addComment{
-    width : 60px;
+    flex-basis: 8%;
     height : 25px;
     border-radius: 18px;
     background-color: #c9c9c9dd;
     border:none;
-    flex-basis: 15%;
+    margin-left: auto;
+    margin-right: 5px;
     display : flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 #addComment:active{
     background-color: #6b6b6b;
@@ -614,7 +633,7 @@
     color: rgb(255, 248, 208);
     cursor : pointer;
 }
-.fa-solid{
+.fill{
     color : red;
 }
 .fa-star{

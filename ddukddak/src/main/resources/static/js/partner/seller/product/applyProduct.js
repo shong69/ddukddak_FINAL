@@ -3,14 +3,6 @@ const smallcategory = document.querySelector("#smallCategory");
 const plusButton = document.querySelector("#productPlusButton");
 const optionBox = document.querySelector("#optionBox");
 
-console.log(optionBox);
-
-let selectOption = 1;
-
-const radio2 = document.querySelector("#radio2");
-
-radio2.checked = true;
-
 bigCategory.addEventListener('change', () => {
   // 기존 소분류 옵션을 모두 제거
   smallcategory.innerHTML = '<option value="none">소분류</option>';
@@ -38,9 +30,7 @@ bigCategory.addEventListener('change', () => {
 
 });
 
-bigCategory.addEventListener("click", e => {
-  e.target.children[0].remove();
-})
+bigCategory.children[0].remove();
 
   
   
@@ -62,6 +52,7 @@ bigCategory.addEventListener('change', () => {
     });
   }
 });
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -92,6 +83,90 @@ document.addEventListener('DOMContentLoaded', function() {
     })
   })
 
+  // 상세이미지 삭제
+  const delImgButton = document.querySelectorAll(".delButton");
+
+  delImgButton.forEach(elements => {
+    elements.addEventListener("click", e => {
+      const imgNo = e.target.value
+
+      fetch("/partner/seller/product/delImgs", {
+        method: "DELETE",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(imgNo)
+        })
+        .then(resp => resp.text())
+        .then(result => {
+          e.target.parentElement.remove();
+        })
+    })
+  })
+
+  const applyButton = document.querySelectorAll(".applyButton");
+
+  // 적용 버튼 눌렀을 떄
+  applyButton.forEach(elements => {
+    elements.addEventListener("click", e => {
+      const optionContentBox = e.target.parentElement;
+      const plusEx = e.target.parentElement.parentElement.querySelector(".plusEx");
+  
+      let temp = true;
+  
+      const optionNameInput = e.target.parentElement.parentElement.querySelector(".optionName");
+      const allInput = e.target.parentElement.getElementsByClassName("contentInput");
+      const allCount = e.target.parentElement.getElementsByClassName("contentCountInput");  
+
+      if(optionNameInput.value.trim().length === 0) {
+        alert("옵션명을 입력해주세요")
+        temp = false;
+      }
+      
+      for(let i = 0; i < allInput.length; i ++) {
+        if(allInput[i].value.trim().length === 0) {
+          alert("모든 옵션값을 입력해주세요");
+          temp = false;
+        }
+      }
+      
+      for(let i = 0; i < allCount.length; i ++) {
+        if(allCount[i].value.trim().length === 0) {
+          alert("모든 옵션값을 입력해주세요");
+        }
+      }
+
+      
+      if(temp) {
+          const cutInput1 = document.createElement("input");
+          cutInput1.type = 'hidden';
+          cutInput1.value = '/';
+          cutInput1.setAttribute('name', 'optionContent');
+  
+          optionContentBox.append(cutInput1);
+  
+          const cutInput2 = document.createElement("input");
+          cutInput2.type = 'hidden';
+          cutInput2.value = '/';
+          cutInput2.setAttribute('name', 'optionCount');
+  
+          optionContentBox.append(cutInput2);
+  
+          optionContentBox.style.display = 'none';
+          e.target.style.display = "none";
+          e.target.nextElementSibling.style.display = 'none';
+          plusEx.style.display = 'block';
+
+          plusEx.addEventListener('click', () => {
+            console.log(elements);
+            optionContentBox.style.display = 'flex';
+            plusEx.style.display = 'none';
+            e.target.style.display = "block";
+            e.target.nextElementSibling.style.display = 'block';
+          })
+      }
+  })
+
+  })
+
 });
 
 // 세부옵션 삭제
@@ -112,8 +187,10 @@ function addOption(product) {
   inputs.forEach(elements => {
     if(elements.value.trim().length === 0) {
       temp = false;
+      return;
     }
   })
+
 
   if(temp) {
     const tr = document.createElement("tr");
@@ -122,7 +199,7 @@ function addOption(product) {
   
     const input1 = document.createElement("input");
     input1.classList.add("contentInput");
-    input1.setAttribute('name', 'opionContent');
+    input1.setAttribute('name', 'optionContent');
     input1.placeholder = "예시 : 빨강";
   
     const td2 = document.createElement("td");
@@ -159,7 +236,19 @@ function addOption(product) {
 
 const productPlusButton = document.querySelector("#productPlusButton");
 
+// 옵션 추가
 productPlusButton.addEventListener("click", e => {
+
+  
+  const allApply = document.getElementsByClassName("applyButton");
+
+  for(let i = 0; i < allApply.length; i ++) {
+    if(allApply[i].style.display != 'none') {
+      alert("모든 옵션값을 적용 후에 추가해주세요");
+      return;
+    }
+  }
+
   const optionContentContainer = document.querySelector('#optionBox');
   
   const box1 = document.createElement("div");
@@ -172,6 +261,10 @@ productPlusButton.addEventListener("click", e => {
   inputBox.classList.add("optionName");
   inputBox.setAttribute('name', 'optionName');
   inputBox.placeholder = "예시 : 컬러";
+
+  const h5 = document.createElement("h5");
+  h5.innerText = "상세보기";
+  h5.classList.add("plusEx");
 
   const box2 = document.createElement("div");
   box2.classList.add("optionContentBox");
@@ -203,7 +296,7 @@ productPlusButton.addEventListener("click", e => {
   
     const input1 = document.createElement("input");
     input1.classList.add("contentInput");
-    input1.setAttribute('name', 'opionContent');
+    input1.setAttribute('name', 'optionContent');
     input1.placeholder = "예시 : 빨강";
   
     const td2 = document.createElement("td");
@@ -217,6 +310,11 @@ productPlusButton.addEventListener("click", e => {
     const button = document.createElement("button");
     button.classList.add("minusOption");
     button.innerText = "-";
+
+    const applyButton = document.createElement("button");
+    applyButton.classList.add("applyButton");
+    applyButton.type = 'button';
+    applyButton.innerText = "적용";
 
     const delButtonBox = document.createElement("button");
     delButtonBox.classList.add("delOption");
@@ -235,10 +333,12 @@ productPlusButton.addEventListener("click", e => {
     table.append(tr);
 
     box2.append(table);
+    box2.append(applyButton);
     box2.append(delButtonBox);
 
     box1.append(h4);
     box1.append(inputBox);
+    box1.append(h5);
     box1.append(box2);
 
     optionContentContainer.append(box1);
@@ -258,4 +358,83 @@ productPlusButton.addEventListener("click", e => {
       }
     })
 
+    // 적용 버튼 눌렀을 떄
+
+    applyButton.addEventListener("click", e => {
+      const optionContentBox = e.target.parentElement;
+      const plusEx = e.target.parentElement.parentElement.querySelector(".plusEx");
+  
+      let temp = true;
+  
+      const optionNameInput = e.target.parentElement.parentElement.querySelector(".optionName");
+      const allInput = e.target.parentElement.getElementsByClassName("contentInput");
+      const allCount = e.target.parentElement.getElementsByClassName("contentCountInput"); 
+
+      if(optionNameInput.value.trim().length === 0) {
+        alert("옵션명을 입력해주세요")
+        temp = false;
+        return;
+      }
+      
+      for(let i = 0; i < allInput.length; i ++) {
+        if(allInput[i].value.trim().length === 0) {
+          alert("모든 옵션값을 입력해주세요");
+          temp = false;
+          return;
+        }
+      }
+      
+      for(let i = 0; i < allCount.length; i ++) {
+        if(allCount[i].value.trim().length === 0) {
+          alert("모든 옵션값을 입력해주세요");
+          return;
+        }
+      }
+      
+      
+      if(temp) {
+          const cutInput1 = document.createElement("input");
+          cutInput1.type = 'hidden';
+          cutInput1.value = '/';
+          cutInput1.setAttribute('name', 'optionContent');
+  
+          optionContentBox.append(cutInput1);
+  
+          const cutInput2 = document.createElement("input");
+          cutInput2.type = 'hidden';
+          cutInput2.value = '/';
+          cutInput2.setAttribute('name', 'optionCount');
+  
+          optionContentBox.append(cutInput2);
+  
+          optionContentBox.style.display = 'none';
+          e.target.style.display = "none";
+          e.target.nextElementSibling.style.display = 'none';
+          plusEx.style.display = 'block';
+
+          plusEx.addEventListener('click', () => {
+            optionContentBox.style.display = 'flex';
+            plusEx.style.display = 'none';
+            e.target.style.display = "block";
+            e.target.nextElementSibling.style.display = 'block';
+          })
+      }
+  })
+
+
 })
+
+// 대표 이미지 미리보기
+function readMainURL(fileInput) {
+  if (fileInput.files && fileInput.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+          document.getElementById('preview').src = e.target.result;
+      };
+      reader.readAsDataURL(fileInput.files[0]);
+  } else {
+      document.getElementById('preview').removeAttribute('src');
+  }
+
+  console.log(fileInput.files[0]);
+}

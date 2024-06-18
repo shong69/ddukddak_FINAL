@@ -315,7 +315,49 @@
 	<update id="updateRegistProduct">
 		UPDATE "PRODUCT"
 		SET PRODUCT_NAME = #{productName},
-			CATEGORY = #{smallCategory},
+			CATEGORY_NO = #{smallCategoryNo},
+			PRODUCT_PRICE = #{productPrice},
+			PARTNER_NO = #{memberNo},
+			PRODUCT_FL = 'N'
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	<!-- 대표사진 업로드 -->
+	<update id="updateThumbnail">
+		UPDATE "UPLOAD_FILE"
+		SET UPLOAD_IMG_OG_NAME = #{originalName},
+			UPLOAD_IMG_RENAME = #{rename},
+			CATEGORY = #{smallCategory}
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	<!-- 상세사진 삭제 -->
+	<delete id="delProductImg2">
+		DELETE FROM "UPLOAD_FILE" WHERE UPLOAD_IMG_NO = #{imgNo}
+	</delete>
+	
+	<!-- 상세사진 업로드 -->
+	<insert id="insertImg2">
+		INSERT INTO "UPLOAD_FILE"
+		VALUES(SEQ_UPLOAD_IMG_NO.NEXTVAL, #{uploadImgPath}, #{uploadImgOgName}, #{uploadImgRename}, #{uploadImgOrder}, #{category}, #{productNo}, NULL, NULL, NULL)
+	</insert>
+	
+	<!-- 옵션 비우기 -->
+	<delete id="delOption">
+		DELETE FROM "OPTION" WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	
+	<!-- 새 옵션 추가 -->
+	<insert id="insertOption2">
+		INSERT INTO "OPTION"
+		VALUES(SEQ_OPTION_ID.NEXTVAL, #{optionName}, #{optionValue}, #{productCount}, #{productNo})
+	</insert>
+	
+	<!-- 수정상품 등록 -->
+	<update id="modifyRegistProduct">
+		UPDATE "PRODUCT"
+		SET PRODUCT_NAME = #{productName},
+			CATEGORY_NO = #{smallCategoryNo},
 			PRODUCT_PRICE = #{productPrice},
 			PARTNER_NO = #{memberNo}
 		WHERE PRODUCT_NO = #{productNo}
