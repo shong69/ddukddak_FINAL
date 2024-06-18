@@ -20,25 +20,28 @@
 
         <main class="mainContainer">
 
+            <th:block th:each="mainPortfolio : ${mainPortfolio}" th:object="${mainPortfolio}">
             <!-- 시공사 이름 + 메인 캐러셀 컨테이너 -->
-            <div class="topContainer">
-                <h1 class="portTitle">캣츠코</h1>
-                
-                <th:block th:replace="~{common/fragments/portfolioCarousel}"></th:block>
-            </div>
+                <div class="topContainer">
+                    <h1 class="portTitle" th:text="*{partnerBusinessName}">캣츠코</h1>
+                    
+                    <th:block th:replace="~{common/fragments/portfolioCarousel}"></th:block>
+                </div>
 
-            <!-- 중간 시공사 컨테이너 -->
-            <div class="midContainer">
-                <div class="imgContainer">
-                    <img class="portLogo" src="/images/profile/main.jpg"></img>
+                <!-- 중간 시공사 컨테이너 -->
+                <div class="midContainer">
+                    <div class="imgContainer">
+                        <img class= "portLogo" th:unless="*{profileImg}" th:src="#{user.default.image}">
+                        <img class= "portLogo" th:if="*{profileImg}" th:src="*{profileImg}">
+                    </div>
+                    <div class="nameContainer">
+                        <h2 class="portName" th:text="*{partnerBusinessName}">캣츠코</h2>
+                    </div>
+                    <div class="buttonContainer">
+                        <button class="interiorMatchBtn">컨택하기</button>
+                    </div>
                 </div>
-                <div class="nameContainer">
-                    <h2 class="portName">캣츠코</h2>
-                </div>
-                <div class="buttonContainer">
-                    <button class="interiorMatchBtn">컨택하기</button>
-                </div>
-            </div>
+            </th:block>
 
 
             <!-- 프로젝트 리스트 컨테이너 -->
@@ -49,7 +52,6 @@
 
                 <button class="interiorProjectViewMoreBtn" id="interiorProjectViewMore">더보기 +</button>
             </div>
-
         </main> 
 
         <div id="portTop">↑</div>

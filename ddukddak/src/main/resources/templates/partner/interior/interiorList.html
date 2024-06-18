@@ -120,8 +120,9 @@
                                 <td th:text="*{homeLink != null ? homeLink : '없음'}"></td>
                                 <!-- <td>서울특별시 중랑구 면목동</td>
                                 <td>1,000,000</td> -->
-                                
-                                <td><a th:href="|/interior/interiorPortfolio/*{partnerNo}|" id="interiorDetailView" class="interiorDetailView">포트폴리오</a></td>
+                                    <td>
+                                        <button class="interiorDetailViewBtn" th:attr="data-portfolio-no=*{portfolioNo}">포트폴리오</button>
+                                    </td>
                             </tr>
 
                         </tbody>

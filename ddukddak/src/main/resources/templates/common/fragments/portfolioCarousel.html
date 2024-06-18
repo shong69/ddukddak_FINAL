@@ -2,12 +2,12 @@
     <!-- Full-width images with number and caption text -->
     <div class="mySlides fade">
         <!-- if (파트너면 -> /partner/projectDetail 로 이동) -->
-        <a href="/interior/interiorPortfolioDetail" method="GET">
+        <a th:href="@{/interior/interiorPortfolioDetail/{portfolioNo}(portfolioNo=*{portfolioNo})}" method="GET">
             <img src="/images/partner/interior/portfolio/portfolio_ex_main.jpg" style="width:100%" class="adBannerImg">
             <div class="text-overlay">
-                <h1 class="text-title">외국계 글로벌 데비마이어 목동 사옥</h1>
-                <h3 class="text-subtitle">완성도 높은 디자인과 전문적인 시공기술을 바탕으로 최상의 품질과 서비스를 제공하기 위해 최선을 다하고 있습니다</h3>
-                <h4 class="text-date">2024-03-25</h4>
+                <h1 class="text-title" th:text="*{projectName}">외국계 글로벌 데비마이어 목동 사옥</h1>
+                <h3 class="text-subtitle" th:text="*{projectContent}">완성도 높은 디자인과 전문적인 시공기술을 바탕으로 최상의 품질과 서비스를 제공하기 위해 최선을 다하고 있습니다</h3>
+                <h4 class="text-date" th:text="|*{constructionYear} 년|">2024-03-25</h4>
             </div>
         </a>
     </div>
