@@ -31,12 +31,6 @@ public class ContactInteriorController {
 		return "partner/interior/interiorList";
 	}
 	
-	@GetMapping("interiorPortfolio/{partnerNo:[0-9]+}")
-	public String interiorPortfolio() {
-		
-		return "partner/interior/interiorPortfolio";
-	}
-	
 	@GetMapping("interiorPortfolioDetail")
 	public String interiorPortfolioDetail() {
 		return "partner/interior/projectDetail";
