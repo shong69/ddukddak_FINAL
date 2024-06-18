@@ -25,46 +25,10 @@
 
             <section class="myPage-main">
                 <h2 class="category-name">주문내역</h2>
-                <table class="skuList">
-                    <thead>
-                        <th>상품이미지</th>
-                        <th>주문일자</th>
-                        <th>주문번호</th>
-                        <th>상품정보[옵션]</th>
-                        <th>주문수량</th>
-                        <th>주문금액</th>
-                        <th>주문상태</th>
-                    </thead>
-                    <tbody>
-                        <th:block th:if="${#lists.isEmpty(orderList)}">
-                            <div>
-                                주문 내역이 존재하지 않습니다
-                            </div>
-                        </th:block>
-                        <th:block th:unless="${#lists.isEmpty(orderList)}">
-                                <th:block th:foreach="list : ${orderList}" th:object="${list}">
-                                    <tr>
-                                        <td th:href="@{productImg}">상품이미지</a></td>
-                                        <td th:text="*{orderDate}">주문일자</td>
-                                        <td th:text="*{orderNo}">주문번호</td>
-                                        <td th:text="*{|product\n[optionValue]|}">상품정보</td>
-                                        <td th:text="${orderPrice}">주문금액</td>
-                                        <td th:text="${orderQuantity}">주문수량</td>
-                                        <td><!--주문 상태 (주문 취소인 경우 주문 상태 '주문 취소'로 표시)-->
-                                            <span th:if="${orderDelFl == 'Y'}" >주문 취소</span>
-                                            <span th:if="${orderDelFl == 'N'}" th:text="${orderStatus}">
-                                                주문상태
-                                                <button>상태 변경 버튼</button>
-                                            </span>
-                                        </td>
+                <div class="skuList">
 
-
-                                    </tr>
-                                </th>
-                            </th>
-                        
-
-                        <tr> <!--상품으로 나눠서 나열-->
+                     
+                        <!--<tr> <상품으로 나눠서 나열
                             <td><a><img class="product-image" ></a></td>
                             <td>2025-01-01</td>
                             <td>12341234</td>
@@ -93,13 +57,13 @@
                                 <span>배송중</span>
                                 <button class="myPageMainBtn">교환</button>
                             </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </tr>-->
+                </div>
             </section>
         </section>
     </main>
 
     <th:block th:replace="~{common/fragments/footer}"></th:block>
+    <script src="/js/myPage/main.js"></script>
 </body>
 </html>
