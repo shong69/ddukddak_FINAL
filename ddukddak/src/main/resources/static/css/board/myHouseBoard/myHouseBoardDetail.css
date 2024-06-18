@@ -287,11 +287,16 @@
 
 }
 
+.childCommentBtnArea div {
+    width: 30px;
+}
+
 .childCommentBtnArea div:hover {
     cursor: pointer;
     color: var(--secondary);
     text-decoration: underline;
 }
+
 
 .commentInsertContent {
     width: 840px;

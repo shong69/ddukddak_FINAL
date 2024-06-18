@@ -35,4 +35,8 @@ public class Partner {
 	// 파트너 프로필 이미지
 	private String profileImg;
 	
+	// 포트폴리오
+	private int portfolioNo;
+	private String homeLink;
+	
 }
