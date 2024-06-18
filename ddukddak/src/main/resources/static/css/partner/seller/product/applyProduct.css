@@ -120,9 +120,7 @@
 }
 
 #plusBox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 30px;
 }
 
 #addoption {
@@ -131,21 +129,19 @@
 }
 
 #productPlusButton {
-    background-color: var(--gray1);
-    color: white;
+  background: none;
+    color: var(--gray1);
+    border: 1px solid var(--gray1);
     border-radius: 5px;
     height: 20px;
     width: 30px;
     justify-content: center;
     align-items: center;
-    border: none;
     transition-duration: 0.2s;
     cursor: pointer;
 }
 
 #productPlusButton:hover {
-    background-color: var(--white);
-    color: var(--gray1);
     transform: translateY(-3px);
     box-shadow: 3px 3px 5px var(--gray5);
 }

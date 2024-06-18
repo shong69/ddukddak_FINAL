@@ -333,7 +333,7 @@
 	
 	<!-- 상세사진 삭제 -->
 	<delete id="delProductImg2">
-		DELETE FROM "UPLOAD_FILE" WHERE UPLOAD_IMG_RENAME = #{rename}
+		DELETE FROM "UPLOAD_FILE" WHERE UPLOAD_IMG_NO = #{imgNo}
 	</delete>
 	
 	<!-- 상세사진 업로드 -->

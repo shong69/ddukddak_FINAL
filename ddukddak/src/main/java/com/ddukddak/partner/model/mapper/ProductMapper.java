@@ -214,10 +214,10 @@ public interface ProductMapper {
 	int updateThumbnail(Map<String, Object> map);
 
 	/** 상세사진 삭제
-	 * @param rename
+	 * @param imgNo
 	 * @return
 	 */
-	int delProductImg2(String rename);
+	int delProductImg2(int imgNo);
 
 	/** 상세사진 업로드
 	 * @param map

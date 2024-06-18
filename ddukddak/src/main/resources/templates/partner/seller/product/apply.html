@@ -84,7 +84,7 @@
                                     <input type="hidden" name="status" value="apply">
                                 </td>
                             </form>
-                            <form th:case="*" action="/partner/seller/product/applyProduct" method="POST">
+                            <form th:case="'S'" action="/partner/seller/product/applyProduct" method="POST">
                                 <td class="buttonBox">
                                     <button name="productNo" th:value="${applyItem.productNo}">수정</button>
                                     <input type="hidden" name="status" value="modify">
