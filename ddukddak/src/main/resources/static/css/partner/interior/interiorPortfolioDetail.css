@@ -140,12 +140,12 @@
     height: auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-bottom: 20px;
 }
 
 .portListContainer {
-    width: 350px;
+    width: 366px;
     height: 260px;
     margin: 10px;
     position: relative;

@@ -41,6 +41,10 @@ if (viewMoreBtn != null) {
 //     });
 // }
 
-document.querySelector("#insertBtn").addEventListener("click", () => {
-    location.href = "/partner/registProject";
-});
+const instertBtn = document.querySelector("#insertBtn");
+
+if (instertBtn != null) {
+    instertBtn.addEventListener("click", () => {
+        location.href = "/partner/registProject";
+    });
+}

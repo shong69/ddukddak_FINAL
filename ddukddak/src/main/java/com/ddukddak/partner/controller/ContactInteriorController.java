@@ -74,18 +74,18 @@ public class ContactInteriorController {
     }
 	
 	@GetMapping("interiorPortfolioDetail")
-	public String interiorPortfolioDetail(Model model, @PathVariable("portfolioNo") int portfolioNo) {
+	public String interiorPortfolioDetail(Model model) {
 		
-		List<Project> portfolio = service.selectMain(portfolioNo);
-		
-		log.info("portfolio : " + portfolio.toString());
-		List<List<Project>> portfolioChunks = chunkBoards(portfolio, 3);
-		
-		if (portfolio != null) {
-			model.addAttribute("portfolio", portfolio);
-			model.addAttribute("portfolioChunks", portfolioChunks);
-			
-		}
+//		List<Project> portfolio = service.selectMain(portfolioNo);
+//		
+//		log.info("portfolio : " + portfolio.toString());
+//		List<List<Project>> portfolioChunks = chunkBoards(portfolio, 3);
+//		
+//		if (portfolio != null) {
+//			model.addAttribute("portfolio", portfolio);
+//			model.addAttribute("portfolioChunks", portfolioChunks);
+//			
+//		}
 		
 		return "partner/interior/projectDetail";
 	}

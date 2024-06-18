@@ -20,7 +20,6 @@ public class Project {
 	// 파트너
 	private int partnerNo;
 	
-	private int projectNo;
 	private String projectName;
 	private String housingType;
 	private String workForm;
@@ -30,6 +29,7 @@ public class Project {
 	private String constructionYear;
 	private String familySize;
 	private String mainProjectFl;
+	private String  projectContent;
 	
 	// 포트폴리오
 	private int portfolioNo;
@@ -37,4 +37,8 @@ public class Project {
 	private List<ProjectImg> imgList;
 	private String thumbnail;
 	private String homeLink;
+	
+	private String profileImg;
+	
+	private String partnerBusinessName;
 }
