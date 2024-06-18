@@ -41,7 +41,7 @@ VALUES(6, 'test1', 'test1@test.com', '1234', '테스트유저1', '닉네임테�
 '01098765555', '서울시 동대문구', '3000', DEFAULT, DEFAULT, DEFAULT, 1, DEFAULT);
 
 INSERT INTO "MEMBER"
-VALUES(SEQ_MEMBER_NO.NEXTVAL, 'test2', 'test2@test.com', '1234', '테스트유저2', '닉네임테스트유저2',
+VALUES(SEQ_MEMBER_NO.NEXTVAL, 'test', 'test2@test.com', '1234', 'sm1', '닉네임중복테스트',
 '01012345555', '서울시 동대문구', '3000', DEFAULT, DEFAULT, DEFAULT, 1, DEFAULT);
 
 
