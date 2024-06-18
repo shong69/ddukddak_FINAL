@@ -102,10 +102,10 @@ public interface ProductService {
 	List<ProductOption> selectOpion(int productNo);
 
 	/** 상세사진 삭제
-	 * @param rename
+	 * @param imgNo
 	 * @return
 	 */
-	int delImg(String rename);
+	int delImg(int imgNo);
 
 	/** 상품 판매등록
 	 * @param map

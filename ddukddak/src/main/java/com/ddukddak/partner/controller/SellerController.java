@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -296,10 +297,11 @@ public class SellerController {
 	}
 	
 	// 상세사진 삭제
-	@PostMapping("product/delImgs")
+	@DeleteMapping("product/delImgs")
 	@ResponseBody
-	public int delImg(@RequestBody String rename) {
-		return service.delImg(rename);
+	public int delImg(@RequestBody int imgNo) {
+		
+		return service.delImg(imgNo);
 	}
 	
 	// 판매등록
@@ -348,6 +350,8 @@ public class SellerController {
 		
 		// 상세사진
 		List<MultipartFile> imgList = new ArrayList<>(subImgs);
+		
+		log.info("imgList : " + imgList);
 
 		int result2 = service.updateInsertImg(productNo, smallCategory, imgList);
 
@@ -459,6 +463,8 @@ public class SellerController {
 		
 		// 상세사진
 		List<MultipartFile> imgList = new ArrayList<>(subImgs);
+		
+		log.info("subImgs : " + subImgs);
 		
 		int result2 = service.updateInsertImg(productNo, smallCategory, imgList);
 		

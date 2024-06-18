@@ -439,60 +439,53 @@ public class ProductServiceImpl implements ProductService{
 	public int updateInsertImg(String proudctNo, String smallCategory, List<MultipartFile> imgList) throws IllegalStateException, IOException {
 		List<ProductImg> uploadList = new ArrayList<>();
 		
-		log.info("uploadList" + uploadList);
+		log.info("imgList" + imgList);
 	
 		// 상세사진 업로드가 없을 때
-		if(uploadList.isEmpty()) {
+		if(imgList.isEmpty()) {
 			return 1;
 		} else {
 			Map<String, Object> map = new HashMap<String, Object>();
 			
 			int result = 0;
 			
-			if(!imgList.isEmpty()) {
+			for(int i = 1; i < imgList.size(); i++) {
 				
-				for(int i = 1; i < imgList.size(); i++) {
+				// 원본명
+				String originalName = imgList.get(i).getOriginalFilename();
+				if(!originalName.equals("")) {
+					log.info("name : " +originalName);
 					
-					// 원본명
-					String originalName = imgList.get(i).getOriginalFilename();
-					if(!originalName.equals("")) {
-						log.info("name : " +originalName);
-						
-						// 변경명
-						String rename = Utility.fileRename(originalName);
-						
-						map.put("uploadImgOgName", originalName);
-						map.put("uploadImgRename", rename);
-						map.put("uploadImgPath", webPath);
-						map.put("category", smallCategory);
-						map.put("productNo", Integer.parseInt(proudctNo));
-						map.put("uploadImgOrder", i);
-						
-						result += mapper.insertImg2(map);
-						
-						ProductImg img = ProductImg.builder()
-								.uploadImgOgName(originalName)
-								.uploadImgRename(rename)
-								.uploadImgPath(webPath)
-								.uploadImgOrder(i)
-								.uploadFile(imgList.get(i))
-								.build();
-						
-						uploadList.add(img);
-						
-					}
+					// 변경명
+					String rename = Utility.fileRename(originalName);
+					
+					map.put("uploadImgOgName", originalName);
+					map.put("uploadImgRename", rename);
+					map.put("uploadImgPath", webPath);
+					map.put("category", smallCategory);
+					map.put("productNo", Integer.parseInt(proudctNo));
+					map.put("uploadImgOrder", i);
+					
+					result += mapper.insertImg2(map);
+					
+					ProductImg img = ProductImg.builder()
+							.uploadImgOgName(originalName)
+							.uploadImgRename(rename)
+							.uploadImgPath(webPath)
+							.uploadImgOrder(i)
+							.uploadFile(imgList.get(i))
+							.build();
+					
+					uploadList.add(img);
 					
 				}
 				
-			} else {
-				return 0;
 			}
-			
 			// 폴더에 이미지저장
 			for(ProductImg img : uploadList) {
 				img.getUploadFile().transferTo( new File(folderPath + img.getUploadImgRename()) );
 			}
-			return 0;
+			return result;
 			
 		}
 		
@@ -516,12 +509,16 @@ public class ProductServiceImpl implements ProductService{
 				// 변경명
 				String rename = Utility.fileRename(originalName);
 				
+				log.info("mainRename : " + rename);
+				
 				map.put("uploadImgOgName", originalName);
 				map.put("uploadImgRename", rename);
 				map.put("uploadImgPath", webPath);
 				map.put("productNo", productNo);
 				map.put("category", smallCategory);
 				map.put("uploadImgOrder", 0);
+				
+				log.info("map : " + map);
 				
 				result += mapper.updateThumbnail(map);
 				
@@ -546,8 +543,8 @@ public class ProductServiceImpl implements ProductService{
 
 	// 상세사진 삭제
 	@Override
-	public int delImg(String rename) {
-		return mapper.delProductImg2(rename);
+	public int delImg(int imgNo) {
+		return mapper.delProductImg2(imgNo);
 	}
 
 	// 옵션 비우기

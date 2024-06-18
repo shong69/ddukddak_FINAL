@@ -3,14 +3,6 @@ const smallcategory = document.querySelector("#smallCategory");
 const plusButton = document.querySelector("#productPlusButton");
 const optionBox = document.querySelector("#optionBox");
 
-console.log(optionBox);
-
-let selectOption = 1;
-
-const radio2 = document.querySelector("#radio2");
-
-radio2.checked = true;
-
 bigCategory.addEventListener('change', () => {
   // 기존 소분류 옵션을 모두 제거
   smallcategory.innerHTML = '<option value="none">소분류</option>';
@@ -38,9 +30,7 @@ bigCategory.addEventListener('change', () => {
 
 });
 
-bigCategory.addEventListener("click", e => {
-  e.target.children[0].remove();
-})
+bigCategory.children[0].remove();
 
   
   
@@ -93,16 +83,17 @@ document.addEventListener('DOMContentLoaded', function() {
     })
   })
 
+  // 상세이미지 삭제
   const delImgButton = document.querySelectorAll(".delButton");
 
   delImgButton.forEach(elements => {
     elements.addEventListener("click", e => {
-      const rename = e.target.previousElementSibling.attributes[1].value
+      const imgNo = e.target.value
 
       fetch("/partner/seller/product/delImgs", {
-        method: "POST",
+        method: "DELETE",
         headers : {"Content-Type" : "application/json"},
-        body : JSON.stringify(rename)
+        body : JSON.stringify(imgNo)
         })
         .then(resp => resp.text())
         .then(result => {
@@ -142,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
           alert("모든 옵션값을 입력해주세요");
         }
       }
+
       
       if(temp) {
           const cutInput1 = document.createElement("input");
@@ -195,8 +187,10 @@ function addOption(product) {
   inputs.forEach(elements => {
     if(elements.value.trim().length === 0) {
       temp = false;
+      return;
     }
   })
+
 
   if(temp) {
     const tr = document.createElement("tr");
@@ -205,7 +199,7 @@ function addOption(product) {
   
     const input1 = document.createElement("input");
     input1.classList.add("contentInput");
-    input1.setAttribute('name', 'opionContent');
+    input1.setAttribute('name', 'optionContent');
     input1.placeholder = "예시 : 빨강";
   
     const td2 = document.createElement("td");
@@ -242,7 +236,19 @@ function addOption(product) {
 
 const productPlusButton = document.querySelector("#productPlusButton");
 
+// 옵션 추가
 productPlusButton.addEventListener("click", e => {
+
+  
+  const allApply = document.getElementsByClassName("applyButton");
+
+  for(let i = 0; i < allApply.length; i ++) {
+    if(allApply[i].style.display != 'none') {
+      alert("모든 옵션값을 적용 후에 추가해주세요");
+      return;
+    }
+  }
+
   const optionContentContainer = document.querySelector('#optionBox');
   
   const box1 = document.createElement("div");
@@ -290,7 +296,7 @@ productPlusButton.addEventListener("click", e => {
   
     const input1 = document.createElement("input");
     input1.classList.add("contentInput");
-    input1.setAttribute('name', 'opionContent');
+    input1.setAttribute('name', 'optionContent');
     input1.placeholder = "예시 : 빨강";
   
     const td2 = document.createElement("td");
@@ -362,25 +368,29 @@ productPlusButton.addEventListener("click", e => {
   
       const optionNameInput = e.target.parentElement.parentElement.querySelector(".optionName");
       const allInput = e.target.parentElement.getElementsByClassName("contentInput");
-      const allCount = e.target.parentElement.getElementsByClassName("contentCountInput");  
+      const allCount = e.target.parentElement.getElementsByClassName("contentCountInput"); 
 
       if(optionNameInput.value.trim().length === 0) {
         alert("옵션명을 입력해주세요")
         temp = false;
+        return;
       }
       
       for(let i = 0; i < allInput.length; i ++) {
         if(allInput[i].value.trim().length === 0) {
           alert("모든 옵션값을 입력해주세요");
           temp = false;
+          return;
         }
       }
       
       for(let i = 0; i < allCount.length; i ++) {
         if(allCount[i].value.trim().length === 0) {
           alert("모든 옵션값을 입력해주세요");
+          return;
         }
       }
+      
       
       if(temp) {
           const cutInput1 = document.createElement("input");
@@ -413,3 +423,18 @@ productPlusButton.addEventListener("click", e => {
 
 
 })
+
+// 대표 이미지 미리보기
+function readMainURL(fileInput) {
+  if (fileInput.files && fileInput.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+          document.getElementById('preview').src = e.target.result;
+      };
+      reader.readAsDataURL(fileInput.files[0]);
+  } else {
+      document.getElementById('preview').removeAttribute('src');
+  }
+
+  console.log(fileInput.files[0]);
+}
