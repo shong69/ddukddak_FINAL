@@ -1,13 +1,13 @@
 /* 선택된 이미지 미리보기 */
-const previewList = document.querySelectorAll(".preview"); // img 태그 5개
-const inputImageList = document.querySelectorAll(".projectImg"); // input 태그 5개
-const deleteImageList = document.querySelectorAll(".delete-img"); // x버튼 5개
+// const previewList = document.querySelectorAll(".preview"); // img 태그 5개
+// const inputImageList = document.querySelectorAll(".projectImg"); // input 태그 5개
+// const deleteImageList = document.querySelectorAll(".delete-img"); // x버튼 5개
 
 
 
 // 이미지 선택 이후 취소를 누를 경우를 대비한 백업 이미지
 // (백업 원리 -> 복제품으로 기존 요소를 대체함)
-const backupInputList = new Array(inputImageList.length);
+// const backupInputList = new Array(inputImageList.length);
 
 
 // /* ***** input 태그 값 변경 시(파일 선택 시) 실행할 함수 ***** */
@@ -234,3 +234,23 @@ function updateMainImage(src, fileName) {
     // Set the hidden input to the selected file name
     mainImgHidden.value = fileName;
 }
+
+
+const registProjectForm = document.querySelector("#registProjectForm");
+
+registProjectForm.addEventListener("submit", e => {
+
+    const images = document.getElementById('imageUpload').files;
+    const mainImg = document.getElementById('mainImgHidden').value;
+
+    if(images.length === 0) {
+        alert("사진을 1장 이상 업로드해주세요.");
+        e.preventDefault();
+        return;
+    } else if (mainImg === "") {
+        alert("메인이미지를 선택해주세요.");
+        e.preventDefault();
+        return;
+    }
+
+})

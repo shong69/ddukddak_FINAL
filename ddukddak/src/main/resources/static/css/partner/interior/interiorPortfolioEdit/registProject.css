@@ -40,6 +40,16 @@
     font-size: 15px;
     padding: 5px;
     border-radius: 5px;
+    margin-left: 20px;
+}
+
+.inputProjectContent {
+    width: 850px;
+    height: 100px;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 5px;
+    resize: none;
 }
 
 .project-info {

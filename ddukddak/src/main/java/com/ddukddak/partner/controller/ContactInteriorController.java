@@ -52,15 +52,15 @@ public class ContactInteriorController {
 													HttpServletRequest req,
 													HttpServletResponse resp) {
 
-		List<Partner> portfolio = service.selectPortfolio(portfolioNo);
-		List<Project> mainPortfolio = service.selectMain(portfolioNo);
-        if (portfolio != null) {
-            model.addAttribute("portfolio", portfolio);
-            log.info("portfolio : " + portfolio);
-        }
-        if(mainPortfolio != null) {
-        	model.addAttribute("mainPortfolio", mainPortfolio);
-        	log.info("mainPortfolio : " + mainPortfolio);
+//		List<Partner> portfolio = service.selectPortfolio(portfolioNo);
+		Project mainProject = service.selectMainProject(portfolioNo);
+//        if (portfolio != null) {
+//            model.addAttribute("portfolio", portfolio);
+//            log.info("portfolio : " + portfolio);
+//        }
+        if(mainProject != null) {
+        	model.addAttribute("mainProject", mainProject);
+        	log.info("mainProject : " + mainProject);
         }
         return "partner/interior/interiorPortfolio";
 	}
@@ -76,16 +76,16 @@ public class ContactInteriorController {
 	@GetMapping("interiorPortfolioDetail/{portfolioNo:[0-9]+}")
 	public String interiorPortfolioDetail(Model model, @PathVariable("portfolioNo") int portfolioNo) {
 		
-		List<Project> portfolio = service.selectMain(portfolioNo);
+		Project mainPortfolio = service.selectMainProject(portfolioNo);
 		
-		List<Project> portfolioList = service.selectPortfolioList(portfolioNo);
+		List<Project> portfolioList = service.selectProjectList(portfolioNo);
 		
-		log.info("portfolio : " + portfolio.toString());
+		log.info("portfolio : " + mainPortfolio.toString());
 		log.info("portfolioList : " + portfolioList.toString());
 		List<List<Project>> portfolioChunks = chunkBoards(portfolioList, 3);
 		
-		if (portfolio != null) {
-			model.addAttribute("portfolio", portfolio);
+		if (mainPortfolio != null) {
+			model.addAttribute("mainPortfolio", mainPortfolio);
 			model.addAttribute("portfolioChunks", portfolioChunks);
 			
 		}
