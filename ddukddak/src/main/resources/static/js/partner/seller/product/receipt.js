@@ -2,6 +2,7 @@ const modal = document.querySelector(".modal");
 const orderReceipt = document.querySelector("#orderReceipt");
 const orderRejection = document.querySelector("#orderRejection");
 const productListBox = document.querySelector("#productListBox");
+const closeButton = document.querySelector("#closeButton");
 
 /* 주문 접수 */
 orderReceipt.addEventListener("click", () => {
@@ -57,8 +58,9 @@ orderReceipt.addEventListener("click", () => {
         if(confirm("취소하시겠습니까?")) {
             modal.style.display = 'none';
         }
-    })
+    });
 
+    
 });
 
 /* 주문 거절 */
@@ -121,18 +123,17 @@ orderRejection.addEventListener("click", () => {
         if(confirm("취소하시겠습니까?")) {
             modal.style.display = 'none';
         }
-    })
+    });
 
 });
 
-
-const closeButton = document.querySelector("#closeButton");
-
 closeButton.addEventListener("click", () => {
-    if(confirm("접수관리를 취소하시겠습니까?")) {
+    if(confirm("취소하시겠습니까?")) {
         modal.style.display = "none";
+        return;
     }
-})
+});
+
 
 /* 전체선택버튼 */
 const selectAll = document.querySelector('#selectAllCheckBox');
@@ -147,5 +148,43 @@ selectAll.addEventListener('change', () => {
         checkboxes.forEach(elements => {
             elements.checked = false;
         })
+    }
+});
+
+
+function updateStatus(checkbox) {
+    // 모든 체크박스를 체크 해제합니다.
+    const checkboxes = document.querySelectorAll('input[name="receipt"]');
+    checkboxes.forEach(cb => cb.checked = false);
+
+    // 클릭된 체크박스를 체크합니다.
+    checkbox.checked = true;
+
+    // URL 파라미터를 업데이트합니다.
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set('status', checkbox.value);
+    currentUrl.searchParams.set('cp', '1');
+    window.location.href = currentUrl.toString();
+}
+
+function getStatusFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('status');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const status = getStatusFromUrl();
+
+    if (status) {
+        const checkbox = document.querySelector(`input[name="receipt"][value="${status}"]`);
+        if (checkbox) {
+            checkbox.checked = true;
+        }
+    } else {
+        // URL 파라미터가 없는 경우 '전체' 체크박스를 기본적으로 체크합니다.
+        const checkbox = document.querySelector('input[name="receipt"][value="A"]');
+        if (checkbox) {
+            checkbox.checked = true;
+        }
     }
 });

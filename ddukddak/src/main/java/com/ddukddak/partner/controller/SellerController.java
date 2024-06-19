@@ -502,7 +502,7 @@ public class SellerController {
 			
 			// 옵션재고 리스트 나누기
 			List<List<String>> resultList2 = new ArrayList<>();
-			List<String> optionCountList = new ArrayList<>();
+			List<String> optionCountList = new ArrayList<>();	
 			
 			for (String item : optionCount) {
 				if ("/".equals(item)) {
@@ -537,7 +537,37 @@ public class SellerController {
 	}
 	
 	@GetMapping("product/receipt")
-	public String ProductReceipt() {
+	public String ProductReceipt(@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+			@RequestParam(value="mainSort", required=false, defaultValue="0") int mainSort,
+			@RequestParam(value="sort", required=false, defaultValue="0") int sort,
+			@RequestParam(value="status", required=false, defaultValue="A") String status,
+			Model model,
+			@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) {
+		
+		int partnerNo = loginPartnerMember.getPartnerNo();
+		
+		// 대분류 카테고리 선택
+		List<Category> categoryList = eCommerceService.selectCategory();
+		
+//		log.info("categoryList : " + categoryList);
+		
+		model.addAttribute("categoryList", categoryList);
+		
+		// 소분류 카테고리 선택
+		List<Category> smallCategoryList = eCommerceService.selectSmallCategory();
+		
+//		log.info("smallCategoryList : " + smallCategoryList);
+
+		model.addAttribute("smallCategoryList", smallCategoryList);
+		
+		// 재고상품 조회
+		Map<String, Object> map = service.selectReciptList(partnerNo, mainSort, sort, status, cp);
+		
+		
+		model.addAttribute("applyList", map.get("applyList"));
+		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("status", status);
+		
 		return "partner/seller/product/receipt";
 	}
 	

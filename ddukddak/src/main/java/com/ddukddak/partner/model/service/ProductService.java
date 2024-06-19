@@ -156,6 +156,16 @@ public interface ProductService {
 	 */
 	int modifyRegistProduct(Map<String, Object> map);
 
+	/** 접수관리 조회하기
+	 * @param partnerNo
+	 * @param mainSort
+	 * @param sort
+	 * @param status
+	 * @param cp
+	 * @return
+	 */
+	Map<String, Object> selectReciptList(int partnerNo, int mainSort, int sort, String status, int cp);
+
 
 
 
