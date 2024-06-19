@@ -370,31 +370,20 @@ button:active {
 
 /* 집들이/노하우 */
 .boardMainBtn {
-    width: 150px; 
-    height: 55px;
-    border-radius: 30px;
-    background-color: var(--primary2);
+    width: 90px; 
+    height: 40px;
     transition: 0.3s;
 
     /* 폰트 */
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 700;
-    color: var(--secondary);
 }
 .boardMainBtn:hover {
     transform: none;
     box-shadow: none;
     /* border: 1px solid var(--secondary); */
-    background-color: var(--primary1);
     transition: 0.3s;
-    color: var(--secondary);
 }
-.boardMainBtn:active {
-    background-color: var(--primary1);
-
-    color: var(--secondary);
-}
-
 
 
 

@@ -1,10 +1,9 @@
+
 .topContainer {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #FFFDF8;
-    transform: translateX(-5%);
 }
 
 
@@ -57,8 +56,8 @@
 
 .searchBox {
     width: 650px;
-    height: 48px;
-    font-size: 15px;
+    height: 40px;
+    font-size: 14px;
     border: none;
     border-radius: 10px;
     margin: 0 10px;
@@ -102,12 +101,14 @@
 .sortingArea {
     text-align: end;
     width: 100%;
-    margin: 50px 0;
+    margin: 30px 0;
+    height: 10px;
 }
 
 .sortingArea select {
-    font-size: 18px;
-    border-radius: 5px;
+    font-size: 15px;
+    border-radius: 10px;
+    width: 150px;
     padding: 5px;
 }
 
@@ -115,19 +116,17 @@
 .listArea {
     border-radius: 10px;
     width: 1000px;
-    padding: 50px;
-    background-color: white;
-    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.25); 
+    padding: 20px;
 }
 
 .myHouseList {
     display: flex;
     border-radius: 10px; 
-    margin: 30px 0;
+    margin-bottom: 40px;
     height: 150px;
     cursor: pointer;
-    background-color: #ded9d1;
     box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.25); 
+    background-color: white;
 }
 
 .myHouseList:hover {
@@ -233,7 +232,7 @@
     align-items: baseline;
 }
 
-.myHouseRightSide h3 {
+.myHouseRightSide h4 {
     color: var(--gray3);
 }
 

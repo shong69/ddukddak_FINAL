@@ -84,18 +84,30 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	List<ProductOption> selectOptionListName(int productNo);
-
+	
 	/** 카테고리별 상품개수
-	 * @param smallcategoryNo
+	 * @param newMap
 	 * @return
 	 */
-	int selectProductListCount(int smallcategoryNo);
+	int selectProductListCount1(int smallcategoryNo);
+
+	/** 카테고리별 상품개수
+	 * @param newMap
+	 * @return
+	 */
+	int selectProductListCount(Map<String, Object> newMap);
+	
+	/** 검색으로 찾은 상품개수
+	 * @param paramMap
+	 * @return
+	 */
+	int getSearchCount1(String query);
 
 	/** 검색으로 찾은 상품개수
 	 * @param paramMap
 	 * @return
 	 */
-	int getSearchCount(String query);
+	int getSearchCount(Map<String, Object> newMap);
 
 	/** 검색으로 찾은 상품 리스트
 	 * @param paramMap

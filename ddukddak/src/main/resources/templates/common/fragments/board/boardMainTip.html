@@ -2,10 +2,15 @@
 <div class="tipBoardMainContainer" th:each="chunk, iterStat : ${tipBoardChunks}" th:classappend="${iterStat.index == 0} ? '' : 'hidden'">
     <th:block th:each="board : ${chunk}">
         <div class="tipBoardContainer fade" th:onclick="|location.href='@{/tip/detail/{boardNo}(boardNo=${board.boardNo})}'|">
-            <img th:src="@{|${board.thumbnail}|}" alt="Portfolio Image" class="tipBoardImg">
+            <div class="tipBoardImg">
+                <img th:src="@{|${board.thumbnail}|}" alt="Portfolio Image" class="tipBoardImg">
+            </div>
             <div class="tipBoardUserInfoContainer">
-                <div class="tipBoardUserName" th:text="${board.memberNickname}">닉네임</div>
                 <div class="tipBoardTitle" th:text="${board.boardTitle}">제목</div>
+                <div class="nameBox">
+                    <img th:src="${board.profileImg}">
+                    <div class="tipBoardUserName" th:text="${board.memberNickname}">닉네임</div>
+                </div>
                 <div class="tipBoardLikeContainer">
                     <div class="like">
                         <i class="fa-solid fa-heart" style="color: red;"></i>
