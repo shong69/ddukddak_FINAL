@@ -111,8 +111,19 @@
         calculateTotalPrice();
 
 
-            
+        
         function submitSelectedCartForm() {
+            const loginMemberTell = /*[[${session.loginMember.memberTel}]]*/ "휴대폰";
+
+            if(loginMemberTell == null) {
+
+                if(confirm(`휴대폰이 등록되지 않으면 구매하실 수 없습니다.\n '확인' 버튼 클릭 시 휴대폰 등록 경로로 이동합니다.`)) {
+                    location.href = '/myPage/memberInfo';
+                }
+                
+                return;
+            }
+
             const selectedCartIds = [];
             let totalPrice = 0;
 

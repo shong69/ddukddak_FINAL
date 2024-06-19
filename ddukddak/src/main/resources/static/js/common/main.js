@@ -1,3 +1,13 @@
+
+
+const memberTel = document.getElementById('memberTel');
+
+if(memberTel.value == '') {
+    if(confirm(`휴대폰 번호 미등록 시 사이트 이용에 제한이 있을 수 있습니다.\n휴대폰 등록 페이지로 이동하시겠습니까?`)) {
+        location.href = '/myPage/memberInfo';
+    }
+}
+
 const topButton = document.querySelector("#top");
 
 topButton.addEventListener("click", () => {

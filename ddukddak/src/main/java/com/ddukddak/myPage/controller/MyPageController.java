@@ -93,6 +93,7 @@ public class MyPageController {
 //		map.put("CategotyNo", product.getCategoryNo());
 
 		log.info("C카테고리 {}",productNo);
+		map = service.getProductByNo(productNo);
 //		Map<String, Object> map = service.getProductByNo(productNo);
 
 		

@@ -70,6 +70,7 @@ public class ContactInteriorController {
         return "partner/interior/interiorPortfolio";
  
 	}
+        
 	
 	private List<List<Project>> chunkBoards(List<Project> portfolio, int chunkSize) {
         List<List<Project>> portfolioChunks = new ArrayList<>();
