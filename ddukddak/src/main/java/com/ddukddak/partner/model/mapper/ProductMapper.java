@@ -248,7 +248,9 @@ public interface ProductMapper {
 	int modifyRegistProduct(Map<String, Object> map);
 
 	
-	int selectReceiptListCount();
+	int selectReceiptListCount(int partnerNo);
+
+	List<Product> selectReceiptList(int partnerNo, RowBounds rowBounds);
 
 
 

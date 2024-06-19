@@ -164,7 +164,7 @@ public interface ProductService {
 	 * @param cp
 	 * @return
 	 */
-	Map<String, Object> selectReciptList(int partnerNo, int mainSort, int sort, String status, int cp);
+	Map<String, Object> selectReceiptList(int partnerNo, int mainSort, int sort, String status, int cp);
 
 
 

@@ -36,5 +36,11 @@ public class Product {
 	private String uploadImgRename;
 	private int uploadImgOrder;
 	private String category;
+	
+	private String thumbnail;
+	
+	private String optionName;
+	private String optionValue;
+	private int productCount;
 
 }

@@ -56,127 +56,20 @@
                     <td>판매가</td>
                 </thead>
 
-
+                <th:block th:each="receiptList : ${receiptList}" th:object="${receiptList}">
                 <tr class="borderTr">
                     <td>
                         <input type="checkbox" value="1" name="selectProduct">
                     </td>
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
+                    <td><img th:src="@{*{thumbnail}}" alt="Product Thumbnail"></td>
+                    <td th:text="*{categoryName}">가구/의자</td>
+                    <td th:text="|*{optionName} : *{optionValue}|">오크내추럴</td>
+                    <td th:text="*{productCount}">300</td>
+                    <td th:text="*{productNo}">F202405210001</td>
+                    <td th:text="*{productName}">오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td th:text="*{productPrice}">122,200</td>
                 </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td><img src="/images/partner/seller/chair.jpg"></td>
-                    <td>가구/의자</td>
-                    <td>오크내추럴</td>
-                    <td>300</td>
-                    <td>F202405210001</td>
-                    <td>오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td>122,200</td>
-                </tr>
+            </th:block>
             </table>
         </div>
 
