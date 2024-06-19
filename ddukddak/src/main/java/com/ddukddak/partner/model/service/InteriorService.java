@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ddukddak.partner.model.dto.Partner;
 import com.ddukddak.partner.model.dto.Project;
+import com.ddukddak.partner.model.dto.ProjectImg;
 
 public interface InteriorService {
 
@@ -18,6 +19,10 @@ public interface InteriorService {
 
 	List<Partner> searchInteriorList();
 	
-	List<Project> selectMain(int portfolioNo); 
+	List<Project> selectMain(int portfolioNo);
+
+	List<Project> selectPortfolioList(int portfolioNo); 
+	
+	List<ProjectImg> selectImageList (int projectNo);
 
 }

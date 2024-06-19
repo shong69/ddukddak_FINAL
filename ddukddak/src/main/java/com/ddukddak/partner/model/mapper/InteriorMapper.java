@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ddukddak.partner.model.dto.Partner;
 import com.ddukddak.partner.model.dto.Project;
+import com.ddukddak.partner.model.dto.ProjectImg;
 
 @Mapper
 public interface InteriorMapper {
@@ -21,4 +22,7 @@ public interface InteriorMapper {
 	
 	List<Project> selectMain(int portfolioNo);
 
+	List<Project> selectPortfolioList(int portfolioNo);
+
+	List<ProjectImg> selectImageList(int projectNo);
 }

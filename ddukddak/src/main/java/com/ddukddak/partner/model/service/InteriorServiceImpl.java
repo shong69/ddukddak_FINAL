@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ddukddak.partner.model.dto.Partner;
 import com.ddukddak.partner.model.dto.Project;
+import com.ddukddak.partner.model.dto.ProjectImg;
 import com.ddukddak.partner.model.mapper.InteriorMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,18 @@ public class InteriorServiceImpl implements InteriorService {
 	@Override
 	public List<Project> selectMain(int portfolioNo) {
 		return mapper.selectMain(portfolioNo);
+	}
+
+
+	@Override
+	public List<Project> selectPortfolioList(int portfolioNo) {
+		return mapper.selectPortfolioList(portfolioNo);
+	}
+
+
+	@Override
+	public List<ProjectImg> selectImageList(int projectNo) {
+		return mapper.selectImageList(projectNo);
 	}
 
 }
