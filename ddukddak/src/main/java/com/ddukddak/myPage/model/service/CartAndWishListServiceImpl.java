@@ -1,6 +1,5 @@
 package com.ddukddak.myPage.model.service;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,6 +139,44 @@ public class CartAndWishListServiceImpl implements CartAndWishListService{
 	public List<Order> selectOrderList(Member loginMember) {
 		int memberNo = loginMember.getMemberNo();
 		return mapper.selectOrderList(memberNo);
+	}
+
+	//[주문내역]구매확정으로 변경
+	@Override
+	public int confirmPurchase(int orderItemNo, String orderStatus) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("orderItemNo", orderItemNo);
+		map.put("orderStatus", orderStatus);
+		int result = mapper.confirmPurchase(map);
+
+		return result;
+	}
+
+	//[주문내역]주문취소로 변경
+	@Override
+	public int orderDelete(int orderItemNo, String orderStatus) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("orderItemNo", orderItemNo);
+		map.put("orderStatus", orderStatus);
+		
+		int result = mapper.orderDelete(map);
+		log.info("주문취소 결과{}",result);
+		return result;
+	}
+
+	//[주문내역]리뷰작성여부 확인
+	@Override
+	public int checkReviewWrite(int orderItemNo) {
+		Map<String, Object> map = new HashMap<>();
+		int result = mapper.checkReviewWrite(orderItemNo);
+		return result;
+	}
+
+	//카테고리 알아오기
+	@Override
+	public Map<String, Object> getProductByNo(int productNo) {
+		log.info("I카테고리 {}",mapper.getProductByNo(productNo));
+		return mapper.getProductByNo(productNo);
 	}
 	
 }

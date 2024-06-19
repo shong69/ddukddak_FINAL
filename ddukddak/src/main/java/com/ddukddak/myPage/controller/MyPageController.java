@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.CartItem;
 import com.ddukddak.myPage.model.dto.Order;
@@ -40,51 +39,56 @@ public class MyPageController {
 	
 	//주문내역 진입
 	@GetMapping("")
+	public String main() {
+		return "/myPage/myPageMain";
+	}
+	
+	@GetMapping("selectOrderList")
 	@ResponseBody
-	public List<Order> main(@SessionAttribute("loginMember") Member loginMember,
-						Model model) {
+	public List<Order> selectOrderList(@SessionAttribute("loginMember") Member loginMember) {
 
-		
 		return service.selectOrderList(loginMember);
 	}
 	
-//	//[주문상태] 상태 배송완료 -> 구매확정
-//	@GetMapping("confirmPurchase")
-//	@ResponseBody
-//	public String confirmPurchase(@RequestParam("orderItemNo") int orderItemNo) {
-//
-//		
-//		return service.confirmPurchase(orderItemNo);
-//	}
-//	
-//	//[주문상태]주문상태 결제완료 -> 주문취소
-//	@GetMapping("orderDelete")
-//	@ResponseBody
-//	public String orderDelete(@RequestParam("orderItemNo") int orderItemNo) {
-//		
-//		return service.orderDelete(orderItemNo);
-//	}
-//	
-//	//[주문상태]리뷰작성 상태 확인
-//	@GetMapping("checkReviewWrite")
-//	@ResponseBody
-//	public String checkReviewWrite(@RequestParam("orderItemNo") int orderItemNo,
-//									@RequestParam("orderNo") int orderNo){
-//		
-//		return service.checkReviewWrite(orderItemNo);
-//	}
-//	
-//	//[주문상태]리뷰작성 : 카테고리 얻어오기
-//	@GetMapping("selectCategoty")
-//	@ResponseBody
-//	public Map<String, Object> selectCategoty(@RequestParam("productNo") int productNo){
-//		Product product = service.getProductByNo(productNo);
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("bigCategotyNo", product.getBigCategoryNo());
-//		map.put("CategotyNo", product.getCategoryNo());
-//		
-//		return map;
-//	}
+
+	//[주문상태] 상태 배송완료 -> 구매확정
+	@GetMapping("confirmPurchase")
+	@ResponseBody
+	public int confirmPurchase(@RequestParam("orderItemNo") int orderItemNo,
+							@RequestParam("orderStatus") String orderStatus) {
+
+		
+		return service.confirmPurchase(orderItemNo,orderStatus);
+	}
+	
+	//[주문상태]주문상태 결제완료 -> 주문취소
+	@GetMapping("orderDelete")
+	@ResponseBody
+	public int orderDelete(@RequestParam("orderItemNo") int orderItemNo,
+							@RequestParam("orderStatus") String orderStatus) {
+		
+		log.info("취소 정보{}", orderStatus);
+		return service.orderDelete(orderItemNo,orderStatus);
+	}
+	
+	//[주문상태]리뷰작성 상태 확인
+	@GetMapping("checkReviewWrite")
+	@ResponseBody
+	public int checkReviewWrite(@RequestParam("orderItemNo") int orderItemNo){
+		
+		return service.checkReviewWrite(orderItemNo);
+	}
+	
+	//[주문상태]리뷰작성 : 카테고리 얻어오기
+	@GetMapping("selectCategory")
+	@ResponseBody
+	public Map<String, Object> selectCategoty(@RequestParam("productNo") int productNo){
+		log.info("C카테고리 {}",productNo);
+		Map<String, Object> map = service.getProductByNo(productNo);
+		
+		return map;
+	}
+
 	
 	//회원정보 진입
 	@GetMapping("memberInfo")
