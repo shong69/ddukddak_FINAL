@@ -25,33 +25,10 @@
 
             <section class="myPage-main">
                 <h2 class="category-name">주문내역</h2>
-                <table class="skuList">
-                    <thead>
-                        <th>상품이미지</th>
-                        <th>주문일자</th>
-                        <th>주문번호</th>
-                        <th>상품정보[옵션]</th>
-                        <th>주문수량</th>
-                        <th>주문금액</th>
-                        <th>주문상태</th>
-                    </thead>
-                    <tbody>
-                        <th:block th:if="${skuList} != null">
-                                <th:block th:foreach 어쩌구>
-                                    <tr>
-                                        <td th:text="${}"><a th:href="@{상품 상세 링크}">상품이미지</a></td>
-                                        <td th:text="${}">주문일자</td>
-                                        <td th:text="${}">주문번호</td>
-                                        <td th:text="${}">상품정보</td>
-                                        <td th:text="${}">주문금액</td>
-                                        <td th:text="${}">주문수량</td>
-                                        <td th:text="${}">주문상태</td>
-                                    </tr>
-                                </th>
-                            </th>
-                        
+                <div class="skuList">
 
-                        <tr> <!--상품으로 나눠서 나열-->
+                     
+                        <!--<tr> <상품으로 나눠서 나열
                             <td><a><img class="product-image" ></a></td>
                             <td>2025-01-01</td>
                             <td>12341234</td>
@@ -80,13 +57,13 @@
                                 <span>배송중</span>
                                 <button class="myPageMainBtn">교환</button>
                             </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </tr>-->
+                </div>
             </section>
         </section>
     </main>
 
     <th:block th:replace="~{common/fragments/footer}"></th:block>
+    <script src="/js/myPage/main.js"></script>
 </body>
 </html>
