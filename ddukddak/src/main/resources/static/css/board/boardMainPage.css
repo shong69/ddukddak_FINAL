@@ -5,10 +5,7 @@
 .boardMainPageContainer {
     display: flex;
     flex-wrap: wrap;
-    margin: 0;
-    background-color: #FFFDF8;
     width: 100%;
-    transform: translateX(-5%);
 }
 
 
@@ -23,7 +20,7 @@
 
 .mainArea {
     flex-grow: 1;
-    margin: 50px;
+    margin: 30px;
     width: 900px;
     display: flex;
     flex-direction: column;
@@ -48,32 +45,30 @@
 }
 
 .searchArea input {
-    width: 100%;
-    height: 48px;
-    font-size: 15px;
+    width: 910px;
+    height: 30px;
+    font-size: 14px;
     border: none;
     border-radius: 10px;
     margin: 0 10px;
     
 }
 
+.searchArea input::placeholder {
+    font-size: 14px;
+}
+
 .searchArea input:focus {
     outline: none;
 }
 
-.searchArea > span:nth-child(1) {
+.searchArea > span:nth-child(1) form {
     border: 1px solid var(--gray5);
     border-radius: 10px;
     display: flex;
     align-items: center;
     background-color: white;
     width: 100%;
-}
-
-.searchBox::placeholder {
-    font-family: 'main';
-    font-size: 18px;
-    color: var(--gray3);
 }
 
 .searchArea > span:nth-child(1) > i {
@@ -162,7 +157,7 @@
 /* 중간 집들이 컨테이너 */
 .myHouseMainContainer, .tipMainContainer {
     height: auto;
-    width: 110%;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 20px;
@@ -170,9 +165,8 @@
     justify-content: center;
     flex-direction: column;
     margin-top: 50px;
-    border-radius: 30px;
-    background-color: white;
-    box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    box-shadow: 7px 7px 30px #cfcfcf;
 }
 
 .titleContainer {
@@ -195,19 +189,25 @@
 }
 
 .portListContainer {
-    width: 240px;
-    height: 240px;
+    width: 220px;
+    height: 220px;
     margin: 20px;
     position: relative;
     cursor: pointer;
-    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 7px 7px 30px #cfcfcf;
+    overflow: hidden;
 }
 
 .portListContainer img {
-    width: 100%;
-    height: 100%;
+    width: 220px;
+    height: 220px;
     object-fit: cover;
     border-radius: 0px;
+    transition-duration: 0.3s;
+}
+
+.portListContainer img:hover {
+    transform: scale(1.2);
 }
 
 .overlay {
@@ -229,11 +229,11 @@
     pointer-events: none;
 }
 
-.overlay h2, .overlay h4 {
+.overlay h2, .overlay h5 {
     margin: 5px 0; /* Adjust margin for spacing */
 }
 
-.overlay h1 {
+.overlay h2 {
     text-align: left;
     word-break: keep-all;
     line-height: 40px;
@@ -241,8 +241,7 @@
     word-wrap: break-word;
 }
 
-.overlay h4 {
-    font-size: 16px; /* Adjust font size as needed */
+.overlay h5 {
     width: 100%;
     text-align: right;
 }
@@ -284,13 +283,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #ded9d1;
-    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
     border-radius: 10px; /* Optional: rounded corners */
-    padding: 20px; /* Add some padding */
+    padding: 10px; /* Add some padding */
     box-sizing: border-box; 
-    margin: 20px;
-    cursor: pointer;
+    /* margin: 30px; */
+    margin: 30px;
 
 }
 
@@ -298,28 +295,53 @@
     width: 100%;
     height: 240px;
     object-fit: cover;
-    border-radius: 10px; /* Optional: rounded corners */
+    border-radius: 5px; /* Optional: rounded corners */
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.tipBoardImg img {
+    transition-duration: 0.3s;
+}
+
+.tipBoardImg img:hover {
+    transform: scale(1.2);
 }
 
 .tipBoardUserInfoContainer {
-    margin-top: 20px;
+    margin-top: 10px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 30px;
 }
 
 .tipBoardUserName {
     font-weight: bold;
-    font-size: 16px;
+    text-align: center;
+    font-size: 14px;
     margin-bottom: 10px;
 }
 
 .tipBoardTitle {
     font-size: 18px;
+    text-align: center;
     font-weight: bold;
     margin-bottom: 10px;
+    width: 100%;
+}
+
+.nameBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nameBox > img {
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
 .tipBoardLikeContainer {
@@ -328,11 +350,16 @@
     margin-bottom: 20px;
 }
 
+.like {
+    display: flex;
+}
+
 .tipBoardLikeContainer a {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: inherit;
+    cursor: pointer;
 }
 
 .tipBoardLikeContainer i {

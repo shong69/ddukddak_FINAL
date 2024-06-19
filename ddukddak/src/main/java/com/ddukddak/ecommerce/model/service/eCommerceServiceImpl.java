@@ -74,7 +74,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 	public Map<String, Object> selectProductList(int smallcategoryNo, int cp) {
 
 		//1. 전체 게시글 수 조회
-		int productCount = mapper.selectProductListCount(smallcategoryNo);
+		int productCount = mapper.selectProductListCount1(smallcategoryNo);
 		
 		//2. pagination 객체 생성하기
 		eCommercePagination pagination = new eCommercePagination(cp, productCount);
@@ -89,6 +89,8 @@ public class eCommerceServiceImpl implements eCommerceService{
 		Map<String, Object> map = new HashMap<>();
 		map.put("pagination", pagination);
 		map.put("productList", productList);
+		
+		log.info("productList" + productList);
 		
 		return map;
 	}
@@ -189,7 +191,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 	public Map<String, Object> searchList(int memberNo, String query, int cp) {
 		
 		//1.검색조건 맞고, 삭제 안된 게시글 수 조회
-		int listCount = mapper.getSearchCount(query);
+		int listCount = mapper.getSearchCount1(query);
 		
 		//2. + cp 사용해서 Pagination 생성하기
 		eCommercePagination pagination = new eCommercePagination(cp, listCount);
@@ -219,10 +221,19 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	// 검색 없이 정렬순서 바꾸기
 	@Override
-	public Map<String, Object> selectProductList(int memberNo, int smallcategoryNo, int cp, int sort) {
+	public Map<String, Object> selectProductList(int memberNo, int smallcategoryNo, int cp, int sort, int minPrice, int maxPrice) {
+		
+		Map<String, Object> newMap = new HashMap<String, Object>();
+		
+		newMap.put("smallcategoryNo", smallcategoryNo);
+		newMap.put("sort", sort);
+		newMap.put("minPrice", minPrice);
+		newMap.put("maxPrice", maxPrice);
+		newMap.put("memberNo", memberNo);
+		
 		log.debug("cp : " + cp);
 		//1. 전체 게시글 수 조회
-		int productCount = mapper.selectProductListCount(smallcategoryNo);
+		int productCount = mapper.selectProductListCount(newMap);
 		
 		//2. pagination 객체 생성하기
 		eCommercePagination pagination = new eCommercePagination(cp, productCount);
@@ -231,12 +242,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		Map<String, Object> newMap = new HashMap<String, Object>();
-		
-		newMap.put("smallcategoryNo", smallcategoryNo);
-		newMap.put("sort", sort);
-		newMap.put("memberNo", memberNo);
+
 		List<Product> productList = mapper.selectProductListOrder(newMap, rowBounds);
 		//4. 목록조회 결과 + pagination객체 map으로 묶어서 반환
 		
@@ -244,14 +250,25 @@ public class eCommerceServiceImpl implements eCommerceService{
 		map.put("pagination", pagination);
 		map.put("productList", productList);
 		
+		log.info("productList" + productList);
+		
 		return map;
 	}
 
 	// 검색한 상품 정렬순서 바꾸기
 	@Override
-	public Map<String, Object> searchList(int memberNo, String query, int cp, int sort) {
+	public Map<String, Object> searchList(int memberNo, String query, int cp, int sort, int minPrice, int maxPrice) {
+		
+		Map<String, Object> newMap = new HashMap<String, Object>();
+		
+		newMap.put("query", query);
+		newMap.put("sort", sort);
+		newMap.put("minPrice", minPrice);
+		newMap.put("maxPrice", maxPrice);
+		newMap.put("memberNo", memberNo);
+		
 		///1.검색조건 맞고, 삭제 안된 게시글 수 조회
-		int listCount = mapper.getSearchCount(query);
+		int listCount = mapper.getSearchCount(newMap);
 		
 		//2. + cp 사용해서 Pagination 생성하기
 		eCommercePagination pagination = new eCommercePagination(cp, listCount);
@@ -260,12 +277,6 @@ public class eCommerceServiceImpl implements eCommerceService{
 		int limit = pagination.getLimit();
 		int offset =(cp-1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		Map<String, Object> newMap = new HashMap<String, Object>();
-		
-		newMap.put("query", query);
-		newMap.put("sort", sort);
-		newMap.put("memberNo", memberNo);
 		
 		List<Product> productList = mapper.selectSearchListOrder(newMap, rowBounds);
 		

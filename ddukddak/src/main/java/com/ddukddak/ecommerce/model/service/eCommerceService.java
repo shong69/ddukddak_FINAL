@@ -77,17 +77,21 @@ public interface eCommerceService {
 	 * @param smallcategoryNo
 	 * @param cp
 	 * @param sort
+	 * @param maxPrice 
+	 * @param minPrice 
 	 * @return
 	 */
-	Map<String, Object> selectProductList(int memberNo, int smallcategoryNo, int cp, int sort);
+	Map<String, Object> selectProductList(int memberNo, int smallcategoryNo, int cp, int sort, int minPrice, int maxPrice);
 
 	/** 검색한 상품 정렬순서 바꾸기
 	 * @param query
 	 * @param cp
 	 * @param sort
+	 * @param maxPrice 
+	 * @param minPrice 
 	 * @return
 	 */
-	Map<String, Object> searchList(int memberNo, String query, int cp, int sort);
+	Map<String, Object> searchList(int memberNo, String query, int cp, int sort, int minPrice, int maxPrice);
 
 	/** 판매사 페이지용 소분류 카테고리 조회
 	 * @return

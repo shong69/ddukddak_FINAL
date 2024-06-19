@@ -58,6 +58,7 @@ public class InteriorServiceImpl implements InteriorService {
 	@Override
 	public List<ProjectImg> selectImageList(int projectNo) {
 		return mapper.selectImageList(projectNo);
+	}
 	// 포트 폴리오 프로젝트 추가
 	@Override
 	public int insertProject(Project project, List<MultipartFile> imgList) {

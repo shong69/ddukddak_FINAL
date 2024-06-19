@@ -33,7 +33,7 @@
         width: 200px;
     }
 
-    #priceSearch {
+    #priceSearch > form {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -52,10 +52,28 @@
         background-color: #404040;
         border: none;
         border-radius: 10px;
-        margin-top: 20px;
+        margin-top: 10px;
+        cursor: pointer;
     }
 
-    #priceSearch button h3 {
+    #priceSearch a {
+        height: 30px;
+        width: 200px;
+        background-color: #404040;
+        border: none;
+        border-radius: 10px;
+        margin-top: 10px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #priceSearch button h4 {
+        color: white;
+    }
+
+    #priceSearch a h4 {
         color: white;
     }
 
@@ -88,17 +106,32 @@
                 <div style="border: 1px solid black;"></div>
         
                 <div id="priceSearch">
-                    <h4 style="margin: 10px 0;">가격</h4>
-                    <input>
-                    <h3>~</h3>
-                    <input>
-                    <button><h3>찾기</h3></button>
+                    <form>
+                        <h4 style="margin: 10px 0;">가격</h4>
+                        <input name="minPrice" type="number" id="minPrice">
+                        <h3>~</h3>
+                        <input name="maxPrice" type="number" id="maxPrice">
+                        <button id="priceButton"><h4>찾기</h4></button>
+                        <a th:href='|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}|'><h4>초기화</h4></a>
+                    </form>
                 </div>
             </div>
         </div>
     </th:block>
 
 <script>
+    const priceButton = document.querySelector("#priceButton");
+
+    priceButton.addEventListener("click", e => {
+        const minPrice = document.querySelector("#minPrice").value;
+        const maxPrice = document.querySelector("#maxPrice").value;
+
+        if(minPrice > maxPrice) {
+            alert("가격범위가 알맞지 않습니다");
+            e.preventDefault();
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         const category = document.getElementById('detailCategory');
         let lastScrollY = window.scrollY;
