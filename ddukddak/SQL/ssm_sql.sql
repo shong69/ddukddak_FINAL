@@ -320,3 +320,5 @@ VALUES (1, '주문 생성용', 'N');
 
 
 -- 추후 MERCHANT_UID 널 ㄱㄱ
+
+SELECT * FROM "MEMBER" WHERE MEMBER_NO = 2;

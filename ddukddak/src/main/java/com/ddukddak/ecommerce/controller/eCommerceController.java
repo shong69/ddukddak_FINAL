@@ -262,6 +262,10 @@ public class eCommerceController {
 	    // 주소 이슈로 직접 불러오기
 		Member loginMember = service.selectMember(memberNo);
 		
+		if(loginMember != null) {
+			model.addAttribute("loginMember", loginMember);
+		}
+		
 		// 주소 포맷팅
 	    if (loginMember.getMemberAddr() != null) {
 	        String formattedAddr = loginMember.getMemberAddr().replaceAll("\\^\\^\\^", " ");
@@ -290,6 +294,7 @@ public class eCommerceController {
 	        }
 	    }
 		
+	    log.info("loginMember : " + loginMember);
 	    log.info("selectedItems : " + selectedItems);
 	    log.info("totalPrice : " + params.get("totalPrice"));
 	    
@@ -311,11 +316,11 @@ public class eCommerceController {
 	    
            
 	    
-	    // 모델에 필터링된 항목 추가
-	    
+	    // 모델에 필터링된 항목 추가)
 	    model.addAttribute("cartList", selectedItems);
 	    model.addAttribute("totalPrice", totalPrice);
 	    model.addAttribute("merchantUid", merchantUid);
+	    
 	    
 		return "eCommerce/eCommercePayment";
 	}

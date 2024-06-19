@@ -44,9 +44,8 @@ let myAmount = parseInt(number, 10);
 console.log(merchantUid); // ORD-202404281808330001
 
 const onClickPay = async () => {
-    
-    if(!agree.checked) {
-        alert('이용 약간 동의 체크 후 구매해 주세요.')
+    if (!agree.checked) {
+        alert('이용 약관 동의 체크 후 구매해 주세요.');
         return;
     }
 
@@ -58,89 +57,89 @@ const onClickPay = async () => {
     console.log(email);
     console.log(addr);
 
-    IMP.init('imp82211881');
+    try {
+        // 사전 검증 요청
+        const prepareResponse = await fetch('/payment/prepare', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                merchant_uid: merchantUid,
+                amount: myAmount
+            })
+        });
 
-    IMP.request_pay(
-        {
-            pg: "kakaopay",
-            pay_method: "card", // 생략가
-            merchant_uid: merchantUid, // 상점에서 생성한 고유 주문번호
-            name: productName,
-            amount: myAmount,
-            buyer_email: email,
-            buyer_name: nickName,
-            buyer_tel: tel,
-            buyer_addr: addr,
-        },
-        function (rsp) {
-            if(rsp.success) {
-                verifyPayment(rsp.imp_uid, rsp.merchant_uid);
-            } else {
-                alert(`결제에 실패하였습니다. 오류 내용: ${rsp.error_msg}`);
-                // 실패 로직 (예: 결제 실패 페이지로 리디렉션)
-                window.location.href = "/myPage/cart";
+        const prepareData = await prepareResponse.json();
+
+        // 여기에 이제 사전 검증 조건 
+        if (prepareData.status !== 'success') {
+            alert('결제 사전 검증에 실패하였습니다.');
+            return;
+        }
+
+        // 사전 검증이 완료되면 결제 요청
+        IMP.init('imp82211881');
+
+        IMP.request_pay(
+            {
+                pg: "kakaopay",
+                pay_method: "card",
+                merchant_uid: merchantUid,
+                name: productName,
+                amount: myAmount,
+                buyer_email: email,
+                buyer_name: nickName,
+                buyer_tel: tel,
+                buyer_addr: addr,
+            },
+            function (rsp) {
+                if (rsp.success) {
+                    // 결제 성공 시 서버로 결제 검증 요청
+                    verifyPayment(rsp.imp_uid, rsp.merchant_uid, myAmount);
+                } else {
+                    alert(`결제에 실패하였습니다. 오류 내용: ${rsp.error_msg}`);
+                    // 실패 로직 (예: 결제 실패 페이지로 리디렉션)
+                    window.location.href = "/myPage/cart";
+                }
             }
-        },
-    );
-
-    
+        );
+    } catch (error) {
+        console.error('사전 검증 중 오류 발생:', error);
+        alert('사전 검증 중 오류가 발생했습니다.');
+    }
 };
 
 
-// const verifyPayment = async (impUid, merchantUid) => {
-//     try {
-//         const myAmount = 0;// 실제 결제 금액을 서버에서 구하거나 클라이언트에서 넘겨받은 금액 사용
+// 결제 검증 함수
+const verifyPayment = async (impUid, merchantUid, myAmount) => {
+    try {
+        const response = await fetch('/payment/verify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                imp_uid: impUid,
+                merchant_uid: merchantUid
+            })
+        });
 
-//         // 사전 검증 API 호출
-//         const prepareResponse = await fetch('https://api.iamport.kr/payments/prepare', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': 'Bearer YOUR_ACCESS_TOKEN' // 아임포트 액세스 토큰
-//             },
-//             body: JSON.stringify({
-//                 merchant_uid: merchantUid,
-//                 amount: myAmount
-//             })
-//         });
+        const data = await response.json();
 
-//         const prepareData = await prepareResponse.json();
-
-//         if (prepareData.code !== 0) {
-//             // 사전 검증 실패
-//             alert("결제 준비 검증에 실패하였습니다.");
-//             window.location.href = "/paymentFailure";
-//             return;
-//         }
-
-//         // 사전 검증 성공, 결제 검증 API 호출
-//         const response = await fetch('/verifyPayment', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 imp_uid: impUid,
-//                 merchant_uid: merchantUid
-//             })
-//         });
-
-//         const data = await response.json();
-
-//         if (data.status === "success") {
-//             alert("결제가 성공적으로 완료되었습니다.");
-//             window.location.href = "/paymentSuccess";
-//         } else {
-//             alert("결제 검증에 실패하였습니다.");
-//             window.location.href = "/paymentFailure";
-//         }
-//     } catch (error) {
-//         console.error('결제 검증 중 오류 발생:', error);
-//         alert("결제 검증 중 오류가 발생했습니다.");
-//         window.location.href = "/paymentFailure";
-//     }
-// };
-
+        if (data.status === 'success') {
+            alert('결제가 성공적으로 완료되었습니다.');
+            window.location.href = '/paymentSuccess'; // 결제 성공 페이지로 리디렉션
+        } else {
+            alert('결제 검증에 실패하였습니다.');
+            window.location.href = '/paymentFailure'; // 결제 실패 페이지로 리디렉션
+        }
+    } catch (error) {
+        console.error('결제 검증 중 오류 발생:', error);
+        alert('결제 검증 중 오류가 발생했습니다.');
+        window.location.href = '/paymentFailure'; // 결제 실패 페이지로 리디렉션
+    }
+};
 // 버튼 클릭 시
 // payBtn.addEventListener('click', onClickPay);
 

@@ -18,25 +18,25 @@
     <h2 style="text-align: center; margin: 50px;">주문/결제</h2>
 
     
-    <form action="/eCommerce/complete">
+    <form action="/eCommerce/complete" id="paymentForm">
         <!-- 배송지 -->
         <div class="infoBox">
             <h3>배송지</h3>
 
             <div id="delivery">
                 <div id="change">
-                    <h4 style="margin-right: 850px;" th:text="${session.loginMember.memberNickname}">홍길동</h4>
+                    <h4 style="margin-right: 850px;" th:text="${loginMember.memberNickname}">홍길동</h4>
                     <!-- <button class="eCommerBuyDetailUpdateBtn">변경</button> -->
                 </div>
                 
-                <input type="hidden" name="memberNo" th:value="${session.loginMember.memberNo}">
+                <input type="hidden" name="memberNo" th:value="${loginMember.memberNo}">
 
-                <h4 style="color: rgb(165, 165, 165);" th:text="${session.loginMember.memberTel}">010-1234-1234</h4>
+                <h4 style="color: rgb(165, 165, 165);" th:text="${loginMember.memberTel}">010-1234-1234</h4>
                 
                 
-                <h4 th:text="${session.loginMember.memberAddr}">주소</h4>
+                <h4 th:text="${loginMember.memberAddr}">주소</h4>
                 
-                <input id="memberAddr" type="hidden" name="memberAddr" th:value="${session.loginMember.memberAddr}">
+                <input id="memberAddr" type="hidden" name="memberAddr" th:value="${loginMember.memberAddr}">
                 
                 
 
@@ -136,10 +136,10 @@
     
     <th:block th:replace="~{common/fragments/footer}"></th:block>
     <script th:inline="javascript">
-        const nickName = /*[[${session.loginMember.memberNickname}]]*/ "닉넴";
-        const email = /*[[${session.loginMember.memberEmail}]]*/ "이메일";
+        const nickName = /*[[${loginMember.memberNickname}]]*/ "닉넴";
+        const email = /*[[${loginMember.memberEmail}]]*/ "이메일";
         
-        const tel = /*[[${session.loginMember.memberTel}]]*/ "휴대폰";
+        const tel = /*[[${loginMember.memberTel}]]*/ "휴대폰";
 
     </script>
     <!-- iamport.payment.js -->
