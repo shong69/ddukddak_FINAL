@@ -202,6 +202,8 @@ public class eCommerceController {
 		// 소분류 카테고리 선택
 		List<Category> smallCategoryList = service.selectSmallCategory(bigcategoryNo);
 		
+		String bigCategoryName = service.selectBigCategory(bigcategoryNo);
+		
 		// 추천상품 선택
 		List<Product> recList = service.selectRecProduct(memberNo, productNo, smallcategoryNo);
 		
@@ -216,6 +218,8 @@ public class eCommerceController {
 		model.addAttribute("selectRecProductList", recList);
 		model.addAttribute("optionList", optionList);
 		model.addAttribute("productNo", productNo);
+		model.addAttribute("bigCategoryName", bigCategoryName);
+		model.addAttribute("minPrice", "NO");
 
 		
 		
