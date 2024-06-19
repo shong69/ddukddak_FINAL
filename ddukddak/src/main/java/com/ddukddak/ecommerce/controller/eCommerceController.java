@@ -26,6 +26,7 @@ import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.CartItem;
+import com.ddukddak.myPage.model.dto.Order;
 import com.ddukddak.myPage.model.service.CartAndWishListService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -289,9 +290,6 @@ public class eCommerceController {
 	
 	@RequestMapping("complete")
 	public String eCommerceComplete() {
-		
-		
-		
 		return "eCommerce/eCommerceComplete";
 	}
 	
@@ -303,10 +301,11 @@ public class eCommerceController {
 		
 		return service.selectReviewList(productNo);
 	}
-	//해당 상품에 대한 리뷰 작성 가능 개수
-	@GetMapping("")
+	
+	//해당 상품에 대한 리뷰 작성 가능 주문 상품 목록
+	@GetMapping("checkReviewAuth")
 	@ResponseBody
-	public int checkReviewAuth(@RequestParam("productNo") int productNo,
+	public List<Order> checkReviewAuth(@RequestParam("productNo") int productNo,
 								@SessionAttribute("loginMember") Member member) {
 		return service.checkReviewAuth(productNo, member.getMemberNo());
 	}
@@ -317,7 +316,7 @@ public class eCommerceController {
 	@ResponseBody
 	public int eCommercePostReview(@RequestParam("reviewContent") String reviewContent,
             						@RequestParam("reviewRating") int reviewRating,
-            						@RequestParam("reviewRating") int reviewRating,
+            						@RequestParam("orderItemNo") int orderItemNo,
             						@RequestParam("ProductNo") int ProductNo,
             						
 									@RequestParam("reviewImgs") List<MultipartFile> reviewImgs,

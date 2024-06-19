@@ -18,7 +18,7 @@
 
                 	
                 <form id="reviewForm" enctype="multipart/form-data">
-                    <div id = "review">
+                    <div id = "reviewArea">
                         <div id="id-addCommentArea">
                             <input id="hiddenReviewNo" name = "reviewNo" type = "hidden"> <!--리뷰id 존재 시 업데이트 로직 실행-->
                             <span id = "reviewerId" th:text="|@${session.loginMember?.memberId}|">아이디</span>
@@ -31,7 +31,7 @@
                             </span>
                             <button id="addComment" type = "button" onClick = "handleFormMissionReview(event)">등록</button>
                         </div>
-                        <div>
+                        <div id="optionDiv">
                             <div>상품 옵션</div>
                         </div>
                         <div id = "contentBox">
@@ -54,55 +54,6 @@
             <div id = "reviewContainer">
 
             </div>
-
-
-
-
-            <th:block th:if="${#lists.isEmpty(reviewList)}">
-                <li>
-                    <div id = "noReviewArea">
-                        작성된 리뷰가 존재하지 않습니다.
-                    </div>
-                </li>
-
-            </th:block>
-
-            <th:object th:unless="${#lists.isEmpty(reviewList)}">
-                <li class="reviewRow" th:each="review : ${reviewList}"
-                th:object="${review}">
-                
-                <th:block th:if="*{reviewDelFl}=='Y'">
-                    <div class="deleteReviewArea">- 삭제된 리뷰입니다 -</div>
-                </th:block>
-                    
-                <th:block th:if="*{reviewDelFl}=='N'">
-                    
-                    <div class = "reviewWrite">
-                        <div class="infoArea">
-                            <span class="memberId" th:text="|@*{memberId}|">아이디</span>
-                            <span class="commentWriteDate"th:text="*{reviewWriteDate}">작성일</span>
-                        </div>
-                            
-                        <div class="editArea" style="display: none;">
-
-                            <th:block th:if="${session.loginMember != null and session.loginMember?.memberNo == review.memberNo}">
-                                <button class="updateBtn-c" th:onclick="|showUpdateComment(*{commentNo}, this)|">수정</button>
-                                <button class="deleteBtn-c" th:onclick="|deleteComment(*{commentNo})|">삭제</button>
-                            </th:block>
-                        </div>
-                        <div>
-                            <img class="reviewImg" src="#">
-                        </div>
-
-                    </div>
-                    
-                    <div class="comment-content" th:utext="*{reviewContent}">댓글 내용</div>
-                    
-                
-                </th:block>
-                
-            </li>
-            </th:object>
 
         </ul>
     </div>

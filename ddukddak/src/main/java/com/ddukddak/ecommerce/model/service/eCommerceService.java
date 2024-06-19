@@ -10,6 +10,7 @@ import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.dto.Review;
+import com.ddukddak.myPage.model.dto.Order;
 
 public interface eCommerceService {
 
@@ -113,7 +114,7 @@ public interface eCommerceService {
 	 * @param i 
 	 * @return
 	 */
-	int checkReviewAuth(int productNo, int memberNo);
+	List<Order> checkReviewAuth(int productNo, int memberNo);
 
 	/**리뷰 등록하기
 	 * @param reivew

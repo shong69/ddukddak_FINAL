@@ -18,6 +18,7 @@ import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.ecommerce.model.mapper.eCommerceMapper;
+import com.ddukddak.myPage.model.dto.Order;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -305,9 +306,9 @@ public class eCommerceServiceImpl implements eCommerceService{
 		return list;
 	}
 
-	//해당 상품에 대한 리뷰 작성 가능 개수 조회
+	//해당 상품에 대한 리뷰 작성 가능 개수 조회 -> 드롭다운으로 표시할거임
 	@Override
-	public int checkReviewAuth(int productNo, int memberNo) {
+	public List<Order> checkReviewAuth(int productNo, int memberNo) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("productNo", productNo);
 		map.put("memberNo", memberNo);

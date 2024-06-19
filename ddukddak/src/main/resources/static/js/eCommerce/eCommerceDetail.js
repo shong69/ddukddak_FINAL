@@ -28,7 +28,7 @@ review.addEventListener("click", () => {
     reviewBox.style.display ='flex';
     explain.style.display = 'none';
     change.style.display = 'none';
-    openReviewCheck();
+    openReviewCheck(productNo);
     
 });
 
@@ -531,50 +531,76 @@ function handleFormMissionReview(event) {
 
 
 //리뷰 영역 선택 시 선택한 멤버가 리뷰 작성 권한이 있는지(상품id과 주문테이블에 겹치는지) 확인
-function openReviewCheck(){
+async function openReviewCheck(productNo){
 
     //리뷰 작성 권한 비동기로 알아오기
     const reviewForm = document.querySelector("#reviewForm");
-    if(checkReviewAuth(productNo)){//작성 하지 않은 리뷰가 존재하는 경우
+    const optionDiv = document.querySelector("#optionDiv");
+
+    //로그인 여부 확인
+    if(typeof loginMember === 'undefined' || loginMember === null){
+        reviewForm.classList.add('display-none');
+        selectReviewList(productNo);
+        return;
+    }
+    const reviewAuthList = await checkReviewAuth(productNo);
+
+    if(reviewAuthList&& reviewAuthList.length > 0){//작성 하지 않은 리뷰가 존재하는 경우
         //id=reviewForm 노출시키기
         reviewForm.classList.remove('display-none');
+        
+        
+        const existingSelect = document.querySelector("select.reviewOptSelect");
+        if(existingSelect) {
+            optionDiv.removeChild(existingSelect);
+        }
+        const select = document.createElement("select");
+        select.classList.add("reviewOptSelect");
+        
+        //옵션 추가하기
+        reviewAuthList.forEach(item =>{
+            const option = document.createElement("option");
+            option.value = `${order.orderItemNo}`;
+            option.innerHTML = `주문일:${item.orderDate} | 주문옵션:${order.optionValue} ${order.orderQuantity}개`;
+            select.append(option);
+        })
+        optionDiv.append(select);
     }else{
         reviewForm.classList.add('display-none');
     }
     
     //리뷰 리스트 알아오기
-    selectReviewList();
+    selectReviewList(productNo);
 }
 
-function checkReviewAuth(){
-    fetch(`/eCommerce/checkReviewAuth?productNo=${productNo}`)
-    .then(resp => resp.text())
-    .then(result => {
-        if(result ==0){ //작성 하지 않은 리뷰의 개수가 0개
-            return false;
-        }else{
-            return true;
-        }
-    }).catch(error => {
+//리뷰 작성 가능 주문 상품 목록
+async function checkReviewAuth(productNo){
+    try {
+        console.log(memberNo==undefined);
+        const response = await fetch("/eCommerce/checkReviewAuth?productNo=" + productNo);
+        const result = await response.json();
+        return result;
+    } catch (error) {
         console.error('Error:', error);
-        return false;
-    });
+        return [];
+    }
 }
 
 
 //4.리뷰 리스트 불러오기
 function selectReviewList(productNo){
-    fetch("/eCommerce?selectReviewList?productNo=${productNo}")
+    console.log(productNo);
+    fetch("/eCommerce/selectReviewList?productNo="+productNo)
     .then(resp=>resp.json())
     .then(result => {
-        
+        console.log(result);
         const reviewList = result;
         const reviewContainer = document.getElementById("reviewContainer");
         reviewContainer.innerHTML = "";
 
-        console.log(reviewList);
         if(reviewList == null || reviewList.length == 0){
             const li = document.createElement("li");
+            li.classList.add("noReviewLi");
             const div = document.createElement("div");
             div.innerHTML = "리뷰가 존재하지 않습니다";
             div.classList.add("noReviewArea");
