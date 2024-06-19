@@ -25,4 +25,11 @@ public interface InteriorMapper {
 	List<Project> selectPortfolioList(int portfolioNo);
 
 	List<ProjectImg> selectImageList(int projectNo);
+	
+	/** 포트폴리오 프로젝트 등록
+	 * @param project
+	 * @return result
+	 */
+	int projectInsert(Project project);
+
 }
