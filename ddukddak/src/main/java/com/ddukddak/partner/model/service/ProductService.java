@@ -15,11 +15,12 @@ public interface ProductService {
 
 	/** 재고등록 재고상품 조회
 	 * @param cp 
+	 * @param memberNo 
 	 * @param cp2 
 	 * @param cp2 
 	 * @return
 	 */
-	Map<String, Object> selectCreateList(int mainSort, int sort, int cp);
+	Map<String, Object> selectCreateList(int mainSort, int sort, int cp, int memberNo);
 
 	/** 재고상품 판매등록
 	 * @param selectedValues
@@ -67,9 +68,10 @@ public interface ProductService {
 	 * @param sort
 	 * @param status 
 	 * @param cp
+	 * @param memberNo 
 	 * @return
 	 */
-	Map<String, Object> selectApplyList(int mainSort, int sort, String status, int cp);
+	Map<String, Object> selectApplyList(int mainSort, int sort, String status, int cp, int memberNo);
 
 	/** 판매상태 변경
 	 * @param map

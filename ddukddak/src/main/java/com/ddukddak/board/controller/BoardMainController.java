@@ -11,13 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.board.model.dto.BoardImg;
 import com.ddukddak.board.model.dto.Report;
 import com.ddukddak.board.model.service.BoardMainService;
+import com.ddukddak.board.model.service.MyHouseBoardService;
+import com.ddukddak.board.model.service.tipBoardService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardMainController {
 	
 	private final BoardMainService service;
+	private final MyHouseBoardService myPageService;
+	private final tipBoardService tipService;
 
 	@GetMapping("main")
 	public String boardMain(Model model) {
@@ -101,5 +107,29 @@ public class BoardMainController {
 		log.info("report : " + report);
 		
 		return service.insertReport(report);
+	}
+	
+	@GetMapping("main/search")
+	public String mainSerch(@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+							@RequestParam(value="query", required=false) String query,
+							Model model) {
+		
+		Map<String, Object> map = myPageService.searchList(1, "latest", query, cp);
+	    List<Board> tipBoard = tipService.searchList(2, "latest", query);
+	    
+	    log.info("my : " + map.get("myHouseList"));
+	    
+	    // myHouseList를 가져와서 처음 5개의 요소만 추출
+	    List<Board> myHouseList = (List<Board>) map.get("myHouseList");
+	    List<Board> myHouseListTop5 = myHouseList.size() > 5 ? myHouseList.subList(0, 5) : myHouseList;
+
+	    List<List<Board>> tipBoardChunks = chunkBoards(tipBoard, 2);
+	    
+	    model.addAttribute("pagination", map.get("pagination"));
+	    model.addAttribute("myHouseList", myHouseListTop5);  // 처음 5개의 요소만 추가
+	    model.addAttribute("tipBoardChunks", tipBoardChunks);
+	    model.addAttribute("query", query);
+		
+		return "board/boardMainSearch";
 	}
 }

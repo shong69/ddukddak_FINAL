@@ -10,6 +10,7 @@
 		FROM PRODUCT
 		WHERE PRODUCT_FL = 'N'
 		AND PRODUCT_UPDATE_DATE IS NULL
+		AND PARTNER_NO = #{partnerNo}
 	</select>
 	
 	<!-- 재고등록 재고상품 조회 -->
@@ -24,6 +25,7 @@
 		WHERE UPLOAD_IMG_ORDER = 0
 		AND PRODUCT_FL = 'N'
 		AND PRODUCT_UPDATE_DATE IS NULL
+		AND PARTNER_NO = #{partnerNo}
 		ORDER BY p.PRODUCT_NO DESC
 	</select>
 
@@ -36,6 +38,7 @@
 		WHERE PRODUCT_FL = 'N'
 		AND PRODUCT_UPDATE_DATE IS NULL
 		AND BIG_CATEGORY_NO = #{mainSort}
+		AND PARTNER_NO = #{partnerNo}
 	</select>
 	
 	<!-- 재고등록 재고상품 조회 메인카테고리 -->
@@ -51,6 +54,7 @@
 		AND PRODUCT_FL = 'N'
 		AND PRODUCT_UPDATE_DATE IS NULL
 		AND BIG_CATEGORY_NO = #{mainSort}
+		AND PARTNER_NO = #{partnerNo}
 		ORDER BY p.PRODUCT_NO DESC
 	</select>
 
@@ -61,6 +65,7 @@
 		WHERE PRODUCT_FL = 'N'
 		AND PRODUCT_UPDATE_DATE IS NULL
 		AND CATEGORY_NO = #{sort}
+		AND PARTNER_NO = #{partnerNo}
 	</select>
 	
 	<!-- 재고등록 재고상품 조회 카테고리 -->
@@ -76,6 +81,7 @@
 		AND PRODUCT_FL = 'N'
 		AND PRODUCT_UPDATE_DATE IS NULL
 		AND CATEGORY_NO = #{sort}
+		AND PARTNER_NO = #{partnerNo}
 		ORDER BY p.PRODUCT_NO DESC
 	</select>
 	
@@ -131,6 +137,7 @@
 		SELECT COUNT(*)
 		FROM PRODUCT
 		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
+		AND PARTNER_NO = #{partnerNo}
 	</select>
 	
 	<!-- 판매관리 판매상품 조회 -->
@@ -145,6 +152,7 @@
 		NATURAL JOIN BIG_CATEGORY b
 		WHERE UPLOAD_IMG_ORDER = 0
 		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		AND PARTNER_NO = #{partnerNo}
 		ORDER BY p.PRODUCT_NO DESC
 	</select>
 	
@@ -154,6 +162,7 @@
 		FROM PRODUCT
 		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
 		AND PRODUCT_FL = #{status}
+		AND PARTNER_NO = #{partnerNo}
 	</select>
 	
 	<!-- 판매관리 판매상품 조회 상태 -->
@@ -169,6 +178,7 @@
 		WHERE UPLOAD_IMG_ORDER = 0
 		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		AND PRODUCT_FL = #{status}
+		AND PARTNER_NO = #{partnerNo}
 		ORDER BY p.PRODUCT_NO DESC
 	</select>
 
@@ -180,6 +190,7 @@
 		NATURAL JOIN BIG_CATEGORY
 		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
 		AND BIG_CATEGORY_NO = #{mainSort}
+		AND PARTNER_NO = #{partnerNo}
 	</select>
 	
 	<!-- 판매관리 판매상품 조회 메인카테고리 -->
@@ -195,6 +206,7 @@
 		WHERE UPLOAD_IMG_ORDER = 0
 		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		AND BIG_CATEGORY_NO = #{mainSort}
+		AND PARTNER_NO = #{partnerNo}
 		ORDER BY p.PRODUCT_NO DESC
 	</select>
 
@@ -207,6 +219,7 @@
 		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
 		AND BIG_CATEGORY_NO = #{mainSort}
 		AND PRODUCT_FL = #{status}
+		AND PARTNER_NO = #{partnerNo}
 	</select>
 	
 	<!-- 판매관리 판매상품 조회 메인카테고리 상태 -->
@@ -223,6 +236,7 @@
 		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		AND BIG_CATEGORY_NO = #{mainSort}
 		AND PRODUCT_FL = #{status}
+		AND PARTNER_NO = #{partnerNo}
 		ORDER BY p.PRODUCT_NO DESC
 	</select>
 
@@ -232,6 +246,7 @@
 		FROM PRODUCT
 		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
 		AND CATEGORY_NO = #{sort}
+		AND PARTNER_NO = #{partnerNo}
 	</select>
 	
 	<!-- 판매관리 판매상품 조회 카테고리 -->
@@ -247,6 +262,7 @@
 		WHERE UPLOAD_IMG_ORDER = 0
 		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		AND CATEGORY_NO = #{sort}
+		AND PARTNER_NO = #{partnerNo}
 		ORDER BY p.PRODUCT_NO DESC
 	</select>
 
@@ -257,6 +273,7 @@
 		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
 		AND CATEGORY_NO = #{sort}
 		AND PRODUCT_FL = #{status}
+		AND PARTNER_NO = #{partnerNo}
 	</select>
 	
 	<!-- 판매관리 판매상품 조회 카테고리 상태 -->
@@ -273,6 +290,7 @@
 		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		AND CATEGORY_NO = #{sort}
 		AND PRODUCT_FL = #{status}
+		AND PARTNER_NO = #{partnerNo}
 		ORDER BY p.PRODUCT_NO DESC
 	</select>
 	

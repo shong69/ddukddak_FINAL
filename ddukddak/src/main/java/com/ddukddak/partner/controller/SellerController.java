@@ -63,6 +63,8 @@ public class SellerController {
             return "redirect:/partner/main";
         } 
 		
+		int memberNo = loginPartnerMember.getPartnerNo();
+		
 		// 대분류 카테고리 선택
 		List<Category> categoryList = eCommerceService.selectCategory();
 		
@@ -74,7 +76,7 @@ public class SellerController {
 		model.addAttribute("smallCategoryList", smallCategoryList);
 		
 		// 재고상품 조회
-		Map<String, Object> map = service.selectCreateList(mainSort, sort, cp);
+		Map<String, Object> map = service.selectCreateList(mainSort, sort, cp, memberNo);
 		
 		model.addAttribute("createList", map.get("createList"));
 		model.addAttribute("pagination", map.get("pagination"));
@@ -223,8 +225,11 @@ public class SellerController {
 			@RequestParam(value="mainSort", required=false, defaultValue="0") int mainSort,
 			@RequestParam(value="sort", required=false, defaultValue="0") int sort,
 			@RequestParam(value="status", required=false, defaultValue="A") String status,
+			@SessionAttribute("loginPartnerMember") Partner loginPartnerMember,
 			Model model
 			) {
+		
+		int memberNo = loginPartnerMember.getPartnerNo();
 		
 		// 대분류 카테고리 선택
 		List<Category> categoryList = eCommerceService.selectCategory();
@@ -237,7 +242,7 @@ public class SellerController {
 		model.addAttribute("smallCategoryList", smallCategoryList);
 		
 		// 재고상품 조회
-		Map<String, Object> map = service.selectApplyList(mainSort, sort, status, cp);
+		Map<String, Object> map = service.selectApplyList(mainSort, sort, status, cp, memberNo);
 		
 		model.addAttribute("applyList", map.get("applyList"));
 		model.addAttribute("pagination", map.get("pagination"));

@@ -3,7 +3,6 @@
     display: flex;
     flex-wrap: wrap;
     margin: 0;
-    background-color: #FFFDF8;
     width: 100%;
     transform: translateX(-5%);
 }
@@ -45,7 +44,7 @@
 }
 
 .searchArea input {
-    width: 650px;
+    width: 700px;
     height: 48px;
     font-size: 15px;
     border: none;
@@ -76,6 +75,20 @@
 .searchBox::placeholder {
     font-family: 'main';
     font-size: 18px;
+    color: var(--gray3);
+}
+
+.searchForm {
+    display: flex;
+    align-items: center;
+}
+
+#searchBtn {
+    background-color: white;
+    width: 30px;
+    font-size: 15px;
+    margin: 0 10px;
+    cursor: pointer;
     color: var(--gray3);
 }
 
@@ -171,6 +184,8 @@
     display: -webkit-box;
     -webkit-line-clamp: 5; /* Number of lines to show */
     -webkit-box-orient: vertical;
+    margin-top: auto;
+    text-align: end;
 }
 
 /* 버튼 */
@@ -206,10 +221,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #ded9d1;
-    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+    background-color: white;
     border-radius: 10px; /* Optional: rounded corners */
-    padding: 20px; /* Add some padding */
+    padding: 10px; /* Add some padding */
     box-sizing: border-box; 
     /* margin: 30px; */
     margin-top: 50px;
@@ -221,35 +235,63 @@
     width: 100%;
     height: 240px;
     object-fit: cover;
-    border-radius: 10px; /* Optional: rounded corners */
+    border-radius: 5px; /* Optional: rounded corners */
     cursor: pointer;
+    overflow: hidden;
+}
+
+.tipBoardImg img {
+    transition-duration: 0.3s;
+}
+
+.tipBoardImg img:hover {
+    transform: scale(1.2);
 }
 
 .tipBoardUserInfoContainer {
-    margin-top: 20px;
+    margin-top: 10px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 30px;
 }
 
 .tipBoardUserName {
     font-weight: bold;
-    font-size: 16px;
+    text-align: center;
+    font-size: 14px;
     margin-bottom: 10px;
 }
 
 .tipBoardTitle {
     font-size: 18px;
+    text-align: center;
     font-weight: bold;
     margin-bottom: 10px;
+    width: 100%;
+}
+
+.nameBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nameBox > img {
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
 
 .tipBoardLikeContainer {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+}
+
+.like {
+    display: flex;
 }
 
 .tipBoardLikeContainer a {

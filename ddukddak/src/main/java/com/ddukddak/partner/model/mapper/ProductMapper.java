@@ -15,37 +15,39 @@ import com.ddukddak.ecommerce.model.dto.ProductOption;
 public interface ProductMapper {
 	
 	/** 재고등록 재고상품 개수조회
+	 * @param productCount 
 	 * @return
 	 */
-	int selectCreateListCount();
+	int selectCreateListCount(int productCount);
 	
 	/** 재고등록 재고상품 조회
+	 * @param partnerNo 
 	 * @param rowBounds 
 	 * @return
 	 */
-	List<Product> selectCreateList(RowBounds rowBounds);
+	List<Product> selectCreateList(int partnerNo, RowBounds rowBounds);
 	
 	/** 재고등록 재고상품 개수조회 메인카테고리
 	 * @return
 	 */
-	int selectCreateListCountMainSort(int mainSort);
+	int selectCreateListCountMainSort(Map<String, Object> newMap);
 	
 	/** 재고등록 재고상품 조회 메인카테고리
 	 * @param rowBounds 
 	 * @return
 	 */
-	List<Product> selectCreateListMainSort(int mainSort, RowBounds rowBounds);
+	List<Product> selectCreateListMainSort(Map<String, Object> newMap, RowBounds rowBounds);
 
 	/** 재고등록 재고상품 개수조회 카테고리
 	 * @return
 	 */
-	int selectCreateListCountSort(int sort);
+	int selectCreateListCountSort(Map<String, Object> newMap);
 
 	/** 재고등록 재고상품 조회 카테고리
 	 * @param rowBounds 
 	 * @return
 	 */
-	List<Product> selectCreateListSort(int sort, RowBounds rowBounds);
+	List<Product> selectCreateListSort(Map<String, Object> newMap, RowBounds rowBounds);
 
 	/** 재고상품 판매등록
 	 * @param value
@@ -98,39 +100,41 @@ public interface ProductMapper {
 	int insertOption(Map<String, Object> map);
 
 	/** 판매관리 판매상품 개수조회
+	 * @param partnerNo 
 	 * @return
 	 */
-	int selectApplyListCount();
+	int selectApplyListCount(int partnerNo);
 
 	/** 판매관리 판매상품 조회
+	 * @param partnerNo 
 	 * @param rowBounds
 	 * @return
 	 */
-	List<Product> selectApplyList(RowBounds rowBounds);
+	List<Product> selectApplyList(int partnerNo, RowBounds rowBounds);
 	
 	/** 판매관리 판매상품 개수조회 상태
 	 * @return
 	 */
-	int selectApplyListCountStatus(String status);
+	int selectApplyListCountStatus(Map<String, Object> newMap);
 	
 	/** 판매관리 판매상품 조회 상태
 	 * @param rowBounds
 	 * @return
 	 */
-	List<Product> selectApplyListStatus(String status, RowBounds rowBounds);
+	List<Product> selectApplyListStatus(Map<String, Object> newMap, RowBounds rowBounds);
 
 	/** 판매관리 판매상품 개수조회 메인카테고리
-	 * @param mainSort
+	 * @param newMap
 	 * @return
 	 */
-	int selectApplyListCountMainSort(int mainSort);
+	int selectApplyListCountMainSort(Map<String, Object> newMap);
 
 	/** 판매관리 판매상품 조회 메인카테고리
-	 * @param mainSort
+	 * @param newMap
 	 * @param rowBounds
 	 * @return
 	 */
-	List<Product> selectApplyListMainSort(int mainSort, RowBounds rowBounds);
+	List<Product> selectApplyListMainSort(Map<String, Object> newMap, RowBounds rowBounds);
 	
 	/** 판매관리 판매상품 개수조회 메인카테고리 상태
 	 * @param mainSort
@@ -146,17 +150,17 @@ public interface ProductMapper {
 	List<Product> selectApplyListMainSortStatus(Map<String, Object> newMap, RowBounds rowBounds);
 
 	/** 판매관리 판매상품 개수조회 카테고리
-	 * @param sort
+	 * @param newMap
 	 * @return
 	 */
-	int selectApplyListCountSort(int sort);
+	int selectApplyListCountSort(Map<String, Object> newMap);
 
 	/** 판매관리 판매상품 조회 카테고리
-	 * @param sort
+	 * @param newMap
 	 * @param rowBounds
 	 * @return
 	 */
-	List<Product> selectApplyListSort(int sort, RowBounds rowBounds);
+	List<Product> selectApplyListSort(Map<String, Object> newMap, RowBounds rowBounds);
 	
 	/** 판매관리 판매상품 개수조회 카테고리 상태
 	 * @param sort
