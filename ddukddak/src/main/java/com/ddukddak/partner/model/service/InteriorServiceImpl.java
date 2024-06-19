@@ -77,6 +77,18 @@ public class InteriorServiceImpl implements InteriorService {
 		
 		log.info("projectList : " + projectList);
 		
+		for (Project project : projectList) {
+			
+			Project thumbnailProject = mapper.selectProject(project.getProjectNo());
+//			log.info("확인 : " + thumbnailProject.getImgList());
+			if(!thumbnailProject.getImgList().isEmpty()) {
+				
+				project.setImgList(thumbnailProject.getImgList());
+			}
+			
+		}
+//		log.info("projectList : " + projectList);
+		
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("mainProject", mainProject);

@@ -62,15 +62,11 @@ public class InteriorController {
         
         portfolio.setMainProject( (Project) map.get("mainProject") );
         
-        ProjectImg thumbnail = null;
+        portfolio.setProjectList( (List<Project>) map.get("projectList") );
         
-//        for(Project project : projectList) {
-//        	
-//        	
-//        	project.setThumbnail( project.getImgList().get(0).getUploadImgPath() + project.getImgList().get(0).getUploadImgRename() );
-//        	
-//        	log.info(project.getThumbnail());
-//        }
+        log.info("포트폴리오 프로젝트 리스트 : " + portfolio.getProjectList());
+        
+
         
 //        log.info("확인 : " + portfolio.getProjectList().get(5).getThumbnail());
 //        log.info("mainProject : " + portfolio.getMainProject());

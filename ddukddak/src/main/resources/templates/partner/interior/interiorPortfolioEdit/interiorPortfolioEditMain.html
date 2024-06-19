@@ -53,7 +53,14 @@
 
         <!-- 중간 시공사 컨테이너 -->
         <div class="midContainer">
-            <div class="imgContainer">
+
+            <!-- 프로필 이미지 X -->
+             <div th:unless="${portfolio.profileImg != null}" class="imgContainer">
+                <img th:src="#{user.default.image}" class="portLogo">
+             </div>
+
+            <!-- 프로필 이미지 O -->
+            <div th:if="${portfolio.profileImg != null}" class="imgContainer">
                 <img class="portLogo" th:src="${portfolio.profileImg}"></img>
             </div>
             <div class="nameContainer">
