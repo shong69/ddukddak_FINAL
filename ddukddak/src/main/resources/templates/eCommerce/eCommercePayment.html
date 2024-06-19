@@ -59,7 +59,7 @@
 
                         <div class="itemInfo">
                             <div>
-                                <h5 th:text="*{productName}" style="font-weight: 600;"></h5>
+                                <h5 id="productName" th:text="*{productName}" style="font-weight: 600;"></h5>
                                 <h5 th:text="|*{optionValue}  - 수량 *{productCount}개|" style="color: var(--gray2); font-weight: 500; font-size: 13px;"></h5>
                                 <!-- <h5 th:text="|*{productCount}개|" style="color: var(--gray2); font-weight: 500; font-size: 13px;"></h5> -->
                             </div>
@@ -95,14 +95,14 @@
 
             <div id="pamentOption">
                 <div>
-                    <input type="radio" id="option1" name="option" value="1">
+                    <input type="radio" id="option1" name="option" value="1" checked>
                     <label for="option1">카카오 페이</label>
                 </div>
-                <!-- <div>
-                    <input type="radio" id="option2" name="option" value="2">
+                <div>
+                    <input type="radio" id="option2" value="2" disabled>
                     <label for="option2">무통장 입금</label>
                 </div>
-                <div>
+                <!-- <div>
                     <input type="radio" id="option3" name="option" value="3">
                     <label for="option3">간편 결제</label></br>
                 </div> -->
@@ -120,16 +120,21 @@
             </label>
         </div>
         <div style="width: 100%; display: flex; justify-content: center">
-            <button id="payBtn" class="eCommerBuyDetailConfirmBtn" style="margin: 60px 0;">결제하기</button>
+            <button type="button" id="payBtn" class="eCommerBuyDetailConfirmBtn" style="margin: 60px 0;">결제하기</button>
         </div>
     </form>
     
     
     
     <th:block th:replace="~{common/fragments/footer}"></th:block>
+    <script th:inline="javascript">
+        const nickName = /*[[${session.loginMember.memberNickname}]]*/ "닉넴";
 
+
+    </script>
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <script src="/js/eCommerce/eCommercePayment.js"></script>
+    
 </body>
 </html>

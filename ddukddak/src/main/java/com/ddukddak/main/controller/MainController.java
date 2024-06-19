@@ -32,16 +32,26 @@ public class MainController {
 	// 메인페이지로 이동
 	@RequestMapping("/")
 	public String main(HttpServletRequest req,
-						Model model) {
+						Model model, RedirectAttributes ra) {
 		
 		HttpSession session = req.getSession();
-		
+				
 		Member loginMember = (Member)session.getAttribute("loginMember");
 		
 		int memberNo = 0;
 		
+		String message = null;
+		
 		if(loginMember != null) {
 			memberNo = loginMember.getMemberNo();
+			
+			
+			if(loginMember.getMemberTel() == null) {
+				
+				message = "휴대폰 번호가 등록되지 않으면 사이트 이용에 제한이 있을 수 있습니다.\n 휴대폰 등록 페이지로 이동하시겠습니까?";
+				
+				
+			}
 		}
 		
 		// 대분류 카테고리 선택
@@ -58,6 +68,9 @@ public class MainController {
 		
 		// 집들이 게시물 가져오기
 		List<Board> MyHouseList = MyHouservice.selectMyHouseList();
+		
+		ra.addFlashAttribute("message", message);
+		
 		
 		model.addAttribute("myHouseList", MyHouseList);
 		
