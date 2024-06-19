@@ -109,6 +109,10 @@
 		    AND p.PRODUCT_FL = 'N'
 		    AND c.CATEGORY_NO = #{smallcategoryNo}
 		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		<![CDATA[
+			AND PRODUCT_PRICE > #{minPrice}
+			AND PRODUCT_PRICE < #{maxPrice}
+		]]>
 		ORDER BY
 				CASE 
 		        WHEN #{sort} = 1 THEN p.PRODUCT_UPDATE_DATE
@@ -305,6 +309,32 @@
 			AND PRODUCT_PRICE > #{minPrice}
 			AND PRODUCT_PRICE < #{maxPrice}
 		]]>
+	</select>
+	
+	<!-- 검색으로 찾은 상품리스트 -->
+	<select id="selectSearchList1">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, p.CATEGORY_NO "CATEGORY_NO", PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME, BIG_CATEGORY_NO,
+		UPLOAD_IMG_ORDER, CATEGORY,
+		CASE 
+	        WHEN EXISTS (SELECT 1
+	        						FROM WISHLIST w
+	        						WHERE w.PRODUCT_NO = p.PRODUCT_NO
+	        						AND w.MEMBER_NO = #{memberNo}) 
+	        THEN 1 
+	        ELSE 0 
+	    END AS WISH
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		LEFT JOIN CATEGORY c ON(p.CATEGORY_NO = c.CATEGORY_NO)
+		NATURAL JOIN BIG_CATEGORY
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND (PRODUCT_NAME LIKE '%' || #{query} || '%'
+			OR CATEGORY_NAME LIKE '%' || #{query} || '%'
+			OR BIG_CATEGORY_NAME LIKE '%' || #{query} || '%')
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		ORDER BY PRODUCT_NO
 	</select>
 	
 	<!-- 검색으로 찾은 상품리스트 -->
