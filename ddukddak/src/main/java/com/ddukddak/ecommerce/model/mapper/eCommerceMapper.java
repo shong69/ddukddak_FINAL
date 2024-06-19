@@ -11,6 +11,7 @@ import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 
 @Mapper
@@ -141,5 +142,10 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	List<Category> selectSmallCategory2();
+
+	/**리뷰 등록하기
+	 * @param review
+	 */
+	void postReview(Review review);
 
 }

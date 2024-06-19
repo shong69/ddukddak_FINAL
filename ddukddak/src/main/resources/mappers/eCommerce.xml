@@ -372,4 +372,19 @@
 		SELECT * FROM "CATEGORY"
 	</select>
 	
+	
+	
+	
+	
+	
+
+    <insert id="postReview" parameterType="Review" useGeneratedKeys="true" >
+    	<selectKey order="BEFORE" resultType="_int" keyProperty="reviewNo">
+    		SELECT SEQ_REVIEW_NO.NEXTVAL FROM DUAL
+    	</selectKey>
+        INSERT INTO "REVIEW"
+        VALUES (reviewNo, #{reviewContent},SYSDATE, NULL, #{reviewRating}, #{productNo}, )
+    </insert>
+
+
 </mapper>

@@ -769,4 +769,10 @@ public class ProductServiceImpl implements ProductService{
 			}
 		}
 	}
+
+	@Override
+	public int changeStatus(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

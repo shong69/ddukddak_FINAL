@@ -1,5 +1,7 @@
 package com.ddukddak.ecommerce.model.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,5 +26,8 @@ public class Review {
 	private int memberNo;
 	private int orderItemNo;
 	private String reviewDelFl;
+	
+	//리뷰 이미지
+	private List<ReviewImg> imgList;
 
 }

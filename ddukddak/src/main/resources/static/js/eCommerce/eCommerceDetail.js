@@ -28,6 +28,7 @@ review.addEventListener("click", () => {
     reviewBox.style.display ='flex';
     explain.style.display = 'none';
     change.style.display = 'none';
+    openReviewCheck();
     
 });
 
@@ -193,136 +194,146 @@ function updateTotalCount() {
     totalCount.innerText = `총 수량: ${totalCountNumber}개`;
 }
 
-    // 선택된 옵션 값이 이미 존재하는지 확인하는 함수
-    function checkDuplicateOption() {
-        const selectedOptions = Array.from(selectTags).map(select => select.options[select.selectedIndex].text).join(',');
-        const optionElements = document.querySelectorAll('.options');
-        let isDuplicate = false;
+// 선택된 옵션 값이 이미 존재하는지 확인하는 함수
+function checkDuplicateOption() {
+    const selectedOptions = Array.from(selectTags).map(select => select.options[select.selectedIndex].text).join(',');
+    const optionElements = document.querySelectorAll('.options');
+    let isDuplicate = false;
 
-        optionElements.forEach(optionElement => {
-            if (optionElement.innerText === selectedOptions) {
-                isDuplicate = true;
-            }
-        });
+    optionElements.forEach(optionElement => {
+        if (optionElement.innerText === selectedOptions) {
+            isDuplicate = true;
+        }
+    });
 
-        return isDuplicate;
-    }
+    return isDuplicate;
+}
 
-    // 모든 select 태그의 옵션값이 0이 아닌 경우에만 alert 창 띄우기
-    function showAlertIfAllValuesAreNotZero() {
-        if (checkAllSelectValues()) {
-            if (checkDuplicateOption()) {
-                alert('이미 같은 옵션이 선택되었습니다.');
-                selectTags.forEach(elements => {
-                    elements.value = 0;
-                })
-                return;
-            }
-
-            const div1 = document.createElement("div");
-            div1.classList.add("selectOptionProduct");
-
-            const close = document.createElement("h5");
-            close.innerText = "X";
-            close.classList.add("closeButton");
-
-            
-            const options = document.createElement("h4");
-            options.classList.add("options");
-            selectTags.forEach(elements => {
-                const optionValue = document.createElement("input");
-                optionValue.classList.add("optionValue");
-                optionValue.type = 'hidden';
-
-                div1.append(optionValue);
-
-                optionValue.value = elements.value;
-                options.innerText += elements.options[elements.selectedIndex].text + ',';
-            })
-            options.innerText = options.innerText.slice(0, -1);
-
-            const div2 = document.createElement("div");
-            div2.classList.add("underOption");
-
-            const div3 = document.createElement("div");
-            div3.classList.add("numberBox");
-            const minusButton = document.createElement("button");
-            minusButton.innerText = "-";
-            minusButton.type = 'button';
-            const numberBox = document.createElement("h4");
-            numberBox.classList.add("count");
-            numberBox.innerText = "1";
-            const plusButton = document.createElement("button");
-            plusButton.innerText = "+";
-            plusButton.type = 'button';
-            let count = 1;
-
-            const totalPriceNo = mainProductPrice.attributes[3].value;
-            const priceNum = parseInt(totalPriceNo);
-
-            let inputPrice = count * priceNum;
-            const optionPrice = document.createElement("h4");
-            optionPrice.classList.add("optionPrice");
-
-            div3.append(minusButton);
-            div3.append(numberBox);
-            div3.append(plusButton);
-
-            div2.append(div3);
-            div2.append(optionPrice);
-            
-            div1.append(close);
-            div1.append(options);
-            div1.append(div2);
-
-            optionProductBox.append(div1);
-
+// 모든 select 태그의 옵션값이 0이 아닌 경우에만 alert 창 띄우기
+function showAlertIfAllValuesAreNotZero() {
+    if (checkAllSelectValues()) {
+        if (checkDuplicateOption()) {
+            alert('이미 같은 옵션이 선택되었습니다.');
             selectTags.forEach(elements => {
                 elements.value = 0;
             })
+            return;
+        }
 
-            close.addEventListener("click", () => {
-                div1.remove();
-                updateTotal();
-                updateTotalCount();
-            })
+        const div1 = document.createElement("div");
+        div1.classList.add("selectOptionProduct");
 
-            plusButton.addEventListener("click", () => {
-                count += 1;
+        const close = document.createElement("h5");
+        close.innerText = "X";
+        close.classList.add("closeButton");
+
+        
+        const options = document.createElement("h4");
+        options.classList.add("options");
+        selectTags.forEach(elements => {
+            const optionValue = document.createElement("input");
+            optionValue.classList.add("optionValue");
+            optionValue.type = 'hidden';
+
+            div1.append(optionValue);
+
+            optionValue.value = elements.value;
+            options.innerText += elements.options[elements.selectedIndex].text + ',';
+        })
+        options.innerText = options.innerText.slice(0, -1);
+
+        const div2 = document.createElement("div");
+        div2.classList.add("underOption");
+
+        const div3 = document.createElement("div");
+        div3.classList.add("numberBox");
+        const minusButton = document.createElement("button");
+        minusButton.innerText = "-";
+        minusButton.type = 'button';
+        const numberBox = document.createElement("h4");
+        numberBox.classList.add("count");
+        numberBox.innerText = "1";
+        const plusButton = document.createElement("button");
+        plusButton.innerText = "+";
+        plusButton.type = 'button';
+        let count = 1;
+
+        const totalPriceNo = mainProductPrice.attributes[3].value;
+        const priceNum = parseInt(totalPriceNo);
+
+        let inputPrice = count * priceNum;
+        const optionPrice = document.createElement("h4");
+        optionPrice.classList.add("optionPrice");
+
+        div3.append(minusButton);
+        div3.append(numberBox);
+        div3.append(plusButton);
+
+        div2.append(div3);
+        div2.append(optionPrice);
+        
+        div1.append(close);
+        div1.append(options);
+        div1.append(div2);
+
+        optionProductBox.append(div1);
+
+        selectTags.forEach(elements => {
+            elements.value = 0;
+        })
+
+        close.addEventListener("click", () => {
+            div1.remove();
+            updateTotal();
+            updateTotalCount();
+        })
+
+        plusButton.addEventListener("click", () => {
+            count += 1;
+            inputPrice = count * priceNum;
+            optionPrice.innerText = `${formatNumberWithCommas(inputPrice)}원`;
+            numberBox.innerText = count;
+            updateTotal();
+            updateTotalCount();
+        })
+
+        minusButton.addEventListener("click", () => {
+            if(count == 1) {
+                alert("상품을 1개 이상 선택해야 합니다.");
+            } else {
+                count -= 1;
                 inputPrice = count * priceNum;
                 optionPrice.innerText = `${formatNumberWithCommas(inputPrice)}원`;
                 numberBox.innerText = count;
                 updateTotal();
                 updateTotalCount();
-            })
+            }
+        })
 
-            minusButton.addEventListener("click", () => {
-                if(count == 1) {
-                    alert("상품을 1개 이상 선택해야 합니다.");
-                } else {
-                    count -= 1;
-                    inputPrice = count * priceNum;
-                    optionPrice.innerText = `${formatNumberWithCommas(inputPrice)}원`;
-                    numberBox.innerText = count;
-                    updateTotal();
-                    updateTotalCount();
-                }
-            })
-
-            optionPrice.innerText = `${formatNumberWithCommas(inputPrice)}원`;
-            updateTotal();
-            updateTotalCount();
-        }
+        optionPrice.innerText = `${formatNumberWithCommas(inputPrice)}원`;
+        updateTotal();
+        updateTotalCount();
     }
+}
 
-    // 모든 select 태그에 change 이벤트 리스너 추가
-    selectTags.forEach(function(select) {
-        select.addEventListener('change', showAlertIfAllValuesAreNotZero);
-    });
+// 모든 select 태그에 change 이벤트 리스너 추가
+selectTags.forEach(function(select) {
+    select.addEventListener('change', showAlertIfAllValuesAreNotZero);
+});
+
+
+
+
+
+
+
+
+
+
 
 
 //리뷰 기능
-//0. 전체 별점 구해서 총 평점 내보내기
+
 //1. 리뷰 등록 비동기 + (사진, 텍스트, 별점)도 올리기
 let reviewImgFiles = [];
 function readImgURLs(input) {
@@ -451,6 +462,7 @@ function handleFormMission(event) {
     // Allow form to submit
 }
 
+//2. 전체 별점 구해서 총 평점 내보내기
 let reviewRating;  //별점
 
 const stars = document.querySelectorAll(".fa-star");
@@ -463,8 +475,7 @@ stars.forEach((star, index) =>{
                 stars[i].classList.remove('fa-regular');
                 stars[i].classList.add('fa-solid');
                 stars[i].classList.add('fill');
-
-                
+ 
             }
             reviewRating = index + 1;
         }else{
@@ -481,37 +492,47 @@ stars.forEach((star, index) =>{
     })
 })
 
-//비동기로 리뷰 보내기
-function handleFormMission(event) {
+//3. 비동기로 리뷰 작성(+수정)하기
+function handleFormMissionReview(event) {
     event.preventDefault();
 
-    document.getElementById("reviewForm").addEventListener("submit", function(event){
+    const form = document.getElementById('reviewForm');
+    const formData = new FormData(form);
 
-        event.preventDefault;
-        const formData = new FormData(this);
-        
-        formData.append("reviewRating", reviewRating);
+    // 리뷰 이미지 파일을 FormData에 추가
+    reviewImgFiles.forEach(file => {
+        formData.append('reviewImgs', file);
+    });
 
-        fetch("/eCommerce/reviewPost", {
-            method : "POST",
-            body : formData
-        })
-        .then(resp => resp.json())
-        .then(result =>{
-            console.log("결과", result);
-            //리뷰 불러오기 함수
-            selectReviewList();
-        })
+    // 별점 추가
+    formData.append('reviewRating', reviewRating);
+    formData.append('productNo', productNo);
+    // reviewNo 가져오기
+    const reviewNo = document.querySelector("#hiddenReviewNo").value;
+    const url = reviewNo ? '/eCommerce/updateReview' : '/eCommerce/reviewPost';
+
+    fetch(url, {
+        method: 'POST',
+        body: formData
     })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);  //data 값 보고 조건문 추가하기
+        alert(reviewNo ? "리뷰가 수정되었습니다." : "리뷰가 등록되었습니다.");
+        selectReviewList(productNo); // 리뷰 목록 새로 고침
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert(reviewNo ? "리뷰 수정에 실패했습니다." : "리뷰 등록에 실패했습니다.");
+    });
 }
 
 
 
-//2. 페이지 진입 시 리뷰 리스트 불러오기
 
 //리뷰 영역 선택 시 선택한 멤버가 리뷰 작성 권한이 있는지(상품id과 주문테이블에 겹치는지) 확인
-function openReview(){
-    //로그인한 회원 번호, 상품 번호 알아오기
+function openReviewCheck(){
+
     //리뷰 작성 권한 비동기로 알아오기
     const reviewForm = document.querySelector("#reviewForm");
     if(checkReviewAuth(productNo)){//작성 하지 않은 리뷰가 존재하는 경우
@@ -541,6 +562,7 @@ function checkReviewAuth(){
 }
 
 
+//4.리뷰 리스트 불러오기
 function selectReviewList(productNo){
     fetch("/eCommerce?selectReviewList?productNo=${productNo}")
     .then(resp=>resp.json())
@@ -551,7 +573,7 @@ function selectReviewList(productNo){
         reviewContainer.innerHTML = "";
 
         console.log(reviewList);
-        if(reviewList == null){
+        if(reviewList == null || reviewList.length == 0){
             const li = document.createElement("li");
             const div = document.createElement("div");
             div.innerHTML = "리뷰가 존재하지 않습니다";
@@ -575,40 +597,39 @@ function selectReviewList(productNo){
 
                     const memberId = document.createElement("span");
                     memberId.classList.add("memberId");
-                    memberId.textContent = loginMember.memberId; --멤버 아이디 적기
+                    memberId.textContent = loginMember.memberId; //멤버 아이디 적기
                     const commentWriteDate = document.createElement("span");
                     commentWriteDate.classList.add("commentWriteDate");
-                    commentWriteDate.textContent = review.commebtWriteDate;--리뷰 작성일 적기
+                    commentWriteDate.textContent = review.commebtWriteDate; //리뷰 작성일 적기
                     infoArea.append(memberId, commentWriteDate);
 
                     const editArea = document.createElement("div");
                     editArea.classList.add("editArea");
-                    editArea.style.display="none";  // 작성한 멤버면 display = "block"; 주기
+                    editArea.style.display=review.memberNo == loginMemberNo?"block":"none";  // 작성한 멤버면 display = "block"; 주기
 
                     const updateBtn = document.createElement("button");
                     updateBtn.classList.add("updateBtn");
                     updateBtn.textContent = "수정";
-                    updateBtn.onclick(updateBtn(review.reviewId));
+                    updateBtn.onclick(updateBtn(review.reviewNo));
                     const delBtn = document.createElement("button");
                     delBtn.classList.add("delBtn");
                     delBtn.textContent = "삭제";
-                    delBtn.onclick(delReview(review.reviewId));
+                    delBtn.onclick(delReview(review.reviewNo));
 
                     //수정할 때 영역
+                    console.log(loginMember.memberNo);
+                    editArea.append(updateBtn, delBtn);                    
 
-
-                    editArea.append(updateBtn, delBtn);
                     reviewWrite.append(infoArea, editArea);
-
                     //이미지 배열 추가
-                    if (review.images && review.images.length > 0) {
+                    if (review.imgList && review.imgList.length > 0) {
                         const imgRow = document.createElement("div");
                         imgRow.classList.add("imgRow");
 
-                        review.images.forEach(imgUrl => {
+                        review.imgList.forEach(imgUrl => {
                             const img = document.createElement("img");
                             img.src = imgUrl;
-                            img.classList.add("reviewImage");
+                            img.classList.add("reviewImg");
                             imgRow.append(img);
                         });
 
@@ -625,13 +646,12 @@ function selectReviewList(productNo){
     .catch(error => console.error('Error:', error));
 }
 
-//3. 내가 쓴 리뷰인 경우에만 editArea의 display='block'주기
 
 
 //4. 내가 쓴 리뷰 삭제 비동기
-function delReview(reviewId){
+function delReview(reviewNo){
     if(confirm("정말 리뷰를 삭제하시겠습니까?")){
-        fetch(`/eCommerce/delReview?reviewId=${reviewId}`, {
+        fetch(`/eCommerce/delReview?reviewNo=${reviewNo}`, {
             method: 'DELETE'
         })
         .then(resp => resp.text())
@@ -649,6 +669,75 @@ function delReview(reviewId){
 }
 
 //5. 내가 쓴 리뷰 수정하기 비동기 -> 
-function updateBtn(this) {
+function updateBtn(reviewNo) {
+    //리뷰 불러오기
+    fetch("/eCommerce/reloadReview?reviewNo="+reviewNo)
+    .then(resp => resp.json())
+    .then(result =>{
+        if(result == null){
+            //리뷰 불러오기 실패
+            alert("리뷰 수정 실패");
+            return;
+        }
+        //#review 에 해당 내용 넣기
+
+        const review = result;
+
+        const reviewForm = document.querySelector("#reviewForm");
+        if(reviewForm.classList.contains("display-none")){
+            reviewForm.classList.remove("display-none");
+        }
+        const commentContent = document.querySelector("#commentContent");
+        commentContent.value = review.reviewContent;
+
+        // 별점 채우기
+        const stars = document.querySelectorAll(".fa-star");
+        stars.forEach((star, index) => {
+            if (index < review.reviewRating) {
+                star.classList.remove('fa-regular');
+                star.classList.add('fa-solid');
+                star.classList.add('fill');
+            } else {
+                star.classList.remove('fa-solid');
+                star.classList.add('fa-regular');
+                star.classList.remove('fill');
+            }
+        });
+        reviewRating = review.reviewRating; // 리뷰 별점 저장
+
+        const reviewImgBox = document.querySelector('#reviewImgBox');
+        reviewImgBox.innerHTML = ''; // 기존 이미지 초기화
+        reviewImgFiles = []; // 이미지 파일 배열 초기화
+        if(review.imgList && review.imgList.length>0){
+            review.imgList.forEach(img=>{
+                const previewContainer = document.createElement('div');
+                previewContainer.classList.add('preview-image-container');
+
+                const preview = document.createElement('img');
+                preview.classList.add('preview-image');
+                preview.src = e.target.result;
+                previewContainer.appendChild(preview);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('delete-button');
+                deleteButton.classList.add('fa-solid');
+                deleteButton.classList.add('fa-trash-can');
+                deleteButton.onclick = function() {
+                    if (confirm("해당 사진을 삭제하시겠습니까?")) {
+                        const index = Array.from(reviewImgBox.children).indexOf(previewContainer);
+                        reviewImgFiles.splice(index, 1); // 배열에서 파일 제거
+                        previewContainer.remove(); // 이미지 삭제
+                    }
+                };
+                previewContainer.appendChild(deleteButton);
+
+                reviewImgBox.appendChild(previewContainer);
+            });
+        }
+        reviewForm.scrollIntoView({behavior : 'smooth'});
+
+        document.querySelector("#hiddenReviewNo").value = reviewNo;
+    });
 
 }
+
