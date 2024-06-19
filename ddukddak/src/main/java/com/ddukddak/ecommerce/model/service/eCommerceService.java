@@ -98,4 +98,10 @@ public interface eCommerceService {
 	 */
 	List<Category> selectSmallCategory();
 
+	/** qna 입력
+	 * @param obj
+	 * @return
+	 */
+	int insertQna(Map<String, Object> obj);
+
 }

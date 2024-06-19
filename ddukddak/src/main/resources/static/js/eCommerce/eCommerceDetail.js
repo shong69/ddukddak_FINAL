@@ -7,6 +7,7 @@ const changeInfo = document.querySelector("#changeInfo");
 const explain = document.querySelector("#explain");
 const change = document.querySelector("#change");
 const reviewBox = document.querySelector("#reviewBox");
+const qnaBox = document.querySelector("#qnaBox");
 
 detailInfo.addEventListener("click", () => {
     detailInfo.style.backgroundColor = 'var(--primary3)';
@@ -17,6 +18,7 @@ detailInfo.addEventListener("click", () => {
     explain.style.display = 'flex';
     change.style.display = 'none';
     reviewBox.style.display ='none';
+    qnaBox.style.display = 'none';
 });
 
 review.addEventListener("click", () => {
@@ -28,6 +30,7 @@ review.addEventListener("click", () => {
     reviewBox.style.display ='flex';
     explain.style.display = 'none';
     change.style.display = 'none';
+    qnaBox.style.display = 'none';
     
 });
 
@@ -37,6 +40,7 @@ qna.addEventListener("click", () => {
     qna.style.backgroundColor = 'var(--primary3)';
     changeInfo.style.backgroundColor = 'var(--white)';
 
+    qnaBox.style.display = 'flex';
     explain.style.display = 'none';
     change.style.display = 'none';
     reviewBox.style.display ='none';
@@ -51,6 +55,7 @@ changeInfo.addEventListener("click", () => {
     explain.style.display = 'none';
     change.style.display = 'flex';
     reviewBox.style.display ='none';
+    qnaBox.style.display = 'none';
 });
 
 // mainImg 요소를 선택합니다
@@ -575,10 +580,10 @@ function selectReviewList(productNo){
 
                     const memberId = document.createElement("span");
                     memberId.classList.add("memberId");
-                    memberId.textContent = loginMember.memberId; --멤버 아이디 적기
+                    memberId.textContent = loginMember.memberId; //멤버 아이디 적기
                     const commentWriteDate = document.createElement("span");
                     commentWriteDate.classList.add("commentWriteDate");
-                    commentWriteDate.textContent = review.commebtWriteDate;--리뷰 작성일 적기
+                    commentWriteDate.textContent = review.commebtWriteDate;//리뷰 작성일 적기
                     infoArea.append(memberId, commentWriteDate);
 
                     const editArea = document.createElement("div");
@@ -649,6 +654,62 @@ function delReview(reviewId){
 }
 
 //5. 내가 쓴 리뷰 수정하기 비동기 -> 
-function updateBtn(this) {
+// function updateBtn(this) {
 
-}
+// }
+
+
+// QNA
+const qnaInserButton = document.querySelector("#qnaInserButton");
+const write = document.querySelector("#write");
+const applyQnaButton = document.querySelector("#applyQnaButton");
+
+document.addEventListener('DOMContentLoaded', () => {
+    const memberNo = document.querySelector("#memberNo");
+    
+    qnaInserButton.addEventListener("click", () => {
+
+        if(memberNo.value == 0) {
+            alert("로그인 후 이용해주세요");
+            location.href = "/member/login?returnUrl=http%3A%2F%2Flocalhost%3A1000%2FeCommerce%2Flist%2F1%2F1%2F20%2Fdetail";
+        } else {
+            write.style.display = 'flex';
+        }
+    })
+    
+    applyQnaButton.addEventListener("click", () => {
+        const writeTitle = document.querySelector("#writeTitle");
+        const writeQna = document.querySelector("#writeQna");
+    
+        if(writeTitle.value.trim().length === 0) {
+            alert("QNA 제목을 작성해주세요");
+        } else if(writeQna.value.trim().length === 0) {
+            alert("QNA 내용을 작성해주세요");
+        } else {
+            const obj = {
+                "qnaTitle" : writeTitle.value,
+                "qnaContent" : writeQna.value
+            }
+    
+            console.log(obj);
+    
+            fetch("/eCommerce/insertQna", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(obj)
+            })
+            .then(resp => resp.text())
+            .then(result => {
+                if(result > 0) {
+                    alert("QNA 등록이 완료되었습니다");
+                    writeTitle.value = "";
+                    writeQna.value = "";
+                    write.style.display = 'none';
+                } else {
+                    alert("QNA 등록 실패");
+                }
+            });
+        }
+    });
+})
+

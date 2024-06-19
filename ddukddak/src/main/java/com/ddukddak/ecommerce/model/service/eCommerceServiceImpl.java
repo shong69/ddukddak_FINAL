@@ -295,6 +295,12 @@ public class eCommerceServiceImpl implements eCommerceService{
 	public List<Category> selectSmallCategory() {
 		return mapper.selectSmallCategory2();
 	}
+
+	// qna 입력
+	@Override
+	public int insertQna(Map<String, Object> obj) {
+		return mapper.insertQna(obj);
+	}
 	
 	
 

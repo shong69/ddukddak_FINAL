@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.ecommerce.model.dto.Category;
@@ -30,10 +31,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("eCommerce")
 @RequiredArgsConstructor
+@SessionAttributes("loginMember")
 @Slf4j
 public class eCommerceController {
 	
@@ -220,6 +223,7 @@ public class eCommerceController {
 		model.addAttribute("productNo", productNo);
 		model.addAttribute("bigCategoryName", bigCategoryName);
 		model.addAttribute("minPrice", "NO");
+		model.addAttribute("memberNo", memberNo);
 
 		
 		
@@ -306,7 +310,18 @@ public class eCommerceController {
 	}
 	
 	
-	
+	// qna 입력
+	@PostMapping("insertQna")
+	@ResponseBody
+	public int insertQna(@RequestBody Map<String, Object> obj,
+						@SessionAttribute("loginMember") Member loginMember) {
+		
+		log.info("obj : " + obj);
+
+		obj.put("memberNo", loginMember.getMemberNo());
+		
+		return service.insertQna(obj);
+	}
 	
 	
 	

@@ -142,4 +142,10 @@ public interface eCommerceMapper {
 	 */
 	List<Category> selectSmallCategory2();
 
+	/** qna 입력
+	 * @param obj
+	 * @return
+	 */
+	int insertQna(Map<String, Object> obj);
+
 }

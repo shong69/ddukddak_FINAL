@@ -372,4 +372,10 @@
 		SELECT * FROM "CATEGORY"
 	</select>
 	
+	
+	<insert id="insertQna">
+		INSERT INTO "QNA"
+		VALUES(SEQ_QNA_NO.NEXTVAL, #{qnaTitle}, #{qnaContent}, NULL, #{memberNo}, NULL)
+	</insert>
+	
 </mapper>
