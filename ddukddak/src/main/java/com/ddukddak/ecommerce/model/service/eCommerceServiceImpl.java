@@ -206,7 +206,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		newMap.put("query", query);
 		newMap.put("memberNo", memberNo);
 		
-		List<Product> productList = mapper.selectSearchList(newMap, rowBounds);
+		List<Product> productList = mapper.selectSearchList1(newMap, rowBounds);
 		
 		//4. 목록 조회 결과 + pagination 객체를 map으로 묶어서 결과로 반환
 		Map<String, Object> map = new HashMap<>();
