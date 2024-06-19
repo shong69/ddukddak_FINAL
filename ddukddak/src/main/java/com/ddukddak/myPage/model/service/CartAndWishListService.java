@@ -61,4 +61,31 @@ public interface CartAndWishListService {
 	 */
 	List<Order> selectOrderList(Member loginMember);
 
+	/** 구매확정으로 변경
+	 * @param orderItemNo
+	 * @param orderStatus 
+	 * @return
+	 */
+	int confirmPurchase(int orderItemNo, String orderStatus);
+
+	/**주문취소로 변경
+	 * @param orderItemNo
+	 * @param orderStatus 
+	 * @return
+	 */
+	int orderDelete(int orderItemNo, String orderStatus);
+
+	/** 리뷰 작성 여부 검사
+	 * @param orderItemNo
+	 * @param orderNo 
+	 * @return
+	 */
+	int checkReviewWrite(int orderItemNo);
+
+	/**카테고리 값 알아오기
+	 * @param productNo
+	 * @return
+	 */
+	Map<String, Object> getProductByNo(int productNo);
+
 }

@@ -27,38 +27,119 @@
     margin: 30px 0;
 }
 
-.skuList,
+#skuList,
 .cartList {
     margin:30px 0;
     width :1100px;
     border-collapse: collapse;
 }
-.skuList thead,
+
+.order-group{
+    border : 0.4px solid #757575;
+    border-radius: 30px;
+    background-color: transparent;
+    min-height: 350px;
+    padding : 30px;
+    margin: 30px 0;
+}
+.order-group > h3{
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 60px;
+    text-align: start;
+    margin-left: 10px;
+    border-bottom: 0.4px solid #646464;
+    margin-bottom: 20px;
+}
+.order-info{
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin:10px;
+    text-align: end;
+    color:#646464;
+}
+.orderTotalPrice{
+    font-size: 16px;
+    font-weight: 400;
+}
+.date-address{
+    font-size :15px;
+    font-weight: 100;
+}
+.order-item{
+    display: flex;
+    flex-direction: row;
+    margin : 10px 10px;
+}
+.productImg{
+    width : 120px;
+}
+.order-item div:nth-child(2),
+.order-item div:nth-child(3),
+.order-item div:nth-child(4),
+.order-item div:nth-child(5){
+    margin : auto 0;
+}
+.order-item div:first-child{
+    width : 160px;
+}
+
+.order-item div:nth-child(2){
+    width : 550px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+.order-item div:nth-child(3){
+    width: 30px;
+}
+.order-item div:nth-child(4){
+    width: 100px;
+}
+.statusArea{
+    width : 180px;
+    height: 80px;
+    font-weight: 400;
+    margin:auto 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.status{
+    font-weight: 600;
+}
+.confirmPurchaseBtn,
+.orderDelBtn,
+.reviewWriteBtn{
+    margin-top: 5px;
+    width : 120px;
+    height: 35px;
+    border-radius: 13px;
+}
+/*장바구니*/
 .cartList thead{
     height: 70px;
     
 }
-.skuList th,
+
 .cartList th{
     min-width: 90px;
 }
-.skuList tr,
+
 .cartList tr{
     height: 60px;
     border-bottom:1px solid black;
 }
 
-.skuList td,
+
 .cartList td{
     height: 80px;
 }
 
-.sku-status{
-    display: flex;
-    flex-direction: column;
-    height: 60px;
-    justify-content: space-evenly;
-}
 .product-image{
     width: 60px;
     height: 60px;

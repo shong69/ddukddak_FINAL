@@ -76,6 +76,10 @@
 		AND PRODUCT_FL = 'N'
 		AND CATEGORY = #{smallcategoryNo}
 		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		<![CDATA[
+			AND PRODUCT_PRICE > #{minPrice}
+			AND PRODUCT_PRICE < #{maxPrice}
+		]]>
 		ORDER BY p.PRODUCT_NO
 	</select>
 	
@@ -167,8 +171,22 @@
 	    END ASC
 	</select>
 	
+	<select id="selectProductListCount1">
+		SELECT COUNT(*)
+		FROM "PRODUCT" 
+		WHERE CATEGORY_NO = #{smallcategoryNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+	</select>
+	
 	<select id="selectProductListCount">
-		SELECT COUNT(*) FROM "PRODUCT" WHERE CATEGORY_NO = #{smallcategoryNo} AND PRODUCT_UPDATE_DATE IS NOT NULL
+		SELECT COUNT(*)
+		FROM "PRODUCT" 
+		WHERE CATEGORY_NO = #{smallcategoryNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		<![CDATA[
+			AND PRODUCT_PRICE > #{minPrice}
+			AND PRODUCT_PRICE < #{maxPrice}
+		]]>
 	</select>
 	
 	<!-- 대분류 카테고리 선택 -->
@@ -262,6 +280,18 @@
 	
 	
 	<!-- 검색으로 찾은 상품개수 -->
+	<select id="getSearchCount1">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		NATURAL JOIN CATEGORY
+		NATURAL JOIN BIG_CATEGORY
+		WHERE PRODUCT_NAME LIKE '%' || #{query} || '%'
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		OR CATEGORY_NAME LIKE '%' || #{query} || '%'
+		OR BIG_CATEGORY_NAME LIKE '%' || #{query} || '%'
+	</select>
+	
+	<!-- 검색으로 찾은 상품개수 -->
 	<select id="getSearchCount">
 		SELECT COUNT(*)
 		FROM PRODUCT
@@ -271,6 +301,10 @@
 		AND PRODUCT_UPDATE_DATE IS NOT NULL
 		OR CATEGORY_NAME LIKE '%' || #{query} || '%'
 		OR BIG_CATEGORY_NAME LIKE '%' || #{query} || '%'
+		<![CDATA[
+			AND PRODUCT_PRICE > #{minPrice}
+			AND PRODUCT_PRICE < #{maxPrice}
+		]]>
 	</select>
 	
 	<!-- 검색으로 찾은 상품리스트 -->
@@ -296,6 +330,10 @@
 			OR CATEGORY_NAME LIKE '%' || #{query} || '%'
 			OR BIG_CATEGORY_NAME LIKE '%' || #{query} || '%')
 		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		<![CDATA[
+			AND PRODUCT_PRICE > #{minPrice}
+			AND PRODUCT_PRICE < #{maxPrice}
+		]]>
 		ORDER BY PRODUCT_NO
 	</select>
 	

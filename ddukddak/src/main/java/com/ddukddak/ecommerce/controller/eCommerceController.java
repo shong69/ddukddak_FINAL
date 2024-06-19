@@ -111,6 +111,8 @@ public class eCommerceController {
 								@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 								@RequestParam(value="query", required=false) String query,
 								@RequestParam(value="sort", required=false, defaultValue="1") int sort,
+								@RequestParam(value="minPrice", required=false, defaultValue="0") int minPrice,
+								@RequestParam(value="maxPrice", required=false, defaultValue="9999999") int maxPrice,
 								HttpServletRequest req,
 								Model model) {
 		
@@ -128,11 +130,15 @@ public class eCommerceController {
 		
 		if(query == null) { //검색 X(그냥 목록 조회)
 
-			map = service.selectProductList(memberNo, smallcategoryNo, cp, sort);
+			map = service.selectProductList(memberNo, smallcategoryNo, cp, sort, minPrice, maxPrice);
+			
+			log.info("map : " + map);
+			log.info("minPrice : " + minPrice);
+			log.info("maxPrice : " + maxPrice);
 			
 		}else { //검색 O
 			
-			map = service.searchList(memberNo, query, cp, sort);
+			map = service.searchList(memberNo, query, cp, sort, minPrice, maxPrice);
 			
 		}
 		
@@ -151,6 +157,8 @@ public class eCommerceController {
 		model.addAttribute("bigCategoryName", bigCategoryName);
 		model.addAttribute("bigCategoryNo", bigcategoryNo);
 		model.addAttribute("smallCategoryNo", smallcategoryNo);
+		model.addAttribute("minPrice", minPrice);
+		model.addAttribute("maxPrice", maxPrice);
 
 		model.addAttribute("query", query);
 		
@@ -261,6 +269,9 @@ public class eCommerceController {
 	    log.info("totalPrice : " + params.get("totalPrice"));
 	    
 	    
+	    // 주문 정보 생성
+
+	    
 	    // 모델에 필터링된 항목 추가
 	    model.addAttribute("cartList", selectedItems);
 	    model.addAttribute("totalPrice", params.get("totalPrice"));
@@ -269,8 +280,11 @@ public class eCommerceController {
 		return "eCommerce/eCommercePayment";
 	}
 	
+	
 	@RequestMapping("complete")
 	public String eCommerceComplete() {
+		
+		
 		
 		return "eCommerce/eCommerceComplete";
 	}

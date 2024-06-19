@@ -53,8 +53,12 @@ public class tipBoardServiceImpl implements tipBoardService{
 
 	@Override
 	public List<Board>  searchList(int boardCode, String sort, String query) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		map.put("boardCode",boardCode);
+		map.put("sort",sort);
+		map.put("query",query);
+		
+		return mapper.searchList(map);
 	}
 
 	@Override

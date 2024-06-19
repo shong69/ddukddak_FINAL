@@ -31,8 +31,10 @@
                     <section class="searchArea">
 
                         <span>
-                            <input type="text" placeholder="집들이 검색" class="searchBox">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <form action="/board/main/search">
+                                <input type="text" placeholder="집들이 검색" class="searchBox" name="query">
+                                <i class="fa-solid fa-magnifying-glass" style="font-size: 14px; padding: 5px;"></i>
+                            </form>
                         </span>
                         
                     </section>
@@ -49,7 +51,7 @@
                     <div class="myHouseMainContainer">
                         <div class="titleContainer">
                             <th:block th:each="boardType : ${application.boardTypeList}">
-                                <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="tipViewMore"><h1 th:text="${boardType.boardName}">노하우</h1></a>
+                                <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="tipViewMore"><h2 th:text="${boardType.boardName}">집들이</h2></a>
                                 <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="myHouseViewMore">+더 보기</a>
                             </th:block>
 
@@ -61,7 +63,7 @@
                     <div class="tipMainContainer">
                         <div class="titleContainer">
                             <th:block th:each="boardType : ${application.boardTypeList}">
-                            <a th:if="${boardType.boardCode == 2}" th:href="@{/tip/main(boardCode=${boardType.boardCode})}" class="tipViewMore"><h1 th:text="${boardType.boardName}">노하우</h1></a>
+                            <a th:if="${boardType.boardCode == 2}" th:href="@{/tip/main(boardCode=${boardType.boardCode})}" class="tipViewMore"><h2 th:text="${boardType.boardName}">노하우</h2></a>
                             <a th:if="${boardType.boardCode == 2}" th:href="@{/tip/main(boardCode=${boardType.boardCode})}" class="tipViewMore">+더 보기</a>
                         </th:block>
 

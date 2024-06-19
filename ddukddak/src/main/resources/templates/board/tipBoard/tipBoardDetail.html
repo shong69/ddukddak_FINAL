@@ -73,7 +73,7 @@
 
             <!-- 프로필 이미지가 있을 경우 -->
             <th:block th:unless="${board.profileImg == null}">
-              <img th:src="${board.profileImg}">
+              <img th:src="${board.profileImg}" style="height: 30px; padding: 3px;">
             </th:block>
 
             <div class="userNickname">
