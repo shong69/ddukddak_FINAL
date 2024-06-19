@@ -561,13 +561,12 @@ public class SellerController {
 		model.addAttribute("smallCategoryList", smallCategoryList);
 		
 		// 재고상품 조회
-//		Map<String, Object> map = service.selectReciptList(partnerNo, mainSort, sort, status, cp);
-//		
-//		
-//		model.addAttribute("applyList", map.get("applyList"));
-//		model.addAttribute("pagination", map.get("pagination"));
-//		model.addAttribute("status", status);
-
+		Map<String, Object> map = service.selectReceiptList(partnerNo, mainSort, sort, status, cp);
+		
+		log.info("map : " + map.toString());
+		model.addAttribute("receiptList", map.get("receiptList"));
+		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("status", status);
 		
 		return "partner/seller/product/receipt";
 	}
