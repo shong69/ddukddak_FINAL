@@ -175,46 +175,15 @@
           </div>
 
           <div>
-            <div>
-              <img src="/images/main/interior-4.jpeg">
-              <h4>@user01</h4>
-              <h3 style="font-weight: bold;">베란다 가구배치 꿀팁</h3>
-              <h3>♡ 16</h3>
-              <h5>
-                공간 측정: 베란다의 크기를 정확히 측정하고<br>
-                가구의 크기와 배치 계획을 세웁니다.<br>
-                구역 나누기: 베란다를 여러 구역으로 나눠<br>
-                휴식, 식사, 가드닝 등 다양한 용도로 사용할 수 있도...
-              </h5>
-            </div>
-
-
-            <div>
-              <img src="/images/main/interior-5.jpg">
-              <h4>@user01</h4>
-              <h3 style="font-weight: bold;">베란다 가구배치 꿀팁</h3>
-              <h3>♡ 16</h3>
-              <h5>
-                공간 측정: 베란다의 크기를 정확히 측정하고<br>
-                가구의 크기와 배치 계획을 세웁니다.<br>
-                구역 나누기: 베란다를 여러 구역으로 나눠<br>
-                휴식, 식사, 가드닝 등 다양한 용도로 사용할 수 있도...
-              </h5>
-            </div>
-
-
-            <div>
-              <img src="/images/main/interior-6.jpg">
-              <h4>@user01</h4>
-              <h3 style="font-weight: bold;">베란다 가구배치 꿀팁</h3>
-              <h3>♡ 16</h3>
-              <h5>
-                공간 측정: 베란다의 크기를 정확히 측정하고<br>
-                가구의 크기와 배치 계획을 세웁니다.<br>
-                구역 나누기: 베란다를 여러 구역으로 나눠<br>
-                휴식, 식사, 가드닝 등 다양한 용도로 사용할 수 있도...
-              </h5>
-            </div>
+            <th:block th:each="tip : ${tipList}">
+              <div class="konwHowEx">
+                <img th:src="@{|${tip.thumbnail}|}">
+                <h4 th:text="|@${tip.memberNickname}|">@user01</h4>
+                <h3 style="font-weight: bold;" th:text="${tip.boardTitle}">노하우 제목</h3>
+                <h3 th:text="|♡ ${tip.likeCount}|">♡</h3>
+                <h5 th:text="${tip.boardContent}">내용</h5>
+              </div>
+            </th:block>
           </div>
         </div>
       </div>

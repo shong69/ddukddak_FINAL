@@ -330,8 +330,8 @@ function readImgURLs(input) {
         const reviewImgBox = document.getElementById('reviewImgBox');
         const totalReviewImages = reviewImgBox.children.length + input.files.length;
 
-        if (totalReviewImages > 5) {
-            alert('리뷰 이미지는 최대 7개까지 추가할 수 있습니다.');
+        if (totalReviewImages > 6) {
+            alert('리뷰 이미지는 최대 5개까지 추가할 수 있습니다.');
             return;
         }
 
@@ -508,8 +508,147 @@ function handleFormMission(event) {
 
 
 //2. 페이지 진입 시 리뷰 리스트 불러오기
-function selectReviewList() {
+
+//리뷰 영역 선택 시 선택한 멤버가 리뷰 작성 권한이 있는지(상품id과 주문테이블에 겹치는지) 확인
+function openReview(){
+    //로그인한 회원 번호, 상품 번호 알아오기
+    //리뷰 작성 권한 비동기로 알아오기
+    const reviewForm = document.querySelector("#reviewForm");
+    if(checkReviewAuth(productNo)){//작성 하지 않은 리뷰가 존재하는 경우
+        //id=reviewForm 노출시키기
+        reviewForm.classList.remove('display-none');
+    }else{
+        reviewForm.classList.add('display-none');
+    }
     
+    //리뷰 리스트 알아오기
+    selectReviewList();
 }
 
-//3. 내가 쓴 리뷰 삭제 가능하기 비동기
+function checkReviewAuth(){
+    fetch(`/eCommerce/checkReviewAuth?productNo=${productNo}`)
+    .then(resp => resp.text())
+    .then(result => {
+        if(result ==0){ //작성 하지 않은 리뷰의 개수가 0개
+            return false;
+        }else{
+            return true;
+        }
+    }).catch(error => {
+        console.error('Error:', error);
+        return false;
+    });
+}
+
+
+function selectReviewList(productNo){
+    fetch("/eCommerce?selectReviewList?productNo=${productNo}")
+    .then(resp=>resp.json())
+    .then(result => {
+        
+        const reviewList = result;
+        const reviewContainer = document.getElementById("reviewContainer");
+        reviewContainer.innerHTML = "";
+
+        console.log(reviewList);
+        if(reviewList == null){
+            const li = document.createElement("li");
+            const div = document.createElement("div");
+            div.innerHTML = "리뷰가 존재하지 않습니다";
+            div.classList.add("noReviewArea");
+            li.append(div);
+        }else{
+            reviewList.forEach(review=>{
+                const li = document.createElement("li");
+                li.classList.add("reviewRow");
+
+                if(review.reviewDelFl == 'Y'){
+                    const delDiv = document.createElement("div");
+                    delDiv.classList.add("deleteReviewArea");
+                    li.append(delDiv);
+                }else{
+                    const reviewWrite =document.createElement("div");
+                    reviewWrite.classList.add("reviewWrite");
+
+                    const infoArea = document.createElement("div");
+                    infoArea.classList.add("infoArea");
+
+                    const memberId = document.createElement("span");
+                    memberId.classList.add("memberId");
+                    memberId.textContent = loginMember.memberId; --멤버 아이디 적기
+                    const commentWriteDate = document.createElement("span");
+                    commentWriteDate.classList.add("commentWriteDate");
+                    commentWriteDate.textContent = review.commebtWriteDate;--리뷰 작성일 적기
+                    infoArea.append(memberId, commentWriteDate);
+
+                    const editArea = document.createElement("div");
+                    editArea.classList.add("editArea");
+                    editArea.style.display="none";  // 작성한 멤버면 display = "block"; 주기
+
+                    const updateBtn = document.createElement("button");
+                    updateBtn.classList.add("updateBtn");
+                    updateBtn.textContent = "수정";
+                    updateBtn.onclick(updateBtn(review.reviewId));
+                    const delBtn = document.createElement("button");
+                    delBtn.classList.add("delBtn");
+                    delBtn.textContent = "삭제";
+                    delBtn.onclick(delReview(review.reviewId));
+
+                    //수정할 때 영역
+
+
+                    editArea.append(updateBtn, delBtn);
+                    reviewWrite.append(infoArea, editArea);
+
+                    //이미지 배열 추가
+                    if (review.images && review.images.length > 0) {
+                        const imgRow = document.createElement("div");
+                        imgRow.classList.add("imgRow");
+
+                        review.images.forEach(imgUrl => {
+                            const img = document.createElement("img");
+                            img.src = imgUrl;
+                            img.classList.add("reviewImage");
+                            imgRow.append(img);
+                        });
+
+                        reviewWrite.append(imgRow);
+                    }
+                    li.append(reviewWrite);
+                }
+                reviewContainer.append(li);
+
+            });
+        }
+
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+//3. 내가 쓴 리뷰인 경우에만 editArea의 display='block'주기
+
+
+//4. 내가 쓴 리뷰 삭제 비동기
+function delReview(reviewId){
+    if(confirm("정말 리뷰를 삭제하시겠습니까?")){
+        fetch(`/eCommerce/delReview?reviewId=${reviewId}`, {
+            method: 'DELETE'
+        })
+        .then(resp => resp.text())
+        .then(result => {
+            if (result ==1) {
+                alert("리뷰가 삭제되었습니다.");
+                selectReviewList(productNo); // 리뷰 목록 새로 고침
+            } else {
+                alert("리뷰 삭제에 실패했습니다.");
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+}
+
+//5. 내가 쓴 리뷰 수정하기 비동기 -> 
+function updateBtn(this) {
+
+}

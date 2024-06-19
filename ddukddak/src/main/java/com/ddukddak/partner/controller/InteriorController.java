@@ -119,6 +119,7 @@ public class InteriorController {
 		project.setRegion(region);
 		project.setConstructionYear(constructionYear);
 		project.setFamilySize(familySize);
+		project.setPortfolioNo(loginPartnerMember.getPortfolioNo());
 		project.setPartnerNo(loginPartnerMember.getPartnerNo());
 		
 		log.info(constructionYear);

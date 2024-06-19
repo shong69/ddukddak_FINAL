@@ -62,13 +62,13 @@ public class ContactInteriorController {
         	model.addAttribute("mainProject", mainProject);
         	log.info("mainProject : " + mainProject);
         }
-        
         if(mainPortfolio != null) {
         	model.addAttribute("mainPortfolio", mainPortfolio);
         	log.info("mainPortfolio : " + mainPortfolio);
-
         }
+        
         return "partner/interior/interiorPortfolio";
+ 
 	}
         
 	

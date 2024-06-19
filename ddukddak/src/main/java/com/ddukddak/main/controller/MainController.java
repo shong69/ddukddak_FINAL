@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.board.model.service.MyHouseBoardService;
+import com.ddukddak.board.model.service.tipBoardService;
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
@@ -28,6 +29,7 @@ public class MainController {
 	
 	private final eCommerceService eCommerceservice;
 	private final MyHouseBoardService MyHouservice;
+	private final tipBoardService tipService;
 
 	// 메인페이지로 이동
 	@RequestMapping("/")
@@ -71,8 +73,14 @@ public class MainController {
 		
 		ra.addFlashAttribute("message", message);
 		
+		// 노하우 게시물 가져오기
+		List<Board> tipList = tipService.selectTipList(2, "latest");
+		
+		List<Board> tipListTop3 = tipList.size() > 3 ? tipList.subList(0, 3) : tipList;
+		
 		
 		model.addAttribute("myHouseList", MyHouseList);
+		model.addAttribute("tipList", tipListTop3);
 		
 						
 		return "common/main";
