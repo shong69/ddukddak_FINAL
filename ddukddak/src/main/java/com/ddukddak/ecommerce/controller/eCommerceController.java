@@ -261,6 +261,9 @@ public class eCommerceController {
 	    log.info("totalPrice : " + params.get("totalPrice"));
 	    
 	    
+	    // 주문 정보 생성
+
+	    
 	    // 모델에 필터링된 항목 추가
 	    model.addAttribute("cartList", selectedItems);
 	    model.addAttribute("totalPrice", params.get("totalPrice"));
@@ -269,8 +272,11 @@ public class eCommerceController {
 		return "eCommerce/eCommercePayment";
 	}
 	
+	
 	@RequestMapping("complete")
 	public String eCommerceComplete() {
+		
+		
 		
 		return "eCommerce/eCommerceComplete";
 	}
