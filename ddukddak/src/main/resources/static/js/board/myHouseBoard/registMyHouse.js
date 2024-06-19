@@ -148,11 +148,11 @@ registMyHouseForm.addEventListener("submit", e => {
 
     if (images.length === 0) {
         alert('사진을 1장 이상 업로드해주세요.');
-        event.preventDefault();
+        e.preventDefault();
         return;
     } else if (mainImg === "") {
         alert('메인이미지를 선택해주세요.');
-        event.preventDefault();
+        e.preventDefault();
         return;
     }
 

@@ -53,6 +53,7 @@ public class MyPageController {
 
 
 	//[주문상태] 상태 배송완료 -> 구매확정
+
 	@GetMapping("confirmPurchase")
 	@ResponseBody
 	public int confirmPurchase(@RequestParam("orderItemNo") int orderItemNo,
@@ -79,13 +80,21 @@ public class MyPageController {
 		
 		return service.checkReviewWrite(orderItemNo);
 	}
+
 	
 	//[주문상태]리뷰작성 : 카테고리 얻어오기
 	@GetMapping("selectCategory")
 	@ResponseBody
 	public Map<String, Object> selectCategoty(@RequestParam("productNo") int productNo){
+
+//		Product product = service.getProductByNo(productNo);
+		Map<String, Object> map = new HashMap<>();
+//		map.put("bigCategotyNo", product.getBigCategoryNo());
+//		map.put("CategotyNo", product.getCategoryNo());
+
 		log.info("C카테고리 {}",productNo);
 		Map<String, Object> map = service.getProductByNo(productNo);
+
 		
 		return map;
 	}
