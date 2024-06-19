@@ -28,10 +28,17 @@
                     <h4 style="margin-right: 850px;" th:text="${session.loginMember.memberNickname}">홍길동</h4>
                     <!-- <button class="eCommerBuyDetailUpdateBtn">변경</button> -->
                 </div>
+                
                 <input type="hidden" name="memberNo" th:value="${session.loginMember.memberNo}">
 
                 <h4 style="color: rgb(165, 165, 165);" th:text="${session.loginMember.memberTel}">010-1234-1234</h4>
-                <h4 th:text="${session.loginMember.memberAddr}">서울특별시 서대문로 120 그레이츠청계 3층 E강의장</h4>
+                
+                
+                <h4 th:text="${session.loginMember.memberAddr}">주소</h4>
+                
+                <input id="memberAddr" type="hidden" name="memberAddr" th:value="${session.loginMember.memberAddr}">
+                
+                
 
                 <select id="delivery-memo">
                     <option>배송메모를 선택해 주세요</option>
@@ -44,6 +51,7 @@
 
         <!-- 주문상품 -->
         <div class="infoBox" style="margin-top: 100px;">
+            <input id="merchantUid" type="hidden" th:value="${merchantUid}">
             <h3>주문상품</h3>
 
             <div>
@@ -120,7 +128,7 @@
             </label>
         </div>
         <div style="width: 100%; display: flex; justify-content: center">
-            <button type="button" id="payBtn" class="eCommerBuyDetailConfirmBtn" style="margin: 60px 0;">결제하기</button>
+            <button onclick="onClickPay()" type="button" id="payBtn" class="eCommerBuyDetailConfirmBtn" style="margin: 60px 0;">결제하기</button>
         </div>
     </form>
     
@@ -129,7 +137,9 @@
     <th:block th:replace="~{common/fragments/footer}"></th:block>
     <script th:inline="javascript">
         const nickName = /*[[${session.loginMember.memberNickname}]]*/ "닉넴";
-
+        const email = /*[[${session.loginMember.memberEmail}]]*/ "이메일";
+        
+        const tel = /*[[${session.loginMember.memberTel}]]*/ "휴대폰";
 
     </script>
     <!-- iamport.payment.js -->

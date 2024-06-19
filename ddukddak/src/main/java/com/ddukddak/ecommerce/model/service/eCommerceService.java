@@ -5,8 +5,10 @@ import java.util.Map;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
+import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.member.model.dto.Member;
 
 public interface eCommerceService {
 
@@ -97,5 +99,17 @@ public interface eCommerceService {
 	 * @return
 	 */
 	List<Category> selectSmallCategory();
+
+	/**
+	 * @param memberNo
+	 * @return
+	 */
+	Member selectMember(int memberNo);
+	
+	/** 주문 생성
+	 * @param order 
+	 * @return
+	 */
+	int createOrder(Orders order);
 
 }

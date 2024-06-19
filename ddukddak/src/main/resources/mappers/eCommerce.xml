@@ -372,4 +372,25 @@
 		SELECT * FROM "CATEGORY"
 	</select>
 	
+	<select id="selectMember">
+		SELECT *
+		FROM "MEMBER"
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!-- 주문생성(paid 추후 수정) -->
+	<insert id="createOrder" parameterType="Orders">
+		INSERT INTO "ORDERS"
+		VALUES(SEQ_ORDER_NO.NEXTVAL,
+				DEFAULT,
+				#{totalPrice},
+				DEFAULT,
+				#{memberNo},
+				DEFAULT,
+				#{merchantUid},
+				DEFAULT,
+				DEFAULT
+				)
+	</insert>
+	
 </mapper>
