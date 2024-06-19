@@ -364,4 +364,41 @@
 		WHERE PRODUCT_NO = #{productNo}
 	</update>
 	
+	
+<!-- 접수관리 -->
+
+	<!-- 판매관리 판매상품 개수조회 -->
+	<select id="selectReceiptListCount">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
+	</select>
+
+	<!-- <select id="selectReciptList">
+		SELECT DISTINCT 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    p.PRODUCT_CREATE_DATE,
+		    o.ORDER_NO,
+		    o.MEMBER_NO,
+		    c.CATEGORY_NO,
+		    bc.BIG_CATEGORY_NO,
+		    ORDER_STATUS,
+		    ORDER_QUANTITY,
+		    oo.OPTION_NO,
+		    o2.OPTION_NAME,
+		    o2.OPTION_VALUE 
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		JOIN ORDER_DETAIL od ON p.PRODUCT_NO = od.PRODUCT_NO
+		JOIN ORDERS o ON od.ORDER_NO = o.ORDER_NO
+		JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		WHERE ORDER_STATUS = '결제완료'
+		AND p.PARTNER_NO = #{partnerNo}
+	</select> -->
+	
 </mapper>

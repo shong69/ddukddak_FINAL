@@ -111,10 +111,16 @@
     justify-content: end;
     padding: 10px;
 }
+.div-container {
+    display: flex;
+    justify-content: center;
+}
 
-.modal h2 {
+.modal h3 {
     text-align: center;
     color: var(--secondary);
+    width: 80%;
+    font-weight: 700;
 }
 
 .modal > div:nth-child(3) {
