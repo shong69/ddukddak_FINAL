@@ -1,6 +1,7 @@
 package com.ddukddak.ecommerce.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,8 @@ import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.myPage.model.dto.CartItem;
+import com.ddukddak.myPage.model.service.CartAndWishListService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -36,7 +39,8 @@ public class eCommerceController {
 	
 	// 쇼핑몰 메인페이지
 	private final eCommerceService service;
-
+	private final CartAndWishListService cartService;
+	
 	@GetMapping("main")
 	public String eCommerceMain(@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 								@RequestParam(value="query", required=false) String query,
@@ -213,9 +217,54 @@ public class eCommerceController {
 	
 	
 	@RequestMapping("payment")
-	public String eCommercePayment(@RequestParam("total") int total) {
+	public String eCommercePayment(Model model, HttpSession session,
+								@RequestParam Map<String, String> params
+								   ) {
 		
-		log.info("total : " + total);
+	  
+		
+	    log.info("cartId : " + params);
+	    // cartId : {check=on, quantity1=5, cartId=43, quantity2=5, quantity3=1, totalPrice=219905, cartIds=["43","45"]}
+	    
+	    // totalPrice=24, cartIds=["41","46"]}
+	    
+	    String cartIds = params.get("cartIds");
+	    
+	    log.info("꺼내온 cartId : " + cartIds);
+	    
+		Member loginMember = (Member)session.getAttribute("loginMember");
+		
+		
+		
+	    // 장바구니 항목 불러오기
+	    List<CartItem> cartItem = cartService.selectCartList(loginMember);
+
+	    // 선택된 카트 아이디 추출
+	    String selectedCartIdsParam = params.get("cartIds");
+	    List<Integer> selectedCartIds = new ArrayList<>();
+	    if (selectedCartIdsParam != null) {
+	        String[] selectedCartIdsArray = selectedCartIdsParam.replaceAll("[\\[\\]\"]", "").split(",");
+	        for (String id : selectedCartIdsArray) {
+	            selectedCartIds.add(Integer.parseInt(id.trim()));
+	        }
+	    }
+
+	    // 선택된 카트 항목 필터링
+	    List<CartItem> selectedItems = new ArrayList<>();
+	    for (CartItem item : cartItem) {
+	        if (selectedCartIds.contains(item.getCartId())) {
+	            selectedItems.add(item);
+	        }
+	    }
+		
+	    log.info("selectedItems : " + selectedItems);
+	    log.info("totalPrice : " + params.get("totalPrice"));
+	    
+	    
+	    // 모델에 필터링된 항목 추가
+	    model.addAttribute("cartList", selectedItems);
+	    model.addAttribute("totalPrice", params.get("totalPrice"));
+
 		
 		return "eCommerce/eCommercePayment";
 	}

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.ddukddak.partner.model.dto.Partner;
 import com.ddukddak.partner.model.dto.Project;
 import com.ddukddak.partner.model.dto.ProjectImg;
+import com.ddukddak.partner.model.service.InteriorService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InteriorController {
 	
-	
+	private final InteriorService service;
 	
 	@GetMapping("interiorPortfolioEditMain")
     public String interiorPortfolioEditMain(@SessionAttribute("loginPartnerMember") Partner loginPartnerMember, RedirectAttributes ra) {
@@ -92,6 +93,8 @@ public class InteriorController {
 		project.setConstructionYear(constructionYear);
 		project.setFamilySize(familySize);
 		
+		log.info(constructionYear);
+		
 		MultipartFile mainImg = null;
 		
 		String message = null;
@@ -109,8 +112,13 @@ public class InteriorController {
 		
 		List<MultipartFile> imgList = new ArrayList<>();
 		
+		imgList.remove(mainImg);	// 중복된 mainImg 리스트에서 삭제
+		imgList.add(0, mainImg);	// 다시 mainImg 를 배열 0번째 자리에 추가
+		
+		int projectNo = service.insertProject(project, imgList);
 		
 		return "";
+		
 	}
 }
 

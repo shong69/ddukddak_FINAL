@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.partner.model.dto.Partner;
 import com.ddukddak.partner.model.dto.Project;
+import com.ddukddak.partner.model.dto.ProjectImg;
 import com.ddukddak.partner.model.mapper.InteriorMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -46,4 +48,51 @@ public class InteriorServiceImpl implements InteriorService {
 		return mapper.selectMain(portfolioNo);
 	}
 
+
+	@Override
+	public List<Project> selectPortfolioList(int portfolioNo) {
+		return mapper.selectPortfolioList(portfolioNo);
+	}
+
+
+	@Override
+	public List<ProjectImg> selectImageList(int projectNo) {
+		return mapper.selectImageList(projectNo);
+	// 포트 폴리오 프로젝트 추가
+	@Override
+	public int insertProject(Project project, List<MultipartFile> imgList) {
+		
+		int result = mapper.projectInsert(project);
+//		int result2 = mapper.projectInfoInsert(project);
+		
+		
+		if(result == 0) return 0;
+		
+		return 0;
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

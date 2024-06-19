@@ -150,4 +150,3 @@ function formatNumber() {
 
 formatNumber();
 
-

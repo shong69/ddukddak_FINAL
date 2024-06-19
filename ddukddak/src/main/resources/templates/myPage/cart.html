@@ -28,6 +28,7 @@
                 <h2 class="category-name">장바구니</h2>
                 <!-- 일단 겟으로 파라미터부터 체크.. -->
                 <form id="cartForm" action="/eCommerce/payment" method="get" name = "cartForm" enctype="multipart/form-data">
+                    
                     <table class="cartList">
                         <thead>
                             <th>전체(N개)</th>
@@ -56,7 +57,7 @@
                             <th:object th:unless="${#lists.isEmpty(cartList)}">
                                 <tr class="boxCount" th:each = "list, listStat : ${cartList}" th:object="${list}"> <!--상품으로 나눠서 나열-->
                                     <td class="countBox" th:text="${listStat.count}">1</td>
-                                    <td><input name="check" th:productNo-data="*{productNo}" th:productName-data="*{productName}" type="checkbox"></td>
+                                    <td><input name="check" th:productNo-data="*{productNo}" th:productName-data="*{productName}" type="checkbox" class="item-checkbox" th:data-cartId="*{cartId}"></td>
                                     <td><a><img th:src="|*{uploadImgPath}*{uploadImgRename}|" class="product-image"></a></td>
                                     <td>
                                         <h th:text="*{productName}"></h4>
@@ -65,41 +66,39 @@
                                     <td>
                                         <div class="adjustCount">
                                             <button type="button" class="quantity-btn" onclick="changeQuantity(this, -1)">-</button>
-                                            <input type="text" th:name="'quantity'+${listStat.count} "th:value="*{productCount}" class="quantity-input" readonly>
+                                            <input type="text" th:name="'quantity'+${listStat.count}" th:value="*{productCount}" class="quantity-input" readonly>
+                                            <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
                                             <!-- 카트 아이디 히든 -->
                                             <input type="hidden" th:value="*{cartId}" id="optionIdInput" name="cartId">
-                                            <button type="button" class="quantity-btn" onclick="changeQuantity(this, 1)">+</button>
                                         </div>
                                     </td>
-                                    <td class="price-input" th:text="|*{productPrice}원|" th:value="*{productPrice}">상품가격<td>
+                                    <td class="price-input" th:text="|*{productPrice}원|" th:value="*{productPrice}" th:productPrice-data="*{productPrice}">상품가격</td> <!-- 수정된 부분 -->
                                         <button th:data-cartId =*{cartId} type="button" class="myPageDelUpdateBtn">삭제</button>
                                     </td>
+
                                     <!-- 값 넘기기 용 -->
                                     <input name="productNo" th:value="*{productNo}" type="hidden">
 
-                                    <input type="hidden" name="total" id="total" value="total">
 
+                                    <input type="hidden" name="cartId" th:value="*{cartId}">
                                 </tr>
                             </th:object>
-
                         </tbody>
                     </table>
     
                     <div class="infoArea">
                         <div class="totalCount">총 <span id="totalCount">N</span>건</div>
                         <div class="totalPrice">합계 <span id="totalPrice">100000</span> 원</div>
-                        <!-- 총 값 서버로 전달하기 -->
-                        <input type="hidden" name="totalPrice" id="hiddenTotalPrice">
                     </div>
                     <div class="pointArea">총 예상 포인트 <span id="pointArea">100</span>원</div>
+
                     <div class="purchaseArea">
-
-
-                        <button type="button" class="selectedPurchage">선택상품 구매</button>
-                        <button class="wholePurchase">전체상품 구매</button>
+                        <button type="button" class="selectedPurchase" onclick="submitSelectedCartForm()">선택상품 구매</button>
+                        <button type="button" class="wholePurchase" onclick="submitWholeCartForm()">전체상품 구매</button>
 
                     </div>
-                    
+                    <input type="hidden" name="totalPrice" id="totalPriceHidden">
+                    <input type="hidden" name="cartIds" id="cartIdsHidden">`
                 </form> 
                 
             </section>
@@ -107,14 +106,56 @@
 
         <th:block th:replace="~{common/fragments/footer}"></th:block>
         <script th:inline="javascript">
-
             
-            const cartForm = document.getElementById('cartForm');
+        function submitSelectedCartForm() {
+            const selectedCartIds = [];
+            let totalPrice = 0;
+
+            document.querySelectorAll('.item-checkbox:checked').forEach(checkbox => {
+                const cartId = checkbox.getAttribute('data-cartId');
+                selectedCartIds.push(cartId);
+
+                const row = checkbox.closest('tr');
+                const price = parseInt(row.querySelector('.price-input').getAttribute('productPrice-data'), 10) || 0;
+                const count = parseInt(row.querySelector('.quantity-input').value, 10) || 0;
+                console.log(`Cart ID: ${cartId}, Price: ${price}, Count: ${count}`);
+                totalPrice += price * count;
+        });
+
+        if (selectedCartIds.length === 0) {
+            alert("하나 이상의 상품을 선택해주세요.");
+            return;
+        }
+
+        // cartIds 배열을 숨겨진 필드에 JSON 문자열로 설정
+        document.getElementById('cartIdsHidden').value = JSON.stringify(selectedCartIds);
+
+        // 총 금액을 숨겨진 필드에 설정
+        document.getElementById('totalPriceHidden').value = totalPrice;
+
+        document.getElementById('cartForm').submit();
+
+        }
+
+        function submitWholeCartForm() {
+            document.querySelectorAll('.item-checkbox').forEach(checkbox => checkbox.checked = true);
+            submitSelectedCartForm();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const totalPriceValue = parseInt(document.getElementById('totalPrice').textContent.replace(/[^0-9]/g, ''), 10);
+            document.getElementById('totalPriceHidden').value = totalPriceValue || 0;
+        });
             
-            cartForm.addEventListener('submit', e => {
 
 
-            })
+            // document.getElementById('cartForm').addEventListener('submit', e =>{
+            //     const totalPriceValue = document.getElementById('totalPrice').innerText;
+            
+            //     totalPriceHidden.value = totalPriceValue;
+            // })
+
+
 
             function changeQuantity(button, change) {
                 const input = button.parentElement.querySelector('.quantity-input');
