@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const viewMoreBtn = document.querySelector("#interiorProjectViewMore");
-    const portBotContainer = document.querySelector(".botContainer");
+    // const portBotContainer = document.querySelector(".botContainer");
     const projectLists = document.querySelectorAll(".portListMainContainer");
     
     let currentVisibleIndex = 0; // Tracks the currently visible list

@@ -55,19 +55,22 @@ public class ContactInteriorController {
 
 		Project mainProject = service.selectMainProject(portfolioNo);
 
-		List<Project> mainPortfolio = service.selectMain(portfolioNo);
+		List<Project> mainPortfolio = service.selectProjectList(portfolioNo);
 
 
         if(mainProject != null) {
         	model.addAttribute("mainProject", mainProject);
         	log.info("mainProject : " + mainProject);
+        }
 
         if(mainPortfolio != null) {
         	model.addAttribute("mainPortfolio", mainPortfolio);
         	log.info("mainPortfolio : " + mainPortfolio);
 
         }
+        
         return "partner/interior/interiorPortfolio";
+ 
 	}
 	
 	private List<List<Project>> chunkBoards(List<Project> portfolio, int chunkSize) {
