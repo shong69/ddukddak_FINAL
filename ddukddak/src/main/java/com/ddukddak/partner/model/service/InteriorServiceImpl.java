@@ -56,7 +56,7 @@ public class InteriorServiceImpl implements InteriorService {
 
 
 	@Override
-	public List<ProjectImg> selectImageList(int projectNo) {
+	public List<ProjectImg> selectImageList(int projectNo) { 
 		return mapper.selectImageList(projectNo);
 	}
 

@@ -1,3 +1,23 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const priceElements = document.querySelectorAll('.price');
+    const totalPriceElement = document.getElementById('totalPrice');
+
+    priceElements.forEach(priceElement => {
+        priceElement.innerText = formatToKoreanWon(priceElement.innerText);
+    });
+
+    totalPriceElement.innerText = formatToKoreanWon(totalPriceElement.innerText);
+});
+
+function formatToKoreanWon(numberString) {
+    let number = parseInt(numberString.replace(/[^0-9]/g, ''), 10);
+    return number.toLocaleString('ko-KR') + '원';
+}
+
+
+
+
+
 // 주문번호 규칙 생성 
 let orderCounter = sessionStorage.getItem('orderCounter');
 if (!orderCounter) {
@@ -25,7 +45,7 @@ const payBtn = document.getElementById('payBtn'); // 결제하기 버튼
 const onClickPay = async () => {
     
     // 총 금액 구해오기
-    const amountText = document.getElementById('amount');
+    const amountText = document.getElementById('totalPrice');
 
     let text = amountText.innerText;
     let number = text.replace(/[^0-9]/g, '');
@@ -60,7 +80,8 @@ const onClickPay = async () => {
     
 };
 
-payBtn.addEventListener('click', onClickPay);
+//payBtn.addEventListener('click', onClickPay);
+
 
 
 
