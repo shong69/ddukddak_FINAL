@@ -155,7 +155,7 @@
                 <div>
                     <div>
                         <button class="eCommerceProductDetailBtn" id="detailInfo">상세정보</button>
-                        <button class="eCommerceProductDetailBtn" id="review" onclick="checkReviewAuth()">리뷰 0</button>
+                        <button class="eCommerceProductDetailBtn" id="review" onclick="openReview()">리뷰 0</button>
                         <button class="eCommerceProductDetailBtn" id="qna">QNA</button>
                         <button class="eCommerceProductDetailBtn" id="changeInfo">반품/교환 정보</button>
                     </div>
@@ -394,16 +394,6 @@
 
 
             return false;
-        }
-
-
-
-        //리뷰 영역 선택 시 선택한 멤버가 리뷰 작성 권한이 있는지(상품id과 주문테이블에 겹치는지) 확인
-        function checkReviewAuth(){
-            //로그인한 회원 번호, 상품 번호 알아오기
-            //리뷰 작성 권한 비동기로 알아오기
-
-            //작성 안한 리뷰가 존재한다면 id=reviewForm 노출시키기
         }
     </script>
 </body>

@@ -44,6 +44,8 @@
         height: 30px;
         border-radius: 10px;
         border: 1px black solid;
+        text-align: center;
+        padding: 3px;
     }
 
     #priceSearch button {
@@ -103,18 +105,20 @@
                     </table>
                 </div>
         
+                <th:block th:if="${minPrice != 'NO'}">
                 <div style="border: 1px solid black;"></div>
         
-                <div id="priceSearch">
-                    <form>
-                        <h4 style="margin: 10px 0;">가격</h4>
-                        <input name="minPrice" type="number" id="minPrice">
-                        <h3>~</h3>
-                        <input name="maxPrice" type="number" id="maxPrice">
-                        <button id="priceButton"><h4>찾기</h4></button>
-                        <a th:href='|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}|'><h4>초기화</h4></a>
-                    </form>
-                </div>
+                    <div id="priceSearch">
+                        <form>
+                            <h4 style="margin: 10px 0;">가격</h4>
+                            <input name="minPrice" type="number" id="minPrice">
+                            <h3>~</h3>
+                            <input name="maxPrice" type="number" id="maxPrice">
+                            <button id="priceButton"><h4>찾기</h4></button>
+                            <a th:href='|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}|'><h4>초기화</h4></a>
+                        </form>
+                    </div>
+                </th:block>
             </div>
         </div>
     </th:block>
@@ -122,15 +126,29 @@
 <script>
     const priceButton = document.querySelector("#priceButton");
 
-    priceButton.addEventListener("click", e => {
-        const minPrice = document.querySelector("#minPrice").value;
-        const maxPrice = document.querySelector("#maxPrice").value;
+    if(priceButton != null) {
+        priceButton.addEventListener("click", e => {
+            const minPrice = Number(document.querySelector("#minPrice").value);
+            const maxPrice = Number(document.querySelector("#maxPrice").value);
+    
+            if(minPrice <= 0) {
+                alert("최소가격은 0원 이상 입력해야 합니다");
+                e.preventDefault();
+            }
+    
+            if(minPrice.trim().length === 0 || maxPrice.trim().length === 0) {
+                alert("최소가격과 최대가격을 모두 입력해주세요");
+                e.preventDefault();
+            }
+    
+            if(minPrice > maxPrice) {
+                alert("가격범위가 알맞지 않습니다");
+                e.preventDefault();
+            }
+        });
 
-        if(minPrice > maxPrice) {
-            alert("가격범위가 알맞지 않습니다");
-            e.preventDefault();
-        }
-    });
+    }
+
 
     document.addEventListener('DOMContentLoaded', function() {
         const category = document.getElementById('detailCategory');

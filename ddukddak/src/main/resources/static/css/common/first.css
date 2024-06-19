@@ -341,7 +341,7 @@
 
 .comeHome-box {
     margin-bottom: 50px;
-    width: 1500px;
+    width: 1100px;
     height: 100px;
     background-color: white;
     box-shadow: 8px 8px 8px #b8b8b8;
@@ -355,31 +355,31 @@
 }
 
 #konwHow > div:nth-child(3) {
-    width: 1500px;
+    width: 1300px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#konwHow > div:nth-child(3) > div {
+.konwHowEx {
     margin: 0 100px;
     display: flex;
     flex-direction: column;
     cursor: pointer;
 }
 
-#konwHow > div:nth-child(3) > div > img {
+.konwHowEx > img {
     height: 300px;
     width: 300px;
 }
 
-#konwHow > div:nth-child(3) > div > * {
+.konwHowEx > * {
     margin-bottom: 5px;
 }
 
-#konwHow > div:nth-child(3) > div > h3,
-#konwHow > div:nth-child(3) > div > h4,
-#konwHow > div:nth-child(3) > div > h5 {
+.konwHowEx > h3,
+.konwHowEx > h4,
+.konwHowEx > h5 {
     padding: 0 15px;
 }
 

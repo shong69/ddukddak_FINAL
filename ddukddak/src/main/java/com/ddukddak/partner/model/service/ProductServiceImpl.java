@@ -400,35 +400,35 @@ public class ProductServiceImpl implements ProductService{
 		}
 	}
 
-	// 판매상태 변경
-	@Override
-	public int changeStatus(Map<String, Object> map) {
-		List<Object> list = (List<Object>) map.get("obj");
-		String getStatus = (String) map.get("status");
-		
-		String status = "";
-		
-		if(getStatus.equals("판매중")) {
-			status = "N";
-		} else if(getStatus.equals("판매중지")) {
-			status = "S";
-		} else {
-			status = "Y";
-		}
-		
-		int result = 0;
-		
-		for(Object productNo : list) {
-			Map<String, Object> newMap = new HashMap<String, Object>();
-			
-			newMap.put("productNo", productNo);
-			newMap.put("status", status);
-			
-			result += mapper.changeStatus(newMap);
-		}
-		return result;
-	}
-	
+//	// 판매상태 변경
+//	@Override
+//	public int changeStatus(Map<String, Object> map) {
+//		List<Object> list = (List<Object>) map.get("obj");
+//		String getStatus = (String) map.get("status");
+//		
+//		String status = "";
+//		
+//		if(getStatus.equals("판매중")) {
+//			status = "N";
+//		} else if(getStatus.equals("판매중지")) {
+//			status = "S";
+//		} else {
+//			status = "Y";
+//		}
+//		
+//		int result = 0;
+//		
+//		for(Object productNo : list) {
+//			Map<String, Object> newMap = new HashMap<String, Object>();
+//			
+//			newMap.put("productNo", productNo);
+//			newMap.put("status", status);
+//			
+//			result += mapper.changeStatus(newMap);
+//		}
+//		return result;
+//	}
+//	
 	// 판매등록 상품 조회
 	@Override
 	public Product selectOne(int productNo) {
@@ -603,13 +603,11 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.modifyRegistProduct(map);
 	}
 
-	@Override
-	public Map<String, Object> selectReciptList(int partnerNo, int mainSort, int sort, String status, int cp) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	
+
+
 
 
 

@@ -108,6 +108,13 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	int getSearchCount(Map<String, Object> newMap);
+	
+	/** 검색으로 찾은 상품 리스트
+	 * @param paramMap
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Product> selectSearchList1(Map<String, Object> newMap, RowBounds rowBounds);
 
 	/** 검색으로 찾은 상품 리스트
 	 * @param paramMap

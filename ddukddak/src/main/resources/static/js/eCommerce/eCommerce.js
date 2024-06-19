@@ -51,8 +51,8 @@ dateObj.setDate(dateObj.getDate() + 1);
 
 countDownTimer('0', '07/01/2024');
 countDownTimer('1', '06/29/2024');
-countDownTimer('2', '06/15/2024');
-countDownTimer('3', '06/20/2024');
+countDownTimer('2', '06/30/2024');
+countDownTimer('3', '06/28/2024');
 
 
 function formatNumberWithCommas(number) {
