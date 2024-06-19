@@ -21,4 +21,11 @@ public interface InteriorMapper {
 	
 	List<Project> selectMain(int portfolioNo);
 
+	
+	/** 포트폴리오 프로젝트 등록
+	 * @param project
+	 * @return result
+	 */
+	int projectInsert(Project project);
+
 }

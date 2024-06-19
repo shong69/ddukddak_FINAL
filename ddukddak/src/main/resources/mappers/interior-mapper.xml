@@ -9,7 +9,7 @@
 		LEFT JOIN PORTFOLIO USING (PARTNER_NO)
 		WHERE PARTNER_TYPE = 1
 		AND PARTNER_DEL_FL = 'N'
-    AND MAIN_PROJECT_FL = 'Y'
+    	<!-- AND MAIN_PROJECT_FL = 'Y' -->
 	</select>
 	
 	<!-- 포트폴리오 조회 -->
@@ -21,11 +21,34 @@
     	SELECT PARTNER_NO, PARTNER_TEL, PARTNER_BUSINESS_NAME, PORTFOLIO_NO, PROJECT_NAME, HOME_LINK, 
 		PORTFOLIO_DETAIL, HOUSING_TYPE, WORK_FORM, WORK_AREA, PROFILE_IMG, 	
 		CONSTRUCTION_COST, REGION, CONSTRUCTION_YEAR, FAMILY_SIZE, PROJECT_CONTENT,
-		MAIN_PROJECT_FL FROM PARTNER NATURAL JOIN 
-		PORTFOLIO NATURAL JOIN PROJECT_INFO 
+		MAIN_PROJECT_FL 
+		FROM PARTNER 
+		NATURAL JOIN PORTFOLIO 
+		NATURAL JOIN PROJECT_INFO 
 		NATURAL JOIN PROJECT
 		WHERE PARTNER_TYPE = 1 AND MAIN_PROJECT_FL = 'Y'
 		AND PORTFOLIO_NO = #{portfolioNo}
     </select>
+    
+    
+    <!-- 포트폴리오 프로젝트 등록 -->
+    <!-- 
+    <insert id="projectInsert">
+    	<selectKey order="BEFORE" resultType="_int" keyProperty="projectNo">
+			SELECT SEQ_PROJECT_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		
+		INSERT INTO "PROJECT"
+		VALUES ( #{boardNo},
+				 #{boardTitle},
+				 #{boardContent},
+				 DEFAULT,
+				 NULL,
+				 DEFAULT,
+				 DEFAULT,
+				 #{memberNo},
+				 1)
+    </insert>
+     -->
 	
 </mapper>

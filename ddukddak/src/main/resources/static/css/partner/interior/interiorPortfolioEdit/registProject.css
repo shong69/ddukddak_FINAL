@@ -58,6 +58,13 @@
     padding: 0 50px;
 }
 
+.detail-info input {
+    width: 150px;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
 .input-project-detail > div:last-child {
     display: flex;
     margin-left: 155px;
