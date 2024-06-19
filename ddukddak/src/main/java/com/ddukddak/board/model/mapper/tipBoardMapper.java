@@ -23,4 +23,6 @@ public interface tipBoardMapper {
 
 	int insertUploadList(List<BoardImg> uploadList);
 
+	List<Board> searchList(Map<String, Object> map);
+
 }

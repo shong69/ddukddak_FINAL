@@ -50,6 +50,7 @@ public class MyPageController {
 		return service.selectOrderList(loginMember);
 	}
 	
+
 	//[주문상태] 상태 배송완료 -> 구매확정
 	@GetMapping("confirmPurchase")
 	@ResponseBody
@@ -87,6 +88,7 @@ public class MyPageController {
 		
 		return map;
 	}
+
 	
 	//회원정보 진입
 	@GetMapping("memberInfo")
