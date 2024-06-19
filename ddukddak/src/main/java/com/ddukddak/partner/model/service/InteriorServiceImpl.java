@@ -85,9 +85,9 @@ public class InteriorServiceImpl implements InteriorService {
 		Portfolio portfolio = new Portfolio();
 		log.info("partnerNo : " + project.getPartnerNo());
 		
-		portfolio = mapper.selectPortfolio(project.getPortfolioNo());
-		
-		project.setPortfolioNo(portfolio.getPortfolioNo());
+//		portfolio = mapper.selectPortfolio(project.getPortfolioNo());
+//		
+//		project.setPortfolioNo(portfolio.getPortfolioNo());
 		
 		int result = mapper.projectInsert(project);
 		log.info("projectNo : " + project.getProjectNo());
