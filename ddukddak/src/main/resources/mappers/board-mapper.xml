@@ -24,6 +24,7 @@
            M.MEMBER_ID, 
            M.MEMBER_NICKNAME, 
            U.UPLOAD_IMG_PATH || U.UPLOAD_IMG_RENAME AS THUMBNAIL, 
+           PROFILE_IMG,
            C.BOARD_CODE, 
            (SELECT COUNT(*) 
               FROM BOARD_LIKE L 

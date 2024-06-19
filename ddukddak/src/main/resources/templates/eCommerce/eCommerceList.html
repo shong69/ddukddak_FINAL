@@ -122,8 +122,8 @@
                 <div class="pagination">
                     <!--검색 안한 경우-->
                     <ul class = "pagination" th:unless="${query}" th:object="${pagination}">
-                        <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=1|}">&lt;&lt;</a></li>
-                        <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{prevPage}|}">&lt;</a></li>
+                        <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=1&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&lt;&lt;</a></li>
+                        <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{prevPage}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&lt;</a></li>
             
                         <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
     
@@ -132,7 +132,7 @@
                             </li>
     
                             <li th:unless="${i} == *{currentPage}">
-                                <a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=${i}|}"
+                                <a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=${i}&minPrice=${minPrice}&maxPrice=${maxPrice}|}"
                                 th:text="${i}">이동할 페이지</a>
                             </li>
                             
@@ -140,17 +140,17 @@
             
                     
                         <li>
-                            <a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{nextPage}|}">&gt;</a>
+                            <a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{nextPage}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&gt;</a>
                         </li>
-                        <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{maxPage}|}">&gt;&gt;</a></li>
+                        <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{maxPage}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&gt;&gt;</a></li>
                     </ul>
                 
                 </div>
 
                 <!--검색인 경우-->
                 <ul class="pagination" th:if="${query}" th:object="${pagination}">
-                    <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=1&query=${query}|}">&lt;&lt;</a></li>
-                    <li><a  th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{prevPage}&query=${query}|}">&lt;</a></li>
+                    <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=1&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&lt;&lt;</a></li>
+                    <li><a  th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{prevPage}&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&lt;</a></li>
                     
                     <th:block th:if="*{startPage lt endPage}" th:each="i : *{#numbers.sequence(startPage, endPage)}">
                         
@@ -159,7 +159,7 @@
                         </li>
                         
                         <li th:unless="${i} == *{currentPage}">
-                            <a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=${i}&query=${query}|}"
+                            <a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=${i}&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}|}"
                                 th:text="${i}">이동할 페이지</a>
                         </li>
                     </th:block>
@@ -171,8 +171,8 @@
                         </li>
                     </th:block>
                     
-                    <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{nextPage}&query=${query}|}">&gt;</a></li>
-                    <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{maxPage}&query=${query}|}">&gt;&gt;</a></li>
+                    <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{nextPage}&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&gt;</a></li>
+                    <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{maxPage}&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&gt;&gt;</a></li>
                 </ul>           
                 
             </th:block>

@@ -92,6 +92,30 @@ public interface CartAndWishListMapper {
 	 */
 	List<Order> selectOrderList(int memberNo);
 
+	/**[주문내역]구매확정으로 변경
+	 * @param map
+	 * @return
+	 */
+	int confirmPurchase(Map<String, Object> map);
+
+	/**[주문내역]주문취소로 변경
+	 * @param map
+	 * @return
+	 */
+	int orderDelete(Map<String, Object> map);
+
+	/**[주문내역]리뷰 작성 여부 확인
+	 * @param orderItemNo
+	 * @return
+	 */
+	int checkReviewWrite(int orderItemNo);
+
+	/**[주문내역]카테고리 검색
+	 * @param productNo
+	 * @return
+	 */
+	Map<String, Object> getProductByNo(int productNo);
+
 
 	
 

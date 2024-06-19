@@ -52,12 +52,12 @@ public class ContactInteriorController {
 													HttpServletRequest req,
 													HttpServletResponse resp) {
 
-		List<Partner> portfolio = service.selectPortfolio(portfolioNo);
+//		List<Partner> portfolio = service.selectPortfolio(portfolioNo);
 		List<Project> mainPortfolio = service.selectMain(portfolioNo);
-        if (portfolio != null) {
-            model.addAttribute("portfolio", portfolio);
-            log.info("portfolio : " + portfolio);
-        }
+//        if (portfolio != null) {
+//            model.addAttribute("portfolio", portfolio);
+//            log.info("portfolio : " + portfolio);
+//        }
         if(mainPortfolio != null) {
         	model.addAttribute("mainPortfolio", mainPortfolio);
         	log.info("mainPortfolio : " + mainPortfolio);

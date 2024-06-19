@@ -32,8 +32,13 @@
                 
                 <span class="title">노하우</span>
                   <span>
-                      <input type="text" placeholder="노하우 검색" class="searchBox">
-                      <i class="fa-solid fa-magnifying-glass"></i>
+                    <form th:action="@{/tip/main}" class="searchForm">
+                      <input type="text" placeholder="노하우 검색" class="searchBox" name="query">
+                      <button  id="searchBtn">
+                        <input type="hidden" name="boardCode" th:value="${boardCode}">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </form>
                   </span>
                   
               </section>
@@ -42,8 +47,7 @@
                   <div class="boardAdContentContainer">
                     <h1>이달의 Best 리뷰어</h1>
                     <h3>나만의 공간을 꾸몄어요</h3>
-                    <h4 class="ellipsed-content">이사오고 나만의 공간을 꾸며봤어요 처음 자취하는거라 인테리어에 고민을 많이 했는데 뚝딱뚝딱에서 인테리어소품을 구매하고 시공까지 맡기니 제가 원하던 집이 완성됐어요 뚝딱뚝딱 최고 이사오고 나만의 공간을 꾸며봤어요 처음 자취하는거라 인테리어에 고민을 많이 했는데 뚝딱뚝딱에서 인테리어소품을 구매하고 시공까지 맡기니 제가 원하던 집이 완성됐어요 뚝딱뚝딱 최고 이사오고 나만의 공간을 꾸며봤어요 처음 자취하는거라 인테리어에 고민을 많이 했는데 뚝딱뚝딱에서 인테리어소품을 구매하고 시공까지 맡기니 제가 원하던 집이 완성됐어요 뚝딱뚝딱 최고 이사오고 나만의 공간을 꾸며봤어요 처음 자취하는거라 인테리어에 고민을 많이 했는데 꾸며봤어요 처음 자취하는거라 인테리어에 고민을 많이 했는데 꾸며봤어요 처음 자취하는거라 인테리어에 고민을 많이 했는데</h4>
-                    <a href=""><h3>더보기 >></h3></a>
+                    <h4 class="ellipsed-content">이사오고 나만의 공간을 꾸며봤어요 처음 자취하는거라 인테리어에 고민을 많이 했는데 뚝딱뚝딱에서 인테리어소품을 구매하고 시공까지 맡기니 제가 원하던 집이 완성됐어요 뚝딱뚝딱 최고 이사오고 나만의 공간을 꾸며봤어요 처음 자취하는거라 인테리어에 고민을 많이 했는데 뚝딱뚝딱에서 인테리어소품을 구매하고 시공까지 맡기니 제가 원하던 집이 완성됐어요 뚝딱뚝딱 최고 이사오고 나만의 공간을 꾸며봤어요 처음 자취하는거라 인테리어에 고민을 많이 했는데...</h4>
                   </div>
                   <img src="/images/partner/interior/portfolio/portfolio_ex5_1.jpg" alt="" class="boardAd mySlides">
                     
