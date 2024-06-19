@@ -226,35 +226,58 @@
         function handleFormSubmission(event) {
             event.preventDefault(); // 기본 제출 동작 막기
 
-            const form = document.getElementById('uploadForm');
-            console.log(form);
-            const formData = new FormData(form);
+            //유효성 검사
+            var optionTemp = true;
 
-            // subImageFiles를 FormData에 추가
-            subImageFiles.forEach(file => {
-                formData.append('subImgs', file);
-            });
+            const optionTemps = document.getElementsByClassName("applyButton");
 
-            // 폼 데이터 로그 출력 (디버깅 용도)
-            for (let [key, value] of formData.entries()) {
-                console.log(key, value);
+            console.log(optionTemps);
+
+            for(let i = 0; i < optionTemps.length; i ++) {
+                console.log(optionTemps[i]);
+                if(optionTemps[i].style.display != 'none') {
+                    optionTemp = false;
+                }
             }
 
-            // FormData 객체를 사용하여 서버로 POST 요청 보내기
-            fetch('/partner/seller/product/applySellProduct', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(result => {
-
-                if(result > 0) {
-                    alert("등록 완료");
-                    location.href = '/partner/seller/product/apply';
-                } else {
-                    alert("등록 실패");
+            if(document.querySelector("#productName").value.trim().length === 0 ||
+                document.querySelector("#productPrice").value.trim().length === 0) {
+                    alert("모든 입력값 작성을 완료해주세요");
+            } else if(!optionTemp) {
+                alert("모든 옵션값 적용을 완료해주세요");
+            } else {
+                const form = document.getElementById('uploadForm');
+                console.log(form);
+                const formData = new FormData(form);
+    
+                // subImageFiles를 FormData에 추가
+                subImageFiles.forEach(file => {
+                    formData.append('subImgs', file);
+                });
+    
+                // 폼 데이터 로그 출력 (디버깅 용도)
+                for (let [key, value] of formData.entries()) {
+                    console.log(key, value);
                 }
-            })
+    
+                // FormData 객체를 사용하여 서버로 POST 요청 보내기
+                fetch('/partner/seller/product/applySellProduct', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(result => {
+    
+                    if(result > 0) {
+                        alert("등록 완료");
+                        location.href = '/partner/seller/product/apply';
+                    } else {
+                        alert("등록 실패");
+                    }
+                })
+
+            }
+
         }
 
         function handleFormSubmissionModify(event) {

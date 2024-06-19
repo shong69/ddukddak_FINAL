@@ -76,6 +76,10 @@
                                         <button th:data-cartId =*{cartId} type="button" class="myPageDelUpdateBtn">삭제</button>
                                     </td>
 
+                                    <!-- 값 넘기기 용 -->
+                                    <input name="productNo" th:value="*{productNo}" type="hidden">
+
+
                                     <input type="hidden" name="cartId" th:value="*{cartId}">
                                 </tr>
                             </th:object>

@@ -150,16 +150,3 @@ function formatNumber() {
 
 formatNumber();
 
-
-//////////////////////////////////
-// const selectedPurchage = document.querySelector(".selectedPurchage");
-
-// selectedPurchage.addEventListener("click", () => {
-//     const checkedElements = document.querySelectorAll('input[name="check"]:checked');
-
-//     for(let i = 0; i < checkedElements.length; i ++) {
-//         console.log(checkedElements[i].getAttribute('productNo-data'));
-//         console.log(checkedElements[i].getAttribute('productName-data'));
-
-//     }
-// })

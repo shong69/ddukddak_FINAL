@@ -43,6 +43,7 @@ public class MyPageController {
 	@ResponseBody
 	public List<Order> main(@SessionAttribute("loginMember") Member loginMember,
 						Model model) {
+
 		
 		return service.selectOrderList(loginMember);
 	}
@@ -51,6 +52,7 @@ public class MyPageController {
 	@GetMapping("confirmPurchase")
 	@ResponseBody
 	public String confirmPurchase(@RequestParam("orderItemNo") int orderItemNo) {
+
 		
 		return service.confirmPurchase(orderItemNo);
 	}

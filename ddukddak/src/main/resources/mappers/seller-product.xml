@@ -325,10 +325,11 @@
 	<!-- 대표사진 업로드 -->
 	<update id="updateThumbnail">
 		UPDATE "UPLOAD_FILE"
-		SET UPLOAD_IMG_OG_NAME = #{originalName},
-			UPLOAD_IMG_RENAME = #{rename},
-			CATEGORY = #{smallCategory}
+		SET UPLOAD_IMG_OG_NAME = #{uploadImgOgName},
+			UPLOAD_IMG_RENAME = #{uploadImgRename},
+			CATEGORY = #{category}
 		WHERE PRODUCT_NO = #{productNo}
+		AND UPLOAD_IMG_ORDER = 0
 	</update>
 	
 	<!-- 상세사진 삭제 -->
