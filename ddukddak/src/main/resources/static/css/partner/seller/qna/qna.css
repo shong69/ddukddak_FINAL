@@ -45,6 +45,7 @@
 
 .borderTr {
     height: 50px;
+    cursor: pointer;
 }
 
 .borderTr div {
@@ -129,6 +130,7 @@
     width: 530px;
     height: 150px;
     margin: 0 30px;
+    padding: 5px;
 }
 
 #buttonContainer {
@@ -156,4 +158,34 @@
     color: var(--gray1);
     transform: translateY(-5px);
     box-shadow: 3px 3px 5px var(--gray5);
+}
+
+.statusBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.statusBox h4 {
+    font-size: 15px;
+}
+
+.pagination{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 100px 0;
+}
+
+.pagination li{
+    width: 20px;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.pagination a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }

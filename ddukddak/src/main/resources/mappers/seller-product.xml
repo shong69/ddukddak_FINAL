@@ -429,4 +429,29 @@
 		ORDER BY p.PRODUCT_NO DESC, o2.OPTION_NAME
 	</select>
 	
+	<!-- 전체 문의내역 리스트 개수 -->
+	<select id="qnaListCount">
+		SELECT * FROM "QNA"
+	</select>
+	
+	<!-- 전체 문의내역 리스트 가져오기 -->
+	<select id="selectQna">
+		SELECT QNA_NO, QNA_TITLE, QNA_CONTENT, QNA_ANSWER, MEMBER_NO, PARTNER_NO,
+		TO_CHAR(QNA_WRITE_DATE, 'YYYY-MM-DD') AS QNA_WRITE_DATE,
+		TO_CHAR(QNA_ANSWER_DATE, 'YYYY-MM-DD') AS QNA_ANSWER_DATE,
+		QNA_ANSWER_STATUS, MEMBER_ID
+		FROM "QNA"
+		NATURAL JOIN "MEMBER"
+	</select>
+	
+	<!-- 문의답변 넣기 -->
+	<update id="insertQnaAnswer">
+		UPDATE "QNA"
+		SET QNA_ANSWER = #{qnaAnswer},
+			PARTNER_NO = #{partnerNo},
+			QNA_ANSWER_DATE = SYSDATE,
+			QNA_ANSWER_STATUS = 'Y'
+		WHERE QNA_NO = #{qnaNo}
+	</update>
+	
 </mapper>

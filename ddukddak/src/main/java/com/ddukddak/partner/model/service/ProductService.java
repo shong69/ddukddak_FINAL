@@ -10,6 +10,7 @@ import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
 
 public interface ProductService {
 
@@ -165,6 +166,17 @@ public interface ProductService {
 	 * @return
 	 */
 	Map<String, Object> selectReceiptList(int partnerNo, int mainSort, int sort, String status, int cp);
+
+	/** 문의내역 리스트 가져오기
+	 * @return
+	 */
+	Map<String, Object> selectQna(int cp);
+
+	/** 문의답변 넣기
+	 * @param map
+	 * @return
+	 */
+	int insertQnaAnswer(Map<String, Object> obj);
 
 
 

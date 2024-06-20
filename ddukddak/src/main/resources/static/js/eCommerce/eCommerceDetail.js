@@ -711,17 +711,138 @@ function delReview(reviewNo){
 const qnaInserButton = document.querySelector("#qnaInserButton");
 const write = document.querySelector("#write");
 const applyQnaButton = document.querySelector("#applyQnaButton");
+const myQna = document.querySelector("#myQna");
+const qnaContainer = document.querySelector("#qnaContainer");
+const tBody = document.querySelector("#tBody");
+const allBox = document.querySelector("#allBox");
+const allQna = document.querySelector("#allQna");
+
+
+function maskString(str) {
+    // 문자열 길이를 구함
+    const length = str.length;
+
+    // 8글자 이상일 경우 처리
+    if (length >= 8) {
+        return str.slice(0, 4) + '*'.repeat(length - 4);
+    }
+
+    // 8글자보다 짧을 경우 처리
+    const halfLength = Math.ceil(length / 2);
+    return str.slice(0, length - halfLength) + '*'.repeat(halfLength);
+}
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const memberNo = document.querySelector("#memberNo");
+
+    // 모든 QNA 불러오기
+    fetch("/eCommerce/selectQna")
+    .then(resp => resp.json())
+    .then(result => {
+        console.log(result);
+
+        if (result.length == 0) {
+            const h2 = document.createElement("h2");
+            h2.innerText = "작성한 QNA가 존재하지 않습니다";
+            h2.style.color = 'var(--gray5)';
+            h2.style.fontWeight = '500';
+            h2.style.textAlign = 'center';
+            h2.style.marginTop = '20px';
+
+            qnaContainer.append(h2);
+        } else {
+            result.forEach((qna) => {
+                qna.memberId = maskString(qna.memberId);
+                if(qna.partnerId != "") {
+                    qna.partnerId = maskString(qna.partnerId);
+                }
+
+                if (qna.qnaAnswerStatus == 'N') {
+                    qna.qnaAnswerStatus = '미답변';
+                } else {
+                    qna.qnaAnswerStatus = '답변완료';
+                }
+
+                let arr = [
+                    qna.qnaAnswerStatus,
+                    qna.qnaTitle,
+                    qna.memberId,
+                    qna.qnaWriteDate
+                ];
+
+                const tr = document.createElement("tr");
+                tr.style.cursor = 'pointer';
+
+                const contentTr = document.createElement("tr");
+                contentTr.style.display = 'none';
+                
+                const answerTr = document.createElement("tr");
+                answerTr.style.display = 'none';
+
+                for (let key of arr) {
+                    const td = document.createElement("td");
+                    td.innerText = key;
+                    tr.append(td);
+
+                    const contentTd = document.createElement("td");
+                    const answerTd = document.createElement("td");
+                    if (key == qna.qnaTitle) {
+                        contentTd.innerText = qna.qnaContent;
+                        answerTd.innerText = "▷ " + qna.qnaAnswer;
+                    }
+
+                    if (key == qna.memberId) {
+                        answerTd.innerText = qna.partnerId;
+                    }
+
+                    if (key == qna.qnaWriteDate) {
+                        answerTd.innerText = qna.qnaAnswerDate;
+                    }
+
+                    contentTr.append(contentTd);
+                    answerTr.append(answerTd);
+                }
+                tBody.append(tr);
+                tBody.append(contentTr);
+
+                if(qna.qnaAnswer != "") {
+                    tBody.append(answerTr);
+                }
+
+                tr.addEventListener("click", () => {
+                    const display = (contentTr.style.display === 'none') ? 'table-row' : 'none';
+                    if (display === 'table-row') {
+                        contentTr.style.display = display;
+                        answerTr.style.display = display;
+                        contentTr.style.backgroundColor = 'rgb(248, 248, 248)';
+                        answerTr.style.backgroundColor = 'rgb(248, 248, 248)';
+                        tr.style.backgroundColor = 'rgb(248, 248, 248)';
+                    } else {
+                        contentTr.style.display = display;
+                        answerTr.style.display = display;
+                        tr.style.backgroundColor = 'white'; // tr의 배경색 원래대로 설정
+                    }
+                });
+
+            });
+        }
+    });
+
     
+    // QNA 입력
     qnaInserButton.addEventListener("click", () => {
 
         if(memberNo.value == 0) {
             alert("로그인 후 이용해주세요");
             location.href = "/member/login?returnUrl=http%3A%2F%2Flocalhost%3A1000%2FeCommerce%2Flist%2F1%2F1%2F20%2Fdetail";
         } else {
-            write.style.display = 'flex';
+            if( write.style.display == 'flex') {
+                 write.style.display = 'none'
+            } else {
+                write.style.display = 'flex';
+            }
         }
     })
     
@@ -759,8 +880,186 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+   // '내가 쓴 QNA' 버튼 클릭 이벤트
+    myQna.addEventListener("click", () => {
+        if (memberNo.value == 0) {
+            alert("로그인 후 이용해주세요");
+            location.href = "/member/login?returnUrl=http%3A%2F%2Flocalhost%3A1000%2FeCommerce%2Flist%2F1%2F1%2F20%2Fdetail";
+        } else {
+            allBox.style.display = 'block';
+            tBody.innerHTML = "";
+            write.style.display = 'none';
+            write.style.display = 'none';
+
+            fetch("/eCommerce/myQna")
+                .then(resp => resp.json())
+                .then(result => {
+                    console.log(result);
+
+                    if (result.length == 0) {
+                        const h2 = document.createElement("h2");
+                        h2.innerText = "작성한 QNA가 존재하지 않습니다";
+                        h2.style.color = 'var(--gray5)';
+                        h2.style.fontWeight = '500';
+                        h2.style.textAlign = 'center';
+                        h2.style.marginTop = '20px';
+
+                        qnaContainer.append(h2);
+                    } else {
+                        
+                        result.forEach((qna) => {
+                            qna.memberId = maskString(qna.memberId);
+                            if(qna.partnerId != "") {
+                                qna.partnerId = maskString(qna.partnerId);
+                            }
+
+                            if (qna.qnaAnswerStatus == 'N') {
+                                qna.qnaAnswerStatus = '미답변';
+                            } else {
+                                qna.qnaAnswerStatus = '답변완료';
+                            }
+
+                            let arr = [
+                                qna.qnaAnswerStatus,
+                                qna.qnaTitle,
+                                qna.memberId,
+                                qna.qnaWriteDate
+                            ];
+
+                            const tr = document.createElement("tr");
+                            tr.style.cursor = 'pointer';
+
+                            const contentTr = document.createElement("tr");
+                            contentTr.style.display = 'none';
+                            
+                            const answerTr = document.createElement("tr");
+                            answerTr.style.display = 'none';
+
+                            for (let key of arr) {
+                                const td = document.createElement("td");
+                                td.innerText = key;
+                                tr.append(td);
+            
+                                const contentTd = document.createElement("td");
+                                const answerTd = document.createElement("td");
+                                if (key == qna.qnaTitle) {
+                                    contentTd.innerText = qna.qnaContent;
+                                    answerTd.innerText = "▷ " + qna.qnaAnswer;
+                                }
+
+                                if (key == qna.memberId) {
+                                    answerTd.innerText = qna.partnerId;
+                                }
+
+                                if (key == qna.qnaWriteDate) {
+                                    answerTd.innerText = qna.qnaAnswerDate;
+                                }
+
+                                contentTr.append(contentTd);
+                                answerTr.append(answerTd);
+                            }
+                            tBody.append(tr);
+                            tBody.append(contentTr);
+            
+                            if(qna.qnaAnswer != "") {
+                                tBody.append(answerTr);
+                            }
+
+                            tr.addEventListener("click", () => {
+                                const display = (contentTr.style.display === 'none') ? 'table-row' : 'none';
+                                if (display === 'table-row') {
+                                    contentTr.style.display = display;
+                                    answerTr.style.display = display;
+                                    contentTr.style.backgroundColor = 'rgb(248, 248, 248)';
+                                    answerTr.style.backgroundColor = 'rgb(248, 248, 248)';
+                                    tr.style.backgroundColor = 'rgb(248, 248, 248)';
+                                } else {
+                                    contentTr.style.display = display;
+                                    answerTr.style.display = display;
+                                    tr.style.backgroundColor = 'white'; // tr의 배경색 원래대로 설정
+                                }
+                            });
+                            
+                            
+                        });
+                    }
+                });
+        }
+    });
+
+    // '전체 QNA' 버튼 클릭 이벤트
+    allQna.addEventListener("click", () => {
+        tBody.innerHTML = "";
+        write.style.display = 'none';
+        allBox.style.display = 'none';
+        
+        fetch("/eCommerce/selectQna")
+            .then(resp => resp.json())
+            .then(result => {
+                console.log(result);
+
+                if (result.length == 0) {
+                    const h2 = document.createElement("h2");
+                    h2.innerText = "작성한 QNA가 존재하지 않습니다";
+                    h2.style.color = 'var(--gray5)';
+                    h2.style.fontWeight = '500';
+                    h2.style.textAlign = 'center';
+                    h2.style.marginTop = '20px';
+
+                    qnaContainer.append(h2);
+                } else {
+                    result.forEach((qna) => {
+                        qna.memberId = maskString(qna.memberId);
+                        if(qna.partnerId != "") {
+                            qna.partnerId = maskString(qna.partnerId);
+                        }
+
+                        if (qna.qnaAnswerStatus == 'N') {
+                            qna.qnaAnswerStatus = '미답변';
+                        } else {
+                            qna.qnaAnswerStatus = '답변완료';
+                        }
+
+                        let arr = [
+                            qna.qnaAnswerStatus,
+                            qna.qnaTitle,
+                            qna.memberId,
+                            qna.qnaWriteDate
+                        ];
+
+                        const tr = document.createElement("tr");
+                        tr.style.cursor = 'pointer';
+                        const contentTr = document.createElement("tr");
+                        contentTr.style.display = 'none';
+
+                        for (let key of arr) {
+                            const td = document.createElement("td");
+                            td.innerText = key;
+                            tr.append(td);
+
+                            const contentTd = document.createElement("td");
+                            if (key == qna.qnaTitle) {
+                                contentTd.innerText = qna.qnaContent;
+                                contentTd.colSpan = arr.length; // 제목이 포함된 행에 대해 전체 열에 걸치도록 설정
+                            }
+                            contentTr.append(contentTd);
+                        }
+                        tBody.append(tr);
+                        tBody.append(contentTr);
+
+                        tr.addEventListener("click", () => {
+                            const display = (contentTr.style.display == 'none') ? 'table-row' : 'none';
+                            contentTr.style.display = display;
+                        });
+                    });
+                }
+            });
+    });
+
 })
 
+// 리뷰
 function updateBtn(reviewNo) {
     //리뷰 불러오기
     fetch("/eCommerce/reloadReview?reviewNo="+reviewNo)

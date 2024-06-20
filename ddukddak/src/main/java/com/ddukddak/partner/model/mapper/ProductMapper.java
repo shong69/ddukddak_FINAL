@@ -10,6 +10,7 @@ import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
 
 @Mapper
 public interface ProductMapper {
@@ -251,6 +252,23 @@ public interface ProductMapper {
 	int selectReceiptListCount(int partnerNo);
 
 	List<Product> selectReceiptList(int partnerNo, RowBounds rowBounds);
+
+	/** 전체 문의내역 리스트 개수
+	 * @return
+	 */
+	int qnaListCount();
+
+	/** 전체 문의내역 리스트 가져오기
+	 * @return
+	 */
+	List<QNA> selectQna(RowBounds rowBounds);
+
+	/** 문의답변 넣기
+	 * @param map
+	 * @return
+	 */
+	int insertQnaAnswer(Map<String, Object> obj);
+
 
 
 

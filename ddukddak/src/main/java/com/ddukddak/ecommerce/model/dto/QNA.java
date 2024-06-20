@@ -21,5 +21,11 @@ public class QNA {
 	private String qnaAnswer;
 	private int memberNo;
 	private int partnerNo;
+	private String qnaWriteDate;
+	private String qnaAnswerDate;
+	private char qnaAnswerStatus;
+	
+	private String memberId;
+	private String partnerId;
 	
 }
