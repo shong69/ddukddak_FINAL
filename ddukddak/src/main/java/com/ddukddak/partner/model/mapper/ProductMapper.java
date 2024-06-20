@@ -248,9 +248,37 @@ public interface ProductMapper {
 	int modifyRegistProduct(Map<String, Object> map);
 
 	
+	/** 접수관리 페이지네이션을 위한 카운트
+	 * @param partnerNo
+	 * @return
+	 */
 	int selectReceiptListCount(int partnerNo);
 
+	/** 접수관리 조회하기
+	 * @param partnerNo
+	 * @param rowBounds
+	 * @return
+	 */
 	List<Product> selectReceiptList(int partnerNo, RowBounds rowBounds);
+
+	
+	/** 젭수관리 대분류
+	 * @param newMap
+	 * @param rowBounds
+	 * @return
+	 */
+
+	int selectReceiptListCountMainSort(Map<String, Object> newMap);
+
+	List<Product> selectReceiptListMainSort(Map<String, Object> newMap, RowBounds rowBounds);
+
+	int selectReceiptListCountStatus(Map<String, Object> newMap);
+
+	List<Product> selectReceiptListStatus(Map<String, Object> newMap, RowBounds rowBounds);
+
+	int selectReceiptListCountMainSortStatus(Map<String, Object> newMap);
+
+	List<Product> selectReceiptListMainSortStatus(Map<String, Object> newMap, RowBounds rowBounds);
 
 
 
