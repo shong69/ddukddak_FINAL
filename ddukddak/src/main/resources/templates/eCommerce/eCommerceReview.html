@@ -22,7 +22,7 @@
                         <div id="id-addCommentArea">
                             <input id="hiddenReviewNo" name = "reviewNo" type = "hidden"> <!--리뷰id 존재 시 업데이트 로직 실행-->
                             <span id = "reviewerId" th:text="|@${session.loginMember?.memberId}|">아이디</span>
-                            <span id="productRate"> 별점 : 
+                            <span id="productRate"> 별점 : &ensp; 
                                 <i class="fa-regular fa-star"></i>
                                 <i class="fa-regular fa-star"></i>
                                 <i  class="fa-regular fa-star"></i>
@@ -32,7 +32,7 @@
                             <button id="addComment" type = "button" onClick = "handleFormMissionReview(event)">등록</button>
                         </div>
                         <div id="optionDiv">
-                            <div>상품 옵션</div>
+                            <div>주문상품 기록</div>
                         </div>
                         <div id = "contentBox">
                             <textarea id="commentContent" name = "reviewContent" rows="12" placeholder="다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현이나 타인의 권리를 침해하는 내용은 사용하지 않도록 주의해주세요."></textarea>

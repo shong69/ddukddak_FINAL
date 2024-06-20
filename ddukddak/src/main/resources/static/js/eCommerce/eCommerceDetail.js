@@ -544,7 +544,7 @@ async function openReviewCheck(productNo){
         return;
     }
     const reviewAuthList = await checkReviewAuth(productNo);
-
+    console.log(reviewAuthList);
     if(reviewAuthList&& reviewAuthList.length > 0){//작성 하지 않은 리뷰가 존재하는 경우
         //id=reviewForm 노출시키기
         reviewForm.classList.remove('display-none');
@@ -560,9 +560,10 @@ async function openReviewCheck(productNo){
         //옵션 추가하기
         reviewAuthList.forEach(item =>{
             const option = document.createElement("option");
-            option.value = `${order.orderItemNo}`;
-            option.innerHTML = `주문일:${item.orderDate} | 주문옵션:${order.optionValue} ${order.orderQuantity}개`;
+            option.value = `${item.orderItemNo}`;
+            option.innerHTML = `주문일:${item.orderDate} | 주문옵션:${item.optionValue} ${item.orderQuantity}개`;
             select.append(option);
+            console.log(option);
         })
         optionDiv.append(select);
     }else{
@@ -576,7 +577,6 @@ async function openReviewCheck(productNo){
 //리뷰 작성 가능 주문 상품 목록
 async function checkReviewAuth(productNo){
     try {
-        console.log(memberNo==undefined);
         const response = await fetch("/eCommerce/checkReviewAuth?productNo=" + productNo);
         const result = await response.json();
         return result;

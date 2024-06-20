@@ -312,6 +312,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		Map<String, Object> map = new HashMap<>();
 		map.put("productNo", productNo);
 		map.put("memberNo", memberNo);
+		log.info("리뷰 조회{}",mapper.checkReviewAuth(map));
 		return mapper.checkReviewAuth(map);
 	}
 
