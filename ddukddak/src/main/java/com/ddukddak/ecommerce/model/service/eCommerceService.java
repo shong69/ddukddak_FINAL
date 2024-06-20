@@ -10,6 +10,7 @@ import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.myPage.model.dto.Order;
@@ -164,11 +165,24 @@ public interface eCommerceService {
 	 */
 	int updateReview(Review review, List<MultipartFile> reviewImgs);
 
+
+	/** 모든 qna 보기
+	 * @return
+	 */
+	List<QNA> selectQna();
+
+	/** 내 qna 보기
+	 * @return
+	 */
+	List<QNA> myQna(int memberNo);
+
+
 	/** 사전 등록 검증하기
 	 * @param merchantUid
 	 * @return
 	 */
 	Orders prepareOrder(String merchantUid);
+
 
 
 }

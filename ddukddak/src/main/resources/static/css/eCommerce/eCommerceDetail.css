@@ -760,5 +760,64 @@
 #qnaContainer {
     width: 1000px;
     border-top: 2px solid var(--gray1);
+    border-bottom: 2px solid var(--gray1);
     margin-top: 20px;
+    padding: 0;
+}
+
+#qnaContainer > table {
+    width: 1000px;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+#qnaContainer > table thead {
+    border-bottom: 2px solid var(--gray5);
+}
+
+#qnaContainer > table tr {
+    border-top: 1px solid var(--gray5);
+}
+
+#qnaContainer > table tr:first {
+    border: none;
+}
+
+#qnaContainer > table th {
+    height: 40px;
+}
+
+#qnaContainer > table td {
+    height: 40px;
+}
+
+#qnaContainer > table th:nth-child(1) {
+    width: 150px;
+}
+
+#qnaContainer > table th:nth-child(2) {
+    width: 570px;
+}
+
+#qnaContainer > table th:nth-child(3) {
+    width: 130px;
+}
+
+#qnaContainer > table th:nth-child(4) {
+    width: 150px;
+}
+
+#qnaContainer > table > tbody > tr > td:nth-child(2) {
+    text-align: start;
+}
+
+#qnaContainer > div {
+    display: none;
+    width: 980px;
+    text-align: end;
+    margin: 10px;
+}
+
+#allQna {
+    cursor: pointer;
 }

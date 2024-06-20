@@ -16,6 +16,7 @@ import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
 import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.ecommerce.model.mapper.eCommerceMapper;
@@ -386,6 +387,19 @@ public class eCommerceServiceImpl implements eCommerceService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	// 모든 qna 보기
+	@Override
+	public List<QNA> selectQna() {
+		return mapper.selectQna();
+	}
+
+	// 내 qna 보기
+	@Override
+	public List<QNA> myQna(int memberNo) {
+		return mapper.myQna(memberNo);
+	}
+
 
 	// 사전 등록 DB 검증 
 	@Override

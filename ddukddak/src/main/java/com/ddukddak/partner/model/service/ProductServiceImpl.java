@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.board.model.dto.BoardImg;
 import com.ddukddak.board.model.exception.BoardInsertException;
 import com.ddukddak.common.util.Utility;
@@ -21,7 +22,9 @@ import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
+import com.ddukddak.main.model.dto.Pagination;
 import com.ddukddak.partner.model.dto.ProductPagination;
 import com.ddukddak.partner.model.mapper.ProductMapper;
 
@@ -777,9 +780,60 @@ public class ProductServiceImpl implements ProductService{
 		}
 	}
 
-	@Override
+	// 판매상태 변경
 	public int changeStatus(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		List<Object> list = (List<Object>) map.get("obj");
+		String getStatus = (String) map.get("status");
+		
+		String status = "";
+		
+		if(getStatus.equals("판매중")) {
+			status = "N";
+		} else if(getStatus.equals("판매중지")) {
+			status = "S";
+		} else {
+			status = "Y";
+		}
+		
+		int result = 0;
+		
+		for(Object productNo : list) {
+			Map<String, Object> newMap = new HashMap<String, Object>();
+			
+			newMap.put("productNo", productNo);
+			newMap.put("status", status);
+			
+			result += mapper.changeStatus(newMap);
+		}
+		return result;
+	}
+
+	// 문의내역 리스트 가져오기
+	@Override
+	public Map<String, Object> selectQna(int cp) {
+		
+		int listCount = mapper.qnaListCount();
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		List<QNA> qnaList = mapper.selectQna(rowBounds);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("qnaList", qnaList);
+		
+		
+		return map;
+	}
+
+	// 문의답변 넣기
+	@Override
+	public int insertQnaAnswer(Map<String, Object> obj) {
+		return mapper.insertQnaAnswer(obj);
 	}
 }

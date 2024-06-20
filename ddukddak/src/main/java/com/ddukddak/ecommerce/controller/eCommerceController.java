@@ -27,6 +27,7 @@ import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
 import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
 import com.ddukddak.member.model.dto.Member;
@@ -357,6 +358,7 @@ public class eCommerceController {
 	}
 	
 	
+
 	//[비동기]리뷰 등록하기
 
 
@@ -375,6 +377,7 @@ public class eCommerceController {
 		//modelAttribute로 바인딩하기
 		
 		int imgResult = 0;
+
 //		Review newReview = service.postReview(reivew); //결과와 reviewNo 받아오기
 
 
@@ -401,7 +404,7 @@ public class eCommerceController {
 		obj.put("memberNo", loginMember.getMemberNo());
 		
 		return service.insertQna(obj);
-}
+	}
 	//[비동기]리뷰 삭제
 	@DeleteMapping("delReview")
 	@ResponseBody
@@ -431,6 +434,21 @@ public class eCommerceController {
 
 	}
 	
+	// 모든 qna 보기
+	@GetMapping("selectQna")
+	@ResponseBody
+	public List<QNA> selectQna() {
+		
+		return service.selectQna();
+	}
+	
+	// 내 qna 보기
+	@GetMapping("myQna")
+	@ResponseBody
+	public List<QNA> insertQna(@SessionAttribute("loginMember") Member loginMember) {
+		
+		return service.myQna(loginMember.getMemberNo());
+	}
 	
 	
 	
