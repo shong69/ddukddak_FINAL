@@ -34,6 +34,7 @@
 		<!-- id 태그 : PK 역할을 하는 컬럼, 필드를 작성하는 태그 -->
 		<id property="projectNo" column="PROJECT_NO"/>
 		
+		
 		<!-- 
 			<< collection 태그 >>
 			select로 조회된 결과를 컬렉션(List)에 담아
@@ -107,16 +108,28 @@
 		WHERE PARTNER_TYPE = 1 
 		AND MAIN_PROJECT_FL = 'N'
 		AND PORTFOLIO_NO = #{portfolioNo}
+		ORDER BY CONSTRUCTION_YEAR DESC
     </select>
 
     <!-- 프로젝트 상세 조회 -->
     <select id="selectProject" resultMap="project_rm">
+    <!-- 
     	SELECT PROJECT_NO, PROJECT_NAME, PORTFOLIO_NO, HOUSING_TYPE, WORK_FORM, WORK_AREA, CONSTRUCTION_COST,
     		   REGION, CONSTRUCTION_YEAR, FAMILY_SIZE, MAIN_PROJECT_FL, PROJECT_CONTENT, HOME_LINK
     	FROM "PROJECT"
     	NATURAL JOIN "PROJECT_INFO"
     	NATURAL JOIN "PORTFOLIO"
     	WHERE PROJECT_NO = #{projectNo}
+     -->
+     	SELECT PARTNER_NO, PARTNER_TEL, PARTNER_BUSINESS_NAME, PORTFOLIO_NO, PROJECT_NAME, HOME_LINK, 
+		PORTFOLIO_DETAIL, HOUSING_TYPE, WORK_FORM, WORK_AREA, PROFILE_IMG, PROJECT_NO,
+		CONSTRUCTION_COST, REGION, CONSTRUCTION_YEAR, FAMILY_SIZE, PROJECT_CONTENT, MAIN_PROJECT_FL 
+		FROM PROJECT 
+		NATURAL JOIN PORTFOLIO 
+		NATURAL JOIN PROJECT_INFO 
+		NATURAL JOIN PARTNER
+		WHERE PROJECT_NO = #{projectNo}
+     
     </select>
 
     <!-- 상세조회한 게시글의 이미지 리스트 조회 -->

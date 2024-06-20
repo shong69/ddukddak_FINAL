@@ -14,7 +14,6 @@ import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.dto.QNA;
 import com.ddukddak.ecommerce.model.dto.Review;
-import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.Order;
 
@@ -185,6 +184,7 @@ public interface eCommerceMapper {
 	 */
 	List<Order> checkReviewAuth(Map<String, Object> map);
 
+
 	/** 모든 qna 보기
 	 * @return
 	 */
@@ -194,6 +194,13 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	List<QNA> myQna(int memberNo);
+
+
+	/** DB 사전 검증
+	 * @param merchantUid
+	 * @return
+	 */
+	Orders prepareOrder(String merchantUid);
 
 
 
