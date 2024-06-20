@@ -1,9 +1,15 @@
 package com.ddukddak.ecommerce.controller;
 
 
-import java.text.SimpleDateFormat;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+
+import java.text.SimpleDateFormat;
+
 import java.util.Date;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -220,7 +226,7 @@ public class eCommerceController {
 		
 		// 옵션 개수 선택
 		List<ProductOption> optionList = service.selectOptionListName(productNo);
-		log.info("optionList : " + optionList);
+		//log.info("optionList : " + optionList);
 		
 		model.addAttribute("productInfo", productInfo);
 		model.addAttribute("categoryList", categoryList);
@@ -367,28 +373,43 @@ public class eCommerceController {
 	public int eCommercePostReview(@RequestParam("reviewContent") String reviewContent,
             						@RequestParam("reviewRating") int reviewRating,
             						@RequestParam("orderItemNo") int orderItemNo,
-            						@RequestParam("ProductNo") int ProductNo,
-            						
+            						@RequestParam("productNo") int ProductNo,
 									@RequestParam("reviewImgs") List<MultipartFile> reviewImgs,
-									@SessionAttribute("loginMember") Member member ) {
+									@SessionAttribute("loginMember") Member member ) throws IllegalStateException, IOException {
+
+
 		int memberNo = member.getMemberNo();
+		log.info("아아{}",reviewContent);
+		log.info("아아{}",reviewRating);
+		log.info("아아{}",orderItemNo);
+		log.info("아아{}",ProductNo);
+		log.info("아아{}",reviewImgs);
+		Map<String, Object> map = new HashMap<>();
+		map.put("reviewContent", reviewContent);
+		map.put("reviewRating", reviewRating);
+		map.put("orderItemNo", orderItemNo);
+		map.put("ProductNo", ProductNo);
+		map.put("memberNo", memberNo);
 
-//		review.setMemberNo(memberNo);
-		//modelAttribute로 바인딩하기
+
+		int reviewNo = service.postReview(map);
 		
-		int imgResult = 0;
-
-//		Review newReview = service.postReview(reivew); //결과와 reviewNo 받아오기
-
-
-
-		
-		if(imgResult >0) {
-			//등록 성공
-			return 1;
-		}else {
+		if(reviewNo == 0) {
 			return 0;
+		}else {//리뷰 사진 uploadFile에 삽입하기
+			List<MultipartFile> imgList = new ArrayList<>(reviewImgs);
+			int imgResult = service.insertImgs(reviewNo, reviewImgs);
+			
+			if(imgResult >0) {
+				log.info("이미지 등록 개수:{}",imgResult);
+				//등록 성공
+				return imgResult;
+			}else {
+				return 0;
+			}
 		}
+
+
 
 	}
 
@@ -442,6 +463,14 @@ public class eCommerceController {
 		return service.selectQna();
 	}
 	
+
+	//[비동기] 리뷰 개수
+	@GetMapping("reviewCount")
+	@ResponseBody
+	public int reviewCount(@RequestParam("productNo") int productNo) {
+		return service.reviewCount(productNo);
+	}
+
 	// 내 qna 보기
 	@GetMapping("myQna")
 	@ResponseBody
@@ -450,6 +479,7 @@ public class eCommerceController {
 		return service.myQna(loginMember.getMemberNo());
 	}
 	
+
 	
 	
 	

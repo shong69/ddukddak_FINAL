@@ -619,6 +619,7 @@
     padding:10px;
     resize: none;
     border : none;
+    font-size: 17px;
 }
 #commentContent:focus{
     outline:none;

@@ -1,5 +1,7 @@
 package com.ddukddak.ecommerce.model.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,9 +9,12 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ddukddak.common.util.Utility;
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Orders;
@@ -18,6 +23,7 @@ import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.dto.QNA;
 import com.ddukddak.ecommerce.model.dto.Review;
+import com.ddukddak.ecommerce.model.dto.ReviewImg;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.ecommerce.model.mapper.eCommerceMapper;
 import com.ddukddak.member.model.dto.Member;
@@ -29,9 +35,17 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@PropertySource("classpath:/config.properties")
 public class eCommerceServiceImpl implements eCommerceService{
 	
 	private final eCommerceMapper mapper;
+	
+	@Value("${my.review.web-path}")
+	private String webPath;
+	
+	@Value("${my.review.folder-path}")
+	private String folderPath;
+	
 
 	// 쇼핑몰 메인페이지 오늘의 상품 고르기
 	@Override
@@ -337,6 +351,9 @@ public class eCommerceServiceImpl implements eCommerceService{
 	@Override
 	public List<Review> selectReviewList(int productNo) {
 		List<Review> list = mapper.selectReviewList(productNo);
+		log.info("결과{}",productNo);
+		log.info("상품{}", list);
+		
 		return list;
 	}
 
@@ -346,24 +363,70 @@ public class eCommerceServiceImpl implements eCommerceService{
 		Map<String, Object> map = new HashMap<>();
 		map.put("productNo", productNo);
 		map.put("memberNo", memberNo);
+		log.info("상품넘{}",productNo);
 		log.info("리뷰 조회{}",mapper.checkReviewAuth(map));
 		return mapper.checkReviewAuth(map);
 	}
 
-	//리뷰 등록하기
+	//리뷰 등록하기 + 리뷰 넘버 리턴하기
 	@Override
-	public Review postReview(Review review) {
+	public int postReview(Map<String, Object> map) {
 		//주문 테이블에서 memberNo와 productNo에 해당하는 orderItemNo 찾아오기(리뷰를 써야 하는 주문상품)
-		mapper.postReview(review);
+		int result = mapper.postReview(map);
+		int reviewNo =0;
+		if(result != 0) {
+			reviewNo = mapper.getReviewNo(map);
+		}
 
-		return review;
+		return reviewNo;
 	}
 
 	//리뷰 사진 등록하기  
 	@Override
-	public int insertImgs(int reviewNo, List<MultipartFile> reviewImgs) {
+	public int insertImgs(int reviewNo, List<MultipartFile> reviewImgs) throws IllegalStateException, IOException {
+		List<ReviewImg> uploadList = new ArrayList<>();
+		Map<String, Object> map = new HashMap<>();
 		
+
+		if(!reviewImgs.isEmpty()) {
+			
+			int result = 0;
+			for(int i = 0; i<reviewImgs.size();i++) {
+				
+				String originalName =reviewImgs.get(i).getOriginalFilename();
+				if(!originalName.equals("")) {
+					log.info("이름{}",originalName);
+					
+					String rename = Utility.fileRename(originalName);
+					map.put("reviewNo", reviewNo);
+					map.put("uploadImgOrder", i);
+					map.put("uploadImgOgName", originalName);
+					map.put("uploadImgRename", rename);
+					map.put("uploadImgPath", webPath);
+					
+					result += mapper.insertImgs(map);
+					log.info("사진 삽입 결과{}",result);
+					ReviewImg img = ReviewImg.builder()
+							.reviewNo(reviewNo)
+							.uploadImgOrder(i)
+							.uploadImgPath(webPath)
+							.uploadImgOgName(originalName)
+							.uploadImgRename(rename)
+							.uploadFile(reviewImgs.get(i))
+							.build();
+					uploadList.add(img);				
+					}
+			}
+			for(ReviewImg img : uploadList) {
+				img.getUploadFile().transferTo(new File(folderPath + img.getUploadImgRename()));
+			}
+			return result;
+		}else { //이미지 안보낸 경우
+			return 1;
+		}
+
 		return 0;
+
 
 	}
 	
@@ -408,6 +471,12 @@ public class eCommerceServiceImpl implements eCommerceService{
 		return mapper.prepareOrder(merchantUid);
 	}
 
+
+	//리뷰 개수 리턴
+	@Override
+	public int reviewCount(int productNo) {
+		return mapper.reviewCount(productNo);
+	}
 
 	
 
