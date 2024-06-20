@@ -19,14 +19,44 @@
 			ofType : List(컬렉션)의 제네릭(타입 제한) 지정
 		-->
 		
-		<!-- 해당 포트폴리오 이미지 목록 조회 후 필드에 저장 -->
-		<collection property="imageList" 
+					
+		<!-- 해당 포트폴리오 프로젝트 조회 후 필드에 저장 -->
+		<collection property="projectList" 
+					select="selectProjectList"
+					column="PORTFOLIO_NO"
+					javaType="java.util.ArrayList"
+					ofType="Project"/>
+
+	</resultMap>
+
+	<resultMap type="Project" id="project_rm">
+	
+		<!-- id 태그 : PK 역할을 하는 컬럼, 필드를 작성하는 태그 -->
+		<id property="projectNo" column="PROJECT_NO"/>
+		
+		<!-- 
+			<< collection 태그 >>
+			select로 조회된 결과를 컬렉션(List)에 담아
+			지정된 필드에 세팅
+			
+			property : List를 담을 DTO의 필드명
+			select : 실행할 select의 id
+			column : 조회 결과 중 지정된 컬럼의 값을 파라미터로 전달
+			javaType : List(컬렉션)의 타입을 지정
+			ofType : List(컬렉션)의 제네릭(타입 제한) 지정
+		-->
+		
+					
+		<!-- 해당 포트폴리오 프로젝트 조회 후 필드에 저장 -->
+		<collection property="imgList" 
 					select="selectImageList"
 					column="PROJECT_NO"
 					javaType="java.util.ArrayList"
 					ofType="ProjectImg"/>
-	
+
 	</resultMap>
+
+
 	
 	<!-- 시공사 리스트 조회 -->
 	<select id="selectIneriorList">
@@ -50,7 +80,8 @@
     
     
     <!-- 메인프로젝트 조회 -->
-    <select id="selectMainProject" resultType="Project">
+     
+    <select id="selectMainProject" resultMap="project_rm">
     	SELECT PARTNER_NO, PARTNER_TEL, PARTNER_BUSINESS_NAME, PORTFOLIO_NO, PROJECT_NAME, HOME_LINK, 
 		PORTFOLIO_DETAIL, HOUSING_TYPE, WORK_FORM, WORK_AREA, PROFILE_IMG, PROJECT_NO, 	
 		CONSTRUCTION_COST, REGION, CONSTRUCTION_YEAR, FAMILY_SIZE, PROJECT_CONTENT, MAIN_PROJECT_FL 
@@ -63,10 +94,11 @@
 		AND PORTFOLIO_NO = #{portfolioNo}
     </select>
     
+    
     <!-- 포트폴리오에 포함된 프로젝트 리스트 조회 -->
-    <select id="selectProjectList">
+    <select id="selectProjectList" resultType="Project">
     	SELECT PARTNER_NO, PARTNER_TEL, PARTNER_BUSINESS_NAME, PORTFOLIO_NO, PROJECT_NAME, HOME_LINK, 
-		PORTFOLIO_DETAIL, HOUSING_TYPE, WORK_FORM, WORK_AREA, PROFILE_IMG, 	
+		PORTFOLIO_DETAIL, HOUSING_TYPE, WORK_FORM, WORK_AREA, PROFILE_IMG, PROJECT_NO,	
 		CONSTRUCTION_COST, REGION, CONSTRUCTION_YEAR, FAMILY_SIZE, PROJECT_CONTENT, MAIN_PROJECT_FL 
 		FROM PARTNER 
 		NATURAL JOIN PORTFOLIO 
@@ -78,7 +110,7 @@
     </select>
 
     <!-- 프로젝트 상세 조회 -->
-    <select id="selectProject">
+    <select id="selectProject" resultMap="project_rm">
     	SELECT PROJECT_NO, PROJECT_NAME, PORTFOLIO_NO, HOUSING_TYPE, WORK_FORM, WORK_AREA, CONSTRUCTION_COST,
     		   REGION, CONSTRUCTION_YEAR, FAMILY_SIZE, MAIN_PROJECT_FL, PROJECT_CONTENT, HOME_LINK
     	FROM "PROJECT"
@@ -86,13 +118,15 @@
     	NATURAL JOIN "PORTFOLIO"
     	WHERE PROJECT_NO = #{projectNo}
     </select>
-    
+
     <!-- 상세조회한 게시글의 이미지 리스트 조회 -->
 	<select id="selectImageList" resultType="ProjectImg">
 		SELECT * FROM "UPLOAD_FILE" 
 		WHERE PROJECT_NO = #{projectNo}
 		ORDER BY UPLOAD_IMG_ORDER
 	</select>
+	
+    
 	
 	
 	<!-- 포트폴리오 데이터 -->

@@ -12,8 +12,10 @@ import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.myPage.model.dto.Order;
 
 @Mapper
 public interface eCommerceMapper {
@@ -158,6 +160,29 @@ public interface eCommerceMapper {
 	 */
 	int createOrder(Orders order);
 
-	
+
+	/** qna 입력
+	 * @param obj
+	 * @return
+	 */
+	int insertQna(Map<String, Object> obj);
+
+	/**리뷰 등록하기
+	 * @param review
+	 */
+	void postReview(Review review);
+
+	/** 리뷰 리스트 불러오기
+	 * @param productNo
+	 * @return
+	 */
+	List<Review> selectReviewList(int productNo);
+
+	/** 리뷰 작성 가능한 주문 상품 알아오기
+	 * @param map
+	 * @return
+	 */
+	List<Order> checkReviewAuth(Map<String, Object> map);
+
 
 }

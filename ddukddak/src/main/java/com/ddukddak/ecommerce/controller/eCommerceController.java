@@ -1,5 +1,6 @@
 package com.ddukddak.ecommerce.controller;
 
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,7 +11,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.ecommerce.model.dto.Category;
@@ -25,19 +29,23 @@ import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.CartItem;
+import com.ddukddak.myPage.model.dto.Order;
 import com.ddukddak.myPage.model.service.CartAndWishListService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("eCommerce")
 @RequiredArgsConstructor
+@SessionAttributes("loginMember")
 @Slf4j
 public class eCommerceController {
 	
@@ -227,6 +235,7 @@ public class eCommerceController {
 		model.addAttribute("productNo", productNo);
 		model.addAttribute("bigCategoryName", bigCategoryName);
 		model.addAttribute("minPrice", "NO");
+		model.addAttribute("memberNo", memberNo);
 
 		
 		
@@ -357,26 +366,100 @@ public class eCommerceController {
 	
 	@RequestMapping("complete")
 	public String eCommerceComplete() {
-		
-		
-		
 		return "eCommerce/eCommerceComplete";
 	}
 	
 
 	//[비동기]리뷰 조회하기
-	//[비동기]리뷰 삽입하기
-	@PostMapping("reviewPost")
+	@GetMapping("selectReviewList")
 	@ResponseBody
-	public String eCommercePostReview(@RequestParam("reviewContent") String reviewContent,
-										@RequestParam("reviewRating") int reviewRating,
-										@RequestParam("reviewImgs") List<MultipartFile> reviewImgs,
-										@SessionAttribute("loginMember") Member loginMember) throws IOException {
-		return "";
+	public List<Review> selectReviewList(@RequestParam("productNo") int productNo){
+		
+		return service.selectReviewList(productNo);
+	}
+	
+	//해당 상품에 대한 리뷰 작성 가능 주문 상품 목록
+	@GetMapping("checkReviewAuth")
+	@ResponseBody
+	public List<Order> checkReviewAuth(@RequestParam("productNo") int productNo,
+								@SessionAttribute("loginMember") Member member) {
+		return service.checkReviewAuth(productNo, member.getMemberNo());
 	}
 	
 	
+	//[비동기]리뷰 등록하기
+	@PostMapping("reviewPost")
+	@ResponseBody
+	public int eCommercePostReview(@RequestParam("reviewContent") String reviewContent,
+            						@RequestParam("reviewRating") int reviewRating,
+            						@RequestParam("orderItemNo") int orderItemNo,
+            						@RequestParam("ProductNo") int ProductNo,
+            						
+									@RequestParam("reviewImgs") List<MultipartFile> reviewImgs,
+									@SessionAttribute("loginMember") Member member ) {
+		int memberNo = member.getMemberNo();
+		review.setMemberNo(memberNo);
+		//modelAttribute로 바인딩하기
+		
+		int imgResult = 0;
+		Review newReview = service.postReview(reivew); //결과와 reviewNo 받아오기
+		if(newReview != null) { //리뷰 등록 성공
+			//리뷰 사진 uploadFile에 삽입하기
+			List<MultipartFile> imgList = new ArrayList<>(reviewImgs);
+			imgResult = service.insertImgs(newReview.getReviewNo(), reviewImgs);
+		}
+
+		
+		if(imgResult >0) {
+			//등록 성공
+			return 1;
+		}else {
+			return 0;
+		}
+
+	}
 	
+
+	// qna 입력
+	@PostMapping("insertQna")
+	@ResponseBody
+	public int insertQna(@RequestBody Map<String, Object> obj,
+						@SessionAttribute("loginMember") Member loginMember) {
+		
+		log.info("obj : " + obj);
+
+		obj.put("memberNo", loginMember.getMemberNo());
+		
+		return service.insertQna(obj);
+}
+	//[비동기]리뷰 삭제
+	@DeleteMapping("delReview")
+	@ResponseBody
+	public int delReview(@RequestParam("reviewId") int reviewId) {
+		return service.delReview(reviewId);
+	}
+	
+	//[비동기]수정할 리뷰 불러오기
+	@GetMapping("reloadReview")
+	@ResponseBody
+	public Review reloadReview(@RequestParam("reviewId") String reviewId) {
+		Review review = service.reloadReview(reviewId);
+		return review;
+	}
+
+	//[비동기]리뷰 수정하기
+	@PostMapping("updateReview")
+	@ResponseBody
+	public int updateReview(@ModelAttribute Review review,
+											@RequestParam("reviewImgs") List<MultipartFile> reviewImgs){
+		
+		int result = service.updateReview(review,reviewImgs);
+		if(result > 0) {
+			return 1;
+		}
+		return 0;
+
+	}
 	
 	
 	
