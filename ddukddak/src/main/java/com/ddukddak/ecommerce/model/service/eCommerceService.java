@@ -165,6 +165,7 @@ public interface eCommerceService {
 	 */
 	int updateReview(Review review, List<MultipartFile> reviewImgs);
 
+
 	/** 모든 qna 보기
 	 * @return
 	 */
@@ -174,6 +175,13 @@ public interface eCommerceService {
 	 * @return
 	 */
 	List<QNA> myQna(int memberNo);
+
+
+	/** 사전 등록 검증하기
+	 * @param merchantUid
+	 * @return
+	 */
+	Orders prepareOrder(String merchantUid);
 
 
 

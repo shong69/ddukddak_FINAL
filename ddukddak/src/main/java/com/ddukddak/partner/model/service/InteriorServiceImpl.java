@@ -73,7 +73,6 @@ public class InteriorServiceImpl implements InteriorService {
 		Project mainProject = mapper.selectMainProject(portfolioNo);
 		List<Project> projectList = mapper.selectProjectList(portfolioNo);
 		
-		List<ProjectImg> thumbnailList = new ArrayList<>();
 		
 		log.info("projectList : " + projectList);
 		
@@ -177,6 +176,8 @@ public class InteriorServiceImpl implements InteriorService {
 	// 프로젝트 상세 정보 조회
 	@Override
 	public Project selectProject(int projectNo) {
+		
+		log.info("selectProject : " + mapper.selectProject(projectNo));
 		
 		return mapper.selectProject(projectNo);
 	}

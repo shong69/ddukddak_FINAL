@@ -39,8 +39,8 @@ public class Product {
 	
 	private String thumbnail;
 	
-	private String optionName;
-	private String optionValue;
+	private String options;
 	private int productCount;
+	private int orderQuantity;
 
 }

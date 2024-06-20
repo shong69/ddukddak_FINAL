@@ -531,7 +531,6 @@
 }
 #reviewArea{
     width : 100%;
-    height: 200px;
     display : flex;
     flex-direction: column;
     align-items: center;
@@ -548,13 +547,15 @@
 #reviewerId{
     line-height: 35px;
     flex-basis: 15%;
+    font-weight: 600;
 }
 #productRate{
-    font-size: 20px;
+    font-size: 15px;
     flex-basis: 77%;
     display : flex;
     justify-content: end;
     margin-right: 10px;
+    align-items: center;
 
 }
 #addComment{
@@ -569,11 +570,29 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    margin-top: 5px;
 }
 #addComment:active{
     background-color: #6b6b6b;
     color: white;
     transition-duration: 0.1s;
+}
+#optionDiv{
+    margin-right: auto;
+    margin-left : 25px;
+    height: 50px;
+}
+#optionDiv>div{
+    text-align: start;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+.reviewOptSelect{
+    width : 400px;
+    text-align: center;
+}
+.reviewOptSelect option{
+    height: 50px;
 }
 #contentBox{
     border : 0.4px solid #bbbbbb;
@@ -617,7 +636,7 @@
     text-align: center;
     cursor: pointer;
     font-weight: 200;
-    font-size: 12px;
+    font-size: 15px;
 }
 #reviewFile {
     display : none;
@@ -654,6 +673,7 @@
 }
 .fa-star{
     cursor: pointer;
+    font-size: 20px;
 }
 
 

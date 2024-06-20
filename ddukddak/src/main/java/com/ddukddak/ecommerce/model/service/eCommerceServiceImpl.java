@@ -346,6 +346,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		Map<String, Object> map = new HashMap<>();
 		map.put("productNo", productNo);
 		map.put("memberNo", memberNo);
+		log.info("리뷰 조회{}",mapper.checkReviewAuth(map));
 		return mapper.checkReviewAuth(map);
 	}
 
@@ -399,6 +400,13 @@ public class eCommerceServiceImpl implements eCommerceService{
 		return mapper.myQna(memberNo);
 	}
 
+
+	// 사전 등록 DB 검증 
+	@Override
+	public Orders prepareOrder(String merchantUid) {
+		
+		return mapper.prepareOrder(merchantUid);
+	}
 
 
 	
