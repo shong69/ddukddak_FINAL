@@ -388,6 +388,7 @@ public class eCommerceController {
 	
 	
 	//[비동기]리뷰 등록하기
+
 	@PostMapping("reviewPost")
 	@ResponseBody
 	public int eCommercePostReview(@RequestParam("reviewContent") String reviewContent,
@@ -405,11 +406,7 @@ public class eCommerceController {
 		int imgResult = 0;
 //		Review newReview = service.postReview(reivew); //결과와 reviewNo 받아오기
 
-//		if(newReview != null) { //리뷰 등록 성공
-//			//리뷰 사진 uploadFile에 삽입하기
-//			List<MultipartFile> imgList = new ArrayList<>(reviewImgs);
-//			imgResult = service.insertImgs(newReview.getReviewNo(), reviewImgs);
-//		}
+
 
 		
 		if(imgResult >0) {
@@ -420,6 +417,7 @@ public class eCommerceController {
 		}
 
 	}
+
 	
 
 	// qna 입력

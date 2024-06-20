@@ -571,6 +571,8 @@ public class SellerController {
 		return "partner/seller/product/receipt";
 	}
 	
+	
+	
 	@GetMapping("product/shipment")
 	public String ProductRelease() {
 		return "partner/seller/product/shipment";

@@ -603,6 +603,7 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.modifyRegistProduct(map);
 	}
 
+//	접수관리 리스트 조
 	@Override
 	public Map<String, Object> selectReceiptList(int partnerNo, int mainSort, int sort, String status, int cp) {
 		// 대분류 소분류 상태 모두 선택 안했을 때
@@ -636,7 +637,7 @@ public class ProductServiceImpl implements ProductService{
 				newMap.put("status", status);
 				newMap.put("partnerNo", partnerNo);
 				//1. 전체 재고상품개수 조회
-				int productCount = mapper.selectApplyListCountStatus(newMap);
+				int productCount = mapper.selectReceiptListCountStatus(newMap);
 				
 				//2. pagination 객체 생성하기
 				ProductPagination pagination = new ProductPagination(cp, productCount);
@@ -647,11 +648,15 @@ public class ProductServiceImpl implements ProductService{
 				RowBounds rowBounds = new RowBounds(offset, limit);
 				
 				
-				List<Product> applyList = mapper.selectApplyListStatus(newMap, rowBounds);
+				List<Product> receiptList = mapper.selectReceiptListStatus(newMap, rowBounds);
 				
 				Map<String, Object> map = new HashMap<>();
+				
+//				log.info("AM receiptList : " + receiptList);
+//				log.info("PR receiptList : " + receiptList);
+				
 				map.put("pagination", pagination);
-				map.put("applyList", applyList);
+				map.put("receiptList", receiptList);
 				
 				return map;
 			}
@@ -665,7 +670,9 @@ public class ProductServiceImpl implements ProductService{
 					newMap.put("mainSort", mainSort);
 					newMap.put("partnerNo", partnerNo);
 					//1. 전체 재고상품개수 조회
-					int productCount = mapper.selectApplyListCountMainSort(newMap);
+					int productCount = mapper.selectReceiptListCountMainSort(newMap);
+					
+//					log.info("productCount : " + productCount);
 					
 					//2. pagination 객체 생성하기
 					ProductPagination pagination = new ProductPagination(cp, productCount);
@@ -676,11 +683,11 @@ public class ProductServiceImpl implements ProductService{
 					RowBounds rowBounds = new RowBounds(offset, limit);
 					
 					
-					List<Product> applyList = mapper.selectApplyListMainSort(newMap, rowBounds);
+					List<Product> receiptList = mapper.selectReceiptListMainSort(newMap, rowBounds);
 					
 					Map<String, Object> map = new HashMap<>();
 					map.put("pagination", pagination);
-					map.put("applyList", applyList);
+					map.put("receiptList", receiptList);
 					
 					return map;	
 					
@@ -693,7 +700,7 @@ public class ProductServiceImpl implements ProductService{
 					newMap.put("partnerNo", partnerNo);
 					
 					//1. 전체 재고상품개수 조회
-					int productCount = mapper.selectApplyListCountMainSortStatus(newMap);
+					int productCount = mapper.selectReceiptListCountMainSortStatus(newMap);
 					
 					//2. pagination 객체 생성하기
 					ProductPagination pagination = new ProductPagination(cp, productCount);
@@ -703,11 +710,11 @@ public class ProductServiceImpl implements ProductService{
 					
 					RowBounds rowBounds = new RowBounds(offset, limit);
 					
-					List<Product> applyList = mapper.selectApplyListMainSortStatus(newMap, rowBounds);
+					List<Product> receiptList = mapper.selectReceiptListMainSortStatus(newMap, rowBounds);
 					
 					Map<String, Object> map = new HashMap<>();
 					map.put("pagination", pagination);
-					map.put("applyList", applyList);
+					map.put("receiptList", receiptList);
 					
 					return map;
 				}
@@ -731,11 +738,11 @@ public class ProductServiceImpl implements ProductService{
 					
 					RowBounds rowBounds = new RowBounds(offset, limit);
 					
-					List<Product> applyList = mapper.selectApplyListSort(newMap, rowBounds);
+					List<Product> receiptList = mapper.selectApplyListSort(newMap, rowBounds);
 					
 					Map<String, Object> map = new HashMap<>();
 					map.put("pagination", pagination);
-					map.put("applyList", applyList);
+					map.put("receiptList", receiptList);
 					
 					return map;		
 					
@@ -758,11 +765,11 @@ public class ProductServiceImpl implements ProductService{
 					
 					RowBounds rowBounds = new RowBounds(offset, limit);
 					
-					List<Product> applyList = mapper.selectApplyListSortStatus(newMap, rowBounds);
+					List<Product> receiptList = mapper.selectApplyListSortStatus(newMap, rowBounds);
 					
 					Map<String, Object> map = new HashMap<>();
 					map.put("pagination", pagination);
-					map.put("applyList", applyList);
+					map.put("receiptList", receiptList);
 					
 					return map;
 				}
