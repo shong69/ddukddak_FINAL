@@ -425,8 +425,6 @@ public class eCommerceServiceImpl implements eCommerceService{
 			return 1;
 		}
 
-		return 0;
-
 
 	}
 	

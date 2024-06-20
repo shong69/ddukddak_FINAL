@@ -514,8 +514,11 @@ function handleFormMissionReview(event) {
     
     //orderItemNo 추가
     const orderItemNoSelect = document.querySelector(".reviewOptSelect");
-    const option = orderItemNoSelect.options[orderItemNoSelect.selectedIndex]; //select의 옵션 중 선택된 옵션의 값
+    const option = orderItemNoSelect.options[orderItemNoSelect.selectedIndex]; //select의 옵션 중 선택된 옵션의 값--------------------------------------------
+    const optionValue = orderItemNoSelect.options[orderItemNoSelect.selectedIndex].getAttribute("data-value");
+    console.log(optionValue);
     formData.append("orderItemNo", option.value);
+    formData.append("orderValue", optionValue);
 
 
     formData.append('reviewRating', reviewRating); // 별점 추가
@@ -591,6 +594,7 @@ async function openReviewCheck(productNo){
             const option = document.createElement("option");
             option.value = `${item.orderItemNo}`;
             option.innerHTML = `주문일:${item.orderDate} | 주문옵션:${item.optionValue} ${item.orderQuantity}개`;
+            option.setAttribute("data-value", `${item.optionValue}`);
             select.append(option);
             console.log(option);
         })
@@ -656,7 +660,7 @@ function selectReviewList(productNo){
                     const commentWriteDate = document.createElement("span");
                     commentWriteDate.classList.add("commentWriteDate");
 
-                    commentWriteDate.textContent = review.commentWriteDate; //리뷰 작성일 적기
+                    commentWriteDate.textContent = review.reviewCreateDate; //리뷰 작성일 적기
 
                     infoArea.append(memberId, commentWriteDate);
 
@@ -678,7 +682,7 @@ function selectReviewList(productNo){
                     };
 
                     //수정할 때 영역
-                    console.log(loginMember.memberNo);
+                    
                     editArea.append(updateBtn, delBtn);                    
 
                     reviewWrite.append(infoArea, editArea);
@@ -697,6 +701,13 @@ function selectReviewList(productNo){
                         reviewWrite.append(imgRow);
                     }
                     li.append(reviewWrite);
+
+                    //콘텐트 추가
+                    const contentArea = document.createElement("div");
+                    contentArea.classList.add("reviewContent");
+                    //옵션, 별점-----------------------------------------
+                    //contentArea.innerText = review.reviewContent;
+
                 }
                 reviewContainer.append(li);
 

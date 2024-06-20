@@ -375,21 +375,20 @@ public class eCommerceController {
             						@RequestParam("orderItemNo") int orderItemNo,
             						@RequestParam("productNo") int ProductNo,
 									@RequestParam("reviewImgs") List<MultipartFile> reviewImgs,
+									@RequestParam("optionValue") String optionValue,
 									@SessionAttribute("loginMember") Member member ) throws IllegalStateException, IOException {
 
 
 		int memberNo = member.getMemberNo();
-		log.info("아아{}",reviewContent);
-		log.info("아아{}",reviewRating);
-		log.info("아아{}",orderItemNo);
-		log.info("아아{}",ProductNo);
-		log.info("아아{}",reviewImgs);
+
+		log.info("옵션이름{}",optionValue);
 		Map<String, Object> map = new HashMap<>();
 		map.put("reviewContent", reviewContent);
 		map.put("reviewRating", reviewRating);
 		map.put("orderItemNo", orderItemNo);
 		map.put("ProductNo", ProductNo);
 		map.put("memberNo", memberNo);
+		map.put("optionValue", optionValue);
 
 
 		int reviewNo = service.postReview(map);
