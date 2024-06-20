@@ -13,11 +13,11 @@
     <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
 </head>
 <body>
+    <input id="totalPriceValue" type="hidden" name="totalPrice" th:value="${totalPrice}">
     <th:block th:replace="~{common/fragments/header}"></th:block>
-
     <h2 style="text-align: center; margin: 50px;">주문/결제</h2>
 
-    
+    <!-- 로직 구성하면 post로 바꿔줘야함 -->
     <form action="/eCommerce/complete" id="paymentForm">
         <!-- 배송지 -->
         <div class="infoBox">
@@ -33,14 +33,15 @@
 
                 <h4 style="color: rgb(165, 165, 165);" th:text="${loginMember.memberTel}">010-1234-1234</h4>
                 
-                
+                <input type="hidden" name="memberTel" th:value="${loginMember.memberTel}">
+
                 <h4 th:text="${loginMember.memberAddr}">주소</h4>
                 
                 <input id="memberAddr" type="hidden" name="memberAddr" th:value="${loginMember.memberAddr}">
                 
                 
 
-                <select id="delivery-memo">
+                <select id="delivery-memo" name="deliveryMemo">
                     <option>배송메모를 선택해 주세요</option>
                     <option>문 앞에 놓아주세요.</option>
                     <option>배송 후 문자주세요.</option>
@@ -51,7 +52,7 @@
 
         <!-- 주문상품 -->
         <div class="infoBox" style="margin-top: 100px;">
-            <input id="merchantUid" type="hidden" th:value="${merchantUid}">
+            <input id="merchantUid" type="hidden" name="merchantUid" value="">
             <h3>주문상품</h3>
 
             <div>
@@ -80,8 +81,8 @@
                             <h3 class="price" style="margin: 20px 7px; font-weight: 700; letter-spacing: 0.05em" th:text="|*{productPrice * productCount}원|">13,900원</h3>
                         </div>
                     </div>
+                    <input type="hidden" name="cartList" th:value="${cartList}">
                 </th:object>
-
             </div>
 
 
@@ -91,7 +92,7 @@
                 </div>
                 <div style="width: 50%; text-align: end;">
                     <h3 id="totalPrice" th:text="${totalPrice}" style="white-space: nowrap; font-weight: 700; letter-spacing: 0.05em;">1,762,900원</h3>
-                    <input type="hidden" name="totalPrice" th:value="${totalPrice}">
+
                 </div>
             </block>
 
@@ -104,11 +105,11 @@
             <div id="pamentOption">
                 <div>
                     <input type="radio" id="option1" name="option" value="1" checked>
-                    <label for="option1">카카오 페이</label>
+                    <label for="option1">카카오페이</label>
                 </div>
                 <div>
                     <input type="radio" id="option2" value="2" disabled>
-                    <label for="option2">무통장 입금</label>
+                    <label for="option2">무통장입금</label>
                 </div>
                 <!-- <div>
                     <input type="radio" id="option3" name="option" value="3">
@@ -128,7 +129,8 @@
             </label>
         </div>
         <div style="width: 100%; display: flex; justify-content: center">
-            <button onclick="onClickPay()" type="button" id="payBtn" class="eCommerBuyDetailConfirmBtn" style="margin: 60px 0;">결제하기</button>
+            <button type="submit" id="payBtn" class="eCommerBuyDetailConfirmBtn" style="margin: 60px 0;">결제하기</button>
+            <!-- onclick="onClickPay()" -->
         </div>
     </form>
     

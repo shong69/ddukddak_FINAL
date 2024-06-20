@@ -1,5 +1,25 @@
+const totalPriceValue = Number(document.getElementById('totalPriceValue').value);
+
+const agree = document.getElementById('agree'); // 동의 버튼
+
+const payBtn = document.getElementById('payBtn'); // 결제하기 버튼
+
+// 상품 이름
+const productName = document.getElementById('productName').innerText;
+
+// 고유 주문 번호
+const addr = document.getElementById('memberAddr').value;
+
+// 총 금액 구해오기
+const amountText = document.getElementById('totalPrice');
+
+
+
+console.log(totalPriceValue);
+
 // 가격 스트링 포맷
 document.addEventListener('DOMContentLoaded', () => {
+
     const priceElements = document.querySelectorAll('.price');
     const totalPriceElement = document.getElementById('totalPrice');
 
@@ -8,7 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     totalPriceElement.innerText = formatToKoreanWon(totalPriceElement.innerText);
+
+    
 });
+
+
+
+
 
 function formatToKoreanWon(numberString) {
     let number = parseInt(numberString.replace(/[^0-9]/g, ''), 10);
@@ -40,47 +66,23 @@ function generateMerchantUid() {
 console.log(generateMerchantUid());
 
 
-
-
-const agree = document.getElementById('agree'); // 동의 버튼
-
-const payBtn = document.getElementById('payBtn'); // 결제하기 버튼
-
-// 상품 이름
-const productName = document.getElementById('productName').innerText;
-
-// 고유 주문 번호
-const addr = document.getElementById('memberAddr').value;
-
-// 총 금액 구해오기
-const amountText = document.getElementById('totalPrice');
+// Prepare payment failed. : 결제 사전 검증에 실패하였습니다.
 
 
 const onClickPay = async () => {
 
+    const merchantUid = generateMerchantUid();
+    document.getElementById('merchantUid').value = merchantUid;
+    // let text = amountText.innerText;
+    // let number = text.replace(/[^0-9]/g, '');
+    // const myAmount = parseInt(number, 10);
 
-
-    let text = amountText.innerText;
-    let number = text.replace(/[^0-9]/g, '');
-    const myAmount = parseInt(number, 10);
-
-
+    
     if (!agree.checked) {
         alert('이용 약관 동의 체크 후 구매해 주세요.');
         return;
     }
-
-    const merchantUid = generateMerchantUid();
-
-    console.log(merchantUid); // 예: ORD-202406191741050820
-    console.log(myAmount);
-    console.log(nickName);
-    console.log(productName);
-    console.log(tel);
-    console.log(email);
-    console.log(addr);
-    console.log(memberNo);
-
+    
     try {
         // 주문 생성 요청
 
@@ -91,7 +93,7 @@ const onClickPay = async () => {
             },
             body: JSON.stringify({
                 merchant_uid: merchantUid,
-                amount: myAmount,
+                amount: totalPriceValue,
                 memberNo : memberNo
             })
         });
@@ -113,16 +115,17 @@ const onClickPay = async () => {
             },
             body: JSON.stringify({
                 merchant_uid: merchantUid,
-                amount: myAmount
+                amount: totalPriceValue
             })
         });
 
         const prepareData = await prepareResponse.json();
 
+        console.log("prepareData.message 테스트 : " + prepareData.message);
         // 여기에 이제 사전 검증 조건 
         if (prepareData.status !== 'success') {
             alert(`${prepareData.message} : 결제 사전 검증에 실패하였습니다.`);
-            
+    
             return;
         }
 
@@ -131,7 +134,7 @@ const onClickPay = async () => {
         const serverAmount = parseInt(prepareData.amount, 10);
 
         // 사전 검증된 정보와 클라이언트 정보 비교
-        if (serverMerchantUid !== merchantUid || serverAmount !== myAmount) {
+        if (serverMerchantUid !== merchantUid || serverAmount !== totalPriceValue) {
             alert('사전 검증된 정보와 클라이언트 정보가 일치하지 않습니다.');
             return;
         }
@@ -153,7 +156,6 @@ const onClickPay = async () => {
             },
             async function (rsp) {
                 if (rsp.success) {
-                    // 결제 성공 시 서버로 결제 검증 요청
                     // 결제 성공 시 서버로 결제 검증 요청
                     const verifyResponse = await fetch('/payment/verify', {
                         method: 'POST',
@@ -183,7 +185,29 @@ const onClickPay = async () => {
                 } else {
                     alert(`결제에 실패하였습니다. 오류 내용: ${rsp.error_msg}`);
                     // 실패 로직 (예: 결제 실패 페이지로 리디렉션)
-                    window.location.href = "/myPage/cart";
+                    // 결제 취소 상태 업데이트를 위한 서버 호출
+                    console.log(rsp.error_msg);
+
+                    await fetch('/payment/cancel', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            merchant_uid: serverMerchantUid,
+                            message : rsp.error_msg
+                        })
+                    })
+                    .then(resp => resp.text())
+                    .then(result => {
+
+                        if(result > 0) {
+                            window.location.href = "/myPage/cart";
+                        } else {
+                            console.log('사용자 취소 업데이트 실패');
+                        }
+                        
+                    })
                 }
             }
         );

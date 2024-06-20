@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ddukddak.common.config.PaymentConfig;
 import com.ddukddak.ecommerce.model.dto.Orders;
+import com.ddukddak.ecommerce.model.mapper.eCommerceMapper;
 import com.ddukddak.payment.model.dto.PaymentDTO;
 import com.ddukddak.payment.model.mapper.PaymentMapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -31,28 +32,25 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(rollbackFor = Exception.class)
 public class PaymentServiceImpl implements PaymentService {
 	
-	private final PaymentConfig paymentConfig;
+	//private final PaymentConfig paymentConfig;
 	private final RestTemplate restTemplate;
 	private final PaymentMapper mapper;
+	private final eCommerceMapper eCommerceMapper;
 	
 	/**
 	 * 토큰 얻기
 	 * @throws Exception 
 	 */
 	@Override
-	public String getAccessToken() throws Exception {
+	public String getAccessToken(String impKey, String impSecret) throws Exception {
 		
 		String tokenUrl = "https://api.iamport.kr/users/getToken";
 		
 		// 헤더
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		
-        log.info("키 : " + paymentConfig.getPayApikey());
-        log.info("시크릿 : " + paymentConfig.getPaySecret());
-		
-        String impKey = paymentConfig.getPayApikey();
-        String impSecret = paymentConfig.getPaySecret();
+	
+
         
 		// 바디 
 		Map<String, String> body = new HashMap<>();
@@ -141,7 +139,7 @@ public class PaymentServiceImpl implements PaymentService {
         // 요청 바디 설정
         Map<String, Object> body = new HashMap<>();
         body.put("merchant_uid", merchantUid);
-        body.put("amount", amount);
+        body.put("amount", (Integer) amount);
 		
         log.info("사전 검증 요청 바디 확인 : " + body);
         
@@ -163,6 +161,13 @@ public class PaymentServiceImpl implements PaymentService {
                 int code = root.path("code").asInt();
                 if (code != 0) {
                     log.error("Error code: " + code + ", message: " + root.path("message").asText());
+	                
+                    Map<String, String> map = new HashMap<>();
+                    map.put("merchantUid", merchantUid);
+                    map.put("message", "사전 검증 " + root.path("message").asText());
+                    
+                    eCommerceMapper.reasonUpdate(map);
+                    
                     return null;
                 }
                 
@@ -225,6 +230,20 @@ public class PaymentServiceImpl implements PaymentService {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode root = objectMapper.readTree(response.getBody());
 
+        // 에러 코드 확인
+        int code = root.path("code").asInt();
+        if (code != 0) {
+            log.error("Error code: " + code + ", message: " + root.path("message").asText());
+            
+            Map<String, String> map = new HashMap<>();
+            map.put("merchantUid", merchantUid);
+            map.put("message", "사후 검증 " + root.path("message").asText());
+            
+            eCommerceMapper.reasonUpdate(map);
+            
+            return 0;
+        }
+        
         // 필요한 데이터 추출
         JsonNode responseNode = root.path("response");
         if (responseNode.isMissingNode()) {
@@ -282,6 +301,7 @@ public class PaymentServiceImpl implements PaymentService {
         Orders orderInfo = mapper.selectOrder(merchantUid);
         
         if(orderInfo == null) { 
+        	
         	return 0;
         }
        

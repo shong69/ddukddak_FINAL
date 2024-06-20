@@ -464,9 +464,10 @@
 	
 	
 	<select id="prepareOrder">
-		SELECT * 
+		SELECT *
 		FROM "ORDERS" 
 		WHERE MERCHANT_UID = #{merchantUid}
+		AND ROWNUM = 1
 	</select>
 	
 	<!-- 모든 qna 보기 -->
@@ -506,5 +507,21 @@
 		WHERE MERCHANT_UID = #{merchantUid}
 		AND STATUS = 'ready'
 		
+	</update>
+	
+	<!-- 사전 검증 실패 업데이트 -->
+	<update id="reasonUpdate">
+		UPDATE "ORDERS" SET
+		STATUS = 'fail',
+		FAIL_REASON = #{message}
+		WHERE MERCHANT_UID = #{merchantUid}
+	</update>
+	
+	<!-- 사용자 취소 업데이트 -->
+	<update id="cancelUpdate">
+		UPDATE "ORDERS" SET
+		STATUS = 'fail',
+		FAIL_REASON = #{message}
+		WHERE MERCHANT_UID = #{merchantUid}
 	</update>
 </mapper>

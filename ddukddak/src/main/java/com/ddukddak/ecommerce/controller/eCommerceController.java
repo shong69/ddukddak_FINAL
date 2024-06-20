@@ -341,7 +341,9 @@ public class eCommerceController {
 	
 	
 	@RequestMapping("complete")
-	public String eCommerceComplete() {
+	public String eCommerceComplete(@RequestParam("cartList") Map<String, Object> params) {
+		log.info("params : " + params);
+		
 		return "eCommerce/eCommerceComplete";
 	}
 	

@@ -5,11 +5,11 @@ import java.util.concurrent.CompletableFuture;
 
 public interface PaymentService {
 
-	/** 토큰 얻기
-	 * @return
+	/**
+	 * 토큰 얻기
 	 * @throws Exception 
 	 */
-	String getAccessToken() throws Exception;
+	String getAccessToken(String impKey, String impSecret) throws Exception;
 
 	/** 사전 검증
 	 * @param params
@@ -25,6 +25,8 @@ public interface PaymentService {
 	 * @throws Exception 
 	 */
 	int verifyPayment(Map<String, Object> params, String accessToken) throws Exception;
+
+
 
 
 }
