@@ -389,7 +389,7 @@
 				#{memberNo},
 				DEFAULT,
 				#{merchantUid},
-				DEFAULT,
+				#{status},
 				DEFAULT
 				)
 	</insert>
@@ -446,6 +446,13 @@
 		    D.ORDER_ITEM_NO, D.ORDER_QUANTITY, D.ORDER_PRICE, D.PRODUCT_NO, 
 		    P.PRODUCT_NAME, L.DELIVERY_ADDRESS, R.MEMBER_NO, R.REVIEW_DEL_FL
 		ORDER BY ORDER_DATE DESC;
+	</select>
+	
+	
+	<select id="prepareOrder">
+		SELECT * 
+		FROM "ORDERS" 
+		WHERE MERCHANT_UID = #{merchantUid}
 	</select>
 
 </mapper>

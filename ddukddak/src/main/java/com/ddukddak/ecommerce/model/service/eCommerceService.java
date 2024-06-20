@@ -164,5 +164,11 @@ public interface eCommerceService {
 	 */
 	int updateReview(Review review, List<MultipartFile> reviewImgs);
 
+	/** 사전 등록 검증하기
+	 * @param merchantUid
+	 * @return
+	 */
+	Orders prepareOrder(String merchantUid);
+
 
 }

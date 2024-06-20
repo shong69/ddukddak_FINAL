@@ -1,7 +1,6 @@
 package com.ddukddak.ecommerce.controller;
 
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +25,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
-import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.dto.Review;
@@ -40,7 +38,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("eCommerce")
@@ -49,8 +46,6 @@ import oracle.jdbc.proxy.annotation.Post;
 @Slf4j
 public class eCommerceController {
 	
-	private static final AtomicInteger orderCounter = new AtomicInteger(0); // 주문 카운터 초기화
-	private static String lastDate = "";
 	
 	// 쇼핑몰 메인페이지
 	private final eCommerceService service;
@@ -310,8 +305,7 @@ public class eCommerceController {
 	    int totalPrice =  Integer.parseInt(params.get("totalPrice"));
 	    
 	    
-	    // 주문 정보 생성
-	    String merchantUid = generateMerchantUid();
+
 	    
 	    
 //	    Orders order = new Orders();
@@ -328,38 +322,13 @@ public class eCommerceController {
 	    // 모델에 필터링된 항목 추가)
 	    model.addAttribute("cartList", selectedItems);
 	    model.addAttribute("totalPrice", totalPrice);
-	    model.addAttribute("merchantUid", merchantUid);
+	   
 	    
 	    
 		return "eCommerce/eCommercePayment";
 	}
 	
-    /** 주문번호 규칙 생성
-     * @return
-     */
-	private String generateMerchantUid() {
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	    String currentDate = sdf.format(new Date());
 
-	    
-	    log.info("currentDate :" + currentDate);
-	    // 날짜가 변경될 때 카운터 초기화
-	    if (!currentDate.equals(lastDate)) {
-	        
-	    	orderCounter.set(0);
-	        
-	        lastDate = currentDate;
-	        
-	        log.info("lastDate :" + currentDate);
-	    }
-
-	    int orderNumber = orderCounter.incrementAndGet();
-
-	    SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-	    String timestamp = timestampFormat.format(new Date());
-
-	    return "ORD-" + timestamp + String.format("%04d", orderNumber);
-	}
 	
 	
 	
@@ -388,36 +357,36 @@ public class eCommerceController {
 	
 	
 	//[비동기]리뷰 등록하기
-	@PostMapping("reviewPost")
-	@ResponseBody
-	public int eCommercePostReview(@RequestParam("reviewContent") String reviewContent,
-            						@RequestParam("reviewRating") int reviewRating,
-            						@RequestParam("orderItemNo") int orderItemNo,
-            						@RequestParam("ProductNo") int ProductNo,
-            						
-									@RequestParam("reviewImgs") List<MultipartFile> reviewImgs,
-									@SessionAttribute("loginMember") Member member ) {
-		int memberNo = member.getMemberNo();
-		review.setMemberNo(memberNo);
-		//modelAttribute로 바인딩하기
-		
-		int imgResult = 0;
-		Review newReview = service.postReview(reivew); //결과와 reviewNo 받아오기
-		if(newReview != null) { //리뷰 등록 성공
-			//리뷰 사진 uploadFile에 삽입하기
-			List<MultipartFile> imgList = new ArrayList<>(reviewImgs);
-			imgResult = service.insertImgs(newReview.getReviewNo(), reviewImgs);
-		}
-
-		
-		if(imgResult >0) {
-			//등록 성공
-			return 1;
-		}else {
-			return 0;
-		}
-
-	}
+//	@PostMapping("reviewPost")
+//	@ResponseBody
+//	public int eCommercePostReview(@RequestParam("reviewContent") String reviewContent,
+//            						@RequestParam("reviewRating") int reviewRating,
+//            						@RequestParam("orderItemNo") int orderItemNo,
+//            						@RequestParam("ProductNo") int ProductNo,
+//            						
+//									@RequestParam("reviewImgs") List<MultipartFile> reviewImgs,
+//									@SessionAttribute("loginMember") Member member ) {
+//		int memberNo = member.getMemberNo();
+//		review.setMemberNo(memberNo);
+//		//modelAttribute로 바인딩하기
+//		
+//		int imgResult = 0;
+//		Review newReview = service.postReview(reivew); //결과와 reviewNo 받아오기
+//		if(newReview != null) { //리뷰 등록 성공
+//			//리뷰 사진 uploadFile에 삽입하기
+//			List<MultipartFile> imgList = new ArrayList<>(reviewImgs);
+//			imgResult = service.insertImgs(newReview.getReviewNo(), reviewImgs);
+//		}
+//
+//		
+//		if(imgResult >0) {
+//			//등록 성공
+//			return 1;
+//		}else {
+//			return 0;
+//		}
+//
+//	}
 	
 
 	// qna 입력
