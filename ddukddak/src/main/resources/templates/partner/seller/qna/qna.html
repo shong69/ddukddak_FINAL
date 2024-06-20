@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 판매사</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/partner/seller/qna/qna.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+</head>
+<body>
+    <th:block th:replace="~{partner/seller/common/header}"></th:block>
+
+
+    <div id="qnaContainer">
+        <div id="qnaTitle">
+            <h1>문의내역</h1>
+    
+            <div>
+                <input type="checkbox" value="all" name="qna"><label>전체</label>
+                <input type="checkbox" value="complete" name="qna"><label>답변 완료</label>
+                <input type="checkbox" value="completeNot" name="qna"><label>답변 미완료</label>
+            </div>
+        </div>
+    
+    
+    
+    
+    
+        <div>
+            <!-- 상품목록 -->
+         <div id="productList">
+            <table>
+                <thead style="height: 40px;">
+                    <td>주문번호</td>
+                    <td>회원 아이디</td>
+                    <td>상품 이름</td>
+                    <td>옵션</td>
+                    <td>문의 날짜</td>
+                    <td>답변 여부</td>
+                </thead>
+
+
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>핑크</td>
+                    <td>7시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color:green; margin-right: 5px;">●</h5>답변 완료
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-0004562
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크</td>
+                    <td>3시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>베이지</td>
+                    <td>6시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>그린</td>
+                    <td>2시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>다크그레이</td>
+                    <td>5시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>스카이</td>
+                    <td>4시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>퍼플</td>
+                    <td>8시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>아크샨</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>내추럴</td>
+                    <td>4시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>원목</td>
+                    <td>2시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>딥베이지</td>
+                    <td>4시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                <tr class="borderTr">
+                    <td>
+                        20241231-000001<br>
+                        B20200101-000002
+                    </td>
+                    <td>user01</td>
+                    <td>
+                        오아르 벤 원목 부클레<br> 
+                        패브릭 의자
+                    </td>
+                    <td>오크내추럴</td>
+                    <td>1시간 전</td>
+                    <td>
+                        <div>
+                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
+                        </div>
+                    </td>
+                </tr>
+                
+                
+            </table>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div><h3 style="text-align: center; margin: 30px 0;"><<&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;>></h3></div>
+        </div>
+    </div>
+
+
+    <!-- 모달창 -->
+    <div class="modal">
+        <div id="closeButton">X</div>
+
+        <div>
+            <h2>문의정보</h2>
+        </div>
+
+        <div>
+            <table>
+                <tr>
+                    <td>주문번호</td>
+                    <td>회원 아이디</td>
+                    <td>상품이름</td>
+                    <td>옵션</td>
+                    <td>문의날짜</td>
+                </tr>
+    
+                <tr>
+                    <td id="orderNo"></td>
+                    <td id="userId"></td>
+                    <td id="productName"></td>
+                    <td id="option"></td>
+                    <td id="qnaDate"></td>
+                </tr>
+            </table>
+
+        </div>
+
+
+        <h3>[문의내용]</h3>
+
+        <div id="qnaContent">
+            배송 언제오나요?
+        </div>
+
+        <h3>[문의답변]</h3>
+
+        <textarea id="textarea"></textarea>
+
+        <div id="buttonContainer">
+            <button id="modify">수정</button>
+            <button id="apply">등록</button>
+        </div>
+
+            
+    </div>
+
+    
+    <script src="/js/partner/seller/qna/qna.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 파트너</title>
+
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+    <!-- <link rel="stylesheet" href="/css/common/button.css"> -->
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/partner/signup.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+
+        <!-- 폰트어썸 -->
+        <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+
+    <!-- 회원가입 경로에서 로그인 시도 시 회원가입 경로 노출되지 않게 -->
+    <th:block th:replace="~{common/fragments/signupLoginMove}"></th:block>
+
+    <main>
+        <form action="/partner/signup" method="post" id="signUpForm" name="signUpForm">
+            <input id="partnerType" type="hidden" name="partnerType" th:value="${choice}">
+            <div class="signupContainer">
+                <!-- 약관 동의, 정보 입력 영역 -->
+                <div class="signupContainer2">
+                    <!-- 약관 동의 영역 전체-->
+                    <div class="agreeArea">
+                        <div>
+                            <div>
+                                <div class="logoArea1">
+                                    <img onclick="location.href='signup';" src="/images/main/main-logo.png" style="height: 60px; width: 60px; cursor: pointer;">
+                                    <h1 style="font-size: 34px; color: var(--secondary); cursor: pointer;" onclick="location.href='/signup'">뚝딱뚝딱</h1>
+                                </div>
+                                <div class="logoArea2">
+                                    <h4>
+                                        약관에 동의 후 개인정보를 입력해야 파트너 등록 요청이 완료됩니다.
+                                    </h4>
+                                </div>
+                            </div>
+                            <!-- 이용약관 -->
+                            <div class="agreeCheckBox1">
+                                <div class="agreeCheck">
+                                    <h3 class="requiredRel">이용약관 동의<span class="required">(필수)</span></h3>
+                                    <input type="checkbox" id="agreeBtn1" name="agree" class="agreeBtn">
+                                </div>
+                                <div>
+                                    <textarea readonly><th:block th:replace="~{common/fragments/policies/terms-and-conditions}"></th:block></textarea>
+                                </div>
+                            </div>
+                            <!-- 개인정보 수집 -->
+                            <div class="agreeCheckBox2">
+                                <div class="agreeCheck">
+                                    <h3 class="requiredRel">개인정보 수집 및 이용 동의<span class="required">(필수)</span></h3>
+                                    <input type="checkbox" id="agreeBtn2"  name="agree" class="agreeBtn">
+                                </div>
+                                <div>
+                                    <textarea readonly><th:block th:replace="~{common/fragments/policies/privacy-policy}"></th:block></textarea>
+                                </div>
+                            </div>
+                            <!-- 계정 운영 정책 -->
+                            <div>
+                                <div class="agreeCheck">
+                                    <h3 class="requiredRel">계정 운영 정책<span class="required">(필수)</span></h3>
+                                    <input type="checkbox" id="agreeBtn3" name="agree" class="agreeBtn">
+                                </div>
+                                <div>
+                                    <textarea readonly><th:block th:replace="~{common/fragments/policies/account-management-policy}"></th:block></textarea>
+                                </div>
+                            </div>
+                            <div class="agreeAllArea">
+                                <input type="checkbox" id="agreeAllBtn" name="allAgree">
+                                <label for="agreeAllBtn" class="agreeAllBtnLabel">약관 전체 동의</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 사업자, 회원정보 입력 -->
+                    <div class="infoArea">
+                        
+                        <div class="partnerType">
+                            <i class="fa-solid" th:classappend="${choice} == 1 ? fa-paint-roller : fa-store"></i>
+                            <h2 th:text="${choice} == 1 ? '시공사' : '판매사'"></h2>
+                        </div>
+                        <div>
+                            <!-- 사업자인증 ~ span -->
+                            <div>
+                                <div>
+                                    <div class="authArea">
+                                        <h3 style="font-size: 18px; font-weight: 700;">사업자 인증</h3>
+                                        <button type="button" id="bsNumAuthBtn" class="authBtn">인증</button>
+                                    </div>
+                                </div>
+                                <div class="businessNumArea">
+                                    <input class="bsNumInputs" type="text" id="bsNum1" maxlength="3" name="bsNumFrag" placeholder="3자리 숫자"> - 
+                                    <input class="bsNumInputs" type="text" id="bsNum2" maxlength="2" name="bsNumFrag" placeholder="2자리 숫자"> - 
+                                    <input class="bsNumInputs" type="text" id="bsNum3" maxlength="5" name="bsNumFrag" placeholder="5자리 숫자">
+                                </div>
+                                <div class="businessNumAuthMsgArea">
+                                    <span id="businessNumAuthMsg">사업자등록번호를 입력해 주세요.</span>
+                                </div>
+                            </div>
+
+                            <!-- 상호명 -->
+                            <div>
+                                <div class="infoInputArea1">
+                                    <input id="bsName" placeholder="상호명" name="partnerBusinessName" maxlength="30">
+                                    <span id="bsNameMsg">"2~30자의 한글, 대/소문자, 숫자, 특수문자(& . ( ) , - · ') 사용해 주세요.";</span>
+                                    <input id="ceoName"placeholder="대표자명(한글)" name="partnerCeoName" maxlength="10">
+                                    <input id="bsNum" placeholder="사업자등록번호" name="partnerBusinessNum" readonly>
+                                </div>
+                            </div>
+
+                            <!-- 아이디, 비밀번호, 휴대폰 번호 -->
+                            <div class="infoInputArea2">
+                                <!-- 아이디 -->
+                                <input id="partnerId" placeholder="아이디" name="partnerId">
+                                <span id="idMsg">아이디를 입력해 주세요.</span>                                
+
+                                <!-- 비밀번호 -->
+                                <input id="partnerPw" type="password" placeholder="비밀번호" name="partnerPw" maxlength="16">
+                                <span id="pwMsg">8~16자의 영문 대/소문자, 숫자, 특수문자(필수) 사용해 주세요.</span>
+                                
+                                <!-- 비밀번호 확인 -->
+                                <input id="partnerPwConfirm" type="password" placeholder="비밀번호 확인" name="partnerPwConfirm" maxlength="16">
+                                <span id="pwConfirmMsg"></span>
+                                
+                                <!-- SMS인증 요청 -->
+                                <div class="inputWithButton">
+                                    <input id="partnerTel" type="tel" placeholder="휴대폰 번호(-없이)" name="partnerTel" maxlength="11">
+                                    <button id="sendAuthBtn" type="button" class="authBtn" disabled>인증요청</button>
+                                </div>
+                                <span id="telMsg">실제 사용하고 계신 휴대폰 번호를 입력해 주세요.</span>
+                                
+                                <!-- 인증번호 입력 -->
+                                <div class="inputWithButton">
+                                    <input id="smsAuthKey" name="telAuth" class="smsAuthKey" placeholder="인증번호(6자리)" maxlength="6" readonly>
+                                    <button id="checkAuthBtn" class="authBtn" type="button" disabled>인증하기</button>
+                                    <span id="telAuthTime" class="authMsg"></span>
+                                </div>
+                                <div class="telAuthMsgArea">
+                                    <span id="telAuthMsg"></span>
+                                </div>
+
+                                <!-- 테스트용 버튼 -->
+                                <!-- <button id="checkObjBtn" type="button" style="height: 40px;">현재 유효성 콘솔로 확인(테스트용)</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 파트너 등록 요청 -->
+                <div class="partnerRequestArea">
+                    <button id="signUpBtn" class="mainPageBtn">파트너 등록 요청</button>
+                </div>      
+            </div>
+        </form>
+    </main>
+
+
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+    <script src="/js/partner/signup.js"></script>
+    <script src="/js/common/redirectToLogin.js"></script>
+    
+</body>
+</html>

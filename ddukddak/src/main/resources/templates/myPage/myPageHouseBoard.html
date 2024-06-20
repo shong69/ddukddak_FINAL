@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 마이페이지</title>
+    <link rel="stylesheet" href="/css/myPage/myPage.css">
+    <link rel="stylesheet" href="/css/common/fragments/myPageSidebar.css">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+    <script src="https://kit.fontawesome.com/4b505ed7b7.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    <main>
+
+        <th:block th:replace="~{common/fragments/myPageProfileSection}"></th:block>
+
+        <section class="myPage-row2">
+            <th:block th:replace="~{common/fragments/myPageSideBar}"></th:block>
+
+            <section class="myPage-main">
+                <h2 class="category-name">내 집들이</h2>
+                <ul class="homeBoard-list">
+                    <th:object th:if="${#lists.isEmpty(myHouseBoardList)}">
+
+                        <div class="noHouseData">
+                            작성한 게시글이 존재하지 않습니다.
+                        </div>
+
+
+                    </th:object>
+                    <th:object th:unless="${#lists.isEmpty(myHouseBoardList)}">
+                        <li class="myHouseBoardList" th:each = "list : ${myHouseBoardList}" th:object="${list}">
+                            <img th:src="*{thumbnail}" class="homeBoard-img">
+                            
+                            <h3 th:text="*{boardTitle}" class="homeboard-title" >
+                                게시글 제목
+                            </h3>
+                            <div class="homeBoard-info">
+                                <div>
+                                    <a th:href="|/myHouse/detail/*{boardNo}|">방문하기 ></a>
+                                </div>
+                                <div>
+                                    <span th:text="${session.loginMember.memberNickname}"></span>
+                                    <span th:text="|조회수 *{readCount}|">조회수</span>
+                                    <span th:if="*{boardUpdateDate != null}"  th:text="*{boardUpdateDate}">업데이트날짜</span>
+                                    <span th:unless="${boardUpdateDate!=null}" th:text="*{boardWriteDate}">작성일</span>
+                                </div>
+                            </div>
+                        </li>
+                    </th:object>
+
+
+
+                </ul>
+
+            </section>
+        </section>
+
+        <th:block th:replace="~{common/fragments/footer}"></th:block>
+        <script th:inline="javascript">
+
+            /* Thymeleaf로부터 썸네일 이미지 경로를 배열로 가져오기 */
+            var thumbnails = /*[[ ${myHouseBoardList.![thumbnail]} ]]*/
+
+            /* 이미지가 존재하는지 확인하는 함수 */
+            function checkImageExists(url, callback) {
+                var img = new Image();  //1번
+                img.onload = function() { //비동기적으로 계속 확인중
+                    callback(true);
+                };
+                img.onerror = function() {
+                    callback(false);
+                };
+                img.src = url; //url 설정 이후에 onload와 onerror 확인됨 -2번
+            }
+
+            /* 각 썸네일 이미지의 존재 여부 확인 */
+            thumbnails.forEach(
+                function(url, index) {
+                    checkImageExists(url, function(exists) {  //function(exists) -> callback(true)나 callback(false)와 같다
+                        if (!exists) {
+                            // 여기에 존재하지 않는 이미지 처리 로직을 추가하세요.
+                            document.querySelectorAll('.homeBoard-img')[index].src = '/images/myHouse/myHouseDetailImg1.jpg';
+                        }
+                });
+            });
+
+
+        </script>
+</body>
+</html>

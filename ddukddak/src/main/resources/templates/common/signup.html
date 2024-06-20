@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 회원가입</title>
+
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+    <link rel="stylesheet" href="/css/common/button.css">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/signup.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+
+    <!-- 회원가입 경로에서 로그인 시도 시 회원가입 경로 노출되지 않게 -->
+    <th:block th:replace="~{common/fragments/signupLoginMove}"></th:block>
+    
+    <main>
+        <h1 class="signupTitle1">회원가입</h1>
+        
+        <div class="signupContainer">
+            <form method="get" id="signupForm">
+                <div class="signupBox">
+
+                    <h4 class="signupTitle2">회원 / 파트너 선택</h4>
+                    <!-- 회원, 파트너 묶음 영역 -->
+                    <div class="signupChoiceArea">
+                        <!-- 회원 선택 영역 -->
+                        <div class="memberChoiceArea">
+                            <h3 style="font-weight: 700;">회원</h3>
+                            <label for="memberChoice" class="horizontal-align">
+                                <input type="radio" id="memberChoice" name="choice" value="0"> 고객
+                            </label>
+                        </div>
+
+                        <!-- 파트너 선택 영역 -->
+                        <div class="partnerChoiceArea">
+                            <h3 style="font-weight: 700;">파트너</h3>
+                            <label for="sellerChoice" class="horizontal-align">
+                                <input type="radio" id="sellerChoice" name="choice" value="1"> 시공사
+                            </label>
+                            <label type="interierChoice" class="horizontal-align">
+                                <input type="radio" id="interierChoice" name="choice" value="2"> 판매사
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 선택 완료 버튼 영역 -->
+                    <div class="choiceBtnArea">
+                        <button class="mainPageBtn">선택 완료</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+    <!-- 고객 / 판매사, 시공사 체크 후 선택 완료 제출 시 -->
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            const choice = document.querySelector('input[name="choice"]:checked').value;
+            if (choice === '0') {
+                this.action = '/member/signup';
+            } else {
+                this.action = '/partner/signup';
+            }
+        });
+    </script>
+
+    <!-- 고객 선택 값에 따라 기본 checked 설정 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 이전 URL 가져오기
+            const referrer = document.referrer;
+
+            const partnerPattern = /partner\/(login|signup|.*)/;
+
+            // URL 검사하여 라디오 버튼 선택
+            if (partnerPattern.test(referrer)) {
+                document.getElementById('sellerChoice').checked = true;
+            } else {
+                document.getElementById('memberChoice').checked = true;
+            }
+        });
+    </script>
+    <script src="/js/common/redirectToLogin.js"></script>
+</body>
+</html>

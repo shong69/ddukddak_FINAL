@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 판매사</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/partner/seller/product/shipment.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+</head>
+<body>
+    <th:block th:replace="~{partner/seller/common/header}"></th:block>
+
+
+    <div id="shipmentContainer">
+        <h1>상품관리 > 출고관리</h1>
+
+        <!-- 검색엔진 -->
+        <th:block th:replace="~{partner/seller/common/search}"></th:block>
+
+        <!-- 상품 분류 -->
+        <th:block th:replace="~{partner/seller/common/category}"></th:block>
+
+        <!-- 접수 상태-->
+        <div id="shipmentStatus">
+            <h3>출고 상태</h3>
+
+            <input type="checkbox" value="all" name="shipment"><label>전체</label>
+            <input type="checkbox" value="shipmentWait" name="shipment"><label>출고 대기</label>
+            <input type="checkbox" value="shipping" name="shipment"><label>출고중</label>
+            <input type="checkbox" value="shipmentComplete" name="shipment"><label>출고 완료</label>
+        </div>
+
+        <!-- 상품접수버튼 -->
+        <div id="sellerButton">
+            <button>상태 수정</button>
+        </div>
+
+        <!-- 출고 목록 -->
+        <div id="productList">
+            <table>
+                <thead>
+                    <td>
+                        <input type="checkbox" value="all" name="product" id="selectAllCheckBox">
+                    </td>
+                    <td>no</td>
+                    <td>주문번호</td>
+                    <td>상품명</td>
+                    <td>주문상태</td>
+                    <td>출고상태</td>
+                    <td>출고 수량</td>
+                    <td>출고 등록일</td>
+                    <td>출고 완료일</td>
+                </thead>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="1" name="product" >
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="2" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="3" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="4" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="5" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="6" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="7" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="8" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="9" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="10" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="11" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="12" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="13" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="14" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="checkbox" value="15" name="product">
+                    </td>
+                    <td>323</td>
+                    <td>20241231-000001</td>
+                    <td>
+                        오아르 벤 원목 부클레<br>
+                        패브릭 의자(P010a440TO)
+                    </td>
+                    <td>완료</td>
+                    <td>출고중</td>
+                    <td>3</td>
+                    <td>20240524</td>
+                    <td>-</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div><h3 style="text-align: center; margin: 30px 0;"><<&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;>></h3></div>
+
+    </div>
+
+
+    <!-- 모달창 -->
+    <div class="modal">
+        <div id="closeButton">X</div>
+
+        <div>
+            <h2>판매 상태 변경</h2>
+        </div>
+
+        <div>
+            <table>
+                <tr>
+                    <th>상품번호</th>
+                    <th>상품명</th>
+                    <th>상품 옵션</th>
+                    <th>판매 상태</th>
+                    <th>판매 등록일</th>
+                </tr>
+            </table>
+
+            <div id="productListBox"></div>
+
+            <div>
+                <button id="shipmentButton">출고하기</button>
+                <button id="shipmentRejection">출고거절</button>
+            </div>
+        </div>
+            
+    </div>
+
+    <script src="/js/partner/seller/product/shipment.js"></script>
+    
+</body>
+</html>

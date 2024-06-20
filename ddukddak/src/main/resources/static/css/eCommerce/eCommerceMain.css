@@ -1,0 +1,137 @@
+/* 광고영상 */
+#ad-container {
+    padding: 50px 0;
+    display: flex;
+}
+
+#ad-container iframe {
+    margin-right: 30px;
+    height: 500px;
+    width: 888px;
+}
+
+#slide2{
+    width: 300px;
+    overflow: hidden;
+}
+#slide2>ul{
+    width: 2100px;
+    display: flex;
+}
+#slide2>ul>li{
+    width: 300px;
+}
+
+#slide2>ul>li img {
+    width: 300px;
+    height: 500px;
+}
+
+
+
+/* 오늘의 상품 */
+.shoping-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.shoping-list > div:nth-child(2) {
+    display: flex;
+    justify-content: end;
+}
+
+.shopping-items {
+    width: 1300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.shopping-items > div {
+    display: flex;
+    flex-direction: column;
+    margin: 0 60px;
+}
+
+.img-wrap > img {
+    height: 300px;
+    width: 250px;
+}
+
+.fa-heart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#heart {
+    color: red;
+}
+
+.price-wrap {
+    display: flex;
+    margin-top: 8px;
+}
+
+.price-wrap > h3:first-child {
+    margin-right: 15px;
+    color: var(--secondary);
+}
+
+.shoping-list > div:first-child {
+    display: flex;
+}
+
+.review-wrap {
+    display: flex;
+    margin-top: 8px;
+}
+
+.review-wrap img {
+    height: 10px;
+}
+
+.review-wrap h5:first-child {
+    margin-right: 5px;
+}
+
+.review-wrap h5:last-child {
+    margin-left: 3px;
+    color: var(--gray4);
+}
+
+.productPrice {
+    font-weight: bold;
+}
+
+.shoping-list > div:first-child h4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    padding: 4px 7px;
+    background-color: var(--primary3);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.img-wrap {
+    position: relative;
+}
+
+/* 카운트다운 */
+.sample {
+    background-color: rgb(255, 46, 46);
+    color: white;
+    border-radius: 5px;
+    height: 18px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+}

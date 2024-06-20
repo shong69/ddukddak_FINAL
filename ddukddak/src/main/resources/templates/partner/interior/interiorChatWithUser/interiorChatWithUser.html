@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+    <link rel="stylesheet" href="/css/partner/interior/interiorChatWithUser/interiorChatWithUser.css">
+
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+    <script src="https://kit.fontawesome.com/4b505ed7b7.js" crossorigin="anonymous"></script>
+
+    <title>뚝딱뚝딱 : 시공사</title>
+</head>
+<body>
+
+    <th:block th:replace="~{/partner/interior/common/header}"></th:block>
+    <main>
+
+        <div id="addTargetPopupLayer" class="popup-layer-close">  
+            <span id="closeBtn">×</span>
+
+            <div class="target-input-area">
+                <input type="search" id="targetInput" placeholder="닉네임 또는 이메일을 입력하세요" autocomplete="off">
+                <div id="inputCloseBtn" style="cursor:pointer"><i class="fa-solid fa-trash"></i></div>
+            </div>
+            <div class="reaultDiv">
+                <ul id="resultArea"></ul>
+            </div>
+            
+        </div>
+        <div class="chatting-area-box">
+            <div class="chatting-header">
+                <div class="chatting-header1">
+                    <div id="addTarget"class="fa-solid fa-user-plus" title="시공사 추가"></div>
+                </div>
+            </div><!--뚜껑-->
+            
+            <div class="chatting-area">
+                <ul class="chatting-list">
+                    <th:block th:each="room : ${roomList}">
+                        <li class="chatting-item" th:chat-no="${room.chattingNo}" th:target-no="${room.targetNo}">
+                            <div class="item-header">
+    
+                                <img class="list-profile" th:if="${room.targetProfile}" src="/images/default/main.jpg">
+                                <img class="list-profile" th:unless="${room.targetProfile}" th:src="/images/default/main.jpg">
+                                
+                            </div>
+                            <div class="item-body">
+                                <p>
+                                    <span class="target-name" th:text="${room.targetNickName}">유저이</span>
+                                    <span class="recent-send-time" th:text="${room.sendTime}">2024.06.03</span>
+                                </p>
+                                <div>
+                                    <p class="recent-message" th:utext="${room.lastMessage}">왜</p>
+                                    <p th:if="${room.notReadCount>0}" class="not-read-count" th:text="${room.notReadCount}"></p>
+                                </div>
+                            </div>
+                        </li>
+                    </th:block>
+                </ul>
+    
+                <div class="prev-message">
+                    <h1>채팅방을 선택해주세요</h1>	
+                </div>
+                
+                <div class="chatting-content display-none">
+                    <ul class="display-chatting"></ul>
+
+                    <div class="input-area">
+                        <textarea id="inputChatting" rows="5"></textarea>
+    
+                        <button id="send">보내기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script th:inline="javascript">
+		// 로그인한 회원 번호
+		const loginPartnerNo = /*[[${session.loginPartnerMember?.partnerNo}]]*/ "로그인 파트너 번호";
+        console.log("파트너 번호!!",loginPartnerNo);
+	</script>
+    <script src="/js/partner/interior/userChat.js"></script>
+</body>
+</html>

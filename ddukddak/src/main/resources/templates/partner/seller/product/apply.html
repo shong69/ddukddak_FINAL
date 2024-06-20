@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 판매사</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/partner/seller/product/apply.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+</head>
+<body>
+    <th:block th:replace="~{partner/seller/common/header}"></th:block>
+
+
+    <div id="applyContainer">
+        <h1>상품관리 > 판매관리</h1>
+
+        <!-- 검색엔진 -->
+        <th:block th:replace="~{partner/seller/common/search}"></th:block>
+
+        <!-- 상품 분류 -->
+        <th:block th:replace="~{partner/seller/common/category}"></th:block>
+
+        <!-- 판매 상태-->
+        <div id="saleStatus">
+            <h3>판매 상태</h3>
+
+            <input type="checkbox" value="A" name="sale" id="saleAll" onclick="updateStatus(this)"><label for="saleAll">전체</label>
+            <input type="checkbox" value="N" name="sale" id="saleNow" onclick="updateStatus(this)"><label for="saleNow">판매중</label>
+            <input type="checkbox" value="S" name="sale" id="saleStop" onclick="updateStatus(this)"><label for="saleStop">판매 중지</label>
+            <input type="checkbox" value="Y" name="sale" id="Nosale" onclick="updateStatus(this)"><label for="Nosale">진열 안함</label>
+        </div>
+
+        <!-- 상품등록버튼 -->
+        <div id="sellerButton">
+            <button id="changeStatus">판매 상태 변경</button>
+        </div>
+
+        <div id="selectAll">
+            <input type="checkbox" value="selectAll" name="select" id="selectAllCheckBox"><label>전체 선택</label>
+        </div>
+
+        <!-- 상품목록 -->
+        <div id="productList">
+            <table>
+                <thead style="height: 60px; font-size: 14px; font-weight: bold;">
+                    <td></td>
+                    <td>상품이미지</td>
+                    <td>대분류</td>
+                    <td>소분류</td>
+                    <td>업로드날짜</td>
+                    <td>상품번호</td>
+                    <td>판매상태</td>
+                    <td>상품명</td>
+                    <td>판매가</td>
+                    <td>판매등록</td>
+                </thead>
+
+
+                <th:block th:each="applyItem : ${applyList}" th:object="${applyItem}">
+                    <tr class="borderTr">
+                        <td>
+                            <input type="checkbox" th:value="${applyItem.productNo}" name="selectProduct">
+                        </td>
+                        <td><img th:src="|${applyItem.uploadImgPath}${applyItem.uploadImgRename}|"></td>
+                        <td th:text="${applyItem.bigCategoryName}">대분류</td>
+                        <td th:text="${applyItem.categoryName}">소분류</td>
+                        <td th:text="${applyItem.productUpdateDate}">업로드날짜</td>
+                        <td th:text="${applyItem.productNo}">상품번호</td>
+                        <td th:switch="${applyItem.productFl}">
+                            <span th:case="'N'">판매중</span>
+                            <span th:case="'S'">판매중지</span>
+                            <span th:case="'Y'">진열안함</span>
+                            <span th:case="*">알 수 없음</span> <!-- 기본값 설정 -->
+                        </td>
+                        <td th:text="${applyItem.productName}" class="productName">상품제목</td>
+                        <td th:text="${applyItem.productPrice}" class="productPrice">상품가격</td>
+                        <th:block th:switch="${applyItem.productFl}">
+                            <form th:case="'Y'" action="/partner/seller/product/applyProduct" method="POST">
+                                <td class="buttonBox">
+                                    <button class="sellerButton" name="productNo" th:value="${applyItem.productNo}">판매등록</button>
+                                    <input type="hidden" name="status" value="apply">
+                                </td>
+                            </form>
+                            <form th:case="'S'" action="/partner/seller/product/applyProduct" method="POST">
+                                <td class="buttonBox">
+                                    <button name="productNo" th:value="${applyItem.productNo}">수정</button>
+                                    <input type="hidden" name="status" value="modify">
+                                </td>
+                            </form>
+                        </th:block>
+                    </tr>
+                </th:block>
+
+            </table>
+            
+        </div>
+        
+
+         <!-- 페이지네이션 -->
+         <div class="pagination">
+            <th:block th:if="${status == null}">
+                <ul class = "pagination" th:object="${pagination}">
+                    <li><a th:href="@{|/partner/seller/product/apply?cp=1|}">&lt;&lt;</a></li>
+                    <li><a th:href="@{|/partner/seller/product/apply?cp=*{prevPage}|}">&lt;</a></li>
+        
+                    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+    
+                        <li th:if="${i} == *{currentPage}">
+                            <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                        </li>
+    
+                        <li th:unless="${i} == *{currentPage}">
+                            <a th:href="@{|/partner/seller/product/apply?cp=${i}|}"
+                            th:text="${i}">이동할 페이지</a>
+                        </li>
+                        
+                    </th:block>
+        
+                
+                    <li>
+                        <a th:href="@{|/partner/seller/product/apply?cp=*{nextPage}&status=${status}|}">&gt;</a>
+                    </li>
+                    <li><a th:href="@{|/partner/seller/product/apply?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
+                </ul>
+            </th:block>
+            <th:block th:unless="${status == null}">
+                <ul class = "pagination" th:object="${pagination}">
+                    <li><a th:href="@{|/partner/seller/product/apply?cp=1&status=${status}|}">&lt;&lt;</a></li>
+                    <li><a th:href="@{|/partner/seller/product/apply?cp=*{prevPage}&status=${status}|}">&lt;</a></li>
+        
+                    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+    
+                        <li th:if="${i} == *{currentPage}">
+                            <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                        </li>
+    
+                        <li th:unless="${i} == *{currentPage}">
+                            <a th:href="@{|/partner/seller/product/apply?cp=${i}&status=${status}|}"
+                            th:text="${i}">이동할 페이지</a>
+                        </li>
+                        
+                    </th:block>
+        
+                
+                    <li>
+                        <a th:href="@{|/partner/seller/product/apply?cp=*{nextPage}&status=${status}|}">&gt;</a>
+                    </li>
+                    <li><a th:href="@{|/partner/seller/product/apply?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
+                </ul>
+
+            </th:block>
+        </div>
+
+
+    </div>
+
+
+
+    <!-- 모달창 -->
+    <div class="modal">
+        <div id="closeButton">X</div>
+
+        <div>
+            <h2>판매 상태 변경</h2>
+        </div>
+
+        <div>
+            <table>
+                <tr>
+                    <th>상품번호</th>
+                    <th>상품명</th>
+                    <th>상품 옵션</th>
+                    <th>판매 상태</th>
+                    <th>판매 등록일</th>
+                </tr>
+            </table>
+
+            <div id="productListBox"></div>
+
+            <div>
+                <button class="changeButton">판매중</button>
+                <button class="changeButton">판매중지</button>
+                <button class="changeButton">진열안함</button>
+            </div>
+        </div>
+            
+    </div>
+
+
+    <script src="/js/partner/seller/product/apply.js"></script>
+    
+</body>
+</html>

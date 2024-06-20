@@ -1,0 +1,73 @@
+header {
+    top: 0;
+    position: sticky;
+    background-color: white;
+    display: flex;
+    width: 100%;
+    z-index: 10;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/* 로고 */
+header > div:nth-child(1) {
+    flex-basis: 85%;
+    padding: 0 10px;
+}
+
+header > div:nth-child(1) img {
+    cursor: pointer;
+}
+
+
+/* 로그인/회원가입 */
+header > div:nth-child(2) {
+    flex-basis: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header > div:nth-child(2) > a {
+    padding: 0 20px;
+}
+
+
+
+#selectContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 800px;
+}
+
+.selectBox {
+    width: 450px;
+    height: 550px;
+    background-color: var(--white);
+    margin: 50px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px var(--gray5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+.selectBox:hover {
+    transform: translateY(-10px);
+}
+
+.selectBox i {
+    font-size: 30px;
+    padding: 20px;
+}
+
+.selectBox h3 {
+    font-weight: bold;
+}

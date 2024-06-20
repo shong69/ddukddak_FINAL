@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 쇼핑</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/eCommerce/eCommerceList.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+
+    <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+
+    <!-- 검색엔진 -->
+    <th:block th:replace="~{eCommerce/common/searchHeader}"></th:block>
+
+    <!-- 카테고리 -->
+    <th:block th:replace="~{eCommerce/common/category}"></th:block>
+
+    <div id="detail">
+        <!-- 상세 카테고리-->
+        <th:block th:replace="~{eCommerce/common/leftCategory}"></th:block>
+
+
+
+        <!-- 상품리스트 -->
+        <div id="productList">
+            <!--상품 X-->
+            <th:block th:if="${#lists.isEmpty(selectProductList)}">
+                <div id="noneOfList"> 
+                    <img src="/images/eCommerce/tung.JPG" style="margin-top: 100px; height: 200px;">
+                </div>
+            </th:block>
+            <!--상품 O-->
+            <th:block th:unless="${#lists.isEmpty(selectProductList)}">
+                <div id="selectProduct">
+                    <select id="orderSorting">
+                        <option value="1" th:selected="${sort == 1}">최신순</option>
+                        <option value="2" th:selected="${sort == 2}">오래된순</option>
+                        <option value="3" th:selected="${sort == 3}">가격 높은순</option>
+                        <option value="4" th:selected="${sort == 4}">가격 낮은순</option>
+                    </select>
+                </div>
+    
+    
+                <div>
+                    <table>
+                        <tr th:each="row : ${#numbers.sequence(0, 2)}">
+                            <td class="products" th:each="col : ${#numbers.sequence(row * 4, row * 4 + 3)}">
+                                <div th:if="${col < selectProductList.size()}">
+                                    <!-- 검색 X -->
+                                    <a th:unless="${query}" th:href="@{'/eCommerce/list/' + ${selectProductList[col].bigCategoryNo} + '/' + ${selectProductList[col].categoryNo} + '/' + ${selectProductList[col].productNo} + '/detail'}">
+                                        <div th:value="${selectProductList[col].productNo}">
+                                            <img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgRename}|">
+
+                                            <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                                                th:style="${selectProductList[col].wish == 0} ? 'display:block;' : 'display:none;'"
+                                                class="fa-regular fa-heart" id="noHerat" onclick="showHert(event);"
+                                                th:value="${selectProductList[col].productNo}">
+                                            </i>
+                                            <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                                                th:style="${selectProductList[col].wish == 0} ? 'display:none;' : 'display:block;'"
+                                                class="fa-solid fa-heart" id="heart" onclick="noshowHert(event);"
+                                                th:value="${selectProductList[col].productNo}">
+                                            </i>
+                                        </div>
+                                        <div>
+                                            <h4 th:text="${selectProductList[col].productName}">상품이름</h4>
+                                        </div>
+                                        <div>
+                                            <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+                                            <h3 th:text="${selectProductList[col].productPrice} + '원'" class="productPrice">상품가격</h3>
+                                        </div>
+                                        <div>
+                                            <img src="/images/main/star.png" style="height: 10px;">
+                                            <h5 style="margin-right: 5px;">4.1</h5>
+                                            <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+                                        </div>
+                                    </a>
+                                    <!-- 검색 O -->
+                                    <a th:if="${query}" th:href="@{'/eCommerce/list/' + ${selectProductList[col].bigCategoryNo} + '/' + ${selectProductList[col].categoryNo} + '/' + ${selectProductList[col].productNo} + '/detail'}",
+                                        query="${query}">
+                                        <div>
+                                            <img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgRename}|">
+
+                                            <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                                                th:style="${selectProductList[col].wish == 0} ? 'display:block;' : 'display:none;'"
+                                                class="fa-regular fa-heart" id="noHerat" onclick="showHert(event);"
+                                                th:value="${selectProductList[col].productNo}">
+                                            </i>
+                                            <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                                                th:style="${selectProductList[col].wish == 0} ? 'display:none;' : 'display:block;'"
+                                                class="fa-solid fa-heart" id="heart" onclick="noshowHert(event);"
+                                                th:value="${selectProductList[col].productNo}">
+                                            </i>
+                                        </div>
+                                        <div>
+                                            <h4 th:text="${selectProductList[col].productName}">상품이름</h4>
+                                        </div>
+                                        <div>
+                                            <h3 style="color: #3A732A; margin-right: 15px;">32%</h3>
+                                            <h3 th:text="${selectProductList[col].productPrice} + '원'" class="productPrice">상품가격</h3>
+                                        </div>
+                                        <div>
+                                            <img src="/images/main/star.png" style="height: 10px;">
+                                            <h5 style="margin-right: 5px;">4.1</h5>
+                                            <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <!-- 페이지네이션 -->
+                <div class="pagination">
+                    <!--검색 안한 경우-->
+                    <ul class = "pagination" th:unless="${query}" th:object="${pagination}">
+                        <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=1&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&lt;&lt;</a></li>
+                        <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{prevPage}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&lt;</a></li>
+            
+                        <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+    
+                            <li th:if="${i} == *{currentPage}">
+                                <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                            </li>
+    
+                            <li th:unless="${i} == *{currentPage}">
+                                <a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=${i}&minPrice=${minPrice}&maxPrice=${maxPrice}|}"
+                                th:text="${i}">이동할 페이지</a>
+                            </li>
+                            
+                        </th:block>
+            
+                    
+                        <li>
+                            <a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{nextPage}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&gt;</a>
+                        </li>
+                        <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{maxPage}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&gt;&gt;</a></li>
+                    </ul>
+                
+                </div>
+
+                <!--검색인 경우-->
+                <ul class="pagination" th:if="${query}" th:object="${pagination}">
+                    <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=1&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&lt;&lt;</a></li>
+                    <li><a  th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{prevPage}&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&lt;</a></li>
+                    
+                    <th:block th:if="*{startPage lt endPage}" th:each="i : *{#numbers.sequence(startPage, endPage)}">
+                        
+                        <li th:if="${i} == *{currentPage}">
+                            <a class="current" th:text="${i}">현재페이지</a>
+                        </li>
+                        
+                        <li th:unless="${i} == *{currentPage}">
+                            <a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=${i}&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}|}"
+                                th:text="${i}">이동할 페이지</a>
+                        </li>
+                    </th:block>
+                    
+
+                    <th:block th:unless="*{startPage lt endPage}">
+                        <li>
+                            <a class="current">1</a>
+                        </li>
+                    </th:block>
+                    
+                    <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{nextPage}&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&gt;</a></li>
+                    <li><a th:href="@{|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}?cp=*{maxPage}&query=${query}&minPrice=${minPrice}&maxPrice=${maxPrice}|}">&gt;&gt;</a></li>
+                </ul>           
+                
+            </th:block>
+
+
+        </div>
+    </div>
+    
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/eCommerce/eCommerceList.js"></script>
+    <script src="/js/common/redirectToLogin.js"></script>
+
+    <script th:inline="javascript">
+        
+        // 찜하기 눌렀을 때
+        function showHert(event) {
+            event.preventDefault();
+
+
+            event.target.style.display = 'none';
+            event.target.nextElementSibling.style.display = 'block';
+            
+
+            var obj = {
+                "memberNo" : event.target.attributes[0].value,
+                "productNo" : event.target.attributes[5].value
+            }
+
+
+            fetch("/myPage/addWish", {
+                method : "PUT",
+                headers : {"Content-Type": "application/json"},
+                body : JSON.stringify(obj)
+            })
+            .then(resp => resp.text())
+            .then(temp => {
+                if(temp > 0) {
+                    alert("위시리스트에 추가되었습니다");
+                }else {
+                    alert("위시리스트 추가 실패");
+                }
+            });
+
+                
+
+
+            return false;
+        }
+        function noshowHert(event) {
+            event.preventDefault();
+            alert("위시리스트에서 삭제되었습니다");
+
+            event.target.style.display = 'none';
+            event.target.previousElementSibling.style.display = 'block';
+
+
+            var obj = {
+                "memberNo" : event.target.attributes[0].value,
+                "productNo" : event.target.attributes[5].value
+            }
+
+            console.log(event.target.attributes);
+
+
+            fetch("/myPage/delWish", {
+                method : "POST",
+                headers : {"Content-Type": "application/json"},
+                body : JSON.stringify(obj)
+            })
+            .then(resp => resp.text())
+            .then(temp => {
+                if(temp > 0) {
+                    alert("위시리스트에서 삭제되었습니다");
+                }else {
+                    alert("위시리스트 삭제 실패");
+                }
+            });
+
+
+            return false;
+        }
+    </script>
+</body>
+</html>

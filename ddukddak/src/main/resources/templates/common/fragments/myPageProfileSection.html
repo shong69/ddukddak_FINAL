@@ -1,0 +1,70 @@
+<section class="myPage-row1">
+    <div>
+        <img class="profile-img" 
+        th:with="user=#{user.default.image}"
+        th:src="${session.loginMember.profileImg?:user}">
+        <table class="profile-content">
+            <tr>
+                <td>닉네임</td>
+                <td th:text="${session.loginMember.memberNickname}">닉네임</td>
+            </tr>
+            <tr>
+                <td>이메일</td>
+                <td th:text="${session.loginMember.memberEmail}">squid@gmail.com</td>
+            </tr>
+            <tr>
+                <td>가입일</td>
+                <td th:text="${session.loginMember.enrollDate}">2024.05.27</td>
+            </tr>
+            <tr>
+                <td>휴대전화</td>
+                <td th:text="${session.loginMember.memberTel}">010-1234-1234</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <div class="title">마이페이지</div>
+        <div class="quick-view">
+            <a class="nav-content" href="/myPage/memberInfo"><i class="fa-solid fa-circle-info" style="margin-right: 5px;"></i>회원정보</a>
+            <a class="nav-content" onclick="openChatPopup()" ><i class="fa-regular fa-comments" style="margin-right: 5px;"></i>1:1문의</a>
+            <a class="nav-content" onclick="openPointModal()"><i class="fa-solid fa-coins" style="margin-right: 5px;"></i>포인트</a>
+        </div>
+    </div>
+</section>
+<div class="pointModal display-none">
+    <div class="close-btn" onclick="closePointModal()">&times;</div>
+    <div>
+        
+        <table class="pointTable">
+            <tr>
+                <td>김소영 님의 포인트<i class="fa-solid fa-sack-dollar"></i></td>
+            </tr>
+            <tr>
+                <th>
+                    5900pt
+                </th>
+            </tr>
+        </table>
+    </div>
+</div>
+<script th:inline="javascript">
+    function openChatPopup() { window.open("/myChat/chatWithManager", "1:1 문의", "width=500px, height=750px, left=470, top=50,resizable=no, scrollbars=no"); }
+    /*function openChatPopup() {
+    var popup = window.open("/myPage/chatWithManager", "1:1 문의", "width=500, height=700, left=470, top=100, scrollbars=no");
+    popup.resizeTo(500, 700); // 크기 고정
+    popup.onresize = function() {
+        popup.resizeTo(500, 700); // 리사이즈 이벤트 발생 시 크기를 다시 고정
+    };
+    }
+    */
+    const modal = document.querySelector(".pointModal");
+   function openPointModal(){
+        modal.classList.remove("display-none");
+   }
+
+   function closePointModal(){
+        modal.classList.add("display-none");
+   }
+
+
+</script>

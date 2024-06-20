@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 판매사</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/partner/seller/product/applyProduct.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+</head>
+<body>
+    <th:block th:replace="~{partner/seller/common/header}"></th:block>
+
+    <div id="applyProductContainer">
+        <h1>상품관리 > 판매등록</h1>
+
+        <th:block th:switch="${status}">
+            <th:block th:case="'apply'">
+                <form id="uploadForm" action="/partner/seller/product/applySellProduct" method="POST" enctype="multipart/form-data">
+            </th:block>
+            <th:block th:case="'modify'">
+                <form id="uploadForm" action="/partner/seller/product/modifySellProduct" method="POST" enctype="multipart/form-data">
+            </th:block>
+        </th:block>
+            <div id="formContainer">
+
+                <div>
+                    <h4>카테고리 선택</h4>
+
+                    <div>
+                        <select name="bigCategory" id="bigCategory">
+                            <option th:text="${product.bigCategoryName}" th:value="${product.bigCategoryNo}">대분류</option>
+                            <th:block th:each="category : ${categoryList}" th:object="${category}">
+                                <option th:value="${category.bigCategoryNo}" th:text="${category.bigCategoryName}">대분류값</option>
+                            </th:block>
+                        </select>
+
+                        <select id="smallCategory" name="smallCategory">
+                            <option th:text="${product.categoryName}" th:value="${product.categoryNo}">소분류</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>상품명</h4>
+
+                    <input name="productName" id="productName" th:value="${product.productName}">
+                </div>
+
+                <div>
+                    <h4>판매가(원)</h4>
+
+                    <input type="number" name="productPrice" id="productPrice" th:value="${product.productPrice}">
+                </div>
+
+                <div>
+                    <h4>옵션</h4>
+
+                    <div id="plusBox">
+                        <button type="button" id="productPlusButton">추가</button>
+                    </div>
+                    
+                    <div id="optionBox">
+                        <th:block th:if="${option != null}">
+                            <th:block th:each="optionNames : ${optionName}" th:object="${optionNames}">
+                                <div class="optionMainBox">
+                                    <h4>옵션명</h4>
+                                    <input name="optionName" class="optionName" th:value="${optionNames.optionName}">
+                                    <h5 class="plusEx">상세보기</h5>
+                                    <div class="optionContentBox">
+                                        <table>
+                                            <tr>
+                                                <td style="font-size: 12px;">옵션 내용</td>
+                                                <td style="font-size: 12px;">재고 수량</td>
+                                                <td>
+                                                    <button type="button" class="addOption">+</button>
+                                                </td>
+                                            </tr>
+
+                                            <th:block th:each="options : ${option}" th:object="${options}">
+                                                <th:block th:if="${options.optionName == optionNames.optionName}">
+                                                    <tr>
+                                                        <td>
+                                                            <input name="optionContent" class="contentInput" th:value="${options.optionValue}">
+                                                        </td>
+                                                        <td>
+                                                            <input name="optionCount" class="contentCountInput" th:value="${options.productCount}">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="minusOption">-</button>
+                                                        </td>
+                                                    </tr>
+                                                </th:block>
+                                            </th:block>
+                                        </table>
+                                        <button type="button" class="applyButton">적용</button>
+                                        <button type="button" class="delOption">삭제</button>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </th:block>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>상품 대표 이미지 등록</h4>
+
+                    <input type="file" name="mainImg" id="mainImg" class="real-upload-main" onchange="readMainURL(this);" accept="image/*">
+                    <label for="mainImg" class="upload-main">사진 등록</label>
+                    <ul class="image-preview-main">
+                        <th:block th:each="imgs : ${img}" th:object="${imgs}">
+                            <th:block th:if="${imgs.uploadImgOrder == 0}">
+                                <li>
+                                    <img id="preview" th:src="|${imgs.uploadImgPath}${imgs.uploadImgRename}|">
+                                    <input type="hidden" name="uploadedImages" th:value="${imgs.uploadImgOgName}">
+                                </li>
+                            </th:block>
+                        </th:block>
+                    </ul>
+                </div>
+
+                <div id="subImgBox">
+                    <h4>상품 상세 이미지 등록</h4>
+
+                    <input type="file" name="subImgs" id="subFile" onchange="readSubURLs(this);" class="real-upload" accept="image/*" required multiple>
+                    <label for="subFile" class="upload">사진 등록</label>
+                    <ul class="image-preview">
+                        <th:block th:each="imgs : ${img}" th:object="${imgs}">
+                            <th:block th:if="${imgs.uploadImgOrder != 0}">
+                                <li>
+                                    <img th:src="|${imgs.uploadImgPath}${imgs.uploadImgRename}|" th:value="${imgs.uploadImgRename}">
+                                    <button class="delButton" th:value="${imgs.uploadImgNo}">X</button>
+                                </li>
+                            </th:block>
+                        </th:block>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>상품 상세설명</h4>
+
+                    <div class="form__input--file_wrap">
+                        <input accept="image/*" class="form__input--file" id="upload1" type="file" multiple>
+                        <label class="form__label--file" for="upload1">파일선택</label>
+                        <span class="form__span--file">선택된 파일이 없습니다.</span>
+                    </div>
+                </div>
+
+
+                <div>
+                    <th:block th:switch="${status}">
+                        <div th:case="'apply'" id="buttons">
+                            <button type="submit" id="createButton" onclick="handleFormSubmission(event)">등록</button>
+                        </div>
+                        <div th:case="'modify'" id="buttons">
+                            <button type="submit" id="createButton" onclick="handleFormSubmissionModify(event)">수정</button>
+                        </div>
+                    </th:block>
+                </div>
+
+            </div>
+            <input type="hidden" name="productNo" th:value="${product.productNo}">
+        </form>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="/js/partner/seller/product/applyProduct.js"></script>
+    <script>
+        let subImageFiles = [];
+
+        function readSubURLs(input) {
+            if (input.files && input.files.length > 0) {
+                const subImgBox = document.getElementById('subImgBox');
+                const totalSubImages = subImgBox.getElementsByTagName('img').length + input.files.length;
+                const previewContainer = document.querySelector('.image-preview');
+
+                if (totalSubImages > 7) {
+                    alert('상세이미지는 최대 7개까지 추가할 수 있습니다.');
+                    return;
+                }
+
+                Array.from(input.files).forEach(file => {
+                    // 이미지 파일인지 확인
+                    if (!file.type.startsWith('image/')) {
+                        alert('이미지 파일만 선택할 수 있습니다.');
+                        return;
+                    }
+
+                    subImageFiles.push(file); // 파일을 배열에 추가
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+
+                        const preview = document.createElement('img');
+                        const li = document.createElement('li');
+                        preview.src = e.target.result;
+
+                        li.append(preview);
+                        previewContainer.append(li);
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.classList.add('delete-button');
+                        deleteButton.textContent = 'X';
+                        deleteButton.onclick = function() {
+                            if (confirm("해당 사진을 삭제하시겠습니까?")) {
+                                const index = Array.from(subImgBox.children).indexOf(previewContainer);
+                                subImageFiles.splice(index, 1); // 배열에서 파일 제거
+                                li.remove(); // 이미지 삭제
+                            }
+                        };
+                        li.appendChild(deleteButton);
+                    };
+                    reader.readAsDataURL(file);
+                });
+
+                // 리셋 input file field to allow adding the same file again
+                input.value = '';
+
+                console.log(subImageFiles);
+            }
+        }
+
+        function handleFormSubmission(event) {
+            event.preventDefault(); // 기본 제출 동작 막기
+
+            //유효성 검사
+            var optionTemp = true;
+
+            const optionTemps = document.getElementsByClassName("applyButton");
+
+            console.log(optionTemps);
+
+            for(let i = 0; i < optionTemps.length; i ++) {
+                console.log(optionTemps[i]);
+                if(optionTemps[i].style.display != 'none') {
+                    optionTemp = false;
+                }
+            }
+
+            if(document.querySelector("#productName").value.trim().length === 0 ||
+                document.querySelector("#productPrice").value.trim().length === 0) {
+                    alert("모든 입력값 작성을 완료해주세요");
+            } else if(!optionTemp) {
+                alert("모든 옵션값 적용을 완료해주세요");
+            } else {
+                const form = document.getElementById('uploadForm');
+                console.log(form);
+                const formData = new FormData(form);
+    
+                // subImageFiles를 FormData에 추가
+                subImageFiles.forEach(file => {
+                    formData.append('subImgs', file);
+                });
+    
+                // 폼 데이터 로그 출력 (디버깅 용도)
+                for (let [key, value] of formData.entries()) {
+                    console.log(key, value);
+                }
+    
+                // FormData 객체를 사용하여 서버로 POST 요청 보내기
+                fetch('/partner/seller/product/applySellProduct', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(result => {
+    
+                    if(result > 0) {
+                        alert("등록 완료");
+                        location.href = '/partner/seller/product/apply';
+                    } else {
+                        alert("등록 실패");
+                    }
+                })
+
+            }
+
+        }
+
+        function handleFormSubmissionModify(event) {
+            event.preventDefault(); // 기본 제출 동작 막기
+
+            
+            //유효성 검사
+            var optionTemp = true;
+
+            const optionTemps = document.getElementsByClassName("applyButton");
+
+            console.log(optionTemps);
+
+            for(let i = 0; i < optionTemps.length; i ++) {
+                console.log(optionTemps[i]);
+                if(optionTemps[i].style.display != 'none') {
+                    optionTemp = false;
+                }
+            }
+
+            if(document.querySelector("#productName").value.trim().length === 0 ||
+                document.querySelector("#productPrice").value.trim().length === 0) {
+                    alert("모든 입력값 작성을 완료해주세요");
+            } else if(!optionTemp) {
+                alert("모든 옵션값 적용을 완료해주세요");
+            } else {
+                const form = document.getElementById('uploadForm');
+                console.log(form);
+                const formData = new FormData(form);
+    
+                // subImageFiles를 FormData에 추가
+                subImageFiles.forEach(file => {
+                    formData.append('subImgs', file);
+                });
+    
+                // 폼 데이터 로그 출력 (디버깅 용도)
+                for (let [key, value] of formData.entries()) {
+                    console.log(key, value);
+                }
+    
+                // FormData 객체를 사용하여 서버로 POST 요청 보내기
+                fetch('/partner/seller/product/modifySellProduct', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.text())
+                .then(result => {
+    
+                    if(result > 0) {
+                        alert("등록 완료");
+                        location.href = '/partner/seller/product/apply';
+                    } else {
+                        alert("등록 실패");
+                    }
+                })
+            }
+            }
+    </script>
+
+    
+</body>
+</html>

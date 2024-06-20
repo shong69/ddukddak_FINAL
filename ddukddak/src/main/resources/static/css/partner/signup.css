@@ -1,0 +1,531 @@
+main {
+    width: 1440px;
+    height: 1200px;
+    color: var(--gray1);
+    
+}
+
+/* 약관 내용 영역 */
+#signUpForm textarea {
+    width: 470px;
+    height: 200px;
+    resize: none;
+    overflow-y: auto;
+    padding: 10px 15px;
+    font-size: 13px; /* 전체 텍스트의 폰트 크기 */
+    line-height: 1.5; /* 줄 간격 */
+    font-family: 'main';
+    box-sizing: border-box; /* 패딩이 내부 영역에 포함되도록 설정 */
+    color: var(--gray3);
+    font-weight: 600;
+    outline: none;
+}
+
+.logoArea1 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.logoArea1 h1 {
+    letter-spacing: 0.3em;
+    margin-left: 10.2px;
+}
+
+.logoArea1, .logoArea2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logoArea2 {
+    margin-bottom: 40px;
+    
+}
+
+
+.agreeCheckBox1, .agreeCheckBox2 {
+    margin-bottom: 30px;
+    
+}
+
+/* 전체 컨테이너 */
+.signupContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* 좌, 우 컨테이너 */
+.signupContainer2 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 1140px;
+    margin: 60px 0;
+}
+
+
+.agreeArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.agreeCheck {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+
+.requiredRel {
+    position: relative;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+.required {
+    color: red;
+    font-size: 12px;
+    font-weight: 600;
+    position: absolute;
+    top: -0.2em; /* 텍스트가 올라가는 정도를 조절하세요 */
+    right: -2.6em; /* 위치 조정을 위한 값 */
+}
+
+
+.agreeBtn {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* 약관 전체 동의 */
+.agreeAllArea {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+
+
+#agreeAllBtn {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.agreeAllBtnLabel {
+    font-size: 15px;
+    font-weight: 700;
+    margin-left: 6px;
+    cursor: pointer;
+}
+
+
+/* ------------------------------------------------------ */
+.partnerType {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 중앙 정렬을 위해 start를 center로 변경 */
+    width: 360px;
+    transform: translateY(-50px);
+}
+
+.partnerType i {
+    font-size: 24px;
+}
+
+.partnerType h2 {
+    margin-left: 10px;
+    font-size: 24px;
+    display: flex;
+    align-items: center; /* 중앙 정렬 추가 */
+    letter-spacing: 0.2em;
+}
+
+
+/* 사업자, 파트너 정보 영역 */
+.infoArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 420px;
+    height: auto;
+    margin-top: 50px;
+}
+
+/* 인증 관련 메시지 */
+.infoArea span {
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 5px;
+    margin-left: 5px;
+    min-height: 20px;
+}
+
+.authArea {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 6px 0;
+}
+
+/* 인증 버튼 */
+.authBtn {
+
+    padding: 6px 30px;
+    background: #404040; 
+    border-radius: 5px;
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    will-change: transform;
+    touch-action: manipulation;
+    outline: none;
+
+}
+
+.authBtn:hover {
+
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 5px 5px;
+    transform: translateY(-2px);
+    
+
+    /* 폰트 */
+    font-family: 'main';
+    color: var(--gray1);
+    text-align: center;
+    word-wrap: break-word;
+
+    background-color: var(--white);
+}
+
+
+.authBtn:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+
+/* 사업자 번호 영역 */
+.businessNumArea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 사업자 번호 입력 영역 */
+.businessNumArea input {
+    width: 115px;
+    height: 40px;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid var(--gray5);
+}
+.businessNumArea input:focus {
+    outline: none;
+}
+
+/* 인증 메시지 영역 */
+/* .businessNumAuthMsgArea {
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.bsNumInputs::-webkit-outer-spin-button,
+.bsNumInputs::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+} */
+
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+/* 사업자 정보 인풋 div */
+.infoInputArea1 {
+    display: flex;
+    flex-direction: column;
+    margin-top: 46px;
+}
+
+#bsName {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--gray5);
+    padding: 6px;
+}
+
+
+#ceoName {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid var(--gray5);
+    padding: 6px;
+}
+
+#bsNum {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--gray5);
+    padding: 6px;
+}
+
+.infoInputArea1 input:focus, .infoInputArea2 input:focus {
+    outline: none;
+}
+
+/* 파트너 정보 인풋 div */
+.infoInputArea2 {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+
+}
+
+.infoInputArea2 input {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--gray5);
+    padding: 6px;
+    margin-top: 10px;
+}
+
+
+
+/* 핸드폰 인증 */
+.telAuthMsgArea {
+    display: flex;
+    justify-content: flex-start;
+}
+
+
+
+
+.partnerRequestArea {
+    margin-top: 40px;
+    margin-bottom: 80px;
+}
+
+
+input:-webkit-autofill { -webkit-box-shadow: 0 0 0 30px #fff inset ; -webkit-text-fill-color: #000; }
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active { transition: background-color 5000s ease-in-out 0s; }
+
+
+#bsNum:read-only {
+    background-color: #f0f0f0; /* 회색 배경 */
+    border: 1px solid #ccc; /* 회색 테두리 */
+    cursor: not-allowed; /* 사용 불가 커서 */
+}
+
+
+.complete {
+    background-color: rgb(255, 255, 255) !important;
+    border: 1px solid var(--gray5) !important;
+} 
+
+/* 등록 요청 버튼 */
+.mainPageBtn {
+
+    width: 400px;
+    height: 50px;
+    border-radius: 10px;
+
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 18px;
+    font-weight: 700;
+
+    left: 0px; 
+    top: 0px;
+    background-color: var(--gray1);
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+    outline: none;
+
+    cursor: pointer;
+    
+    /* 폰트 */
+    font-family: 'main';
+    word-wrap: break-word;
+    text-align: center; 
+    color: var(--white); 
+
+}
+.mainPageBtn:hover {
+    left: 0px; 
+    top: 0px;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 5px 5px;
+    transform: translateY(-2px);
+    
+
+    /* 폰트 */
+    font-family: 'main';
+    color: var(--gray1);
+    text-align: center;
+    word-wrap: break-word;
+
+    background-color: var(--white);
+}
+
+
+.inputWithButton {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+#sendAuthBtn {
+    position: absolute;
+    top: 14px;
+    /* transform: translateY(10%); */
+    right: 5px;
+    font-size: 14px;
+    
+}
+
+#partnerTel {
+    width: 100%;
+    /* Adjust according to button width */
+    margin-bottom: 0;
+}
+
+#smsAuthKey {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--gray5);
+    padding: 6px;
+    
+}
+
+#checkAuthBtn {
+    position: absolute;
+    top: 14px;
+    /* transform: translateY(10%); */
+    right: 5px;
+    font-size: 14px;
+    
+}
+
+#smsAuthKey:focus {
+    outline: none;
+}
+
+#telAuthTime {
+    position: absolute;
+    top: 18px;
+    right: 130px;
+    font-size: 13px;
+}
+
+
+.error {
+    color: #DC143C !important;
+}
+
+.confirm {
+    color: green !important;
+}
+
+
+
+#sendAuthBtn:disabled {
+    background-color: #f1f1f1;
+    border-left: none;
+    border: 2px solid #f1f1f1; /* 포지션 때문에 지정 */
+    cursor: auto;
+    color: #aaa;
+    text-decoration: none;
+    box-shadow: none; /* 그림자 제거 */
+
+}
+
+#sendAuthBtn:disabled:hover,
+#sendAuthBtn:disabled:active {
+    background-color: #f1f1f1; /* 동일한 배경색 유지 */
+    color: #aaa; /* 동일한 글자색 유지 */
+    border-color: none; /* 동일한 테두리 색상 유지 */
+    box-shadow: none; /* 그림자 제거 */
+    transform: none; /* 이동 효과 제거 */
+    cursor: auto; /* 동일한 커서 유지 */
+}
+
+
+#checkAuthBtn:disabled {
+    background-color: #f1f1f1;
+    border-left: none;
+    border: 2px solid #f1f1f1; /* 포지션 때문에 지정 */
+    cursor: auto;
+    color: #aaa;
+    text-decoration: none;
+    box-shadow: none; /* 그림자 제거 */
+
+}
+
+#checkAuthBtn:disabled:hover,
+#checkAuthBtn:disabled:active {
+    background-color: #f1f1f1; /* 동일한 배경색 유지 */
+    color: #aaa; /* 동일한 글자색 유지 */
+    border-color: none; /* 동일한 테두리 색상 유지 */
+    box-shadow: none; /* 그림자 제거 */
+    transform: none; /* 이동 효과 제거 */
+    cursor: auto; /* 동일한 커서 유지 */
+}
+
+
+#signUpBtn:disabled {
+    background-color: #f1f1f1;
+    border-left: none;
+    border: 2px solid #f1f1f1; /* 포지션 때문에 지정 */
+    cursor: auto;
+    color: #aaa;
+    text-decoration: none;
+    box-shadow: none; /* 그림자 제거 */
+
+}
+
+#signUpBtn:disabled:hover,
+#signUpBtn:disabled:active {
+    background-color: #f1f1f1; /* 동일한 배경색 유지 */
+    color: #aaa; /* 동일한 글자색 유지 */
+    border-color: none; /* 동일한 테두리 색상 유지 */
+    box-shadow: none; /* 그림자 제거 */
+    transform: none; /* 이동 효과 제거 */
+    cursor: auto; /* 동일한 커서 유지 */
+}
+
+
+.smsAuthKey:read-only {
+    cursor: not-allowed;
+}

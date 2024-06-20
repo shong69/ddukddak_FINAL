@@ -1,0 +1,148 @@
+
+/* 메인 폰트 */
+@font-face {
+    font-family: 'main';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+*{
+    font-family: 'main';
+}
+main {
+    min-height: 1000px;
+    display: flex;
+    width: 100%;
+}
+/*마이페이지 상단 개인정보 영역*/
+
+.myPage-row1{
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left:300px;
+    padding-right: 330px;
+    border-bottom: 2px solid black;
+}
+.myPage-row2{
+    min-height: 700px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.myPage-row1>div:first-child{
+    display: flex;
+    flex-direction: row;
+    padding: 30px 0;
+}
+.profile-img{
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.profile-content tr>td:first-child{
+    font-weight: 600;
+    padding-right: 20px;
+}
+
+
+
+.myPage-row1>div:last-child{
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.title{
+    font-family: 'main';
+    font-weight: 600;
+    font-size: 45px;
+    margin-left: auto;
+}
+.quick-view{
+    line-height: 32.5px;
+    
+}
+.nav-content{
+    margin:0 5px;
+}
+
+.nav-content:hover{
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/*포인트 모달*/
+.pointModal{
+    width :180px;
+    height: 100px;
+    position: absolute;
+    background-color: #FFFAF0;
+    margin: auto;
+    top: -400px;
+    bottom: 0;
+    left: 1050px;
+    right: 0;
+    z-index: 1200;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.4), 0 3px 3px rgba(0,0,0,0.1);
+}
+.display-none{
+    display:none;
+}
+.close-btn{
+    width: 20px;
+    margin-left: auto;
+    cursor: pointer;
+}
+.pointModal>div:nth-child(2){
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin : 0 auto;
+}
+.fa-sack-dollar{
+    margin-left: 5px;
+}
+.pointTable{
+    border-collapse: collapse;
+}
+.pointTable tr{
+    text-align: center;
+    height: 30px;
+    font-size: 13px;
+}
+.pointTable tr:first-child{
+    border-bottom: 1px solid black;
+}
+/*사이드바*/
+.side-bar{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    border-right: 1px solid #737373;
+    background-color: black;
+    
+}
+
+.side-bar-logo {
+    width: 100px;
+    height: 100px;
+}
+.side-bar div{
+    padding:30px 60px;
+    border-bottom: 0.3px solid #ffffff;
+}
+.menu{
+    display: flex;
+    flex-direction: column;
+}
+.menu *{
+    margin:15px auto;
+    color:white;
+}
+

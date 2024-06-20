@@ -1,0 +1,211 @@
+<style>
+    #detailCategory {
+        flex: 1;
+        padding: 20px;
+        position: sticky;
+        top: 10%;
+        transition: transform 0.2s ease-out;
+        height: fit-content;
+    }
+
+    #detaildetailCategory {
+        margin-top: 20px;
+        margin-right: 50px;
+        display: flex;
+        flex-direction: column;
+        border: 1px black solid;
+        padding: 10px;
+    }
+
+    #detaildetailCategory table {
+        font-family: 'main';
+    }
+
+    #detaildetailCategory table tr {
+        cursor: pointer;
+    }
+
+    #detaildetailCategory table td {
+        padding: 5px 0px;
+    }
+
+    #detaildetailCategory table tr td:first-child {
+        width: 200px;
+    }
+
+    #priceSearch > form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #priceSearch input {
+        height: 30px;
+        border-radius: 10px;
+        border: 1px black solid;
+        text-align: center;
+        padding: 3px;
+    }
+
+    #priceSearch button {
+        height: 30px;
+        width: 200px;
+        background-color: #404040;
+        border: none;
+        border-radius: 10px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+    #priceSearch a {
+        height: 30px;
+        width: 200px;
+        background-color: #404040;
+        border: none;
+        border-radius: 10px;
+        margin-top: 10px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #priceSearch button h4 {
+        color: white;
+    }
+
+    #priceSearch a h4 {
+        color: white;
+    }
+
+    .highlight {
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+    <th:block th:unless="${query}">
+        <div id="detailCategory">
+            <h4 th:text="${bigCategoryName}">소분류</h4>
+        
+            <div id="detaildetailCategory">
+                <div>
+                    <table>
+                        <tr th:each="category : ${smallCategoryList}" th:object="${category}" onclick="window.location.href = this.querySelector('a').href">
+                            <td>
+                                <a th:href="@{/eCommerce/list/{bigcategoryNo}/{smallcategoryNo} (bigcategoryNo=*{bigCategoryNo}, smallcategoryNo=*{categoryNo})}" style="display:block; width:100%; height:100%;">
+                                    <span th:value="${category.categoryNo}" class="data-category-no" th:text="${category.categoryName}">소분류</span>
+                                </a>
+                            </td>
+                            <a th:href="@{/eCommerce/list/{bigcategoryNo}/{smallcategoryNo} (bigcategoryNo=*{bigCategoryNo}, smallcategoryNo=*{categoryNo})}" style="display:block; width:100%; height:100%;"></a>
+                                <td>></td>
+                            </a>
+                        </tr>
+                    </table>
+                </div>
+        
+                <th:block th:if="${minPrice != 'NO'}">
+                <div style="border: 1px solid black;"></div>
+        
+                    <div id="priceSearch">
+                        <form>
+                            <h4 style="margin: 10px 0;">가격</h4>
+                            <input name="minPrice" type="number" id="minPrice">
+                            <h3>~</h3>
+                            <input name="maxPrice" type="number" id="maxPrice">
+                            <button id="priceButton"><h4>찾기</h4></button>
+                            <a th:href='|/eCommerce/list/${bigCategoryNo}/${smallCategoryNo}|'><h4>초기화</h4></a>
+                        </form>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </th:block>
+
+<script>
+    const priceButton = document.querySelector("#priceButton");
+
+    if(priceButton != null) {
+        priceButton.addEventListener("click", e => {
+            const minPrice = Number(document.querySelector("#minPrice").value);
+            const maxPrice = Number(document.querySelector("#maxPrice").value);
+    
+            if(minPrice <= 0) {
+                alert("최소가격은 0원 이상 입력해야 합니다");
+                e.preventDefault();
+            }
+    
+            if(minPrice.trim().length === 0 || maxPrice.trim().length === 0) {
+                alert("최소가격과 최대가격을 모두 입력해주세요");
+                e.preventDefault();
+            }
+    
+            if(minPrice > maxPrice) {
+                alert("가격범위가 알맞지 않습니다");
+                e.preventDefault();
+            }
+        });
+
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const category = document.getElementById('detailCategory');
+        let lastScrollY = window.scrollY;
+        let isTicking = false;
+        let targetOffset = 0;
+        let animationFrame;
+
+        function onScroll() {
+            const currentScrollY = window.scrollY;
+            const deltaY = currentScrollY - lastScrollY;
+
+            targetOffset += deltaY * 0.2; // Adjust the factor for desired effect
+            targetOffset = Math.max(Math.min(targetOffset, 20), -20); // Limit the movement range
+
+            if (!isTicking) {
+                window.requestAnimationFrame(() => {
+                    category.style.transform = `translateY(${targetOffset}px)`;
+                    isTicking = false;
+                });
+                isTicking = true;
+            }
+
+            lastScrollY = currentScrollY;
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
+
+            animationFrame = requestAnimationFrame(resetPosition);
+        }
+
+        function resetPosition() {
+            targetOffset *= 0.9; // Damping factor to bring back to original position
+            if (Math.abs(targetOffset) < 0.1) {
+                targetOffset = 0;
+                cancelAnimationFrame(animationFrame);
+            } else {
+                category.style.transform = `translateY(${targetOffset}px)`;
+                animationFrame = requestAnimationFrame(resetPosition);
+            }
+        }
+
+        window.addEventListener('scroll', onScroll);
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentUrl = window.location.href;
+        var extractedNumber = currentUrl.match(/\/\d+\/(\d+)\/?/)[1];  
+ 
+        const categoryNos = document.querySelectorAll(".data-category-no");
+
+        categoryNos.forEach(elements => {
+
+            if(elements.attributes[0].value === extractedNumber) {
+                elements.classList.add("highlight");
+            }
+        })
+    });
+</script>

@@ -1,0 +1,133 @@
+.topContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFDF8;
+    transform: translateX(-5%);
+}
+
+
+.mainContainer {
+    display: flex;
+    width: 900px;
+    position: relative;
+    justify-content: center;
+}
+
+.mainArea {
+    margin: 50px;
+    width: 850px;
+}
+
+/* 페이지 타이틀 */
+.topTitle {
+    text-align: center;
+    color: var(--secondary);
+}
+
+/* myHouse 입력 부분 */
+.titleInput {
+    margin: 30px 0;
+}
+
+.titleInput > input {
+    width: 850px;
+    height: 40px;
+    padding: 5px 10px;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+.titleInput > input:focus {
+    outline: none;
+}
+
+.contentInput textarea {
+    width: 850px;
+    resize: none;
+    border-radius: 10px;
+    height: 300px;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.contentInput textarea:focus {
+    outline: none;
+}
+
+/* 파일첨부 */
+.midTitle {
+    margin: 30px 0;
+}
+
+.inputFile {
+    margin: 30px 0;
+}
+
+.guideText {
+    color: var(--secondary);
+    margin: 20px 0;
+}
+
+.preview-container {
+    display: flex;
+    overflow-x: scroll;
+    width: 100%;
+    white-space: nowrap;
+}
+.preview-container img {
+    width: 100px;
+    height: 80px;
+    margin: 10px;
+}
+
+.mainImgText {
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--secondary);
+    color: white;
+    position: absolute;
+    z-index: 1;
+    border-radius: 5px;
+}
+
+#largeImage {
+    width: 900px;
+    height: 500px;
+    position: relative;
+    object-fit: scale-down;
+}
+
+.thumbnailImg {
+    margin: 50px 0;
+}
+
+
+/* 버튼 */
+.btnArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btnArea button {
+    margin: 0 10px;
+}
+
+/* 탑버튼 */
+#top {
+    position: fixed;
+    top: 90%;
+    left: 95%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    background-color: white;
+    font-family: 'main';
+    cursor: pointer;
+    border: 2px black solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

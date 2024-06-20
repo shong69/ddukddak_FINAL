@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>뚝딱뚝딱 : 시공사</title>
+        
+        <link rel="stylesheet" href="/css/common/main.css"> 
+        <link rel="stylesheet" href="/css/partner/interior/interiorList.css"> 
+        <link rel="stylesheet" href="/css/common/fragments/header.css"> 
+        <link rel="stylesheet" href="/css/common/fragments/footer.css"> 
+        <!--<link rel="stylesheet" href="/css/common/button.css"> -->
+        <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+
+    </head>
+    <body>
+
+        <th:block th:replace="~{common/fragments/header}"></th:block>
+
+        <div class="mainContainer">
+
+            <main>
+
+                <section class="bannerArea">
+                
+                    <img src="/images/partner/interior/portfolio/시공사 배너이미지.jpg">
+                    <h1>시공사 모아보기</h1>
+                    
+                </section>
+
+                
+                <!-- <section class="searchInterior">
+
+                    <div class="titleArea">
+                        <h2>시공사 찾기</h2>
+                    </div>
+                    
+                    <div>
+                        <table>
+                          <tr>
+                            <td><h3>시공사 지역</h3></td>
+                            <td>
+                              <select>
+                                <option>서울</option>
+                                <option>경기/인천</option>
+                                <option>충청/대전</option>
+                                <option>전라/광주</option>
+                                <option>경북/대구</option>
+                                <option>경남/부산/울산</option>
+                                <option>강원</option>
+                                <option>제주</option>
+                              </select>
+                            </td>
+                            <td><h3>견적금액</h3></td>
+                            <td>
+                              <input class="interiorPrice" type="number" step="100000" min="0">&nbsp;원
+                              <span>~</span>
+                              <input class="interiorPrice" type="number" step="100000" min="0">&nbsp;원
+                            </td>
+                          </tr>
+                
+                
+                          <tr>
+                            <td><h3>시공일정</h3></td>
+                            <td>
+                              <input type="date" class="selectDate">
+                              <span>~</span>
+                              <input type="date" class="selectDate">
+                            </td>
+                          </tr>
+                
+                
+                          <tr>
+                            <td><h3>원하는 스타일</h3></td>
+                            <td style="display: flex;">
+                              <input type="checkbox" name="style" value="1"><h4>모던</h4>
+                              <input type="checkbox" name="style" value="2"><h4>시크</h4>
+                              <input type="checkbox" name="style" value="3"><h4>화려</h4>
+                              <input type="checkbox" name="style" value="4"><h4>깔끔</h4>
+                              <input type="checkbox" name="style" value="5"><h4>무채색</h4>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                        
+                      
+                    </table>
+                    
+                    <div>
+                      <button class="interiorSearchBtn">시공사 찾기</button>
+                    </div>
+
+                </section> -->
+
+            
+                
+                <section class="interiorList">
+
+                    <div class="titleArea">
+                        <h2>시공사 리스트</h2>
+                    </div>
+
+                    <table style="text-align: center;">
+
+                        <thead>
+                            <th>시공사</th>
+                            <th>전화번호</th>
+                            <!-- <th>주소</th>
+                            <th>시공가격(평당)</th> -->
+                            <th>시공사 홈페이지</th>
+                            <th>포트폴리오</th>
+                        </thead>
+
+                        <tbody>
+
+                            <tr class="listRow"
+                                th:each="interior : ${interiorList}" th:object="${interior}">
+                                <td th:text="*{partnerBusinessName}">삶</td>
+                                <td th:text="*{partnerTel}">01012341234</td>
+                                <td th:text="*{homeLink != null ? homeLink : '없음'}"></td>
+                                <!-- <td>서울특별시 중랑구 면목동</td>
+                                <td>1,000,000</td> -->
+                                    <td>
+                                        <button class="interiorDetailViewBtn" th:attr="data-portfolio-no=*{portfolioNo}">포트폴리오</button>
+                                    </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                    
+                </section>
+                
+
+                <section>
+                    
+                    <th:block>
+                        <div class="pagination-area">
+        
+                            <ul class="pagination">
+                                <!-- 첫 페이지로 이동 -->
+                                <li><a href="#">&lt;&lt;</a></li>
+        
+                                <!-- 이전 목록 마지막 번호로 이동 -->
+                                <li><a href="#">&lt;</a></li>
+        
+                                <!-- 특정 페이지로 이동 -->
+        
+                                <th:block>
+        
+                                    <!-- 현재 보고있는 페이지 -->
+                                    <li>
+                                        <a class="current">1</a>
+                                    </li>
+        
+                                    <!-- 보고있지 않은 페이지 -->
+                                    <li>
+                                        <a href="#">2</a>
+                                    </li>
+                                </th:block>
+        
+                                <!-- 다음 목록 시작 번호로 이동 -->
+                                <li><a href="#">&gt;</a></li>
+        
+                                <!-- 끝 페이지로 이동 -->
+                                <li><a href="#">&gt;&gt;</a></li>
+                            </ul>
+                        </div>
+                    </th:block>
+
+
+                </section>
+
+            </main>
+            
+            
+        </div>
+        
+        <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+    </body>
+    <script src="/js/common/redirectToLogin.js"></script>
+    <script src="/js/partner/interior/interiorList.js"></script>
+</html>

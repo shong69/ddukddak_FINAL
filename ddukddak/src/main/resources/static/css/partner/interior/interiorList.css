@@ -1,0 +1,285 @@
+section {
+    margin-bottom: 50px;
+}
+
+.mainContainer {
+    width: 1020px;
+}
+
+/* 배너 */
+.bannerArea {
+    position: relative;
+    width: 1440px;
+    height: 270px;
+}
+
+
+.bannerArea img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bannerArea h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* 버튼 */
+.btnArea {
+    display: flex;
+    justify-content: center;
+}
+
+
+/* 타이틀 */
+.titleArea {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+
+/* 시공사 찾기 */
+.searchInterior {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+    border: 1px solid black;
+    border-radius: 30px;
+}
+
+.selectDate {
+    padding: 5px;
+}
+
+.searchInteriorTable {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.searchInterior table {
+    padding: 30px 0;
+    margin: 0 30px;
+}
+
+.interiorPrice {
+    padding: 0 10px;
+}
+
+.searchInterior table td {
+    padding-bottom: 30px;
+}
+
+.searchInterior table td h3 {
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.searchInterior table select {
+    font-family: 'main';
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px black solid;
+}
+
+.searchInterior tr:nth-child(1) input,
+.searchInterior tr:nth-child(2) input {
+    font-family: 'main';
+    height: 30px;
+    border-radius: 10px;
+    border: 1px black solid;
+}
+
+.searchInterior tr:nth-child(3) h4 {
+    margin-left: 3px;
+    margin-right: 10px;
+}
+
+
+/*시공사 리스트*/
+.interiorList {
+    width: -webkit-fill-available;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+/* .listRow {
+    width: 1020px; 
+    height: 78px;
+    box-shadow: 7px 7px 4px rgba(0, 0, 0, 0.25); 
+    border-radius: 10px; 
+    border: 0.50px black solid;
+} */
+
+tr.listRow {
+    width: 1020px; 
+    height: 78px;
+    box-shadow: 7px 7px 4px rgba(0, 0, 0, 0.25); 
+    border-radius: 10px; 
+    border: 0.50px black solid;
+}
+
+tr.listRow td {
+    border: none; /* 개별 셀의 기본 보더를 제거 */
+}
+
+.interiorDetailView {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--secondary);
+    left: 0px; 
+    top: 0px;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 100%;
+    will-change: transform;
+    outline: none;
+
+    cursor: pointer;
+    
+    /* 폰트 */
+    font-family: 'main';
+    word-wrap: break-word;
+    text-align: center; 
+    color: var(--white); 
+}
+
+.interiorDetailView:hover {
+    color: var(--white);
+    left: 0px; 
+    top: 0px;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 5px 5px;
+    transform: translateY(-2px);
+    
+
+    /* 폰트 */
+    font-family: 'main';
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.interiorDetailView:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+
+/*페이징*/
+.pagination{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.pagination li{
+    width: 20px;
+    margin: 0 5px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.pagination a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.current{
+    font-weight: bold;
+    background-color: #3A732A;
+    border-radius: 50%;
+    color: white !important;
+    letter-spacing: 0 !important;
+} 
+
+
+/* body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.mainContainer {
+    width: 1020px;
+    margin: 0 auto;
+    position: relative;
+}
+.bannerArea {
+    position: relative;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.bannerArea img {
+    width: 100%;
+    height: auto;
+}
+.botContainer {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+.searchInterior {
+    width: 30%;
+    position: relative;
+    margin-right: 20px;
+}
+.interiorList {
+    width: 68%;
+    position: relative;
+}
+.titleArea h2 {
+    margin: 0;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+.pagination-area {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    display: inline-block;
+}
+.pagination li {
+    display: inline;
+    margin: 0 5px;
+}
+.pagination a {
+    text-decoration: none;
+}
+.pagination a.current {
+    font-weight: bold;
+} */

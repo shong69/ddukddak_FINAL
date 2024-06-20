@@ -1,0 +1,398 @@
+#applyProductContainer {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+}
+
+#applyProductContainer > h1 {
+    padding: 50px;
+}
+
+#formContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+#formContainer > div {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#formContainer > div:first-child select:first-child {
+    width: 200px;
+    height: 30px;
+    border: 1px solid var(--gray5);
+    border-radius: 5px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+#formContainer > div:first-child,
+#formContainer > div:nth-child(2),
+#formContainer > div:nth-child(3),
+#formContainer > div:nth-child(4) {
+  margin-left: 50px;
+}
+
+#formContainer > div:first-child select:last-child {
+    width: 300px;
+    height: 30px;
+    border: 1px solid var(--gray5);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#formContainer > div > input {
+    width: 700px;
+    height: 40px;
+    border: 1px solid var(--gray5);
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+
+#formContainer > div:nth-child(4) > div {
+    display: flex;
+    margin-top: 10px;
+}
+
+#formContainer > div:nth-child(4) > div > label {
+    margin-left: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#formContainer > div:nth-child(6) > input,
+#formContainer > div:nth-child(7) > input {
+    border: none;
+}
+
+#formContainer > div:nth-child(6) > input[type='file'],
+#formContainer > div:nth-child(7) input[type='file'] {
+    display: block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+  .form__input--file_wrap {
+    display: flex;
+    margin-top: 10px;
+  }
+  .form__label--file {
+    width: 80px;
+    height: 30px;
+    line-height:30px;
+    background: #999;
+    border-radius: 3px;
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .form__span--file {
+    padding: 0 5px 0 10px;
+    margin-left: 5px;
+    display: block;
+    width: 500px;
+    min-height: 30px;
+    border: 1px solid #e7e7e7;
+    border-radius: 3px;
+    line-height: 30px;
+    color: #999;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+
+/* 옵션칸 */
+#option {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: visible;
+}
+
+#plusBox {
+    height: 30px;
+}
+
+#addoption {
+    display: none;
+    flex-direction: column;
+}
+
+#productPlusButton {
+  background: none;
+    color: var(--gray1);
+    border: 1px solid var(--gray1);
+    border-radius: 5px;
+    height: 20px;
+    width: 30px;
+    justify-content: center;
+    align-items: center;
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+
+#productPlusButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 3px 3px 5px var(--gray5);
+}
+
+.optionMainBox {
+    width: 800px;
+    margin: 10px 0;
+}
+
+.optionName {
+    height: 30px;
+    width: 800px;
+    border:  1px solid var(--gray5);
+    padding: 0 10px;
+}
+
+#optionBox {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  overflow: auto;
+}
+
+.optionContentBox {
+    width: 800px;
+    box-shadow: 5px 5px 7px var(--gray5);
+    margin-bottom: 30px;
+}
+
+.contentInput {
+    height: 30px;
+    width: 350px;
+    border:  1px solid var(--gray5);
+    padding: 0 10px;
+}
+
+.contentCountInput {
+    height: 30px;
+    width: 400px;
+    border:  1px solid var(--gray5);
+    padding: 0 10px;
+}
+
+.applyButton {
+    width: 40px;
+    height: 20px;
+    background-color: var(--secondary);
+    color: var(--white);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+    border: none;
+    margin-top: 5px;
+    margin-left: 750px;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+}
+
+.applyButton:hover {
+    background-color: var(--white);
+    color: var(--gray1);
+    box-shadow: 3px 3px 5px var(--gray5);
+    transform: translateY(-3px);
+}
+
+.delOption {
+    width: 40px;
+    height: 20px;
+    background-color: red;
+    color: var(--white);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+    border: none;
+    margin-top: 5px;
+    margin-left: 750px;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+}
+
+.delOption:hover {
+    background-color: var(--white);
+    color: var(--gray1);
+    box-shadow: 3px 3px 5px var(--gray5);
+    transform: translateY(-3px);
+}
+
+.addOption {
+    width: 20px;
+    height: 20px;
+    background-color: var(--secondary);
+    color: var(--white);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+    border: none;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.addOption:hover {
+    box-shadow: 3px 3px 5px var(--gray5);
+    transform: translateY(-3px);
+}
+
+.minusOption {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: var(--white);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+    border: none;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.minusOption:hover {
+    box-shadow: 3px 3px 5px var(--gray5);
+    transform: translateY(-3px);
+}
+
+
+/* 이미지 업로드 */
+#applyProductContainer li {
+    list-style: none;
+  }
+
+  .image-preview-main img {
+    width: 250px;
+    height: 250px;
+  }
+
+  .image-preview img {
+    width: 150px;
+    height: 150px;
+    position: relative;
+  }
+
+  .delButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 20px;
+    height: 20px;
+    color: black;
+    border: none;
+    font-size: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 20px;
+    height: 20px;
+    color: black;
+    border: none;
+    font-size: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  #applyProductContainer .real-upload, .real-upload-main {
+    display: none;
+  }
+
+  #applyProductContainer .upload, .upload-main {
+    font-size: 12px;
+    text-align: center;
+    width: 70px;
+    height: 20px;
+    border: 1px solid var(--gray4);
+    color: var(--gray4);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+  }
+
+  #applyProductContainer .image-preview {
+    width: 1000px;
+    height: 180px;
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid var(--gray5);
+    overflow-x: auto;
+  }
+
+  .image-preview > li:first-child {
+    margin-left: 50px;
+  }
+
+  .image-preview > li {
+    position: relative;
+  }
+
+  .plusEx {
+    width: 50px;
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 2px;
+    text-align: center;
+    margin-top: 5px;
+    display: none;
+  }
+
+  #buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px;
+  }
+
+  #buttons > button {
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+  }
+
+  #buttons > button:first-child {
+    color: var(--white);
+    background-color: var(--secondary);
+    transition-duration: 0.2s;
+    margin-right: 30px;
+    cursor: pointer;
+  }
+
+  #buttons > button:first-child:hover {
+    box-shadow: 5px 5px 7px var(--gray5);
+    transform: translateY(-10px);
+    background-color: var(--white);
+    color: black;
+  }
+
+  #buttons > button:last-child {
+    color: black;
+    background-color: var(--white);
+    transition-duration: 0.2s;
+    cursor: pointer;
+  }
+
+  #buttons > button:last-child:hover {
+    box-shadow: 5px 5px 7px var(--gray5);
+    transform: translateY(-10px);
+    background-color: var(--secondary);
+    color: var(--white);
+  }

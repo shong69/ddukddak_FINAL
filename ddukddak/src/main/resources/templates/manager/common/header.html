@@ -1,0 +1,34 @@
+<header>
+    <!-- 로고 -->
+    <div>
+        <img onclick="location.href='/manager/main';" src="/images/main/main-logo.png" style="height: 50px;">
+    </div>
+
+    <!-- 네비바 -->
+    <div>
+        <!-- <a href="/partner/seller/product/create"><h4>상품생성</h4></a>
+        <a href="/partner/seller/product/apply"><h4>판매등록</h4></a>
+        <a href="/partner/seller/product/receipt"><h4>접수관리</h4></a>
+        <a href="/partner/seller/product/shipment"><h4>출고관리</h4></a>
+        <a href="/partner/seller/product/complete"><h4>완료내역</h4></a>
+        <a href="/partner/seller/qna"><h4>문의내역</h4></a> -->
+    </div>
+
+    <!-- 로그인/회원가입 -->
+    <th:block th:if="${session.loginMember == null}">
+        <div>
+            <!-- 빈 a 간격 -->
+            <a></a>
+            <a></a>
+            <a style="cursor: pointer;" onclick="redirectToLogin()"><h4>로그인</h4></a>
+        </div>
+    </th:block>
+
+    <th:block th:if="${session.loginMember}" th:object="${session.loginMember}">
+        <div>
+            <a href="/member/logout"><h4>신고관리</h4></a>
+            <a href="/member/logout"><h4>1:1문의</h4></a>
+            <a href="/member/logout"><h4>로그아웃</h4></a>
+        </div>
+    </th:block>
+</header>

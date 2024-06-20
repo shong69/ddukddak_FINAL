@@ -1,0 +1,35 @@
+/* 카테고리 버튼 */
+.categoryNav {
+    margin: 50px;
+    position: sticky;
+    top: 55px;
+    left: 0;
+    height: 40px;
+    font-size: 15px;
+}
+
+
+.btnBox {
+    height: 170px;
+    box-shadow: 7px 7px 30px #cfcfcf;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(243, 243, 243, 0.582);
+    border-radius: 20px;
+}
+
+.btnBox a:hover {
+    background-color: rgba(199, 199, 199, 0.25);
+    width: 50px;
+    border-radius: 10px;
+}
+
+.boardMainBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    cursor: pointer;
+}

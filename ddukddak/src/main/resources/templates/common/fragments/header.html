@@ -1,0 +1,35 @@
+<header>
+    <!-- 로고 -->
+    <div>
+        <img onclick="location.href='/';" src="/images/main/main-logo.png" style="height: 50px;">
+    </div>
+
+    <!-- 네비바 -->
+    <div>
+        <!-- 일반회원 -->
+        <a href="/eCommerce/main"><h4>쇼핑</h4></a>
+        <a href="/board/main"><h4>커뮤니티</h4></a>
+        <a href="/interior/interiorList"><h4>시공사 모아보기</h4></a>
+        <a href="/liveCommerce"><h4>라이브 커머스</h4></a>
+        <a href="/partner/interior/modeling/main"><h4>방 디자인</h4></a>
+        
+        <!-- 파트너 / 시공사 -->
+
+        <!-- 파트너 / 판매사 -->
+    </div>
+
+    <!-- 로그인/회원가입 -->
+    <th:block th:if="${session.loginMember == null}">
+        <div>
+            <a style="cursor: pointer;" onclick="redirectToLogin()"><h4>로그인</h4></a>
+            <a href="/signup"><h4>회원가입</h4></a>
+        </div>
+    </th:block>
+    <th:block th:if="${session.loginMember != null}">
+        <div>
+            <a href="/myPage"><h4>마이페이지</h4></a>
+            <a href="/member/logout"><h4>로그아웃</h4></a>
+        </div>
+    </th:block>
+</header>
+

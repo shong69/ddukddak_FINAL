@@ -1,0 +1,217 @@
+/* 메인 컨테이너 */
+
+.mainContainer {
+    width: 1160px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+
+/* 탑 컨테이너 */
+.topContainer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+.imgContainer {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.portLogo {
+    width: 100px; 
+    height: 100px;
+    border-radius: 9999px;
+    /* border: 1px solid black; */
+}
+.nameContainer {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+}
+.buttonContainer {
+    width: 80%;
+}
+
+
+/* 중간 캐러셀 컨테이너 */
+
+.midContainer {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    justify-content: start;
+    margin-top: 20px;
+}
+.portTitle {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* 프로젝트 컨테이너 */
+
+.detailContainer {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border: 1px solid var(--gray1);
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.detailTitle {
+    height: auto;
+}
+
+.detailTitle h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.detailContent {
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 10px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--gray1);
+}
+
+.detailContent h3 {
+    display: flex;
+    font-weight: 700;
+    height: auto;
+}
+
+.detailExplination {
+    width: 100%;
+    flex-wrap: wrap;
+    display: flex;
+    white-space: pre-wrap;
+}
+
+.detailTextarea {
+    display: flex;
+    width: 100%;
+    border: none;
+    word-wrap: break-word;
+    background: none;
+    font-size: 16px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    height: auto;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden; /* Ensure no scrollbars */
+}
+
+
+/* 프로젝트 리스트 컨테이너 */
+.botContainer {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+
+.portListMainContainer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.portListContainer {
+    width: 366px;
+    height: 260px;
+    margin: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.portListContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.0) 70%); /* Gradient overlay */
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    color: white; /* Text color */
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.overlay h2, .overlay h4 {
+    margin: 5px 0; /* Adjust margin for spacing */
+}
+
+.overlay h2 {
+    font-size: 24px; /* Adjust font size as needed */
+}
+
+.overlay h4 {
+    font-size: 16px; /* Adjust font size as needed */
+}
+
+.portDate {
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+.interiorProjectViewMoreBtn {
+    margin-top: 20px;
+}
+
+/* 탑버튼 */
+#portDetailTop {
+    position: fixed;
+    top: 90%;
+    left: 95%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    background-color: white;
+    font-family: 'main';
+    cursor: pointer;
+    border: 2px black solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

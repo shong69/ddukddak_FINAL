@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddukddak.partner.model.mapper.PartnerMapper">
+	
+	<select id="login">
+		SELECT PARTNER_NO, PARTNER_ID, PARTNER_PW, PARTNER_TEL, 
+		PARTNER_BUSINESS_NAME, PARTNER_CEO_NAME, PARTNER_BUSINESS_NUM, 
+		TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일"') ENROLL_DATE,
+		PARTNER_DEL_FL, PARTNER_PASS, PARTNER_TYPE,
+		(SELECT PORTFOLIO_NO FROM PORTFOLIO JOIN "PARTNER" USING (PARTNER_NO) WHERE PARTNER_TYPE = 1 AND PARTNER_ID = #{partnerId}) AS PORTFOLIO_NO
+		FROM "PARTNER"
+		WHERE PARTNER_ID = #{partnerId}
+		AND PARTNER_DEL_FL = 'N'
+		AND PARTNER_PASS = 1
+	</select>
+	
+	<!-- [SMS] 이름, 이메일 일치 여부 확인 -->
+	<select id="partnerNTCheck">
+		SELECT COUNT(*)
+		FROM "PARTNER"
+		WHERE PARTNER_CEO_NAME = #{partnerCeoName} 
+		AND PARTNER_TEL = #{partnerTel}
+		AND PARTNER_DEL_FL = 'N'
+	</select>
+	
+	
+	<!-- 아이디 찾기 결과(휴대폰) -->
+	<select id="findIdByTel">
+		SELECT PARTNER_ID, TO_CHAR(ENROLL_DATE, 'YY"."MM"."DD') ENROLL_DATE, PARTNER_TYPE
+		FROM "PARTNER"
+		WHERE PARTNER_TEL = #{partnerTel}
+		AND PARTNER_CEO_NAME = #{partnerCeoName}
+		AND PARTNER_DEL_FL = 'N'
+	</select>
+	
+	<!-- 사업자등록번호 중복 체크 -->
+	<select id="checkBusinessNum">
+		SELECT COUNT(*)
+		FROM "PARTNER"
+		WHERE PARTNER_BUSINESS_NUM = #{inputBN}
+		AND PARTNER_DEL_FL != 'Y'
+	</select>
+	
+	<!-- 상호명 중복 체크 -->
+	<select id="checkBusinessName">
+		SELECT COUNT(*)
+		FROM "PARTNER"
+		WHERE PARTNER_BUSINESS_NAME = #{inputBName}
+		AND PARTNER_DEL_FL != 'Y'
+	</select>
+	
+	<!-- 아이디 중복 체크 -->
+	<select id="checkId">
+		SELECT COUNT(*)
+		FROM (
+		    SELECT MEMBER_ID
+		    FROM "MEMBER"
+		    WHERE MEMBER_ID = #{inputId}
+		    AND MEMBER_DEL_FL = 'N'
+		    
+		    UNION ALL
+		    
+		    SELECT PARTNER_ID
+		    FROM PARTNER
+		    WHERE PARTNER_ID = #{inputId}
+		    AND PARTNER_DEL_FL != 'Y'
+		)
+	</select>
+	
+	
+	<!-- 휴대폰 중복 체크 -->
+	<select id="checkTel">
+		SELECT COUNT(*)
+		FROM "PARTNER"
+		WHERE PARTNER_TEL = #{inputTel}
+		AND PARTNER_DEL_FL != 'Y'
+	</select>
+	
+	<insert id="signup">
+		INSERT INTO "PARTNER"
+		VALUES(
+			SEQ_PARTNER_NO.NEXTVAL,
+			#{partnerId},
+			#{partnerPw},
+			#{partnerTel},
+			#{partnerBusinessName},
+			#{partnerCeoName},
+			#{partnerBusinessNum},
+			DEFAULT,
+			DEFAULT,
+			DEFAULT,
+			#{partnerType})
+	</insert>
+
+
+	<!-- 파트너 타입 리스트 조회 -->
+	<!-- 
+		<select id="selectPartnerTypeList">
+			SELECT PARTNER_TYPE, PARTNER_NAME 
+			FROM "PARTNER_TYPE"
+			ORDER BY BOARD_CODE
+		</select>
+	 -->
+</mapper>

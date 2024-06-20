@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 마이페이지</title>
+    <link rel="stylesheet" href="/css/myPage/myPage.css">
+    <link rel="stylesheet" href="/css/common/fragments/myPageSidebar.css">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+    <script src="https://kit.fontawesome.com/4b505ed7b7.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    <main>
+
+        <th:block th:replace="~{common/fragments/myPageProfileSection}"></th:block>
+
+        <section class="myPage-row2">
+            <th:block th:replace="~{common/fragments/myPageSideBar}"></th:block>
+
+            <section class="myPage-main">
+                <h2 class="category-name">내 노하우</h2>
+
+                <table class="tipBoard-table">
+                    <tbody>
+                        <th:object th:if="${#lists.isEmpty(myTipBoardList)}">
+                            <tr>
+                                <div class="noTipData">
+                                    작성한 게시글이 존재하지 않습니다.
+                                </div>
+                            </tr>
+                        </th:object>
+                        <th:object th:unless="${#lists.isEmpty(myTipBoardList)}">
+                            <th:block th:each="rowIndex : ${#numbers.sequence(0,(myTipBoardList.size()+2)/3 -1)}"><!--행 반복 -->
+                                <tr class="tipBoard-row">
+                                    <th:block th:each="colIndex: ${#numbers.sequence(0,2)}" th:with="listIndex=${rowIndex * 3 + colIndex}">
+                                        <td th:if="${rowIndex*3 + colIndex < myTipBoardList.size()}" th:object="${myTipBoardList[listIndex]}">
+                                            <!--3개로 주어진 myTipBoardList의 인덱스 -->
+                                            <section class="tipBoard-item">
+                                                <a th:href="|/tip/detail/*{boardNo}|">
+                                                    <img th:src="@{thumbnail}" class="tipBoard-img">
+                                                </a>
+                                                <span th:text="|@${session.loginMember.memberNickname}|">@USER01</span>
+                                                <span th:text="*{boardTitle}">베란다 가구배치 꿀팁</span>
+                                                <span><i class="fa-solid fa-heart"></i><span class="likeCount" th:text="*{likeCount}"/></span>
+                                                <span th:text="*{boardContent}">헌법개정은 국회재적의원 과반수 또는 대통령의 발의로 제안된다. 
+                                                    국회의원과 정부는 법률안을 제출할 수 있다. 
+                                                    국가는 농업 및 어업을 보호·육성하기 위하여 농·어촌종합개발과...</span>
+            
+                                            </section>
+                                        </td>
+                                    </th:block> 
+
+        
+                                </tr>
+                            </th:block>
+
+                        </th:object>
+
+                    </tbody>
+                </table>
+
+            </section>
+        </section>
+
+        <th:block th:replace="~{common/fragments/footer}"></th:block>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+
+    <link rel="stylesheet" href="/css/common/main.css">
+        <link rel="stylesheet" href="/css/partner/interior/interiorPortfolio.css">
+        <link rel="stylesheet" href="/css/common/fragments/header.css">
+        <link rel="stylesheet" href="/css/common/fragments/footer.css">
+        <link rel="stylesheet" href="/css/common/button.css">
+        <link rel="stylesheet" href="/css/common/fragments/portfolioCarousel.css">
+        <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+    <title>뚝딱뚝딱 : 시공사</title>
+</head>
+<body>
+
+    <th:block th:replace="~{partner/interior/common/header}"></th:block>
+    <main class="mainContainer">
+
+        <!-- 시공사 이름 + 메인 캐러셀 컨테이너 -->
+        <div class="topContainer">
+            <h1 class="portTitle">캣츠코</h1>
+            
+            <div class="slideshow-container">
+
+                <th:block th:if="${portfolio.mainProject == null}">
+                    <h1>메인 프로젝트를 등록해 주세요</h1>
+                </th:block>
+
+                <!-- Full-width images with number and caption text -->
+                <th:block th:unless="${portfolio.mainProject == null}">
+                    <div th:each="img : ${portfolio.mainProject.imgList}" th:object="${img}" class="mySlides fade">
+                        <a th:href="@{/partner/projectDetail/{projectNo}(projectNo=*{projectNo})}" method="GET">
+                            <!-- <p>[[|*{uploadImgPath}*{uploadImgRename}|]]</p> -->
+                            <img th:src="|*{uploadImgPath}*{uploadImgRename}|" style="width:100%" class="adBannerImg">
+                            <div class="text-overlay">
+                                <h1 class="text-title" th:text="${portfolio.mainProject.projectName}">외국계 글로벌 데비마이어 목동 사옥</h1>
+                                <h3 class="text-subtitle" th:text="${portfolio.mainProject.projectContent}">완성도 높은 디자인과 전문적인 시공기술을 바탕으로 최상의 품질과 서비스를 제공하기 위해 최선을 다하고 있습니다</h3>
+                                <h4 class="text-date" th:text="|${portfolio.mainProject.constructionYear} 년|">2024-03-25</h4>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Next and previous buttons -->
+                </th:block>
+                
+                <a class="prev"><i class="fa-solid fa-chevron-left"></i></a>
+                <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+        </div>
+
+        <!-- 중간 시공사 컨테이너 -->
+        <div class="midContainer">
+
+            <!-- 프로필 이미지 X -->
+             <div th:unless="${portfolio.profileImg != null}" class="imgContainer">
+                <img th:src="#{user.default.image}" class="portLogo">
+             </div>
+
+            <!-- 프로필 이미지 O -->
+            <div th:if="${portfolio.profileImg != null}" class="imgContainer">
+                <img class="portLogo" th:src="${portfolio.profileImg}"></img>
+            </div>
+            <div class="nameContainer">
+                <h2 class="portName" th:text="${portfolio.partnerBusinessName}">캣츠코</h2>
+            </div>
+        </div>
+
+
+        <!-- 프로젝트 리스트 컨테이너 -->
+        <div class="botContainer">
+            <!-- 프로젝트 리스트 불러오기 -->
+            <th:block th:replace="~{common/fragments/interiorProjectList.html}"></th:block>
+
+
+            <button class="interiorProjectViewMoreBtn" id="interiorProjectViewMore">더보기 +</button>
+        </div>
+
+        <div class="insertBtnArea">
+            <button type="button" class="insertBtn" id="insertBtn">프로젝트 등록하기</button>
+        </div>
+    </main> 
+
+    <div id="portTop">↑</div>
+
+
+    <!-- 푸터 -->
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+    <!-- <script src="/js/common/fragments/portfolioCarousel.js"></script> -->
+    <script src="/js/partner/interior/interiorPortfolio-dom.js"></script>
+    <script src="/js/partner/interior/interiorPortfolio.js"></script>
+    <script src="https://kit.fontawesome.com/7f3fe5627c.js" crossorigin="anonymous"></script>
+</body>
+</html>

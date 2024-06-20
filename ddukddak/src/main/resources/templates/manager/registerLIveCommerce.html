@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 라이브 업로드</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/admin/leftheader.css">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    <main>
+
+    <th:block th:replace="~{common/fragments/admin/leftheader}"></th:block>
+    
+    <section>
+        <input id="video-file" type="file" name="file">
+        <button id="upload-btn">업로드</button>
+        <button id="pause-btn">일시중지</button>
+        <div id="result"></div>
+        <form>
+            업로드 일 : <input type="date">
+            업로드 시간 : <input type="time">
+        </form>
+    </section>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/tus-js-client@latest/dist/tus.min.js"></script>
+<script type="text/javascript">
+  const uploadBtn = document.querySelector('#upload-btn')
+
+  uploadBtn.addEventListener('click', () => {
+    const pauseBtn = document.querySelector("#pause-btn");
+    const file = document.querySelector("#video-file").files[0];
+    const result = document.querySelector("#result");
+    const chunkSize = 1024 * 1024 * 5;
+
+    let response;
+
+    const upload = new tus.Upload(file, {
+      endpoint: "/tus/upload",
+      chunkSize,
+      retryDelays: [0, 1000, 3000, 5000],
+      metadata: {
+        filename: file.name,
+        filetype: file.type
+      },
+
+      onError: (error) => {
+        console.log("Failed because: " + error);
+      },
+
+      onProgress: (bytesUploaded, bytesTotal) => {
+        const percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2)
+        result.textContent = percentage + "%"
+      },
+
+      onSuccess: () => {
+        result.innerHTML = `
+          <div>업로드 완료!</div>
+          <div>${response}</div>
+        `;
+      },
+
+      onAfterResponse: (req, res) => {
+        response = res.getBody();
+      }
+    });
+
+    upload.findPreviousUploads().then( (previousUploads) => {
+      if(previousUploads.length) {
+        upload.resumeFromPreviousUpload(previousUploads[0]);
+      }
+
+      upload.start();
+    });
+
+    pauseBtn.addEventListener("click", function() {
+      upload.abort();
+    });
+  });
+
+</script>
+</html>

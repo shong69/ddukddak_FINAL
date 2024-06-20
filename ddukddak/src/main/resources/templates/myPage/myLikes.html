@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 마이페이지</title>
+    <link rel="stylesheet" href="/css/myPage/myPage.css">
+    <link rel="stylesheet" href="/css/common/fragments/myPageSidebar.css">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+    <script src="https://kit.fontawesome.com/4b505ed7b7.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    <main>
+
+        <th:block th:replace="~{common/fragments/myPageProfileSection}"></th:block>
+
+        <section class="myPage-row2">
+            <th:block th:replace="~{common/fragments/myPageSideBar}"></th:block>
+
+            <section class="myPage-main">
+                <h2 class="category-name">좋아요한 게시글</h2>
+                <div class="select-area">
+                    <select class="select-box">
+                        <option value="1">집들이</option>
+                        <option value="2">노하우</option>
+                    </select>
+                </div>
+
+                <div id="postArea"></div>
+
+
+
+                <!--페이지 네이션 추가-->
+            </section>
+        </section>
+
+        <th:block th:replace="~{common/fragments/footer}"></th:block>
+        <script src="/js/myPage/myLike.js"></script>
+
+</body>
+</html>

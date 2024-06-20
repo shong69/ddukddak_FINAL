@@ -1,0 +1,251 @@
+
+.topContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.mainContainer {
+    display: flex;
+    width: 1200px;
+    position: relative;
+}
+
+/* 카테고리 버튼 */
+/* .categoryNav {
+    margin: 50px;
+    position: sticky;
+    top: 55px;
+    left: 0;
+    height: fit-content;
+}
+
+.boardMainBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    cursor: pointer;
+} */
+
+/* 메인 area */
+.mainArea {
+    flex-grow: 1;
+    margin: 50px;
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 검색 area */
+.searchArea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #3A732A;
+}
+
+.searchBox {
+    width: 650px;
+    height: 40px;
+    font-size: 14px;
+    border: none;
+    border-radius: 10px;
+    margin: 0 10px;
+    
+}
+
+.searchBox:focus {
+    outline: none;
+}
+
+.searchArea > span:nth-child(2) {
+    border: 1px solid var(--gray5);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+}
+
+.searchForm {
+    display: flex;
+    align-items: center;
+}
+
+#searchBtn {
+    background-color: white;
+    width: 50px;
+    font-size: 25px;
+    margin: 0 10px;
+    cursor: pointer;
+    color: var(--gray3);
+}
+
+
+.searchBox::placeholder {
+    font-family: 'main';
+    font-size: 18px;
+    color: var(--gray3);
+}
+
+/* 정렬방식 area */
+.sortingArea {
+    text-align: end;
+    width: 100%;
+    margin: 30px 0;
+    height: 10px;
+}
+
+.sortingArea select {
+    font-size: 15px;
+    border-radius: 10px;
+    width: 150px;
+    padding: 5px;
+}
+
+/* 집들이 리스트 */
+.listArea {
+    border-radius: 10px;
+    width: 1000px;
+    padding: 20px;
+}
+
+.myHouseList {
+    display: flex;
+    border-radius: 10px; 
+    margin-bottom: 40px;
+    height: 150px;
+    cursor: pointer;
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.25); 
+    background-color: white;
+}
+
+.myHouseList:hover {
+
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.25); 
+    transition: 0.3s;
+
+}
+
+.myHouseThumbnail {
+    width: 280px;
+    height: 130px;
+}
+
+.myHouseThumbnail img {
+    margin: 10px;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.myHouseInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 15px;
+    width: -webkit-fill-available;
+    padding-left: 10px;
+}
+
+.myHouseInfo h2 {
+    color: var(--gray1);
+}
+
+.myHouseInfo > div:nth-child(2) {
+    text-align: end;
+    color: var(--gray1);
+}
+
+/* 작성하기 버튼 */
+.btnArea {
+    text-align: end;
+    margin: 50px 0;
+    width: 100%;
+}
+
+/*페이징*/
+.pagination{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.pagination li{
+    width: 20px;
+    margin: 0 5px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.pagination a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.current{
+    font-weight: bold;
+    background-color: #3A732A;
+    border-radius: 50%;
+    color: white !important;
+    letter-spacing: 0 !important;
+} 
+
+/* 탑버튼 */
+#top {
+    position: fixed;
+    top: 90%;
+    left: 95%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    background-color: white;
+    font-family: 'main';
+    cursor: pointer;
+    border: 2px black solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.emptyList {
+    text-align: center;
+    color: var(--gray3);
+}
+
+.myHouseRightSide {
+    display: flex;
+    justify-content: end;
+    align-items: baseline;
+}
+
+.myHouseRightSide h4 {
+    color: var(--gray3);
+}
+
+.myHouseRightSide span {
+    margin: 0 5px;
+    color: var(--gray3);
+}
+
+.likeArea {
+    display: flex;
+    align-items: center;
+}
+
+.likeArea h3 {
+    margin-left:5px;
+}

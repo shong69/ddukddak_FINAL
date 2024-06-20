@@ -1,0 +1,205 @@
+<style>
+    #serch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#serchBox {
+    width: 1000px;
+    margin-left: 50px;
+    height: 45px;
+    border-radius: 10px;
+    border: 1px solid var(--gray4);
+    display: flex;
+    align-items: center;
+
+}
+
+#serch input {
+    width: 950px;
+    height: 30px;
+    padding-left: 15px;
+    border: none;
+    outline: none;
+}
+
+#serch input::placeholder {
+    font-family: 'main';
+    padding-left: 10px;
+}
+
+/* 인기검색어 */
+#slide {
+    margin-left: 30px;
+}
+
+#slide div {
+    width: 130px;
+    display: flex;
+    align-items: center;
+}
+
+#slide div h4:first-child {
+    font-weight: bold;
+}
+
+#slide div i {
+    margin: 0 10px;
+    font-size: 15px;
+}
+
+.fa-caret-up {
+    color: red;
+}
+
+.fa-caret-down {
+    color: blue;
+}
+
+#slide{
+    height: 20px;
+    overflow: hidden;
+}
+#slide>ul{
+    height: 60px;
+}
+#slide>ul>li{
+    height: 20px;
+}
+</style>
+
+<!-- 검색헤더 -->
+<div id="serch">
+    <h2 style="cursor: pointer;" onclick="location.href='/eCommerce/main';">쇼핑</h2>
+    <div id="serchBox">
+
+        <form th:action="${smallcategoryNo}" method="get" id="boardSearch">
+            <input type="text" name="query" id="searchQuery" placeholder="쇼핑상품 검색">
+            <button style="background: none; border: none;">
+                <i class="fa-solid fa-magnifying-glass" style="font-size: 20px; color: var(--gray4); cursor: pointer;"></i>
+            </button>
+            
+        </form>
+
+    </div>
+
+    <!-- 인기 검색어 -->
+    <div id="slide">
+        <ul>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>1</h4>
+                        <i class="fa-solid fa-caret-up"></i>
+                        <h4>일체형책상</h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>2</h4>
+                        <i class="fa-solid fa-caret-down"></i>
+                        <h4>매트리스</h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>3</h4>
+                        <i class="fa-solid fa-caret-down"></i>
+                        <h4>스탠딩조명</h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>4</h4>
+                        <i class="fa-solid fa-caret-up"></i>
+                        <h4>데코용 식물</h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>5</h4>
+                        <i class="fa-solid fa-caret-up"></i>
+                        <h4>해먹</h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>6</h4>
+                        <i class="fa-solid fa-caret-down"></i>
+                        <h4>센서휴지통</h4>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div>
+                        <h4>7</h4>
+                        <i class="fa-solid fa-caret-down"></i>
+                        <h4>스탠딩티비</h4>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    /* 인기검색어 */
+setInterval(function(){
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "-20px"})
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "-40px"})
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "-60px"})
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "-80px"})
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "-100px"})
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "-120px"})
+    $('#slide>ul').delay(2500);
+    $('#slide>ul').animate({marginTop: "0px"})
+});
+
+    // 폼 요소를 가져옵니다
+    var form = document.getElementById("boardSearch");
+
+    // 폼이 제출되었을 때 실행되는 함수를 추가합니다
+    form.addEventListener("submit", function(event) {
+        // 현재 URL을 가져옵니다
+        var currentUrl = window.location.href;
+
+        // 현재 URL이 '/detail'로 끝나는지 확인합니다
+        if (!currentUrl.endsWith("/detail")) {
+            // 이벤트 기본 동작으로 폼을 제출합니다
+            return;
+        }
+
+        // 이벤트 기본 동작을 중지합니다
+        event.preventDefault();
+
+        // 검색어를 가져옵니다
+        var query = document.getElementById("searchQuery").value;
+
+        // '/detail' 및 '/숫자' 부분을 제거합니다
+        var newPath = currentUrl.replace(/\/\d+\/detail$/, "");
+
+        // 검색어를 URL에 추가합니다
+        var newUrl = newPath + "?query=" + encodeURIComponent(query);
+
+        // 새 URL로 이동합니다
+        window.location.href = newUrl;
+    });
+</script>

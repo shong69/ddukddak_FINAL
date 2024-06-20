@@ -1,11 +1,333 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>뚝딱뚝딱 : 메인페이지</title>
+
+  <link rel="stylesheet" href="/css/common/fragments/header.css">
+  <link rel="stylesheet" href="/css/common/fragments/footer.css">
+  <link rel="stylesheet" href="/css/common/main.css">
+  <link rel="stylesheet" href="/css/common/first.css">
+
+  <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+  <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
+  <th:block th:replace="~{common/fragments/header}"></th:block>
+
+  <!-- 헤더 전체 div -->
+  <div class="main-container">
+
+    <!-- 메인 배너 광고 -->
+    <div id="video-container">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/dMekU8fxlW8?autoplay=1&mute=1&controls=0&loop=1&playlist=dMekU8fxlW8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <!-- 광고 포스터 -->
+    <div id="poster-container">
+      <div id="image-box">
+        <div>
+          <img src="/main/ad-4.jpg">
+        </div>
+        <div>
+          <img src="/images/main/ad-5.jpg">
+        </div>
+        <div>
+          <img src="/images/main/ad-6.jpg">
+        </div>
+        <div>
+          <img src="/images/main/ad-7.jpg">
+        </div>
+        <div>
+          <img src="/images/main/ad-8.jpg">
+        </div>
+        <div>
+          <img src="/images/main/ad-9.jpg">
+        </div>
+        <div>
+          <img src="/images/main/ad-10.jpg">
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 라이브 커머스 -->
+    <div id="live">
+      <h2>오늘의 라이브커머스</h2>
+      <div id="liveCommerce">
+        <iframe src="https://www.youtube.com/embed/edEuwPLsdIw?autoplay=1&mute=1&controls=0&loop=1&playlist=edEuwPLsdIw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <div>
+          <div id="chatting"></div>
+          <div>
+            <input id="chattingInput" placeholder="채팅을 입력해 주세요"><button id="chattingButton">등록</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h4>라이브커머스 바로가기 >></h4>
+      </div>
+    </div>
+
+    <!-- 3d 모델링 -->
+    <div id="modeling-container">
+      <div>
+        <h2>3D 모델링으로 내 방을 미리 꾸며보자!</h2>
+      </div>
+
+      <div id="threeD-container">
+        <div>
+          <div><img src="/images/main/3d-modeling.png" style="height: 300px;"></div>
+          <div><button onclick="location.href='/partner/interior/modeling/main';">3D 모델링 바로가기</button></div>
+        </div>
+
+        <div>
+          <iframe src="https://www.youtube.com/embed/TtrVg4Hz_fU?autoplay=1&mute=1&controls=0&loop=1&playlist=TtrVg4Hz_fU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- 카테고리 -->
+    <div style="margin-top: 50px;"><h3>카테고리별 상품보기</h3></div>
+    <th:block th:replace="~{eCommerce/common/category}"></th:block>
+
+    <!-- 쇼핑 목록 -->
+    <div class="shoping-list" style="margin-top: 100px;">
+      <div>
+        <h3 style="font-weight: bold;">쇼핑</h3>
+      </div>
+
+      <div style="margin-bottom: 10px;">
+        <h4 style="cursor: pointer;" onclick="location.href='/eCommerce/list/1/1';">+ 더보기</h4>
+      </div>
+
+      <!-- 쇼핑 아이템들 -->
+      <div class="shopping-items">
+        <div th:each="productList : ${selectProductList}" th:object="${productList}">
+          <a th:href="@{'/eCommerce/list/' + *{bigCategoryNo} + '/' + *{categoryNo} + '/' + *{productNo} + '/detail'}">
+            <div class="img-wrap">
+              <img th:src="|*{uploadImgPath}*{uploadImgRename}|">
+
+              <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                  th:style="*{wish == 0} ? 'display:block;' : 'display:none;'"
+                  class="fa-regular fa-heart" id="noHerat" onclick="showHert(event);"
+                  th:value="*{productNo}">
+              </i>
+              <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
+                  th:style="*{wish == 0} ? 'display:none;' : 'display:block;'"
+                  class="fa-solid fa-heart" id="heart" onclick="noshowHert(event);"
+                  th:value="*{productNo}">
+              </i>
+              <h5 class="sample"></h5>
+            </div>
+            <div class="title-wrap">
+              <h4 th:text="*{productName}">상품제목</h4>
+            </div>
+            <div class="price-wrap">
+              <h3>32%</h3>
+              <h3 th:text="*{productPrice} + '원'" class="productPrice">상품가격</h3>
+            </div>
+            <div class="review-wrap">
+              <img src="/images/main/star.png">
+              <h5>4.1</h5>
+              <h5>리뷰 78개</h5>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 커뮤니티 -->
+    <div id="community">
+      <h3 style="text-align: center; font-weight: bold; margin-bottom: 100px;">커뮤니티</h3>
+
+      <!-- 집들이 -->
+      <div>
+        <div id="comeHome" class="community-child">
+          <div>
+            <h3 style="font-weight: bold;">집들이</h3>
+          </div>
+  
+          <div style="margin-bottom: 10px;">
+            <h4 onclick="location.href='/myHouse/main?boardCode=1';" style="cursor: pointer;">+ 더보기</h4>
+          </div>
+        </div>
+
+        <th:block th:each="myHouse : ${myHouseList}">
+          <a class="comeHome-box" th:href="@{/myHouse/detail/{boardNo} (boardNo=${myHouse.boardNo})}">
+            <img th:src="${myHouse.thumbnail}" style="width: 150px;">
+            <h2 style="display: flex; align-items: center; width: 1100px; padding-left: 30px;" th:text="${myHouse.boardTitle}">집들이 제목</h2>
+            <h5 style="color: #9B9B9B;" th:text="|${myHouse.memberNickname} / 조회수 ${myHouse.readCount} / ${myHouse.boardWriteDate}|">유저삼  |  조회수 30  |  2024-05-11</h5>
+          </a>
+        </th:block>
+      </div>
+
+      <!-- 노하우 -->
+      <div>
+        <div id="konwHow" class="community-child">
+          <div>
+            <h3 style="font-weight: bold;">노하우</h3>
+          </div>
+  
+          <div style="margin-bottom: 10px;">
+            <h4>+ 더보기</h4>
+          </div>
+
+          <div>
+            <th:block th:each="tip : ${tipList}">
+              <div class="konwHowEx">
+                <img th:src="@{|${tip.thumbnail}|}">
+                <h4 th:text="|@${tip.memberNickname}|">@user01</h4>
+                <h3 style="font-weight: bold;" th:text="${tip.boardTitle}">노하우 제목</h3>
+                <h3 th:text="|♡ ${tip.likeCount}|">♡</h3>
+                <h5 th:text="${tip.boardContent}">내용</h5>
+              </div>
+            </th:block>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div style="width: 1200px; border: 1px #404040 solid;"></div>
+
+
+    <!-- 시공사 찾기 -->
+    <div id="constructor">
+      <div><h2 style="margin-bottom: 30px;">시공사 찾기</h2></div>
+
+      <div>
+        <table>
+          <tr>
+            <td><h3>시공사 지역</h3></td>
+            <td>
+              <select>
+                <option>서울</option>
+                <option>경기/인천</option>
+                <option>충청/대전</option>
+                <option>전라/광주</option>
+                <option>경북/대구</option>
+                <option>경남/부산/울산</option>
+                <option>강원</option>
+                <option>제주</option>
+              </select>
+            </td>
+            <td><h3>견적금액</h3></td>
+            <td>
+              <input type="number">~<input type="number">
+            </td>
+          </tr>
+
+
+          <tr>
+            <td><h3>시공일정</h3></td>
+            <td>
+              <input type="date">~<input type="date">
+            </td>
+          </tr>
+
+
+          <tr>
+            <td><h3>원하는 스타일</h3></td>
+            <td style="display: flex;">
+              <input type="checkbox" name="style" value="1"><h4>모던</h4>
+              <input type="checkbox" name="style" value="2"><h4>시크</h4>
+              <input type="checkbox" name="style" value="3"><h4>화려</h4>
+              <input type="checkbox" name="style" value="4"><h4>깔끔</h4>
+              <input type="checkbox" name="style" value="5"><h4>무채색</h4>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div>
+        <button>시공사 찾기</button>
+      </div>
+    </div>
+    <th:block th:unless="${session.loginMember} == null">
+      <input id="loginMember" type="hidden" th:value="${session.loginMember}">
+      <input id="memberTel" type="hidden" th:value="${session.loginMember.memberTel}">
+    </th:block>
+  </div>
+
+  <div id="top">↑</div>
+
+
+  <th:block th:replace="~{common/fragments/footer}"></th:block>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/js/common/main.js"></script>
+  <script src="/js/common/redirectToLogin.js"></script>
+
+  <script th:inline="javascript">
+       
+    // 찜하기 눌렀을 때
+    function showHert(event) {
+        event.preventDefault();
+
+
+        event.target.style.display = 'none';
+        event.target.nextElementSibling.style.display = 'block';
+        
+
+        var obj = {
+            "memberNo" : event.target.attributes[0].value,
+            "productNo" : event.target.attributes[5].value
+        }
+
+
+        fetch("/myPage/addWish", {
+            method : "PUT",
+            headers : {"Content-Type": "application/json"},
+            body : JSON.stringify(obj)
+        })
+        .then(resp => resp.text())
+        .then(temp => {
+          if(temp > 0) {
+                  alert("위시리스트에 추가되었습니다");
+              }else {
+                  alert("위시리스트 추가 실패");
+              }
+        });
+
+
+
+        return false;
+    }
+    function noshowHert(event) {
+        event.preventDefault();
+
+        event.target.style.display = 'none';
+        event.target.previousElementSibling.style.display = 'block';
+
+
+        var obj = {
+            "memberNo" : event.target.attributes[0].value,
+            "productNo" : event.target.attributes[5].value
+        }
+
+        console.log(event.target.attributes);
+
+
+        fetch("/myPage/delWish", {
+            method : "POST",
+            headers : {"Content-Type": "application/json"},
+            body : JSON.stringify(obj)
+        })
+        .then(resp => resp.text())
+        .then(temp => {
+          if(temp > 0) {
+                  alert("위시리스트에서 삭제되었습니다");
+              }else {
+                  alert("위시리스트 삭제 실패");
+              }
+        });
+
+
+        return false;
+    }
+  </script>
+
   
 </body>
 </html>

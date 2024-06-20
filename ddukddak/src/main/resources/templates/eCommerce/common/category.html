@@ -1,0 +1,59 @@
+<style>
+    #shopping > div:first-child {
+    display: flex;
+    flex-direction: column;
+}
+
+#category-circle {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#category-circle > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#category-circle > div  h4 {
+    margin-top: 15px;
+}
+
+#category-circle > div > a > div {
+    border: 1px #ececec solid;
+    border-radius: 50%;
+    height: 130px;
+    width: 130px;
+    margin: 0 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+#category-circle > div > a > div:hover {
+    box-shadow: 5px 5px 5px #9B9B9B;
+}
+
+#category-circle > div  img {
+    width: 60%;
+    height: 60%;
+}
+</style>
+
+<div>
+    <div id="category-circle">
+      <div th:each="category : ${categoryList}" th:object="${category}">
+        <a th:href="@{/eCommerce/list/{bigcategoryNo}/{smallcategoryNo} (bigcategoryNo=*{bigCategoryNo}, smallcategoryNo=*{categoryNo})}">
+          <div><img th:src="@{|/images/main/category-${category.bigCategoryNo}.png|}"></div>
+        </a>
+        <a>
+          <h4 th:text="${category.bigCategoryName}">대분류</h4>
+        </a>
+      </div>
+    </div>
+  </div>

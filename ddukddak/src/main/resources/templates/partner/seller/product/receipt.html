@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 판매사</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/partner/seller/product/receipt.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+</head>
+<body>
+    <th:block th:replace="~{partner/seller/common/header}"></th:block>
+
+
+    <div id="receiptContainer">
+        <h1>상품관리 > 접수관리</h1>
+
+        <!-- 검색엔진 -->
+        <th:block th:replace="~{partner/seller/common/search}"></th:block>
+
+        <!-- 상품 분류 -->
+        <th:block th:replace="~{partner/seller/common/category}"></th:block>
+
+        <!-- 접수 상태-->
+        <div id="receiptStatus">
+            <h3>접수 상태</h3>
+
+            <input type="checkbox" value="A" name="receipt" id="selectAll" onclick="updateStatus(this)"><label for="selectAll">전체</label>
+            <input type="checkbox" value="AM" name="receipt" id="selectAmount" onclick="updateStatus(this)"><label for="selectAmount">수량</label>
+            <input type="checkbox" value="P" name="receipt" id="selectPrice" onclick="updateStatus(this)"><label for="selectPrice">판매가</label>
+        </div>
+
+        <!-- 상품접수버튼 -->
+        <div id="sellerButton">
+            <button id="orderReceipt" style="margin-right: 10px;">주문 접수</button>
+            <button id="orderRejection">주문 거절</button>
+        </div>
+
+        <div id="selectAll">
+            <input type="checkbox" value="selectAll" name="select" id="selectAllCheckBox"><label>전체 선택</label>
+        </div>
+
+        <!-- 상품목록 -->
+        <div id="productList">
+            <table>
+                <thead style="height: 60px;">
+                    <td></td>
+                    <td>상품</td>
+                    <td>분류</td>
+                    <td>옵션</td>
+                    <td>수량</td>
+                    <td>상품번호</td>
+                    <td>상품명</td>
+                    <td>판매가</td>
+                </thead>
+
+                <th:block th:each="receiptList : ${receiptList}" th:object="${receiptList}">
+                <tr class="borderTr">
+                    <td>
+                        <input type="checkbox" value="1" name="selectProduct">
+                    </td>
+                    <td><img th:src="@{*{thumbnail}}" alt="Product Thumbnail"></td>
+                    <td th:text="*{categoryName}">가구/의자</td>
+                    <td th:text="|*{optionName} : *{optionValue}|">오크내추럴</td>
+                    <td th:text="*{productCount}">300</td>
+                    <td th:text="*{productNo}">F202405210001</td>
+                    <td th:text="*{productName}">오아르 벤 원목 부클레 패브릭 의자</td>
+                    <td th:text="*{productPrice}">122,200</td>
+                </tr>
+            </th:block>
+            </table>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div><h3 style="text-align: center; margin: 30px 0;"><<&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;>></h3></div>
+
+
+    </div>
+
+
+    <!-- 모달창 -->
+    <div class="modal">
+        <div id="closeButton">X</div>
+
+        <div class="div-container">
+            <h3>선택한 n개의 상품 주문를 접수하시겠습니까? 접수 후 해당 주문 품목은 출고관리에서 확인할 수 있습니다</h3>
+        </div>
+
+        <div>
+            <table>
+                <tr>
+                    <th>상품번호</th>
+                    <th>상품명</th>
+                    <th>상품 옵션</th>
+                    <th>판매 상태</th>
+                    <th>판매 등록일</th>
+                </tr>
+            </table>
+
+            <div id="productListBox"></div>
+
+            <div>
+                <button id="orderOK">확인</button>
+                <button id="orderNO">취소</button>
+            </div>
+        </div>
+            
+    </div>
+
+
+    <script src="/js/partner/seller/product/receipt.js"></script>
+    
+</body>
+</html>

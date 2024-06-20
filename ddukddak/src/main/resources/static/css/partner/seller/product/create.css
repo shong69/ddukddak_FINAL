@@ -1,0 +1,454 @@
+#createContainer {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+}
+
+#createContainer > h1 {
+    padding: 50px;
+}
+
+#sellerButton {
+    display: flex;
+    justify-content: end;
+    margin: 10px 0;
+}
+
+#sellerButton button {
+    background-color: var(--primary3);
+    width: 80px;
+    height: 30px;
+    font-weight: bold;
+    border: none;
+    box-shadow: 3px 3px 3px var(--gray5);
+    border-radius: 10px;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#sellerButton button:hover {
+    background-color: var(--gray1);
+    color: white;
+}
+
+#productList img{
+    height: 100px;
+    width: 100px;
+}
+
+#productList table {
+    width: 1000px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+}
+
+#productList thead {
+    background-color: var(--white);
+}
+
+.borderTr {
+    box-shadow: 5px 5px 10px var(--gray5);
+}
+.borderTr button {
+    background-color: var(--gray1);
+    width: 40px;
+    height: 20px;
+    color: white;
+    border-radius: 5px;
+    transition-duration: 0.2s;
+    border: none;
+}
+
+.borderTr button:hover {
+    background-color: var(--white);
+    color: black;
+    box-shadow: 3px 3px 3px var(--gray5);
+}
+
+#selectAll {
+    display: flex;
+}
+
+#selectAll > label {
+    margin-left: 5px;
+}
+
+.pagination{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination li{
+    width: 20px;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.pagination a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+/* 모달창 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 30%;
+    width: 800px;
+    height: 650px;
+    background-color: white;
+    border: 1px solid var(--gray5);
+    box-shadow: 5px 5px 7px var(--gray5);
+    flex-direction: column;
+}
+
+#closeButton {
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+
+#closeButton:hover {
+    color: red;
+}
+
+.modal > div:first-child {
+    display: flex;
+    justify-content: end;
+    padding: 10px;
+}
+
+.modal h2 {
+    text-align: center;
+    color: var(--secondary);
+}
+
+#createProduct {
+    display: flex;
+    margin: 30px;
+}
+
+.fileBox {
+    position: relative;
+    height: 350px;
+    width: 330px;
+    border: 1px solid var(--gray5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.fileBox > h2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+
+.file {
+    visibility: hidden;
+    height: 0px;
+    width: 0px;
+}
+
+#mainImg {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: white;
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+    padding: 3px;
+    font-weight: bold;
+}
+
+#subImgContainer {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+#subImgPlus {
+    margin-left: 7px;
+    font-size: 12px;
+    background: none;
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    width: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+#subImgBox {
+    width: 330px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#preview {
+    width: 100%;
+    height: 100%;
+}
+
+.preview-image-container {
+    position: relative;
+    margin: 5px;
+    width: 50px;
+    height: 50px;
+}
+
+.preview-image {
+    margin: 5px;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.delete-button {
+    position: absolute;
+    font-size: 10px;
+    top: 7px;
+    right: 1px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#subImgContainer  h1 {
+    margin: 0 10px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+#createProduct > div:first-child > div {
+    display: flex;
+    margin-top: 10px;
+}
+
+#createProduct > div:first-child > div input {
+    margin-right: 10px;
+    height: 50px;
+    width: 50px;
+}
+
+#productEx {
+    display: flex;
+    flex-direction: column;
+    width: 430px;
+}
+
+#productEx table {
+    margin-left: 10px;
+}
+
+#productEx > table input {
+    width: 200px;
+    height: 30px;
+    border: 1px solid var(--gray5);
+    border-radius: 10px;
+}
+
+#productEx table select {
+    width: 98px;
+    height: 30px;
+    border: 1px solid var(--gray5);
+    border-radius: 10px;
+}
+
+#productEx tr > td:first-child {
+    width: 100px;
+    height: 30px;
+}
+
+#productEx > h4 {
+    margin-left: 10px;
+}
+
+
+#buttonBox {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+#createButton {
+    background-color: var(--secondary);
+    width: 200px;
+    height: 50px;
+    color: var(--white);
+    font-size: 20px;
+    border-radius: 10px;
+    border: none;
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+
+#createButton:hover {
+    background-color: var(--white);
+    color: var(--gray1);
+    transform: translateY(-5px);
+    box-shadow: 3px 3px 5px var(--gray5);
+}
+
+/* 옵션칸 */
+#option {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    height: 280px;
+    overflow-y: auto;
+    overflow-x: visible;
+}
+
+#plusBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#productPlusButton {
+    background-color: var(--gray1);
+    color: white;
+    border-radius: 5px;
+    height: 20px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+
+#productPlusButton:hover {
+    background-color: var(--white);
+    color: var(--gray1);
+    transform: translateY(-3px);
+    box-shadow: 3px 3px 5px var(--gray5);
+}
+
+.optionMainBox {
+    width: 400px;
+    margin: 10px 0;
+}
+
+.optionName {
+    height: 30px;
+    width: 400px;
+    border:  1px solid var(--gray5);
+    padding: 0 10px;
+}
+
+.optionContentBox {
+    width: 400px;
+    box-shadow: 5px 5px 7px var(--gray5);
+}
+
+.contentInput {
+    height: 30px;
+    width: 180px;
+    border:  1px solid var(--gray5);
+    padding: 0 10px;
+}
+
+.contentCountInput {
+    height: 30px;
+    width: 130px;
+    border:  1px solid var(--gray5);
+    padding: 0 10px;
+}
+
+.applyButton {
+    width: 40px;
+    height: 20px;
+    background-color: var(--secondary);
+    color: var(--white);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+    border: none;
+    margin-top: 5px;
+    margin-left: 350px;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+}
+
+.delButton {
+    display: none;
+    margin-top: 5px;
+    background-color: var(--gray1);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 3px;
+    transition-duration: 0.2s;
+}
+
+.delButton:hover {
+    background-color: var(--white);
+    color: black;
+    box-shadow: 3px 3px 3px var(--gray5);
+    transform: translateY(-3px);
+}
+
+.applyButton:hover {
+    background-color: var(--white);
+    color: var(--gray1);
+    box-shadow: 3px 3px 5px var(--gray5);
+    transform: translateY(-3px);
+}
+
+.addOption {
+    width: 20px;
+    height: 20px;
+    background-color: var(--secondary);
+    color: var(--white);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+    border: none;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.addOption:hover {
+    box-shadow: 3px 3px 5px var(--gray5);
+    transform: translateY(-3px);
+}
+
+.minusOption {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: var(--white);
+    border-radius: 3px;
+    transition-duration: 0.2s;
+    border: none;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.minusOption:hover {
+    box-shadow: 3px 3px 5px var(--gray5);
+    transform: translateY(-3px);
+}
+

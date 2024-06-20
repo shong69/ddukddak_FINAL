@@ -1,0 +1,634 @@
+/* 메인 버튼 CSS */
+
+button {
+
+    left: 0px; 
+    top: 0px;
+    background-color: var(--gray1);
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 100%;
+    will-change: transform;
+    outline: none;
+
+    cursor: pointer;
+    
+    /* 폰트 */
+    font-family: 'main';
+    word-wrap: break-word;
+    text-align: center; 
+    color: var(--white); 
+
+}
+
+button:hover {
+    left: 0px; 
+    top: 0px;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 5px 5px;
+    transform: translateY(-2px);
+    
+
+    /* 폰트 */
+    font-family: 'main';
+    color: var(--gray1);
+    text-align: center;
+    word-wrap: break-word;
+}
+
+button:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+/* ----------------------------------------------------------- */
+
+/* 메인페이지 관련 버튼 */
+
+
+.mainPageBtn {
+    width: 400px;
+    height: 50px;
+    border-radius: 10px;
+
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 18px;
+    font-weight: 700;
+}
+.mainPageBtn:hover {
+    background-color: var(--white);
+}
+
+
+
+/* ----------------------------------------------------------- */
+
+
+
+/* 로그인 관런 버튼 */
+
+
+
+/* 로그인/아이디찾기/비밀번호찾기 메인 버튼*/
+.loginMainBtn {
+
+    width: 500px; 
+    height: 50px;
+    border-radius: 10px;
+
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.loginMainBtn:hover {
+    background: var(--white);
+}
+
+
+
+
+
+/* API 카카오/네이버 버튼 */
+
+/* ----------------------------------------------------------- */
+
+
+/* 회원가입 관련 버튼 */
+
+/* 주소 검색 버튼 */
+.searchAddressBtn {
+    
+    width: 150px; 
+    height: 30px;
+    border-radius: 10px;
+
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 14px;
+    font-weight: 500;
+}
+.searchAddressBtn:hover {
+    background-color: var(--white);
+
+    /* 폰트 */
+    font-weight: 700;
+}
+
+
+/* ----------------------------------------------------------- */
+
+/* 마이페이지 관련 버튼 */
+
+
+
+
+/* 교환/구매확정/사진변경 버튼 */
+.myPageMainBtn {
+    width: 85px; 
+    height: 20px;
+    border-radius: 5px;
+    
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 12px;
+    font-weight: 500;
+}
+.myPageMainBtn:hover {
+    background-color: var(--white);
+    border: 0.5px solid var(--gray1);
+
+}
+
+
+
+
+/* 비밀번호 변경/이메일 변경/닉네임 변경/휴대전화 변경(인증) */
+.myPageSubBtn {
+    width: 85px; 
+    height: 20px;
+    border-radius: 5px;
+    background-color: var(--gray3);
+    
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 12px;
+    font-weight: 500;
+}
+.myPageSubBtn:hover {
+    background-color: var(--white);
+    border: 0.5px solid var(--gray1);
+    
+}
+
+
+
+/* 삭제/수정 */
+.myPageDelUpdateBtn {
+    width: 40px; 
+    height: 20px;
+    border-radius: 9px;
+    font-size:12px;
+    color:white;
+}
+
+.myPageDelUpdateBtn:hover {
+    background-color: var(--white);
+}
+
+/* 확인/취소 */
+.myPageConfirmCancelBtn {
+    width: 60px; 
+    height: 25px;
+    border-radius: 5px;
+}
+.myPageConfirmCancelBtn:hover {
+    background-color: var(--white);
+    border: 0.5px solid var(--gray1);
+}
+
+/* 인증 */
+.myPageVerifyBtn {
+    width: 60px; 
+    height: 20px;
+    border-radius: 5px;
+}
+.myPageVerifyBtn:hover {
+    background-color: var(--white);
+    border: 0.5px solid var(--gray1);
+}
+
+
+
+
+/* 체팅 -> 보내기 */
+.myPageChatSend {
+    width: 140px; 
+    height: 50px;
+    border-radius: 5px;
+    background-color: var(--secondary);
+    
+    /* 폰트 */
+    font-size: 24px;
+    font-weight: 700;
+}
+.myPageChatSend:hover {
+    background-color: var(--white);
+    border: 1px solid var(--secondary);
+    box-shadow: none;
+    transform: none;
+}
+.myPageChatSend:active {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+
+
+/* ----------------------------------------------------------- */
+
+
+/* E 커머스 관련 버튼 */
+
+
+
+
+
+/* 메인 페이지 */
+
+/* 카테고리 검색버튼 */
+
+.eCommerceCategorySearchBtn{
+    width: 200px; 
+    height: 30px;
+    border-radius: 10px;
+    background-color: var(--white);
+
+    /* 폰트 */
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray1);
+}
+
+
+
+
+/* 상품 구매/찜 버튼 */
+.eCommerceBuyLikeBtn {
+    width: 280px; 
+    height: 50px;
+    border-radius: 10px;
+    background-color: var(--white);
+    transition: 0.3s;
+
+    /* 폰트 */
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray1);
+}
+.eCommerceBuyLikeBtn:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: var(--gray1);
+    transition: 0.3s;
+    
+    /* 폰트 */
+    color: var(--white);
+}
+.eCommerceBuyLikeBtn:active {
+    background-color: var(--white);
+
+    color: var(--gray1);
+}
+
+
+
+
+
+
+
+/* e 커머스 상품 상세 정보 페이지 */
+
+/* 상세정보/리뷰/Q&A/반품 교환정보 */
+
+/* ****중요 클릭시 변한색으로 고정은 JS 으로 처리**** */
+.eCommerceProductDetailBtn {
+    width: 280px; 
+    height: 50px;
+    background-color: var(--white);
+    transition: 0.3s;
+    margin: 0 2px;
+
+    /* 폰트 */
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gray1);
+}
+.eCommerceProductDetailBtn:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: var(--primary3);
+    transition: 0.3s;
+}
+
+
+
+
+/* E 커머스 주문 결제 페이지 */
+
+/* 주문 결제 관련 버튼 */
+
+/* 변경 */
+.eCommerBuyDetailUpdateBtn {
+    width: 60px; 
+    height: 30px;
+    background-color: var(--secondary);
+    border-radius: 10px;
+
+    /* 폰트 */
+    font-size: 15px;
+    font-weight: 500;
+}
+.eCommerBuyDetailUpdateBtn:hover {
+    color: var(--white);
+}
+
+/* 결제하기 */
+.eCommerBuyDetailConfirmBtn {
+    width: 300px; 
+    height: 50px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid var(--secondary);
+
+    /* 폰트 */
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--secondary);
+}
+.eCommerBuyDetailConfirmBtn:hover {
+    background-color: var(--secondary);
+    
+    color: var(--white);
+}
+
+
+
+
+
+/* ----------------------------------------------------------- */
+
+/* 커뮤니티 관련 버튼 */
+
+/* 메인페이지 */
+
+
+/* 집들이/노하우 */
+.boardMainBtn {
+    width: 90px; 
+    height: 40px;
+    transition: 0.3s;
+
+    /* 폰트 */
+    font-size: 15px;
+    font-weight: 700;
+}
+.boardMainBtn:hover {
+    transform: none;
+    box-shadow: none;
+    /* border: 1px solid var(--secondary); */
+    transition: 0.3s;
+}
+
+
+
+
+/* 집들이 / 노하우 리스트 페이지 */
+
+/* 작성하기 */
+.boardCreateBtn {
+    width: 135px; 
+    height: 40px;
+    border-radius: 10px;
+
+    /* 폰트 */
+    font-size: 18px;
+    font-weight: 500;
+}
+.boardCreateBtn:hover {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+.boardCreateBtn:active {
+    background-color: var(--gray1);
+    color: var(--white);
+}
+
+/* 더보기 (노하우) */
+.tipBoardMoreBtn {
+    width: 140px; 
+    height: 40px;
+    border-radius: 10px;
+
+    /* 폰트 */
+    font-size: 18px;
+    font-weight: 500;
+}
+.tipBoardMoreBtn:hover {
+    background-color: var(--white);
+}
+.tipBoardMoreBtn:active {
+    background-color: var(--gray1);
+    color: var(--white);
+}
+
+
+
+
+
+
+/* 집들이 / 노하우 상세 페이지  */
+
+/* 등록 */
+.boardDetailSubmitChatBtn {
+    width: 80px; 
+    height: 30px;
+    border-radius: 5px;
+
+    /* 폰트 */
+    font-size: 14px;
+    font-weight: 300;
+}
+.boardDetailSubmitChatBtn:hover {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+.boardDetailSubmitChatBtn:active {
+    background-color: var(--gray1);
+    color: var(--white);
+}
+
+
+
+
+
+
+
+/* 집들이 / 노하우 작성하기 페이지 */
+
+/* 등록하기 */
+.boardCreateSubmitBtn {
+    width: 330px; 
+    height: 55px;
+    border-radius: 10px;
+    background-color: var(--secondary);
+
+    /* 폰트 */
+    font-size: 24px;
+    font-weight: 500;
+}
+.boardCreateSubmitBtn:hover {
+    color: var(--white);
+}
+
+/* 미리보기 */
+.boardQuickViewBtn {
+    width: 330px; 
+    height: 55px;
+    border-radius: 10px;
+    background-color: var(--gray2);
+
+    /* 폰트 */
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--white);
+}
+.boardQuickViewBtn:hover {
+    color: var(--white);
+}
+
+
+
+/* ----------------------------------------------------------- */
+/* 시공사 관련 버튼 */
+
+/* 시공사 메인 페이지 */
+
+
+/* 시공사 찾기 */
+.interiorSearchBtn {
+    border: none;
+    background-color: #404040;
+    width: 300px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition-duration: 0.3s;
+    font-family: 'main';
+    font-size: 18px;
+    color: white;
+}
+.interiorSearchBtn:hover {
+    color: black;
+    background-color: #FFFAF0;
+    box-shadow: 3px 3px 3px #9B9B9B;
+}
+
+/* 바로가기 */
+.interiorDetailViewBtn {
+    width: 90px; 
+    height: 30px;
+    border-radius: 10px;
+    background-color: var(--secondary);
+}
+.interiorDetailViewBtn:hover {
+    color: var(--white);
+}
+
+
+
+
+
+
+/* 시공사 포트폴리오 페이지 */
+
+/* 컨택하기 */
+.interiorMatchBtn {
+    width: 140px; 
+    height: 50px;
+    border-radius: 5px;
+
+    /* 폰트 */
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.interiorMatchBtn:hover {
+    color: var(--white);
+}
+
+
+/* 더보기 */
+.interiorProjectViewMoreBtn {
+    width: 140px; 
+    height: 45px;
+    border-radius: 10px;
+    background-color: var(--gray2);
+
+    /* 폰트 */
+    font-size: 20px;
+    font-weight: 500;
+}
+.interiorProjectViewMoreBtn:hover {
+    color: var(--white);
+}
+
+
+
+/* ----------------------------------------------------------- */
+/* 라이브 커머스 관련 버튼 */
+
+/* 메인페이지 */
+/* 등록하기 */
+.liveCommerceSubmitBtn {
+    width: 220px; 
+    height: 30px;
+
+    transition: 0.3s;
+}
+.liveCommerceSubmitBtn:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: var(--white);
+    border: 1px solid var(--gray1);
+
+    transition: 0.3s;
+}
+
+
+
+
+
+/* ----------------------------------------------------------- */
+/* 3D 인테리어 내방 꾸미기 관련 버튼 */
+
+
+/* 카테고리 */
+.interior3dCategory {
+    width: 100px;
+    height: 40px;
+    background-color: #dae1e6;
+    font-family: 'main';
+    color: var(--gray1);
+}
+.interior3dCategory:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: #edf3f5;
+    color: var(--gray1);
+
+    transition: 0.2s;
+}
+.interior3dCategory:active {
+    background-color: #c7d0d6;
+}
+
+
+
+/* 예상견적 조회 */
+.interiorViewPrice {
+    width: 200px; 
+    height: 50px;
+    border-radius: 5px;
+    background-color: var(--white);
+
+    /* 폰트 */
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray1);
+}

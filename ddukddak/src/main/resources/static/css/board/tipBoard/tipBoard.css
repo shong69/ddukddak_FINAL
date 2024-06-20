@@ -1,0 +1,375 @@
+/* 전체 백그라운드색 컨테이너 */
+.boardMainPageContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    width: 100%;
+    transform: translateX(-5%);
+}
+
+
+
+
+/* 메인 컨테이너 */
+.boardMainPageContentContainer {
+    display: flex;
+    width: 1200px;
+    position: relative;
+}
+
+.mainArea {
+    flex-grow: 1;
+    margin: 50px;
+    width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+
+/* 검색 area */
+.searchArea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #3A732A;
+}
+
+.searchArea input {
+    width: 700px;
+    height: 48px;
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    margin: 0 10px;
+    
+}
+
+.searchArea input:focus {
+    outline: none;
+}
+
+.searchArea > span:nth-child(2) {
+    border: 1px solid var(--gray5);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+}
+
+.searchArea > span:nth-child(2) > i {
+    font-size: 25px;
+    margin: 0 10px;
+    cursor: pointer;
+    color: var(--gray3);
+}
+
+.searchBox::placeholder {
+    font-family: 'main';
+    font-size: 18px;
+    color: var(--gray3);
+}
+
+.searchForm {
+    display: flex;
+    align-items: center;
+}
+
+#searchBtn {
+    background-color: white;
+    width: 30px;
+    font-size: 15px;
+    margin: 0 10px;
+    cursor: pointer;
+    color: var(--gray3);
+}
+
+
+
+/* 광고 베너 컨테이너 */
+.boardAdContainer {
+    position: relative;
+    width: 100%;
+    height: 335px;
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.boardAd {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    color: white;
+    text-align: center;
+    padding: 0;
+    box-sizing: border-box;
+    z-index: 1;
+    pointer-events: none;
+    border-radius: 10px;
+}
+
+.boardAdContentContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    color: var(--white);
+    padding: 20px;
+    z-index: 2;
+    pointer-events: auto;
+}
+
+.boardAdContentContainer h1 {
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--white);
+}
+
+.boardAdContentContainer a {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.boardAdContentContainer h1, 
+.boardAdContentContainer h3, 
+.boardAdContentContainer h4, 
+.boardAdContentContainer a {
+    margin: 5px 0;
+    color: var(--white);
+}
+
+.boardAdContentContainer h3 {
+    font-weight: 700;
+    font-size: 20px;
+}
+.boardAdContentContainer h4 {
+    font-weight: 300;
+    line-height: 1.8;
+    overflow: hidden;
+    word-wrap: normal;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+    margin-top: auto;
+    text-align: end;
+}
+
+/* 버튼 */
+
+.btn-container {
+    width: 100%;
+    margin-top: 30px;
+}
+.btn-form {
+    width: 100%;
+}
+/* 팁 보드  */
+
+.tipMainContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.tipBoardMainContainer {
+    width: 100%;
+    /* transform: translateX(-8.5%); */
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    /* padding-bottom: 30px; */
+}
+
+.tipBoardContainer {
+    width: 400px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px; /* Optional: rounded corners */
+    padding: 10px; /* Add some padding */
+    box-sizing: border-box; 
+    /* margin: 30px; */
+    margin-top: 50px;
+
+
+}
+
+.tipBoardImg {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 5px; /* Optional: rounded corners */
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.tipBoardImg img {
+    transition-duration: 0.3s;
+}
+
+.tipBoardImg img:hover {
+    transform: scale(1.2);
+}
+
+.tipBoardUserInfoContainer {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.tipBoardUserName {
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.tipBoardTitle {
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.nameBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nameBox > img {
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.tipBoardLikeContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.like {
+    display: flex;
+}
+
+.tipBoardLikeContainer a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.tipBoardLikeContainer i {
+    font-size: 16px;
+    color: red;
+    margin-right: 5px;
+}
+
+.tipBoardLikeContainer h4 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.tipBoardContent {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+    overflow: hidden; /* Ensure long text is handled */
+    text-overflow: ellipsis;
+    font-weight: 700;
+}
+
+
+.tipBoardUserName, .tipBoardTitle, .tipBoardContent {
+    color: var(--gray1);
+}
+
+
+.tipBoardMainContainer {
+    /* width: 100%; */
+    display: none; 
+}
+
+.tipBoardMainContainer.active {
+    display: flex; 
+}
+
+.tipBoardMoreBtnContainer {
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+/* 탑버튼 */
+#boardMainTop {
+    position: fixed;
+    top: 90%;
+    left: 95%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    background-color: white;
+    font-family: 'main';
+    cursor: pointer;
+    border: 2px black solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Fading animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+  
+  @keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+  }
+  

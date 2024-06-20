@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>뚝딱뚝딱 : 모델링</title>
+
+  <link rel="stylesheet" href="/css/partner/interior/modeling/modelingMain.css">
+  <link rel="stylesheet" href="/css/common/main.css">
+  <link rel="stylesheet" href="/css/common/button.css">
+  <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+</head>
+<body>
+
+  <!-- 전체 container -->
+  <div style="width: 100%;">
+
+    <!-- 헤더 -->
+    <div id="modelingHeader">
+      <img src="/images/main/main-logo.png" style="height: 50px; margin-left: 20px; opacity: 70%;">
+      <h2>내 방 디자인하기</h2>
+
+      <h3 onclick="location.href='/';" style="cursor: pointer;">나가기</h3>
+      <img src="/images/partner/interior/modeling/quit.png" style="height: 30px; cursor: pointer;" onclick="location.href='/';">
+    </div>
+
+
+
+    <div id="modelingBox">
+      <div class="container">
+        <!-- 가구선택칸 -->
+        <div class="left-panel">
+          <div>
+            <div>
+              <button id="add-chair" class="add-element-button interior3dCategory">의자/소파</button>
+              <button id="add-table" class="add-element-button interior3dCategory">가전제품</button>
+              <button id="add-sofa" class="add-element-button interior3dCategory">테이블/책상</button>
+            </div>
+            <div>
+              <button id="add-bed" class="add-element-button interior3dCategory">소품</button>
+              <button id="add-no1" class="add-element-button interior3dCategory">벽걸이</button>
+              <button id="add-no2" class="add-element-button interior3dCategory">러그/매트</button>
+            </div>
+
+
+            
+            <!-- 가구 아이템들 -->
+            <div class="item-box">
+
+              <table class="item" id="chair-item" style="display: block;">
+                <tr>
+                  <td>
+                    <img src="/images/partner/interior/modeling/chair1.jpg">
+                  </td>
+                  <td>
+                    <img src="/images/partner/interior/modeling/chair2.png">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="/images/partner/interior/modeling/chair3.png">
+                  </td>
+                  <td>
+                    <img src="/images/partner/interior/modeling/chair4.png">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="/images/partner/interior/modeling/chair5.png">
+                  </td>
+                  <td>
+                    <img src="/images/partner/interior/modeling/chair6.png">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="/images/partner/interior/modeling/chair7.png">
+                  </td>
+                  <td>
+                    <img src="/images/partner/interior/modeling/chair8.png">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <img src="/images/partner/interior/modeling/chair9.png">
+                  </td>
+                  <td>
+                    <img src="/images/partner/interior/modeling/chair10.png">
+                  </td>
+                </tr>
+              </table>
+
+              <table class="item" id="eletronic-item">
+
+              </table>
+
+              <table class="item" id="table-item">
+
+              </table>
+
+              <table class="item" id="props-item">
+
+              </table>
+
+              <table class="item" id="wall-item">
+
+              </table>
+
+              <table class="item" id="rug-item">
+
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+
+        <!-- 평면도 그리기 -->
+          <div id="floor-plan">
+            <div>
+              <table>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+              <div class="right-panel">
+      
+                <!--3d 모델링-->
+                <div id="viewer">
+                  <button id="open">[  ]</button>
+                </div>
+      
+                <!-- 견적조회 container -->
+                <div id="searchContainer">
+                  <h3>스크린샷 저장하기</h3>
+                  <h3>3D 모델링 저장하기</h3>
+                  <h3>내 게시판에 공유하기</h3>
+                  <h3>공유</h3>
+      
+                  <button class="interiorViewPrice" onclick="location.href='/partner/interior/modeling/estimate';">예상견적 조회 (가구 미포함)</button>
+                  <button class="interiorViewPrice">예상견적 조회 (가구 포함)</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+      </div>
+
+    </div>
+
+
+  </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="/js/partner/interior/modeling/modelingMain.js"></script>
+    </body>
+</html>

@@ -1,0 +1,720 @@
+/* 메인 폰트 */
+@font-face {
+    font-family: 'main';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+*{
+    font-family: 'main';
+}
+
+.display-none{
+    display:none !important;
+}
+.myPage-main{
+    min-width: 1400px;
+    min-height: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    
+}
+
+/*주문내역*/
+.category-name{
+    margin: 30px 0;
+}
+
+#skuList,
+.cartList {
+    margin:30px 0;
+    width :1100px;
+    border-collapse: collapse;
+}
+
+.order-group{
+    border : 0.4px solid #757575;
+    border-radius: 30px;
+    background-color: transparent;
+    min-height: 350px;
+    padding : 30px;
+    margin: 30px 0;
+}
+.order-group > h3{
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 60px;
+    text-align: start;
+    margin-left: 10px;
+    border-bottom: 0.4px solid #646464;
+    margin-bottom: 20px;
+}
+.order-info{
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin:10px;
+    text-align: end;
+    color:#646464;
+}
+.orderTotalPrice{
+    font-size: 16px;
+    font-weight: 400;
+}
+.date-address{
+    font-size :15px;
+    font-weight: 100;
+}
+.order-item{
+    display: flex;
+    flex-direction: row;
+    margin : 10px 10px;
+}
+.productImg{
+    width : 120px;
+}
+.order-item div:nth-child(2),
+.order-item div:nth-child(3),
+.order-item div:nth-child(4),
+.order-item div:nth-child(5){
+    margin : auto 0;
+}
+.order-item div:first-child{
+    width : 160px;
+}
+
+.order-item div:nth-child(2){
+    width : 550px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+.order-item div:nth-child(3){
+    width: 30px;
+}
+.order-item div:nth-child(4){
+    width: 100px;
+}
+.statusArea{
+    width : 180px;
+    height: 80px;
+    font-weight: 400;
+    margin:auto 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.status{
+    font-weight: 600;
+}
+.confirmPurchaseBtn,
+.orderDelBtn,
+.reviewWriteBtn{
+    margin-top: 5px;
+    width : 120px;
+    height: 35px;
+    border-radius: 13px;
+}
+/*장바구니*/
+.cartList thead{
+    height: 70px;
+    
+}
+
+.cartList th{
+    min-width: 90px;
+}
+
+.cartList tr{
+    height: 60px;
+    border-bottom:1px solid black;
+}
+
+
+.cartList td{
+    height: 80px;
+}
+
+.product-image{
+    width: 60px;
+    height: 60px;
+    background-color: #757575;
+}
+/*위시리스트*/
+.wishList-table{
+    margin-top: 80px;
+    margin-left: 70px;
+    margin-bottom: 50px;
+}
+.item-row{
+    height: 180px;
+}
+.item_img{
+    height: 150px;
+    width: 150px;
+}
+.wish-a{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width : 400px;
+    height: 180px;
+    margin:20px 20px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.wish-item> a > div{
+    display: flex;
+    flex-direction: column;
+    width:200px;
+    text-align: end;
+    margin:5px 10px;
+    line-height: 30px;
+}
+.delButton {
+    background-color: var(--gray1);
+    border: none;
+    transition-duration: 0.2s;
+    color: white;
+    border-radius: 10px;
+    height: 20px;
+    width: 40px;
+    cursor: pointer;
+}
+
+.wish-a > div {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.wish-a > div > div {
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+}
+
+.delButton:hover {
+    background-color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: 3px 3px 3px var(--gray5);
+    color: black;
+}
+
+.item-title {
+    font-weight: 600;
+    font-size: 14px;
+    text-align: start;
+    height: 90px;
+    width: 200px;
+}
+
+.heart{
+    position: absolute;
+    font-size: 15px;
+    top: 20px;
+    left: 20px;
+}
+
+.pagination{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination li{
+    width: 20px;
+    margin: 0 5px;
+    text-align: center;
+}
+
+.pagination a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/*장바구니*/
+.cartList{
+    margin-bottom: 100px;
+    margin-left: 50px;
+}
+.adjustCount{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.adjustCount>input{
+    width : 30px;
+    margin:0 5px;
+}
+.adjustCount>button{
+    width:20px;
+}
+.infoArea{
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    border-top: 3px solid #757575;
+    align-items: end;
+    height: 80px;
+}
+.infoArea span{
+    font-size: 30px;
+    font-weight: bold;
+    margin:auto 6px;
+}
+.pointArea{
+    text-align: end;
+    margin:10px 30px 30px 0;
+    color: #757575;
+    font-size: 14px;
+
+}
+.totalCount{
+    margin-left: auto;
+    font-size: 20px;
+    margin-right: 10px;
+}
+.totalPrice{
+    font-size: 20px;
+    margin-right: 30px;
+}
+.purchaseArea{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    margin-left: auto;
+}
+.purchaseArea button {
+    margin-left: 10px;
+    width:300px;
+    height:60px;
+    border-radius: 18px !important;
+    color:black;
+    font-size: 17px;
+    background-color: var(--white);
+}
+/*내 집들이*/
+.homeBoard-list{
+    list-style-type: none;
+}
+.myHouseBoardList {
+    width : 900px;
+    margin: 50px 0;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.homeBoard-img{
+    width : 300px;
+    height: 200px;
+}
+
+
+.homeboard-title{
+    font-size : 18px;
+    margin-top: 20px;
+    margin-left: 15px;
+    height: 30px;
+    text-align: start;
+}
+
+.homeBoard-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: auto;
+}
+.homeBoard-info>div:first-child{
+    margin-left: auto;
+    margin-top: 15px;
+}
+.homeBoard-info>div:last-child{
+    margin-left: auto;
+}
+.homeBoard-info a{
+    color: rgb(0, 73, 182);
+    font-size: 15px;
+}
+.homeBoard-info span{
+    font-size: 12px;
+    color: #757575;
+}
+
+.noHouseData{
+    font-size: 50px;
+    margin-top: 461px;
+    color:#9b9b9b;
+}
+/*내 노하우*/
+
+.tipBoard-table{
+    margin-top: 80px;
+    margin-bottom: 50px;
+}
+.tipBoard-row{
+    height: 180px;
+}
+
+.tipBoard-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width : 400px;
+    height: 520px;
+    margin:20px 50px;
+    padding:30px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.tipBoard-item span:nth-child(2),
+.tipBoard-item span:nth-child(3),
+.tipBoard-item span:nth-child(4){
+    margin:5px 0;
+    margin-right: auto;
+}
+.tipBoard-item>span:nth-child(3){
+    font-weight: 600;
+}
+
+.tipBoard-item>span:nth-child(2){
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+.tipBoard-item>span:nth-child(4){
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+
+.tipBoard-item>span:last-child{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* 5 줄로 제한 */
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+    text-align: start;
+    margin: auto 0;
+}
+.tipBoard-img{
+    width:330px;
+    height: 240px;
+}
+.fa-heart {
+    color : red;
+    margin-right: 5px;
+}
+.noTipData{
+    font-size: 50px;
+    margin: auto auto;
+    color : #9b9b9b;
+}
+/*좋아요한 게시글*/
+.select-area{
+    margin-left: auto;
+}
+.select-box{
+    width: 150px;
+    height: 35px;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin:10px 0;
+}
+
+.select-box>option {
+    background-color: black;
+    color:white;
+    width: 146px;
+    font-size: 16px;
+}
+
+
+/*회원 정보*/
+.member-info,
+.add-info{
+    border-collapse: collapse;
+    width: 1200px;
+}
+input{
+    border : 1px solid black;
+    padding:0 10px;
+}
+
+.member-info th,
+.add-info th
+{
+    width : 100px;
+    border-collapse: collapse;
+}
+.member-info tr,
+.add-info tr{
+    border-bottom: 1px solid #dddd;
+}
+
+
+.change-profile-img-area,
+.change-password-area,
+.change-email-area,
+.change-nickname-area,
+.change-phoneNum-area
+{
+    height: 300px;
+}
+.profile-img-area,
+.password-area,
+.id-area,
+.email-area,
+.nickname-area,
+.phoneNum-area,
+.add-info tr{
+    height: 100px;
+}
+.profileImg{
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    border:none;
+}
+.image-label{
+    width : 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+.image-label>img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+#inputImage{
+    display:none;
+}
+.delete-image{
+    position: absolute;
+    left:200px;
+    top:100px;
+    font-size: 20px;
+    cursor: pointer;
+    color:black;
+}
+
+
+.profile-img-area td:nth-child(2),
+.change-profile-img-area td:nth-child(3){
+    display: flex;
+    width: 300px;
+    height: 300px;
+    justify-content: center;
+    align-items: center;
+}
+.profile-img-area td:nth-child(3),
+.change-profile-img-area td:nth-child(4){
+    width: 630px;
+    text-align: start;
+}
+.profile-area{
+    width: 96px;
+}
+.myPageDelUpdateBtn{
+    margin:0 4px;
+}
+
+.id-area{
+    text-align: start;
+}
+.id-box {
+    width: 300px;
+    margin-left: 80px;
+    font-weight: 600;
+}
+
+.password-area2{
+    display:flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+.password-area2-1 {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.password-title {
+    margin:0 10px 0 80px;
+    width : 300px;
+    text-align: start;
+}
+.password-area2 input{
+    width : 400px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 8px;
+    font-family: 'main';
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    border: 1px solid var(--gray5);
+}
+.fa-eye,
+.fa-eye-slash{
+    position: relative;
+    top:12px;
+    right: 30px;
+    z-index: 10;
+    cursor:pointer;
+}
+.pwAlert{
+    width: 350px;
+    text-align: end;
+    margin-left: auto;
+    margin-right: 310px;
+    margin-top: 5px;
+    font-size: 13px;
+    color: red;
+}
+.password-commit{
+    display: flex;
+    width: 450px;
+    margin-left: 80px;
+}
+.myPageConfirmCancelBtn{
+    margin: 10px 10px 0 0;
+}
+
+
+.mail-alarm,
+.nickname-area2>ul{
+    width: 400px;
+    line-height: 20px;
+    margin-left: 100px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: start;
+}
+
+.email-input{
+    width : 400px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 8px;
+    margin-bottom: 20px;
+    font-family: 'main';
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    border: 1px solid var(--gray5);
+}
+input::placeholder{
+    color: #9c9c9cdd;
+}
+.email-input-area,
+.nickname-input-area{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.email-input-area>div:first-child{
+    margin-left: 80px;
+    display: flex;
+    flex-direction: column;
+}
+.email-btn-area,
+.nickname-btn-area{
+    display: flex;
+    margin-left: 80px;
+}
+
+.nickname{
+    text-align: start;
+    font-weight: 600;
+}
+.nickname-area2{
+    text-align: start;
+    margin-top: 20px;
+}
+
+.nickname-input-area>input{
+    width : 400px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 8px;
+    font-family: 'main';
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    border: 1px solid var(--gray5);
+    margin-bottom: 20px;
+    margin-left: 80px;
+}
+
+.phoneNum-area2{
+    text-align: start;
+}
+.phonNum-input-area{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.phonNum-input-area>div:first-child{
+    margin-left: 80px;
+    display: flex;
+    flex-direction: column;
+}
+.phonNum-input-area input{
+    width : 400px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 8px;
+    font-family: 'main';
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    border: 1px solid var(--gray5);
+    margin-bottom: 20px;
+
+}
+
+.phoneNum-area2 div:nth-child(2){
+    margin-left: 80px;
+}
+
+
+
+.addinfo-title{
+    margin: 50px 0;
+}
+.add-info{
+    margin-bottom: 100px;
+}
+
+
+.add-info td{
+    display: flex;
+    line-height: 100px;
+    margin-left: 80px;
+}
+
+/*회원정보 변경 전 설정*/
+
+.before-modify {
+    display: flex;
+    width : 92.5%;
+    justify-content: space-between;
+    margin-left: 80px;
+}

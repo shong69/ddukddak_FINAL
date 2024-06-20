@@ -1,0 +1,368 @@
+/* 방 이미지 */
+.boardAdContainer {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+.boardAd {
+    width: 100%;
+    height: 100%;
+    object-fit:scale-down;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.adViewMore {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.5); 
+    color: var(--white);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.8s ease;
+}
+
+.active {
+    background-color: #717171;
+}
+
+.mySlides {
+    display: none;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+/* 마이하우스 타이틀 */
+.myHouseTitle {
+    margin: 30px;
+    width: 100%;
+}
+
+.myHouseTitle h4 {
+    margin-bottom: 5px;
+}
+
+.myHouseTitle div {
+    display: flex;
+    align-items: center;
+}
+
+/* 유저 프로필 */
+.userProfileArea {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    padding: 10px 0;
+    margin-top: 20px;
+    width: 100%;
+    align-items: center;
+}
+
+.userProfileArea div {
+    display: flex;
+}
+
+.profileImg > img{
+    width: 50px;
+    border-radius: 9999px;
+}
+
+.leftSide div{
+    margin-right: 20px;
+    align-items: center;
+}
+
+.rightSide div {
+    margin-right: 20px;
+    align-items: center;
+}
+
+.reportBtn {
+    padding: 5px;
+    height: 25px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.reportBtn:hover {
+    background-color: red;
+
+    left: 0px; 
+    top: 0px;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 5px 5px;
+    transform: translateY(-2px);
+    
+
+    /* 폰트 */
+    font-family: 'main';
+    color: white;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+/* 집들이 내용 */
+.contentArea {
+    width: 100%;
+}
+
+.myHouseContent {
+    width: 100%;
+    flex-wrap: wrap;
+    white-space: pre-wrap;
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.25);
+    margin-top: 20px;
+    background-color: white;
+    min-height: 300px;
+    padding: 30px;
+}
+
+
+/* 댓글 */
+.commentArea {
+    margin-top: 50px;
+    border-top: 1px solid black;
+    width: 100%;
+}
+
+.topArea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px;
+}
+
+.commentTextArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.commentTextArea > textarea {
+    width: 840px;
+    resize: none;
+    padding: 10px;
+}
+
+.like {
+    margin-left: 10px;
+}
+
+.like > i {
+    margin:0 5px;
+    cursor: pointer;
+    color: red;
+}
+
+.commentList {
+    margin-top: 30px;
+    border-top: 1px solid black;
+}
+
+.commentList h2 {
+    text-align: center;
+    margin: 30px;
+}
+
+.commentContent {
+    white-space: pre-wrap;
+    width: 600px;
+}
+
+.commentContentArea {
+    display: flex;
+    justify-content: space-between;
+}
+
+.commentContainer {
+    display: flex;
+    margin: 20px 10px;
+    flex-direction: column;
+    padding: 0 20px;
+    padding-top: 20px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.commentContainer div {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    width: auto;
+    
+}
+
+.userInfo h4 {
+    margin-left: 10px;
+    color: var(--gray5);
+}
+
+.commentUser {
+    border-bottom: 1px solid var(--gray5);
+    padding-bottom: 8px;
+}
+
+.commentUser img {
+    width: 30px;
+    margin-right: 10px;
+    border-radius: 9999px;
+}
+
+.commentBtnArea div {
+    color: #8C8C8C;
+    cursor: pointer;
+}
+
+.commentBtnArea div:hover {
+    color: var(--secondary);
+    text-decoration: underline;
+}
+
+.displayComment {
+    margin: 20px 30px;
+}
+
+.child-comment {
+    margin-left: 100px;
+}
+
+.childCommentInsertContent {
+    resize: none;
+    width: 750px;
+    margin: auto;
+    padding: 5px;
+}
+
+.childCommentBtnArea {
+    width: 750px;
+    display: flex;
+    justify-content: flex-end;
+    color: var(--gray4);
+    margin: 10px 0;
+    padding-right: 10px;
+
+}
+
+.childCommentBtnArea div {
+    width: 30px;
+}
+
+.childCommentBtnArea div:hover {
+    cursor: pointer;
+    color: var(--secondary);
+    text-decoration: underline;
+}
+
+
+.commentInsertContent {
+    width: 840px;
+    resize: none;
+    padding: 5px;
+}
+
+.update-remove {
+    margin: 30px 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.update-remove button {
+    width: 150px;
+    margin:10px;
+    padding: 10px 50px;
+    font-size: 15px;
+    border: 1px solid var(--gray4);
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: var(--gray2);
+    color: var(--white);
+}
+
+.update-remove button:hover {
+    background-color: var(--secondary);
+    color: var(--white);
+}
+
+.update-remove button:active {
+    background-color: var(--gray1);
+    color: var(--white);
+}
+
+/* .comment-btn-area {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 30px;
+}
+
+.comment-btn-area button {
+    width: 50px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.comment-btn-area button:hover {
+    background-color: var(--secondary);
+    color: white;
+} */
+
+/* 탑버튼 */
+#top {
+    position: fixed;
+    top: 90%;
+    left: 95%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    background-color: white;
+    font-family: 'main';
+    cursor: pointer;
+    border: 2px black solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

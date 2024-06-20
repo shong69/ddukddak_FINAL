@@ -1,0 +1,27 @@
+<header>
+    <!-- 로고 -->
+    <div>
+        <img onclick="location.href='/partner/interiorPortfolioEditMain';" src="/images/main/main-logo.png" style="height: 50px;">
+    </div>
+
+    <!-- 네비바 -->
+    <div>
+        <a href="/partner/interiorPortfolioEditMain"><h4>내 포트폴리오</h4></a>
+        <a href="/partner/interiorChatWithUser"><h4>채팅</h4></a>
+        <a href="/partner/interiorChatWithManager"><h4>1:1 문의</h4></a>
+    </div>
+
+    <!-- 로그인/회원가입 -->
+    <th:block th:unless="${session.loginPartnerMember}">
+        <div>
+            <a href="/member/login"><h4>로그인</h4></a>
+            <a href="/signup"><h4>회원가입</h4></a>
+        </div>
+    </th:block>
+
+    <th:block th:if="${session.loginPartnerMember}">
+        <div>
+            <a href="/partner/logout"><h4>로그아웃</h4></a>
+        </div>
+    </th:block>
+</header>

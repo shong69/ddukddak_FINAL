@@ -1,0 +1,159 @@
+#qnaContainer {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+}
+
+#qnaTitle {
+    display: flex;
+    flex-direction: column;
+}
+
+#qnaTitle h1 {
+    margin: 20px 0;
+}
+
+#qnaTitle > div:last-child {
+    display: flex;
+}
+
+#qnaTitle > div:last-child label {
+    margin-left: 5px;
+    margin-right: 30px;
+}
+
+#productList table {
+    margin-top: 50px;
+    width: 1000px;
+    text-align: center;
+    margin-bottom: 30px;
+    border-collapse: collapse;
+}
+
+#productList table input {
+    margin-left: 10px;
+}
+
+#productList thead {
+    background-color: var(--gray1);
+    color: var(--white);
+}
+
+#productList tr {
+    border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+.borderTr {
+    height: 50px;
+}
+
+.borderTr div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* 모달창 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 150px;
+    left: 600px;
+    width: 600px;
+    height: 600px;
+    background-color: white;
+    border: 1px solid var(--gray5);
+    box-shadow: 5px 5px 7px var(--gray5);
+    flex-direction: column;
+}
+
+#closeButton {
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
+
+#closeButton:hover {
+    color: red;
+}
+
+.modal > div:first-child {
+    display: flex;
+    justify-content: end;
+    padding: 10px;
+}
+
+.modal h2 {
+    text-align: center;
+}
+
+.modal > div:nth-child(3) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.modal table {
+    border-spacing: 0;
+    width: 500px;
+    text-align: center;
+    border-bottom: 1px solid var(--gray5);
+}
+
+.modal table tr:first-child {
+    background-color: var(--gray1);
+    color: white;
+}
+
+.modal table tr:last-child {
+    font-size: 12px;
+}
+
+.modal > h3 {
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+}
+
+#qnaContent {
+    border: 1px solid black;
+    margin: 0 30px;
+    width: 530px;
+    height: 150px;
+    padding: 10px;
+}
+
+.modal textarea {
+    resize: none;
+    width: 530px;
+    height: 150px;
+    margin: 0 30px;
+}
+
+#buttonContainer {
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+#buttonContainer button {
+    background-color: var(--secondary);
+    color: var(--white);
+    border: none;
+    width: 100px;
+    height: 40px;
+    transition-duration: 0.2s;
+    border-radius: 10px;
+    margin: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#buttonContainer button:hover {
+    background-color: var(--white);
+    color: var(--gray1);
+    transform: translateY(-5px);
+    box-shadow: 3px 3px 5px var(--gray5);
+}

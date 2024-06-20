@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddukddak.partner.model.mapper.ProductMapper">
+
+<!-- 재고등록 -->
+
+	<!-- 재고등록 재고상품 개수조회 -->
+	<select id="selectCreateListCount">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NULL
+		AND PARTNER_NO = #{partnerNo}
+	</select>
+	
+	<!-- 재고등록 재고상품 조회 -->
+	<select id="selectCreateList">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, TO_CHAR(PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, CATEGORY_NAME, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NULL
+		AND PARTNER_NO = #{partnerNo}
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+
+	<!-- 재고등록 재고상품 개수조회 메인카테고리 -->
+	<select id="selectCreateListCountMainSort">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		NATURAL JOIN CATEGORY
+		NATURAL JOIN BIG_CATEGORY
+		WHERE PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NULL
+		AND BIG_CATEGORY_NO = #{mainSort}
+		AND PARTNER_NO = #{partnerNo}
+	</select>
+	
+	<!-- 재고등록 재고상품 조회 메인카테고리 -->
+	<select id="selectCreateListMainSort">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, TO_CHAR(PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, CATEGORY_NAME, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NULL
+		AND BIG_CATEGORY_NO = #{mainSort}
+		AND PARTNER_NO = #{partnerNo}
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+
+	<!-- 재고등록 재고상품 개수조회 카테고리 -->
+	<select id="selectCreateListCountSort">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NULL
+		AND CATEGORY_NO = #{sort}
+		AND PARTNER_NO = #{partnerNo}
+	</select>
+	
+	<!-- 재고등록 재고상품 조회 카테고리 -->
+	<select id="selectCreateListSort">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, TO_CHAR(PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, CATEGORY_NAME, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NULL
+		AND CATEGORY_NO = #{sort}
+		AND PARTNER_NO = #{partnerNo}
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+	
+	<!-- 재고상품 판매등록 -->
+	<update id="sellApplyProduct">
+		UPDATE PRODUCT
+		SET PRODUCT_UPDATE_DATE  = SYSDATE,
+			PRODUCT_FL = 'Y'
+		WHERE PRODUCT_NO = #{value}
+	</update>
+	
+	<!-- 재고상품 삭제 -->
+	<delete id="delProduct">
+		DELETE FROM "PRODUCT" WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	<delete id="delProductImg">
+		DELETE FROM "UPLOAD_FILE" WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	<delete id="delProductOption">
+		DELETE FROM "OPTION" WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	
+	<!-- 대분류에 따른 소분류 조회 -->
+	<select id="selectSmallCategory">
+		SELECT CATEGORY_NO, CATEGORY_NAME
+		FROM CATEGORY
+		WHERE BIG_CATEGORY_NO = #{selectedCategory}
+	</select>
+	
+	<!-- 상품 재고등록 -->
+	<insert id="registProduct">
+		INSERT INTO PRODUCT
+		VALUES(SEQ_PRODUCT_NO.NEXTVAL, #{productName}, #{productPrice}, SYSDATE, DEFAULT, 'N', #{smallCategoryNo}, #{memberNo})
+	</insert>
+	
+	<!-- 상품 재고 이미지 등록 -->
+	<insert id="insertImg">
+		INSERT INTO "UPLOAD_FILE"
+		VALUES(SEQ_UPLOAD_IMG_NO.NEXTVAL, #{uploadImgPath}, #{uploadImgOgName}, #{uploadImgRename}, #{uploadImgOrder}, #{category}, SEQ_PRODUCT_NO.CURRVAL, NULL, NULL, NULL)
+	</insert>
+	
+	<!-- 상품 재고 옵션 등록 -->
+	<insert id="insertOption">
+		INSERT INTO "OPTION"
+		VALUES(SEQ_OPTION_ID.NEXTVAL, #{optionName}, #{optionValue}, #{productCount}, SEQ_PRODUCT_NO.CURRVAL)
+	</insert>
+	
+	
+<!-- 판매관리 -->
+	
+	<!-- 판매관리 판매상품 개수조회 -->
+	<select id="selectApplyListCount">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
+		AND PARTNER_NO = #{partnerNo}
+	</select>
+	
+	<!-- 판매관리 판매상품 조회 -->
+	<select id="selectApplyList">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, TO_CHAR(PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		TO_CHAR(PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, CATEGORY_NAME, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		AND PARTNER_NO = #{partnerNo}
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+	
+	<!-- 판매관리 판매상품 개수조회 상태 -->
+	<select id="selectApplyListCountStatus">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
+		AND PRODUCT_FL = #{status}
+		AND PARTNER_NO = #{partnerNo}
+	</select>
+	
+	<!-- 판매관리 판매상품 조회 상태 -->
+	<select id="selectApplyListStatus">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, TO_CHAR(PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		TO_CHAR(PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, CATEGORY_NAME, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		AND PRODUCT_FL = #{status}
+		AND PARTNER_NO = #{partnerNo}
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+
+	<!-- 판매관리 판매상품 개수조회 메인카테고리 -->
+	<select id="selectApplyListCountMainSort">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		NATURAL JOIN CATEGORY
+		NATURAL JOIN BIG_CATEGORY
+		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
+		AND BIG_CATEGORY_NO = #{mainSort}
+		AND PARTNER_NO = #{partnerNo}
+	</select>
+	
+	<!-- 판매관리 판매상품 조회 메인카테고리 -->
+	<select id="selectApplyListMainSort">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, TO_CHAR(PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		TO_CHAR(PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, CATEGORY_NAME, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		AND BIG_CATEGORY_NO = #{mainSort}
+		AND PARTNER_NO = #{partnerNo}
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+
+	<!-- 판매관리 판매상품 개수조회 메인카테고리 상태 -->
+	<select id="selectApplyListCountMainSortStatus">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		NATURAL JOIN CATEGORY
+		NATURAL JOIN BIG_CATEGORY
+		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
+		AND BIG_CATEGORY_NO = #{mainSort}
+		AND PRODUCT_FL = #{status}
+		AND PARTNER_NO = #{partnerNo}
+	</select>
+	
+	<!-- 판매관리 판매상품 조회 메인카테고리 상태 -->
+	<select id="selectApplyListMainSortStatus">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, TO_CHAR(PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		TO_CHAR(PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, CATEGORY_NAME, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		AND BIG_CATEGORY_NO = #{mainSort}
+		AND PRODUCT_FL = #{status}
+		AND PARTNER_NO = #{partnerNo}
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+
+	<!-- 판매관리 판매상품 개수조회 카테고리 -->
+	<select id="selectApplyListCountSort">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
+		AND CATEGORY_NO = #{sort}
+		AND PARTNER_NO = #{partnerNo}
+	</select>
+	
+	<!-- 판매관리 판매상품 조회 카테고리 -->
+	<select id="selectApplyListSort">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, TO_CHAR(PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		TO_CHAR(PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, CATEGORY_NAME, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		AND CATEGORY_NO = #{sort}
+		AND PARTNER_NO = #{partnerNo}
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+
+	<!-- 판매관리 판매상품 개수조회 카테고리 상태 -->
+	<select id="selectApplyListCountSortStatus">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
+		AND CATEGORY_NO = #{sort}
+		AND PRODUCT_FL = #{status}
+		AND PARTNER_NO = #{partnerNo}
+	</select>
+	
+	<!-- 판매관리 판매상품 조회 카테고리 상태 -->
+	<select id="selectApplyListSortStatus">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, TO_CHAR(PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		TO_CHAR(PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, CATEGORY_NAME, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		AND CATEGORY_NO = #{sort}
+		AND PRODUCT_FL = #{status}
+		AND PARTNER_NO = #{partnerNo}
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+	
+	<!-- 판매상태 바꾸기 -->
+	<update id="changeStatus">
+		UPDATE "PRODUCT"
+		SET PRODUCT_FL = #{status}
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	<!-- 판매등록 재고선택 -->
+	<select id="selectOne">
+		SELECT *
+		FROM "PRODUCT"
+		NATURAL JOIN CATEGORY
+		NATURAL JOIN BIG_CATEGORY
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 판매등록 이미지조회 -->
+	<select id="selectImg">
+		SELECT * FROM
+		UPLOAD_FILE
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 판매등록 옵션명조회 -->
+	<select id="selectOptionName">
+		SELECT DISTINCT OPTION_NAME
+		FROM "OPTION"
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 판매등록 옵션조회 -->
+	<select id="selectOption">
+		SELECT * FROM "OPTION" WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 상품 판매등록 -->
+	<update id="updateRegistProduct">
+		UPDATE "PRODUCT"
+		SET PRODUCT_NAME = #{productName},
+			CATEGORY_NO = #{smallCategoryNo},
+			PRODUCT_PRICE = #{productPrice},
+			PARTNER_NO = #{memberNo},
+			PRODUCT_FL = 'N'
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	<!-- 대표사진 업로드 -->
+	<update id="updateThumbnail">
+		UPDATE "UPLOAD_FILE"
+		SET UPLOAD_IMG_OG_NAME = #{uploadImgOgName},
+			UPLOAD_IMG_RENAME = #{uploadImgRename},
+			CATEGORY = #{category}
+		WHERE PRODUCT_NO = #{productNo}
+		AND UPLOAD_IMG_ORDER = 0
+	</update>
+	
+	<!-- 상세사진 삭제 -->
+	<delete id="delProductImg2">
+		DELETE FROM "UPLOAD_FILE" WHERE UPLOAD_IMG_NO = #{imgNo}
+	</delete>
+	
+	<!-- 상세사진 업로드 -->
+	<insert id="insertImg2">
+		INSERT INTO "UPLOAD_FILE"
+		VALUES(SEQ_UPLOAD_IMG_NO.NEXTVAL, #{uploadImgPath}, #{uploadImgOgName}, #{uploadImgRename}, #{uploadImgOrder}, #{category}, #{productNo}, NULL, NULL, NULL)
+	</insert>
+	
+	<!-- 옵션 비우기 -->
+	<delete id="delOption">
+		DELETE FROM "OPTION" WHERE PRODUCT_NO = #{productNo}
+	</delete>
+	
+	<!-- 새 옵션 추가 -->
+	<insert id="insertOption2">
+		INSERT INTO "OPTION"
+		VALUES(SEQ_OPTION_ID.NEXTVAL, #{optionName}, #{optionValue}, #{productCount}, #{productNo})
+	</insert>
+	
+	<!-- 수정상품 등록 -->
+	<update id="modifyRegistProduct">
+		UPDATE "PRODUCT"
+		SET PRODUCT_NAME = #{productName},
+			CATEGORY_NO = #{smallCategoryNo},
+			PRODUCT_PRICE = #{productPrice},
+			PARTNER_NO = #{memberNo}
+		WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	
+<!-- 접수관리 -->
+
+	<!-- 판매관리 판매상품 개수조회 -->
+	<select id="selectReceiptListCount">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE PRODUCT_UPDATE_DATE IS NOT NULL
+	</select>
+
+	<select id="selectReceiptList">
+		SELECT DISTINCT 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    TO_CHAR(p.PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		    TO_CHAR(p.PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME,
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
+		    o2.OPTION_NAME,
+		    o2.OPTION_VALUE,
+		    o2.PRODUCT_COUNT
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		JOIN ORDER_DETAIL od ON p.PRODUCT_NO = od.PRODUCT_NO
+		JOIN ORDERS o ON od.ORDER_NO = o.ORDER_NO
+		JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		WHERE o.STATUS = 'paid'
+		AND p.PRODUCT_FL = 'N'
+		AND uf.UPLOAD_IMG_ORDER = 0
+		AND p.PARTNER_NO =  #{partnerNo}
+		ORDER BY p.PRODUCT_NO DESC, o2.OPTION_NAME
+	</select>
+	
+</mapper>

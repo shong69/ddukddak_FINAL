@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddukddak.ecommerce.model.mapper.eCommerceMapper">
+	
+	<!-- 오늘의 상품 -->
+	<select id="selectProduct">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,BIG_CATEGORY_NO,
+		UPLOAD_IMG_ORDER, CATEGORY,
+		CASE 
+	        WHEN EXISTS (SELECT 1
+	        						FROM WISHLIST w
+	        						WHERE w.PRODUCT_NO = p.PRODUCT_NO
+	        						AND w.MEMBER_NO = #{memberNo}) 
+	        THEN 1 
+	        ELSE 0 
+	    END AS WISH
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY
+		NATURAL JOIN BIG_CATEGORY
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+	</select>
+	
+	<!-- 베스트 상품 -->
+	<select id="selectBestProduct">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, CATEGORY, BIG_CATEGORY_NO,
+		CASE 
+	        WHEN EXISTS (SELECT 1
+	        						FROM WISHLIST w
+	        						WHERE w.PRODUCT_NO = p.PRODUCT_NO
+	        						AND w.MEMBER_NO = #{memberNo}) 
+	        THEN 1 
+	        ELSE 0 
+	    END AS WISH
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY
+		NATURAL JOIN BIG_CATEGORY
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND CATEGORY = 1
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		ORDER BY p.PRODUCT_NO
+	</select>
+	
+	<!-- 카테고리별 베스트상품 출력 -->
+	<select id="BestProduct">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME,
+		UPLOAD_IMG_ORDER, CATEGORY, BIG_CATEGORY_NO
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		NATURAL JOIN CATEGORY c
+		NATURAL JOIN BIG_CATEGORY b
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND BIG_CATEGORY_NO = ${categoryNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+	
+	<!-- 카테고리별 상품목록 출력 -->
+	<select id="selectProductList">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, p.CATEGORY_NO "CATEGORY_NO", PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME, BIG_CATEGORY_NO,
+		UPLOAD_IMG_ORDER, CATEGORY
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		LEFT JOIN CATEGORY c ON(p.CATEGORY_NO = c.CATEGORY_NO)
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND CATEGORY = #{smallcategoryNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		<![CDATA[
+			AND PRODUCT_PRICE > #{minPrice}
+			AND PRODUCT_PRICE < #{maxPrice}
+		]]>
+		ORDER BY p.PRODUCT_NO
+	</select>
+	
+	<!-- 검색없이 정렬순서 바꾸기 -->
+	<select id="selectProductListOrder">
+		SELECT 
+	    p.PRODUCT_NO, p.PRODUCT_NAME, p.PRODUCT_PRICE, p.PRODUCT_CREATE_DATE, p.PRODUCT_UPDATE_DATE, 
+	    p.PRODUCT_FL, p.CATEGORY_NO, p.PARTNER_NO, uf.UPLOAD_IMG_NO, uf.UPLOAD_IMG_PATH, 
+		uf.UPLOAD_IMG_OG_NAME, uf.UPLOAD_IMG_RENAME, BIG_CATEGORY_NO, uf.UPLOAD_IMG_ORDER,
+	    CASE 
+	        WHEN EXISTS (SELECT 1
+	        						FROM WISHLIST w
+	        						WHERE w.PRODUCT_NO = p.PRODUCT_NO
+	        						AND w.MEMBER_NO = #{memberNo}) 
+	        THEN 1 
+	        ELSE 0 
+	    END AS WISH
+		FROM 
+		    PRODUCT p
+		JOIN 
+		    UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		LEFT JOIN 
+		    CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		NATURAL JOIN BIG_CATEGORY
+		WHERE 
+		    uf.UPLOAD_IMG_ORDER = 0
+		    AND p.PRODUCT_FL = 'N'
+		    AND c.CATEGORY_NO = #{smallcategoryNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		<![CDATA[
+			AND PRODUCT_PRICE > #{minPrice}
+			AND PRODUCT_PRICE < #{maxPrice}
+		]]>
+		ORDER BY
+				CASE 
+		        WHEN #{sort} = 1 THEN p.PRODUCT_UPDATE_DATE
+		        ELSE NULL
+		    END DESC,
+		    CASE 
+		        WHEN #{sort} = 2 THEN p.PRODUCT_UPDATE_DATE
+		        ELSE NULL
+		    END ASC,
+		    CASE 
+		        WHEN #{sort} = 3 THEN PRODUCT_PRICE
+		        ELSE NULL
+		    END DESC,
+		    CASE 
+		        WHEN #{sort} = 4 THEN PRODUCT_PRICE
+		        ELSE NULL
+		    END ASC
+	</select>
+	
+	<!-- 검색으로 찾은 상품 정렬순서 바꾸기 -->
+	<select id="selectSearchListOrder">
+		SELECT 
+	    p.PRODUCT_NO, p.PRODUCT_NAME, p.PRODUCT_PRICE, p.PRODUCT_CREATE_DATE, p.PRODUCT_UPDATE_DATE, 
+	    p.PRODUCT_FL, p.CATEGORY_NO, p.PARTNER_NO, uf.UPLOAD_IMG_NO, uf.UPLOAD_IMG_PATH, 
+		uf.UPLOAD_IMG_OG_NAME, uf.UPLOAD_IMG_RENAME, BIG_CATEGORY_NO, uf.UPLOAD_IMG_ORDER,
+	    CASE 
+	        WHEN EXISTS (SELECT 1
+	        						FROM WISHLIST w
+	        						WHERE w.PRODUCT_NO = p.PRODUCT_NO
+	        						AND w.MEMBER_NO = #{memberNo}) 
+	        THEN 1 
+	        ELSE 0 
+	    END AS WISH
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		LEFT JOIN CATEGORY c ON(p.CATEGORY_NO = c.CATEGORY_NO)
+		NATURAL JOIN BIG_CATEGORY
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND (PRODUCT_NAME LIKE '%' || #{query} || '%'
+			OR CATEGORY_NAME LIKE '%' || #{query} || '%'
+			OR BIG_CATEGORY_NAME LIKE '%' || #{query} || '%')
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		ORDER BY
+			CASE 
+	        WHEN #{sort} = 1 THEN p.PRODUCT_UPDATE_DATE
+	        ELSE NULL
+	    END DESC,
+	    CASE 
+	        WHEN #{sort} = 2 THEN p.PRODUCT_UPDATE_DATE
+	        ELSE NULL
+	    END ASC,
+	    CASE 
+	        WHEN #{sort} = 3 THEN PRODUCT_PRICE
+	        ELSE NULL
+	    END DESC,
+	    CASE 
+	        WHEN #{sort} = 4 THEN PRODUCT_PRICE
+	        ELSE NULL
+	    END ASC
+	</select>
+	
+	<select id="selectProductListCount1">
+		SELECT COUNT(*)
+		FROM "PRODUCT" 
+		WHERE CATEGORY_NO = #{smallcategoryNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+	</select>
+	
+	<select id="selectProductListCount">
+		SELECT COUNT(*)
+		FROM "PRODUCT" 
+		WHERE CATEGORY_NO = #{smallcategoryNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		<![CDATA[
+			AND PRODUCT_PRICE > #{minPrice}
+			AND PRODUCT_PRICE < #{maxPrice}
+		]]>
+	</select>
+	
+	<!-- 대분류 카테고리 선택 -->
+	<select id="selectCategory">
+		WITH RankedCategories AS (
+	    SELECT 
+	        c.CATEGORY_NO, 
+	        b.BIG_CATEGORY_NAME, 
+	        b.BIG_CATEGORY_NO,
+	        ROW_NUMBER() OVER (PARTITION BY b.BIG_CATEGORY_NO ORDER BY c.CATEGORY_NO) AS rn
+	    FROM CATEGORY c
+	    LEFT JOIN BIG_CATEGORY b ON c.BIG_CATEGORY_NO = b.BIG_CATEGORY_NO
+	)
+	SELECT CATEGORY_NO, BIG_CATEGORY_NAME, BIG_CATEGORY_NO
+	FROM RankedCategories
+	WHERE rn = 1
+	</select>
+	
+	<!-- 소분류 카테고리 선택 -->
+	<select id="selectSmallCategory">
+		SELECT CATEGORY_NO, CATEGORY_NAME, b.BIG_CATEGORY_NO, BIG_CATEGORY_NAME
+		FROM CATEGORY c JOIN BIG_CATEGORY b ON(c.BIG_CATEGORY_NO = b.BIG_CATEGORY_NO)
+		WHERE b.BIG_CATEGORY_NO = #{bigcategoryNo}
+	</select>
+	
+	<!-- 대분류 카테고리 이름 -->
+	<select id="selectBigCategoty">
+		SELECT BIG_CATEGORY_NAME
+		FROM BIG_CATEGORY
+		WHERE BIG_CATEGORY_NO = #{bigcategoryNo}
+	</select>
+	
+	<!-- 상품 상세정보 -->
+	<select id="selectOneProduct">
+		SELECT PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, CATEGORY_NO, PARTNER_NO,
+		CASE 
+	        WHEN EXISTS (SELECT 1
+	        						FROM WISHLIST w
+	        						WHERE w.PRODUCT_NO = PRODUCT_NO
+	        						AND w.MEMBER_NO = #{memberNo}) 
+	        THEN 1 
+	        ELSE 0 
+	    END AS WISH
+		FROM "PRODUCT"
+		NATURAL JOIN CATEGORY
+		NATURAL JOIN BIG_CATEGORY
+		WHERE PRODUCT_NO = #{productNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+	</select>
+	
+	<!-- 상품 상세정보 이미지리스트 -->
+	<select id="selectImgList">
+		SELECT * FROM "UPLOAD_FILE" WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 상품 상세정보 옵션리스트 -->
+	<select id="selectOptionList">
+		SELECT * FROM "OPTION" WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 상품별 추천상품 출력 -->
+	<select id="recProduct">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, p.CATEGORY_NO "CATEGORY_NO", PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME, BIG_CATEGORY_NO,
+		UPLOAD_IMG_ORDER, CATEGORY,
+		CASE 
+	        WHEN EXISTS (SELECT 1
+	        						FROM WISHLIST w
+	        						WHERE w.PRODUCT_NO = p.PRODUCT_NO
+	        						AND w.MEMBER_NO = #{memberNo}) 
+	        THEN 1 
+	        ELSE 0 
+	    END AS WISH
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		LEFT JOIN CATEGORY c ON(p.CATEGORY_NO = c.CATEGORY_NO)
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND CATEGORY = #{smallcategoryNo}
+		AND p.PRODUCT_NO != #{productNo}
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+	</select>
+	
+	<!-- 상품의 옵션이름 출력 -->
+	<select id="selectOptionListName">
+		SELECT DISTINCT OPTION_NAME AS "optionName"
+		FROM "OPTION"
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	
+	<!-- 검색으로 찾은 상품개수 -->
+	<select id="getSearchCount1">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		NATURAL JOIN CATEGORY
+		NATURAL JOIN BIG_CATEGORY
+		WHERE PRODUCT_NAME LIKE '%' || #{query} || '%'
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		OR CATEGORY_NAME LIKE '%' || #{query} || '%'
+		OR BIG_CATEGORY_NAME LIKE '%' || #{query} || '%'
+	</select>
+	
+	<!-- 검색으로 찾은 상품개수 -->
+	<select id="getSearchCount">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		NATURAL JOIN CATEGORY
+		NATURAL JOIN BIG_CATEGORY
+		WHERE PRODUCT_NAME LIKE '%' || #{query} || '%'
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		OR CATEGORY_NAME LIKE '%' || #{query} || '%'
+		OR BIG_CATEGORY_NAME LIKE '%' || #{query} || '%'
+		<![CDATA[
+			AND PRODUCT_PRICE > #{minPrice}
+			AND PRODUCT_PRICE < #{maxPrice}
+		]]>
+	</select>
+	
+	<!-- 검색으로 찾은 상품리스트 -->
+	<select id="selectSearchList1">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, p.CATEGORY_NO "CATEGORY_NO", PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME, BIG_CATEGORY_NO,
+		UPLOAD_IMG_ORDER, CATEGORY,
+		CASE 
+	        WHEN EXISTS (SELECT 1
+	        						FROM WISHLIST w
+	        						WHERE w.PRODUCT_NO = p.PRODUCT_NO
+	        						AND w.MEMBER_NO = #{memberNo}) 
+	        THEN 1 
+	        ELSE 0 
+	    END AS WISH
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		LEFT JOIN CATEGORY c ON(p.CATEGORY_NO = c.CATEGORY_NO)
+		NATURAL JOIN BIG_CATEGORY
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND (PRODUCT_NAME LIKE '%' || #{query} || '%'
+			OR CATEGORY_NAME LIKE '%' || #{query} || '%'
+			OR BIG_CATEGORY_NAME LIKE '%' || #{query} || '%')
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		ORDER BY PRODUCT_NO
+	</select>
+	
+	<!-- 검색으로 찾은 상품리스트 -->
+	<select id="selectSearchList">
+		SELECT p.PRODUCT_NO, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CREATE_DATE, PRODUCT_UPDATE_DATE,
+		PRODUCT_FL, p.CATEGORY_NO "CATEGORY_NO", PARTNER_NO, UPLOAD_IMG_NO, UPLOAD_IMG_PATH, UPLOAD_IMG_OG_NAME, UPLOAD_IMG_RENAME, BIG_CATEGORY_NO,
+		UPLOAD_IMG_ORDER, CATEGORY,
+		CASE 
+	        WHEN EXISTS (SELECT 1
+	        						FROM WISHLIST w
+	        						WHERE w.PRODUCT_NO = p.PRODUCT_NO
+	        						AND w.MEMBER_NO = #{memberNo}) 
+	        THEN 1 
+	        ELSE 0 
+	    END AS WISH
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON(p.PRODUCT_NO = uf.PRODUCT_NO)
+		LEFT JOIN CATEGORY c ON(p.CATEGORY_NO = c.CATEGORY_NO)
+		NATURAL JOIN BIG_CATEGORY
+		WHERE UPLOAD_IMG_ORDER = 0
+		AND PRODUCT_FL = 'N'
+		AND (PRODUCT_NAME LIKE '%' || #{query} || '%'
+			OR CATEGORY_NAME LIKE '%' || #{query} || '%'
+			OR BIG_CATEGORY_NAME LIKE '%' || #{query} || '%')
+		AND PRODUCT_UPDATE_DATE IS NOT NULL
+		<![CDATA[
+			AND PRODUCT_PRICE > #{minPrice}
+			AND PRODUCT_PRICE < #{maxPrice}
+		]]>
+		ORDER BY PRODUCT_NO
+	</select>
+	
+	<!-- 판매사 페이지용 소분류 카테고리 조회 -->
+	<select id="selectSmallCategory2">
+		SELECT * FROM "CATEGORY"
+	</select>
+	
+
+	<select id="selectMember">
+		SELECT *
+		FROM "MEMBER"
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<!-- 주문생성(paid 추후 수정) -->
+	<insert id="createOrder" parameterType="Orders">
+		INSERT INTO "ORDERS"
+		VALUES(SEQ_ORDER_NO.NEXTVAL,
+				DEFAULT,
+				#{totalPrice},
+				DEFAULT,
+				#{memberNo},
+				DEFAULT,
+				#{merchantUid},
+				DEFAULT,
+				DEFAULT
+				)
+	</insert>
+	
+
+	
+
+	<insert id="insertQna">
+		INSERT INTO "QNA"
+		VALUES(SEQ_QNA_NO.NEXTVAL, #{qnaTitle}, #{qnaContent}, NULL, #{memberNo}, NULL)
+	</insert>
+
+	
+	
+	
+	
+	<!--리뷰 등록하기-->
+    <insert id="postReview" parameterType="Review" useGeneratedKeys="true" >
+    	<selectKey order="BEFORE" resultType="_int" keyProperty="reviewNo">
+    		SELECT SEQ_REVIEW_NO.NEXTVAL FROM DUAL
+    	</selectKey>
+        INSERT INTO "REVIEW"
+        VALUES (reviewNo, #{reviewContent},SYSDATE, NULL, #{reviewRating}, #{productNo}, )
+    </insert>
+
+	<!--리뷰 리스트 불러오기-->
+	<select id="selectReviewList">
+		SELECT REVIEW_NO, REVIEW_CONTENT, REVIEW_CREATE_DATE, REVIEW_UPDATE_DATE,
+		REVIEW_RATING, PRODUCT_NO, MEMBER_NO, ORDER_ITEM_NO, REVIEW_DEL_FL
+		FROM REVIEW
+		WHERE PRODUCT_NO= #{productNo}
+	</select>
+	
+	<!--해당 상품에서 내가 작성할 수 있는 주문상품 리스트 찾기 -->
+	<select id="checkReviewAuth">
+		SELECT O.ORDER_NO, ORDER_DATE, D.ORDER_STATUS, ORDER_DEL_FL, D.ORDER_ITEM_NO, ORDER_QUANTITY, ORDER_PRICE, D.PRODUCT_NO,P.PRODUCT_NAME, 
+		L.DELIVERY_ADDRESS, R.MEMBER_NO,
+		(SELECT UPLOAD_IMG_PATH||UPLOAD_IMG_RENAME FROM UPLOAD_FILE F WHERE F.PRODUCT_NO = D.PRODUCT_NO AND UPLOAD_IMG_ORDER=0) PRODUCT_IMG,
+		(LISTAGG(OPTION_VALUE,',') WITHIN GROUP (ORDER BY T.OPTION_NO)) OPTION_VALUE
+		FROM ORDERS O
+		LEFT JOIN ORDER_DETAIL D ON(O.ORDER_NO = D.ORDER_NO)
+		LEFT JOIN ORDERDETAIL_OPTION O2 ON(O2.ORDER_ITEM_NO = D.ORDER_ITEM_NO)
+		LEFT JOIN PRODUCT P ON(D.PRODUCT_NO = P.PRODUCT_NO)
+		LEFT JOIN DELIVERY L ON(O.DELIVERY_ID = L.DELIVERY_ID)
+		LEFT JOIN "OPTION" T ON(T.OPTION_NO=O2.OPTION_NO)
+		LEFT JOIN REVIEW R ON(R.PRODUCT_NO = P.PRODUCT_NO)
+		WHERE R.MEMBER_NO = #{memberNo}
+		AND P.PRODUCT_NO = #{productNo}
+		AND STATUS = 'paid'
+		AND ORDER_STATUS = '구매확정'
+		AND REVIEW_DEL_FL = 'N'
+		GROUP BY 
+		    O.ORDER_NO, O.ORDER_DATE, D.ORDER_STATUS, O.ORDER_DEL_FL, 
+		    D.ORDER_ITEM_NO, D.ORDER_QUANTITY, D.ORDER_PRICE, D.PRODUCT_NO, 
+		    P.PRODUCT_NAME, L.DELIVERY_ADDRESS, R.MEMBER_NO, R.REVIEW_DEL_FL
+		ORDER BY ORDER_DATE DESC;
+	</select>
+
+</mapper>

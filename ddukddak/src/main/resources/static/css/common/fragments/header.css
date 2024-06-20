@@ -1,0 +1,52 @@
+header {
+    top: 0;
+    position: sticky;
+    background-color: white;
+    display: flex;
+    width: 100%;
+    z-index: 100;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/* 로고 */
+header > div:nth-child(1) {
+    flex-basis: 10%;
+    padding: 0 10px;
+}
+
+header > div:nth-child(1) img {
+    cursor: pointer;
+}
+
+/* 네비바 */
+header > div:nth-child(2) {
+    flex-basis: 75%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+header > div:nth-child(2) > a {
+    padding: 0 30px;
+}
+
+header > div:nth-child(2) > a > h4 {
+    font-weight: bold;
+}
+
+/* 로그인/회원가입 */
+header > div:nth-child(3) {
+    flex-basis: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header > div:nth-child(3) > a {
+    padding: 0 20px;
+}
+

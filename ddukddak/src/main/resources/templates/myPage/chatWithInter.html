@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 마이페이지</title>
+    <link rel="stylesheet" href="/css/myPage/interChat.css">
+    <link rel="stylesheet" href="/css/common/fragments/myPageSidebar.css">
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/style.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+    <script src="https://kit.fontawesome.com/4b505ed7b7.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+    <main>
+
+        <th:block th:replace="~{common/fragments/myPageProfileSection}"></th:block>
+
+        <section class="myPage-row2">
+            <th:block th:replace="~{common/fragments/myPageSideBar}"></th:block>
+
+            <section class="myPage-main">
+                <h2 class="category-name">시공사와의 채팅</h2>
+
+                <div id="addTargetPopupLayer" class="popup-layer-close">  
+                    <span id="closeBtn">×</span>
+        
+                    <div class="target-input-area">
+                        <input type="search" id="targetInput" placeholder="닉네임 또는 이메일을 입력하세요" autocomplete="off">
+                        <div id="inputCloseBtn" style="cursor:pointer"><i class="fa-solid fa-trash"></i></div>
+                    </div>
+                    <div class="reaultDiv">
+                        <ul id="resultArea"></ul>
+                    </div>
+                    
+                </div>
+                <div class="chatting-area-box">
+                    <div class="chatting-header">
+                        <div class="chatting-header1">
+                            <div id="addTarget"class="fa-solid fa-user-plus" title="시공사 추가"></div>
+                        </div>
+                    </div><!--뚜껑-->
+                    
+                    <div class="chatting-area">
+                        <ul class="chatting-list">
+                            <th:block th:each="room : ${roomList}">
+                                <li class="chatting-item" th:chat-no="${room.chattingNo}" th:target-no="${room.targetNo}">
+                                    <div class="item-header">
+            
+                                        <img class="list-profile" th:if="${room.targetProfile}" src="/images/default/main.jpg">
+                                        <img class="list-profile" th:unless="${room.targetProfile}" th:src="/images/default/main.jpg">
+                                        
+                                    </div>
+                                    <div class="item-body">
+                                        <p>
+                                            <span class="target-name" th:text="${room.targetNickName}">닉네임</span>
+                                            <span class="recent-send-time" th:text="${room.sendTime}">2024.06.03</span>
+                                        </p>
+                                        <div>
+                                            <p class="recent-message" th:utext="${room.lastMessage}">채팅 내용</p>
+                                            <p th:if="${room.notReadCount>0}" class="not-read-count" th:text="${room.notReadCount}"></p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </th:block>
+                        </ul>
+            
+                        <div class="prev-message">
+                            <h1>채팅방을 선택해주세요</h1>	
+                        </div>
+                        
+                        <div class="chatting-content display-none">
+                            <ul class="display-chatting"></ul>
+
+                            <div class="input-area">
+                                <textarea id="inputChatting" rows="5"></textarea>
+            
+                                <button id="send">보내기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </section>
+        </section>
+    </main>
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script th:inline="javascript">
+		// 로그인한 회원 번호
+		const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원 번호";
+	</script>
+    <script src="/js/myPage/interChat.js"></script>
+
+
+</body>
+
+</html>

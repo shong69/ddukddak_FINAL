@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddukddak.myPage.model.mapper.MemberInfoMapper">
+
+	<!--프로필 이미지 업데이트-->
+	<update id="updateImg">
+		UPDATE "MEMBER" SET
+		PROFILE_IMG = #{profileImg}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<!-- 비밀번호 여부 조회 -->
+	<select id="selectPw">
+		SELECT MEMBER_PW
+		FROM "MEMBER"
+		WHERE MEMBER_NO = #{member_no}
+	</select>
+	<!--비밀번호 업데이트-->
+	<update id="changePassword">
+		UPDATE "MEMBER" SET
+		MEMBER_PW = #{encPw}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	
+	<!--이메일 중복 검사-->
+	<select id="checkEmail">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_DEL_FL = 'N'
+		AND MEMBER_EMAIL=#{memberEmail}
+	</select>
+	<!--이메일 업데이트-->
+	<update id="updateEmail">
+		UPDATE "MEMBER" SET
+		MEMBER_EMAIL = #{memberEmail}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	
+	
+	<!--닉네임 중복 조회-->
+	<select id="dupNickname">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_DEL_FL = 'N'
+		AND MEMBER_NICKNAME = #{memberNickname}
+	</select>
+	<!-- 닉네임 변경 횟수 조회 -->
+	<select id="changeCount">
+		SELECT COUNT(*)
+		FROM "NICKNAME_CHANGE_LOG"
+		WHERE MEMBER_NO = #{memberNo}
+		AND TO_CHAR(CHANGE_DATE, 'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
+	</select>
+	<!--닉네임 업데이트-->
+	<update id="updateNickname">
+		UPDATE "MEMBER" SET
+		MEMBER_NICKNAME = #{memberNickname}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+
+	<!-- 닉네임 로그 테이블 업데이트 -->
+	<insert id = "insertNicknameChangeLog">
+		INSERT INTO "NICKNAME_CHANGE_LOG"
+		VALUES(NICKNAME_CHANGE_LOG_SEQ.NEXTVAL, 
+		#{memberNo}, 
+		#{oldNickname},
+		#{memberNickname},
+		SYSDATE)
+	</insert>
+	
+	<!--이메일 중복 검사-->
+	<select id="checkPhoneNum">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_DEL_FL = 'N'
+		AND MEMBER_TEL=#{phoneNum}
+	</select>
+	
+	<!-- 휴대폰 번호 업데이트하기 -->
+	<update id="updatePhoneNum">
+		UPDATE "MEMBER" SET
+		MEMBER_TEL = #{updatePhoneNum}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+</mapper>

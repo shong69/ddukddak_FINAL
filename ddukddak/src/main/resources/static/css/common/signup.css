@@ -1,0 +1,101 @@
+main {
+    width: 1440px;
+    height: 100vh;
+    color: var(--gray1);
+}
+
+.signupTitle1 {
+    color: var(--secondary);
+    margin-bottom: 60px;
+    font-size: 34px;
+    letter-spacing: 0.3em;
+    margin-left: 10.2px;
+}
+
+.signupTitle2 {
+    font-weight: 700;
+}
+
+.signupBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+/* 회원가입 전체 컨테이너 */
+.signupContainer {
+    border: 1px solid black;
+    border-radius: 30px;
+    width: 600px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 회원, 파트너 선택 전체 영역 */
+.signupChoiceArea {
+    display: flex;
+    width: 400px;
+    height: 300px;
+    margin-top: 50px;
+}
+
+/* 회원 선택 영역 */
+.memberChoiceArea {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 28px;
+    
+}
+
+/* 파트너 선택 영역 */
+.partnerChoiceArea {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 28px;
+}
+
+
+.horizontal-align {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.horizontal-align input[type="radio"] {
+    margin-right: 10px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+
+
+.choiceBtnArea {
+    
+    height: 100px;
+}
+
+
+input[type='radio'] {
+    width: 13px;
+    height: 13px;
+    cursor: pointer;
+}
+
+label {
+    cursor: pointer;
+}

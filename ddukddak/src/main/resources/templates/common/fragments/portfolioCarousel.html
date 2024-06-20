@@ -1,0 +1,57 @@
+<div class="slideshow-container">
+    <!-- Full-width images with number and caption text -->
+    <div class="mySlides fade">
+        <a th:href="@{/partner/projectDetail/{portfolioNo}(portfolioNo=*{portfolioNo})}" method="GET">
+            <img src="/images/partner/interior/portfolio/portfolio_ex_main.jpg" style="width:100%" class="adBannerImg">
+            <div class="text-overlay">
+                <h1 class="text-title" th:text="*{projectName}">외국계 글로벌 데비마이어 목동 사옥</h1>
+                <h3 class="text-subtitle" th:text="*{projectContent}">완성도 높은 디자인과 전문적인 시공기술을 바탕으로 최상의 품질과 서비스를 제공하기 위해 최선을 다하고 있습니다</h3>
+                <h4 class="text-date" th:text="|*{constructionYear} 년|">2024-03-25</h4>
+            </div>
+        </a>
+    </div>
+
+    <div class="mySlides fade">
+        <a href="">
+            <img src="/images/partner/interior/portfolio/portfolio_ex_1.jpg" style="width:100%" class="adBannerImg">
+            <div class="text-overlay">
+                <h1 class="text-title">외국계 글로벌 데비마이어 목동 사옥</h1>
+                <h3 class="text-subtitle">완성도 높은 디자인과 전문적인 시공기술을 바탕으로 최상의 품질과 서비스를 제공하기 위해 최선을 다하고 있습니다</h3>
+                <h4 class="text-date">2024-03-25</h4>
+            </div>
+        </a>
+    </div>
+
+    <div class="mySlides fade">
+        <a href="">
+            <img src="/images/partner/interior/portfolio/portfolio_ex_2.jpg" style="width:100%" class="adBannerImg">
+            <div class="text-overlay">
+                <h1 class="text-title">외국계 글로벌 데비마이어 목동 사옥</h1>
+                <h3 class="text-subtitle">완성도 높은 디자인과 전문적인 시공기술을 바탕으로 최상의 품질과 서비스를 제공하기 위해 최선을 다하고 있습니다</h3>
+                <h4 class="text-date">2024-03-25</h4>
+            </div>
+        </a>
+    </div>
+
+    <div class="mySlides fade">
+        <a href="">
+            <img src="/images/partner/interior/portfolio/portfolio_ex_3.jpg" style="width:100%" class="adBannerImg">
+            <div class="text-overlay">
+                <h1 class="text-title">외국계 글로벌 데비마이어 목동 사옥</h1>
+                <h3 class="text-subtitle">완성도 높은 디자인과 전문적인 시공기술을 바탕으로 최상의 품질과 서비스를 제공하기 위해 최선을 다하고 있습니다</h3>
+                <h4 class="text-date">2024-03-25</h4>
+            </div>
+        </a>
+    </div>
+
+    <!-- Next and previous buttons -->
+    <a class="prev" onclick="plusSlides(-1)"><i class="fa-solid fa-chevron-left"></i></a>
+    <a class="next" onclick="plusSlides(1)"><i class="fa-solid fa-chevron-right"></i></a>
+</div>
+
+<!-- The dots/circles -->
+<div class="circle">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+</div>

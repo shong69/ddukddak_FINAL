@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뚝딱뚝딱 : 쇼핑</title>
+
+    <link rel="stylesheet" href="/css/common/fragments/header.css">
+    <link rel="stylesheet" href="/css/common/fragments/footer.css">
+    <link rel="stylesheet" href="/css/common/main.css">
+    <link rel="stylesheet" href="/css/common/button.css">
+    <link rel="stylesheet" href="/css/eCommerce/eCommercePayment.css">
+    <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+</head>
+<body>
+    <th:block th:replace="~{common/fragments/header}"></th:block>
+
+    <h2 style="text-align: center; margin: 50px;">주문/결제</h2>
+
+    
+    <form action="/eCommerce/complete" id="paymentForm">
+        <!-- 배송지 -->
+        <div class="infoBox">
+            <h3>배송지</h3>
+
+            <div id="delivery">
+                <div id="change">
+                    <h4 style="margin-right: 850px;" th:text="${loginMember.memberNickname}">홍길동</h4>
+                    <!-- <button class="eCommerBuyDetailUpdateBtn">변경</button> -->
+                </div>
+                
+                <input type="hidden" name="memberNo" th:value="${loginMember.memberNo}">
+
+                <h4 style="color: rgb(165, 165, 165);" th:text="${loginMember.memberTel}">010-1234-1234</h4>
+                
+                
+                <h4 th:text="${loginMember.memberAddr}">주소</h4>
+                
+                <input id="memberAddr" type="hidden" name="memberAddr" th:value="${loginMember.memberAddr}">
+                
+                
+
+                <select id="delivery-memo">
+                    <option>배송메모를 선택해 주세요</option>
+                    <option>문 앞에 놓아주세요.</option>
+                    <option>배송 후 문자주세요.</option>
+                    <option>경비실에 맡겨주세요.</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 주문상품 -->
+        <div class="infoBox" style="margin-top: 100px;">
+            <input id="merchantUid" type="hidden" th:value="${merchantUid}">
+            <h3>주문상품</h3>
+
+            <div>
+
+                <div id="title">
+                    <!-- <h4 style="margin-right: 830px;">책상</h4> -->
+                    <!-- <h5 style="color: rgb(165, 165, 165);">배송비 : 3,000원</h5> -->
+                </div>
+
+                <th:object th:unless="${#lists.isEmpty(cartList)}">
+                    <div class="optionBox" th:each="item : ${cartList}" th:object="${item}">
+                        <img th:src="|*{uploadImgPath}*{uploadImgRename}|" style="height: 80px; max-width: 80px; margin-top: 4px;">
+
+                        <div class="itemInfo">
+                            <div>
+                                <h5 id="productName" th:text="*{productName}" style="font-weight: 600;"></h5>
+                                <h5 th:text="|*{optionValue}  - 수량 *{productCount}개|" style="color: var(--gray2); font-weight: 500; font-size: 13px;"></h5>
+                                <!-- <h5 th:text="|*{productCount}개|" style="color: var(--gray2); font-weight: 500; font-size: 13px;"></h5> -->
+                            </div>
+
+                            <!-- <div id="option">
+                                <h5 style="border: 1px solid var(--gray2); padding: 2px; color: var(--gray2)">옵션</h5>
+                                <h5 th:text="*{optionValue}" style="color: var(--gray2); font-weight: 500; font-size: 13px;"></h5>
+                            </div> -->
+
+                            <h3 class="price" style="margin: 20px 7px; font-weight: 700; letter-spacing: 0.05em" th:text="|*{productPrice * productCount}원|">13,900원</h3>
+                        </div>
+                    </div>
+                </th:object>
+
+            </div>
+
+
+            <block id="total">
+                <div style="width: 50%;">
+                    <h3 style="white-space: nowrap">총 주문금액</h3>
+                </div>
+                <div style="width: 50%; text-align: end;">
+                    <h3 id="totalPrice" th:text="${totalPrice}" style="white-space: nowrap; font-weight: 700; letter-spacing: 0.05em;">1,762,900원</h3>
+                    <input type="hidden" name="totalPrice" th:value="${totalPrice}">
+                </div>
+            </block>
+
+        </div>
+
+        <!-- 결제수단 -->
+        <div class="infoBox" style="margin-top: 100px;">
+            <h3>결제수단</h3>
+
+            <div id="pamentOption">
+                <div>
+                    <input type="radio" id="option1" name="option" value="1" checked>
+                    <label for="option1">카카오 페이</label>
+                </div>
+                <div>
+                    <input type="radio" id="option2" value="2" disabled>
+                    <label for="option2">무통장 입금</label>
+                </div>
+                <!-- <div>
+                    <input type="radio" id="option3" name="option" value="3">
+                    <label for="option3">간편 결제</label></br>
+                </div> -->
+            </div>
+
+        </div>
+
+        <div style="display: flex; margin-top: 50px; width: 1000px;">
+            <input id="agree" type="radio">
+            <label style="margin-left: 10px;" for="agree">
+                이용약관 동의
+                <h5 style="color: rgb(165, 165, 165); margin-top: 10px;">
+                    주문 내용을 확인했으며 서비스 약관 및 결제에 동의합니다.
+                </h5>
+            </label>
+        </div>
+        <div style="width: 100%; display: flex; justify-content: center">
+            <button onclick="onClickPay()" type="button" id="payBtn" class="eCommerBuyDetailConfirmBtn" style="margin: 60px 0;">결제하기</button>
+        </div>
+    </form>
+    
+    
+    
+    <th:block th:replace="~{common/fragments/footer}"></th:block>
+    <script th:inline="javascript">
+        const nickName = /*[[${loginMember.memberNickname}]]*/ "닉넴";
+        const email = /*[[${loginMember.memberEmail}]]*/ "이메일";
+        
+        const tel = /*[[${loginMember.memberTel}]]*/ "휴대폰";
+
+    </script>
+    <!-- iamport.payment.js -->
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+    <script src="/js/eCommerce/eCommercePayment.js"></script>
+    
+</body>
+</html>

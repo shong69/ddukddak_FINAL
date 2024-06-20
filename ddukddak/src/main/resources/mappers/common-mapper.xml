@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddukddak.common.mapper.CommonMapper">
+	
+	<!-- 비밀번호 찾기 - 아이디 검색(공통) -->
+	<select id="idCheck" resultType="_int">
+		SELECT COUNT(*)
+		FROM (
+		    SELECT MEMBER_ID
+		    FROM "MEMBER"
+		    WHERE MEMBER_ID = #{id}
+		    AND MEMBER_DEL_FL = 'N'
+		    
+		    UNION
+		    
+		    SELECT PARTNER_ID
+		    FROM "PARTNER"
+		    WHERE PARTNER_ID = #{id}
+		    AND PARTNER_DEL_FL = 'N'
+		)
+	</select>
+	
+	<!-- 비밀번호 찾기 - 아이디, 전화번호 일치 여부 확인 -->
+	<select id="commonITCheck" parameterType="map" resultType="string">
+		SELECT ID
+		FROM (
+		    SELECT MEMBER_ID AS ID
+		    FROM "MEMBER"
+		    WHERE MEMBER_ID = #{id}
+		    AND MEMBER_TEL = #{tel}
+		
+		    UNION
+		
+		    SELECT PARTNER_ID AS ID
+		    FROM PARTNER
+		    WHERE PARTNER_ID = #{id}
+		    AND PARTNER_TEL = #{tel}
+		)
+		
+	</select>
+	
+	<!-- 비밀번호 변경 - 기존 비밀번호 꺼내오기 -->
+	<select id="pwCheck">
+		SELECT PW
+		FROM (
+		    SELECT MEMBER_PW AS PW
+		    FROM "MEMBER"
+		    WHERE MEMBER_ID = #{inputId}
+		    AND MEMBER_DEL_FL = 'N'
+		    
+		    UNION
+		    
+		    SELECT PARTNER_PW AS PW
+		    FROM PARTNER
+		    WHERE PARTNER_ID = #{inputId}
+		    AND PARTNER_DEL_FL = 'N'		    
+		)
+	</select>
+	
+	
+	<!-- 비밀번호 업데이트 멤버부터 시도-->
+	<update id="changeMemberPw">
+		UPDATE "MEMBER" SET
+		MEMBER_PW = #{inputPw}
+		WHERE MEMBER_ID = #{inputId}
+		AND MEMBER_TEL = #{inputTel}
+		AND MEMBER_DEL_FL = 'N'
+	</update>
+	
+	<!-- 회원 업데이트 실패 시 파트너 업데이트  -->
+	<update id="changePartnerPw">
+		UPDATE "PARTNER" SET
+		PARTNER_PW = #{inputPw}
+		WHERE PARTNER_ID = #{inputId}
+		AND PARTNER_TEL = #{inputTel}
+		AND PARTNER_DEL_FL = 'N'
+	</update>
+	
+</mapper>
