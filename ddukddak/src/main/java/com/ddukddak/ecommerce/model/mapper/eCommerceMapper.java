@@ -144,6 +144,13 @@ public interface eCommerceMapper {
 	 */
 	List<Category> selectSmallCategory2();
 
+
+	/** qna 입력
+	 * @param obj
+	 * @return
+	 */
+	int insertQna(Map<String, Object> obj);
+
 	/**리뷰 등록하기
 	 * @param review
 	 */
@@ -160,5 +167,6 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	List<Order> checkReviewAuth(Map<String, Object> map);
+
 
 }

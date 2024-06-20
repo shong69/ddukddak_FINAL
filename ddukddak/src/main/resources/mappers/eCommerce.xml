@@ -373,6 +373,12 @@
 	</select>
 	
 	
+
+	<insert id="insertQna">
+		INSERT INTO "QNA"
+		VALUES(SEQ_QNA_NO.NEXTVAL, #{qnaTitle}, #{qnaContent}, NULL, #{memberNo}, NULL)
+	</insert>
+
 	
 	
 	
@@ -418,4 +424,5 @@
 		    P.PRODUCT_NAME, L.DELIVERY_ADDRESS, R.MEMBER_NO, R.REVIEW_DEL_FL
 		ORDER BY ORDER_DATE DESC;
 	</select>
+
 </mapper>

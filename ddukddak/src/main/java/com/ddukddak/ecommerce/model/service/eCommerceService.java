@@ -102,6 +102,13 @@ public interface eCommerceService {
 	 */
 	List<Category> selectSmallCategory();
 
+
+	/** qna 입력
+	 * @param obj
+	 * @return
+	 */
+	int insertQna(Map<String, Object> obj);
+
 	/**리뷰 목록 조회하기
 	 * @param productNo
 	 * @return
@@ -143,6 +150,5 @@ public interface eCommerceService {
 	 * @return
 	 */
 	int updateReview(Review review, List<MultipartFile> reviewImgs);
-
 
 }

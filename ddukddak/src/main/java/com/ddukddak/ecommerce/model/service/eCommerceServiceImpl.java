@@ -299,6 +299,12 @@ public class eCommerceServiceImpl implements eCommerceService{
 		return mapper.selectSmallCategory2();
 	}
 
+
+	// qna 입력
+	@Override
+	public int insertQna(Map<String, Object> obj) {
+		return mapper.insertQna(obj);
+}
 	//리뷰 목록 조회하기
 	@Override
 	public List<Review> selectReviewList(int productNo) {
@@ -329,6 +335,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 	public int insertImgs(int reviewNo, List<MultipartFile> reviewImgs) {
 		
 		return 0;
+
 	}
 	
 	//리뷰 삭제하기
