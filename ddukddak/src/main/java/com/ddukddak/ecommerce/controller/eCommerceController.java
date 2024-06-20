@@ -382,6 +382,7 @@ public class eCommerceController {
 	@ResponseBody
 	public List<Order> checkReviewAuth(@RequestParam("productNo") int productNo,
 								@SessionAttribute("loginMember") Member member) {
+		log.info("상품번호{}, 회원번호{},결과{}",productNo, member.getMemberNo(),service.checkReviewAuth(productNo, member.getMemberNo()));
 		return service.checkReviewAuth(productNo, member.getMemberNo());
 	}
 	
