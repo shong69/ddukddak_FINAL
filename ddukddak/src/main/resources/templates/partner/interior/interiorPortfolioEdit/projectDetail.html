@@ -37,164 +37,119 @@
                 <h1 th:text="${project.projectName}">프로젝트명</h1>
             </div>
 
-            <div class="input-img-area">
-                <div class="projectImg thumbnail">
-                    <label for="img0">
-                        <img class="preview" src="/images/partner/interior/portfolioEdit/noImageDefault.png" alt="이미지를 추가하세요">
-                    </label>
-                    <input type="file" name="images" class="inputImg" id="img0">
-                    <span class="delete-img">&times;</span>
+            <form action="/partner/updateProject" method="POST" id="updateProjectForm" enctype="multipart/form-data">
+
+                <div class="input-img-area">
+                    <div class="projectImg thumbnail">
+                        <label th:for="|img${project.imgList[0].uploadImgOrder}|">
+                            <img class="preview" th:src="|${project.imgList[0].uploadImgPath}${project.imgList[0].uploadImgRename}|" alt="이미지를 추가하세요">
+                        </label>
+                        <input type="file" name="images" class="inputImg" th:id="|img${project.imgList[0].uploadImgOrder}|">
+                        <!-- <span class="delete-img">&times;</span> -->
+                    </div>
+
+                    <!-- <p>[[|img${project.imgList[0].uploadImgOrder}|]]</p> -->
+
+                    <div class="preview-img">
+
+                        <th:block th:each="img : ${project.imgList}" th:object="${img}">
+                            <div class="projectImg previewImg">
+                                <label th:for="|img${uploadImgOrder}|">
+                                    <img class="preview" th:src="|*{uploadImgPath}*{uploadImgRename}|">
+                                </label>
+                                <input type="file" name="images" class="inputImg" th:id="|img${uploadImgOrder}|">
+                                <!-- <span class="delete-img">&times;</span> -->
+                            </div>
+                        </th:block>
+
+                    </div>
                 </div>
 
-                <div class="preview-img">
-
-                    <div class="projectImg previewImg">
-                        <label for="img1">
-                            <img class="preview" src="">
-                        </label>
-                        <input type="file" name="images" class="inputImg" id="img1">
-                        <span class="delete-img">&times;</span>
+                <div class="project-info-area">
+                    <h2>프로젝트 정보</h2>
+                    <div class="project-info">
+                        <select th:field="${project.housingType}">
+                            <option th:value="'단독주택'">단독주택</option>
+                            <option th:value="'아파트'">아파트</option>
+                            <option th:value="'다세대 주택'">다세대 주택</option>
+                            <option th:value="'상가'">상가</option>
+                            <option th:value="'오피스텔'">오피스텔</option>
+                        </select>
+                        <div>
+                            <input th:value="${project.workArea}" type="number" placeholder="평수" min="0">
+                            <span>평</span>
+                        </div>
+                        
+                        <select th:field="${project.workForm}">
+                            <option th:value="'리모델링'" th:text="'리모델링'"></option>
+                            <option th:value="'바닥공사'" th:text="'바닥공사'"></option>
+                            <option th:value="'벽지도배'" th:text="'벽지도배'"></option>
+                        </select>
+                        <div>
+                            <input th:value="${project.constructionCost}" type="number" placeholder="가격" min="0" step="100000">
+                            <span>원</span>
+                        </div>
+                        
                     </div>
-
-                    <div class="projectImg previewImg">
-                        <label for="img2">
-                            <img class="preview" src="">
-                        </label> 
-                        <input type="file" name="images" class="inputImg" id="img2">
-                        <span class="delete-img">&times;</span>
-                    </div>
-
-                    <div class="projectImg previewImg">
-                        <label for="img3">
-                            <img class="preview" src="">
-                        </label>
-                        <input type="file" name="images" class="inputImg" id="img3">
-                        <span class="delete-img">&times;</span>
-                    </div>
-
-                    <div class="projectImg previewImg">
-                        <label for="img4">
-                            <img class="preview" src="">
-                        </label>
-                        <input type="file" name="images" class="inputImg" id="img4">
-                        <span class="delete-img">&times;</span>
-                    </div>
-
-                    <div class="projectImg previewImg">
-                        <label for="img5">
-                            <img class="preview" src="">
-                        </label>
-                        <input type="file" name="images" class="inputImg" id="img5">
-                        <span class="delete-img">&times;</span>
-                    </div>
-
-                    <div class="projectImg previewImg">
-                        <label for="img6">
-                            <img class="preview" src="">
-                        </label>
-                        <input type="file" name="images" class="inputImg" id="img6">
-                        <span class="delete-img">&times;</span>
-                    </div>
-
-                    <div class="projectImg previewImg">
-                        <label for="img7">
-                            <img class="preview" src="">
-                        </label>
-                        <input type="file" name="images" class="inputImg" id="img7">
-                        <span class="delete-img">&times;</span>
-                    </div>
-
-                    <div class="projectImg previewImg">
-                        <label for="img8">
-                            <img class="preview" src="">
-                        </label>
-                        <input type="file" name="images" class="inputImg" id="img8">
-                        <span class="delete-img">&times;</span>
-                    </div>
-
-                    <div class="projectImg previewImg">
-                        <label for="img9">
-                            <img class="preview" src="">
-                        </label>
-                        <input type="file" name="images" class="inputImg" id="img9">
-                        <span class="delete-img">&times;</span>
-                    </div>
-
-                    <div class="projectImg previewImg">
-                        <label for="img10">
-                            <img class="preview" src="">
-                        </label>
-                        <input type="file" name="images" class="inputImg" id="img10">
-                        <span class="delete-img">&times;</span>
-                    </div>
-
-                    <button class="viewMoreBtn">+</button>
-
                 </div>
-            </div>
 
-            <div class="project-info-area">
-                <h2>프로젝트 정보</h2>
-                <div class="project-info">
-                    <select th:field="${project.housingType}">
-                        <option th:value="'단독주택'" th:text="'단독주택'">단독주택</option>
-                        <option th:value="'아파트'" th:text="'아파트'">아파트</option>
-                        <option th:value="'다세대 주택'" th:text="'다세대 주택'">다세대 주택</option>
-                        <option th:value="'상가'" th:text="'상가'">상가</option>
-                        <option th:value="'오피스텔'" th:text="'오피스텔'">오피스텔</option>
-                    </select>
+                <div class="detail-info-area">
+                    <h2>세부 정보</h2>
                     <div>
-                        <input th:value="${project.workArea}" type="number" placeholder="평수" min="0">
-                        <span>평</span>
+                        <select th:field="${project.region}">
+                            <option th:value="'서울'">서울</option>
+                            <option th:value="'경기/인천'">경기/인천</option>
+                            <option th:value="'충청/대전'">충청/대전</option>
+                            <option th:value="'전라/광주'">전라/광주</option>
+                            <option th:value="'경북/대구'">경북/대구</option>
+                            <option th:value="'경남/부산/울산'">경남/부산/울산</option>
+                            <option th:value="'강원'">강원</option>
+                            <option th:value="'제주'">제주</option>
+                        </select>
+
+                        <input type="date" th:value="${project.constructionYear}">
+
+                        <select th:field="${project.familySize}">
+                            <option th:value="'1인 가족'">1인 가족</option>
+                            <option th:value="'2인 가족'">2인 가족</option>
+                            <option th:value="'4인 가족'">4인 가족</option>
+                            <option th:value="'기타'">기타</option>
+                        </select>
                     </div>
-                    
-                    <select th:field="${project.workForm}">
-                        <option th:value="'리모델링'" th:text="'리모델링'"></option>
-                        <option th:value="'바닥공사'" th:text="'바닥공사'"></option>
-                        <option th:value="'벽지도배'" th:text="'벽지도배'"></option>
-                    </select>
-                    <div>
-                        <input th:value="${project.constructionCost}" type="number" placeholder="가격" min="0" step="100000">
-                        <span>원</span>
-                    </div>
-                    
                 </div>
-            </div>
 
-            <div class="detail-info-area">
-                <h2>세부 정보</h2>
-                <div>
-                    <select th:field="${project.region}">
-                        <option th:value="'서울'">서울</option>
-                        <option th:value="'경기/인천'">경기/인천</option>
-                        <option th:value="'충청/대전'">충청/대전</option>
-                        <option th:value="'전라/광주'">전라/광주</option>
-                        <option th:value="'경북/대구'">경북/대구</option>
-                        <option th:value="'경남/부산/울산'">경남/부산/울산</option>
-                        <option th:value="'강원'">강원</option>
-                        <option th:value="'제주'">제주</option>
-                    </select>
-
-                    <input type="date" th:value="${project.constructionYear}">
-
-                    <select th:field="${project.familySize}">
-                        <option th:value="'1인 가족'">1인 가족</option>
-                        <option th:value="'2인 가족'">2인 가족</option>
-                        <option th:value="'4인 가족'">4인 가족</option>
-                        <option th:value="'기타'">기타</option>
-                    </select>
+                <div class="btn-area">
+                    <button class="boardCreateBtn" type="registMainProjectBtn">메인프로젝트 등록</button>
+                    <button class="boardCreateBtn">프로젝트 수정</button>
+                    <button class="boardCreateBtn" type="deleteProjectBtn">프로젝트 삭제</button>
                 </div>
-            </div>
 
-            <div class="btn-area">
-                <button class="boardCreateBtn">메인프로젝트 등록</button>
-                <button class="boardCreateBtn">프로젝트 수정</button>
-                <button class="boardCreateBtn">프로젝트 삭제</button>
-            </div>
+            </form>
 
         </div>
 
         <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+         <!-- 이미지 미리 보기 설정 -->
+        <script th:inline="javascript">
+
+            const imageList = /*[[${project.imageList}]]*/ [];
+            const previewList = document.querySelectorAll('img.preview');   
+            // img 태그 중에 preview 클래스
+
+            const orderList = [];   // 기존에 존재하던 이미지를 순서를 기록하기 위한 배열 생성
+
+            for(let img of imageList) {     // img => BoardImg 형태
+
+                previewList[img.imgOrder].src = img.imgPath + img.imgRename;
+
+                orderList.push(img.imgOrder);
+                // 다섯개 이미지가 전부다 있었다
+                // -> [0,1,2,3,4]
+
+            }
+
+        </script>
 
         <script src="/js/partner/interior/interiorPortfolioEdit/projectDetail.js"></script>
     </body>

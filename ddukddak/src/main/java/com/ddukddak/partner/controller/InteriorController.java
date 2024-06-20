@@ -2,6 +2,7 @@ package com.ddukddak.partner.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ import com.ddukddak.partner.model.service.InteriorService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import oracle.sql.ARRAY;
 
 @RequestMapping("partner")
 @Controller
@@ -52,7 +54,7 @@ public class InteriorController {
 //      log.info("portfolioNo : " + loginPartnerMember.getPortfolioNo());
 //        
         Portfolio portfolio = service.selectPortfolio(loginPartnerMember.getPortfolioNo());
-        log.info("portfolio : " + portfolio);
+//        log.info("portfolio : " + portfolio);
         
         Map<String, Object> map = service.selectProjectList(portfolio.getPortfolioNo());
         
@@ -67,8 +69,8 @@ public class InteriorController {
         
         List<List<Project>> projectChunks = chunkProjects(projectList, 3);
         
-        log.info("포트폴리오 프로젝트 리스트 : " + projectList);
-        log.info("청크 확인 : " + projectChunks);
+//        log.info("포트폴리오 프로젝트 리스트 : " + projectList);
+//        log.info("청크 확인 : " + projectChunks);
         
 
         
@@ -99,10 +101,10 @@ public class InteriorController {
 								RedirectAttributes ra) {
 		
 		Project project = service.selectProject(projectNo);
-		ProjectImg thumbnail = project.getImgList().get(0);
-		log.info("썸네일 : " + thumbnail);
 		
 //		log.info("project : " + project);
+		
+//		log.info("imgList : " + project.getImgList());
 		
 		model.addAttribute(project);
 		
@@ -164,7 +166,6 @@ public class InteriorController {
 		MultipartFile mainImg = null;
 		
 		String message = null;
-		String path = null;
 		
 		for(MultipartFile image : images) {
 			
@@ -186,16 +187,16 @@ public class InteriorController {
 		int projectNo = service.insertProject(project, imgList);
 		
 		if(projectNo > 0) {
-			path = "/interior/interiorPortfolioDetail/" + projectNo;
+			
 			message = "포트폴리오 프로젝트 등록이 완료되었습니다.";
 		} else {
-			path = "/partner/interiorPortfolioEditMain";
+			
 			message = "포트폴리오 프로젝트 등록에 실패하였습니다.";
 		}
 		
 		ra.addFlashAttribute("message", message);
 		
-		return "redirect:" + path;
+		return "redirect:/partner/interiorPortfolioEditMain";
 		
 	}
 }
