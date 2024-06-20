@@ -172,6 +172,14 @@
     border-radius: 5px;
 }
 
+
+.detail-info-area > div > input {
+    border-radius: 5px;
+    font-size: 15px;
+    width: 150px;
+    padding: 5px;
+}
+
 /* 버튼 */
 .btn-area {
     display: flex;
