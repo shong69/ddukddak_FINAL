@@ -1,10 +1,7 @@
-package com.ddukddak.ecommerce.controller;
+package com.ddukddak.payment.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ddukddak.ecommerce.model.dto.Orders;
-import com.ddukddak.ecommerce.model.service.PaymentService;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
+import com.ddukddak.payment.model.dto.PaymentDTO;
+import com.ddukddak.payment.model.dto.TokenDTO;
+import com.ddukddak.payment.model.service.PaymentService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +26,7 @@ public class PaymentController {
 	private final PaymentService paymentService;
 	private final eCommerceService eCommerceService;
 	
+	private TokenDTO tokenDTO;
 	
 	@PostMapping("createOrder")
 	public int createOrder(@RequestBody Map<String, Object> params) {
@@ -51,7 +51,7 @@ public class PaymentController {
     	order.setMemberNo(memberNo);
     	order.setTotalPrice(amount);
     	order.setMerchantUid(merchantUid);
-    	order.setStatus("PREPARE");
+    	order.setStatus("prepare");
     	
     	log.info("order 객체 결과 : " + order);
     	
@@ -69,6 +69,11 @@ public class PaymentController {
 		
 		// 1. 토큰 얻기
 		String accessToken = paymentService.getAccessToken();
+		
+		tokenDTO = new TokenDTO();
+		
+		tokenDTO.setAccessToken(accessToken);
+		
 		
 		log.info("AccessToken : " + accessToken);
 		// 9f1e87f6e789121f789ab6e443650040f70090a1  잘 오는거 확인
@@ -110,14 +115,63 @@ public class PaymentController {
         }
         
         // 4. 사전 검증 성공
-        response.put("status", "success");
-        response.put("merchant_uid", merchantUid);
-        response.put("amount", String.valueOf(amount));
-	
-		
+        // status 변경 필요 merchantUid 참고해서
+        int updateStatus = eCommerceService.readyUpdate(merchantUid);
+        
+        if(updateStatus > 0) { // status 업데이트 성공
+        	
+            response.put("status", "success");
+            response.put("merchant_uid", merchantUid);
+            response.put("amount", String.valueOf(amount));
+            
+        }
+        
 		return response;
 	}
 	
+	
+	@PostMapping("verify")
+	public Map<String, String> verifyPayment(@RequestBody Map<String, Object> params) throws Exception {
+		
+		
+		String accessToken = tokenDTO.getAccessToken();
+		log.info("사후 검증 accessToken DTO : " +  accessToken);
+		
+		// 사후 검증 값 받아오기
+		int verifyResponse = paymentService.verifyPayment(params, accessToken);
+		
+		// 반환값 세팅
+		Map<String, String> response = new HashMap<>();
+		
+		if(verifyResponse == 0) {
+			
+            response.put("status", "fail");
+            response.put("message", "verify payment failed.");
+            
+            return response;
+		}
+		
+		// DB랑 비교하고 넘어왔기 때문에 기존 Orders 테이블 업데이트
+		String merchantUid = (String) params.get("merchant_uid");
+		
+		int result = eCommerceService.paidUpdate(merchantUid);
+		
+		if(result == 0) {
+            response.put("status", "fail");
+            response.put("message", "paid 업데이트 실패");
+            
+            return response;
+		}
+		
+		
+		// 성공
+		response.put("status", "success");
+		
+		
+		return response;
+		
+		
+	}
 
 }
 

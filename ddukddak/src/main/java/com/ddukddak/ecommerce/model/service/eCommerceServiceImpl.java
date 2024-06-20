@@ -407,6 +407,20 @@ public class eCommerceServiceImpl implements eCommerceService{
 		
 		return mapper.prepareOrder(merchantUid);
 	}
+	
+	// 사전 완료 건 업데이트
+	@Override
+	public int readyUpdate(String merchantUid) {
+		// TODO Auto-generated method stub
+		return mapper.readyUpdate(merchantUid);
+	}
+
+	// 사후 검증 완료건 최종처리
+	@Override
+	public int paidUpdate(String merchantUid) {
+		// TODO Auto-generated method stub
+		return mapper.paidUpdate(merchantUid);
+	}
 
 
 	

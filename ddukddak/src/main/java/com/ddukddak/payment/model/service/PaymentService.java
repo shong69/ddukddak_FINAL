@@ -1,4 +1,4 @@
-package com.ddukddak.ecommerce.model.service;
+package com.ddukddak.payment.model.service;
 
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -17,6 +17,14 @@ public interface PaymentService {
 	 * @return
 	 */
 	Map<String, Object> preparePayment(Map<String, Object> params, String accessToken);
+
+	/** 사후 검증
+	 * @param params
+	 * @param accessToken
+	 * @return
+	 * @throws Exception 
+	 */
+	int verifyPayment(Map<String, Object> params, String accessToken) throws Exception;
 
 
 }

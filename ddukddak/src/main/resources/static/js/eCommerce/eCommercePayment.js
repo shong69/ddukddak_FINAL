@@ -50,20 +50,20 @@ const payBtn = document.getElementById('payBtn'); // 결제하기 버튼
 const productName = document.getElementById('productName').innerText;
 
 // 고유 주문 번호
-
-
 const addr = document.getElementById('memberAddr').value;
 
 // 총 금액 구해오기
 const amountText = document.getElementById('totalPrice');
 
-let text = amountText.innerText;
-let number = text.replace(/[^0-9]/g, '');
-const myAmount = parseInt(number, 10);
-
-
 
 const onClickPay = async () => {
+
+
+
+    let text = amountText.innerText;
+    let number = text.replace(/[^0-9]/g, '');
+    const myAmount = parseInt(number, 10);
+
 
     if (!agree.checked) {
         alert('이용 약관 동의 체크 후 구매해 주세요.');
@@ -154,6 +154,7 @@ const onClickPay = async () => {
             async function (rsp) {
                 if (rsp.success) {
                     // 결제 성공 시 서버로 결제 검증 요청
+                    // 결제 성공 시 서버로 결제 검증 요청
                     const verifyResponse = await fetch('/payment/verify', {
                         method: 'POST',
                         headers: {
@@ -168,6 +169,16 @@ const onClickPay = async () => {
 
                     const verifyData = await verifyResponse.json();
 
+                    if (verifyData.status === 'success') {
+                        alert('결제가 성공적으로 완료되었습니다.');
+                        // 추가 로직 (예: 결제 성공 페이지로 리디렉션)
+                        document.getElementById('paymentForm').submit();
+
+                    } else {
+                        alert('결제 검증에 실패하였습니다.');
+                        // 추가 로직 (예: 결제 실패 페이지로 리디렉션)
+                        window.location.href = "/myPage/cart";
+                    }
 
                 } else {
                     alert(`결제에 실패하였습니다. 오류 내용: ${rsp.error_msg}`);

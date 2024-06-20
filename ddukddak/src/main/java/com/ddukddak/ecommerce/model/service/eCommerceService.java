@@ -183,6 +183,18 @@ public interface eCommerceService {
 	 */
 	Orders prepareOrder(String merchantUid);
 
+	/** 사전 완료 건 상태 업데이트
+	 * @param merchantUid
+	 * @return
+	 */
+	int readyUpdate(String merchantUid);
+
+	/** 사후 완료 건 paid 업데이트
+	 * @param merchantUid
+	 * @return
+	 */
+	int paidUpdate(String merchantUid);
+
 
 
 }
