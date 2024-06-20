@@ -81,7 +81,7 @@ function resetAuthStates() {
         telAuthHidden.classList.add('hidden');
         telAuthInput.value = "";
         telAuthMsg.innerText = "";
-
+        authCount2 = 0;
     }
 
 }
@@ -410,6 +410,8 @@ function disabledCheckButton3() {
     }
 }
 
+let authCount2 = 0;
+
 
 // 비밀번호 찾기 버튼 클릭 시
 findPwBtn.addEventListener('click', () => {
@@ -424,7 +426,42 @@ findPwBtn.addEventListener('click', () => {
         return;
     }
     if (!checkTelObj.telAuth) {
-        alert('SMS 인증번호를 정확히 확인해 주세요.');
+        
+        authCount2++
+
+        if(authCount2 == 3) {
+
+            alert("인증 실패 횟수가 3회를 초과하여 종료됩니다.");
+            checkTelObj.id = false;
+            checkTelObj.tel = false;
+            checkTelObj.telAuth = false;
+
+            inputId.value = "";
+
+            // 휴대폰 입력창 초기화
+            inputTel.value = "";
+            telMsg.innerText = "";
+            telMsg.classList.remove('error', 'confirm');
+            telHiddenDiv.classList.add('hidden');
+
+
+            // 인증 초기화 
+            telAuthInput.value = "";
+            telAuthMsg.innerText = "";
+            telAuthMsg.classList.remove('error', 'confirm');
+            telAuthHidden.classList.add('hidden');
+            
+            // 비번 찾기 버튼
+            findPwBtn.classList.add('hidden');
+
+            nextBtn.classList.remove('hidden');
+            nextBtn.disabled = true;
+            authCount2 = 0;
+            
+            return;
+        }
+
+        alert(`SMS 인증번호가 일치하지 않습니다.\n3회 이상 인증 실패 시 인증이 종료됩니다. (현재 ${authCount2}회 실패)`);
         return;
     }
     
@@ -546,6 +583,8 @@ newPwConfirm.addEventListener('input', e => {
         newPwConfirm.classList.remove('confirmB');
         checkPwObj.newPwConfirm = false;
         memberPwConfirm.value = "";
+
+        disabledCheckButton1();
 
         return;
     }

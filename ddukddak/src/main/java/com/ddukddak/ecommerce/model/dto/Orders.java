@@ -20,10 +20,9 @@ public class Orders {
 	private String orderDelFl;
 	private int memberNo;
 	private int deliveryId;
+	private String merchantUid;
 	private String status; // 결제 상태
-	private String amount; // 주문 금액
-	private String quantity; // 주문 수량
-	private String failReason; // 
+	private String failReason; 
 	
 	
 }

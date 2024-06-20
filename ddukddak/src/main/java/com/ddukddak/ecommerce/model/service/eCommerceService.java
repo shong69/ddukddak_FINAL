@@ -7,8 +7,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
+import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.myPage.model.dto.Order;
 
@@ -102,6 +104,17 @@ public interface eCommerceService {
 	 */
 	List<Category> selectSmallCategory();
 
+	/**
+	 * @param memberNo
+	 * @return
+	 */
+	Member selectMember(int memberNo);
+	
+	/** 주문 생성
+	 * @param order 
+	 * @return
+	 */
+	int createOrder(Orders order);
 
 	/** qna 입력
 	 * @param obj
@@ -150,5 +163,6 @@ public interface eCommerceService {
 	 * @return
 	 */
 	int updateReview(Review review, List<MultipartFile> reviewImgs);
+
 
 }

@@ -8,11 +8,13 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
+import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
+import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.Order;
 
 @Mapper
@@ -143,6 +145,20 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	List<Category> selectSmallCategory2();
+
+	 
+	/** 멤버 찾기
+	 * @param memberNo
+	 * @return
+	 */
+	Member selectMember(int memberNo);
+	
+	
+	/** 주문 생성
+	 * @param order
+	 * @return
+	 */
+	int createOrder(Orders order);
 
 
 	/** qna 입력
