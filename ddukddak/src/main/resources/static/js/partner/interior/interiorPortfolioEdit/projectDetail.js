@@ -1,5 +1,4 @@
 /* 선택된 이미지 미리보기 */
-const previewList = document.querySelectorAll(".preview");
 const inputImageList = document.querySelectorAll(".inputImg"); 
 const deleteImageList = document.querySelectorAll(".delete-img");
 
@@ -143,23 +142,43 @@ for(let i=0 ; i<inputImageList.length ; i++){
 // -------------------------------------------
 
 // 제출 시 유효성 검사
-const boardUpdateFrm = document.querySelector("#boardUpdateFrm");
+const updateProjectForm = document.querySelector("#updateProjectForm");
 
-boardUpdateFrm.addEventListener("submit", e => {
+updateProjectForm.addEventListener("submit", e => {
 
-  const boardTitle = document.querySelector("[name='boardTitle']");
-  const boardContent = document.querySelector("[name='boardContent']");
+  const workArea = document.querySelector("[name='workArea']");
+  const constructionCost = document.querySelector("[name='constructionCost']");
+  const constructionYear = document.querySelector("[name='constructionYear']")
 
-  if(boardTitle.value.trim().length == 0){
-    alert("제목을 작성해 주세요");
-    boardTitle.focus();
+  // for(let i = 0; i < inputImageList.length; i ++) {
+
+  //   if(inputImageList[i].value === "") {
+  //     console.log(inputImageList[i].src);
+  //     alert("비어있는 프로젝트 이미지를 등록해주세요");
+  //     inputImageList[i].focus();
+  //     e.preventDefault();
+  //     return;
+  //   }
+
+  // }
+
+  if(workArea.value.trim().length == 0){
+    alert("시공 면적을 입력해주세요.");
+    workArea.focus();
     e.preventDefault();
     return;
   }
 
-  if(boardContent.value.trim().length == 0){
-    alert("내용을 작성해 주세요");
-    boardContent.focus();
+  if(constructionCost.value.trim().length == 0){
+    alert("시공 가격을 입력해주세요.");
+    constructionCost.focus();
+    e.preventDefault();
+    return;
+  }
+  
+  if(constructionYear.value.trim().length == 0){
+    alert("시공 날짜를 선택해주세요.");
+    constructionYear.focus();
     e.preventDefault();
     return;
   }

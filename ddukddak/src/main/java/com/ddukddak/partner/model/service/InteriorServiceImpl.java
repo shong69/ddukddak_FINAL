@@ -190,6 +190,14 @@ public class InteriorServiceImpl implements InteriorService {
 		return mapper.deleteProject(projectNo);
 	}
 
+
+	// 프로젝트 수정
+	@Override
+	public int updateProject(Map<String, Object> map) {
+		
+		return 0;
+	}
+
 }
 
 

@@ -180,6 +180,24 @@
     padding: 5px;
 }
 
+.projectContentArea {
+    width: 100%;
+}
+
+.projectContent {
+    width: 100%;
+    height: 200px;
+    resize: none;
+    padding: 10px;
+    font-size: 15px;
+    white-space: pre-wrap;
+}
+
+.projectContentArea h2 {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
 /* 버튼 */
 .btn-area {
     display: flex;

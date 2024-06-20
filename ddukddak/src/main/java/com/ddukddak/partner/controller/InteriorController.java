@@ -3,6 +3,7 @@ package com.ddukddak.partner.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -202,7 +203,7 @@ public class InteriorController {
 	
 	@PostMapping("updateProject")
 	public String updateProject(@RequestParam("projectNo") int projectNo,
-								@RequestParam("images") MultipartFile images,
+								@RequestParam("images") List<MultipartFile> images,
 							 	@RequestParam("housingType") String housingType,
 							 	@RequestParam("workArea") String workArea,
 							 	@RequestParam("workForm") String workForm,
@@ -214,6 +215,7 @@ public class InteriorController {
 		
 		Project project = new Project();
 		
+		Map<String, Object> map = new HashMap<>();
 		
 		project.setProjectNo(projectNo);
 		project.setHousingType(housingType);
@@ -224,8 +226,13 @@ public class InteriorController {
 		project.setConstructionYear(constructionYear);
 		project.setFamilySize(familySize);
 		
-		log.info("프로젝트 : " + project);
+		map.put("project", project);
+		map.put("images", images);
 		
+		int result = service.updateProject(map);
+		
+		log.info("프로젝트 : " + project);
+		log.info("이미지 : " + images);		
 		return "redirect:/partner/interiorPortfolioEditMain";
 	}
 	
