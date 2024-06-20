@@ -572,7 +572,22 @@ public class SellerController {
 		return "partner/seller/product/receipt";
 	}
 	
-	
+	@PostMapping("/product/acceptreceipt")
+	@ResponseBody
+	public int ProductAcceptReceipt(@RequestParam("productName") String productName,
+			@RequestParam("productNo") String productNo,
+			@RequestParam(name="bigCategory") String bigCategory,
+			@RequestParam(name="smallCategory") String smallCategory,
+			@RequestParam ("productPrice") int productPrice,
+			@RequestParam (name = "optionName", required = false) List<String> optionName,
+			@RequestParam (name = "optionContent", required = false) List<String> optionContent,
+			@RequestParam (name = "optionCount", required = false) List<String> optionCount,
+			@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) throws IllegalStateException, IOException {
+				
+		
+		return productPrice;
+		
+	}
 	
 	@GetMapping("product/shipment")
 	public String ProductRelease() {

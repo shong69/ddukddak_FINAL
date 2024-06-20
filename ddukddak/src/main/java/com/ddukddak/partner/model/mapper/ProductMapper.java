@@ -299,6 +299,11 @@ public interface ProductMapper {
 
 	List<Product> selectReceiptListMainSortStatus(Map<String, Object> newMap, RowBounds rowBounds);
 
+	int selectReceiptListCountSort(Map<String, Object> newMap);
+	
+	List<Product> selectReceiptListSort(Map<String, Object> newMap, RowBounds rowBounds);
+
+
 
 
 

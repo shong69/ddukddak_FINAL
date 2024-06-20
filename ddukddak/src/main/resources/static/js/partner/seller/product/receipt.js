@@ -3,37 +3,75 @@ const orderReceipt = document.querySelector("#orderReceipt");
 const orderRejection = document.querySelector("#orderRejection");
 const productListBox = document.querySelector("#productListBox");
 const closeButton = document.querySelector("#closeButton");
+const title = document.querySelector(".div-container");
+const productUpdateDate = document.querySelectorAll(".productUpdateDate");
+const orderQuantity = document.querySelectorAll(".orderQuantity");
 
-/* 주문 접수 */
-orderReceipt.addEventListener("click", () => {
+const orderOK = document.querySelector("#orderOK");
+const orderNO = document.querySelector("#orderNO");
+
+
+const orderOKHandler = () => {
+    alert("처리되었습니다");
+    // console.log("확인 버튼");
+    modal.style.display = 'none';
+};
+
+
+const orderNOHandler = () => {
+    if (confirm("취소하시겠습니까?")) {
+        // console.log("취소 버튼");
+        modal.style.display = 'none';
+    }
+};
+
+
+function openModal(type) {
     productListBox.innerHTML = "";
     modal.style.display = "flex";
 
     const query = 'input[name="selectProduct"]:checked'
     const selectedEls = document.querySelectorAll(query);
 
-    console.log(selectedEls);
+    let totalOrderQuantity = 0;
+
+    // console.log(selectedEls);
+
+    const productUpdateDateMap = {};
+    productUpdateDate.forEach((element, index) => {
+        const productNo = element.closest('tr').querySelector('.productNo').value;
+        productUpdateDateMap[productNo] = {
+            updateDate: element.value,
+            orderQuantity: orderQuantity[index].value
+        };
+    });
 
     selectedEls.forEach(elements => {
+        const productNoValue = elements.closest('tr').querySelector('.productNo').value;
+        const orderQuantityValue = elements.closest('tr').querySelector('.orderQuantity').value;
+        totalOrderQuantity += parseInt(orderQuantityValue, 10);
+
         const div = document.createElement("div");
         div.classList.add("elementBox");
 
         const productNo = document.createElement("h5");
-        productNo.innerText = elements.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerText;
+        productNo.innerText = productNoValue;
 
         const productName = document.createElement("h5");
-        productName.innerText = elements.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerText;
+        productName.innerText = elements.closest('tr').querySelector('td:nth-child(7)').innerText;
 
         const productOption = document.createElement("h5");
-        productOption.innerText = elements.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.innerText;
-
+        productOption.innerText = elements.closest('tr').querySelector('td:nth-child(4)').innerText;
 
         const productStatus = document.createElement("h5");
-        const status = elements.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerText;
-        productStatus.innerText = status;
+        productStatus.innerText = elements.closest('tr').querySelector('td:nth-child(8)').innerText;
 
         const productDate = document.createElement("h5");
-        productDate.innerText = "20240603";
+        if (productUpdateDateMap[productNoValue]) {
+            productDate.innerText = productUpdateDateMap[productNoValue].updateDate;
+        } else {
+            productDate.innerText = "N/A";
+        }
 
         div.append(productNo);
         div.append(productName);
@@ -42,26 +80,60 @@ orderReceipt.addEventListener("click", () => {
         div.append(productDate);
 
         productListBox.append(div);
-    })
-
-
-    const orderOK = document.querySelector("#orderOK");
-    const orderNO = document.querySelector("#orderNO");
-
-
-    orderOK.addEventListener("click", () => {
-        alert("주문이 접수되었습니다");
-        modal.style.display = 'none';
-    })
-
-    orderNO.addEventListener("click", () => {
-        if(confirm("취소하시겠습니까?")) {
-            modal.style.display = 'none';
-        }
     });
 
+    const divContainer = document.querySelector(".div-container");
+    divContainer.innerHTML = ''; 
+    const h3 = document.createElement("h3");
+    h3.classList.add("div-titleAdd");
+    h3.innerText = `선택한 ${totalOrderQuantity}개의 상품 주문을 ${type === 'receipt' ? '접수' : '거절'}하시겠습니까?`;
+    divContainer.appendChild(h3);
+
+    if(orderOK != null) {
+
+        orderOK.forEach(element => {
+            element.addEventListener("click", e => {
+                const obj = [];
     
-});
+            selectedEls.forEach(elements => {
+                obj.push(elements.value);
+            })
+    
+            const map = {
+                "obj" : obj,
+                "status" : e.target.innerText
+            }
+    
+            fetch("/partner/seller/product/changeStatus", {
+                method: "POST",
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify(map)
+            })
+            .then(resp => resp.text())
+            .then(result => {
+    
+                if(result > 0) {
+                    alert("변경되었습니다");
+                    window.location.reload();
+                }else {
+                    alert("변경 실패");
+                }
+            });
+            })
+        })
+    
+    
+    }
+
+    // console.log("핸들러 동작");
+
+    orderOK.addEventListener("click", orderOKHandler);
+    orderNO.addEventListener("click", orderNOHandler);
+}
+
+orderReceipt.addEventListener("click", () => openModal('receipt'));
+orderRejection.addEventListener("click", () => openModal('rejection'));
+
 
 /* 주문 거절 */
 orderRejection.addEventListener("click", () => {
@@ -71,7 +143,7 @@ orderRejection.addEventListener("click", () => {
     const query = 'input[name="selectProduct"]:checked'
     const selectedEls = document.querySelectorAll(query);
 
-    console.log(selectedEls);
+    // console.log(selectedEls);
 
     selectedEls.forEach(elements => {
         const div = document.createElement("div");
@@ -109,22 +181,41 @@ orderRejection.addEventListener("click", () => {
         productListBox.append(rejectionDiv);
     })
 
+    if(orderOK != null) {
 
-    const orderOK = document.querySelector("#orderOK");
-    const orderNO = document.querySelector("#orderNO");
-
-
-    orderOK.addEventListener("click", () => {
-        alert("주문이 거절되었습니다");
-        modal.style.display = 'none';
-    })
-
-    orderNO.addEventListener("click", () => {
-        if(confirm("취소하시겠습니까?")) {
-            modal.style.display = 'none';
-        }
-    });
-
+        orderOK.forEach(element => {
+            element.addEventListener("click", e => {
+                const obj = [];
+    
+            selectedEls.forEach(elements => {
+                obj.push(elements.value);
+            })
+    
+            const map = {
+                "obj" : obj,
+                "status" : e.target.innerText
+            }
+    
+            fetch("/partner/seller/product/changeStatus", {
+                method: "POST",
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify(map)
+            })
+            .then(resp => resp.text())
+            .then(result => {
+    
+                if(result > 0) {
+                    alert("변경되었습니다");
+                    window.location.reload();
+                }else {
+                    alert("변경 실패");
+                }
+            });
+            })
+        })
+    
+    
+    }
 });
 
 closeButton.addEventListener("click", () => {
@@ -133,6 +224,8 @@ closeButton.addEventListener("click", () => {
         return;
     }
 });
+
+
 
 
 /* 전체선택버튼 */
@@ -150,6 +243,7 @@ selectAll.addEventListener('change', () => {
         })
     }
 });
+
 
 
 function updateStatus(checkbox) {

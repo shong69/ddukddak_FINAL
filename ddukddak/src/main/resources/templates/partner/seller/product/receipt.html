@@ -57,19 +57,22 @@
                 </thead>
 
                 <th:block th:each="receiptList : ${receiptList}" th:object="${receiptList}">
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td><img th:src="@{*{thumbnail}}" alt="Product Thumbnail"></td>
-                    <td th:text="*{categoryName}">가구/의자</td>
-                    <td th:text="|[*{options}]|">오크내추럴</td>
-                    <td th:text="*{orderQuantity}">300</td>
-                    <td th:text="*{productNo}">F202405210001</td>
-                    <td th:text="*{productName}">오아르 벤 원목 부클레 패브릭 의자</td>
-                    <td th:text="*{productPrice}">122,200</td>
-                </tr>
-            </th:block>
+                    <tr class="borderTr">
+                        <td>
+                            <input type="checkbox" value="1" name="selectProduct">
+                        </td>
+                        <td><img th:src="@{*{thumbnail}}" alt="Product Thumbnail"></td>
+                        <td th:text="*{categoryName}">가구/의자</td>
+                        <td th:text="|[*{options}]|">오크내추럴</td>
+                        <td th:text="*{orderQuantity}">300</td>
+                        <td th:text="*{productNo}">F202405210001</td>
+                        <td th:text="*{productName}">오아르 벤 원목 부클레 패브릭 의자</td>
+                        <td th:text="*{productPrice}">122,200</td>
+                        <input type="hidden" class="productUpdateDate" th:value="*{productUpdateDate}">
+                        <input type="hidden" class="orderQuantity" th:value="*{orderQuantity}">
+                        <input type="hidden" class="productNo" th:value="*{productNo}">
+                    </tr>
+                </th:block>
             </table>
         </div>
 
@@ -137,7 +140,7 @@
         <div id="closeButton">X</div>
 
         <div class="div-container">
-            <h3>선택한 n개의 상품 주문를 접수하시겠습니까? 접수 후 해당 주문 품목은 출고관리에서 확인할 수 있습니다</h3>
+            <h3 class="div-titleAdd">선택한 상품 주문을 접수하시겠습니까? 접수 후 해당 주문 품목은 출고관리에서 확인할 수 있습니다</h3>
         </div>
 
         <div>
@@ -160,7 +163,6 @@
         </div>
             
     </div>
-
 
     <script src="/js/partner/seller/product/receipt.js"></script>
     

@@ -731,7 +731,7 @@ public class ProductServiceImpl implements ProductService{
 					newMap.put("partnerNo", partnerNo);
 					
 					//1. 전체 재고상품개수 조회
-					int productCount = mapper.selectApplyListCountSort(newMap);
+					int productCount = mapper.selectReceiptListCountSort(newMap);
 					
 					//2. pagination 객체 생성하기
 					ProductPagination pagination = new ProductPagination(cp, productCount);
@@ -741,7 +741,7 @@ public class ProductServiceImpl implements ProductService{
 					
 					RowBounds rowBounds = new RowBounds(offset, limit);
 					
-					List<Product> receiptList = mapper.selectApplyListSort(newMap, rowBounds);
+					List<Product> receiptList = mapper.selectReceiptListSort(newMap, rowBounds);
 					
 					Map<String, Object> map = new HashMap<>();
 					map.put("pagination", pagination);
@@ -758,7 +758,7 @@ public class ProductServiceImpl implements ProductService{
 					newMap.put("partnerNo", partnerNo);
 					
 					//1. 전체 재고상품개수 조회
-					int productCount = mapper.selectApplyListCountSortStatus(newMap);
+					int productCount = mapper.selectReceiptListCountSort(newMap);
 					
 					//2. pagination 객체 생성하기
 					ProductPagination pagination = new ProductPagination(cp, productCount);
@@ -768,7 +768,7 @@ public class ProductServiceImpl implements ProductService{
 					
 					RowBounds rowBounds = new RowBounds(offset, limit);
 					
-					List<Product> receiptList = mapper.selectApplyListSortStatus(newMap, rowBounds);
+					List<Product> receiptList = mapper.selectReceiptListSort(newMap, rowBounds);
 					
 					Map<String, Object> map = new HashMap<>();
 					map.put("pagination", pagination);
