@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.partner.model.dto.Partner;
 import com.ddukddak.partner.model.dto.Portfolio;
 import com.ddukddak.partner.model.dto.Project;
@@ -62,9 +63,12 @@ public class InteriorController {
         
         portfolio.setMainProject( (Project) map.get("mainProject") );
         
-        portfolio.setProjectList( (List<Project>) map.get("projectList") );
+        List<Project> projectList = (List<Project>) map.get("projectList");
         
-        log.info("포트폴리오 프로젝트 리스트 : " + portfolio.getProjectList());
+        List<List<Project>> projectChunks = chunkProjects(projectList, 3);
+        
+        log.info("포트폴리오 프로젝트 리스트 : " + projectList);
+        log.info("청크 확인 : " + projectChunks);
         
 
         
@@ -72,15 +76,35 @@ public class InteriorController {
 //        log.info("mainProject : " + portfolio.getMainProject());
 //        log.info("확인 : " + portfolio.getMainProject().getImgList().get(2));
         
+        model.addAttribute("projectChunks", projectChunks);
         model.addAttribute("portfolio", portfolio);
         
         return "partner/interior/interiorPortfolioEdit/interiorPortfolioEditMain";
     }
 	
+	
+	private List<List<Project>> chunkProjects(List<Project> projects, int chunkSize) {
+        List<List<Project>> projectChunks = new ArrayList<>();
+        for (int i = 0; i < projects.size(); i += chunkSize) {
+        	projectChunks.add(projects.subList(i, Math.min(i + chunkSize, projects.size())));
+        }
+        return projectChunks;
+    }
+	
+	
+	
 	@GetMapping("projectDetail/{projectNo:[0-9]+}")
-	public String projectDetail(@PathVariable("projectNo") int projectNo) {
+	public String projectDetail(@PathVariable("projectNo") int projectNo,
+								Model model,
+								RedirectAttributes ra) {
 		
 		Project project = service.selectProject(projectNo);
+		ProjectImg thumbnail = project.getImgList().get(0);
+		log.info("썸네일 : " + thumbnail);
+		
+//		log.info("project : " + project);
+		
+		model.addAttribute(project);
 		
 		return "partner/interior/interiorPortfolioEdit/projectDetail";
 	}
@@ -110,8 +134,8 @@ public class InteriorController {
 								@RequestParam("projectName") String inputProjectName,
 								@RequestParam("housingType") String housingType,
 								@RequestParam("workForm") String workForm,
-								@RequestParam("constructionCost") Number constructionCost,
-								@RequestParam("workArea") Number workArea,
+								@RequestParam("constructionCost") String constructionCost,
+								@RequestParam("workArea") String workArea,
 								@RequestParam("region") String region,
 								@RequestParam("constructionYear") String constructionYear,
 								@RequestParam("familySize") String familySize,
