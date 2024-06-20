@@ -492,4 +492,19 @@
 		WHERE MEMBER_NO = #{memberNo}
 	</select>
 
+	<!-- 사전 완료 건 업데이트 -->
+	<update id="readyUpdate">
+		UPDATE "ORDERS" SET
+		STATUS = 'ready'
+		WHERE MERCHANT_UID = #{merchantUid}
+	</update>
+	
+	<!-- 사후 검증 완료 건 업데이트 -->
+	<update id="paidUpdate">
+		UPDATE "ORDERS" SET
+		STATUS = 'paid'
+		WHERE MERCHANT_UID = #{merchantUid}
+		AND STATUS = 'ready'
+		
+	</update>
 </mapper>

@@ -218,6 +218,18 @@ public interface eCommerceMapper {
 	 */
 	Orders prepareOrder(String merchantUid);
 
+	/** 사전 검증 완료 건 업데이트
+	 * @param merchantUid
+	 * @return
+	 */
+	int readyUpdate(String merchantUid);
+
+	/** 사후 검증 완료 건 최종 처리
+	 * @param merchantUid
+	 * @return
+	 */
+	int paidUpdate(String merchantUid);
+
 
 
 

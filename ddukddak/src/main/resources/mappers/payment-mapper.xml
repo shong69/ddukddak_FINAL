@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ddukddak.payment.model.mapper.PaymentMapper">
+	
+	<!-- 주문 번호 찾기 -->
+	<select id="selectOrder">
+		SELECT MEMBER_NO, ORDER_NO
+		FROM "ORDERS"
+		WHERE MERCHANT_UID = #{merchantUid}
+	</select>
+	
+	<!-- 결제 테이블 삽입 -->
+	<insert id="addPayment">
+		INSERT INTO "PAYMENT"
+		VALUES(
+            SEQ_PAYMENT_NO.NEXTVAL,
+            #{memberNo},
+            #{orderNo},
+            #{impUid},
+            #{merchantUid},
+            #{customerUid},
+            #{customerUidUsage},
+            #{startedAt},
+            #{status},
+            #{failReason},
+            #{failedAt},
+            #{paidAt},
+            #{cancelReason},
+            #{cancelAmount},
+            #{cancelledAt},
+            #{amount},
+            #{currency},
+            #{payMethod},
+            #{name},
+            #{buyerName},
+            #{buyerTel},
+            #{buyerEmail},
+            #{buyerPostcode},
+            #{buyerAddr},
+            #{pgId},
+            #{pgTid},
+            #{pgProvider},
+            #{cardCode},
+            #{cardName},
+            #{cardType},
+            #{cardNumber},
+            #{cardQuota},
+            #{applyNum},
+            #{customData},
+            #{escrow}
+		)
+		
+	</insert>
+	
+</mapper>
