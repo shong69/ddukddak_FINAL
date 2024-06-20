@@ -34,284 +34,26 @@
          <div id="productList">
             <table>
                 <thead style="height: 40px;">
-                    <td>주문번호</td>
-                    <td>회원 아이디</td>
-                    <td>상품 이름</td>
-                    <td>옵션</td>
-                    <td>문의 날짜</td>
-                    <td>답변 여부</td>
+                    <td>문의번호</td>
+                    <td>문의제목</td>
+                    <td>회원아이디</td>
+                    <td>문의날짜</td>
+                    <td>답변여부</td>
                 </thead>
 
-
-                <tr class="borderTr">
+                <tr class="borderTr" th:each="qna : ${qnaList}">
+                    <td th:text="${qna.qnaNo}">문의번호</td>
+                    <td th:text="${qna.qnaTitle}">문의제목</td>
+                    <td th:text="${qna.memberId}">회원아이디</td>
+                    <td th:text="${qna.qnaWriteDate}">문의날짜</td>
                     <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>핑크</td>
-                    <td>7시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color:green; margin-right: 5px;">●</h5>답변 완료
+                        <div class="statusBox">
+                            <h5 style="margin-right: 5px;">●</h5>
+                            <h4 class="answerStatus" th:text="${qna.qnaAnswerStatus}">답변상태</h4>
                         </div>
                     </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-0004562
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>오크</td>
-                    <td>3시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>오크내추럴</td>
-                    <td>1시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>베이지</td>
-                    <td>6시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>그린</td>
-                    <td>2시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>다크그레이</td>
-                    <td>5시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>스카이</td>
-                    <td>4시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>퍼플</td>
-                    <td>8시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>아크샨</td>
-                    <td>1시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: green; margin-right: 5px;">●</h5>답변 완료
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>내추럴</td>
-                    <td>4시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>원목</td>
-                    <td>2시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>딥베이지</td>
-                    <td>4시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>오크내추럴</td>
-                    <td>1시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>오크내추럴</td>
-                    <td>1시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
-                        </div>
-                    </td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000002
-                    </td>
-                    <td>user01</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자
-                    </td>
-                    <td>오크내추럴</td>
-                    <td>1시간 전</td>
-                    <td>
-                        <div>
-                            <h5 style="color: red; margin-right: 5px;">●</h5>미답변
-                        </div>
-                    </td>
+                    <input type="hidden" th:value="${qna.qnaContent}">
+                    <input type="hidden" th:value="${qna.qnaAnswer}">
                 </tr>
                 
                 
@@ -319,7 +61,35 @@
         </div>
 
         <!-- 페이지네이션 -->
-        <div><h3 style="text-align: center; margin: 30px 0;"><<&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;>></h3></div>
+        <div>
+            <ul class="pagination" th:object="${pagination}">
+                <li><a th:href="@{/partner/seller/qna?cp=1}">&lt;&lt;</a></li>
+
+                <li><a th:href="|/partner/seller/qna?cp=*{prevPage}|">&lt;</a></li>
+
+                <th:block th:if="*{startPage lt endPage}" th:each="i : *{#numbers.sequence(startPage, endPage)}">
+                        
+                        <li th:if="${i} == *{currentPage}">
+                            <a class="current" th:text="${i}">현재페이지</a>
+                        </li>
+                        
+                        <li th:unless="${i} == *{currentPage}">
+                            <a th:href="|/partner/seller/qna?cp=${i}|"
+                                th:text="${i}">이동할 페이지</a>
+                        </li>
+                    </th:block>
+                    
+
+                    <th:block th:unless="*{startPage lt endPage}">
+                        <li>
+                            <a class="current">1</a>
+                        </li>
+                    </th:block>
+
+                <li><a th:href="|/partner/seller/qna?cp=*{nextPage}|">&gt;</a></li>
+
+                <li><a th:href="|/partner/seller/qna?cp=*{maxPage}|">&gt;&gt;</a></li>
+            </ul>
         </div>
     </div>
 
@@ -335,11 +105,11 @@
         <div>
             <table>
                 <tr>
-                    <td>주문번호</td>
-                    <td>회원 아이디</td>
-                    <td>상품이름</td>
-                    <td>옵션</td>
+                    <td>문의번호</td>
+                    <td>문의제목</td>
+                    <td>회원아이디</td>
                     <td>문의날짜</td>
+                    <td>답변상태</td>
                 </tr>
     
                 <tr>
@@ -365,8 +135,7 @@
         <textarea id="textarea"></textarea>
 
         <div id="buttonContainer">
-            <button id="modify">수정</button>
-            <button id="apply">등록</button>
+            <button id="apply">수정/등록</button>
         </div>
 
             

@@ -249,6 +249,22 @@
     position: relative;
 }
 
+.img-wrap > div {
+    height: 220px;
+    width: 200px;
+    overflow: hidden;
+}
+
+.img-wrap > div > img {
+    height: 100%;
+    width: 100%;
+    transition-duration: 0.3s;
+}
+
+.img-wrap > div > img:hover {
+    transform: scale(1.1);
+}
+
 .fa-heart {
     position: absolute;
     top: 10px;
@@ -393,7 +409,7 @@
 }
 
 #shopping-items {
-    width: 1000px;
+    width: 1100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -666,8 +682,9 @@
     background-color: transparent;
     border : none;
     font-size: 12px;
-    color: rgb(255, 248, 208);
+    color: white;
     cursor : pointer;
+    text-shadow: 1px 1px 2px gray;
 }
 .fill{
     color : red;
@@ -675,4 +692,150 @@
 .fa-star{
     cursor: pointer;
     font-size: 20px;
+}
+
+
+/* qna */
+#qnaBox {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#qnaBox > * {
+    padding: 10px;
+}
+
+#qnaInserButton {
+    padding: 10px;
+    width: 200px;
+    background-color: var(--gray1);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#myQna {
+    padding: 10px;
+    width: 200px;
+    background-color: var(--gray1);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#write {
+    width: 1000px;
+    flex-direction: column;
+    margin-top: 20px;
+    display: none;
+}
+
+#writeQnaBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    border: 1px solid var(--gray5);
+}
+
+#write input{
+    margin-bottom: 10px;
+    height: 30px;
+    padding: 0 5px;
+    font-size: 12px;
+    border-radius: 0;
+    border: 1px solid var(--gray5);
+}
+
+#write input:focus {
+    outline: none;
+}
+
+#writeQna {
+    padding: 5px;
+    font-size: 12px;
+    width: 100%;
+    height: 50px;
+    resize: none;
+    border: none;
+}
+
+#writeQna:focus {
+    outline: none;
+}
+
+#applyQnaButton {
+    width: 150px;
+    height: 30px;
+    color: white;
+    background-color: var(--gray1);
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+}
+
+#qnaContainer {
+    width: 1000px;
+    border-top: 2px solid var(--gray1);
+    border-bottom: 2px solid var(--gray1);
+    margin-top: 20px;
+    padding: 0;
+}
+
+#qnaContainer > table {
+    width: 1000px;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+#qnaContainer > table thead {
+    border-bottom: 2px solid var(--gray5);
+}
+
+#qnaContainer > table tr {
+    border-top: 1px solid var(--gray5);
+}
+
+#qnaContainer > table tr:first {
+    border: none;
+}
+
+#qnaContainer > table th {
+    height: 40px;
+}
+
+#qnaContainer > table td {
+    height: 40px;
+}
+
+#qnaContainer > table th:nth-child(1) {
+    width: 150px;
+}
+
+#qnaContainer > table th:nth-child(2) {
+    width: 570px;
+}
+
+#qnaContainer > table th:nth-child(3) {
+    width: 130px;
+}
+
+#qnaContainer > table th:nth-child(4) {
+    width: 150px;
+}
+
+#qnaContainer > table > tbody > tr > td:nth-child(2) {
+    text-align: start;
+}
+
+#qnaContainer > div {
+    display: none;
+    width: 980px;
+    text-align: end;
+    margin: 10px;
+}
+
+#allQna {
+    cursor: pointer;
 }

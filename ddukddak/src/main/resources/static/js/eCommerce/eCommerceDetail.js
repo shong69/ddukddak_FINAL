@@ -7,6 +7,7 @@ const changeInfo = document.querySelector("#changeInfo");
 const explain = document.querySelector("#explain");
 const change = document.querySelector("#change");
 const reviewBox = document.querySelector("#reviewBox");
+const qnaBox = document.querySelector("#qnaBox");
 
 detailInfo.addEventListener("click", () => {
     detailInfo.style.backgroundColor = 'var(--primary3)';
@@ -17,6 +18,7 @@ detailInfo.addEventListener("click", () => {
     explain.style.display = 'flex';
     change.style.display = 'none';
     reviewBox.style.display ='none';
+    qnaBox.style.display = 'none';
 });
 
 review.addEventListener("click", () => {
@@ -28,6 +30,7 @@ review.addEventListener("click", () => {
     reviewBox.style.display ='flex';
     explain.style.display = 'none';
     change.style.display = 'none';
+    qnaBox.style.display = 'none';
     openReviewCheck(productNo);
     
 });
@@ -38,6 +41,7 @@ qna.addEventListener("click", () => {
     qna.style.backgroundColor = 'var(--primary3)';
     changeInfo.style.backgroundColor = 'var(--white)';
 
+    qnaBox.style.display = 'flex';
     explain.style.display = 'none';
     change.style.display = 'none';
     reviewBox.style.display ='none';
@@ -52,6 +56,7 @@ changeInfo.addEventListener("click", () => {
     explain.style.display = 'none';
     change.style.display = 'flex';
     reviewBox.style.display ='none';
+    qnaBox.style.display = 'none';
 });
 
 // mainImg 요소를 선택합니다
@@ -650,7 +655,9 @@ function selectReviewList(productNo){
                     memberId.textContent = review.memberId; //멤버 아이디 적기
                     const commentWriteDate = document.createElement("span");
                     commentWriteDate.classList.add("commentWriteDate");
+
                     commentWriteDate.textContent = review.commentWriteDate; //리뷰 작성일 적기
+
                     infoArea.append(memberId, commentWriteDate);
 
                     const editArea = document.createElement("div");
@@ -723,7 +730,435 @@ function delReview(reviewNo,productNo){
 }
 
 //5. 내가 쓴 리뷰 수정하기 비동기 -> 
+
 function updateFn(reviewNo,productNo) {
+    //리뷰 불러오기
+    fetch("/eCommerce/reloadReview?reviewNo="+reviewNo)
+    .then(resp => resp.json())
+    .then(result =>{
+        if(result == null){
+            //리뷰 불러오기 실패
+            alert("리뷰 수정 실패");
+            return;
+        }
+        //#review 에 해당 내용 넣기
+
+        const review = result;
+
+        const reviewForm = document.querySelector("#reviewForm");
+        if(reviewForm.classList.contains("display-none")){
+            reviewForm.classList.remove("display-none");
+        }
+        const commentContent = document.querySelector("#commentContent");
+        commentContent.value = review.reviewContent;
+
+        // 별점 채우기
+        const stars = document.querySelectorAll(".fa-star");
+        stars.forEach((star, index) => {
+            if (index < review.reviewRating) {
+                star.classList.remove('fa-regular');
+                star.classList.add('fa-solid');
+                star.classList.add('fill');
+            } else {
+                star.classList.remove('fa-solid');
+                star.classList.add('fa-regular');
+                star.classList.remove('fill');
+            }
+        });
+        reviewRating = review.reviewRating; // 리뷰 별점 저장
+
+        const reviewImgBox = document.querySelector('#reviewImgBox');
+        reviewImgBox.innerHTML = ''; // 기존 이미지 초기화
+        reviewImgFiles = []; // 이미지 파일 배열 초기화
+        if(review.imgList && review.imgList.length>0){
+            review.imgList.forEach(img=>{
+                const previewContainer = document.createElement('div');
+                previewContainer.classList.add('preview-image-container');
+
+                const preview = document.createElement('img');
+                preview.classList.add('preview-image');
+                preview.src = e.target.result;
+                previewContainer.appendChild(preview);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('delete-button');
+                deleteButton.classList.add('fa-solid');
+                deleteButton.classList.add('fa-trash-can');
+                deleteButton.onclick = function() {
+                    if (confirm("해당 사진을 삭제하시겠습니까?")) {
+                        const index = Array.from(reviewImgBox.children).indexOf(previewContainer);
+                        reviewImgFiles.splice(index, 1); // 배열에서 파일 제거
+                        previewContainer.remove(); // 이미지 삭제
+                    }
+                };
+                previewContainer.appendChild(deleteButton);
+
+                reviewImgBox.appendChild(previewContainer);
+            });
+        }
+        reviewForm.scrollIntoView({behavior : 'smooth'});
+
+        document.querySelector("#hiddenReviewNo").value = reviewNo;
+    });
+    getReviewCount(productNo); //개수 업데이트
+}
+
+
+// QNA
+const qnaInserButton = document.querySelector("#qnaInserButton");
+const write = document.querySelector("#write");
+const applyQnaButton = document.querySelector("#applyQnaButton");
+const myQna = document.querySelector("#myQna");
+const qnaContainer = document.querySelector("#qnaContainer");
+const tBody = document.querySelector("#tBody");
+const allBox = document.querySelector("#allBox");
+const allQna = document.querySelector("#allQna");
+
+
+function maskString(str) {
+    // 문자열 길이를 구함
+    const length = str.length;
+
+    // 8글자 이상일 경우 처리
+    if (length >= 8) {
+        return str.slice(0, 4) + '*'.repeat(length - 4);
+    }
+
+    // 8글자보다 짧을 경우 처리
+    const halfLength = Math.ceil(length / 2);
+    return str.slice(0, length - halfLength) + '*'.repeat(halfLength);
+}
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const memberNo = document.querySelector("#memberNo");
+
+    // 모든 QNA 불러오기
+    fetch("/eCommerce/selectQna")
+    .then(resp => resp.json())
+    .then(result => {
+        console.log(result);
+
+        if (result.length == 0) {
+            const h2 = document.createElement("h2");
+            h2.innerText = "작성한 QNA가 존재하지 않습니다";
+            h2.style.color = 'var(--gray5)';
+            h2.style.fontWeight = '500';
+            h2.style.textAlign = 'center';
+            h2.style.marginTop = '20px';
+
+            qnaContainer.append(h2);
+        } else {
+            result.forEach((qna) => {
+                qna.memberId = maskString(qna.memberId);
+                if(qna.partnerId != null) {
+                    qna.partnerId = maskString(qna.partnerId);
+                }
+
+                if (qna.qnaAnswerStatus == 'N') {
+                    qna.qnaAnswerStatus = '미답변';
+                } else {
+                    qna.qnaAnswerStatus = '답변완료';
+                }
+
+                let arr = [
+                    qna.qnaAnswerStatus,
+                    qna.qnaTitle,
+                    qna.memberId,
+                    qna.qnaWriteDate
+                ];
+
+                const tr = document.createElement("tr");
+                tr.style.cursor = 'pointer';
+
+                const contentTr = document.createElement("tr");
+                contentTr.style.display = 'none';
+                
+                const answerTr = document.createElement("tr");
+                answerTr.style.display = 'none';
+
+                for (let key of arr) {
+                    const td = document.createElement("td");
+                    td.innerText = key;
+                    tr.append(td);
+
+                    const contentTd = document.createElement("td");
+                    const answerTd = document.createElement("td");
+                    if (key == qna.qnaTitle) {
+                        contentTd.innerText = qna.qnaContent;
+                        answerTd.innerText = "답변 : " + qna.qnaAnswer;
+                    }
+
+                    if (key == qna.memberId) {
+                        answerTd.innerText = qna.partnerId;
+                    }
+
+                    if (key == qna.qnaWriteDate) {
+                        answerTd.innerText = qna.qnaAnswerDate;
+                    }
+
+                    contentTr.append(contentTd);
+                    answerTr.append(answerTd);
+                }
+                tBody.append(tr);
+                tBody.append(contentTr);
+
+                if(qna.qnaAnswer != null) {
+                    tBody.append(answerTr);
+                }
+
+                tr.addEventListener("click", () => {
+                    const display = (contentTr.style.display === 'none') ? 'table-row' : 'none';
+                    if (display === 'table-row') {
+                        contentTr.style.display = display;
+                        answerTr.style.display = display;
+                        contentTr.style.backgroundColor = 'rgb(248, 248, 248)';
+                        answerTr.style.backgroundColor = 'rgb(248, 248, 248)';
+                        tr.style.backgroundColor = 'rgb(248, 248, 248)';
+                    } else {
+                        contentTr.style.display = display;
+                        answerTr.style.display = display;
+                        tr.style.backgroundColor = 'white'; // tr의 배경색 원래대로 설정
+                    }
+                });
+
+            });
+        }
+    });
+
+    
+    // QNA 입력
+    qnaInserButton.addEventListener("click", () => {
+
+        if(memberNo.value == 0) {
+            alert("로그인 후 이용해주세요");
+            redirectToLogin();
+        } else {
+            if( write.style.display == 'flex') {
+                 write.style.display = 'none'
+            } else {
+                write.style.display = 'flex';
+            }
+        }
+    })
+    
+    applyQnaButton.addEventListener("click", () => {
+        const writeTitle = document.querySelector("#writeTitle");
+        const writeQna = document.querySelector("#writeQna");
+    
+        if(writeTitle.value.trim().length === 0) {
+            alert("QNA 제목을 작성해주세요");
+        } else if(writeQna.value.trim().length === 0) {
+            alert("QNA 내용을 작성해주세요");
+        } else {
+            const obj = {
+                "qnaTitle" : writeTitle.value,
+                "qnaContent" : writeQna.value
+            }
+    
+            console.log(obj);
+    
+            fetch("/eCommerce/insertQna", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(obj)
+            })
+            .then(resp => resp.text())
+            .then(result => {
+                if(result > 0) {
+                    alert("QNA 등록이 완료되었습니다");
+                    writeTitle.value = "";
+                    writeQna.value = "";
+                    write.style.display = 'none';
+                } else {
+                    alert("QNA 등록 실패");
+                }
+            });
+        }
+    });
+
+   // '내가 쓴 QNA' 버튼 클릭 이벤트
+    myQna.addEventListener("click", () => {
+        if (memberNo.value == 0) {
+            alert("로그인 후 이용해주세요");
+            redirectToLogin();
+        } else {
+            allBox.style.display = 'block';
+            tBody.innerHTML = "";
+            write.style.display = 'none';
+            write.style.display = 'none';
+
+            fetch("/eCommerce/myQna")
+                .then(resp => resp.json())
+                .then(result => {
+                    console.log(result);
+
+                    if (result.length == 0) {
+                        const h2 = document.createElement("h2");
+                        h2.innerText = "작성한 QNA가 존재하지 않습니다";
+                        h2.style.color = 'var(--gray5)';
+                        h2.style.fontWeight = '500';
+                        h2.style.textAlign = 'center';
+                        h2.style.marginTop = '20px';
+
+                        qnaContainer.append(h2);
+                    } else {
+                        
+                        result.forEach((qna) => {
+                            qna.memberId = maskString(qna.memberId);
+                            if(qna.partnerId != null) {
+                                qna.partnerId = maskString(qna.partnerId);
+                            }
+
+                            if (qna.qnaAnswerStatus == 'N') {
+                                qna.qnaAnswerStatus = '미답변';
+                            } else {
+                                qna.qnaAnswerStatus = '답변완료';
+                            }
+
+                            let arr = [
+                                qna.qnaAnswerStatus,
+                                qna.qnaTitle,
+                                qna.memberId,
+                                qna.qnaWriteDate
+                            ];
+
+                            const tr = document.createElement("tr");
+                            tr.style.cursor = 'pointer';
+
+                            const contentTr = document.createElement("tr");
+                            contentTr.style.display = 'none';
+                            
+                            const answerTr = document.createElement("tr");
+                            answerTr.style.display = 'none';
+
+                            for (let key of arr) {
+                                const td = document.createElement("td");
+                                td.innerText = key;
+                                tr.append(td);
+            
+                                const contentTd = document.createElement("td");
+                                const answerTd = document.createElement("td");
+                                if (key == qna.qnaTitle) {
+                                    contentTd.innerText = qna.qnaContent;
+                                    answerTd.innerText = "답변 : " + qna.qnaAnswer;
+                                }
+
+                                if (key == qna.memberId) {
+                                    answerTd.innerText = qna.partnerId;
+                                }
+
+                                if (key == qna.qnaWriteDate) {
+                                    answerTd.innerText = qna.qnaAnswerDate;
+                                }
+
+                                contentTr.append(contentTd);
+                                answerTr.append(answerTd);
+                            }
+                            tBody.append(tr);
+                            tBody.append(contentTr);
+            
+                            if(qna.qnaAnswer != null) {
+                                tBody.append(answerTr);
+                            }
+
+                            tr.addEventListener("click", () => {
+                                const display = (contentTr.style.display === 'none') ? 'table-row' : 'none';
+                                if (display === 'table-row') {
+                                    contentTr.style.display = display;
+                                    answerTr.style.display = display;
+                                    contentTr.style.backgroundColor = 'rgb(248, 248, 248)';
+                                    answerTr.style.backgroundColor = 'rgb(248, 248, 248)';
+                                    tr.style.backgroundColor = 'rgb(248, 248, 248)';
+                                } else {
+                                    contentTr.style.display = display;
+                                    answerTr.style.display = display;
+                                    tr.style.backgroundColor = 'white'; // tr의 배경색 원래대로 설정
+                                }
+                            });
+                            
+                            
+                        });
+                    }
+                });
+        }
+    });
+
+    // '전체 QNA' 버튼 클릭 이벤트
+    allQna.addEventListener("click", () => {
+        tBody.innerHTML = "";
+        write.style.display = 'none';
+        allBox.style.display = 'none';
+        
+        fetch("/eCommerce/selectQna")
+            .then(resp => resp.json())
+            .then(result => {
+                console.log(result);
+
+                if (result.length == 0) {
+                    const h2 = document.createElement("h2");
+                    h2.innerText = "작성한 QNA가 존재하지 않습니다";
+                    h2.style.color = 'var(--gray5)';
+                    h2.style.fontWeight = '500';
+                    h2.style.textAlign = 'center';
+                    h2.style.marginTop = '20px';
+
+                    qnaContainer.append(h2);
+                } else {
+                    result.forEach((qna) => {
+                        qna.memberId = maskString(qna.memberId);
+                        if(qna.partnerId != null) {
+                            qna.partnerId = maskString(qna.partnerId);
+                        }
+
+                        if (qna.qnaAnswerStatus == 'N') {
+                            qna.qnaAnswerStatus = '미답변';
+                        } else {
+                            qna.qnaAnswerStatus = '답변완료';
+                        }
+
+                        let arr = [
+                            qna.qnaAnswerStatus,
+                            qna.qnaTitle,
+                            qna.memberId,
+                            qna.qnaWriteDate
+                        ];
+
+                        const tr = document.createElement("tr");
+                        tr.style.cursor = 'pointer';
+                        const contentTr = document.createElement("tr");
+                        contentTr.style.display = 'none';
+
+                        for (let key of arr) {
+                            const td = document.createElement("td");
+                            td.innerText = key;
+                            tr.append(td);
+
+                            const contentTd = document.createElement("td");
+                            if (key == qna.qnaTitle) {
+                                contentTd.innerText = qna.qnaContent;
+                                contentTd.colSpan = arr.length; // 제목이 포함된 행에 대해 전체 열에 걸치도록 설정
+                            }
+                            contentTr.append(contentTd);
+                        }
+                        tBody.append(tr);
+                        tBody.append(contentTr);
+
+                        tr.addEventListener("click", () => {
+                            const display = (contentTr.style.display == 'none') ? 'table-row' : 'none';
+                            contentTr.style.display = display;
+                        });
+                    });
+                }
+            });
+    });
+
+})
+
+// 리뷰
+function updateBtn(reviewNo) {
+
     //리뷰 불러오기
     fetch("/eCommerce/reloadReview?reviewNo="+reviewNo)
     .then(resp => resp.json())
@@ -813,4 +1248,6 @@ function getReviewCount(productNo) {
     });
 }
 
+
 getReviewCount(productNo);
+

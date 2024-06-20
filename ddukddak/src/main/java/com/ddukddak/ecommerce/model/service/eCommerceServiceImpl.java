@@ -17,13 +17,16 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ddukddak.common.util.Utility;
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
+import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
 import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.ecommerce.model.dto.ReviewImg;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.ecommerce.model.mapper.eCommerceMapper;
+import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.Order;
 
 import lombok.RequiredArgsConstructor;
@@ -313,6 +316,37 @@ public class eCommerceServiceImpl implements eCommerceService{
 		return mapper.selectSmallCategory2();
 	}
 
+
+	
+	/** 멤버 찾기(주소 이슈 때문에)
+	 *
+	 */
+	@Override
+	public Member selectMember(int memberNo) {
+		// 
+		return mapper.selectMember(memberNo);
+	}
+
+	
+	
+	// 주문 생성
+	@Override
+	public int createOrder(Orders order) {
+		
+		return mapper.createOrder(order);
+	}
+
+
+	
+
+	
+
+
+	// qna 입력
+	@Override
+	public int insertQna(Map<String, Object> obj) {
+		return mapper.insertQna(obj);
+}
 	//리뷰 목록 조회하기
 	@Override
 	public List<Review> selectReviewList(int productNo) {
@@ -353,6 +387,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		List<ReviewImg> uploadList = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
 		
+
 		if(!reviewImgs.isEmpty()) {
 			
 			int result = 0;
@@ -390,6 +425,9 @@ public class eCommerceServiceImpl implements eCommerceService{
 			return 1;
 		}
 
+		return 0;
+
+
 	}
 	
 	//리뷰 삭제하기
@@ -412,6 +450,27 @@ public class eCommerceServiceImpl implements eCommerceService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	// 모든 qna 보기
+	@Override
+	public List<QNA> selectQna() {
+		return mapper.selectQna();
+	}
+
+	// 내 qna 보기
+	@Override
+	public List<QNA> myQna(int memberNo) {
+		return mapper.myQna(memberNo);
+	}
+
+
+	// 사전 등록 DB 검증 
+	@Override
+	public Orders prepareOrder(String merchantUid) {
+		
+		return mapper.prepareOrder(merchantUid);
+	}
+
 
 	//리뷰 개수 리턴
 	@Override

@@ -27,6 +27,7 @@ import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.partner.model.dto.Partner;
@@ -571,6 +572,8 @@ public class SellerController {
 		return "partner/seller/product/receipt";
 	}
 	
+	
+	
 	@GetMapping("product/shipment")
 	public String ProductRelease() {
 		return "partner/seller/product/shipment";
@@ -583,9 +586,27 @@ public class SellerController {
 	
 	
 	
-	
+	// 문의내역
 	@GetMapping("qna")
-	public String ProductQNA() {
+	public String ProductQNA(@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+							Model model) {
+		
+		Map<String, Object> map = service.selectQna(cp);
+		
+		model.addAttribute("qnaList" ,map.get("qnaList"));
+		model.addAttribute("pagination" ,map.get("pagination"));
+		
 		return "partner/seller/qna/qna";
+	}
+	
+	// 문의내역 입력
+	@PostMapping("insertQnaAnswer")
+	@ResponseBody
+	public int insertQnaAnswer(@RequestBody Map<String, Object> obj,
+								@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) {
+		
+		obj.put("partnerNo", loginPartnerMember.getPartnerNo());
+		
+		return service.insertQnaAnswer(obj);
 	}
 }

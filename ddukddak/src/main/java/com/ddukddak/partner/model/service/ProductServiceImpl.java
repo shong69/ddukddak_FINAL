@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.board.model.dto.BoardImg;
 import com.ddukddak.board.model.exception.BoardInsertException;
 import com.ddukddak.common.util.Utility;
@@ -21,7 +22,9 @@ import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
+import com.ddukddak.main.model.dto.Pagination;
 import com.ddukddak.partner.model.dto.ProductPagination;
 import com.ddukddak.partner.model.mapper.ProductMapper;
 
@@ -603,6 +606,7 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.modifyRegistProduct(map);
 	}
 
+//	접수관리 리스트 조
 	@Override
 	public Map<String, Object> selectReceiptList(int partnerNo, int mainSort, int sort, String status, int cp) {
 		// 대분류 소분류 상태 모두 선택 안했을 때
@@ -636,7 +640,7 @@ public class ProductServiceImpl implements ProductService{
 				newMap.put("status", status);
 				newMap.put("partnerNo", partnerNo);
 				//1. 전체 재고상품개수 조회
-				int productCount = mapper.selectApplyListCountStatus(newMap);
+				int productCount = mapper.selectReceiptListCountStatus(newMap);
 				
 				//2. pagination 객체 생성하기
 				ProductPagination pagination = new ProductPagination(cp, productCount);
@@ -647,11 +651,15 @@ public class ProductServiceImpl implements ProductService{
 				RowBounds rowBounds = new RowBounds(offset, limit);
 				
 				
-				List<Product> applyList = mapper.selectApplyListStatus(newMap, rowBounds);
+				List<Product> receiptList = mapper.selectReceiptListStatus(newMap, rowBounds);
 				
 				Map<String, Object> map = new HashMap<>();
+				
+//				log.info("AM receiptList : " + receiptList);
+//				log.info("PR receiptList : " + receiptList);
+				
 				map.put("pagination", pagination);
-				map.put("applyList", applyList);
+				map.put("receiptList", receiptList);
 				
 				return map;
 			}
@@ -665,7 +673,9 @@ public class ProductServiceImpl implements ProductService{
 					newMap.put("mainSort", mainSort);
 					newMap.put("partnerNo", partnerNo);
 					//1. 전체 재고상품개수 조회
-					int productCount = mapper.selectApplyListCountMainSort(newMap);
+					int productCount = mapper.selectReceiptListCountMainSort(newMap);
+					
+//					log.info("productCount : " + productCount);
 					
 					//2. pagination 객체 생성하기
 					ProductPagination pagination = new ProductPagination(cp, productCount);
@@ -676,11 +686,11 @@ public class ProductServiceImpl implements ProductService{
 					RowBounds rowBounds = new RowBounds(offset, limit);
 					
 					
-					List<Product> applyList = mapper.selectApplyListMainSort(newMap, rowBounds);
+					List<Product> receiptList = mapper.selectReceiptListMainSort(newMap, rowBounds);
 					
 					Map<String, Object> map = new HashMap<>();
 					map.put("pagination", pagination);
-					map.put("applyList", applyList);
+					map.put("receiptList", receiptList);
 					
 					return map;	
 					
@@ -693,7 +703,7 @@ public class ProductServiceImpl implements ProductService{
 					newMap.put("partnerNo", partnerNo);
 					
 					//1. 전체 재고상품개수 조회
-					int productCount = mapper.selectApplyListCountMainSortStatus(newMap);
+					int productCount = mapper.selectReceiptListCountMainSortStatus(newMap);
 					
 					//2. pagination 객체 생성하기
 					ProductPagination pagination = new ProductPagination(cp, productCount);
@@ -703,11 +713,11 @@ public class ProductServiceImpl implements ProductService{
 					
 					RowBounds rowBounds = new RowBounds(offset, limit);
 					
-					List<Product> applyList = mapper.selectApplyListMainSortStatus(newMap, rowBounds);
+					List<Product> receiptList = mapper.selectReceiptListMainSortStatus(newMap, rowBounds);
 					
 					Map<String, Object> map = new HashMap<>();
 					map.put("pagination", pagination);
-					map.put("applyList", applyList);
+					map.put("receiptList", receiptList);
 					
 					return map;
 				}
@@ -731,11 +741,11 @@ public class ProductServiceImpl implements ProductService{
 					
 					RowBounds rowBounds = new RowBounds(offset, limit);
 					
-					List<Product> applyList = mapper.selectApplyListSort(newMap, rowBounds);
+					List<Product> receiptList = mapper.selectApplyListSort(newMap, rowBounds);
 					
 					Map<String, Object> map = new HashMap<>();
 					map.put("pagination", pagination);
-					map.put("applyList", applyList);
+					map.put("receiptList", receiptList);
 					
 					return map;		
 					
@@ -758,11 +768,11 @@ public class ProductServiceImpl implements ProductService{
 					
 					RowBounds rowBounds = new RowBounds(offset, limit);
 					
-					List<Product> applyList = mapper.selectApplyListSortStatus(newMap, rowBounds);
+					List<Product> receiptList = mapper.selectApplyListSortStatus(newMap, rowBounds);
 					
 					Map<String, Object> map = new HashMap<>();
 					map.put("pagination", pagination);
-					map.put("applyList", applyList);
+					map.put("receiptList", receiptList);
 					
 					return map;
 				}
@@ -770,9 +780,60 @@ public class ProductServiceImpl implements ProductService{
 		}
 	}
 
-	@Override
+	// 판매상태 변경
 	public int changeStatus(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		List<Object> list = (List<Object>) map.get("obj");
+		String getStatus = (String) map.get("status");
+		
+		String status = "";
+		
+		if(getStatus.equals("판매중")) {
+			status = "N";
+		} else if(getStatus.equals("판매중지")) {
+			status = "S";
+		} else {
+			status = "Y";
+		}
+		
+		int result = 0;
+		
+		for(Object productNo : list) {
+			Map<String, Object> newMap = new HashMap<String, Object>();
+			
+			newMap.put("productNo", productNo);
+			newMap.put("status", status);
+			
+			result += mapper.changeStatus(newMap);
+		}
+		return result;
+	}
+
+	// 문의내역 리스트 가져오기
+	@Override
+	public Map<String, Object> selectQna(int cp) {
+		
+		int listCount = mapper.qnaListCount();
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		List<QNA> qnaList = mapper.selectQna(rowBounds);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("qnaList", qnaList);
+		
+		
+		return map;
+	}
+
+	// 문의답변 넣기
+	@Override
+	public int insertQnaAnswer(Map<String, Object> obj) {
+		return mapper.insertQnaAnswer(obj);
 	}
 }

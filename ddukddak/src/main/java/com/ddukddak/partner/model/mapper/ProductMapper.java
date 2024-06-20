@@ -10,6 +10,7 @@ import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
 
 @Mapper
 public interface ProductMapper {
@@ -248,9 +249,56 @@ public interface ProductMapper {
 	int modifyRegistProduct(Map<String, Object> map);
 
 	
+	/** 접수관리 페이지네이션을 위한 카운트
+	 * @param partnerNo
+	 * @return
+	 */
 	int selectReceiptListCount(int partnerNo);
 
+	/** 접수관리 조회하기
+	 * @param partnerNo
+	 * @param rowBounds
+	 * @return
+	 */
 	List<Product> selectReceiptList(int partnerNo, RowBounds rowBounds);
+
+
+	/** 전체 문의내역 리스트 개수
+	 * @return
+	 */
+	int qnaListCount();
+
+	/** 전체 문의내역 리스트 가져오기
+	 * @return
+	 */
+	List<QNA> selectQna(RowBounds rowBounds);
+
+	/** 문의답변 넣기
+	 * @param map
+	 * @return
+	 */
+	int insertQnaAnswer(Map<String, Object> obj);
+
+
+	
+	/** 젭수관리 대분류
+	 * @param newMap
+	 * @param rowBounds
+	 * @return
+	 */
+
+	int selectReceiptListCountMainSort(Map<String, Object> newMap);
+
+	List<Product> selectReceiptListMainSort(Map<String, Object> newMap, RowBounds rowBounds);
+
+	int selectReceiptListCountStatus(Map<String, Object> newMap);
+
+	List<Product> selectReceiptListStatus(Map<String, Object> newMap, RowBounds rowBounds);
+
+	int selectReceiptListCountMainSortStatus(Map<String, Object> newMap);
+
+	List<Product> selectReceiptListMainSortStatus(Map<String, Object> newMap, RowBounds rowBounds);
+
 
 
 

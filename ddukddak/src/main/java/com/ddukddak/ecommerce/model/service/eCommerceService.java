@@ -8,8 +8,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
+import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
+import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.myPage.model.dto.Order;
 
@@ -103,6 +106,24 @@ public interface eCommerceService {
 	 */
 	List<Category> selectSmallCategory();
 
+	/**
+	 * @param memberNo
+	 * @return
+	 */
+	Member selectMember(int memberNo);
+	
+	/** 주문 생성
+	 * @param order 
+	 * @return
+	 */
+	int createOrder(Orders order);
+
+	/** qna 입력
+	 * @param obj
+	 * @return
+	 */
+	int insertQna(Map<String, Object> obj);
+
 	/**리뷰 목록 조회하기
 	 * @param productNo
 	 * @return
@@ -150,6 +171,25 @@ public interface eCommerceService {
 	 * @return
 	 */
 	int reviewCount(int productNo);
+
+
+	/** 모든 qna 보기
+	 * @return
+	 */
+	List<QNA> selectQna();
+
+	/** 내 qna 보기
+	 * @return
+	 */
+	List<QNA> myQna(int memberNo);
+
+
+	/** 사전 등록 검증하기
+	 * @param merchantUid
+	 * @return
+	 */
+	Orders prepareOrder(String merchantUid);
+
 
 
 }

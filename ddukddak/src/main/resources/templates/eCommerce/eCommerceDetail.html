@@ -119,7 +119,9 @@
                     <div th:each="productBestList : ${selectRecProductList}" th:object="${productBestList}">
                         <a th:href="@{'/eCommerce/list/' + *{bigCategoryNo} + '/' + *{categoryNo} + '/' + *{productNo} + '/detail'}">
                             <div class="img-wrap">
-                                <img th:src="|*{uploadImgPath}*{uploadImgRename}|" style="height: 200px; width: 180px;">
+                                <div>
+                                    <img th:src="|*{uploadImgPath}*{uploadImgRename}|">
+                                </div>
                                 <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
                                     th:style="*{wish == 0} ? 'display:block;' : 'display:none;'"
                                     class="fa-regular fa-heart" id="noHerat" onclick="showHert(event);"
@@ -169,6 +171,42 @@
                         </div>
 
                         <th:block th:replace="~{/eCommerce/eCommerceReview}"></th:block>
+
+                        <div id="qnaBox">
+                            <input type="hidden" id="memberNo" th:value="${memberNo}">
+                            <h2 style="margin-top: 30px;">QNA</h2>
+                            <h5 style="color: var(--gray4);">구매하시려는 상품에 대해 궁금한 점이 있으신 경우 문의해주세요.</h5>
+                            
+                            <div>
+                                <button type="button" id="qnaInserButton">상품 QNA 작성하기</button>
+                                <button type="button" id="myQna">내가 작성한 QNA</button>
+                            </div>
+                            
+                            <div id="write">
+                                <input id="writeTitle" placeholder="QNA 제목을 작성해주세요">
+
+                                <div id="writeQnaBox">
+                                    <textarea id="writeQna" placeholder="QNA 내용을 작성해주세요"></textarea>
+                                    <button id="applyQnaButton">등록</button>
+                                </div>
+                            </div>
+
+                            <div id="qnaContainer">
+                                <div id="allBox"><h5 id="allQna" style="color: var(--gray4);">전체 QNA 보기</h5></div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>답변상태</th>
+                                            <th>제목</th>
+                                            <th>작성자</th>
+                                            <th>작성일</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="tBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
                         
                         <!-- 교환/반품 -->
                         <div id="change">

@@ -1,3 +1,4 @@
+// 가격 스트링 포맷
 document.addEventListener('DOMContentLoaded', () => {
     const priceElements = document.querySelectorAll('.price');
     const totalPriceElement = document.getElementById('totalPrice');
@@ -14,92 +15,171 @@ function formatToKoreanWon(numberString) {
     return number.toLocaleString('ko-KR') + '원';
 }
 
-
-
-
-
-// 주문번호 규칙 생성
-let orderCounter = sessionStorage.getItem('orderCounter');
-if (!orderCounter) {
-    orderCounter = 0;
-}
-orderCounter++;
-sessionStorage.setItem('orderCounter', orderCounter);
-
-const getFormattedDate = () => {
+// 고유 주문 번호
+function generateMerchantUid() {
     const date = new Date();
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    const hours = ('0' + date.getHours()).slice(-2);
-    const minutes = ('0' + date.getMinutes()).slice(-2);
-    const seconds = ('0' + date.getSeconds()).slice(-2);
+    
+    // 날짜 형식 (YYYYMMDD)
+    const year = date.getFullYear().toString();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    
+    // 시간 형식 (HHMMSS)
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    
+    // 밀리초 형식 (SSS)
+    const milliseconds = date.getMilliseconds().toString().padStart(3, '0');
+    
+    // 고유한 주문 번호 생성 (ORD-YYYYMMDDHHMMSSSSS)
+    return `ORD-${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
+}
 
-    return `${year}${month}${day}${hours}${minutes}${seconds}`;
-};
+// 예시 출력
+console.log(generateMerchantUid());
 
-const generateMerchantUid = (orderCounter) => {
-    const formattedDate = getFormattedDate();
-    return `ORD-${formattedDate}${String(orderCounter).padStart(4, '0')}`;
-};
 
-// 예시 사용법
-const merchantUid = generateMerchantUid(orderCounter);
-console.log(merchantUid); // ORD-202404281808330001
+
 
 const agree = document.getElementById('agree'); // 동의 버튼
 
 const payBtn = document.getElementById('payBtn'); // 결제하기 버튼
 
+// 상품 이름
 const productName = document.getElementById('productName').innerText;
+
+// 고유 주문 번호
+
+
+const addr = document.getElementById('memberAddr').value;
+
+// 총 금액 구해오기
+const amountText = document.getElementById('totalPrice');
+
+let text = amountText.innerText;
+let number = text.replace(/[^0-9]/g, '');
+const myAmount = parseInt(number, 10);
+
 
 
 const onClickPay = async () => {
-    
-    if(!agree.checked) {
-        alert('이용 약간 동의 체크 후 구매해 주세요.')
+
+    if (!agree.checked) {
+        alert('이용 약관 동의 체크 후 구매해 주세요.');
         return;
     }
 
-    // 총 금액 구해오기
-    const amountText = document.getElementById('totalPrice');
+    const merchantUid = generateMerchantUid();
 
-    let text = amountText.innerText;
-    let number = text.replace(/[^0-9]/g, '');
-    let myAmount = parseInt(number, 10);
-
-    const merchantUid = getFormattedDate();
     console.log(merchantUid); // 예: ORD-202406191741050820
     console.log(myAmount);
     console.log(nickName);
     console.log(productName);
+    console.log(tel);
+    console.log(email);
+    console.log(addr);
+    console.log(memberNo);
 
-    IMP.init('imp82211881');
+    try {
+        // 주문 생성 요청
 
-    IMP.request_pay(
-        {
-            pg: "kakaopay",
-            pay_method: "card", // 생략가
-            merchant_uid: merchantUid, // 상점에서 생성한 고유 주문번호
-            name: productName,
-            amount: myAmount,
-            buyer_email: "test@portone.io",
-            buyer_name: "구매자이름",
-            buyer_tel: "010-1234-5678",
-            buyer_addr: "서울특별시 강남구 삼성동",
-            buyer_postcode: "123-456",
-            m_redirect_url: "{모바일에서 결제 완료 후 리디렉션 될 URL}",
-        },
-        function (rsp) {
-          // callback 로직
-          /* ...중략... */
-        },
-    );
-
+        const response = await fetch('/payment/createOrder', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                merchant_uid: merchantUid,
+                amount: myAmount,
+                memberNo : memberNo
+            })
+        });
     
-};
+        const result = await response.text();
+        // creatOrder insert 결과
+        if(result == 0) {
+            alert('주문 생성 실패로 인한 결제 요청 미진행')
 
-payBtn.addEventListener('click', onClickPay);
+            return;
+        }
+    
+    
+        // 사전 검증 요청
+        const prepareResponse = await fetch('/payment/prepare', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                merchant_uid: merchantUid,
+                amount: myAmount
+            })
+        });
+
+        const prepareData = await prepareResponse.json();
+
+        // 여기에 이제 사전 검증 조건 
+        if (prepareData.status !== 'success') {
+            alert(`${prepareData.message} : 결제 사전 검증에 실패하였습니다.`);
+            
+            return;
+        }
+
+        // 사전 검증 성공 시, prepareData에서 필요한 데이터 추출
+        const serverMerchantUid = prepareData.merchant_uid;
+        const serverAmount = parseInt(prepareData.amount, 10);
+
+        // 사전 검증된 정보와 클라이언트 정보 비교
+        if (serverMerchantUid !== merchantUid || serverAmount !== myAmount) {
+            alert('사전 검증된 정보와 클라이언트 정보가 일치하지 않습니다.');
+            return;
+        }
+
+        // 사전 검증이 완료되면 결제 요청
+        IMP.init('imp82211881');
+
+        IMP.request_pay(
+            {
+                pg: "kakaopay",
+                pay_method: "card",
+                merchant_uid: serverMerchantUid,
+                name: productName,
+                amount: serverAmount,
+                buyer_email: email,
+                buyer_name: nickName,
+                buyer_tel: tel,
+                buyer_addr: addr,
+            },
+            async function (rsp) {
+                if (rsp.success) {
+                    // 결제 성공 시 서버로 결제 검증 요청
+                    const verifyResponse = await fetch('/payment/verify', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            imp_uid: rsp.imp_uid,
+                            merchant_uid: rsp.merchant_uid,
+                            amount: serverAmount
+                        })
+                    });
+
+                    const verifyData = await verifyResponse.json();
+
+
+                } else {
+                    alert(`결제에 실패하였습니다. 오류 내용: ${rsp.error_msg}`);
+                    // 실패 로직 (예: 결제 실패 페이지로 리디렉션)
+                    window.location.href = "/myPage/cart";
+                }
+            }
+        );
+    } catch (error) {
+        console.error('Error :', error);
+    }
+};
 
 
 

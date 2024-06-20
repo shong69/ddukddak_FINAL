@@ -97,6 +97,7 @@
                         <button type="button" class="wholePurchase" onclick="submitWholeCartForm()">전체상품 구매</button>
 
                     </div>
+                    <input type="hidden" name="memberNo" id="memberNo" th:value="${session.loginMember.memberNo}"> 
                     <input type="hidden" name="totalPrice" id="totalPriceHidden">
                     <input type="hidden" name="cartIds" id="cartIdsHidden">`
                 </form> 

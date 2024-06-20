@@ -3,6 +3,7 @@ package com.ddukddak.partner.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.partner.model.dto.Partner;
 import com.ddukddak.partner.model.dto.Portfolio;
 import com.ddukddak.partner.model.dto.Project;
@@ -47,26 +49,62 @@ public class InteriorController {
             
         }
         
-        log.info("portfolioNo : " + loginPartnerMember.getPortfolioNo());
-        
+//      log.info("portfolioNo : " + loginPartnerMember.getPortfolioNo());
+//        
         Portfolio portfolio = service.selectPortfolio(loginPartnerMember.getPortfolioNo());
+        log.info("portfolio : " + portfolio);
         
-        Project mainProject = service.selectMainProject(loginPartnerMember.getPortfolioNo());
-        log.info("projectNo : " + mainProject.getProjectNo());
-//        List<ProjectImg> mainProjectImgList = service.selectImageList(mainProject.getProjectNo());
-        List<Project> projectList = service.selectProjectList(loginPartnerMember.getPortfolioNo());
+        Map<String, Object> map = service.selectProjectList(portfolio.getPortfolioNo());
         
-        model.addAttribute("mainProject", mainProject);
-//        model.addAttribute("mainProjectImgList", mainProjectImgList);
-        model.addAttribute("projectList", projectList);
+//        Project mainProject = service.selectMainProject(loginPartnerMember.getPortfolioNo());
+//        log.info("mainProject : " + mainProject);
+//      List<ProjectImg> mainProjectImgList = service.selectImageList(mainProject.getProjectNo());
+//        List<Project> projectList = service.selectProjectList(loginPartnerMember.getPortfolioNo());
+        
+        portfolio.setMainProject( (Project) map.get("mainProject") );
+        
+        List<Project> projectList = (List<Project>) map.get("projectList");
+        
+        List<List<Project>> projectChunks = chunkProjects(projectList, 3);
+        
+        log.info("포트폴리오 프로젝트 리스트 : " + projectList);
+        log.info("청크 확인 : " + projectChunks);
+        
+
+        
+//        log.info("확인 : " + portfolio.getProjectList().get(5).getThumbnail());
+//        log.info("mainProject : " + portfolio.getMainProject());
+//        log.info("확인 : " + portfolio.getMainProject().getImgList().get(2));
+        
+        model.addAttribute("projectChunks", projectChunks);
+        model.addAttribute("portfolio", portfolio);
         
         return "partner/interior/interiorPortfolioEdit/interiorPortfolioEditMain";
     }
 	
+	
+	private List<List<Project>> chunkProjects(List<Project> projects, int chunkSize) {
+        List<List<Project>> projectChunks = new ArrayList<>();
+        for (int i = 0; i < projects.size(); i += chunkSize) {
+        	projectChunks.add(projects.subList(i, Math.min(i + chunkSize, projects.size())));
+        }
+        return projectChunks;
+    }
+	
+	
+	
 	@GetMapping("projectDetail/{projectNo:[0-9]+}")
-	public String projectDetail(@PathVariable("projectNo") int projectNo) {
+	public String projectDetail(@PathVariable("projectNo") int projectNo,
+								Model model,
+								RedirectAttributes ra) {
 		
 		Project project = service.selectProject(projectNo);
+		ProjectImg thumbnail = project.getImgList().get(0);
+		log.info("썸네일 : " + thumbnail);
+		
+//		log.info("project : " + project);
+		
+		model.addAttribute(project);
 		
 		return "partner/interior/interiorPortfolioEdit/projectDetail";
 	}
@@ -96,8 +134,8 @@ public class InteriorController {
 								@RequestParam("projectName") String inputProjectName,
 								@RequestParam("housingType") String housingType,
 								@RequestParam("workForm") String workForm,
-								@RequestParam("constructionCost") Number constructionCost,
-								@RequestParam("workArea") Number workArea,
+								@RequestParam("constructionCost") String constructionCost,
+								@RequestParam("workArea") String workArea,
 								@RequestParam("region") String region,
 								@RequestParam("constructionYear") String constructionYear,
 								@RequestParam("familySize") String familySize,
@@ -122,8 +160,7 @@ public class InteriorController {
 		project.setPortfolioNo(loginPartnerMember.getPortfolioNo());
 		project.setPartnerNo(loginPartnerMember.getPartnerNo());
 		
-		log.info(constructionYear);
-		
+		log.info("images : " + images);
 		MultipartFile mainImg = null;
 		
 		String message = null;
@@ -133,16 +170,18 @@ public class InteriorController {
 			
 			if(image.getOriginalFilename().equals(mainImgFileName)) {
 				mainImg = image;
-				log.info("mainImg : " + mainImg);
+//				log.info("mainImg : " + mainImg);
 				break;
 			}
 			
 		}
 		
-		List<MultipartFile> imgList = new ArrayList<>();
+		List<MultipartFile> imgList = new ArrayList<>(images);
 		
 		imgList.remove(mainImg);	// 중복된 mainImg 리스트에서 삭제
 		imgList.add(0, mainImg);	// 다시 mainImg 를 배열 0번째 자리에 추가
+		
+		log.info("imgList : " + imgList);
 		
 		int projectNo = service.insertProject(project, imgList);
 		

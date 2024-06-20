@@ -1,10 +1,18 @@
 package com.ddukddak.ecommerce.controller;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
+
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +26,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
 import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
 import com.ddukddak.member.model.dto.Member;
@@ -39,8 +49,10 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("eCommerce")
 @RequiredArgsConstructor
+@SessionAttributes("loginMember")
 @Slf4j
 public class eCommerceController {
+	
 	
 	// 쇼핑몰 메인페이지
 	private final eCommerceService service;
@@ -225,6 +237,7 @@ public class eCommerceController {
 		model.addAttribute("productNo", productNo);
 		model.addAttribute("bigCategoryName", bigCategoryName);
 		model.addAttribute("minPrice", "NO");
+		model.addAttribute("memberNo", memberNo);
 
 		
 		
@@ -233,6 +246,12 @@ public class eCommerceController {
 	
 	
 	
+	/** 결제 페이지
+	 * @param model
+	 * @param session
+	 * @param params
+	 * @return
+	 */
 	@RequestMapping("payment")
 	public String eCommercePayment(Model model, HttpSession session,
 								@RequestParam Map<String, String> params
@@ -246,12 +265,24 @@ public class eCommerceController {
 	    // totalPrice=24, cartIds=["41","46"]}
 	    
 	    String cartIds = params.get("cartIds");
+	    int memberNo = Integer.parseInt(params.get("memberNo"));
 	    
 	    log.info("꺼내온 cartId : " + cartIds);
+	    log.info("꺼내온 memberNo : " + memberNo);
 	    
-		Member loginMember = (Member)session.getAttribute("loginMember");
+	    // 주소 이슈로 직접 불러오기
+		Member loginMember = service.selectMember(memberNo);
 		
+		if(loginMember != null) {
+			model.addAttribute("loginMember", loginMember);
+		}
 		
+		// 주소 포맷팅
+	    if (loginMember.getMemberAddr() != null) {
+	        String formattedAddr = loginMember.getMemberAddr().replaceAll("\\^\\^\\^", " ");
+	        loginMember.setMemberAddr(formattedAddr);
+	    }
+
 		
 	    // 장바구니 항목 불러오기
 	    List<CartItem> cartItem = cartService.selectCartList(loginMember);
@@ -274,20 +305,39 @@ public class eCommerceController {
 	        }
 	    }
 		
+	    log.info("loginMember : " + loginMember);
 	    log.info("selectedItems : " + selectedItems);
 	    log.info("totalPrice : " + params.get("totalPrice"));
 	    
+	    int totalPrice =  Integer.parseInt(params.get("totalPrice"));
 	    
-	    // 주문 정보 생성
+	    
 
 	    
-	    // 모델에 필터링된 항목 추가
+	    
+//	    Orders order = new Orders();
+//	    
+//	    order.setMemberNo(loginMember.getMemberNo());
+//	    order.setMerchantUid(merchantUid);
+//	    order.setTotalPrice(totalPrice);
+//	    order.setStatus("ready");;
+	    
+	    
+	    
+           
+	    
+	    // 모델에 필터링된 항목 추가)
 	    model.addAttribute("cartList", selectedItems);
-	    model.addAttribute("totalPrice", params.get("totalPrice"));
-
-		
+	    model.addAttribute("totalPrice", totalPrice);
+	   
+	    
+	    
 		return "eCommerce/eCommercePayment";
 	}
+	
+
+	
+	
 	
 	
 	@RequestMapping("complete")
@@ -314,7 +364,10 @@ public class eCommerceController {
 	}
 	
 	
+
 	//[비동기]리뷰 등록하기
+
+
 	@PostMapping("reviewPost")
 	@ResponseBody
 	public int eCommercePostReview(@RequestParam("reviewContent") String reviewContent,
@@ -323,6 +376,7 @@ public class eCommerceController {
             						@RequestParam("productNo") int ProductNo,
 									@RequestParam("reviewImgs") List<MultipartFile> reviewImgs,
 									@SessionAttribute("loginMember") Member member ) throws IllegalStateException, IOException {
+
 
 		int memberNo = member.getMemberNo();
 		log.info("아아{}",reviewContent);
@@ -336,6 +390,7 @@ public class eCommerceController {
 		map.put("orderItemNo", orderItemNo);
 		map.put("ProductNo", ProductNo);
 		map.put("memberNo", memberNo);
+
 
 		int reviewNo = service.postReview(map);
 		
@@ -357,7 +412,20 @@ public class eCommerceController {
 
 
 	}
-	
+
+
+	// qna 입력
+	@PostMapping("insertQna")
+	@ResponseBody
+	public int insertQna(@RequestBody Map<String, Object> obj,
+						@SessionAttribute("loginMember") Member loginMember) {
+		
+		log.info("obj : " + obj);
+
+		obj.put("memberNo", loginMember.getMemberNo());
+		
+		return service.insertQna(obj);
+	}
 	//[비동기]리뷰 삭제
 	@DeleteMapping("delReview")
 	@ResponseBody
@@ -384,14 +452,34 @@ public class eCommerceController {
 			return 1;
 		}
 		return 0;
+
 	}
 	
+	// 모든 qna 보기
+	@GetMapping("selectQna")
+	@ResponseBody
+	public List<QNA> selectQna() {
+		
+		return service.selectQna();
+	}
+	
+
 	//[비동기] 리뷰 개수
 	@GetMapping("reviewCount")
 	@ResponseBody
 	public int reviewCount(@RequestParam("productNo") int productNo) {
 		return service.reviewCount(productNo);
 	}
+
+	// 내 qna 보기
+	@GetMapping("myQna")
+	@ResponseBody
+	public List<QNA> insertQna(@SessionAttribute("loginMember") Member loginMember) {
+		
+		return service.myQna(loginMember.getMemberNo());
+	}
+	
+
 	
 	
 	

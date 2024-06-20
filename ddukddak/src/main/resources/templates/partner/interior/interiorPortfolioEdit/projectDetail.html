@@ -20,15 +20,21 @@
 
             <div class="interior-title">
                 <div class="logo-img">
-                    <img src="/images/profile/main.jpg">
+                    <th:block th:if="${project.profileImg == null}">
+                        <img th:src="#{user.default.image}">
+                    </th:block>
+
+                    <th:block th:unless="${project.profileImg == null}">
+                        <img th:src="${project.profileImg}">
+                    </th:block>
                 </div>
                 <div class="interior-name">
-                    <h1>회사명</h1>
+                    <h1 th:text="${project.partnerBusinessName}">회사명</h1>
                 </div>
             </div>
 
             <div class="project-name">
-                <h1>프로젝트명</h1>
+                <h1 th:text="${project.projectName}">프로젝트명</h1>
             </div>
 
             <div class="input-img-area">
@@ -130,26 +136,26 @@
             <div class="project-info-area">
                 <h2>프로젝트 정보</h2>
                 <div class="project-info">
-                    <select>
-                        <option>단독주택</option>
-                        <option>아파트</option>
-                        <option>다세대 주택</option>
-                        <option>상가</option>
-                        <option>오피스텔</option>
+                    <select th:field="${project.housingType}">
+                        <option th:value="'단독주택'" th:text="'단독주택'">단독주택</option>
+                        <option th:value="'아파트'" th:text="'아파트'">아파트</option>
+                        <option th:value="'다세대 주택'" th:text="'다세대 주택'">다세대 주택</option>
+                        <option th:value="'상가'" th:text="'상가'">상가</option>
+                        <option th:value="'오피스텔'" th:text="'오피스텔'">오피스텔</option>
                     </select>
                     <div>
-                        <input type="number" placeholder="평수" min="0">
+                        <input th:value="${project.workArea}" type="number" placeholder="평수" min="0">
                         <span>평</span>
                     </div>
                     
-                    <select>
-                        <option>리모델링</option>
-                        <option>바닥공사</option>
-                        <option>벽지도배</option>
+                    <select th:field="${project.workForm}">
+                        <option th:value="'리모델링'" th:text="'리모델링'"></option>
+                        <option th:value="'바닥공사'" th:text="'바닥공사'"></option>
+                        <option th:value="'벽지도배'" th:text="'벽지도배'"></option>
                     </select>
                     <div>
-                        <input type="number" placeholder="만원" min="0" step="10">
-                        <span>만원</span>
+                        <input th:value="${project.constructionCost}" type="number" placeholder="가격" min="0" step="100000">
+                        <span>원</span>
                     </div>
                     
                 </div>
@@ -158,50 +164,24 @@
             <div class="detail-info-area">
                 <h2>세부 정보</h2>
                 <div>
-                    <select>
-                        <option>서울</option>
-                        <option>경기/인천</option>
-                        <option>충청/대전</option>
-                        <option>전라/광주</option>
-                        <option>경북/대구</option>
-                        <option>경남/부산/울산</option>
-                        <option>강원</option>
-                        <option>제주</option>
+                    <select th:field="${project.region}">
+                        <option th:value="'서울'">서울</option>
+                        <option th:value="'경기/인천'">경기/인천</option>
+                        <option th:value="'충청/대전'">충청/대전</option>
+                        <option th:value="'전라/광주'">전라/광주</option>
+                        <option th:value="'경북/대구'">경북/대구</option>
+                        <option th:value="'경남/부산/울산'">경남/부산/울산</option>
+                        <option th:value="'강원'">강원</option>
+                        <option th:value="'제주'">제주</option>
                     </select>
 
-                    <select>
-                        <option>2000</option>
-                        <option>2001</option>
-                        <option>2002</option>
-                        <option>2003</option>
-                        <option>2004</option>
-                        <option>2005</option>
-                        <option>2006</option>
-                        <option>2007</option>
-                        <option>2008</option>
-                        <option>2009</option>
-                        <option>2010</option>
-                        <option>2011</option>
-                        <option>2012</option>
-                        <option>2013</option>
-                        <option>2014</option>
-                        <option>2015</option>
-                        <option>2016</option>
-                        <option>2017</option>
-                        <option>2018</option>
-                        <option>2019</option>
-                        <option>2020</option>
-                        <option>2021</option>
-                        <option>2022</option>
-                        <option>2023</option>
-                        <option>2024</option>
-                    </select>
+                    <input type="date" th:value="${project.constructionYear}">
 
-                    <select>
-                        <option>1인 가족</option>
-                        <option>2인 가족</option>
-                        <option>4인 가족</option>
-                        <option>기타</option>
+                    <select th:field="${project.familySize}">
+                        <option th:value="'1인 가족'">1인 가족</option>
+                        <option th:value="'2인 가족'">2인 가족</option>
+                        <option th:value="'4인 가족'">4인 가족</option>
+                        <option th:value="'기타'">기타</option>
                     </select>
                 </div>
             </div>

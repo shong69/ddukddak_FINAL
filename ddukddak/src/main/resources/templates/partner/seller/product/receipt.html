@@ -29,7 +29,7 @@
 
             <input type="checkbox" value="A" name="receipt" id="selectAll" onclick="updateStatus(this)"><label for="selectAll">전체</label>
             <input type="checkbox" value="AM" name="receipt" id="selectAmount" onclick="updateStatus(this)"><label for="selectAmount">수량</label>
-            <input type="checkbox" value="P" name="receipt" id="selectPrice" onclick="updateStatus(this)"><label for="selectPrice">판매가</label>
+            <input type="checkbox" value="PR" name="receipt" id="selectPrice" onclick="updateStatus(this)"><label for="selectPrice">판매가</label>
         </div>
 
         <!-- 상품접수버튼 -->
@@ -63,8 +63,8 @@
                     </td>
                     <td><img th:src="@{*{thumbnail}}" alt="Product Thumbnail"></td>
                     <td th:text="*{categoryName}">가구/의자</td>
-                    <td th:text="|*{optionName} : *{optionValue}|">오크내추럴</td>
-                    <td th:text="*{productCount}">300</td>
+                    <td th:text="|[*{options}]|">오크내추럴</td>
+                    <td th:text="*{orderQuantity}">300</td>
                     <td th:text="*{productNo}">F202405210001</td>
                     <td th:text="*{productName}">오아르 벤 원목 부클레 패브릭 의자</td>
                     <td th:text="*{productPrice}">122,200</td>
@@ -73,8 +73,60 @@
             </table>
         </div>
 
-        <!-- 페이지네이션 -->
-        <div><h3 style="text-align: center; margin: 30px 0;"><<&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;>></h3></div>
+         <!-- 페이지네이션 -->
+         <div class="pagination">
+            <th:block th:if="${status == null}">
+                <ul class = "pagination" th:object="${pagination}">
+                    <li><a th:href="@{|/partner/seller/product/receipt?cp=1|}">&lt;&lt;</a></li>
+                    <li><a th:href="@{|/partner/seller/product/receipt?cp=*{prevPage}|}">&lt;</a></li>
+        
+                    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+    
+                        <li th:if="${i} == *{currentPage}">
+                            <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                        </li>
+    
+                        <li th:unless="${i} == *{currentPage}">
+                            <a th:href="@{|/partner/seller/product/receipt?cp=${i}|}"
+                            th:text="${i}">이동할 페이지</a>
+                        </li>
+                        
+                    </th:block>
+        
+                
+                    <li>
+                        <a th:href="@{|/partner/seller/product/receipt?cp=*{nextPage}&status=${status}|}">&gt;</a>
+                    </li>
+                    <li><a th:href="@{|/partner/seller/product/receipt?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
+                </ul>
+            </th:block>
+            <th:block th:unless="${status == null}">
+                <ul class = "pagination" th:object="${pagination}">
+                    <li><a th:href="@{|/partner/seller/product/receipt?cp=1&status=${status}|}">&lt;&lt;</a></li>
+                    <li><a th:href="@{|/partner/seller/product/receipt?cp=*{prevPage}&status=${status}|}">&lt;</a></li>
+        
+                    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+    
+                        <li th:if="${i} == *{currentPage}">
+                            <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                        </li>
+    
+                        <li th:unless="${i} == *{currentPage}">
+                            <a th:href="@{|/partner/seller/product/receipt?cp=${i}&status=${status}|}"
+                            th:text="${i}">이동할 페이지</a>
+                        </li>
+                        
+                    </th:block>
+        
+                
+                    <li>
+                        <a th:href="@{|/partner/seller/product/receipt?cp=*{nextPage}&status=${status}|}">&gt;</a>
+                    </li>
+                    <li><a th:href="@{|/partner/seller/product/receipt?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
+                </ul>
+
+            </th:block>
+        </div>
 
 
     </div>

@@ -372,7 +372,36 @@
 		SELECT * FROM "CATEGORY"
 	</select>
 	
+
+	<select id="selectMember">
+		SELECT *
+		FROM "MEMBER"
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
 	
+	<!-- 주문생성(paid 추후 수정) -->
+	<insert id="createOrder" parameterType="Orders">
+		INSERT INTO "ORDERS"
+		VALUES(SEQ_ORDER_NO.NEXTVAL,
+				DEFAULT,
+				#{totalPrice},
+				DEFAULT,
+				#{memberNo},
+				DEFAULT,
+				#{merchantUid},
+				#{status},
+				DEFAULT
+				)
+	</insert>
+	
+
+	
+
+	<insert id="insertQna">
+		INSERT INTO "QNA"
+		VALUES(SEQ_QNA_NO.NEXTVAL, #{qnaTitle}, #{qnaContent}, NULL, #{memberNo}, NULL, SYSDATE, NULL, 'N')
+	</insert>
+
 	
 	
 	
@@ -418,6 +447,7 @@
 		  AND R.ORDER_ITEM_NO IS NULL
 		GROUP BY O.ORDER_NO, D.ORDER_ITEM_NO, ORDER_DATE, D.ORDER_QUANTITY
 	</select>
+
 	<select id="reviewCount">
 		SELECT COUNT(*)
 		FROM REVIEW
@@ -430,4 +460,36 @@
 			SEQ_UPLOAD_IMG_NO.NEXTVAL,#{uploadImgPath},#{uploadImgOgName},#{uploadImgRename},#{uploadImgOrder},5,NULL,NULL,#{reviewNo}, NULL
 		)
 	</insert>
+
+	
+	
+	<select id="prepareOrder">
+		SELECT * 
+		FROM "ORDERS" 
+		WHERE MERCHANT_UID = #{merchantUid}
+	</select>
+	
+	<!-- 모든 qna 보기 -->
+	<select id="selectQna">
+		SELECT QNA_NO, QNA_TITLE, QNA_CONTENT, QNA_ANSWER, MEMBER_NO, p.PARTNER_NO,
+		TO_CHAR(QNA_WRITE_DATE, 'YYYY-MM-DD') AS QNA_WRITE_DATE,
+		TO_CHAR(QNA_ANSWER_DATE, 'YYYY-MM-DD') AS QNA_ANSWER_DATE,
+		QNA_ANSWER_STATUS, MEMBER_ID, p.PARTNER_ID
+		FROM "QNA" q
+		NATURAL JOIN "MEMBER"
+		LEFT JOIN PARTNER p ON(q.PARTNER_NO = p.PARTNER_NO)
+	</select>
+	
+	<!-- 내 qna 보기 -->
+	<select id="myQna">
+		SELECT QNA_NO, QNA_TITLE, QNA_CONTENT, QNA_ANSWER, MEMBER_NO, p.PARTNER_NO,
+		TO_CHAR(QNA_WRITE_DATE, 'YYYY-MM-DD') AS QNA_WRITE_DATE,
+		TO_CHAR(QNA_ANSWER_DATE, 'YYYY-MM-DD') AS QNA_ANSWER_DATE,
+		QNA_ANSWER_STATUS, MEMBER_ID, p.PARTNER_ID
+		FROM "QNA" q
+		NATURAL JOIN "MEMBER"
+		LEFT JOIN PARTNER p ON(q.PARTNER_NO = p.PARTNER_NO)
+		WHERE MEMBER_NO = #{memberNo}
+	</select>
+
 </mapper>

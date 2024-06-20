@@ -23,4 +23,10 @@ public class ModelingController {
 	public String modelingEstimate() {
 		return "partner/interior/modeling/modelingEstimate";
 	}
+	
+	// 모델링 테스트
+	@GetMapping("modeling/test")
+	public String modelingTest() {
+		return "partner/interior/modeling/modelingTest";
+	}
 }

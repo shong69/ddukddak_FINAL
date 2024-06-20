@@ -402,8 +402,39 @@ findIdForm.addEventListener('submit', (e) => {
                 alert('유효한 전화번호를 입력해 주세요.');
                 return;
             }
+            
             if (!checkTelObj.telAuth) {
                 authCount2++;
+
+                if(authCount2 == 3) {
+                    
+                    alert("인증 실패 횟수가 3회를 초과하여 종료됩니다.");
+
+                    checkTelObj.telNm = false;
+                    checkTelObj.tel = false;
+                    checkTelObj.telAuth = false;
+
+                    // 이름 없애기
+                    telNm.value = "";
+
+                    // 휴대폰 입력창 초기화
+                    inputTel.value = "";
+                    telMsg.innerText = "";
+                    telMsg.classList.remove('error', 'confirm');
+                    
+
+                    // 인증 초기화 및 히든 풀기
+                    telAuthInput.value = "";
+                    telAuthMsg.innerText = "";
+                    telAuthMsg.classList.remove('error', 'confirm');
+
+                    authCount2 = 0;
+                    telAuthHidden.classList.add('hidden');
+
+                    disabledCheckButton();
+                    return;
+                }
+
                 alert(`SMS 인증번호가 일치하지 않습니다.\n3회 이상 인증 실패 시 인증이 종료됩니다. (현재 ${authCount2}회 실패)`);
                 return;
             }

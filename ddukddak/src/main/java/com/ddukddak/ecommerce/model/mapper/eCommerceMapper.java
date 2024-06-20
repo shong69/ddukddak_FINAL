@@ -8,11 +8,13 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
+import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.QNA;
 import com.ddukddak.ecommerce.model.dto.Review;
-import com.ddukddak.ecommerce.model.dto.eCommercePagination;
+import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.Order;
 
 @Mapper
@@ -144,6 +146,27 @@ public interface eCommerceMapper {
 	 */
 	List<Category> selectSmallCategory2();
 
+	 
+	/** 멤버 찾기
+	 * @param memberNo
+	 * @return
+	 */
+	Member selectMember(int memberNo);
+	
+	
+	/** 주문 생성
+	 * @param order
+	 * @return
+	 */
+	int createOrder(Orders order);
+
+
+	/** qna 입력
+	 * @param obj
+	 * @return
+	 */
+	int insertQna(Map<String, Object> obj);
+
 	/**리뷰 등록하기
 	 * @param map
 	 * @return 
@@ -164,6 +187,7 @@ public interface eCommerceMapper {
 	 */
 	List<Order> checkReviewAuth(Map<String, Object> map);
 
+
 	/** 리뷰 개수 리턴
 	 * @param productNo
 	 * @return
@@ -175,6 +199,25 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	int insertImgs(Map<String, Object> map);
+
+
+	/** 모든 qna 보기
+	 * @return
+	 */
+	List<QNA> selectQna();
+
+	/** 내 qna 보기
+	 * @return
+	 */
+	List<QNA> myQna(int memberNo);
+
+
+	/** DB 사전 검증
+	 * @param merchantUid
+	 * @return
+	 */
+	Orders prepareOrder(String merchantUid);
+
 
 
 

@@ -107,7 +107,9 @@
         <div th:each="productList : ${selectProductList}" th:object="${productList}">
           <a th:href="@{'/eCommerce/list/' + *{bigCategoryNo} + '/' + *{categoryNo} + '/' + *{productNo} + '/detail'}">
             <div class="img-wrap">
-              <img th:src="|*{uploadImgPath}*{uploadImgRename}|">
+              <div>
+                <img th:src="|*{uploadImgPath}*{uploadImgRename}|">
+              </div>
 
               <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
                   th:style="*{wish == 0} ? 'display:block;' : 'display:none;'"

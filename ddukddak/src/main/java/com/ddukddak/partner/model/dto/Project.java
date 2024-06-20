@@ -24,8 +24,8 @@ public class Project {
 	private String projectName;
 	private String housingType;
 	private String workForm;
-	private Number workArea;
-	private Number constructionCost;
+	private String workArea;
+	private String constructionCost;
 	private String region;
 	private String constructionYear;
 	private String familySize;
