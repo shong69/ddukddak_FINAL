@@ -3,7 +3,9 @@ package com.ddukddak.partner.model.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -59,15 +61,40 @@ public class InteriorServiceImpl implements InteriorService {
 	}
 
 
-	@Override
-	public Project selectMainProject(int portfolioNo) {
-		return mapper.selectMainProject(portfolioNo);
-	}
+//	@Override
+//	public Project selectMainProject(int portfolioNo) {
+//		return mapper.selectMainProject(portfolioNo);
+//	}
 
 
 	@Override
-	public List<Project> selectProjectList(int portfolioNo) {
-		return mapper.selectProjectList(portfolioNo);
+	public Map<String, Object> selectProjectList(int portfolioNo) {
+		
+		Project mainProject = mapper.selectMainProject(portfolioNo);
+		List<Project> projectList = mapper.selectProjectList(portfolioNo);
+		
+		List<ProjectImg> thumbnailList = new ArrayList<>();
+		
+		log.info("projectList : " + projectList);
+		
+		for (Project project : projectList) {
+			
+			Project thumbnailProject = mapper.selectProject(project.getProjectNo());
+//			log.info("확인 : " + thumbnailProject.getImgList());
+			if(!thumbnailProject.getImgList().isEmpty()) {
+				
+				project.setImgList(thumbnailProject.getImgList());
+			}
+			
+		}
+//		log.info("projectList : " + projectList);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("mainProject", mainProject);
+		map.put("projectList", projectList);
+		
+		return map;
 	}
 
 
@@ -124,6 +151,8 @@ public class InteriorServiceImpl implements InteriorService {
 		if(uploadList.isEmpty()) {
 			return project.getProjectNo();
 		}
+		
+		log.info("uploadList : " + uploadList);
 		
 		result2 = mapper.insertUploadList(uploadList);
 		
