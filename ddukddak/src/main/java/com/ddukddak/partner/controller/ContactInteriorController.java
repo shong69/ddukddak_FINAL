@@ -36,9 +36,6 @@ public class ContactInteriorController {
 		
 		List<Partner> interiorList = service.selectInteriorList();
 		
-//		log.info("interiorList : " + interiorList.toString());
-
-//		model.addAttribute("query", query);
 		model.addAttribute("interiorList", interiorList);
 		
 		return "partner/interior/interiorList";
@@ -53,19 +50,19 @@ public class ContactInteriorController {
 													HttpServletResponse resp) {
 
 
-		Project mainProject = service.selectMainProject(portfolioNo);
-
-		List<Project> mainPortfolio = service.selectProjectList(portfolioNo);
-
-
-        if(mainProject != null) {
-        	model.addAttribute("mainProject", mainProject);
-        	log.info("mainProject : " + mainProject);
-        }
-        if(mainPortfolio != null) {
-        	model.addAttribute("mainPortfolio", mainPortfolio);
-        	log.info("mainPortfolio : " + mainPortfolio);
-        }
+//		Project mainProject = service.selectMainProject(portfolioNo);
+//
+//		List<Project> projectList = service.selectProjectList(portfolioNo);
+//
+//
+//        if(mainProject != null) {
+//        	model.addAttribute("mainProject", mainProject);
+//        	log.info("mainProject : " + mainProject);
+//        }
+//        if(projectList != null) {
+//        	model.addAttribute("projectList", projectList);
+//        	log.info("projectList : " + projectList);
+//        }
         
         return "partner/interior/interiorPortfolio";
  
@@ -83,19 +80,19 @@ public class ContactInteriorController {
 	@GetMapping("interiorPortfolioDetail/{portfolioNo:[0-9]+}")
 	public String interiorPortfolioDetail(Model model, @PathVariable("portfolioNo") int portfolioNo) {
 		
-		Project mainPortfolio = service.selectMainProject(portfolioNo);
-		
-		List<Project> portfolioList = service.selectProjectList(portfolioNo);
-		
-		log.info("portfolio : " + mainPortfolio.toString());
-		log.info("portfolioList : " + portfolioList.toString());
-		List<List<Project>> portfolioChunks = chunkBoards(portfolioList, 3);
-		
-		if (mainPortfolio != null) {
-			model.addAttribute("mainPortfolio", mainPortfolio);
-			model.addAttribute("portfolioChunks", portfolioChunks);
-			
-		}
+//		Project mainProject = service.selectMainProject(portfolioNo);
+//		
+//		List<Project> projectList = service.selectProjectList(portfolioNo);
+//		
+//		log.info("portfolio : " + mainProject.toString());
+//		log.info("projectList : " + projectList.toString());
+//		List<List<Project>> portfolioChunks = chunkBoards(projectList, 3);
+//		
+//		if (mainProject != null) {
+//			model.addAttribute("mainPortfolio", mainProject);
+//			model.addAttribute("portfolioChunks", portfolioChunks);
+//			
+//		}
 		
 		return "partner/interior/projectDetail";
 	}

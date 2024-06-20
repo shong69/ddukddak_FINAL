@@ -12,12 +12,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
+import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.ecommerce.model.mapper.eCommerceMapper;
+import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.Order;
 
 import lombok.RequiredArgsConstructor;
@@ -300,6 +302,31 @@ public class eCommerceServiceImpl implements eCommerceService{
 	}
 
 
+	
+	/** 멤버 찾기(주소 이슈 때문에)
+	 *
+	 */
+	@Override
+	public Member selectMember(int memberNo) {
+		// 
+		return mapper.selectMember(memberNo);
+	}
+
+	
+	
+	// 주문 생성
+	@Override
+	public int createOrder(Orders order) {
+		
+		return mapper.createOrder(order);
+	}
+
+
+	
+
+	
+
+
 	// qna 입력
 	@Override
 	public int insertQna(Map<String, Object> obj) {
@@ -358,6 +385,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 	
 

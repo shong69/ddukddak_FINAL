@@ -1,8 +1,13 @@
 package com.ddukddak.ecommerce.controller;
 
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
+import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.dto.Review;
@@ -42,6 +48,9 @@ import oracle.jdbc.proxy.annotation.Post;
 @SessionAttributes("loginMember")
 @Slf4j
 public class eCommerceController {
+	
+	private static final AtomicInteger orderCounter = new AtomicInteger(0); // 주문 카운터 초기화
+	private static String lastDate = "";
 	
 	// 쇼핑몰 메인페이지
 	private final eCommerceService service;
@@ -235,6 +244,12 @@ public class eCommerceController {
 	
 	
 	
+	/** 결제 페이지
+	 * @param model
+	 * @param session
+	 * @param params
+	 * @return
+	 */
 	@RequestMapping("payment")
 	public String eCommercePayment(Model model, HttpSession session,
 								@RequestParam Map<String, String> params
@@ -248,12 +263,24 @@ public class eCommerceController {
 	    // totalPrice=24, cartIds=["41","46"]}
 	    
 	    String cartIds = params.get("cartIds");
+	    int memberNo = Integer.parseInt(params.get("memberNo"));
 	    
 	    log.info("꺼내온 cartId : " + cartIds);
+	    log.info("꺼내온 memberNo : " + memberNo);
 	    
-		Member loginMember = (Member)session.getAttribute("loginMember");
+	    // 주소 이슈로 직접 불러오기
+		Member loginMember = service.selectMember(memberNo);
 		
+		if(loginMember != null) {
+			model.addAttribute("loginMember", loginMember);
+		}
 		
+		// 주소 포맷팅
+	    if (loginMember.getMemberAddr() != null) {
+	        String formattedAddr = loginMember.getMemberAddr().replaceAll("\\^\\^\\^", " ");
+	        loginMember.setMemberAddr(formattedAddr);
+	    }
+
 		
 	    // 장바구니 항목 불러오기
 	    List<CartItem> cartItem = cartService.selectCartList(loginMember);
@@ -276,20 +303,65 @@ public class eCommerceController {
 	        }
 	    }
 		
+	    log.info("loginMember : " + loginMember);
 	    log.info("selectedItems : " + selectedItems);
 	    log.info("totalPrice : " + params.get("totalPrice"));
 	    
+	    int totalPrice =  Integer.parseInt(params.get("totalPrice"));
+	    
 	    
 	    // 주문 정보 생성
-
+	    String merchantUid = generateMerchantUid();
 	    
-	    // 모델에 필터링된 항목 추가
+	    
+//	    Orders order = new Orders();
+//	    
+//	    order.setMemberNo(loginMember.getMemberNo());
+//	    order.setMerchantUid(merchantUid);
+//	    order.setTotalPrice(totalPrice);
+//	    order.setStatus("ready");;
+	    
+	    
+	    
+           
+	    
+	    // 모델에 필터링된 항목 추가)
 	    model.addAttribute("cartList", selectedItems);
-	    model.addAttribute("totalPrice", params.get("totalPrice"));
-
-		
+	    model.addAttribute("totalPrice", totalPrice);
+	    model.addAttribute("merchantUid", merchantUid);
+	    
+	    
 		return "eCommerce/eCommercePayment";
 	}
+	
+    /** 주문번호 규칙 생성
+     * @return
+     */
+	private String generateMerchantUid() {
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	    String currentDate = sdf.format(new Date());
+
+	    
+	    log.info("currentDate :" + currentDate);
+	    // 날짜가 변경될 때 카운터 초기화
+	    if (!currentDate.equals(lastDate)) {
+	        
+	    	orderCounter.set(0);
+	        
+	        lastDate = currentDate;
+	        
+	        log.info("lastDate :" + currentDate);
+	    }
+
+	    int orderNumber = orderCounter.incrementAndGet();
+
+	    SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+	    String timestamp = timestampFormat.format(new Date());
+
+	    return "ORD-" + timestamp + String.format("%04d", orderNumber);
+	}
+	
+	
 	
 	
 	@RequestMapping("complete")
