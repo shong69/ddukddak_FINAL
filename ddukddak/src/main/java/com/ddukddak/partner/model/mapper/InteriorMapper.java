@@ -63,5 +63,12 @@ public interface InteriorMapper {
 	 */
 	Project selectProject(int projectNo);
 
+	
+	/** 프로젝트 삭제
+	 * @param projectNo
+	 * @return result
+	 */
+	int deleteProject(int projectNo);
+
 
 }

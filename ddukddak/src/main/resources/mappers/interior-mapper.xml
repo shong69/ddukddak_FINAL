@@ -92,6 +92,7 @@
 		NATURAL JOIN PROJECT
 		WHERE PARTNER_TYPE = 1 
 		AND MAIN_PROJECT_FL = 'Y'
+		AND PROJECT_DEL_FL = 'N'
 		AND PORTFOLIO_NO = #{portfolioNo}
     </select>
     
@@ -107,6 +108,7 @@
 		NATURAL JOIN PROJECT
 		WHERE PARTNER_TYPE = 1 
 		AND MAIN_PROJECT_FL = 'N'
+		AND PROJECT_DEL_FL = 'N'
 		AND PORTFOLIO_NO = #{portfolioNo}
 		ORDER BY CONSTRUCTION_YEAR DESC
     </select>
@@ -129,6 +131,7 @@
 		NATURAL JOIN PROJECT_INFO 
 		NATURAL JOIN PARTNER
 		WHERE PROJECT_NO = #{projectNo}
+		AND PROJECT_DEL_FL = 'N'
      
     </select>
 
@@ -159,7 +162,8 @@
 		INSERT INTO "PROJECT"
 		VALUES (#{projectNo},
 				#{projectName},
-				#{portfolioNo}
+				#{portfolioNo},
+				DEFAULT
 				)
 		
 	</insert>
@@ -201,6 +205,13 @@
 		</foreach>
 		
 	</insert>
+	
+	
+	<!-- 프로젝트 삭제 -->
+	<update id="deleteProject">
+		UPDATE "PROJECT" SET PROJECT_DEL_FL = 'Y' 
+		WHERE PROJECT_NO = ${projectNo}
+	</update>
 	
 </mapper>
 

@@ -149,7 +149,7 @@ public class InteriorController {
 		
 		Project project = new Project();
 		
-		log.info("constructionYear : " + constructionYear);
+//		log.info("constructionYear : " + constructionYear);
 		
 		project.setProjectName(inputProjectName);
 		project.setHousingType(housingType);
@@ -162,7 +162,7 @@ public class InteriorController {
 		project.setPortfolioNo(loginPartnerMember.getPortfolioNo());
 		project.setPartnerNo(loginPartnerMember.getPartnerNo());
 		
-		log.info("images : " + images);
+//		log.info("images : " + images);
 		MultipartFile mainImg = null;
 		
 		String message = null;
@@ -182,7 +182,7 @@ public class InteriorController {
 		imgList.remove(mainImg);	// 중복된 mainImg 리스트에서 삭제
 		imgList.add(0, mainImg);	// 다시 mainImg 를 배열 0번째 자리에 추가
 		
-		log.info("imgList : " + imgList);
+//		log.info("imgList : " + imgList);
 		
 		int projectNo = service.insertProject(project, imgList);
 		
@@ -198,6 +198,58 @@ public class InteriorController {
 		
 		return "redirect:/partner/interiorPortfolioEditMain";
 		
+	}
+	
+	@PostMapping("updateProject")
+	public String updateProject(@RequestParam("projectNo") int projectNo,
+								@RequestParam("images") MultipartFile images,
+							 	@RequestParam("housingType") String housingType,
+							 	@RequestParam("workArea") String workArea,
+							 	@RequestParam("workForm") String workForm,
+							 	@RequestParam("constructionCost") String constructionCost,
+							 	@RequestParam("region") String region,
+							 	@RequestParam("constructionYear") String constructionYear,
+							 	@RequestParam("familySize") String familySize,
+							 	Model model) {
+		
+		Project project = new Project();
+		
+		
+		project.setProjectNo(projectNo);
+		project.setHousingType(housingType);
+		project.setWorkArea(workArea);
+		project.setWorkForm(workForm);
+		project.setConstructionCost(constructionCost);
+		project.setRegion(region);
+		project.setConstructionYear(constructionYear);
+		project.setFamilySize(familySize);
+		
+		log.info("프로젝트 : " + project);
+		
+		return "redirect:/partner/interiorPortfolioEditMain";
+	}
+	
+	
+	@GetMapping("deleteProject")
+	public String deleteProject(@RequestParam("projectNo") int projectNo,
+								RedirectAttributes ra) {
+		
+		int result = service.deleteProject(projectNo);
+		
+		String path = null;
+		String message = null;
+		
+		if(result > 0) {
+			path = "/partner/interiorPortfolioEditMain";
+			message = "프로젝트 삭제가 완료되었습니다.";
+		} else {
+			path = "/partner/projectDetail/" + projectNo;
+			message = "프로젝트 삭제에 실패하였습니다.";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
 	}
 }
 
