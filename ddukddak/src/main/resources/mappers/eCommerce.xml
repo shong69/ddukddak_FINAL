@@ -462,7 +462,7 @@
 	</insert>
 
 	
-	
+	<!-- 주문 생성 -->
 	<select id="prepareOrder">
 		SELECT *
 		FROM "ORDERS" 

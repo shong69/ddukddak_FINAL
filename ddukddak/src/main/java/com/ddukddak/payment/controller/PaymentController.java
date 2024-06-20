@@ -29,7 +29,7 @@ public class PaymentController {
 	private final eCommerceMapper eCommerceMapper;
 	private final eCommerceService eCommerceService;
 	
-	private TokenDTO tokenDTO;
+    private final TokenDTO tokenDTO;
 	
 	@PostMapping("createOrder")
 	public int createOrder(@RequestBody Map<String, Object> params) throws Exception {
@@ -57,40 +57,39 @@ public class PaymentController {
     	order.setStatus("prepare");
     	
     	log.info("order 객체 결과 : " + order);
-    	
+        
     	int result = eCommerceService.createOrder(order);
         
-    	if(result > 0) {
-    		
-            String impKey = paymentConfig.getPayApikey();
-            String impSecret = paymentConfig.getPaySecret();
-    		
-    		String accessToken = paymentService.getAccessToken(impKey, impSecret);
-    		
-    		tokenDTO = new TokenDTO();
-    		
-    		tokenDTO.setAccessToken(accessToken);
-    		
-    		
-    	} 
-    	
+        String impKey = paymentConfig.getPayApikey();
+        String impSecret = paymentConfig.getPaySecret();
+        
+        String accessToken = paymentService.getAccessToken(impKey, impSecret, merchantUid);
+        	
+        if(accessToken == null) {
+        	
+            Map<String, String> map = new HashMap<>();
+            map.put("merchantUid", merchantUid);
+            map.put("message", "토큰 획득 실패");
+            
+            eCommerceMapper.reasonUpdate(map);
+        	
+        	return 0;
+        }
+        
+        tokenDTO.setAccessToken(accessToken);
+        
 		return result;
 	}
 	
 	
 	@PostMapping("prepare")
 	public Map<String, String> preparePayment(@RequestBody Map<String, Object> params) throws Exception {
-		log.info("사전 검증 merchantUid, myAmount, memberNo 값 확인 : " + params);
-		// 사전 검증 merchantUid, myAmount, memberNo 값 확인 : {merchant_uid=ORD-202406200943550003, amount=10, memberNo=5}		
 		
+
 		// 1. 토큰 얻기
-		
-		
 		String accessToken = tokenDTO.getAccessToken();
-		
-		
-		log.info("AccessToken : " + accessToken);
-		// 9f1e87f6e789121f789ab6e443650040f70090a1  잘 오는거 확인
+			
+		log.info("사전 검증 컨트롤러 토큰값 : " + accessToken);
 
 		// 2. 사전 검증
 		Map<String, Object> prepareResponse = paymentService.preparePayment(params, accessToken);		
@@ -211,8 +210,7 @@ public class PaymentController {
 	    // 결제 취소 상태 업데이트 로직
 	    int result = eCommerceService.cancelUpdate(map);
 	    
-	    
-	    
+
 	    return result;
 	}
 

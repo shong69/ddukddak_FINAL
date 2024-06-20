@@ -1,4 +1,5 @@
-const totalPriceValue = Number(document.getElementById('totalPriceValue').value);
+// 금액 먼저 구해야 함.
+const totalPriceValue = document.getElementById('totalPriceValue').value;
 
 const agree = document.getElementById('agree'); // 동의 버튼
 
@@ -7,13 +8,31 @@ const payBtn = document.getElementById('payBtn'); // 결제하기 버튼
 // 상품 이름
 const productName = document.getElementById('productName').innerText;
 
-// 고유 주문 번호
+// 주소
 const addr = document.getElementById('memberAddr').value;
 
+function formatAddress(addr) {
+    const match = addr.match(/^(\d{5})\s(.+)$/);
+
+    if (match) {
+        const postcode = match[1]; // 우편번호 (5자리 숫자)
+        let address = match[2];    // 나머지 주소
+
+        // 주소에서 첫 번째 공백만 제거합니다.
+        address = address.replace(/^ /, '');
+
+        return {
+            postcode: postcode,
+            address: address
+        };
+    } else {
+        throw new Error('Invalid address format');
+    }
+}
+
+
 // 총 금액 구해오기
-const amountText = document.getElementById('totalPrice');
-
-
+//const amountText = document.getElementById('totalPrice');
 
 console.log(totalPriceValue);
 
@@ -30,11 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
     totalPriceElement.innerText = formatToKoreanWon(totalPriceElement.innerText);
 
     
+    
 });
-
-
-
-
 
 function formatToKoreanWon(numberString) {
     let number = parseInt(numberString.replace(/[^0-9]/g, ''), 10);
@@ -71,7 +87,17 @@ console.log(generateMerchantUid());
 
 const onClickPay = async () => {
 
+    const totalPriceValue = document.getElementById('totalPriceValue').value;
+
     const merchantUid = generateMerchantUid();
+    const formattedAddress = formatAddress(addr);
+
+    const totalPriceValueNumber = Number(totalPriceValue);
+
+    console.log('postcode : ' + formattedAddress.postcode );
+    console.log('address : ' + formattedAddress.address );
+
+
     document.getElementById('merchantUid').value = merchantUid;
     // let text = amountText.innerText;
     // let number = text.replace(/[^0-9]/g, '');
@@ -93,20 +119,22 @@ const onClickPay = async () => {
             },
             body: JSON.stringify({
                 merchant_uid: merchantUid,
-                amount: totalPriceValue,
+                amount: totalPriceValueNumber,
                 memberNo : memberNo
             })
         });
     
         const result = await response.text();
         // creatOrder insert 결과
-        if(result == 0) {
+        if(result === 0) {
+
             alert('주문 생성 실패로 인한 결제 요청 미진행')
 
             return;
         }
     
-    
+        
+
         // 사전 검증 요청
         const prepareResponse = await fetch('/payment/prepare', {
             method: 'POST',
@@ -115,7 +143,7 @@ const onClickPay = async () => {
             },
             body: JSON.stringify({
                 merchant_uid: merchantUid,
-                amount: totalPriceValue
+                amount: totalPriceValueNumber
             })
         });
 
@@ -134,7 +162,7 @@ const onClickPay = async () => {
         const serverAmount = parseInt(prepareData.amount, 10);
 
         // 사전 검증된 정보와 클라이언트 정보 비교
-        if (serverMerchantUid !== merchantUid || serverAmount !== totalPriceValue) {
+        if (serverMerchantUid !== merchantUid || serverAmount !== totalPriceValueNumber) {
             alert('사전 검증된 정보와 클라이언트 정보가 일치하지 않습니다.');
             return;
         }
@@ -152,7 +180,8 @@ const onClickPay = async () => {
                 buyer_email: email,
                 buyer_name: nickName,
                 buyer_tel: tel,
-                buyer_addr: addr,
+                buyer_postcode: formattedAddress.postcode,
+                buyer_addr: formattedAddress.address
             },
             async function (rsp) {
                 if (rsp.success) {

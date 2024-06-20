@@ -80,8 +80,9 @@
 
                             <h3 class="price" style="margin: 20px 7px; font-weight: 700; letter-spacing: 0.05em" th:text="|*{productPrice * productCount}원|">13,900원</h3>
                         </div>
+                        <input class="cartId" type="hidden" name="cartId" th:value="*{cartId}">
                     </div>
-                    <input type="hidden" name="cartList" th:value="${cartList}">
+                    
                 </th:object>
             </div>
 
@@ -92,7 +93,6 @@
                 </div>
                 <div style="width: 50%; text-align: end;">
                     <h3 id="totalPrice" th:text="${totalPrice}" style="white-space: nowrap; font-weight: 700; letter-spacing: 0.05em;">1,762,900원</h3>
-
                 </div>
             </block>
 
@@ -129,9 +129,10 @@
             </label>
         </div>
         <div style="width: 100%; display: flex; justify-content: center">
-            <button type="submit" id="payBtn" class="eCommerBuyDetailConfirmBtn" style="margin: 60px 0;">결제하기</button>
+            <button onclick="onClickPay()" type="button" id="payBtn" class="eCommerBuyDetailConfirmBtn" style="margin: 60px 0;">결제하기</button>
             <!-- onclick="onClickPay()" -->
         </div>
+        <input type="hidden" name="cartIds" id="cartIdsHidden">
     </form>
     
     
@@ -143,10 +144,18 @@
         const memberNo =  /*[[${loginMember.memberNo}]]*/ "회원번호";
         const tel = /*[[${loginMember.memberTel}]]*/ "휴대폰";
 
+        var cartIds = [];
+        document.querySelectorAll('.cartId').forEach(function(element) {
+            cartIds.push(element.value);
+        });
+        document.getElementById('cartIdsHidden').value = JSON.stringify(cartIds);
+
+            
+        
     </script>
     <!-- iamport.payment.js -->
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <script src="/js/eCommerce/eCommercePayment.js"></script>
-    
+
 </body>
 </html>

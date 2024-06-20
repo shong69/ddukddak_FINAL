@@ -20,6 +20,12 @@ public interface PaymentMapper {
 	 */
 	int addPayment(PaymentDTO paymentDTO);
 
+	/** 구매 페이지 값 얻어오기
+	 * @param merchantUid
+	 * @return
+	 */
+	PaymentDTO selectPaid(String merchantUid);
+
 
 	
 }

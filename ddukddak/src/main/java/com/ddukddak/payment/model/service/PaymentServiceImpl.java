@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import com.ddukddak.common.config.PaymentConfig;
 import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.mapper.eCommerceMapper;
 import com.ddukddak.payment.model.dto.PaymentDTO;
@@ -42,159 +42,152 @@ public class PaymentServiceImpl implements PaymentService {
 	 * @throws Exception 
 	 */
 	@Override
-	public String getAccessToken(String impKey, String impSecret) throws Exception {
+	public String getAccessToken(String impKey, String impSecret, String merchantUid) throws Exception {
 		
 		String tokenUrl = "https://api.iamport.kr/users/getToken";
 		
 		// 헤더
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-	
-
-        
+	        
 		// 바디 
 		Map<String, String> body = new HashMap<>();
         body.put("imp_key", impKey);
         body.put("imp_secret", impSecret);
 		
         log.info("토큰 서비스 body : " + body);
-        // 토큰 서비스 body : {imp_secret=L2Y2hpOL5hjcYWluFSldMpdw9L6auyblap1IC7xFSi750KBRrTFavVOKUTiS0qn7Zm1CWMVOah5GuKSm, imp_key=2110753877161886}
-        
-        
-        // HttpEntity 객체 생성
-        HttpEntity<Map<String, String>> entity = new HttpEntity<>(body, headers);
-		
-        ResponseEntity<String> response = null;
-        
-        
-        //ResponseEntity<String> response = restTemplate.postForEntity(tokenUrl, entity, String.class);
-        
-        try {
-        	log.info("Sending request to {}", tokenUrl);
-        	response = restTemplate.postForEntity(tokenUrl, entity, String.class);
-        } catch (HttpClientErrorException e) {
-            log.error("HttpClientErrorException occurred: {}", e.getResponseBodyAsString());
-            throw new Exception("Exception occurred while getting token: " + e.getMessage(), e);
-        } catch (Exception e) {
-            log.error("Exception occurred while getting token: ", e);
-            throw new Exception("Exception occurred while getting token: " + e.getMessage(), e);
-        }
-        
-        log.info("Token response status: {}", response.getStatusCode());
-        log.info("Token response body: {}", response.getBody());
-        
-        if (response.getStatusCode() == HttpStatus.OK) {
-            try {
+	
+        try {        	
+            // JSON 바디 생성하여 전송해보기
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonBody = objectMapper.writeValueAsString(body);
+            
+            // HttpEntity 객체 생성
+            HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers);
+        	
+            ResponseEntity<String> response = restTemplate.exchange(tokenUrl, HttpMethod.POST, entity, String.class);
+            
+            log.info("토큰 응답 상태 : {}", response.getStatusCode());
+            log.info("토큰 응답 바디 : {}", response.getBody());
+
+            if (response.getStatusCode() == HttpStatus.OK) {
                 // 응답 바디를 JSON으로 파싱
-                ObjectMapper objectMapper = new ObjectMapper();
                 JsonNode root = objectMapper.readTree(response.getBody());
-                
+
                 // access_token 추출
                 String accessToken = root.path("response").path("access_token").asText();
-                log.info("AccessToken 추출 : " + accessToken);
-                
+                log.info("토큰 서비스 AccessToken 추출 : {}", accessToken);
+
                 return accessToken;
-                
-            } catch (Exception e) {
-            	 log.error("Error parsing JSON response: ", e);
-                 log.error("Response Body: " + response.getBody());
-                 throw new Exception("Error parsing JSON response: " + e.getMessage(), e);
-            	
+            } else {
+                log.error("Failed to get token: {}", response.getStatusCode());
+                log.error("Response Body: {}", response.getBody());
+                throw new Exception("Failed to get token: " + response.getStatusCode() + " - " + response.getBody());
             }
-        } else {
-        	
-        	
-            log.error("Failed to get token: " + response.getStatusCode());
-            log.error("Response Body: " + response.getBody());
-            throw new Exception("Failed to get token: " + response.getStatusCode() + " - " + response.getBody());
             
+        } catch (HttpClientErrorException e) {
+            log.error("HttpClientErrorException: {}", e.getMessage());
+            log.error("Response body: {}", e.getResponseBodyAsString());
+
+            // 오더 테이블 STATUS 업데이트
+            Map<String, String> map = new HashMap<>();
+            map.put("merchantUid", merchantUid);
+            map.put("message", "토큰 획득 실패");
+
+            eCommerceMapper.reasonUpdate(map);
+
+            throw new Exception("HttpClientErrorException: " + e.getMessage(), e);
         }
-        
-		
-
-		
 	}
-
 
 	/**
 	 * 사전 검증
 	 */
 	@Override
-	public Map<String, Object> preparePayment(Map<String, Object> params, String accessToken) {
+	public Map<String, Object> preparePayment(Map<String, Object> params, String accessToken) throws Exception {
 		
-		log.info("사전 검증 토큰 확인 : " + accessToken);
+		log.info("사전 검증 서비스단 토큰 확인 : " + accessToken);
 		
-		String prepareUrl = "https://api.iamport.kr/payments/prepare";
-		 
-		// 헤더 설정
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBearerAuth(accessToken);  // Authorization 헤더에 토큰 추가
-		 
-		String merchantUid = (String) params.get("merchant_uid");
-		Integer amount = (Integer) params.get("amount");
+	    String prepareUrl = "https://api.iamport.kr/payments/prepare";
+	     
+	    // 헤더 설정
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    headers.setBearerAuth(accessToken);  // Authorization 헤더에 토큰 추가
+	     
+	    String merchantUid = (String) params.get("merchant_uid");
+	    Object amountObj = params.get("amount");
 
-		log.info("사전 검증 요청 바디 확인 : merchant_uid={}, amount={}", merchantUid, amount);
-		
-        // 요청 바디 설정
-        Map<String, Object> body = new HashMap<>();
-        body.put("merchant_uid", merchantUid);
-        body.put("amount", (Integer) amount);
-		
-        log.info("사전 검증 요청 바디 확인 : " + body);
-        
-        // 객체 생성
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(body, headers);
-		
-        // 요청 보내기
-        ResponseEntity<String> response = restTemplate.postForEntity(prepareUrl, entity, String.class);
-        
-        log.info("사전 검증 응답 확인 : " + response);
-        
-        if (response.getStatusCode() == HttpStatus.OK) {
-            try {
-                // 응답 바디를 JSON으로 파싱
-                ObjectMapper objectMapper = new ObjectMapper();
-                JsonNode root = objectMapper.readTree(response.getBody());
-                
-                // 에러 코드 확인
-                int code = root.path("code").asInt();
-                if (code != 0) {
-                    log.error("Error code: " + code + ", message: " + root.path("message").asText());
-	                
-                    Map<String, String> map = new HashMap<>();
-                    map.put("merchantUid", merchantUid);
-                    map.put("message", "사전 검증 " + root.path("message").asText());
-                    
-                    eCommerceMapper.reasonUpdate(map);
-                    
-                    return null;
-                }
-                
-                // merchantUid, amount 추출
-                String merchantUidResp = root.path("response").path("merchant_uid").asText();
-                Integer amountResp = root.path("response").path("amount").asInt();
-                
-                Map<String, Object> prepareInfo = new HashMap<>();
-                
-                prepareInfo.put("merchant_uid", merchantUidResp);
-                prepareInfo.put("amount", amountResp);
-                
-                return prepareInfo;
-                
-            } catch (Exception e) {
-                log.error("Error parsing JSON response: ", e);
-                log.error("Response Body: " + response.getBody());
-                
-            }
-        } else {
-            log.error("Failed to prepare payment: " + response.getStatusCode());
-            log.error("Response Body: " + response.getBody());
-            
+	    // amount를 무조건 숫자형(Integer)으로 변환해야함(오류 방지)
+	    Integer amount = null;
+	    if (amountObj instanceof Number) {
+	        amount = ((Number) amountObj).intValue();
+	    } else {
+	        try {
+	            amount = Integer.parseInt(amountObj.toString());
+	        } catch (NumberFormatException e) {
+	            log.error("Invalid amount format: {}", amountObj);
+	            throw new IllegalArgumentException("Amount must be a valid number", e);
+	        }
+	    }
 
-        }
-        
-        return null;
+	    // 요청 바디 설정
+	    Map<String, Object> body = new HashMap<>();
+	    body.put("merchant_uid", merchantUid);
+	    body.put("amount", amount);
+	    
+	    // 타입만 한 번 더 확인 해보기(오류 많이 난 부분)
+	    log.info("사전 검증 요청 바디 확인 : amountType={}", amount.getClass().getName());
+	    
+	    try {
+	        ObjectMapper objectMapper = new ObjectMapper();
+	        String jsonBody = objectMapper.writeValueAsString(body);
+	        
+	        // HttpEntity 생성
+	        HttpEntity<String> entity = new HttpEntity<>(jsonBody, headers);
+	        
+	        // 요청 보내기
+	        ResponseEntity<String> response = restTemplate.postForEntity(prepareUrl, entity, String.class);
+	        
+	        if (response.getStatusCode() != HttpStatus.OK) {
+	            log.error("Failed to prepare payment: {}", response.getStatusCode());
+	            log.error("Response Body: {}", response.getBody());
+	            throw new Exception("Failed to prepare payment: " + response.getStatusCode());
+	        }
+	        
+	        // 응답 바디를 JSON으로 파싱
+	        JsonNode root = objectMapper.readTree(response.getBody());
+	        
+	        // 에러 코드 확인
+	        int code = root.path("code").asInt();
+	        if (code != 0) {
+	            String message = root.path("message").asText();
+	            log.error("Error code: {}, message: {}", code, message);
+	            
+	            Map<String, String> map = new HashMap<>();
+	            map.put("merchantUid", merchantUid);
+	            map.put("message", "사전 검증 " + message);
+	            
+	            eCommerceMapper.reasonUpdate(map);
+	            
+	            throw new Exception("사전 검증 실패: " + message);
+	        }
+	        
+	        // merchantUid, amount 추출
+	        String merchantUidResp = root.path("response").path("merchant_uid").asText();
+	        Integer amountResp = root.path("response").path("amount").asInt();
+	        
+	        Map<String, Object> prepareInfo = new HashMap<>();
+	        
+	        prepareInfo.put("merchant_uid", merchantUidResp);
+	        prepareInfo.put("amount", amountResp);
+	        
+	        return prepareInfo;
+	        
+	    } catch (Exception e) {
+	        log.error("JSON 직렬화 오류: ", e);
+	        throw new RuntimeException("JSON 직렬화 오류: " + e.getMessage(), e);
+	    }
 		
 	}
 
@@ -282,6 +275,8 @@ public class PaymentServiceImpl implements PaymentService {
         paymentDTO.setEscrow(responseNode.path("escrow").asText()); // 에스크로 결제 여부
         
         paymentDTO.setFailedAt(LocalDateTime.ofEpochSecond(responseNode.path("failed_at").asLong(), 0, ZoneOffset.UTC)); // 결제 실패 시간
+        
+        //paymentDTO.setPaidAt(responseNode.path("paid_at").asText());
         paymentDTO.setPaidAt(LocalDateTime.ofEpochSecond(responseNode.path("paid_at").asLong(), 0, ZoneOffset.UTC)); // 결제 시간
         paymentDTO.setStartedAt(LocalDateTime.ofEpochSecond(responseNode.path("started_at").asLong(), 0, ZoneOffset.UTC)); // 결제 시작 시간
         
@@ -357,6 +352,16 @@ public class PaymentServiceImpl implements PaymentService {
          */
 		
 		
+	}
+
+
+	/**
+	 * 구매 완료 페이지 값 얻어오기
+	 */
+	@Override
+	public PaymentDTO selectPaid(String merchantUid) {
+		// TODO Auto-generated method stub
+		return mapper.selectPaid(merchantUid);
 	}
 	
   
