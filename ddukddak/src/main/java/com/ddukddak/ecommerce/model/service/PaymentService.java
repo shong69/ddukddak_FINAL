@@ -7,8 +7,9 @@ public interface PaymentService {
 
 	/** 토큰 얻기
 	 * @return
+	 * @throws Exception 
 	 */
-	String getAccessToken();
+	String getAccessToken() throws Exception;
 
 	/** 사전 검증
 	 * @param params

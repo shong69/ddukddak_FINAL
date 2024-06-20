@@ -387,6 +387,13 @@ public class eCommerceServiceImpl implements eCommerceService{
 		return 0;
 	}
 
+	// 사전 등록 DB 검증 
+	@Override
+	public Orders prepareOrder(String merchantUid) {
+		
+		return mapper.prepareOrder(merchantUid);
+	}
+
 
 	
 

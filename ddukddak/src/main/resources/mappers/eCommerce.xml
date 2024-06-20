@@ -389,7 +389,7 @@
 				#{memberNo},
 				DEFAULT,
 				#{merchantUid},
-				DEFAULT,
+				#{status},
 				DEFAULT
 				)
 	</insert>
@@ -439,6 +439,13 @@
 		  AND O.STATUS = 'paid'
 		  AND R.ORDER_ITEM_NO IS NULL
 		GROUP BY O.ORDER_NO, D.ORDER_ITEM_NO, ORDER_DATE, D.ORDER_QUANTITY
+	</select>
+	
+	
+	<select id="prepareOrder">
+		SELECT * 
+		FROM "ORDERS" 
+		WHERE MERCHANT_UID = #{merchantUid}
 	</select>
 
 </mapper>

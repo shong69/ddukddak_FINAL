@@ -13,7 +13,6 @@ import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.dto.Review;
-import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.Order;
 
@@ -183,6 +182,12 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	List<Order> checkReviewAuth(Map<String, Object> map);
+
+	/** DB 사전 검증
+	 * @param merchantUid
+	 * @return
+	 */
+	Orders prepareOrder(String merchantUid);
 
 
 }
