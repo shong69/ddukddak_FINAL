@@ -249,6 +249,22 @@
     position: relative;
 }
 
+.img-wrap > div {
+    height: 220px;
+    width: 200px;
+    overflow: hidden;
+}
+
+.img-wrap > div > img {
+    height: 100%;
+    width: 100%;
+    transition-duration: 0.3s;
+}
+
+.img-wrap > div > img:hover {
+    transform: scale(1.1);
+}
+
 .fa-heart {
     position: absolute;
     top: 10px;
@@ -393,7 +409,7 @@
 }
 
 #shopping-items {
-    width: 1000px;
+    width: 1100px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -665,8 +681,9 @@
     background-color: transparent;
     border : none;
     font-size: 12px;
-    color: rgb(255, 248, 208);
+    color: white;
     cursor : pointer;
+    text-shadow: 1px 1px 2px gray;
 }
 .fill{
     color : red;

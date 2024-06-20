@@ -54,9 +54,20 @@
     margin: 0 60px;
 }
 
-.img-wrap > img {
+.img-wrap > div {
     height: 300px;
     width: 250px;
+    overflow: hidden;
+}
+
+.img-wrap > div > img {
+    height: 300px;
+    width: 250px;
+    transition-duration: 0.3s;
+}
+
+.img-wrap > div > img:hover {
+    transform: scale(1.1);
 }
 
 .fa-heart {

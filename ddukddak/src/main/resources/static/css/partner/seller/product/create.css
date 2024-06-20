@@ -222,15 +222,16 @@
 .delete-button {
     position: absolute;
     font-size: 10px;
-    top: 7px;
-    right: 1px;
-    background-color: rgba(255, 255, 255, 0.8);
+    bottom: 0;
+    left: 7px;
     border: none;
-    border-radius: 50%;
+    background: none;
+    color: white;
     width: 15px;
     height: 15px;
     text-align: center;
-    cursor: pointer;
+    cursor : pointer;
+    text-shadow: 1px 1px 2px gray;
 }
 
 #subImgContainer  h1 {
