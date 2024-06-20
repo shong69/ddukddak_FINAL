@@ -3,10 +3,14 @@ package com.ddukddak.ecommerce.model.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.Review;
+import com.ddukddak.myPage.model.dto.Order;
 
 public interface eCommerceService {
 
@@ -97,5 +101,54 @@ public interface eCommerceService {
 	 * @return
 	 */
 	List<Category> selectSmallCategory();
+
+
+	/** qna 입력
+	 * @param obj
+	 * @return
+	 */
+	int insertQna(Map<String, Object> obj);
+
+	/**리뷰 목록 조회하기
+	 * @param productNo
+	 * @return
+	 */
+	List<Review> selectReviewList(int productNo);
+
+
+	/** 해당 상품에 대한 리뷰 작성 가능 개수 조회
+	 * @param productNo
+	 * @param i 
+	 * @return
+	 */
+	List<Order> checkReviewAuth(int productNo, int memberNo);
+
+	/**리뷰 등록하기
+	 * @param reivew
+	 * @return
+	 */
+	Review postReview(Review reivew);
+	//리뷰 사진 등록하기
+	int insertImgs(int reviewNo, List<MultipartFile> reviewImgs);
+
+
+	/**리뷰 삭제하기
+	 * @param reviewId
+	 * @return
+	 */
+	int delReview(int reviewId);
+
+	/**수정할 리뷰 불러오기
+	 * @param reviewId
+	 * @return
+	 */
+	Review reloadReview(String reviewId);
+
+	/**리뷰 수정하기
+	 * @param review
+	 * @param reviewImgs
+	 * @return
+	 */
+	int updateReview(Review review, List<MultipartFile> reviewImgs);
 
 }

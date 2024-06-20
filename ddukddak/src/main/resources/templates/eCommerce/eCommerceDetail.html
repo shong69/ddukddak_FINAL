@@ -155,7 +155,7 @@
                 <div>
                     <div>
                         <button class="eCommerceProductDetailBtn" id="detailInfo">상세정보</button>
-                        <button class="eCommerceProductDetailBtn" id="review" onclick="openReview()">리뷰 0</button>
+                        <button class="eCommerceProductDetailBtn" id="review">리뷰 0</button>
                         <button class="eCommerceProductDetailBtn" id="qna">QNA</button>
                         <button class="eCommerceProductDetailBtn" id="changeInfo">반품/교환 정보</button>
                     </div>
@@ -169,6 +169,28 @@
                         </div>
 
                         <th:block th:replace="~{/eCommerce/eCommerceReview}"></th:block>
+
+                        <div id="qnaBox">
+                            <input type="hidden" id="memberNo" th:value="${memberNo}">
+                            <h2 style="margin-top: 30px;">QNA</h2>
+                            <h5 style="color: var(--gray4);">구매하시려는 상품에 대해 궁금한 점이 있으신 경우 문의해주세요.</h5>
+                            
+                            <div>
+                                <button type="button" id="qnaInserButton">상품 QNA 작성하기</button>
+                                <button type="button" id="myQna">내가 작성한 QNA</button>
+                            </div>
+                            
+                            <div id="write">
+                                <input id="writeTitle" placeholder="QNA 제목을 작성해주세요">
+
+                                <div id="writeQnaBox">
+                                    <textarea id="writeQna" placeholder="QNA 내용을 작성해주세요"></textarea>
+                                    <button id="applyQnaButton">등록</button>
+                                </div>
+                            </div>
+
+                            <div id="qnaContainer"></div>
+                        </div>
                         
                         <!-- 교환/반품 -->
                         <div id="change">
@@ -238,11 +260,10 @@
     <th:block th:replace="~{common/fragments/footer}"></th:block>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="/js/eCommerce/eCommerceDetail.js"></script>
-    <script src="/js/common/redirectToLogin.js"></script>
 
     <script th:inline="javascript">
         var loginMember = /*[[${loginMember}]]*/ "loginMember";
+        const loginMemberNo = /*[[session.loginMember.memberNo]]*/ "loginMemberNo";
         var productNo = /*[[${productNo}]]*/ "productNo";
         const buyButton = document.querySelector("#buyButton");
         const wishButton = document.querySelector("#wishButton");
@@ -396,6 +417,8 @@
             return false;
         }
     </script>
+    <script src="/js/eCommerce/eCommerceDetail.js"></script>
+    <script src="/js/common/redirectToLogin.js"></script>
 </body>
 </html>
 

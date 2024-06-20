@@ -8,14 +8,17 @@ import java.util.Random;
 
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
+import com.ddukddak.ecommerce.model.dto.Review;
 import com.ddukddak.ecommerce.model.dto.eCommercePagination;
 import com.ddukddak.ecommerce.model.mapper.eCommerceMapper;
+import com.ddukddak.myPage.model.dto.Order;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -295,7 +298,67 @@ public class eCommerceServiceImpl implements eCommerceService{
 	public List<Category> selectSmallCategory() {
 		return mapper.selectSmallCategory2();
 	}
+
+
+	// qna 입력
+	@Override
+	public int insertQna(Map<String, Object> obj) {
+		return mapper.insertQna(obj);
+}
+	//리뷰 목록 조회하기
+	@Override
+	public List<Review> selectReviewList(int productNo) {
+		List<Review> list = mapper.selectReviewList(productNo);
+		return list;
+	}
+
+	//해당 상품에 대한 리뷰 작성 가능 개수 조회 -> 드롭다운으로 표시할거임
+	@Override
+	public List<Order> checkReviewAuth(int productNo, int memberNo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("productNo", productNo);
+		map.put("memberNo", memberNo);
+		return mapper.checkReviewAuth(map);
+	}
+
+	//리뷰 등록하기
+	@Override
+	public Review postReview(Review review) {
+		//주문 테이블에서 memberNo와 productNo에 해당하는 orderItemNo 찾아오기(리뷰를 써야 하는 주문상품)
+		mapper.postReview(review);
+
+		return review;
+	}
+
+	//리뷰 사진 등록하기  
+	@Override
+	public int insertImgs(int reviewNo, List<MultipartFile> reviewImgs) {
+		
+		return 0;
+
+	}
 	
+	//리뷰 삭제하기
+	@Override
+	public int delReview(int reviewId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	//수정할 리뷰 불러오기
+	@Override
+	public Review reloadReview(String reviewId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	//리뷰 수정하기
+	@Override
+	public int updateReview(Review review, List<MultipartFile> reviewImgs) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 
 }
