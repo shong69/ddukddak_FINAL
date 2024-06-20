@@ -41,7 +41,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("eCommerce")
@@ -388,37 +387,35 @@ public class eCommerceController {
 	}
 	
 	
-//	//[비동기]리뷰 등록하기
-//	@PostMapping("reviewPost")
-//	@ResponseBody
-//	public int eCommercePostReview(@RequestParam("reviewContent") String reviewContent,
-//            						@RequestParam("reviewRating") int reviewRating,
-//            						@RequestParam("orderItemNo") int orderItemNo,
-//            						@RequestParam("ProductNo") int ProductNo,
-//            						
-//									@RequestParam("reviewImgs") List<MultipartFile> reviewImgs,
-//									@SessionAttribute("loginMember") Member member ) {
-//		int memberNo = member.getMemberNo();
-//		review.setMemberNo(memberNo);
-//		//modelAttribute로 바인딩하기
-//		
-//		int imgResult = 0;
-//		Review newReview = service.postReview(reivew); //결과와 reviewNo 받아오기
-//		if(newReview != null) { //리뷰 등록 성공
-//			//리뷰 사진 uploadFile에 삽입하기
-//			List<MultipartFile> imgList = new ArrayList<>(reviewImgs);
-//			imgResult = service.insertImgs(newReview.getReviewNo(), reviewImgs);
-//		}
-//
-//		
-//		if(imgResult >0) {
-//			//등록 성공
-//			return 1;
-//		}else {
-//			return 0;
-//		}
-//
-//	}
+
+	//[비동기]리뷰 등록하기
+	@PostMapping("reviewPost")
+	@ResponseBody
+	public int eCommercePostReview(@RequestParam("reviewContent") String reviewContent,
+            						@RequestParam("reviewRating") int reviewRating,
+            						@RequestParam("orderItemNo") int orderItemNo,
+            						@RequestParam("ProductNo") int ProductNo,
+            						
+									@RequestParam("reviewImgs") List<MultipartFile> reviewImgs,
+									@SessionAttribute("loginMember") Member member ) {
+		int memberNo = member.getMemberNo();
+
+		//modelAttribute로 바인딩하기
+		
+		int imgResult = 0;
+		//Review newReview = service.postReview(); //결과와 reviewNo 받아오기
+
+
+		
+		if(imgResult >0) {
+			//등록 성공
+			return 1;
+		}else {
+			return 0;
+		}
+
+	}
+
 	
 
 	// qna 입력
