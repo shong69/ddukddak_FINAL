@@ -335,6 +335,7 @@ selectTags.forEach(function(select) {
 //리뷰 기능
 
 //1. 리뷰 등록 비동기 + (사진, 텍스트, 별점)도 올리기
+//사진 등록하기
 let reviewImgFiles = [];
 function readImgURLs(input) {
     if (input.files && input.files.length > 0) {
@@ -387,6 +388,7 @@ function readImgURLs(input) {
         input.value = '';
     }
 }
+
 function handleFormMission(event) {
     const form = document.getElementById('uploadForm');
     event.preventDefault(); // 기본 제출 동작 막기
@@ -491,41 +493,63 @@ stars.forEach((star, index) =>{
 
     })
 })
-
+console.log(typeof productNo);
 //3. 비동기로 리뷰 작성(+수정)하기
 function handleFormMissionReview(event) {
     event.preventDefault();
 
     const form = document.getElementById('reviewForm');
     const formData = new FormData(form);
+    console.log(typeof formData);
 
     // 리뷰 이미지 파일을 FormData에 추가
     reviewImgFiles.forEach(file => {
         formData.append('reviewImgs', file);
     });
+    
+    //orderItemNo 추가
+    const orderItemNoSelect = document.querySelector(".reviewOptSelect");
+    const option = orderItemNoSelect.options[orderItemNoSelect.selectedIndex]; //select의 옵션 중 선택된 옵션의 값
+    formData.append("orderItemNo", option.value);
 
-    // 별점 추가
-    formData.append('reviewRating', reviewRating);
-    formData.append('productNo', productNo);
+
+    formData.append('reviewRating', reviewRating); // 별점 추가
+    formData.append('productNo', productNo); //상품 번호 추가
+
+    // FormData 내용을 콘솔에 출력 (모든 키와 값을 출력)
+    for (let [key, value] of formData.entries()) {
+        console.log(key, typeof value);
+    }
+
     // reviewNo 가져오기
     const reviewNo = document.querySelector("#hiddenReviewNo").value;
-    const url = reviewNo ? '/eCommerce/updateReview' : '/eCommerce/reviewPost';
+    console.log(reviewNo?1:2);
+    const url = reviewNo ? "/eCommerce/updateReview" : "/eCommerce/reviewPost";
+    console.log(typeof url);
 
     fetch(url, {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);  //data 값 보고 조건문 추가하기
-        alert(reviewNo ? "리뷰가 수정되었습니다." : "리뷰가 등록되었습니다.");
-        selectReviewList(productNo); // 리뷰 목록 새로 고침
+    .then(response => response.text())
+    .then(result => {
+        console.log('result:', result);  
+        if(result > 0){
+            alert(reviewNo ? "리뷰가 수정되었습니다." : "리뷰가 등록되었습니다.");
+            getReviewCount(productNo); //리뷰 개수 업데이트
+            selectReviewList(productNo); // 리뷰 목록 새로 고침
+        }else{
+            alert(reviewNo ? "리뷰 수정 실패" : "리뷰 등록 실패");
+            return;
+        }
     })
     .catch((error) => {
         console.error('Error:', error);
         alert(reviewNo ? "리뷰 수정에 실패했습니다." : "리뷰 등록에 실패했습니다.");
     });
+
 }
+
 
 
 
@@ -623,10 +647,10 @@ function selectReviewList(productNo){
 
                     const memberId = document.createElement("span");
                     memberId.classList.add("memberId");
-                    memberId.textContent = loginMember.memberId; //멤버 아이디 적기
+                    memberId.textContent = review.memberId; //멤버 아이디 적기
                     const commentWriteDate = document.createElement("span");
                     commentWriteDate.classList.add("commentWriteDate");
-                    commentWriteDate.textContent = review.commebtWriteDate; //리뷰 작성일 적기
+                    commentWriteDate.textContent = review.commentWriteDate; //리뷰 작성일 적기
                     infoArea.append(memberId, commentWriteDate);
 
                     const editArea = document.createElement("div");
@@ -636,11 +660,15 @@ function selectReviewList(productNo){
                     const updateBtn = document.createElement("button");
                     updateBtn.classList.add("updateBtn");
                     updateBtn.textContent = "수정";
-                    updateBtn.onclick(updateBtn(review.reviewNo));
+                    updateBtn.onclick=function(){
+                        updateFn(review.reviewNo, productNo)
+                    };
                     const delBtn = document.createElement("button");
                     delBtn.classList.add("delBtn");
                     delBtn.textContent = "삭제";
-                    delBtn.onclick(delReview(review.reviewNo));
+                    delBtn.onclick=function(){
+                        delReview(review.reviewNo, productNo)
+                    };
 
                     //수정할 때 영역
                     console.log(loginMember.memberNo);
@@ -675,7 +703,7 @@ function selectReviewList(productNo){
 
 
 //4. 내가 쓴 리뷰 삭제 비동기
-function delReview(reviewNo){
+function delReview(reviewNo,productNo){
     if(confirm("정말 리뷰를 삭제하시겠습니까?")){
         fetch(`/eCommerce/delReview?reviewNo=${reviewNo}`, {
             method: 'DELETE'
@@ -691,11 +719,11 @@ function delReview(reviewNo){
         })
         .catch(error => console.error('Error:', error));
     }
-
+    getReviewCount(productNo);//개수 업데이트
 }
 
 //5. 내가 쓴 리뷰 수정하기 비동기 -> 
-function updateBtn(reviewNo) {
+function updateFn(reviewNo,productNo) {
     //리뷰 불러오기
     fetch("/eCommerce/reloadReview?reviewNo="+reviewNo)
     .then(resp => resp.json())
@@ -764,6 +792,25 @@ function updateBtn(reviewNo) {
 
         document.querySelector("#hiddenReviewNo").value = reviewNo;
     });
-
+    getReviewCount(productNo); //개수 업데이트
 }
 
+//전체 리뷰 개수 
+
+function getReviewCount(productNo) {
+    
+    let num = 0;
+    fetch("/eCommerce/reviewCount?productNo="+productNo)
+    .then(resp=>resp.text())
+    .then(result=> {
+        num = result;
+    }).catch(error=>console.log("Error : ",error));
+
+    const reviewCounts = document.querySelectorAll(".totalReviewCount");
+    console.log(reviewCounts);
+    reviewCounts.forEach(reviewCount =>{
+        reviewCount.innerText = num;
+    });
+}
+
+getReviewCount(productNo);

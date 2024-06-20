@@ -383,15 +383,22 @@
     		SELECT SEQ_REVIEW_NO.NEXTVAL FROM DUAL
     	</selectKey>
         INSERT INTO "REVIEW"
-        VALUES (reviewNo, #{reviewContent},SYSDATE, NULL, #{reviewRating}, #{productNo}, )
+        VALUES (#{reviewNo}, #{reviewContent},SYSDATE, NULL, #{reviewRating}, #{ProductNo}, #{memberNo}, #{orderItemNo}, DEFAULT)
     </insert>
-
+	<!-- 리뷰 번호 -->
+	<select id="getReviewNo">
+		SELECT REVIEW_NO
+		FROM REVIEW
+		WHERE ORDER_ITEM_NO = #{orderItemNo}
+	</select>
 	<!--리뷰 리스트 불러오기-->
 	<select id="selectReviewList">
+
 		SELECT REVIEW_NO, REVIEW_CONTENT, REVIEW_CREATE_DATE, REVIEW_UPDATE_DATE,
-		REVIEW_RATING, PRODUCT_NO, MEMBER_NO, ORDER_ITEM_NO, REVIEW_DEL_FL
-		FROM REVIEW
-		WHERE PRODUCT_NO= #{productNo}
+		REVIEW_RATING, PRODUCT_NO, R.MEMBER_NO, ORDER_ITEM_NO, REVIEW_DEL_FL,MEMBER_ID
+		FROM REVIEW R
+		LEFT JOIN "MEMBER" M ON(M.MEMBER_NO=R.MEMBER_NO)
+		WHERE PRODUCT_NO=#{productNo}
 	</select>
 	
 	<!--해당 상품에서 내가 작성할 수 있는 주문상품 리스트 찾기 -->
@@ -411,4 +418,16 @@
 		  AND R.ORDER_ITEM_NO IS NULL
 		GROUP BY O.ORDER_NO, D.ORDER_ITEM_NO, ORDER_DATE, D.ORDER_QUANTITY
 	</select>
+	<select id="reviewCount">
+		SELECT COUNT(*)
+		FROM REVIEW
+		WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	<!-- 리뷰 이미지 등록 -->
+	<insert id="insertImgs">
+		INSERT INTO UPLOAD_FILES VALUES(
+			SEQ_UPLOAD_IMG_NO.NEXTVAL,#{uploadImgPath},#{uploadImgOgName},#{uploadImgRename},#{uploadImgOrder},5,NULL,NULL,#{reviewNo}, NULL
+		)
+	</insert>
 </mapper>

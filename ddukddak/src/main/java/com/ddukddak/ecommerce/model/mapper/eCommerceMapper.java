@@ -145,9 +145,12 @@ public interface eCommerceMapper {
 	List<Category> selectSmallCategory2();
 
 	/**리뷰 등록하기
-	 * @param review
+	 * @param map
+	 * @return 
 	 */
-	void postReview(Review review);
+	int postReview(Map<String, Object> map);
+	//reviewNo 알아오기
+	int getReviewNo(Map<String, Object> map);
 
 	/** 리뷰 리스트 불러오기
 	 * @param productNo
@@ -160,5 +163,19 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	List<Order> checkReviewAuth(Map<String, Object> map);
+
+	/** 리뷰 개수 리턴
+	 * @param productNo
+	 * @return
+	 */
+	int reviewCount(int productNo);
+
+	/** 리뷰 이미지 등록
+	 * @param map
+	 * @return
+	 */
+	int insertImgs(Map<String, Object> map);
+
+
 
 }

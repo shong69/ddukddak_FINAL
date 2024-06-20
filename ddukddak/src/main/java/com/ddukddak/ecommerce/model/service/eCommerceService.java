@@ -1,5 +1,6 @@
 package com.ddukddak.ecommerce.model.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -117,12 +118,12 @@ public interface eCommerceService {
 	List<Order> checkReviewAuth(int productNo, int memberNo);
 
 	/**리뷰 등록하기
-	 * @param reivew
+	 * @param map
 	 * @return
 	 */
-	Review postReview(Review reivew);
+	int postReview(Map<String, Object> map);
 	//리뷰 사진 등록하기
-	int insertImgs(int reviewNo, List<MultipartFile> reviewImgs);
+	int insertImgs(int reviewNo, List<MultipartFile> reviewImgs) throws IllegalStateException, IOException;
 
 
 	/**리뷰 삭제하기
@@ -143,6 +144,12 @@ public interface eCommerceService {
 	 * @return
 	 */
 	int updateReview(Review review, List<MultipartFile> reviewImgs);
+
+	/**리뷰 개수 리턴
+	 * @param productNo
+	 * @return
+	 */
+	int reviewCount(int productNo);
 
 
 }

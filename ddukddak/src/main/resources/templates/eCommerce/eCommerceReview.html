@@ -4,7 +4,7 @@
             <li >
                 <div class="reviewInfoArea">
                     <div class="reviewCount" >
-                        <div  th:text="|전체 리뷰 N개|"></div>
+                        <div>전체리뷰&nbsp;<span class="totalReviewCount">val</span>개</div>
                         <i class="totalIcon fa-solid fa-people-group" style="font-size: 45spx;"></i>
                     </div>
                     <div id="totalRating" >
@@ -17,7 +17,7 @@
                 </div>
 
                 	
-                <form id="reviewForm" enctype="multipart/form-data">
+                <form id="reviewForm" method="POST" enctype="multipart/form-data">
                     <div id = "reviewArea">
                         <div id="id-addCommentArea">
                             <input id="hiddenReviewNo" name = "reviewNo" type = "hidden"> <!--리뷰id 존재 시 업데이트 로직 실행-->

@@ -24,6 +24,7 @@ public class Review {
 	private int reviewRating;
 	private int productNo;
 	private int memberNo;
+	private String memberId;
 	private int orderItemNo;
 	private String reviewDelFl;
 	
