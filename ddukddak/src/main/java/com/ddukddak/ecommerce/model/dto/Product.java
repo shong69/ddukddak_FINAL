@@ -42,5 +42,6 @@ public class Product {
 	private String options;
 	private int productCount;
 	private int orderQuantity;
+	private int orderNo;
 
 }
