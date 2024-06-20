@@ -51,7 +51,7 @@
 }
 
 .previewImg {
-    display: none;
+    margin-right: 15px;
 }
 .previewImg.active {
     display: flex;

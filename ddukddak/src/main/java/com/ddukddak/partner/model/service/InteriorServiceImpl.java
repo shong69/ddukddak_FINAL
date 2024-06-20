@@ -151,7 +151,7 @@ public class InteriorServiceImpl implements InteriorService {
 			return project.getProjectNo();
 		}
 		
-		log.info("uploadList : " + uploadList);
+//		log.info("uploadList : " + uploadList);
 		
 		result2 = mapper.insertUploadList(uploadList);
 		
