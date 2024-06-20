@@ -412,7 +412,7 @@
     		SELECT SEQ_REVIEW_NO.NEXTVAL FROM DUAL
     	</selectKey>
         INSERT INTO "REVIEW"
-        VALUES (reviewNo, #{reviewContent},SYSDATE, NULL, #{reviewRating}, #{productNo}, )
+        VALUES (reviewNo, #{reviewContent},SYSDATE, NULL, #{reviewRating}, #{productNo} )
     </insert>
 
 	<!--리뷰 리스트 불러오기-->

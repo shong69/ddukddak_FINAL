@@ -755,7 +755,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             result.forEach((qna) => {
                 qna.memberId = maskString(qna.memberId);
-                if(qna.partnerId != "") {
+                if(qna.partnerId != null) {
                     qna.partnerId = maskString(qna.partnerId);
                 }
 
@@ -790,7 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const answerTd = document.createElement("td");
                     if (key == qna.qnaTitle) {
                         contentTd.innerText = qna.qnaContent;
-                        answerTd.innerText = "▷ " + qna.qnaAnswer;
+                        answerTd.innerText = "답변 : " + qna.qnaAnswer;
                     }
 
                     if (key == qna.memberId) {
@@ -807,7 +807,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 tBody.append(tr);
                 tBody.append(contentTr);
 
-                if(qna.qnaAnswer != "") {
+                if(qna.qnaAnswer != null) {
                     tBody.append(answerTr);
                 }
 
@@ -836,7 +836,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(memberNo.value == 0) {
             alert("로그인 후 이용해주세요");
-            location.href = "/member/login?returnUrl=http%3A%2F%2Flocalhost%3A1000%2FeCommerce%2Flist%2F1%2F1%2F20%2Fdetail";
+            redirectToLogin();
         } else {
             if( write.style.display == 'flex') {
                  write.style.display = 'none'
@@ -885,7 +885,7 @@ document.addEventListener('DOMContentLoaded', () => {
     myQna.addEventListener("click", () => {
         if (memberNo.value == 0) {
             alert("로그인 후 이용해주세요");
-            location.href = "/member/login?returnUrl=http%3A%2F%2Flocalhost%3A1000%2FeCommerce%2Flist%2F1%2F1%2F20%2Fdetail";
+            redirectToLogin();
         } else {
             allBox.style.display = 'block';
             tBody.innerHTML = "";
@@ -910,7 +910,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         
                         result.forEach((qna) => {
                             qna.memberId = maskString(qna.memberId);
-                            if(qna.partnerId != "") {
+                            if(qna.partnerId != null) {
                                 qna.partnerId = maskString(qna.partnerId);
                             }
 
@@ -945,7 +945,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 const answerTd = document.createElement("td");
                                 if (key == qna.qnaTitle) {
                                     contentTd.innerText = qna.qnaContent;
-                                    answerTd.innerText = "▷ " + qna.qnaAnswer;
+                                    answerTd.innerText = "답변 : " + qna.qnaAnswer;
                                 }
 
                                 if (key == qna.memberId) {
@@ -962,7 +962,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             tBody.append(tr);
                             tBody.append(contentTr);
             
-                            if(qna.qnaAnswer != "") {
+                            if(qna.qnaAnswer != null) {
                                 tBody.append(answerTr);
                             }
 
@@ -1011,7 +1011,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     result.forEach((qna) => {
                         qna.memberId = maskString(qna.memberId);
-                        if(qna.partnerId != "") {
+                        if(qna.partnerId != null) {
                             qna.partnerId = maskString(qna.partnerId);
                         }
 

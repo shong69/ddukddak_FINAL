@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/css/common/main.css">
     <link rel="stylesheet" href="/css/partner/seller/product/create.css">
     <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+
+    <script src="https://kit.fontawesome.com/74d1671a70.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <th:block th:replace="~{partner/seller/common/header}"></th:block>
@@ -202,7 +204,8 @@
     
                             const deleteButton = document.createElement('button');
                             deleteButton.classList.add('delete-button');
-                            deleteButton.textContent = 'X';
+                            deleteButton.classList.add('fa-solid');
+                            deleteButton.classList.add('fa-trash-can');
                             deleteButton.onclick = function() {
                                 if (confirm("해당 사진을 삭제하시겠습니까?")) {
                                     const index = Array.from(subImgBox.children).indexOf(previewContainer);
