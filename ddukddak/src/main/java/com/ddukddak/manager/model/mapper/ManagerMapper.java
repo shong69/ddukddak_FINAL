@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
+import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.partner.model.dto.Partner;
 
 @Mapper
@@ -35,6 +36,39 @@ public interface ManagerMapper {
 	 */
 	int passRefuse(String partnerNo);
 
+	/** 회원 수 조회
+	 * @return
+	 */
+	int getMemberListCount();
+
+	/** 회원 목록 조회
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Member> selectMemberList(RowBounds rowBounds);
+
+	/** 회원 탈퇴 처리
+	 * @param memberNo
+	 * @return
+	 */
+	int memberDelete(String memberNo);
+
+	/** 파트너 회원 수 조회
+	 * @return
+	 */
+	int getPartnerListCount();
+
+	/** 파트너 회원 목록 조회
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Partner> selectPartnerList(RowBounds rowBounds);
+
+	/** 파트너 탈퇴 처리
+	 * @param partnerNo
+	 * @return
+	 */
+	int partnerDelete(String partnerNo);
 
 
 }

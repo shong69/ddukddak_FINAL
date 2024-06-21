@@ -1,5 +1,9 @@
-
-
+body {
+    background-image: url("/images/board/aa.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
 
 /* 전체 백그라운드색 컨테이너 */
 .boardMainPageContainer {
@@ -14,14 +18,14 @@
 /* 메인 컨테이너 */
 .boardMainPageContentContainer {
     display: flex;
-    width: 1200px;
+    width: 1700px;
     position: relative;
 }
 
 .mainArea {
     flex-grow: 1;
     margin: 30px;
-    width: 900px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,7 +39,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 1380px;
 }
 
 .title {
@@ -45,12 +49,12 @@
 }
 
 .searchArea input {
-    width: 910px;
-    height: 30px;
+    width: 1350px;
+    height: 40px;
     font-size: 14px;
     border: none;
     border-radius: 10px;
-    margin: 0 10px;
+    padding: 0 10px;
     
 }
 
@@ -81,7 +85,7 @@
 /* 광고 베너 컨테이너 */
 .boardAdContainer {
     position: relative;
-    width: 100%;
+    width: 900px;
     height: 670px;
     margin-top: 30px;
     overflow: hidden;
@@ -164,9 +168,13 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 20px;
     border-radius: 20px;
-    box-shadow: 7px 7px 30px #cfcfcf;
+    /*box-shadow: 7px 7px 10px #dbdbdb;*/
+}
+
+.tipMainContainer {
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .titleContainer {
@@ -180,30 +188,79 @@
 }
 
 .portListMainContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 20px;
     width: 95%;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
     margin-bottom: 20px;
 }
 
 .portListContainer {
-    width: 220px;
-    height: 220px;
-    margin: 20px;
     position: relative;
     cursor: pointer;
     box-shadow: 7px 7px 30px #cfcfcf;
     overflow: hidden;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+/* 다양한 크기를 위해 여러 개의 CSS 클래스를 추가 */
+.portListContainer.size1 {
+    grid-row: span 2;
+    grid-column: span 2;
+}
+
+.portListContainer.size2 {
+    grid-row: span 2;
+    grid-column: span 3;
+}
+
+.portListContainer.size3 {
+    grid-row: span 3;
+    grid-column: span 2;
+}
+
+.portListContainer.size4 {
+    grid-row: span 3;
+    grid-column: span 4;
+}
+
+.portListContainer.size5 {
+    grid-row: span 1;
+    grid-column: span 5;
+}
+
+.portListContainer.size6 {
+    grid-row: span 2;
+    grid-column: span 4;
+}
+
+.portListContainer.size7 {
+    grid-row: span 1;
+    grid-column: span 2;
+}
+
+.portListContainer.size8 {
+    grid-row: span 2;
+    grid-column: span 2;
+}
+
+.portListContainer.size9 {
+    grid-row: span 2;
+    grid-column: span 3;
+}
+
+.portListContainer.size10 {
+    grid-row: span 1;
+    grid-column: span 2;
 }
 
 .portListContainer img {
-    width: 220px;
-    height: 220px;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 0px;
     transition-duration: 0.3s;
+    border-radius: 10px;
 }
 
 .portListContainer img:hover {
@@ -251,8 +308,15 @@
     padding-top: 20px;
 }
 
+
+
 .interiorProjectViewMoreBtn {
     margin-top: 20px;
+}
+
+.myHouseViewMore {
+    width: 100%;
+    text-align: end;
 }
 
 .myHouseViewMore:hover, .tipViewMore:hover {
@@ -261,41 +325,35 @@
 }
 
 /* 팁 보드  */
+.slider {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    overflow: hidden;
+}
 
-.tipMainContainer {
+.slide-container {
     display: flex;
-    flex-direction: row;
+    transition: transform 0.5s ease;
 }
 
 .tipBoardMainContainer {
-    width: 100%;
-    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    padding-bottom: 30px;
 }
 
 .tipBoardContainer {
-    width: 400px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 10px; /* Optional: rounded corners */
-    padding: 10px; /* Add some padding */
-    box-sizing: border-box; 
-    /* margin: 30px; */
-    margin: 30px;
-
+    flex: 0 0 33.333%; /* Show 3 slides at once */
+    box-sizing: border-box;
 }
 
 .tipBoardImg {
     width: 100%;
     height: 240px;
     object-fit: cover;
-    border-radius: 5px; /* Optional: rounded corners */
+    border-radius: 5px;
     cursor: pointer;
     overflow: hidden;
 }
@@ -305,7 +363,7 @@
 }
 
 .tipBoardImg img:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 .tipBoardUserInfoContainer {
@@ -377,16 +435,51 @@
     font-size: 14px;
     color: #333;
     line-height: 1.5;
-    overflow: hidden; /* Ensure long text is handled */
+    overflow: hidden;
     text-overflow: ellipsis;
     font-weight: 700;
 }
-
 
 .tipBoardUserName, .tipBoardTitle, .tipBoardContent {
     color: var(--gray1);
 }
 
+.slider-btn {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 50%; /* 둥근 버튼 모양 */
+    width: 50px; /* 너비 */
+    height: 50px; /* 높이 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px; /* 아이콘 크기 */
+    transition: background-color 0.3s;
+}
+
+.prev-btn {
+    left: 10px; /* 왼쪽 위치 */
+    top: 50%; /* 버튼의 상단을 중앙으로 정렬 */
+    transform: translateY(-50%); /* 버튼을 수직 중앙 정렬 */
+    z-index: 1; /* z-index 추가 */
+}
+
+.next-btn {
+    right: 10px; /* 오른쪽 위치 */
+    top: 50%; /* 버튼의 상단을 중앙으로 정렬 */
+    transform: translateY(-50%); /* 버튼을 수직 중앙 정렬 */
+    z-index: 1; /* z-index 추가 */
+    margin-left: 10px; /* prev-btn과의 간격 설정 */
+}
+
+
+.slider-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
 
 /* 탑버튼 */
 #boardMainTop {

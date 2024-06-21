@@ -38,6 +38,22 @@
                         </span>
                         
                     </section>
+                    
+                    <!-- 집들이 -->
+                    <div class="myHouseMainContainer">
+                        <div class="titleContainer">
+                            <th:block th:each="boardType : ${application.boardTypeList}">
+                                <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="tipViewMore"><h2 th:text="${boardType.boardName}">집들이</h2></a>
+                            </th:block>
+
+                        </div>
+                        <th:block th:replace="~{common/fragments/board/boardMainMyHouse}"></th:block>
+                        <th:block th:each="boardType : ${application.boardTypeList}">
+                            <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="myHouseViewMore">+더 보기</a>
+                        </th:block>
+
+                    </div>
+
                     <!-- 광고 -->
                     <div class="boardAdContainer">
                         <th:block th:each="boardImg : ${boardImg}" th:object="${boardImg}">
@@ -47,18 +63,7 @@
                         </th:block>
                         <h4 class="adViewMore"></h4>
                     </div>
-                    <!-- 집들이 -->
-                    <div class="myHouseMainContainer">
-                        <div class="titleContainer">
-                            <th:block th:each="boardType : ${application.boardTypeList}">
-                                <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="tipViewMore"><h2 th:text="${boardType.boardName}">집들이</h2></a>
-                                <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="myHouseViewMore">+더 보기</a>
-                            </th:block>
 
-                        </div>
-                        <th:block th:replace="~{common/fragments/board/boardMainMyHouse}"></th:block>
-
-                    </div>
                     <!-- 노하우 -->
                     <div class="tipMainContainer">
                         <div class="titleContainer">

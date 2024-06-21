@@ -189,5 +189,142 @@ public class SmsController {
     }
     
     
+    /** 회원 탈퇴 SMS 발송
+     * @param toNumber
+     * @return
+     */
+    @PostMapping("/sendOne/member/delete")
+    public int memberDel(@RequestBody String toNumber) {
+    	
+    	
+    	// 승인이냐, 거절이냐에 따라 문자 발송 양식 수정을 위해 키값 추가
+    	SingleMessageSentResponse response = service.sendMemberSms("confirm", toNumber);
+    	
+    	// response : SMS 발송 결과
+    	log.info("response : " + response);
+    	
+    	// 발송정보 != null == 성공
+    	if(response != null) {
+    		
+    		return 1; // 성공
+    		
+    	}
+    	
+    	return 0; // 실패
+    }
+    
+    /** 회원 다수 SMS 발송 - 탈퇴
+     * @param action
+     * @param paramMap
+     * @return
+     */
+    @PostMapping("/sendMany/member/mulit/{actionForBackend}")
+    public  ResponseEntity<Integer> sendManyMemberDelete(@PathVariable("actionForBackend") String action, 
+			@RequestBody Map<String, List<Map<String, String>>> paramMap) {
+    	
+    	
+    	List<Map<String, String>> members = paramMap.get("members");
+		
+        if (action == null) {
+        	return ResponseEntity.ok(0);  // Invalid action
+        }
+    	
+    	MultipleDetailMessageSentResponse multiResponse = service.sendMemberMultiSms(action, members);
+    	
+    	/* 
+    	 	MultipleDetailMessageSentResponse(
+    	 	failedMessageList=[], 
+    	 	groupInfo=MultipleMessageSentResponse(groupId=G4V20240616021623JA4BH7W3CJZCYTV, 
+    	 	messageId=null, accountId=24052703872352, statusMessage=null, statusCode=null, 
+    	 	to=null, from=null, type=null, country=null, 
+    	 	count=Count(total=2, sentTotal=0, sentFailed=0, sentSuccess=0, 
+    	 	sentPending=0, sentReplacement=0, refund=0, registeredFailed=0, 
+    	 	registeredSuccess=2)), messageList=null)
+    	
+    	*/
+    	// 성공 결과 회수 가져오기
+    	int registeredSuccess = multiResponse.getGroupInfo().getCount().getRegisteredSuccess();
+    	
+    	log.info("성공회수 : " + registeredSuccess);
+    	
+    	
+    	return ResponseEntity.ok(registeredSuccess);
+    	
+    	
+    	
+    }
+    
+    /** 파트너 탈퇴 SMS 발송
+     * @param toNumber
+     * @return
+     */
+    @PostMapping("/sendOne/partner/delete")
+    public int partnerDel(@RequestBody String toNumber) {
+    	
+    	
+    	// 승인이냐, 거절이냐에 따라 문자 발송 양식 수정을 위해 키값 추가
+    	SingleMessageSentResponse response = service.sendPartnerSms2("confirm", toNumber);
+    	
+    	// response : SMS 발송 결과
+    	log.info("response : " + response);
+    	
+    	// 발송정보 != null == 성공
+    	if(response != null) {
+    		
+    		return 1; // 성공
+    		
+    	}
+    	
+    	return 0; // 실패
+    }
+    
+    /** 파트너 다수 SMS 발송 - 탈퇴
+     * @param action
+     * @param paramMap
+     * @return
+     */
+    @PostMapping("/sendMany/mulit/partner/{actionForBackend}")
+    public  ResponseEntity<Integer> sendManyPartnerDelete(@PathVariable("actionForBackend") String action, 
+			@RequestBody Map<String, List<Map<String, String>>> paramMap) {
+    	
+    	
+    	List<Map<String, String>> partners = paramMap.get("partners");
+    	
+		log.info("SMS 컨트롤러 partners: " + partners);
+		log.info("SMS 컨트롤러 action: " + action);
+		
+        if (action == null || (!action.equals("confirm") && !action.equals("refuse"))) {
+        	return ResponseEntity.ok(0);  // Invalid action
+        }
+    	
+    	MultipleDetailMessageSentResponse multiResponse = service.sendPartnerManySms(action, partners);
+    	
+    	// response : SMS 발송 결과
+    	log.info("multiResponse : " + multiResponse);
+    	
+    	/* 
+    	 	MultipleDetailMessageSentResponse(
+    	 	failedMessageList=[], 
+    	 	groupInfo=MultipleMessageSentResponse(groupId=G4V20240616021623JA4BH7W3CJZCYTV, 
+    	 	messageId=null, accountId=24052703872352, statusMessage=null, statusCode=null, 
+    	 	to=null, from=null, type=null, country=null, 
+    	 	count=Count(total=2, sentTotal=0, sentFailed=0, sentSuccess=0, 
+    	 	sentPending=0, sentReplacement=0, refund=0, registeredFailed=0, 
+    	 	registeredSuccess=2)), messageList=null)
+    	
+    	*/
+    	// 성공 결과 회수 가져오기
+    	int registeredSuccess = multiResponse.getGroupInfo().getCount().getRegisteredSuccess();
+    	
+    	log.info("성공회수 : " + registeredSuccess);
+    	
+    	
+    	return ResponseEntity.ok(registeredSuccess);
+    	
+    	
+    	
+    }
+    
+    
     
 }

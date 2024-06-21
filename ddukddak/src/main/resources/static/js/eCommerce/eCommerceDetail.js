@@ -875,7 +875,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const answerTd = document.createElement("td");
                     if (key == qna.qnaTitle) {
                         contentTd.innerText = qna.qnaContent;
-                        answerTd.innerText = "답변 : " + qna.qnaAnswer;
+                        answerTd.innerText = "[답변] " + qna.qnaAnswer;
                     }
 
                     if (key == qna.memberId) {
@@ -1030,7 +1030,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 const answerTd = document.createElement("td");
                                 if (key == qna.qnaTitle) {
                                     contentTd.innerText = qna.qnaContent;
-                                    answerTd.innerText = "답변 : " + qna.qnaAnswer;
+                                    answerTd.innerText = "[답변] " + qna.qnaAnswer;
                                 }
 
                                 if (key == qna.memberId) {
