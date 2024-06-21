@@ -57,8 +57,10 @@ public class PaymentServiceImpl implements PaymentService {
 		
         log.info("토큰 서비스 body : " + body);
 	
-        try {        	
-            // JSON 바디 생성하여 전송해보기
+        try {
+            // 트러블 슈팅 구간
+        	// - 문제 : REST API Key와 Secret을 포트원 쪽에서 제대로 받지 못하는 현상
+        	// - 해결 : 생성한 바디를 이전에는 바로 entity에 실었는데, JSON 바디에 한 번 더 담아서 전송
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonBody = objectMapper.writeValueAsString(body);
             
@@ -139,6 +141,7 @@ public class PaymentServiceImpl implements PaymentService {
 	    // 타입만 한 번 더 확인 해보기(오류 많이 난 부분)
 	    log.info("사전 검증 요청 바디 확인 : amountType={}", amount.getClass().getName());
 	    
+	   
 	    try {
 	        ObjectMapper objectMapper = new ObjectMapper();
 	        String jsonBody = objectMapper.writeValueAsString(body);
@@ -364,6 +367,7 @@ public class PaymentServiceImpl implements PaymentService {
 		return mapper.selectPaid(merchantUid);
 	}
 	
+	//
   
 
 }

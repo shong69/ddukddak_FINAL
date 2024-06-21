@@ -30,6 +30,6 @@ public class Review {
 	private String reviewDelFl;
 	
 	//리뷰 이미지
-	private List<ReviewImg> imgList;
+	private List<String> imgList;
 
 }

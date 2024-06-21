@@ -92,7 +92,7 @@ public class ManagerController {
 		return service.passConfirm(partnerNo);
 	}
 	
-	/** 파트너 승인 처리
+	/** 파트너 거절 처리
 	 * @param partNo
 	 * @return
 	 */
@@ -124,6 +124,100 @@ public class ManagerController {
        
         // 1 : 성공 / 0 실패
         int result = service.updateMultiPass(action, partners);
+        
+
+        return ResponseEntity.ok(result);
+	}
+	
+	
+	// 회원관리 페이지 이동
+	@GetMapping("member/management")
+	public String memberManagement(@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+									Model model) {
+		
+		Map<String, Object> map = service.selectMember(cp);
+
+		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("memberList", map.get("memberList"));
+		
+		return "manager/memberManagement";
+	}
+	
+	// 회원 탈퇴 처리
+	@PostMapping("member/delete")
+	@ResponseBody
+	public int memberDelete(@RequestBody String memberNo) {
+		
+		log.info("partnerNo : " + memberNo);
+		
+		// 1 : 성공, 0 : 실패
+		return service.memberDelete(memberNo);
+	}
+	
+	
+	// 회원 다중 탈퇴처리
+		@PostMapping("member/management/multi/{actionForBackend}")
+		public ResponseEntity<Integer> memberMultiDelete(@PathVariable("actionForBackend") String action, 
+					@RequestBody Map<String, List<Map<String, String>>> paramMap) {
+
+			List<Map<String, String>> members = paramMap.get("members");
+			
+			log.info("컨트롤러 members: " + members);
+	        if (action == null) {
+	        	return ResponseEntity.ok(0);  // Invalid action
+	        }
+
+	       
+	        // 1 : 성공 / 0 실패
+	        int result = service.memberMultiDelete(action, members);
+	        
+
+	        return ResponseEntity.ok(result);
+		}
+	
+	
+	// 파트너 관리 페이지 이동
+	@GetMapping("partner/management")
+	public String partnerManagement(@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+									Model model) {
+		
+		Map<String, Object> map = service.selectPartner(cp);
+
+		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("partnerList", map.get("partnerList"));
+		
+		return "manager/partnerManagement";
+	}
+
+	
+	
+	// 파트너 탈퇴 처리
+	@PostMapping("partner/delete")
+	@ResponseBody
+	public int partnerDelete(@RequestBody String partnerNo) {
+		
+		log.info("partnerNo : " + partnerNo);
+		
+		// 1 : 성공, 0 : 실패
+		return service.partnerDelete(partnerNo);
+	}
+	
+
+	// 파트너 다중 탈퇴처리
+	@PostMapping("partner/management/multi/{actionForBackend}")
+	public ResponseEntity<Integer> partnerMultiDelete(@PathVariable("actionForBackend") String action, 
+				@RequestBody Map<String, List<Map<String, String>>> paramMap) {
+
+		List<Map<String, String>> partners = paramMap.get("partners");
+		
+		log.info("컨트롤러 partners: " + partners);
+        if (action == null) {
+        	return ResponseEntity.ok(0);  // Invalid action
+        }
+
+       
+        // 1 : 성공 / 0 실패
+        int result = service.partnerMultiDelete(action, partners);
         
 
         return ResponseEntity.ok(result);

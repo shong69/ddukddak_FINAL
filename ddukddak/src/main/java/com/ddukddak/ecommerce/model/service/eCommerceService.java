@@ -157,7 +157,7 @@ public interface eCommerceService {
 	 * @param reviewId
 	 * @return
 	 */
-	Review reloadReview(String reviewId);
+	Review reloadReview(int reviewNo);
 
 	/**리뷰 수정하기
 	 * @param review
@@ -204,11 +204,52 @@ public interface eCommerceService {
 	 */
 	int paidUpdate(String merchantUid);
 
+
+	/** 리뷰 평점
+	 * @param productNo
+	 * @return
+	 */
+	double avgScore(int productNo);
+
 	/** 사용자 결제 취소 업데이트
 	 * @param map
 	 * @return
 	 */
 	int cancelUpdate(Map<String, String> map);
+
+	/** 주문정보 찾기
+	 * @param merchantUid
+	 * @return
+	 */
+	Orders findOrder(String merchantUid);
+
+	/** ORDER_DETAIL 테이블 삽입
+	 * @param orderNo
+	 * @param memberNo
+	 * @param cartId
+	 * @param productNo
+	 * @param productCount
+	 * @param productPrice
+	 * @return
+	 */
+	int insertOrderDetail(int orderNo, int memberNo, String cartId, String productNo, String productCount,
+			String productPrice);
+
+	/** 현재 포인트 조회
+	 * @param memberNo
+	 * @return
+	 */
+	int currentPoint(int memberNo);
+
+	/** 포인트 적립 업데이트
+	 * @param memberNo
+	 * @param totalPoint
+	 * @return
+	 */
+	int savePoint(int memberNo, int totalPoint);
+
+	
+
 
 
 

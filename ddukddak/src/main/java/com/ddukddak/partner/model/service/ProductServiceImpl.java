@@ -606,7 +606,7 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.modifyRegistProduct(map);
 	}
 
-//	접수관리 리스트 조
+//	접수관리 리스트 조회
 	@Override
 	public Map<String, Object> selectReceiptList(int partnerNo, int mainSort, int sort, String status, int cp) {
 		// 대분류 소분류 상태 모두 선택 안했을 때
@@ -837,6 +837,9 @@ public class ProductServiceImpl implements ProductService{
 		return mapper.insertQnaAnswer(obj);
 	}
 
+	/** 주문 접수 확정
+	 *
+	 */
 	@Override
 	public int acceptReceipt(Map<String, Object> map) {
 	    List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("obj");
@@ -851,18 +854,288 @@ public class ProductServiceImpl implements ProductService{
 	        int productNo = Integer.parseInt(entry.get("productNo").toString());
 	        int orderNo = Integer.parseInt(entry.get("orderNo").toString());
 	        int loginPartnerMember = Integer.parseInt(entry.get("loginPartnerMember").toString());
+	        String productName = entry.get("productName").toString();
 
 	        log.info("Product No: " + productNo);
 	        log.info("Order No: " + orderNo);
 	        log.info("Login Partner Member: " + loginPartnerMember);
+	        log.info("productName: " + productName);
 
 	        Map<String, Object> newMap = new HashMap<>();
 	        newMap.put("productNo", productNo);
 	        newMap.put("orderNo", orderNo);
 	        newMap.put("partnerNo", loginPartnerMember);
+	        newMap.put("productName", productName);
 
 	        result += mapper.acceptReceipt(newMap);
 	    }
+	    return result;
+	}
+	/** 주문 접수 거절
+	 *
+	 */
+	@Override
+	public int rejectReceipt(Map<String, Object> map) {
+		List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("obj");
+		
+		log.info("list : " + list.toString());
+		
+		int result = 0;
+		
+		
+		
+		for (Map<String, Object> entry : list) {
+			int productNo = Integer.parseInt(entry.get("productNo").toString());
+			int orderNo = Integer.parseInt(entry.get("orderNo").toString());
+			int loginPartnerMember = Integer.parseInt(entry.get("loginPartnerMember").toString());
+			String productName = entry.get("productName").toString();
+			
+			log.info("Product No: " + productNo);
+			log.info("Order No: " + orderNo);
+			log.info("Login Partner Member: " + loginPartnerMember);
+			log.info("productName: " + productName);
+			
+			Map<String, Object> newMap = new HashMap<>();
+			newMap.put("productNo", productNo);
+			newMap.put("orderNo", orderNo);
+			newMap.put("partnerNo", loginPartnerMember);
+			newMap.put("productName", productName);
+			
+			result += mapper.rejectReceipt(newMap);
+		}
+		return result;
+	}
+	
+	
+
+	/** 출고관리 리스트 조회
+	 *
+	 */
+	@Override
+	public Map<String, Object> selectShipmentList(int partnerNo, int mainSort, int sort, String status, int cp) {
+		// 대분류 소분류 상태 모두 선택 안했을 때
+		if(mainSort == 0) {
+			if(status.equals("A")) {
+				//1. 전체 재고상품개수 조회
+				int productCount = mapper.selectShipmentListCount(partnerNo);
+				
+				//2. pagination 객체 생성하기
+				ProductPagination pagination = new ProductPagination(cp, productCount);
+				//3. 페이지 목록 조회
+				int limit = pagination.getLimit(); //제한된 크기
+				int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+				
+				RowBounds rowBounds = new RowBounds(offset, limit);
+				
+				List<Product> shipmentList = mapper.selectShipmentList(partnerNo, rowBounds);
+				
+				log.info("receiptList selectReceiptList : " + shipmentList.toString());
+				
+				Map<String, Object> map = new HashMap<>();
+				map.put("pagination", pagination);
+				map.put("shipmentList", shipmentList);
+				
+				return map;
+				
+			// 상태만 선택했을 때
+			} else {
+				Map<String, Object> newMap = new HashMap<String, Object>();
+				
+				newMap.put("status", status);
+				newMap.put("partnerNo", partnerNo);
+				//1. 전체 재고상품개수 조회
+				int productCount = mapper.selectShipmentCountStatus(newMap);
+				
+				//2. pagination 객체 생성하기
+				ProductPagination pagination = new ProductPagination(cp, productCount);
+				//3. 페이지 목록 조회
+				int limit = pagination.getLimit(); //제한된 크기
+				int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+				
+				RowBounds rowBounds = new RowBounds(offset, limit);
+				
+				
+				List<Product> shipmentList = mapper.selectShipmentListStatus(newMap, rowBounds);
+				
+				Map<String, Object> map = new HashMap<>();
+				
+//						log.info("AM shipmentList : " + shipmentList);
+//						log.info("PR shipmentList : " + shipmentList);
+				
+				map.put("pagination", pagination);
+				map.put("shipmentList", shipmentList);
+				
+				return map;
+			}
+			
+		// 대분류만 선택했을 때
+		} else {
+			if(sort == 0) {
+				if(status.equals("A")) {	
+					Map<String, Object> newMap = new HashMap<String, Object>();
+					
+					newMap.put("mainSort", mainSort);
+					newMap.put("partnerNo", partnerNo);
+					//1. 전체 재고상품개수 조회
+					int productCount = mapper.selectShipmentListCountMainSort(newMap);
+					
+//							log.info("productCount : " + productCount);
+					
+					//2. pagination 객체 생성하기
+					ProductPagination pagination = new ProductPagination(cp, productCount);
+					//3. 페이지 목록 조회
+					int limit = pagination.getLimit(); //제한된 크기
+					int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+					
+					RowBounds rowBounds = new RowBounds(offset, limit);
+					
+					
+					List<Product> shipmentList = mapper.selectShipmentListMainSort(newMap, rowBounds);
+					
+					Map<String, Object> map = new HashMap<>();
+					map.put("pagination", pagination);
+					map.put("shipmentList", shipmentList);
+					
+					return map;	
+					
+				// 대분류와 상태 선택했을 때
+				} else {
+					Map<String, Object> newMap = new HashMap<String, Object>();
+					
+					newMap.put("mainSort", mainSort);
+					newMap.put("status", status);
+					newMap.put("partnerNo", partnerNo);
+					
+					//1. 전체 재고상품개수 조회
+					int productCount = mapper.selectShipmentListCountMainSortStatus(newMap);
+					
+					//2. pagination 객체 생성하기
+					ProductPagination pagination = new ProductPagination(cp, productCount);
+					//3. 페이지 목록 조회
+					int limit = pagination.getLimit(); //제한된 크기
+					int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+					
+					RowBounds rowBounds = new RowBounds(offset, limit);
+					
+					List<Product> shipmentList = mapper.selectShipmentListMainSortStatus(newMap, rowBounds);
+					
+					Map<String, Object> map = new HashMap<>();
+					map.put("pagination", pagination);
+					map.put("shipmentList", shipmentList);
+					
+					return map;
+				}
+				
+			// 대분류 소분류 모두 선택했을 때
+			} else {
+				if(status.equals("A")) {
+					Map<String, Object> newMap = new HashMap<String, Object>();
+					
+					newMap.put("sort", sort);
+					newMap.put("partnerNo", partnerNo);
+					
+					//1. 전체 재고상품개수 조회
+					int productCount = mapper.selectShipmentListCountSort(newMap);
+					
+					//2. pagination 객체 생성하기
+					ProductPagination pagination = new ProductPagination(cp, productCount);
+					//3. 페이지 목록 조회
+					int limit = pagination.getLimit(); //제한된 크기
+					int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+					
+					RowBounds rowBounds = new RowBounds(offset, limit);
+					
+					List<Product> shipmentList = mapper.selectShipmentListSort(newMap, rowBounds);
+					
+					Map<String, Object> map = new HashMap<>();
+					map.put("pagination", pagination);
+					map.put("shipmentList", shipmentList);
+					
+					return map;		
+					
+				// 대분류 소분류 상태 모두 선택했을 때
+				} else {
+					Map<String, Object> newMap = new HashMap<String, Object>();
+					
+					newMap.put("sort", sort);
+					newMap.put("status", status);
+					newMap.put("partnerNo", partnerNo);
+					
+					//1. 전체 재고상품개수 조회
+					int productCount = mapper.selectShipmentListCountSort(newMap);
+					
+					//2. pagination 객체 생성하기
+					ProductPagination pagination = new ProductPagination(cp, productCount);
+					//3. 페이지 목록 조회
+					int limit = pagination.getLimit(); //제한된 크기
+					int offset = (cp-1) * limit; //건너뛰기 :  데이터를 가져오는 시작점에서 얼마나 떨어진 데이터인지를 의미
+					
+					RowBounds rowBounds = new RowBounds(offset, limit);
+					
+					List<Product> shipmentList = mapper.selectShipmentListSort(newMap, rowBounds);
+					
+					Map<String, Object> map = new HashMap<>();
+					map.put("pagination", pagination);
+					map.put("shipmentList", shipmentList);
+					
+					return map;
+				}
+			}
+		}
+		
+	}
+
+	@Override
+	public int acceptShipment(Map<String, Object> map) {
+	    List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("obj");
+
+	    log.info("list : " + list.toString());
+
+	    int result = 0;
+
+	    for (Map<String, Object> entry : list) {
+	        String orderNo = entry.get("orderNo").toString();
+	        String productName = entry.get("productName").toString();
+	        int partnerNo = Integer.parseInt(entry.get("partnerNo").toString());
+
+	        log.info("Order No: " + orderNo);
+	        log.info("Product Name: " + productName);
+
+	        Map<String, Object> newMap = new HashMap<>();
+	        newMap.put("orderNo", orderNo);
+	        newMap.put("productName", productName);
+	        newMap.put("partnerNo", partnerNo);
+
+	        result += mapper.acceptShipment(newMap);
+	    }
+
+	    return result;
+	}
+
+	@Override
+	public int rejectShipment(Map<String, Object> map) {
+	    List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("obj");
+
+	    log.info("list : " + list.toString());
+
+	    int result = 0;
+
+	    for (Map<String, Object> entry : list) {
+	        String orderNo = entry.get("orderNo").toString();
+	        String productName = entry.get("productName").toString();
+	        int partnerNo = Integer.parseInt(entry.get("partnerNo").toString());
+
+	        log.info("Order No: " + orderNo);
+	        log.info("Product Name: " + productName);
+
+	        Map<String, Object> newMap = new HashMap<>();
+	        newMap.put("orderNo", orderNo);
+	        newMap.put("productName", productName);
+	        newMap.put("partnerNo", partnerNo);
+
+	        result += mapper.rejectShipment(newMap);
+	    }
+
 	    return result;
 	}
 }

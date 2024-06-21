@@ -1,6 +1,6 @@
 <div class="portListMainContainer hidden" th:each="chunk, iterStat : ${houseBoardChunks}" th:classappend="${iterStat.index == 0} ? '' : 'hidden'">
-    <th:block th:each="board : ${chunk}">
-        <div class="portListContainer fade" th:onclick="|location.href='@{/myHouse/detail/{boardNo}(boardNo=${board.boardNo})}'|">
+    <th:block th:each="board, iterStat : ${chunk}">
+        <div th:class="|portListContainer fade size${iterStat.index % 10 + 1}|" th:onclick="|location.href='@{/myHouse/detail/{boardNo}(boardNo=${board.boardNo})}'|">
             <img th:src="@{|${board.thumbnail}|}" alt="Portfolio Image">
             <div class="overlay">
                 <h2 th:text="${board.boardTitle}">Title</h2>

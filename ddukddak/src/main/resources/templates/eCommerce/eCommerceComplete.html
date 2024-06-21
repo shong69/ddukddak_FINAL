@@ -47,15 +47,19 @@
                     <tr>
                         <td><h3>주문금액</h3></td>
                         <td><h3 id="amount" style="font-weight: bold;" th:text="${paymentInfo.amount}">16,900원</h3></td>
+                        <td>
+                            <h3 th:text="|적립금 : ${point}|"></h3>
+                            <h3 th:text="|내 적립금 : ${myPoint}|"></h3>
+                        </td>
                     </tr>
                     <tr>
                         <td><h3>결제상세</h3></td>
                         <td><h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.pgProvider}">신용카드</h3>
-                            <th:block th:if="${paymentInfo.payMethod == card}">
+                            <th:block th:if="${paymentInfo.payMethod == 'card'}">
                                 <h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.cardName}">카드이름</h3>
                             </th:block>
 
-                            <th:block th:unless="${paymentInfo.payMethod == card}">
+                            <th:block th:unless="${paymentInfo.payMethod == 'card'}">
                                 <h3 style="color: rgb(165, 165, 165);">카카오포인트</h3>
                             </th:block>
                             

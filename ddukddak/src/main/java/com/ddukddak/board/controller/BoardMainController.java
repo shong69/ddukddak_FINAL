@@ -58,8 +58,8 @@ public class BoardMainController {
 		log.info("houseBoard : " + houseBoard.toString());
 		
 		 // Chunk the filtered boards
-        List<List<Board>> houseBoardChunks = chunkBoards(houseBoard, 6);
-        List<List<Board>> tipBoardChunks = chunkBoards(tipBoard, 4);
+        List<List<Board>> houseBoardChunks = chunkBoards(houseBoard, 10);
+        List<List<Board>> tipBoardChunks = chunkBoards(tipBoard, 6);
 		
 		if (allBoard != null) {
 			

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,12 +67,14 @@
                         <td th:text="*{orderQuantity}">300</td>
                         <td th:text="*{productNo}">F202405210001</td>
                         <td th:text="*{productName}">오아르 벤 원목 부클레 패브릭 의자</td>
-                        <td th:text="*{productPrice}">122,200</td>
+                        <td class="totalPrice" th:value="*{productPrice}">122,200</td>
 
                         <input type="hidden" class="productUpdateDate" th:value="*{productUpdateDate}">
                         <input type="hidden" class="orderQuantity" th:value="*{orderQuantity}">
                         <input type="hidden" class="productNo" th:value="*{productNo}">
                         <input type="hidden" class="orderNo" th:value="*{orderNo}">
+                        <input type="hidden" class="productName" th:value="*{productName}">
+                        <input type="hidden" class="productPrice" th:value="*{productPrice}">
                     </tr>
                 </th:block>
             </table>
@@ -160,7 +162,6 @@
 
             <div>
                 <button id="orderOK">확인</button>
-                <button id="orderNO">취소</button>
             </div>
         </div>
             

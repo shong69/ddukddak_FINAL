@@ -1,5 +1,5 @@
 // 금액 먼저 구해야 함.
-const totalPriceValue = document.getElementById('totalPriceValue').value;
+// const totalPriceValue = document.getElementById('totalPriceValue').value;
 
 const agree = document.getElementById('agree'); // 동의 버튼
 
@@ -47,8 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     totalPriceElement.innerText = formatToKoreanWon(totalPriceElement.innerText);
-
-    
     
 });
 
@@ -87,22 +85,22 @@ console.log(generateMerchantUid());
 
 const onClickPay = async () => {
 
+    // 총 가격 텍스트 얻어 오기
     const totalPriceValue = document.getElementById('totalPriceValue').value;
 
     const merchantUid = generateMerchantUid();
+    
+    // 우편번호, 주소 나누는 포매터
     const formattedAddress = formatAddress(addr);
 
+    // 총 가격 넘버 타입 설정
     const totalPriceValueNumber = Number(totalPriceValue);
 
     console.log('postcode : ' + formattedAddress.postcode );
     console.log('address : ' + formattedAddress.address );
 
-
+    // 결제 페이지 name으로 보낼 고유 주문 번호
     document.getElementById('merchantUid').value = merchantUid;
-    // let text = amountText.innerText;
-    // let number = text.replace(/[^0-9]/g, '');
-    // const myAmount = parseInt(number, 10);
-
     
     if (!agree.checked) {
         alert('이용 약관 동의 체크 후 구매해 주세요.');

@@ -1,6 +1,8 @@
 package com.ddukddak.partner.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -565,34 +567,79 @@ public class SellerController {
 		return "partner/seller/product/receipt";
 	}
 	
-	@PostMapping("/product/acceptReceipt")
+	@PostMapping("/product/receiptAccept")
 	@ResponseBody
 	public int ProductAcceptReceipt(@RequestBody Map<String, Object> map) {
-				
+		
 		int result = service.acceptReceipt(map);
+		
+		log.info("receiptAccept map : " + map.toString());
 		
 		return result;
 		
 	}
 	
-	@PostMapping("/product/declineReceipt")
+	@PostMapping("/product/receiptReject")
 	@ResponseBody
-	public int ProductDeclineReceipt() {
+	public int ProductDeclineReceipt(@RequestBody Map<String, Object> map) {
 		
-		
-		return 0;
+		int result = service.rejectReceipt(map);
+		return result;
 	}
 	
 	
 	@GetMapping("product/shipment")
-	public String ProductRelease() {
+	public String ProductRelease(@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+													@RequestParam(value="mainSort", required=false, defaultValue="0") int mainSort,
+													@RequestParam(value="sort", required=false, defaultValue="0") int sort,
+													@RequestParam(value="status", required=false, defaultValue="A") String status,
+													Model model,
+													@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) {
+		
+		int partnerNo = loginPartnerMember.getPartnerNo();
+		
+		// 대분류 카테고리 선택
+		List<Category> categoryList = eCommerceService.selectCategory();
+		
+//		log.info("categoryList : " + categoryList);
+		
+		model.addAttribute("categoryList", categoryList);
+		
+		// 소분류 카테고리 선택
+		List<Category> smallCategoryList = eCommerceService.selectSmallCategory();
+		
+//		log.info("smallCategoryList : " + smallCategoryList);
+
+		model.addAttribute("smallCategoryList", smallCategoryList);
+		
+		// 재고상품 조회
+		Map<String, Object> map = service.selectShipmentList(partnerNo, mainSort, sort, status, cp);
+		
+		log.info("map : " + map.toString());
+		model.addAttribute("shipmentList", map.get("shipmentList"));
+		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("status", status);
+		
+		
 		return "partner/seller/product/shipment";
 	}
 	
-	@GetMapping("product/complete")
-	public String ProductComplete() {
-		return "partner/seller/product/complete";
+	@PostMapping("product/shipmentAccept")
+	@ResponseBody
+	public int ShippmentAccept(@RequestBody Map<String, Object> map) {
+	    int result = service.acceptShipment(map);
+	    log.info("shipmentAccept map : " + map.toString());
+	    return result;
 	}
+
+	@PostMapping("product/shipmentReject")
+	@ResponseBody
+	public int ShippmentReject(@RequestBody Map<String, Object> map) {
+	    int result = service.rejectShipment(map);
+	    log.info("shipmentReject map : " + map.toString());
+	    return result;
+	}
+
 	
 	
 	

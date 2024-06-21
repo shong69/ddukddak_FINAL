@@ -230,6 +230,25 @@ public interface eCommerceMapper {
 	 */
 	int paidUpdate(String merchantUid);
 
+
+	/**리뷰 이미지들 가져오기
+	 * @param reviewNo
+	 * @return
+	 */
+	List<String> selectReviewImgs(int reviewNo);
+
+	/**리뷰 평점
+	 * @param productNo
+	 * @return 
+	 */
+	double avgScore(int productNo);
+
+	/** 수정할 리뷰 불러오기
+	 * @param reviewNo
+	 * @return
+	 */
+	Review reloadReview(int reviewNo);
+
 	/** 사전 검증 에러 메시지 업데이트
 	 * @return
 	 */
@@ -240,6 +259,30 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	int cancelUpdate(Map<String, String> map);
+
+	/** 주문 테이블 찾기
+	 * @param merchantUid
+	 * @return
+	 */
+	Orders findOrder(String merchantUid);
+
+	/** ORDER_DETAIL 삽입
+	 * @param map
+	 * @return
+	 */
+	int insertOrderDetail(Map<String, Object> map);
+
+	/** 현재 포인트 조회
+	 * @param memberNo
+	 * @return
+	 */
+	int currentPoint(int memberNo);
+
+	/** 포인트 업데이트
+	 * @param map
+	 * @return
+	 */
+	int savePoint(Map<String, Integer> map);
 
 
 

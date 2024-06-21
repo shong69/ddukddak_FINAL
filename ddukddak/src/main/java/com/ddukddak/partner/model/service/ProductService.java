@@ -178,7 +178,24 @@ public interface ProductService {
 	 */
 	int insertQnaAnswer(Map<String, Object> obj);
 
+	/** 접수 완료
+	 * @param map
+	 * @return
+	 */
 	int acceptReceipt(Map<String, Object> map);
+
+	/** 접수 거절
+	 * @param map
+	 * @return
+	 */
+	int rejectReceipt(Map<String, Object> map);
+
+	Map<String, Object> selectShipmentList(int partnerNo, int mainSort, int sort, String status, int cp);
+
+	int acceptShipment(Map<String, Object> map);
+
+	int rejectShipment(Map<String, Object> map);
+
 
 
 

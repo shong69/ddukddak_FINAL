@@ -13,12 +13,12 @@
     <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
 </head>
 <body>
-    <input id="totalPriceValue" type="hidden" name="totalPrice" th:value="${totalPrice}">
     <th:block th:replace="~{common/fragments/header}"></th:block>
+    <input id="totalPriceValue" type="hidden" name="totalPrice" th:value="${totalPrice}">
     <h2 style="text-align: center; margin: 50px;">주문/결제</h2>
 
     <!-- 로직 구성하면 post로 바꿔줘야함 -->
-    <form action="/eCommerce/complete" id="paymentForm">
+    <form action="/eCommerce/complete" id="paymentForm" method="post">
         <!-- 배송지 -->
         <div class="infoBox">
             <h3>배송지</h3>
@@ -80,9 +80,12 @@
 
                             <h3 class="price" style="margin: 20px 7px; font-weight: 700; letter-spacing: 0.05em" th:text="|*{productPrice * productCount}원|">13,900원</h3>
                         </div>
-                        <input class="cartId" type="hidden" name="cartId" th:value="*{cartId}">
+                        
+                        <input class="productNo" type="hidden" name="productNo" th:value="*{productNo}">
+                        <input class="productCount" type="hidden" name="productCount" th:value="*{productCount}">
+                        <input class="productPrice" type="hidden" name="productPrice" th:value="*{productPrice}">
+                        <input class="optionNo" type="hidden" name="optionNo" th:value="*{optionNo}">
                     </div>
-                    
                 </th:object>
             </div>
 
@@ -133,6 +136,10 @@
             <!-- onclick="onClickPay()" -->
         </div>
         <input type="hidden" name="cartIds" id="cartIdsHidden">
+        <input type="hidden" name="productNos" id="productNosHidden">
+        <input type="hidden" name="productCounts" id="productCountsHidden">
+        <input type="hidden" name="productPrices" id="productPricesHidden">
+        <input type="hidden" name="optionNos" id="optionNosHidden">
     </form>
     
     
@@ -144,13 +151,40 @@
         const memberNo =  /*[[${loginMember.memberNo}]]*/ "회원번호";
         const tel = /*[[${loginMember.memberTel}]]*/ "휴대폰";
 
+        // cartId 넘기기
         var cartIds = [];
         document.querySelectorAll('.cartId').forEach(function(element) {
             cartIds.push(element.value);
         });
         document.getElementById('cartIdsHidden').value = JSON.stringify(cartIds);
 
-            
+        // 상품 번호 넘기기
+        var productNos = [];
+        document.querySelectorAll('.productNo').forEach(function(element) {
+            productNos.push(element.value);
+        });
+        document.getElementById('productNosHidden').value = JSON.stringify(productNos);
+
+        // 상품 수량 넘기기
+        var productCounts = [];
+        document.querySelectorAll('.productCount').forEach(function(element) {
+            productCounts.push(element.value);
+        });
+        document.getElementById('productCountsHidden').value = JSON.stringify(productCounts);
+
+        // 상품 가격 넘기기
+        var productPrices = [];
+        document.querySelectorAll('.productPrice').forEach(function(element) {
+            productPrices.push(element.value);
+        });
+        document.getElementById('productPricesHidden').value = JSON.stringify(productPrices);
+
+        // + 옵션 넘버 넘기기
+        var optionNos = [];
+        document.querySelectorAll('.optionNo').forEach(function(element) {
+            optionNos.push(element.value);
+        });
+        document.getElementById('optionNosHidden').value = JSON.stringify(optionNos);
         
     </script>
     <!-- iamport.payment.js -->

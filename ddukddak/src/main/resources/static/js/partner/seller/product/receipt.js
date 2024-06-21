@@ -2,38 +2,24 @@ const modal = document.querySelector(".modal");
 const orderReceipt = document.querySelector("#orderReceipt");
 const orderRejection = document.querySelector("#orderRejection");
 const productListBox = document.querySelector("#productListBox");
-const closeButton = document.querySelector("#closeButton");
 const title = document.querySelector(".div-container");
 const productUpdateDate = document.querySelectorAll(".productUpdateDate");
 const orderQuantity = document.querySelectorAll(".orderQuantity");
 
-const orderOK = document.querySelector("#orderOK");
-const orderNO = document.querySelector("#orderNO");
-let currentType = '';
-
-const orderOKHandler = () => {
-    alert(currentType === 'receipt' ? "주문이 접수되었습니다" : "주문이 거절되었습니다");
-    modal.style.display = 'none';
-};
-
-const orderNOHandler = () => {
-    if (confirm("취소하시겠습니까?")) {
-        modal.style.display = 'none';
-    }
-};
-
-
-
-function openModal(type) {
+function receiptOpenModal() {
     productListBox.innerHTML = "";
     modal.style.display = "flex";
 
-    const query = 'input[name="selectProduct"]:checked'
+    const query = 'input[name="selectProduct"]:checked';
     const selectedEls = document.querySelectorAll(query);
 
-    let totalOrderQuantity = 0;
+    if (selectedEls.length === 0) {
+        alert("선택한 항목이 없습니다.");
+        modal.style.display = "none";
+        return;
+    }
 
-    // console.log(selectedEls);
+    let totalOrderQuantity = 0;
 
     const productUpdateDateMap = {};
     productUpdateDate.forEach((element, index) => {
@@ -81,88 +67,88 @@ function openModal(type) {
     });
 
     const divContainer = document.querySelector(".div-container");
-    divContainer.innerHTML = ''; 
+    divContainer.innerHTML = '';
     const h3 = document.createElement("h3");
     h3.classList.add("div-titleAdd");
-    h3.innerText = `선택한 ${totalOrderQuantity}개의 상품 주문을 ${type === 'receipt' ? '접수' : '거절'}하시겠습니까?`;
+    h3.innerText = `선택한 ${totalOrderQuantity}개의 상품 주문을 접수하시겠습니까?`;
     divContainer.appendChild(h3);
-
 
     const obj = [];
     selectedEls.forEach(elements => {
         const productNoValue = elements.closest('tr').querySelector('.productNo').value;
         const orderNoValue = elements.closest('tr').querySelector('.orderNo').value;
+        const productNameValue = elements.closest('tr').querySelector('.productName').value;
         obj.push({
             productNo: productNoValue,
             orderNo: orderNoValue,
-            loginPartnerMember : loginPartnerMember
+            loginPartnerMember: loginPartnerMember,
+            productName: productNameValue
         });
-        console.log(obj);
     });
 
     const map = {
-        "obj": obj,
-        "status": type === 'receipt' ? '접수' : '거절'
+        "obj": obj
     };
+    const orderOK = document.querySelector("#orderOK");
 
-    orderOK.addEventListener("click", () => {
-        fetch("/partner/seller/product/acceptReceipt", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(map)
-        })
-        .then(resp => resp.text())
-        .then(result => {
-            if (result > 0) {
-                alert(type === 'receipt' ? "접수되었습니다" : "거절되었습니다");
-                window.location.reload();
-            } else {
-                alert(type === 'receipt' ? "접수 실패" : "거절 실패");
-            }
-        });
-    });
-    orderNO.addEventListener("click", orderNOHandler);
+    orderOK.removeEventListener("click", handleOrderOK);
+    orderOK.addEventListener("click", () => handleOrderOK(map, "receipt"));
 }
 
-orderReceipt.addEventListener("click", () => openModal('receipt'));
-orderRejection.addEventListener("click", () => openModal('rejection'));
-
-
-/* 주문 거절 */
-orderRejection.addEventListener("click", () => {
+function rejectionOpenModal() {
     productListBox.innerHTML = "";
     modal.style.display = "flex";
 
-    const query = 'input[name="selectProduct"]:checked'
+    const query = 'input[name="selectProduct"]:checked';
     const selectedEls = document.querySelectorAll(query);
 
-    // console.log(selectedEls);
+    if (selectedEls.length === 0) {
+        alert("선택한 항목이 없습니다.");
+        modal.style.display = "none";
+        return;
+    }
+
+    let totalOrderQuantity = 0;
+
+    const productUpdateDateMap = {};
+    productUpdateDate.forEach((element, index) => {
+        const productNo = element.closest('tr').querySelector('.productNo').value;
+        productUpdateDateMap[productNo] = {
+            updateDate: element.value,
+            orderQuantity: orderQuantity[index].value
+        };
+    });
 
     selectedEls.forEach(elements => {
+        const productNoValue = elements.closest('tr').querySelector('.productNo').value;
+        const orderQuantityValue = elements.closest('tr').querySelector('.orderQuantity').value;
+        totalOrderQuantity += parseInt(orderQuantityValue, 10);
+
         const div = document.createElement("div");
         div.classList.add("elementBox");
 
         const productNo = document.createElement("h5");
-        productNo.innerText = elements.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerText;
+        productNo.innerText = productNoValue;
 
         const productName = document.createElement("h5");
-        productName.innerText = elements.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerText;
+        productName.innerText = elements.closest('tr').querySelector('td:nth-child(7)').innerText;
 
         const productOption = document.createElement("h5");
-        productOption.innerText = elements.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.innerText;
-
+        productOption.innerText = elements.closest('tr').querySelector('td:nth-child(4)').innerText;
 
         const productStatus = document.createElement("h5");
-        const status = elements.parentElement.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.innerText;
-        productStatus.innerText = status;
+        productStatus.innerText = elements.closest('tr').querySelector('td:nth-child(8)').innerText;
 
         const productDate = document.createElement("h5");
-        productDate.innerText = "20240603";
+        if (productUpdateDateMap[productNoValue]) {
+            productDate.innerText = productUpdateDateMap[productNoValue].updateDate;
+        } else {
+            productDate.innerText = "N/A";
+        }
 
         const rejectionDiv = document.createElement("textarea");
         rejectionDiv.classList.add("rejectionDiv");
         rejectionDiv.placeholder = "거절사유를 입력해 주세요";
-
 
         div.append(productNo);
         div.append(productName);
@@ -172,36 +158,82 @@ orderRejection.addEventListener("click", () => {
 
         productListBox.append(div);
         productListBox.append(rejectionDiv);
-    })
-});
+    });
 
+    const divContainer = document.querySelector(".div-container");
+    divContainer.innerHTML = '';
+    const h3 = document.createElement("h3");
+    h3.classList.add("div-titleAdd");
+    h3.innerText = `선택한 ${totalOrderQuantity}개의 상품 주문을 거절하시겠습니까?`;
+    divContainer.appendChild(h3);
+
+    const obj = [];
+    selectedEls.forEach(elements => {
+        const productNoValue = elements.closest('tr').querySelector('.productNo').value;
+        const orderNoValue = elements.closest('tr').querySelector('.orderNo').value;
+        const productNameValue = elements.closest('tr').querySelector('.productName').value;
+        obj.push({
+            productNo: productNoValue,
+            orderNo: orderNoValue,
+            loginPartnerMember: loginPartnerMember,
+            productName: productNameValue
+        });
+    });
+
+    const map = {
+        "obj": obj
+    };
+    const orderOK = document.querySelector("#orderOK");
+
+    orderOK.removeEventListener("click", handleOrderOK);
+    orderOK.addEventListener("click", () => handleOrderOK(map, "rejection"));
+}
+
+function handleOrderOK(map, type) {
+    const url = type === "receipt" ? "/partner/seller/product/receiptAccept" : "/partner/seller/product/receiptReject";
+
+    fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(map)
+    })
+        .then(resp => resp.text())
+        .then(result => {
+            if (result > 0) {
+                alert(type === "receipt" ? "접수되었습니다" : "거절되었습니다");
+                window.location.reload();
+            } else {
+                alert(type === "receipt" ? "접수 실패" : "거절 실패");
+                return;
+            }
+        });
+}
+
+const closeButton = document.querySelector("#closeButton");
 closeButton.addEventListener("click", () => {
-    if(confirm("취소하시겠습니까?")) {
+    if (confirm("취소하시겠습니까?")) {
         modal.style.display = "none";
-        return;
     }
 });
 
-
-
+orderReceipt.addEventListener("click", () => receiptOpenModal());
+orderRejection.addEventListener("click", () => rejectionOpenModal());
 
 /* 전체선택버튼 */
 const selectAll = document.querySelector('#selectAllCheckBox');
 const checkboxes = document.getElementsByName('selectProduct');
 
 selectAll.addEventListener('change', () => {
-    if(selectAll.checked == true) {
+    if (selectAll.checked == true) {
         checkboxes.forEach(elements => {
-          elements.checked = true;
-        })
+            elements.checked = true;
+        });
     } else {
         checkboxes.forEach(elements => {
             elements.checked = false;
-        })
+        });
     }
 });
-
-
 
 function updateStatus(checkbox) {
     // 모든 체크박스를 체크 해제합니다.
@@ -223,7 +255,7 @@ function getStatusFromUrl() {
     return urlParams.get('status');
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const status = getStatusFromUrl();
 
     if (status) {
@@ -238,4 +270,20 @@ document.addEventListener('DOMContentLoaded', function() {
             checkbox.checked = true;
         }
     }
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const rows = document.querySelectorAll('.borderTr');
+    console.log(rows);
+    rows.forEach(row => {
+        console.log(row);
+        const productPrice = row.querySelector('.productPrice').value;
+        const orderQuantity = row.querySelector('.orderQuantity').value;
+        const totalPrice = productPrice * orderQuantity;
+        console.log(totalPrice);
+        console.log(orderQuantity);
+        console.log(productPrice);
+        row.querySelector('.totalPrice').innerText = totalPrice.toLocaleString();
+    });
 });

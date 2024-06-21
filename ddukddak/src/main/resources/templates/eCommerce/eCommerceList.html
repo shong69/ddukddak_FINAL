@@ -87,8 +87,10 @@
                                     <!-- 검색 O -->
                                     <a th:if="${query}" th:href="@{'/eCommerce/list/' + ${selectProductList[col].bigCategoryNo} + '/' + ${selectProductList[col].categoryNo} + '/' + ${selectProductList[col].productNo} + '/detail'}",
                                         query="${query}">
-                                        <div>
-                                            <img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgRename}|">
+                                        <div th:value="${selectProductList[col].productNo}">
+                                            <div>
+                                                <img th:src="|${selectProductList[col].uploadImgPath}${selectProductList[col].uploadImgRename}|">
+                                            </div>
 
                                             <i th:data-memberNo="${loginMember.memberNo}" th:if="${loginMember != null}"
                                                 th:style="${selectProductList[col].wish == 0} ? 'display:block;' : 'display:none;'"

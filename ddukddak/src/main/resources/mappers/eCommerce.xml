@@ -412,7 +412,7 @@
     		SELECT SEQ_REVIEW_NO.NEXTVAL FROM DUAL
     	</selectKey>
         INSERT INTO "REVIEW"
-        VALUES (#{reviewNo}, #{reviewContent},SYSDATE, NULL, #{reviewRating}, #{ProductNo}, #{memberNo}, #{orderItemNo}, DEFAULT, #{optionValue})
+        VALUES (#{reviewNo}, #{reviewContent},SYSDATE, NULL, #{reviewRating}, #{ProductNo}, #{memberNo}, #{orderItemNo}, #{optionValue}, DEFAULT)
     </insert>
 	<!-- 리뷰 번호 -->
 	<select id="getReviewNo">
@@ -432,7 +432,7 @@
 	<!--해당 상품에서 내가 작성할 수 있는 주문상품 리스트 찾기 -->
 	<select id="checkReviewAuth">
 		SELECT O.ORDER_NO, D.ORDER_ITEM_NO, TO_CHAR(ORDER_DATE,'YYYY-MM-DD') ORDER_DATE, D.ORDER_QUANTITY,
-			(LISTAGG(OPTION_VALUE,',') WITHIN GROUP (ORDER BY T.OPTION_NO)) OPTION_VALUE
+			(LISTAGG(T.OPTION_VALUE,',') WITHIN GROUP (ORDER BY T.OPTION_NO)) OPTION_VALUE
 		FROM ORDERS O
 		JOIN ORDER_DETAIL D ON O.ORDER_NO = D.ORDER_NO
 		LEFT JOIN ORDERDETAIL_OPTION O2 ON O2.ORDER_ITEM_NO = D.ORDER_ITEM_NO
@@ -452,15 +452,45 @@
 		FROM REVIEW
 		WHERE PRODUCT_NO = #{productNo}
 	</select>
-	
+	<!-- 리뷰 평점 가져오기 -->
+	<select id="avgScore">
+		SELECT ROUND(REVIEW_RATING /COUNT(*) OVER(),1) RESULT
+		FROM REVIEW
+		WHERE REVIEW_DEL_FL = 'N'
+		AND PRODUCT_NO = #{productNo}
+	</select>
 	<!-- 리뷰 이미지 등록 -->
 	<insert id="insertImgs">
-		INSERT INTO UPLOAD_FILES VALUES(
+		INSERT INTO UPLOAD_FILE VALUES(
 			SEQ_UPLOAD_IMG_NO.NEXTVAL,#{uploadImgPath},#{uploadImgOgName},#{uploadImgRename},#{uploadImgOrder},5,NULL,NULL,#{reviewNo}, NULL
 		)
 	</insert>
 
+	<!-- 리뷰 이미지 목록 가져오기 -->
+	<select id = "selectReviewImgs">
+		SELECT UPLOAD_IMG_PATH||UPLOAD_IMG_RENAME AS IMG_PATH
+		FROM UPLOAD_FILE
+		WHERE REVIEW_NO = #{reviewNo}
+	</select>
 	
+	<!-- 수정할 리뷰 불러오기 -->
+	<select id="reloadReview">
+		SELECT REVIEW_NO, REVIEW_CONTENT, REVIEW_RATING, PRODUCT_NO, MEMBER_NO, ORDER_ITEM_NO,
+		OPTION_VALUE
+		FROM REVIEW
+		WHERE REVIEW_NO = #{reviewNo}
+		AND REVIEW_DEL_FL = 'N'
+	</select>
+	
+	
+	
+	
+	
+	
+
+	
+	<!-- QnA -->
+
 	<!-- 주문 생성 -->
 	<select id="prepareOrder">
 		SELECT *
@@ -495,23 +525,24 @@
 	<!-- 사전 완료 건 업데이트 -->
 	<update id="readyUpdate">
 		UPDATE "ORDERS" SET
-		STATUS = 'ready'
+		STATUS = 'ready',
+		FAIL_REASON = '[미결제] 결제 요청 후 미진행'
 		WHERE MERCHANT_UID = #{merchantUid}
 	</update>
 	
 	<!-- 사후 검증 완료 건 업데이트 -->
 	<update id="paidUpdate">
 		UPDATE "ORDERS" SET
-		STATUS = 'paid'
+		STATUS = 'paid',
+		FAIL_REASON = NULL
 		WHERE MERCHANT_UID = #{merchantUid}
 		AND STATUS = 'ready'
-		
 	</update>
 	
 	<!-- 사전 검증 실패 업데이트 -->
 	<update id="reasonUpdate">
 		UPDATE "ORDERS" SET
-		STATUS = 'fail',
+		STATUS = 'failed',
 		FAIL_REASON = #{message}
 		WHERE MERCHANT_UID = #{merchantUid}
 	</update>
@@ -519,8 +550,45 @@
 	<!-- 사용자 취소 업데이트 -->
 	<update id="cancelUpdate">
 		UPDATE "ORDERS" SET
-		STATUS = 'fail',
+		STATUS = 'canceled',
 		FAIL_REASON = #{message}
 		WHERE MERCHANT_UID = #{merchantUid}
 	</update>
+	
+	<!-- 주문번호 찾기 -->
+	<select id="findOrder">
+		SELECT ORDER_NO, MEMBER_NO
+		FROM "ORDERS"
+		WHERE MERCHANT_UID = #{merchantUid}
+		AND STATUS = 'paid'
+	</select>
+	
+	<!-- 주문상세 행 삽입 -->
+	<insert id="insertOrderDetail">
+		INSERT INTO "ORDER_DETAIL"
+		VALUES(
+			SEQ_ORDER_ITEM_NO.NEXTVAL,
+			#{orderQuantity},
+			#{orderPrice},
+			#{orderNo},
+			#{productNo},
+			#{orderStatus}
+		)
+	</insert>
+	
+	<!-- 현재 포인트 조회  -->
+	<select id="currentPoint">
+		SELECT MEMBER_POINT
+		FROM "MEMBER"
+		WHERE MEMBER_NO = #{memberNo}
+		AND MEMBER_DEL_FL = 'N'
+	</select>
+	
+	<update id="savePoint">
+		UPDATE "MEMBER" SET
+		MEMBER_POINT = #{totalPoint}
+				WHERE MEMBER_NO = #{memberNo}
+		AND MEMBER_DEL_FL = 'N'
+	</update>
+	
 </mapper>

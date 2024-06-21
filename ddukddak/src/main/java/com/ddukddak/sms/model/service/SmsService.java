@@ -34,6 +34,28 @@ public interface SmsService {
 	 * @return
 	 */
 	MultipleDetailMessageSentResponse sendPartnerManySms(String action, List<Map<String, String>> partners);
+	
+	/** 회원 탈퇴 SMS 발송
+	 * @param string
+	 * @param toNumber
+	 * @return
+	 */
+	SingleMessageSentResponse sendMemberSms(String delMessage, String toNumber);	
+
+	/** 회원 다수 탈퇴 SMS 발송
+	 * @param action
+	 * @param partners
+	 * @return
+	 */
+	MultipleDetailMessageSentResponse sendMemberMultiSms(String action, List<Map<String, String>> partners);
+
+	/** 파트너 탈퇴 SMS 발송
+	 * @param string
+	 * @param toNumber
+	 * @return
+	 */
+	SingleMessageSentResponse sendPartnerSms2(String string, String toNumber);
+
 
 	
 	

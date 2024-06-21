@@ -151,7 +151,7 @@ public class SmsServiceImpl implements SmsService {
 			
 	}
 
-
+	// 파트너 다수 SMS 발송
 	@Override
 	public MultipleDetailMessageSentResponse sendPartnerManySms(String action, List<Map<String, String>> partners) {
 		
@@ -215,6 +215,149 @@ public class SmsServiceImpl implements SmsService {
 		
 		return null;
 	}
+
+
+	// 회원 탈퇴 메세지 전송
+	@Override
+	public SingleMessageSentResponse sendMemberSms(String delMessage, String toNumber) {
+		/// 응답 값 생성
+		SingleMessageSentResponse response;
+		
+		String msg = null;
+		
+		switch(delMessage) {
+		
+			case "confirm" : msg = "[뚝딱뚝딱] 귀하의 회원정보가 탈퇴처리되었습니다. 죄송합니다 :("; break;
+	
+		}
+		
+		try {
+			
+			Message message = new Message();
+			// 발신번호 및 수신번호는 반드시 01012345678 형태로 입력
+			
+			log.info("toNumber : " + toNumber);
+			
+			message.setFrom(fromNumber);
+			message.setTo(toNumber);
+			message.setText(msg);
+			// 가입 여부에 따라 발송 메시지 바꿔주기
+			
+			response = this.messageService.sendOne(new SingleMessageSendingRequest(message)); // 실제 발송 구문
+			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		// 따로 결과만 발송이기 때문에 인증키 로직 없음
+		
+		return response;
+	}
+	
+
+	// 회원 다수 탈퇴 SMS 발송
+	@Override
+	public MultipleDetailMessageSentResponse sendMemberMultiSms(String action, List<Map<String, String>> members) {
+		// 응답 값 생성
+		MultipleDetailMessageSentResponse multiResponse;
+		
+		String msg = null;
+
+		
+		switch(action) {
+		
+			case "delete" : msg = "[뚝딱뚝딱] 귀하의 회원정보가 탈퇴처리되었습니다. 죄송합니다 :("; break;
+	
+		}
+		
+		ArrayList<Message> messageList = new ArrayList<>();
+		
+        for (int i = 0; i < members.size(); i++) {
+        	
+            Map<String, String> member = members.get(i);
+            String toNumber = member.get("memberTel");
+        	
+            Message message = new Message();
+            // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+            message.setFrom(fromNumber);
+            message.setTo(toNumber);
+            message.setText(msg);
+
+            // 메시지 건건 마다 사용자가 원하는 커스텀 값(특정 주문/결제 건의 ID를 넣는등)을 map 형태로 기입하여 전송 후 확인해볼 수 있습니다!
+            /*HashMap<String, String> map = new HashMap<>();
+
+            map.put("키 입력", "값 입력");
+            message.setCustomFields(map);*/
+
+            messageList.add(message);
+        }
+        
+        try {
+        	
+            // send 메소드로 단일 Message 객체를 넣어도 동작합니다!
+            // 세 번째 파라미터인 showMessageList 값을 true로 설정할 경우 MultipleDetailMessageSentResponse에서 MessageList를 리턴하게 됩니다!
+            //MultipleDetailMessageSentResponse response = this.messageService.send(messageList, false, true);
+
+            // 중복 수신번호를 허용하고 싶으실 경우 위 코드 대신 아래코드로 대체해 사용해보세요!
+        	multiResponse = this.messageService.send(messageList, true);
+
+            System.out.println(multiResponse);
+
+            return multiResponse;
+            
+        } catch (NurigoMessageNotReceivedException exception) {
+            System.out.println(exception.getFailedMessageList());
+            System.out.println(exception.getMessage());
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+		
+		
+		return null;
+	}
+
+
+	// 파트너 탈퇴 SMS 발송
+	@Override
+	public SingleMessageSentResponse sendPartnerSms2(String string, String toNumber) {
+		/// 응답 값 생성
+				SingleMessageSentResponse response;
+				
+				String msg = null;
+				
+				switch(string) {
+				
+					case "confirm" : msg = "[뚝딱뚝딱] 귀하의 파트너정보가 탈퇴처리되었습니다. 죄송합니다 :("; break;
+			
+				}
+				
+				try {
+					
+					Message message = new Message();
+					// 발신번호 및 수신번호는 반드시 01012345678 형태로 입력
+					
+					log.info("toNumber : " + toNumber);
+					
+					message.setFrom(fromNumber);
+					message.setTo(toNumber);
+					message.setText(msg);
+					// 가입 여부에 따라 발송 메시지 바꿔주기
+					
+					response = this.messageService.sendOne(new SingleMessageSendingRequest(message)); // 실제 발송 구문
+					
+					
+				} catch(Exception e) {
+					e.printStackTrace();
+					return null;
+				}
+				
+				// 따로 결과만 발송이기 때문에 인증키 로직 없음
+				
+				return response;
+	}
+
     
     
 
