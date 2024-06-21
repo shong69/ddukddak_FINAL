@@ -230,6 +230,24 @@ public interface eCommerceMapper {
 	 */
 	int paidUpdate(String merchantUid);
 
+	/**리뷰 이미지들 가져오기
+	 * @param reviewNo
+	 * @return
+	 */
+	List<String> selectReviewImgs(int reviewNo);
+
+	/**리뷰 평점
+	 * @param productNo
+	 * @return 
+	 */
+	double avgScore(int productNo);
+
+	/** 수정할 리뷰 불러오기
+	 * @param reviewNo
+	 * @return
+	 */
+	Review reloadReview(int reviewNo);
+
 
 
 
