@@ -1,6 +1,7 @@
 package com.ddukddak.partner.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -69,6 +70,35 @@ public interface InteriorMapper {
 	 * @return result
 	 */
 	int deleteProject(int projectNo);
+
+	
+	
+	/** 프로젝트 내용 수정
+	 * @param project
+	 * @return result
+	 */
+	int updateProject(Project project);
+
+	
+//	/** 프로젝트 이미지 삭제
+//	 * @param map
+//	 * @return
+//	 */
+//	int deleteImage(Map<String, Object> map);
+
+	
+	/** 프로젝트 이미지 수정
+	 * @param img
+	 * @return result
+	 */
+	int updateImage(ProjectImg img);
+
+	
+//	/** 프로젝트 이미지 삽입(1행)
+//	 * @param img
+//	 * @return result
+//	 */
+//	int insertImage(ProjectImg img);
 
 
 }

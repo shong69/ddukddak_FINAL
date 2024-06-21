@@ -58,11 +58,14 @@ public interface InteriorService {
 	int deleteProject(int projectNo);
 
 	
+	
 	/** 프로젝트 수정
-	 * @param map
+ 	 * @param project
+	 * @param images
+	 * @param deleteOrder
 	 * @return result
 	 */
-	int updateProject(Map<String, Object> map);
+	int updateProject(Project project, List<MultipartFile> images) throws IllegalStateException, IOException;
 
 
 }

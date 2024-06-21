@@ -192,6 +192,7 @@ public class MyHouseBoardController {
 	    String message = null;
 	    String path = null;
 	    
+	    log.info("images : " + images);
 	    
     	for (MultipartFile image : images) {
     		if (image.getOriginalFilename().equals(mainImgFileName)) {
