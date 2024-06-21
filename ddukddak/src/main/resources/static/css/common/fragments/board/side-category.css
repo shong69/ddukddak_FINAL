@@ -11,12 +11,12 @@
 
 .btnBox {
     height: 170px;
-    box-shadow: 7px 7px 30px #cfcfcf;
+    box-shadow: 7px 7px 20px #bbbbbb;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(243, 243, 243, 0.582);
+    background-color: rgba(243, 243, 243, 0.7);
     border-radius: 20px;
 }
 

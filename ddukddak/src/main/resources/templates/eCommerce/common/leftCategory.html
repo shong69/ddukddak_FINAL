@@ -166,7 +166,9 @@
 
             if (!isTicking) {
                 window.requestAnimationFrame(() => {
-                    category.style.transform = `translateY(${targetOffset}px)`;
+                    if(category != null) {
+                        category.style.transform = `translateY(${targetOffset}px)`;
+                    }
                     isTicking = false;
                 });
                 isTicking = true;
@@ -186,7 +188,9 @@
                 targetOffset = 0;
                 cancelAnimationFrame(animationFrame);
             } else {
-                category.style.transform = `translateY(${targetOffset}px)`;
+                if(category != null) {
+                    category.style.transform = `translateY(${targetOffset}px)`;
+                }
                 animationFrame = requestAnimationFrame(resetPosition);
             }
         }
