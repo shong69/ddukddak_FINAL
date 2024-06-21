@@ -412,7 +412,7 @@
     		SELECT SEQ_REVIEW_NO.NEXTVAL FROM DUAL
     	</selectKey>
         INSERT INTO "REVIEW"
-        VALUES (#{reviewNo}, #{reviewContent},SYSDATE, NULL, #{reviewRating}, #{ProductNo}, #{memberNo}, #{orderItemNo}, DEFAULT)
+        VALUES (#{reviewNo}, #{reviewContent},SYSDATE, NULL, #{reviewRating}, #{ProductNo}, #{memberNo}, #{orderItemNo}, DEFAULT, #{optionValue})
     </insert>
 	<!-- 리뷰 번호 -->
 	<select id="getReviewNo">
@@ -422,15 +422,11 @@
 	</select>
 	<!--리뷰 리스트 불러오기-->
 	<select id="selectReviewList">
-
-		SELECT REVIEW_NO, REVIEW_CONTENT, REVIEW_CREATE_DATE, REVIEW_UPDATE_DATE,
-		REVIEW_RATING, PRODUCT_NO, R.MEMBER_NO, ORDER_ITEM_NO, REVIEW_DEL_FL,MEMBER_ID, 
-		(LISTAGG(OPTION_VALUE,',') WITHIN GROUP (ORDER BY T.OPTION_NO)) OPTION_VALUE
+		SELECT R.REVIEW_NO, REVIEW_CONTENT, REVIEW_CREATE_DATE, REVIEW_UPDATE_DATE,
+		REVIEW_RATING, R.PRODUCT_NO, R.MEMBER_NO, R.ORDER_ITEM_NO, REVIEW_DEL_FL,MEMBER_ID,OPTION_VALUE 
 		FROM REVIEW R
-		LEFT JOIN "MEMBER" M ON(M.MEMBER_NO=R.MEMBER_NO)
-		LEFT JOIN ORDERDETAIL_OPTION O2 ON O2.ORDER_ITEM_NO = D.ORDER_ITEM_NO
-		LEFT JOIN "OPTION" T ON T.OPTION_NO = O2.OPTION_NO
-		WHERE PRODUCT_NO=#{productNo}
+		LEFT JOIN MEMBER M ON M.MEMBER_NO = R.MEMBER_NO
+		WHERE R.PRODUCT_NO=#{productNo}
 	</select>
 	
 	<!--해당 상품에서 내가 작성할 수 있는 주문상품 리스트 찾기 -->
