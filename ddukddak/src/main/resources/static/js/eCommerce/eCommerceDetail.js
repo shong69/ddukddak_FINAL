@@ -340,7 +340,7 @@ selectTags.forEach(function(select) {
 //리뷰 기능
 
 //1. 리뷰 등록 비동기 + (사진, 텍스트, 별점)도 올리기
-//사진 등록하기
+//  1)사진 등록하기
 let reviewImgFiles = [];
 function readImgURLs(input) {
     if (input.files && input.files.length > 0) {
@@ -499,7 +499,8 @@ stars.forEach((star, index) =>{
     })
 })
 console.log(typeof productNo);
-//3. 비동기로 리뷰 작성(+수정)하기
+
+//  2) 비동기로 리뷰 작성(+수정)하기
 function handleFormMissionReview(event) {
     event.preventDefault();
 
@@ -514,8 +515,11 @@ function handleFormMissionReview(event) {
     
     //orderItemNo 추가
     const orderItemNoSelect = document.querySelector(".reviewOptSelect");
-    const option = orderItemNoSelect.options[orderItemNoSelect.selectedIndex]; //select의 옵션 중 선택된 옵션의 값
+    const option = orderItemNoSelect.options[orderItemNoSelect.selectedIndex]; 
+    const optionValue = orderItemNoSelect.options[orderItemNoSelect.selectedIndex].getAttribute("data-value"); //옵션명 가져오기
+    console.log(optionValue);//옵션명 불러오기 여부 확인
     formData.append("orderItemNo", option.value);
+    formData.append("optionValue", optionValue); 
 
 
     formData.append('reviewRating', reviewRating); // 별점 추가
@@ -591,6 +595,7 @@ async function openReviewCheck(productNo){
             const option = document.createElement("option");
             option.value = `${item.orderItemNo}`;
             option.innerHTML = `주문일:${item.orderDate} | 주문옵션:${item.optionValue} ${item.orderQuantity}개`;
+            option.setAttribute("data-value", `${item.optionValue}`); //data-value에 optionvalue 넣어서 옵션명 리뷰에 저장하기
             select.append(option);
             console.log(option);
         })
@@ -656,13 +661,14 @@ function selectReviewList(productNo){
                     const commentWriteDate = document.createElement("span");
                     commentWriteDate.classList.add("commentWriteDate");
 
-                    commentWriteDate.textContent = review.commentWriteDate; //리뷰 작성일 적기
+                    commentWriteDate.textContent = review.reviewCreateDate; //리뷰 작성일 적기
 
                     infoArea.append(memberId, commentWriteDate);
 
                     const editArea = document.createElement("div");
                     editArea.classList.add("editArea");
-                    editArea.style.display=review.memberNo == loginMemberNo?"block":"none";  // 작성한 멤버면 display = "block"; 주기
+                    editArea.style.display=review.memberNo == loginMember.memberNo?"block":"none";  // 작성한 멤버면 display = "block"; 주기
+                    console.log(review.memberNo, loginMember.memberNo);
 
                     const updateBtn = document.createElement("button");
                     updateBtn.classList.add("updateBtn");
@@ -678,10 +684,11 @@ function selectReviewList(productNo){
                     };
 
                     //수정할 때 영역
-                    console.log(loginMember.memberNo);
+                    
                     editArea.append(updateBtn, delBtn);                    
-
                     reviewWrite.append(infoArea, editArea);
+                    const reviewImg = document.createElement("div");
+                    reviewImg.classList.add("reviewImg");
                     //이미지 배열 추가
                     if (review.imgList && review.imgList.length > 0) {
                         const imgRow = document.createElement("div");
@@ -694,9 +701,40 @@ function selectReviewList(productNo){
                             imgRow.append(img);
                         });
 
-                        reviewWrite.append(imgRow);
+                        reviewImg.append(imgRow); //
                     }
-                    li.append(reviewWrite);
+                    li.append(reviewWrite, reviewImg);
+
+                    //콘텐트 추가
+                    const contentArea = document.createElement("div");
+                    contentArea.classList.add("reviewContent");
+                    contentArea.innerText = review.reviewContent;
+                    //옵션, 별점-----------------------------------------
+                    const additionalInfoArea = document.createElement("div");
+                    additionalInfoArea.classList.add("additionalInfoArea");
+
+                    const rateDiv =  document.createElement("span");
+                    rateDiv.classList.add("rateDiv");
+                    const optionValue = document.createElement("span");
+                    optionValue.classList.add("optionValue");
+                    optionValue.innerText = review.optionValue;
+
+                    const stars = [];
+                    for (let i = 0; i < 5; i++) {
+                        const star = document.createElement("span");
+                        star.classList.add("fa-star");
+                        if (i < review.reviewRating) {
+                            star.classList.add("fa-solid");
+                        } else {
+                            star.classList.add("fa-regular");
+                        }
+                        stars.push(star);
+                    }
+                    
+                    rateDiv.append(...stars);
+                    additionalInfoArea.append(rateDiv, optionValue);
+                    li.append(additionalInfoArea, contentArea);
+
                 }
                 reviewContainer.append(li);
 
