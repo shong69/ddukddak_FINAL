@@ -1,10 +1,12 @@
 /* 선택된 이미지 미리보기 */
 const inputImageList = document.querySelectorAll(".inputImg"); 
 const deleteImageList = document.querySelectorAll(".delete-img");
+let imgCount = imgList.length;
 
 // x버튼이 눌러져 삭제된 이미지의 순서를 저장
 // * Set : 중복 저장 X, 순서 유지 X
 const deleteOrder = new Set();
+
 
 
 // 이미지 선택 이후 취소를 누를 경우를 대비한 백업 이미지
@@ -103,40 +105,52 @@ const changeImageFn = (inputImage, order) => {
   });
 }
 
-
 for(let i=0 ; i<inputImageList.length ; i++){
-
-  console.log(inputImageList[i]);
 
   // **** input태그에 이미지가 선택된 경우(값이 변경된 경우) ****
   inputImageList[i].addEventListener("change", e => {
+    
     changeImageFn(e.target, i);
+
   })
-
-
+    
+  
   // **** x 버튼 클릭 시 ****
   deleteImageList[i].addEventListener("click", () => {
-
+    
     // img, input, backup의 인덱스가 모두 일치한다는 특징을 이용
-
+    
     // 삭제된 이미지 순서를 deleteOrder에 기록
-
+    
     // 미리보기 이미지가 있을 때에만
     if(previewList[i].getAttribute("src") != null 
-        &&  previewList[i].getAttribute("src") != ""  ){
-
-      // 기존에 이미지가 존재하고 있을 경우에만
-      if( orderList.includes(i) ){
-        deleteOrder.add(i);
-      }
+    &&  previewList[i].getAttribute("src") != ""  ){
+      
+      // // 기존에 이미지가 존재하고 있을 경우에만
+      // if( orderList.includes(i) ){
+      //   deleteOrder.add(i);
+      // }
+      // imgCount --;
     }
 
     previewList[i].src       = ""; // 미리보기 이미지 제거
     inputImageList[i].value  = ""; // input에 선택된 파일 제거
     backupInputList[i]       = undefined; // 백업본 제거
-
+    
+    // console.log("딜리트 오더 : " , deleteOrder);
+    
   });
 }
+
+
+
+document.addEventListener("click", () => {
+  
+  console.log(imgList.length);
+  // console.log(inputImageList.length);
+  console.log(imgCount);
+
+});
 
 
 // -------------------------------------------
@@ -148,18 +162,13 @@ updateProjectForm.addEventListener("submit", e => {
 
   const workArea = document.querySelector("[name='workArea']");
   const constructionCost = document.querySelector("[name='constructionCost']");
-  const constructionYear = document.querySelector("[name='constructionYear']")
+  const constructionYear = document.querySelector("[name='constructionYear']");
+  
 
-  // for(let i = 0; i < inputImageList.length; i ++) {
-
-  //   if(inputImageList[i].value === "") {
-  //     console.log(inputImageList[i].src);
-  //     alert("비어있는 프로젝트 이미지를 등록해주세요");
-  //     inputImageList[i].focus();
-  //     e.preventDefault();
-  //     return;
-  //   }
-
+  // if(imgList.length != imgCount) {
+  //   alert("비어있는 프로젝트 이미지를 등록해주세요.");
+  //   e.preventDefault();
+  //   return;
   // }
 
   if(workArea.value.trim().length == 0){
@@ -193,7 +202,7 @@ updateProjectForm.addEventListener("submit", e => {
 	// <input type="hidden" name="deleteOrder" value="2,3">
 
   // 현재 페이지에서 얻어온 querystring을 input 태그 hidden 타입에 value 값으로 대입하기
-  document.querySelector("[name='querystring']").value = location.search;
+  // document.querySelector("[name='querystring']").value = location.search;
 });
 
 

@@ -193,10 +193,55 @@ public class InteriorServiceImpl implements InteriorService {
 
 	// 프로젝트 수정
 	@Override
-	public int updateProject(Map<String, Object> map) {
+	public int updateProject(Project project, List<MultipartFile> images) throws IllegalStateException, IOException {
 		
-		return 0;
+		// 프로젝트 내용 수정
+		int result = mapper.updateProject(project);
+		
+		if(result == 0) return 0;
+		
+		List<ProjectImg> uploadList = new ArrayList<>();
+		
+		
+		for(int i = 0; i < images.size(); i ++) {
+			
+			log.info("테스트 : " + images.get(i));
+			log.info("테스트 : " + images.get(i).isEmpty());
+			
+			if( !images.get(i).isEmpty() ) {
+				log.info("여기가 문제냐");
+				String originalName = images.get(i).getOriginalFilename();
+				String rename = Utility.fileRename(originalName);
+				
+				ProjectImg img = ProjectImg.builder()
+								 .uploadImgOgName(originalName)
+								 .uploadImgRename(rename)
+								 .uploadImgPath(webPath)
+								 .projectNo(project.getProjectNo())
+								 .uploadImgOrder(i)
+								 .uploadFile(images.get(i))
+								 .build();
+				
+				uploadList.add(img);
+				
+				result = mapper.updateImage(img);
+				
+			}
+			
+			// 선택한 파일이 없을 경우
+			if(uploadList.isEmpty()) {
+				return result;
+			}
+			
+			for(ProjectImg img : uploadList) {
+				img.getUploadFile().transferTo( new File(folderPath + img.getUploadImgRename()) );
+			}
+			
+		}
+		
+		return result;
 	}
+
 
 }
 

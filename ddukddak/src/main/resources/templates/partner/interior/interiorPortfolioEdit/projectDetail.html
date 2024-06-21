@@ -42,7 +42,7 @@
                 <div class="input-img-area">
                     <div class="projectImg thumbnail">
                         <label th:for="|img${project.imgList[0].uploadImgOrder}|">
-                            <img class="preview" th:src="|${project.imgList[0].uploadImgPath}${project.imgList[0].uploadImgRename}|" accept="image/*">
+                            <img class="preview">
                             <!-- th:src="|${project.imgList[0].uploadImgPath}${project.imgList[0].uploadImgRename}|" -->
                         </label>
                         <input type="file" name="images" class="inputImg" th:id="|img${project.imgList[0].uploadImgOrder}|" accept="image/*">
@@ -57,10 +57,10 @@
                             <th:block th:if="${iterStat.index > 0}">
                                 <div class="projectImg previewImg">
                                     <label th:for="|img*{uploadImgOrder}|">
-                                        <img class="preview" th:src="|*{uploadImgPath}*{uploadImgRename}|">
+                                        <img class="preview">
                                         <!-- th:src="|*{uploadImgPath}*{uploadImgRename}|" -->
                                     </label>
-                                    <input type="file" name="images" class="inputImg" th:id="|img*{uploadImgOrder}|" accept="image/*">
+                                    <input type="file" name="images" class="inputImg" th:id="|img*{uploadImgOrder}| " accept="image/*">
                                     <span class="delete-img">&times;</span>
                                 </div>
                             </th:block>
@@ -124,7 +124,7 @@
 
                 <div class="projectContentArea">
                     <h2>프로젝트 내용</h2>
-                    <textarea th:text="${project.projectContent}" class="projectContent"></textarea>
+                    <textarea name="projectContent" th:text="${project.projectContent}" class="projectContent"></textarea>
                 </div>
 
                 <div class="btn-area">
@@ -132,6 +132,8 @@
                     <button class="boardCreateBtn" id="updateProjectBtn">프로젝트 수정</button>
                     <button class="boardCreateBtn" id="deleteProjectBtn" type="button">프로젝트 삭제</button>
                 </div>
+
+                <input type="hidden" name="deleteOrder" value="">
 
             </form>
 
@@ -143,7 +145,7 @@
         <script th:inline="javascript">
             
             const projectNo = /*[[${project.projectNo}]]*/ "프로젝트 번호";
-            const imgList = /*[[${project.imgList}]]*/ "프로젝트 이미지 리스트";
+            const imgList = /*[[${project.imgList}]]*/ [];
             const previewList = document.querySelectorAll('img.preview');
 
             const orderList = [];   // 기존에 존재하던 이미지를 순서를 기록하기 위한 배열 생성

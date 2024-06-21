@@ -206,6 +206,38 @@
 		
 	</insert>
 	
+	<!-- 프로젝트 내용 수정 -->
+	<update id="updateProject">
+		UPDATE "PROJECT_INFO" SET
+		HOUSING_TYPE = #{housingType},
+		WORK_FORM = #{workForm},
+		WORK_AREA = #{workArea},
+		CONSTRUCTION_COST = #{constructionCost},
+		REGION = #{region},
+		CONSTRUCTION_YEAR = #{constructionYear},
+		FAMILY_SIZE = #{familySize},
+		PROJECT_CONTENT = #{projectContent}
+		WHERE PROJECT_NO = #{projectNo}
+	</update>
+	
+	<!-- 프로젝트 이미지 삭제 -->
+	<!-- 
+	<delete id="deleteImage">
+		DELETE FROM "UPLOAD_FILE"
+		WHERE UPLOAD_IMG_ORDER IN (${deleteOrder})
+		AND PROJECT_NO = #{projectNo}
+	</delete>
+	 -->
+	
+	<!-- 프로젝트 이미지 수정 -->
+	<update id="updateImage">
+		UPDATE "UPLOAD_FILE" SET
+		UPLOAD_IMG_OG_NAME = #{uploadImgOgName},
+		UPLOAD_IMG_RENAME = #{uploadImgRename}
+		WHERE PROJECT_NO = #{projectNo}
+		AND UPLOAD_IMG_ORDER = #{uploadImgOrder}
+	</update>
+	
 	
 	<!-- 프로젝트 삭제 -->
 	<update id="deleteProject">

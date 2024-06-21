@@ -211,12 +211,13 @@ public class InteriorController {
 							 	@RequestParam("region") String region,
 							 	@RequestParam("constructionYear") String constructionYear,
 							 	@RequestParam("familySize") String familySize,
-							 	Model model) {
+							 	@RequestParam("projectContent") String projectContent,
+							 	@SessionAttribute("loginPartnerMember") Partner loginPartnerMember,
+							 	Model model) throws IllegalStateException, IOException {
 		
 		Project project = new Project();
 		
-		Map<String, Object> map = new HashMap<>();
-		
+		project.setPartnerNo(loginPartnerMember.getPartnerNo());
 		project.setProjectNo(projectNo);
 		project.setHousingType(housingType);
 		project.setWorkArea(workArea);
@@ -225,14 +226,14 @@ public class InteriorController {
 		project.setRegion(region);
 		project.setConstructionYear(constructionYear);
 		project.setFamilySize(familySize);
+		project.setProjectContent(projectContent);
 		
-		map.put("project", project);
-		map.put("images", images);
 		
-		int result = service.updateProject(map);
+		int result = service.updateProject(project, images);
 		
 		log.info("프로젝트 : " + project);
-		log.info("이미지 : " + images);		
+		log.info("이미지 : " + images);
+		
 		return "redirect:/partner/interiorPortfolioEditMain";
 	}
 	
