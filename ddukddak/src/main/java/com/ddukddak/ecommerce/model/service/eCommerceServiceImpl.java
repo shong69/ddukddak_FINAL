@@ -511,5 +511,50 @@ public class eCommerceServiceImpl implements eCommerceService{
 	}
 
 	
+	// ORDERS 테이블 조회 용도
+	@Override
+	public Orders findOrder(String merchantUid) {
+		
+		return mapper.findOrder(merchantUid);
+	}
+
+	// ORDER_DETAIL 삽입
+	@Override
+	public int insertOrderDetail(int orderNo, int memberNo, String cartId, String productNo, String productCount,
+			String productPrice) {
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("orderNo", orderNo);
+		map.put("productNo", productNo);
+		map.put("orderQuantity", productCount);
+		map.put("orderPrice", productPrice);
+		map.put("orderStatus", "구매확정");
+		
+		
+		return mapper.insertOrderDetail(map);
+	}
+	
+	// 현재 포인트 조회
+	@Override
+	public int currentPoint(int memberNo) {
+		
+		return mapper.currentPoint(memberNo);
+	}
+
+	// 포인트 적립 업데이트
+	@Override
+	public int savePoint(int memberNo, int totalPoint) {
+		
+		Map<String, Integer> map = new HashMap<>();
+		
+		map.put("memberNo", memberNo);
+		map.put("totalPoint", totalPoint);
+		
+		
+		return mapper.savePoint(map);
+	}
+
+	
 
 }
