@@ -37,29 +37,33 @@
                 <h1 th:text="${project.projectName}">프로젝트명</h1>
             </div>
 
-            <form action="/partner/updateProject" method="POST" id="updateProjectForm" enctype="multipart/form-data">
+            <form th:action="@{/partner/updateProject(projectNo=${project.projectNo})}" method="POST" id="updateProjectForm" enctype="multipart/form-data">
 
                 <div class="input-img-area">
                     <div class="projectImg thumbnail">
                         <label th:for="|img${project.imgList[0].uploadImgOrder}|">
-                            <img class="preview" th:src="|${project.imgList[0].uploadImgPath}${project.imgList[0].uploadImgRename}|" alt="이미지를 추가하세요">
+                            <img class="preview" th:src="|${project.imgList[0].uploadImgPath}${project.imgList[0].uploadImgRename}|" accept="image/*">
+                            <!-- th:src="|${project.imgList[0].uploadImgPath}${project.imgList[0].uploadImgRename}|" -->
                         </label>
-                        <input type="file" name="images" class="inputImg" th:id="|img${project.imgList[0].uploadImgOrder}|">
-                        <!-- <span class="delete-img">&times;</span> -->
+                        <input type="file" name="images" class="inputImg" th:id="|img${project.imgList[0].uploadImgOrder}|" accept="image/*">
+                        <span class="delete-img">&times;</span>
                     </div>
 
                     <!-- <p>[[|img${project.imgList[0].uploadImgOrder}|]]</p> -->
 
                     <div class="preview-img">
 
-                        <th:block th:each="img : ${project.imgList}" th:object="${img}">
-                            <div class="projectImg previewImg">
-                                <label th:for="|img${uploadImgOrder}|">
-                                    <img class="preview" th:src="|*{uploadImgPath}*{uploadImgRename}|">
-                                </label>
-                                <input type="file" name="images" class="inputImg" th:id="|img${uploadImgOrder}|">
-                                <!-- <span class="delete-img">&times;</span> -->
-                            </div>
+                        <th:block th:each="img, iterStat : ${project.imgList}" th:object="${img}">
+                            <th:block th:if="${iterStat.index > 0}">
+                                <div class="projectImg previewImg">
+                                    <label th:for="|img*{uploadImgOrder}|">
+                                        <img class="preview" th:src="|*{uploadImgPath}*{uploadImgRename}|">
+                                        <!-- th:src="|*{uploadImgPath}*{uploadImgRename}|" -->
+                                    </label>
+                                    <input type="file" name="images" class="inputImg" th:id="|img*{uploadImgOrder}|" accept="image/*">
+                                    <span class="delete-img">&times;</span>
+                                </div>
+                            </th:block>
                         </th:block>
 
                     </div>
@@ -68,7 +72,7 @@
                 <div class="project-info-area">
                     <h2>프로젝트 정보</h2>
                     <div class="project-info">
-                        <select th:field="${project.housingType}">
+                        <select name="housingType" th:field="${project.housingType}">
                             <option th:value="'단독주택'">단독주택</option>
                             <option th:value="'아파트'">아파트</option>
                             <option th:value="'다세대 주택'">다세대 주택</option>
@@ -76,17 +80,17 @@
                             <option th:value="'오피스텔'">오피스텔</option>
                         </select>
                         <div>
-                            <input th:value="${project.workArea}" type="number" placeholder="평수" min="0">
+                            <input name="workArea" th:value="${project.workArea}" type="number" placeholder="평수" min="0">
                             <span>평</span>
                         </div>
                         
-                        <select th:field="${project.workForm}">
+                        <select name="workForm" th:field="${project.workForm}">
                             <option th:value="'리모델링'" th:text="'리모델링'"></option>
                             <option th:value="'바닥공사'" th:text="'바닥공사'"></option>
                             <option th:value="'벽지도배'" th:text="'벽지도배'"></option>
                         </select>
                         <div>
-                            <input th:value="${project.constructionCost}" type="number" placeholder="가격" min="0" step="100000">
+                            <input name="constructionCost" th:value="${project.constructionCost}" type="number" placeholder="가격" min="0" step="100000">
                             <span>원</span>
                         </div>
                         
@@ -96,7 +100,7 @@
                 <div class="detail-info-area">
                     <h2>세부 정보</h2>
                     <div>
-                        <select th:field="${project.region}">
+                        <select name="region" th:field="${project.region}">
                             <option th:value="'서울'">서울</option>
                             <option th:value="'경기/인천'">경기/인천</option>
                             <option th:value="'충청/대전'">충청/대전</option>
@@ -107,9 +111,9 @@
                             <option th:value="'제주'">제주</option>
                         </select>
 
-                        <input type="date" th:value="${project.constructionYear}">
+                        <input name="constructionYear" type="date" th:value="${project.constructionYear}">
 
-                        <select th:field="${project.familySize}">
+                        <select name="familySize" th:field="${project.familySize}">
                             <option th:value="'1인 가족'">1인 가족</option>
                             <option th:value="'2인 가족'">2인 가족</option>
                             <option th:value="'4인 가족'">4인 가족</option>
@@ -118,10 +122,15 @@
                     </div>
                 </div>
 
+                <div class="projectContentArea">
+                    <h2>프로젝트 내용</h2>
+                    <textarea th:text="${project.projectContent}" class="projectContent"></textarea>
+                </div>
+
                 <div class="btn-area">
-                    <button class="boardCreateBtn" type="registMainProjectBtn">메인프로젝트 등록</button>
-                    <button class="boardCreateBtn">프로젝트 수정</button>
-                    <button class="boardCreateBtn" type="deleteProjectBtn">프로젝트 삭제</button>
+                    <button class="boardCreateBtn" id="registMainProjectBtn" type="button">메인프로젝트 등록</button>
+                    <button class="boardCreateBtn" id="updateProjectBtn">프로젝트 수정</button>
+                    <button class="boardCreateBtn" id="deleteProjectBtn" type="button">프로젝트 삭제</button>
                 </div>
 
             </form>
@@ -130,27 +139,26 @@
 
         <th:block th:replace="~{common/fragments/footer}"></th:block>
 
-         <!-- 이미지 미리 보기 설정 -->
+        <!-- 이미지 미리 보기 설정 -->
         <script th:inline="javascript">
-
-            const imageList = /*[[${project.imageList}]]*/ [];
-            const previewList = document.querySelectorAll('img.preview');   
-            // img 태그 중에 preview 클래스
+            
+            const projectNo = /*[[${project.projectNo}]]*/ "프로젝트 번호";
+            const imgList = /*[[${project.imgList}]]*/ "프로젝트 이미지 리스트";
+            const previewList = document.querySelectorAll('img.preview');
 
             const orderList = [];   // 기존에 존재하던 이미지를 순서를 기록하기 위한 배열 생성
 
-            for(let img of imageList) {     // img => BoardImg 형태
+            for(let img of imgList) { 
 
-                previewList[img.imgOrder].src = img.imgPath + img.imgRename;
+                previewList[img.uploadImgOrder].src = img.uploadImgPath + img.uploadImgRename;
 
-                orderList.push(img.imgOrder);
+                orderList.push(img.uploadImgOrder);
                 // 다섯개 이미지가 전부다 있었다
                 // -> [0,1,2,3,4]
 
             }
 
         </script>
-
         <script src="/js/partner/interior/interiorPortfolioEdit/projectDetail.js"></script>
     </body>
 </html>

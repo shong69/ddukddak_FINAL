@@ -424,6 +424,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		}else { //이미지 안보낸 경우
 			return 1;
 		}
+
 	}
 	
 	//리뷰 삭제하기
