@@ -4,9 +4,11 @@ package com.ddukddak.ecommerce.controller;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
+import com.ddukddak.ecommerce.model.dto.Orders;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
 import com.ddukddak.ecommerce.model.dto.QNA;
@@ -326,56 +329,211 @@ public class eCommerceController {
 	
 	
 	
-	@RequestMapping("complete")
+	@PostMapping("complete")
 	public String eCommerceComplete(@RequestParam Map<String, Object> params, @RequestParam("cartIds") String cartIdsJson, Model model) {
 		log.info("params : " + params);
 		
+		// 고유 주문 번호 추출
+		String merchantUid = (String) params.get("merchantUid");
 		
+		// 배열로 전달 받은 형태
+		// cartIds=["71","72"], 
+	 	// productNos=["15","15"], 
+	 	// productCounts=["1","1"], 
+	 	// productPrices=["339000","339000"]}
+	    // JSON 문자열을 배열로 변환
+	    List<String> cartIds = Arrays.asList(cartIdsJson.replaceAll("[\\[\\]\"]", "").split(","));
+	    List<String> productNos = Arrays.asList(params.get("productNos").toString().replaceAll("[\\[\\]\"]", "").split(","));
+	    List<String> productCounts = Arrays.asList(params.get("productCounts").toString().replaceAll("[\\[\\]\"]", "").split(","));
+	    List<String> productPrices = Arrays.asList(params.get("productPrices").toString().replaceAll("[\\[\\]\"]", "").split(","));
+	    
+        // --------------------- 옵션 추출 --------------------
+        
+        // 추가) 
+        
+	    // + 옵션 꺼내서 ORDERDETAIL_OPTION 테이블에 넣어야함
+	    List<String> optionNosJson = Arrays.asList(params.get("optionNos").toString().split(","));
+
+
+	    // + 옵션들 리스트로 변환
+	    List<List<Integer>> optionNos = new ArrayList<>();
+
+	    
+	    for (String optionNoJson : optionNosJson) {
+	        try {
+	            optionNoJson = optionNoJson.replaceAll("[\\[\\]\"]", ""); // 대괄호와 따옴표 제거
+	            if (!optionNoJson.trim().isEmpty()) {
+	                List<Integer> optionNoList = Arrays.stream(optionNoJson.split(","))
+	                                                    .map(String::trim)
+	                                                    .map(Integer::parseInt)
+	                                                    .collect(Collectors.toList());
+	                optionNos.add(optionNoList);
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    
+        log.info("optionNos 는 과연 뭘까 ? : " + optionNos);
+	    
+
+	    
+        // -----------------------------------------------------
+        
+	    // ORDER_DETAIL 테이블에 업데이트된 회수
+	    int result = 0;
+	    
+	    // 고유 주문 번호로 주문 번호, 회원 번호 구해오기
+	    Orders order = service.findOrder(merchantUid);
+	    
+	    if (order == null) {
+	        log.error("Order not found for merchantUid: " + merchantUid);
+	        model.addAttribute("message", "파라미터 안넘어옴");
+	        
+	        return "/myPage/cart"; // 적절한 에러 페이지로 리다이렉트
+	    }
+	    
+		int orderNo = order.getOrderNo();
+		
+		// 회원 번호는 포인트 적립 로직 구성
+		int memberNo = order.getMemberNo();
+		
+		
+		// 1. 주문 상세 테이블 삽입
+	    for (int i = 0; i < cartIds.size(); i++) {
+	        String cartId = cartIds.get(i).trim();
+	        String productNo = productNos.get(i).trim();
+	        String productCount = productCounts.get(i).trim();
+	        String productPrice = productPrices.get(i).trim();
+	        List<Integer> optionNoList = optionNos.get(i);
+	        
+	        log.info("cartId: " + cartId + ", productNo: " + productNo + ", productCount: " + productCount + ", productPrice: " + productPrice);
+	        // cartId: 91, productNo: 21, productCount: 2, productPrice: 299000
+	        // cartId: 92, productNo: 13, productCount: 3, productPrice: 77900
+	        
+	        // 주문 상세 테이블에 반복 삽입
+	        result += service.insertOrderDetail(orderNo, memberNo, cartId, productNo,productCount, productPrice);
+	        
+	        
+	    }
+	    
+	    
+	    // **************** 여기서 부터(폼제출 체크하고 작업 필요)*************
+	    // 2. 옵션 테이블에 반복 삽입
+	    for (int i = 0; i < optionNos.size(); i++) {
+	        List<Integer> optionNoList = optionNos.get(i);
+	        
+	        for (Integer optionNo : optionNoList) {
+	            log.info("포문 안에 옵션 넘버 : " + optionNo);
+	            //result += service.insertOrderOptionDetail(orderNo, productNo, optionNo);
+	            // 포문 안에 옵션 넘버 : 215
+	            // 포문 안에 옵션 넘버 : 216
+	            // 포문 안에 옵션 넘버 : 344
+	            // 포문 안에 옵션 넘버 : 359
+	            // 포문 안에 옵션 넘버 : 355
+	        }
+	    }
+	    
+	    if(result > 0) {
+	    	
+	    	log.info("주문 상세 테이블 정상 삽입 완료 : {}개", result);
+	    	
+	    }
+		
+		/*
+		 	{memberNo=5, 
+		 	memberTel=01032920409, 
+		 	memberAddr=04540 서울 중구 남대문로 120 3층, 
+		 	deliveryMemo=배송메모를 선택해 주세요, 
+		 	merchantUid=, 
+		 	cartId=71, 
+		 	productNo=15, 
+		 	productCount=1, 
+		 	productPrice=339000, 
+		 	option=1, 
+		 
+		 */
+			   
+		// 2. 장바구니 비워주기
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Integer> cartIds = null;
+        List<Integer> cartIds2 = null;
 
         try {
             // JSON 문자열을 List<Integer>로 변환
-            cartIds = objectMapper.readValue(cartIdsJson, new TypeReference<List<Integer>>() {});
+            cartIds2 = objectMapper.readValue(cartIdsJson, new TypeReference<List<Integer>>() {});
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        int result = 0;
+        int result2 = 0;
+        
         // cartIds가 제대로 추출되었는지 로그로 확인
-        if (cartIds != null) {
-            for (Integer cartId : cartIds) {
-                result += cartService.delProduct(cartId);
+        if (cartIds2 != null) {
+            for (Integer cartId2 : cartIds2) {
+            	
+                result2 += cartService.delProduct(cartId2);
                 
             }
         }
         
-        log.info("결제 완료 후 장바구니 삭제 개수 : " + result + "개");
+        log.info("결제 완료 후 장바구니 삭제 개수 : " + result2 + "개");
 
-        
-        // 따로 실어서 가져감)
-		String merchantUid = (String) params.get("merchantUid");
-		String deliveryMemo = (String) params.get("deliveryMemo");
-		
-		
-		// 결제 수단
-		// 결제 번호
-		// 결제 일시
-		// 그외 구매자 정보
+       
+        // 3. 실어줄 값 추출
+
+		// 결제 수단, 결제 번호, 결제 일시, 그 외 구매자 정보...
 		// PAYMENT에서 꺼내오기 merchantUid
 		PaymentDTO payment = paymentService.selectPaid(merchantUid);
 		
+		
+		// 4. 포인트 삽입하고 적립 포인트 띄워주기(추후 결제 리팩토링 시 포인트 차감 구현 시도)
+        
+
+		// 총 구매가의 1% 적립 포인트
+		int point = (int) Math.floor(payment.getAmount() * 0.01 / 10) * 10;
+        
+		// 현재 포인트 구해서 + 처리하고 UPDATE
+		int currentPoint = service.currentPoint(memberNo);
+		
+		
+		int totalPoint = currentPoint + point;
+		log.info("적립 포인트 1% = {} + 현재 포인트 {}  = 총 포인트 {}",  point, currentPoint, totalPoint);
+				
+		// UPDATE 
+		int saveResult = service.savePoint(memberNo, totalPoint);  
+		
+		Member member = new Member();
+		
+		// 업데이트 성공 시 세팅
+        if(saveResult > 0) {
+        	
+        	member.setMemberPoint(totalPoint);
+        	
+        	log.info("적립 성공! 멤버 객체 세팅 확인 : {}", member.getMemberPoint());
+        	
+        }
+		
+      
+        
+		// 5. 최종적으로 모델에 실어주기 
+        // 따로 실어서 가져감
+		// String merchantUid = (String) params.get("merchantUid");
+		String deliveryMemo = (String) params.get("deliveryMemo");		
+		
+        
         // LocalDateTime을 yyyy-MM-dd HH:mm 형식의 문자열로 변환
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedPaidAt = payment.getPaidAt().format(formatter);
 		
-		//)
+        
+        
 		model.addAttribute("merchantUid", merchantUid);
 		model.addAttribute("deliveryMemo", deliveryMemo);
 		model.addAttribute("paymentInfo", payment);
 		model.addAttribute("formattedPaidAt", formattedPaidAt);
-		
-
+		model.addAttribute("point", point);
+		model.addAttribute("myPoint", member.getMemberPoint());
 		
 		return "eCommerce/eCommerceComplete";
 	}

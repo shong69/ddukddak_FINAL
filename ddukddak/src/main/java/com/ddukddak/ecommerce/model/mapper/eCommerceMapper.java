@@ -241,6 +241,30 @@ public interface eCommerceMapper {
 	 */
 	int cancelUpdate(Map<String, String> map);
 
+	/** 주문 테이블 찾기
+	 * @param merchantUid
+	 * @return
+	 */
+	Orders findOrder(String merchantUid);
+
+	/** ORDER_DETAIL 삽입
+	 * @param map
+	 * @return
+	 */
+	int insertOrderDetail(Map<String, Object> map);
+
+	/** 현재 포인트 조회
+	 * @param memberNo
+	 * @return
+	 */
+	int currentPoint(int memberNo);
+
+	/** 포인트 업데이트
+	 * @param map
+	 * @return
+	 */
+	int savePoint(Map<String, Integer> map);
+
 
 
 

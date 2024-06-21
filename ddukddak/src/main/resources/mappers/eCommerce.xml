@@ -495,23 +495,24 @@
 	<!-- 사전 완료 건 업데이트 -->
 	<update id="readyUpdate">
 		UPDATE "ORDERS" SET
-		STATUS = 'ready'
+		STATUS = 'ready',
+		FAIL_REASON = '[미결제] 결제 요청 후 미진행'
 		WHERE MERCHANT_UID = #{merchantUid}
 	</update>
 	
 	<!-- 사후 검증 완료 건 업데이트 -->
 	<update id="paidUpdate">
 		UPDATE "ORDERS" SET
-		STATUS = 'paid'
+		STATUS = 'paid',
+		FAIL_REASON = NULL
 		WHERE MERCHANT_UID = #{merchantUid}
 		AND STATUS = 'ready'
-		
 	</update>
 	
 	<!-- 사전 검증 실패 업데이트 -->
 	<update id="reasonUpdate">
 		UPDATE "ORDERS" SET
-		STATUS = 'fail',
+		STATUS = 'failed',
 		FAIL_REASON = #{message}
 		WHERE MERCHANT_UID = #{merchantUid}
 	</update>
@@ -519,8 +520,45 @@
 	<!-- 사용자 취소 업데이트 -->
 	<update id="cancelUpdate">
 		UPDATE "ORDERS" SET
-		STATUS = 'fail',
+		STATUS = 'canceled',
 		FAIL_REASON = #{message}
 		WHERE MERCHANT_UID = #{merchantUid}
 	</update>
+	
+	<!-- 주문번호 찾기 -->
+	<select id="findOrder">
+		SELECT ORDER_NO, MEMBER_NO
+		FROM "ORDERS"
+		WHERE MERCHANT_UID = #{merchantUid}
+		AND STATUS = 'paid'
+	</select>
+	
+	<!-- 주문상세 행 삽입 -->
+	<insert id="insertOrderDetail">
+		INSERT INTO "ORDER_DETAIL"
+		VALUES(
+			SEQ_ORDER_ITEM_NO.NEXTVAL,
+			#{orderQuantity},
+			#{orderPrice},
+			#{orderNo},
+			#{productNo},
+			#{orderStatus}
+		)
+	</insert>
+	
+	<!-- 현재 포인트 조회  -->
+	<select id="currentPoint">
+		SELECT MEMBER_POINT
+		FROM "MEMBER"
+		WHERE MEMBER_NO = #{memberNo}
+		AND MEMBER_DEL_FL = 'N'
+	</select>
+	
+	<update id="savePoint">
+		UPDATE "MEMBER" SET
+		MEMBER_POINT = #{totalPoint}
+				WHERE MEMBER_NO = #{memberNo}
+		AND MEMBER_DEL_FL = 'N'
+	</update>
+	
 </mapper>

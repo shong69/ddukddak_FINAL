@@ -210,6 +210,39 @@ public interface eCommerceService {
 	 */
 	int cancelUpdate(Map<String, String> map);
 
+	/** 주문정보 찾기
+	 * @param merchantUid
+	 * @return
+	 */
+	Orders findOrder(String merchantUid);
+
+	/** ORDER_DETAIL 테이블 삽입
+	 * @param orderNo
+	 * @param memberNo
+	 * @param cartId
+	 * @param productNo
+	 * @param productCount
+	 * @param productPrice
+	 * @return
+	 */
+	int insertOrderDetail(int orderNo, int memberNo, String cartId, String productNo, String productCount,
+			String productPrice);
+
+	/** 현재 포인트 조회
+	 * @param memberNo
+	 * @return
+	 */
+	int currentPoint(int memberNo);
+
+	/** 포인트 적립 업데이트
+	 * @param memberNo
+	 * @param totalPoint
+	 * @return
+	 */
+	int savePoint(int memberNo, int totalPoint);
+
+	
+
 
 
 }
