@@ -510,6 +510,7 @@
 #reviewList{
     list-style-type: none;
     width : 100%;
+    background-color: #f3f3f3;
 }
 
 .reviewInfoArea{
@@ -519,6 +520,7 @@
     height: 150px;
     color : #000000dd;
     margin-bottom: 20px;
+    background-color: white;
 }
 .reviewCount {
     flex-basis: 50%;
@@ -527,7 +529,7 @@
     margin : auto 0;
     border-right: 0.4px solid #6b6b6b;
 }
-#totalRating{
+#totalInfo{
     flex-basis: 50%;
     text-align: center;
     font-size: 38px;
@@ -690,14 +692,100 @@
     color : red;
 }
 .fa-star{
-    cursor: pointer;
     font-size: 20px;
 }
-
+/*리뷰 리스트*/
+#reviewContainer{
+    min-height: 800px;
+}
+.reviewRow{
+    min-height: 400px;
+    margin:15px;
+    margin: 30px 0;
+}
+.infoArea{
+    display: flex;
+    flex-direction: row;
+    margin:0 30px;
+    justify-content: space-between;
+}
+.memberId{
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 25px;
+}
+.commentWriteDate{
+    margin-top: auto;
+}
+.editArea{
+    width : 120px;
+    margin-left: auto;
+    margin-right: 30px;
+}
 .updateBtn,
-.delBtn,
-.reviewWrite{
-    background-color: red;
+.delBtn{
+    width:50px;
+    border-radius: 18px;
+    cursor: pointer;
+}
+.updateBtn{
+    margin-right: 10px;
+}
+.delBtn{
+    margin-left: auto;
+}
+.reviewImg{
+    height: 180px;
+}
+.oneReviewImg{
+    width : 80px;
+}
+.additionalInfoArea{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 5px 30px;
+}
+.rateDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+.content {
+    font-size: 20px;
+    padding: 0 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical; 
+    overflow: hidden;
+    margin-top: 10px; 
+}
+
+.reviewContent {
+    width: 1000px;
+    background-color: #fff;
+    border-radius: 21px;
+    overflow: hidden;
+    padding:10px;
+    margin:15px auto;
+}
+.moreBtn {
+    appearance: none;
+    cursor: pointer;
+    margin: 5px;
+    margin-left: 16px;
+}
+.moreBtn::before{
+    content: '더보기';
+}
+
+.moreBtn:checked::before{
+    content: '닫기';
+}
+
+.content:has(+ .moreBtn:checked){
+    -webkit-line-clamp:unset
 }
 /* qna */
 #qnaBox {

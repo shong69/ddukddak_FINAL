@@ -157,7 +157,7 @@ public interface eCommerceService {
 	 * @param reviewId
 	 * @return
 	 */
-	Review reloadReview(String reviewId);
+	Review reloadReview(int reviewNo);
 
 	/**리뷰 수정하기
 	 * @param review
@@ -204,11 +204,19 @@ public interface eCommerceService {
 	 */
 	int paidUpdate(String merchantUid);
 
+
+	/** 리뷰 평점
+	 * @param productNo
+	 * @return
+	 */
+	double avgScore(int productNo);
+
 	/** 사용자 결제 취소 업데이트
 	 * @param map
 	 * @return
 	 */
 	int cancelUpdate(Map<String, String> map);
+
 
 
 

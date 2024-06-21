@@ -279,7 +279,8 @@
 
     <script th:inline="javascript">
         var loginMember = /*[[${loginMember}]]*/ "loginMember";
-        var loginMemberNo = /*[[loginMember.memberNo]]*/ "loginMemberNo";
+
+        var loginMemberNo = /*[[${loginMember?.memberNo}]]*/ "memberNo";
         var productNo = /*[[${productNo}]]*/ "productNo";
         const buyButton = document.querySelector("#buyButton");
         const wishButton = document.querySelector("#wishButton");

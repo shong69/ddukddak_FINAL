@@ -351,8 +351,14 @@ public class eCommerceServiceImpl implements eCommerceService{
 	@Override
 	public List<Review> selectReviewList(int productNo) {
 		List<Review> list = mapper.selectReviewList(productNo);
-		log.info("결과{}",productNo);
-		log.info("상품{}", list);
+
+		//리뷰 넘버로 이미지 조회해서 가져오기
+		for(Review review : list) {
+			int reviewNo = review.getReviewNo();
+			List<String> imgList = mapper.selectReviewImgs(reviewNo);
+			log.info("이미지리스트 : {}",imgList);
+			review.setImgList(imgList);
+			}
 		
 		return list;
 	}
@@ -436,9 +442,9 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	//수정할 리뷰 불러오기
 	@Override
-	public Review reloadReview(String reviewId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Review reloadReview(int reviewNo) {
+		log.info("수정리뷰{}",mapper.reloadReview(reviewNo));
+		return mapper.reloadReview(reviewNo);
 	}
 
 	//리뷰 수정하기
@@ -489,11 +495,19 @@ public class eCommerceServiceImpl implements eCommerceService{
 		return mapper.reviewCount(productNo);
 	}
 
+
+	//리뷰 평점 리턴
+	@Override
+	public double avgScore(int productNo) {
+		log.info("평점 결과:{}",mapper.avgScore(productNo));
+		return mapper.avgScore(productNo);
+
 	// 사용자 결제 취소 업데이트
 	@Override
 	public int cancelUpdate(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return mapper.cancelUpdate(map);
+
 	}
 
 	

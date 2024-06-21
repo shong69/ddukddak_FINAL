@@ -470,8 +470,8 @@ public class eCommerceController {
 	//[비동기]수정할 리뷰 불러오기
 	@GetMapping("reloadReview")
 	@ResponseBody
-	public Review reloadReview(@RequestParam("reviewId") String reviewId) {
-		Review review = service.reloadReview(reviewId);
+	public Review reloadReview(@RequestParam("reviewNo") int reviewNo) {
+		Review review = service.reloadReview(reviewNo);
 		return review;
 	}
 
@@ -505,6 +505,13 @@ public class eCommerceController {
 		return service.reviewCount(productNo);
 	}
 
+	
+	//[비동기]리뷰 평점
+	@GetMapping("getAvgReviewScore")
+	@ResponseBody
+	public double avgScore(@RequestParam("productNo") int productNo) {
+		return service.avgScore(productNo);
+	}
 	// 내 qna 보기
 	@GetMapping("myQna")
 	@ResponseBody
