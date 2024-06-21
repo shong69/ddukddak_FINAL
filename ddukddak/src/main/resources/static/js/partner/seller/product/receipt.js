@@ -9,21 +9,19 @@ const orderQuantity = document.querySelectorAll(".orderQuantity");
 
 const orderOK = document.querySelector("#orderOK");
 const orderNO = document.querySelector("#orderNO");
-
+let currentType = '';
 
 const orderOKHandler = () => {
-    alert("처리되었습니다");
-    // console.log("확인 버튼");
+    alert(currentType === 'receipt' ? "주문이 접수되었습니다" : "주문이 거절되었습니다");
     modal.style.display = 'none';
 };
 
-
 const orderNOHandler = () => {
     if (confirm("취소하시겠습니까?")) {
-        // console.log("취소 버튼");
         modal.style.display = 'none';
     }
 };
+
 
 
 function openModal(type) {
@@ -89,45 +87,40 @@ function openModal(type) {
     h3.innerText = `선택한 ${totalOrderQuantity}개의 상품 주문을 ${type === 'receipt' ? '접수' : '거절'}하시겠습니까?`;
     divContainer.appendChild(h3);
 
-    if(orderOK != null) {
 
-        orderOK.forEach(element => {
-            element.addEventListener("click", e => {
-                const obj = [];
-    
-            selectedEls.forEach(elements => {
-                obj.push(elements.value);
-            })
-    
-            const map = {
-                "obj" : obj,
-                "status" : e.target.innerText
-            }
-    
-            fetch("/partner/seller/product/changeStatus", {
-                method: "POST",
-                headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(map)
-            })
-            .then(resp => resp.text())
-            .then(result => {
-    
-                if(result > 0) {
-                    alert("변경되었습니다");
-                    window.location.reload();
-                }else {
-                    alert("변경 실패");
-                }
-            });
-            })
+    const obj = [];
+    selectedEls.forEach(elements => {
+        const productNoValue = elements.closest('tr').querySelector('.productNo').value;
+        const orderNoValue = elements.closest('tr').querySelector('.orderNo').value;
+        obj.push({
+            productNo: productNoValue,
+            orderNo: orderNoValue,
+            loginPartnerMember : loginPartnerMember
+        });
+        console.log(obj);
+    });
+
+    const map = {
+        "obj": obj,
+        "status": type === 'receipt' ? '접수' : '거절'
+    };
+
+    orderOK.addEventListener("click", () => {
+        fetch("/partner/seller/product/acceptReceipt", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(map)
         })
-    
-    
-    }
-
-    // console.log("핸들러 동작");
-
-    orderOK.addEventListener("click", orderOKHandler);
+        .then(resp => resp.text())
+        .then(result => {
+            if (result > 0) {
+                alert(type === 'receipt' ? "접수되었습니다" : "거절되었습니다");
+                window.location.reload();
+            } else {
+                alert(type === 'receipt' ? "접수 실패" : "거절 실패");
+            }
+        });
+    });
     orderNO.addEventListener("click", orderNOHandler);
 }
 
@@ -180,42 +173,6 @@ orderRejection.addEventListener("click", () => {
         productListBox.append(div);
         productListBox.append(rejectionDiv);
     })
-
-    if(orderOK != null) {
-
-        orderOK.forEach(element => {
-            element.addEventListener("click", e => {
-                const obj = [];
-    
-            selectedEls.forEach(elements => {
-                obj.push(elements.value);
-            })
-    
-            const map = {
-                "obj" : obj,
-                "status" : e.target.innerText
-            }
-    
-            fetch("/partner/seller/product/changeStatus", {
-                method: "POST",
-                headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(map)
-            })
-            .then(resp => resp.text())
-            .then(result => {
-    
-                if(result > 0) {
-                    alert("변경되었습니다");
-                    window.location.reload();
-                }else {
-                    alert("변경 실패");
-                }
-            });
-            })
-        })
-    
-    
-    }
 });
 
 closeButton.addEventListener("click", () => {

@@ -625,7 +625,7 @@ public class ProductServiceImpl implements ProductService{
 				
 				List<Product> receiptList = mapper.selectReceiptList(partnerNo, rowBounds);
 				
-//				log.info("receiptList : " + receiptList.toString());
+				log.info("receiptList selectReceiptList : " + receiptList.toString());
 				
 				Map<String, Object> map = new HashMap<>();
 				map.put("pagination", pagination);
@@ -835,5 +835,34 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int insertQnaAnswer(Map<String, Object> obj) {
 		return mapper.insertQnaAnswer(obj);
+	}
+
+	@Override
+	public int acceptReceipt(Map<String, Object> map) {
+	    List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("obj");
+
+	    log.info("list : " + list.toString());
+	    
+	    int result = 0;
+
+	    
+	    
+	    for (Map<String, Object> entry : list) {
+	        int productNo = Integer.parseInt(entry.get("productNo").toString());
+	        int orderNo = Integer.parseInt(entry.get("orderNo").toString());
+	        int loginPartnerMember = Integer.parseInt(entry.get("loginPartnerMember").toString());
+
+	        log.info("Product No: " + productNo);
+	        log.info("Order No: " + orderNo);
+	        log.info("Login Partner Member: " + loginPartnerMember);
+
+	        Map<String, Object> newMap = new HashMap<>();
+	        newMap.put("productNo", productNo);
+	        newMap.put("orderNo", orderNo);
+	        newMap.put("partnerNo", loginPartnerMember);
+
+	        result += mapper.acceptReceipt(newMap);
+	    }
+	    return result;
 	}
 }

@@ -304,6 +304,9 @@ public interface ProductMapper {
 	List<Product> selectReceiptListSort(Map<String, Object> newMap, RowBounds rowBounds);
 
 
+	int acceptReceipt(Map<String, Object> newMap);
+
+
 
 
 

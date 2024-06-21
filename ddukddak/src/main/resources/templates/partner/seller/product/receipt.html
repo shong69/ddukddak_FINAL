@@ -68,9 +68,11 @@
                         <td th:text="*{productNo}">F202405210001</td>
                         <td th:text="*{productName}">오아르 벤 원목 부클레 패브릭 의자</td>
                         <td th:text="*{productPrice}">122,200</td>
+
                         <input type="hidden" class="productUpdateDate" th:value="*{productUpdateDate}">
                         <input type="hidden" class="orderQuantity" th:value="*{orderQuantity}">
                         <input type="hidden" class="productNo" th:value="*{productNo}">
+                        <input type="hidden" class="orderNo" th:value="*{orderNo}">
                     </tr>
                 </th:block>
             </table>
@@ -149,7 +151,7 @@
                     <th>상품번호</th>
                     <th>상품명</th>
                     <th>상품 옵션</th>
-                    <th>판매 상태</th>
+                    <th>판매가</th>
                     <th>판매 등록일</th>
                 </tr>
             </table>
@@ -164,6 +166,9 @@
             
     </div>
 
+    <script th:inline="javascript">
+        const loginPartnerMember = /*[[${session.loginPartnerMember.partnerNo}]]*/ "loginPartnerMember";
+    </script>
     <script src="/js/partner/seller/product/receipt.js"></script>
     
 </body>

@@ -418,7 +418,7 @@
 		    JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		    JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		    JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		    WHERE o.STATUS = 'paid'
+		    WHERE od.ORDER_STATUS = '구매확정'
 		    AND p.PRODUCT_FL = 'N'
 		    AND uf.UPLOAD_IMG_ORDER = 0
 		    AND p.PARTNER_NO = #{partnerNo}
@@ -475,7 +475,7 @@
 		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		WHERE o.STATUS = 'paid'
+		WHERE od.ORDER_STATUS = '구매확정'
 		AND p.PRODUCT_FL = 'N'
 		AND uf.UPLOAD_IMG_ORDER = 0
 		AND p.PARTNER_NO = #{partnerNo}
@@ -535,7 +535,7 @@
 		    JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		    JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		    JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		    WHERE o.STATUS = 'paid'
+		    WHERE od.ORDER_STATUS = '구매확정'
 		    AND p.PRODUCT_FL = 'N'
 		    AND uf.UPLOAD_IMG_ORDER = 0
 		    AND p.PARTNER_NO = #{partnerNo}
@@ -593,7 +593,7 @@
 		    JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		    JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		    JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		    WHERE o.STATUS = 'paid'
+		    WHERE od.ORDER_STATUS = '구매확정'
 		    AND p.PRODUCT_FL = 'N'
 		    AND uf.UPLOAD_IMG_ORDER = 0
 		    AND p.PARTNER_NO = #{partnerNo}
@@ -653,7 +653,7 @@
 		    JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		    JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		    JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		    WHERE o.STATUS = 'paid'
+		    WHERE od.ORDER_STATUS = '구매확정'
 		    AND p.PRODUCT_FL = 'N'
 		    AND uf.UPLOAD_IMG_ORDER = 0
 		    AND p.PARTNER_NO = #{partnerNo}
@@ -710,7 +710,7 @@
 		    JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		    JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		    JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		    WHERE o.STATUS = 'paid'
+		    WHERE od.ORDER_STATUS = '구매확정'
 		    AND p.PRODUCT_FL = 'N'
 		    AND uf.UPLOAD_IMG_ORDER = 0
 		    AND p.PARTNER_NO = #{partnerNo}
@@ -781,7 +781,7 @@
 		    JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		    JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		    JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		    WHERE o.STATUS = 'paid'
+		    WHERE od.ORDER_STATUS = '구매확정'
 		    AND p.PRODUCT_FL = 'N'
 		    AND uf.UPLOAD_IMG_ORDER = 0
 		    AND p.PARTNER_NO = #{partnerNo}
@@ -839,7 +839,7 @@
 		    JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		    JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		    JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		    WHERE o.STATUS = 'paid'
+		    WHERE od.ORDER_STATUS = '구매확정'
 		    AND p.PRODUCT_FL = 'N'
 		    AND uf.UPLOAD_IMG_ORDER = 0
 		    AND p.PARTNER_NO = #{partnerNo}
@@ -909,7 +909,7 @@
 		    JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		    JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		    JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		    WHERE o.STATUS = 'paid'
+		    WHERE od.ORDER_STATUS = '구매확정'
 		    AND p.PRODUCT_FL = 'N'
 		    AND uf.UPLOAD_IMG_ORDER = 0
 		    AND p.PARTNER_NO = #{partnerNo}
@@ -967,7 +967,7 @@
 		    JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		    JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		    JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		    WHERE o.STATUS = 'paid'
+		    WHERE od.ORDER_STATUS = '구매확정'
 		    AND p.PRODUCT_FL = 'N'
 		    AND uf.UPLOAD_IMG_ORDER = 0
 		    AND p.PARTNER_NO = #{partnerNo}
@@ -1005,7 +1005,25 @@
 		        </choose>
 	</select>
 	
-	
+	<!-- 주문 접수 수락 바꾸기 -->
+	<update id="acceptReceipt">
+		UPDATE ORDER_DETAIL od
+	    SET od.ORDER_STATUS = '출고대기'
+	    WHERE od.ORDER_NO = #{orderNo}
+	      AND EXISTS (
+	        SELECT 1
+	        FROM PRODUCT p
+	        JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+	        JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+	        JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+	        JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+	        JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+	        WHERE od.PRODUCT_NO = p.PRODUCT_NO
+	          AND p.PRODUCT_FL = 'N'
+	          AND uf.UPLOAD_IMG_ORDER = 0
+	          AND p.PARTNER_NO = #{partnerNo}
+	      )
+	</update>
 	
 	
 	<!-- 전체 문의내역 리스트 개수 -->
