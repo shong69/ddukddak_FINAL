@@ -306,6 +306,32 @@ public interface ProductMapper {
 
 	int acceptReceipt(Map<String, Object> newMap);
 
+	int rejectReceipt(Map<String, Object> newMap);
+
+	int selectShipmentListCount(int partnerNo);
+
+	List<Product> selectShipmentList(int partnerNo, RowBounds rowBounds);
+
+	int selectShipmentCountStatus(Map<String, Object> newMap);
+
+	List<Product> selectShipmentListStatus(Map<String, Object> newMap, RowBounds rowBounds);
+
+	int selectShipmentListCountMainSort(Map<String, Object> newMap);
+
+	List<Product> selectShipmentListMainSort(Map<String, Object> newMap, RowBounds rowBounds);
+
+	int selectShipmentListCountMainSortStatus(Map<String, Object> newMap);
+
+	List<Product> selectShipmentListMainSortStatus(Map<String, Object> newMap, RowBounds rowBounds);
+
+	int selectShipmentListCountSort(Map<String, Object> newMap);
+
+	List<Product> selectShipmentListSort(Map<String, Object> newMap, RowBounds rowBounds);
+
+	int acceptShipment(Map<String, Object> newMap);
+
+	int rejectShipment(Map<String, Object> newMap);
+
 
 
 
