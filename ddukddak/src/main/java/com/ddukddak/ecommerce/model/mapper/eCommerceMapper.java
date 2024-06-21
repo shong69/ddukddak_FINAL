@@ -230,6 +230,18 @@ public interface eCommerceMapper {
 	 */
 	int paidUpdate(String merchantUid);
 
+	/** 사전 검증 에러 메시지 업데이트
+	 * @return
+	 */
+	int reasonUpdate(Map<String, String> map);
+
+	/** 사용자 취소 업데이트
+	 * @param map
+	 * @return
+	 */
+	int cancelUpdate(Map<String, String> map);
+
+
 
 
 

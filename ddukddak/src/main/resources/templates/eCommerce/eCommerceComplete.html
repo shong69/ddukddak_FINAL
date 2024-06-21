@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +13,12 @@
 </head>
 <body>
     <th:block th:replace="~{common/fragments/header}"></th:block>
+    
+    <!-- 
+    model.addAttribute("merchantUid", merchantUid);
+    model.addAttribute("deliveryMemo", deliveryMemo);
+    model.addAttribute("paymentInfo", payment); 
+    -->
 
     <h2 style="text-align: center; margin: 50px;">주문/결제</h2>
     
@@ -27,19 +33,34 @@
                 <table>
                     <tr>
                         <td><h3>주문번호</h3></td>
-                        <td><h3 style="font-weight: bold;">12345678</h3></td>
+                        <td><h3 style="font-weight: bold;" th:text="${merchantUid}">12345678</h3></td>
                     </tr>
                     <tr>
                         <td><h3>배송지 정보</h3></td>
-                        <td><h3 style="color: rgb(165, 165, 165);">서울특별시<br>서대문구 남대문로 120<br>그레이츠쳥계 3층 E강의장</h3></td>
+                        <td>
+                            <h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.buyerPostcode}">우편번호</h3>
+                            <h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.buyerAddr}">주소</h3>
+                            <h3 id="buyerTel" style="color: rgb(165, 165, 165);" th:text="${paymentInfo.buyerTel}">연락처</h3>
+                            <h3 style="color: rgb(125, 123, 123); font-size: 14px;" th:text="|[배송요청사항 : ${deliveryMemo}]|"></h3>
+                        </td>
                     </tr>
                     <tr>
                         <td><h3>주문금액</h3></td>
-                        <td><h3 style="font-weight: bold;">16,900원</h3></td>
+                        <td><h3 id="amount" style="font-weight: bold;" th:text="${paymentInfo.amount}">16,900원</h3></td>
                     </tr>
                     <tr>
                         <td><h3>결제상세</h3></td>
-                        <td><h3 style="color: rgb(165, 165, 165);">신용카드<br>********-*******<br>결제일시 : 2024-05-23</h3></td>
+                        <td><h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.pgProvider}">신용카드</h3>
+                            <th:block th:if="${paymentInfo.payMethod == card}">
+                                <h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.cardName}">카드이름</h3>
+                            </th:block>
+
+                            <th:block th:unless="${paymentInfo.payMethod == card}">
+                                <h3 style="color: rgb(165, 165, 165);">카카오포인트</h3>
+                            </th:block>
+                            
+                            <h3 style="color: rgb(165, 165, 165);" th:text="|결제일시 : ${formattedPaidAt}|">결제일시 : 2024-05-23</h3></td>
+                            
                     </tr>
                 </table>
             </div>
@@ -172,7 +193,31 @@
         </div>
 
     </div>
-
+    
     <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const amountElement = document.getElementById('amount');
+            const amountText = amountElement.textContent;
+
+            const formatAmount = (amount) => {
+                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            };
+
+            const formattedAmount = formatAmount(amountText);
+            amountElement.textContent = formattedAmount + '원';
+
+            const telElement = document.getElementById('buyerTel');
+            const telText = telElement.textContent;
+
+            const formatTel = (tel) => {
+                return tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+            };
+
+            const formattedTel = formatTel(telText);
+            telElement.textContent = formattedTel;
+        });
+    </script>
 </body>
 </html>

@@ -1,8 +1,11 @@
 package com.ddukddak.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+
+import com.ddukddak.payment.model.dto.TokenDTO;
 
 @PropertySource("classpath:/config.properties")
 @Configuration
@@ -23,6 +26,9 @@ public class PaymentConfig {
 		return paySecret;
 	}
 	
-	
+    @Bean
+    public TokenDTO tokenDTO() {
+        return new TokenDTO();
+    }
 
 }
