@@ -425,9 +425,6 @@ public class eCommerceServiceImpl implements eCommerceService{
 			return 1;
 		}
 
-//		return 0;
-
-
 	}
 	
 	//리뷰 삭제하기
@@ -490,6 +487,13 @@ public class eCommerceServiceImpl implements eCommerceService{
 	@Override
 	public int reviewCount(int productNo) {
 		return mapper.reviewCount(productNo);
+	}
+
+	// 사용자 결제 취소 업데이트
+	@Override
+	public int cancelUpdate(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return mapper.cancelUpdate(map);
 	}
 
 	

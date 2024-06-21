@@ -41,4 +41,7 @@ public class PaymentDTO {
     private String applyNum;             // 승인 번호
     private String customData;           // 고객 추가 정보
     private String escrow;              // 에스크로 결제 여부
+    
+    
+
 }

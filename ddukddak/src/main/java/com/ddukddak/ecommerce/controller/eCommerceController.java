@@ -2,17 +2,11 @@ package com.ddukddak.ecommerce.controller;
 
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
-
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +34,10 @@ import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.myPage.model.dto.CartItem;
 import com.ddukddak.myPage.model.dto.Order;
 import com.ddukddak.myPage.model.service.CartAndWishListService;
+import com.ddukddak.payment.model.dto.PaymentDTO;
+import com.ddukddak.payment.model.service.PaymentService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -57,6 +55,7 @@ public class eCommerceController {
 	// 쇼핑몰 메인페이지
 	private final eCommerceService service;
 	private final CartAndWishListService cartService;
+	private final PaymentService paymentService;
 	
 	@GetMapping("main")
 	public String eCommerceMain(@RequestParam(value="cp", required=false, defaultValue="1") int cp,
@@ -252,7 +251,7 @@ public class eCommerceController {
 	 * @param params
 	 * @return
 	 */
-	@RequestMapping("payment")
+	@PostMapping("payment")
 	public String eCommercePayment(Model model, HttpSession session,
 								@RequestParam Map<String, String> params
 								   ) {
@@ -311,19 +310,6 @@ public class eCommerceController {
 	    
 	    int totalPrice =  Integer.parseInt(params.get("totalPrice"));
 	    
-	    
-
-	    
-	    
-//	    Orders order = new Orders();
-//	    
-//	    order.setMemberNo(loginMember.getMemberNo());
-//	    order.setMerchantUid(merchantUid);
-//	    order.setTotalPrice(totalPrice);
-//	    order.setStatus("ready");;
-	    
-	    
-	    
            
 	    
 	    // 모델에 필터링된 항목 추가)
@@ -341,7 +327,56 @@ public class eCommerceController {
 	
 	
 	@RequestMapping("complete")
-	public String eCommerceComplete() {
+	public String eCommerceComplete(@RequestParam Map<String, Object> params, @RequestParam("cartIds") String cartIdsJson, Model model) {
+		log.info("params : " + params);
+		
+		
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Integer> cartIds = null;
+
+        try {
+            // JSON 문자열을 List<Integer>로 변환
+            cartIds = objectMapper.readValue(cartIdsJson, new TypeReference<List<Integer>>() {});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int result = 0;
+        // cartIds가 제대로 추출되었는지 로그로 확인
+        if (cartIds != null) {
+            for (Integer cartId : cartIds) {
+                result += cartService.delProduct(cartId);
+                
+            }
+        }
+        
+        log.info("결제 완료 후 장바구니 삭제 개수 : " + result + "개");
+
+        
+        // 따로 실어서 가져감)
+		String merchantUid = (String) params.get("merchantUid");
+		String deliveryMemo = (String) params.get("deliveryMemo");
+		
+		
+		// 결제 수단
+		// 결제 번호
+		// 결제 일시
+		// 그외 구매자 정보
+		// PAYMENT에서 꺼내오기 merchantUid
+		PaymentDTO payment = paymentService.selectPaid(merchantUid);
+		
+        // LocalDateTime을 yyyy-MM-dd HH:mm 형식의 문자열로 변환
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedPaidAt = payment.getPaidAt().format(formatter);
+		
+		//)
+		model.addAttribute("merchantUid", merchantUid);
+		model.addAttribute("deliveryMemo", deliveryMemo);
+		model.addAttribute("paymentInfo", payment);
+		model.addAttribute("formattedPaidAt", formattedPaidAt);
+		
+
+		
 		return "eCommerce/eCommerceComplete";
 	}
 	
@@ -375,21 +410,20 @@ public class eCommerceController {
             						@RequestParam("orderItemNo") int orderItemNo,
             						@RequestParam("productNo") int ProductNo,
 									@RequestParam("reviewImgs") List<MultipartFile> reviewImgs,
+									@RequestParam("optionValue") String optionValue,
 									@SessionAttribute("loginMember") Member member ) throws IllegalStateException, IOException {
 
 
 		int memberNo = member.getMemberNo();
-		log.info("아아{}",reviewContent);
-		log.info("아아{}",reviewRating);
-		log.info("아아{}",orderItemNo);
-		log.info("아아{}",ProductNo);
-		log.info("아아{}",reviewImgs);
+
+		log.info("옵션이름{}",optionValue);
 		Map<String, Object> map = new HashMap<>();
 		map.put("reviewContent", reviewContent);
 		map.put("reviewRating", reviewRating);
 		map.put("orderItemNo", orderItemNo);
 		map.put("ProductNo", ProductNo);
 		map.put("memberNo", memberNo);
+		map.put("optionValue", optionValue);
 
 
 		int reviewNo = service.postReview(map);

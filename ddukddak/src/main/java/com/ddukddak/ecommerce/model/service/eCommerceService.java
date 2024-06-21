@@ -195,12 +195,20 @@ public interface eCommerceService {
 	 * @return
 	 */
 	int readyUpdate(String merchantUid);
+	
+	
 
 	/** 사후 완료 건 paid 업데이트
 	 * @param merchantUid
 	 * @return
 	 */
 	int paidUpdate(String merchantUid);
+
+	/** 사용자 결제 취소 업데이트
+	 * @param map
+	 * @return
+	 */
+	int cancelUpdate(Map<String, String> map);
 
 
 

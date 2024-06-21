@@ -52,4 +52,12 @@
 		
 	</insert>
 	
+	
+	<select id="selectPaid">
+		SELECT MEMBER_NO, ORDER_NO, MERCHANT_UID, AMOUNT, PAY_METHOD, 
+		BUYER_NAME, BUYER_TEL, BUYER_EMAIL, BUYER_POSTCODE ,BUYER_ADDR, PG_PROVIDER , CARD_NAME ,APPLY_NUM, PAID_AT
+		FROM "PAYMENT"
+		WHERE MERCHANT_UID = #{merchantUid}
+	</select>
+	
 </mapper>

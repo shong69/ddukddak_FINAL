@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ddukddak.common.config.PaymentConfig;
 import com.ddukddak.ecommerce.model.dto.Orders;
+import com.ddukddak.ecommerce.model.mapper.eCommerceMapper;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
-import com.ddukddak.payment.model.dto.PaymentDTO;
 import com.ddukddak.payment.model.dto.TokenDTO;
 import com.ddukddak.payment.model.service.PaymentService;
 
@@ -24,12 +25,14 @@ import lombok.extern.slf4j.Slf4j;
 public class PaymentController {
 	
 	private final PaymentService paymentService;
+	private final PaymentConfig paymentConfig;
+	private final eCommerceMapper eCommerceMapper;
 	private final eCommerceService eCommerceService;
 	
-	private TokenDTO tokenDTO;
+    private final TokenDTO tokenDTO;
 	
 	@PostMapping("createOrder")
-	public int createOrder(@RequestBody Map<String, Object> params) {
+	public int createOrder(@RequestBody Map<String, Object> params) throws Exception {
 		
 		log.info("주문 생성 merchantUid, myAmount, memberNo 값 확인 : " + params);
 		//주문 생성 merchantUid, myAmount, memberNo 값 확인 : {merchant_uid=ORD-202406200943550003, amount=10, memberNo=5}
@@ -54,29 +57,39 @@ public class PaymentController {
     	order.setStatus("prepare");
     	
     	log.info("order 객체 결과 : " + order);
-    	
+        
     	int result = eCommerceService.createOrder(order);
+        
+        String impKey = paymentConfig.getPayApikey();
+        String impSecret = paymentConfig.getPaySecret();
+        
+        String accessToken = paymentService.getAccessToken(impKey, impSecret, merchantUid);
         	
-    	
+        if(accessToken == null) {
+        	
+            Map<String, String> map = new HashMap<>();
+            map.put("merchantUid", merchantUid);
+            map.put("message", "토큰 획득 실패");
+            
+            eCommerceMapper.reasonUpdate(map);
+        	
+        	return 0;
+        }
+        
+        tokenDTO.setAccessToken(accessToken);
+        
 		return result;
 	}
 	
 	
 	@PostMapping("prepare")
 	public Map<String, String> preparePayment(@RequestBody Map<String, Object> params) throws Exception {
-		log.info("사전 검증 merchantUid, myAmount, memberNo 값 확인 : " + params);
-		// 사전 검증 merchantUid, myAmount, memberNo 값 확인 : {merchant_uid=ORD-202406200943550003, amount=10, memberNo=5}		
 		
+
 		// 1. 토큰 얻기
-		String accessToken = paymentService.getAccessToken();
-		
-		tokenDTO = new TokenDTO();
-		
-		tokenDTO.setAccessToken(accessToken);
-		
-		
-		log.info("AccessToken : " + accessToken);
-		// 9f1e87f6e789121f789ab6e443650040f70090a1  잘 오는거 확인
+		String accessToken = tokenDTO.getAccessToken();
+			
+		log.info("사전 검증 컨트롤러 토큰값 : " + accessToken);
 
 		// 2. 사전 검증
 		Map<String, Object> prepareResponse = paymentService.preparePayment(params, accessToken);		
@@ -88,8 +101,13 @@ public class PaymentController {
 	    
 	    // 사전 검증 등록 실패 시 
         if (prepareResponse == null) {
-            response.put("status", "fail");
-            response.put("message", "Prepare payment failed.");
+            
+        	response.put("merchantUid", (String) params.get("merchant_uid"));
+        	response.put("status", "fail");
+            response.put("message", "사전 검증 실패");
+            
+            eCommerceMapper.reasonUpdate(response);
+            
             return response;
         }
 	    
@@ -171,6 +189,29 @@ public class PaymentController {
 		return response;
 		
 		
+	}
+	
+	
+	/** 사용자 취소
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping("cancel")
+	public int cancelPayment(@RequestBody Map<String, Object> params) throws Exception {
+	    String merchantUid = (String) params.get("merchant_uid");
+	    String message = (String) params.get("message");
+	    
+	    Map<String, String> map = new HashMap<>();
+	    
+	    map.put("merchantUid", merchantUid);
+	    map.put("message", message);
+	    
+	    // 결제 취소 상태 업데이트 로직
+	    int result = eCommerceService.cancelUpdate(map);
+	    
+
+	    return result;
 	}
 
 }

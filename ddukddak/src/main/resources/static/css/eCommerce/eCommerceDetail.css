@@ -694,7 +694,11 @@
     font-size: 20px;
 }
 
-
+.updateBtn,
+.delBtn,
+.reviewWrite{
+    background-color: red;
+}
 /* qna */
 #qnaBox {
     display: none;

@@ -412,7 +412,7 @@
     		SELECT SEQ_REVIEW_NO.NEXTVAL FROM DUAL
     	</selectKey>
         INSERT INTO "REVIEW"
-        VALUES (#{reviewNo}, #{reviewContent},SYSDATE, NULL, #{reviewRating}, #{ProductNo}, #{memberNo}, #{orderItemNo}, DEFAULT)
+        VALUES (#{reviewNo}, #{reviewContent},SYSDATE, NULL, #{reviewRating}, #{ProductNo}, #{memberNo}, #{orderItemNo}, DEFAULT, #{optionValue})
     </insert>
 	<!-- 리뷰 번호 -->
 	<select id="getReviewNo">
@@ -422,12 +422,11 @@
 	</select>
 	<!--리뷰 리스트 불러오기-->
 	<select id="selectReviewList">
-
-		SELECT REVIEW_NO, REVIEW_CONTENT, REVIEW_CREATE_DATE, REVIEW_UPDATE_DATE,
-		REVIEW_RATING, PRODUCT_NO, R.MEMBER_NO, ORDER_ITEM_NO, REVIEW_DEL_FL,MEMBER_ID
+		SELECT R.REVIEW_NO, REVIEW_CONTENT, REVIEW_CREATE_DATE, REVIEW_UPDATE_DATE,
+		REVIEW_RATING, R.PRODUCT_NO, R.MEMBER_NO, R.ORDER_ITEM_NO, REVIEW_DEL_FL,MEMBER_ID,OPTION_VALUE 
 		FROM REVIEW R
-		LEFT JOIN "MEMBER" M ON(M.MEMBER_NO=R.MEMBER_NO)
-		WHERE PRODUCT_NO=#{productNo}
+		LEFT JOIN MEMBER M ON M.MEMBER_NO = R.MEMBER_NO
+		WHERE R.PRODUCT_NO=#{productNo}
 	</select>
 	
 	<!--해당 상품에서 내가 작성할 수 있는 주문상품 리스트 찾기 -->
@@ -462,11 +461,12 @@
 	</insert>
 
 	
-	
+	<!-- 주문 생성 -->
 	<select id="prepareOrder">
-		SELECT * 
+		SELECT *
 		FROM "ORDERS" 
 		WHERE MERCHANT_UID = #{merchantUid}
+		AND ROWNUM = 1
 	</select>
 	
 	<!-- 모든 qna 보기 -->
@@ -506,5 +506,21 @@
 		WHERE MERCHANT_UID = #{merchantUid}
 		AND STATUS = 'ready'
 		
+	</update>
+	
+	<!-- 사전 검증 실패 업데이트 -->
+	<update id="reasonUpdate">
+		UPDATE "ORDERS" SET
+		STATUS = 'fail',
+		FAIL_REASON = #{message}
+		WHERE MERCHANT_UID = #{merchantUid}
+	</update>
+	
+	<!-- 사용자 취소 업데이트 -->
+	<update id="cancelUpdate">
+		UPDATE "ORDERS" SET
+		STATUS = 'fail',
+		FAIL_REASON = #{message}
+		WHERE MERCHANT_UID = #{merchantUid}
 	</update>
 </mapper>

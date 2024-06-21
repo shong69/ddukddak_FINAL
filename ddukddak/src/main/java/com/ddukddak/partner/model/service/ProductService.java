@@ -178,6 +178,8 @@ public interface ProductService {
 	 */
 	int insertQnaAnswer(Map<String, Object> obj);
 
+	int acceptReceipt(Map<String, Object> map);
+
 
 
 
