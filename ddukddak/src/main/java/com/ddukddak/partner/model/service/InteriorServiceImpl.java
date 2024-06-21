@@ -74,7 +74,7 @@ public class InteriorServiceImpl implements InteriorService {
 		List<Project> projectList = mapper.selectProjectList(portfolioNo);
 		
 		
-		log.info("projectList : " + projectList);
+//		log.info("projectList : " + projectList);
 		
 		for (Project project : projectList) {
 			
@@ -177,9 +177,25 @@ public class InteriorServiceImpl implements InteriorService {
 	@Override
 	public Project selectProject(int projectNo) {
 		
-		log.info("selectProject : " + mapper.selectProject(projectNo));
+//		log.info("selectProject : " + mapper.selectProject(projectNo));
 		
 		return mapper.selectProject(projectNo);
+	}
+
+
+	// 프로젝트 삭제
+	@Override
+	public int deleteProject(int projectNo) {
+		
+		return mapper.deleteProject(projectNo);
+	}
+
+
+	// 프로젝트 수정
+	@Override
+	public int updateProject(Map<String, Object> map) {
+		
+		return 0;
 	}
 
 }

@@ -230,6 +230,7 @@ public interface eCommerceMapper {
 	 */
 	int paidUpdate(String merchantUid);
 
+
 	/**리뷰 이미지들 가져오기
 	 * @param reviewNo
 	 * @return
@@ -247,6 +248,18 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	Review reloadReview(int reviewNo);
+
+	/** 사전 검증 에러 메시지 업데이트
+	 * @return
+	 */
+	int reasonUpdate(Map<String, String> map);
+
+	/** 사용자 취소 업데이트
+	 * @param map
+	 * @return
+	 */
+	int cancelUpdate(Map<String, String> map);
+
 
 
 

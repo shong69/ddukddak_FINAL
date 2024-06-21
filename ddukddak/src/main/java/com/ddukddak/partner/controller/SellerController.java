@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,20 +21,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.Product;
 import com.ddukddak.ecommerce.model.dto.ProductImg;
 import com.ddukddak.ecommerce.model.dto.ProductOption;
-import com.ddukddak.ecommerce.model.dto.QNA;
 import com.ddukddak.ecommerce.model.service.eCommerceService;
-import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.partner.model.dto.Partner;
-import com.ddukddak.partner.model.service.PartnerService;
 import com.ddukddak.partner.model.service.ProductService;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -572,22 +565,24 @@ public class SellerController {
 		return "partner/seller/product/receipt";
 	}
 	
-	@PostMapping("/product/acceptreceipt")
+	@PostMapping("/product/acceptReceipt")
 	@ResponseBody
-	public int ProductAcceptReceipt(@RequestParam("productName") String productName,
-			@RequestParam("productNo") String productNo,
-			@RequestParam(name="bigCategory") String bigCategory,
-			@RequestParam(name="smallCategory") String smallCategory,
-			@RequestParam ("productPrice") int productPrice,
-			@RequestParam (name = "optionName", required = false) List<String> optionName,
-			@RequestParam (name = "optionContent", required = false) List<String> optionContent,
-			@RequestParam (name = "optionCount", required = false) List<String> optionCount,
-			@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) throws IllegalStateException, IOException {
+	public int ProductAcceptReceipt(@RequestBody Map<String, Object> map) {
 				
+		int result = service.acceptReceipt(map);
 		
-		return productPrice;
+		return result;
 		
 	}
+	
+	@PostMapping("/product/declineReceipt")
+	@ResponseBody
+	public int ProductDeclineReceipt() {
+		
+		
+		return 0;
+	}
+	
 	
 	@GetMapping("product/shipment")
 	public String ProductRelease() {

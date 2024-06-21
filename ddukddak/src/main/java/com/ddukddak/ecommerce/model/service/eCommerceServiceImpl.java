@@ -431,7 +431,6 @@ public class eCommerceServiceImpl implements eCommerceService{
 			return 1;
 		}
 
-
 	}
 	
 	//리뷰 삭제하기
@@ -496,11 +495,19 @@ public class eCommerceServiceImpl implements eCommerceService{
 		return mapper.reviewCount(productNo);
 	}
 
+
 	//리뷰 평점 리턴
 	@Override
 	public double avgScore(int productNo) {
 		log.info("평점 결과:{}",mapper.avgScore(productNo));
 		return mapper.avgScore(productNo);
+
+	// 사용자 결제 취소 업데이트
+	@Override
+	public int cancelUpdate(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return mapper.cancelUpdate(map);
+
 	}
 
 	

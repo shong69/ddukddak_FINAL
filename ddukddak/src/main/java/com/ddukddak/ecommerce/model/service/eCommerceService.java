@@ -195,6 +195,8 @@ public interface eCommerceService {
 	 * @return
 	 */
 	int readyUpdate(String merchantUid);
+	
+	
 
 	/** 사후 완료 건 paid 업데이트
 	 * @param merchantUid
@@ -202,11 +204,19 @@ public interface eCommerceService {
 	 */
 	int paidUpdate(String merchantUid);
 
+
 	/** 리뷰 평점
 	 * @param productNo
 	 * @return
 	 */
 	double avgScore(int productNo);
+
+	/** 사용자 결제 취소 업데이트
+	 * @param map
+	 * @return
+	 */
+	int cancelUpdate(Map<String, String> map);
+
 
 
 
