@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -342,11 +344,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 	
 
 
-	// qna 입력
-	@Override
-	public int insertQna(Map<String, Object> obj) {
-		return mapper.insertQna(obj);
-}
+
 	//리뷰 목록 조회하기
 	@Override
 	public List<Review> selectReviewList(int productNo) {
@@ -369,8 +367,6 @@ public class eCommerceServiceImpl implements eCommerceService{
 		Map<String, Object> map = new HashMap<>();
 		map.put("productNo", productNo);
 		map.put("memberNo", memberNo);
-		log.info("상품넘{}",productNo);
-		log.info("리뷰 조회{}",mapper.checkReviewAuth(map));
 		return mapper.checkReviewAuth(map);
 	}
 
@@ -391,18 +387,15 @@ public class eCommerceServiceImpl implements eCommerceService{
 	@Override
 	public int insertImgs(int reviewNo, List<MultipartFile> reviewImgs) throws IllegalStateException, IOException {
 		List<ReviewImg> uploadList = new ArrayList<>();
-		Map<String, Object> map = new HashMap<>();
+		int result = 0;
 		
-
 		if(!reviewImgs.isEmpty()) {
-			
-			int result = 0;
 			for(int i = 0; i<reviewImgs.size();i++) {
 				
 				String originalName =reviewImgs.get(i).getOriginalFilename();
 				if(!originalName.equals("")) {
 					log.info("이름{}",originalName);
-					
+					Map<String, Object> map = new HashMap<>();
 					String rename = Utility.fileRename(originalName);
 					map.put("reviewNo", reviewNo);
 					map.put("uploadImgOrder", i);
@@ -435,25 +428,126 @@ public class eCommerceServiceImpl implements eCommerceService{
 	
 	//리뷰 삭제하기
 	@Override
-	public int delReview(int reviewId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int delReview(int reviewNo) {
+		
+		return mapper.delReview(reviewNo);
 	}
 
 	//수정할 리뷰 불러오기
 	@Override
 	public Review reloadReview(int reviewNo) {
-		log.info("수정리뷰{}",mapper.reloadReview(reviewNo));
-		return mapper.reloadReview(reviewNo);
+
+		//리뷰 사진 불러오기
+		List<String> imgList = mapper.selectReviewImgs(reviewNo);
+		Review review = mapper.reloadReview(reviewNo);
+		if(imgList != null) {
+			review.setImgList(imgList);
+		}
+		log.info("수정리뷰{}",review);
+		return review;
 	}
 
-	//리뷰 수정하기
+	private static final Logger log = LoggerFactory.getLogger(eCommerceServiceImpl.class);
+
+    // 리뷰 수정하기
+    @Override
+    public int updateReview(Review review, List<MultipartFile> reviewImgs) throws IllegalStateException, IOException {
+        log.info("리뷰 수정 시작 - 리뷰 번호: {}", review.getReviewNo());
+        
+        // 리뷰 + 사진 등록
+        int result = mapper.updateReview(review);
+        int result1 = 0;
+        
+        log.info("리뷰 업데이트 결과: {}", result);
+
+        if (result > 0) {
+            List<ReviewImg> imgList = new ArrayList<>();
+            if (reviewImgs != null && !reviewImgs.isEmpty()) {
+                log.info("업로드할 이미지 수: {}", reviewImgs.size());
+
+                // 기존 이미지 삭제
+                int deleteResult = mapper.delReviewImg(review.getReviewNo());
+                log.info("기존 이미지 삭제 결과: {}", deleteResult);
+                
+                Map<String, Object> map = new HashMap<>();
+
+                for (int i = 0; i < reviewImgs.size(); i++) {
+                    String originalName = reviewImgs.get(i).getOriginalFilename();
+                    log.info("원본 파일 이름: {}", originalName);
+
+                    if (originalName != null && !originalName.isEmpty()) {
+                        String rename = Utility.fileRename(originalName);
+                        log.info("변경된 파일 이름: {}", rename);
+                        
+                        map.put("reviewNo", review.getReviewNo());
+                        map.put("uploadImgOgName", originalName);
+                        map.put("uploadImgRename", rename);
+                        map.put("uploadImgPath", webPath);
+                        map.put("uploadImgOrder", i);
+                        
+                        try {
+                            int insertResult = mapper.insertImgs(map);
+                            result1 += insertResult;
+                            log.info("이미지 삽입 결과: {}", insertResult);
+
+                            ReviewImg img = ReviewImg.builder()
+                                    .reviewNo(review.getReviewNo())
+                                    .uploadImgOgName(originalName)
+                                    .uploadImgRename(rename)
+                                    .uploadImgOrder(i)
+                                    .uploadImgPath(webPath)
+                                    .uploadFile(reviewImgs.get(i))
+                                    .build();
+                            imgList.add(img);
+                        } catch (Exception e) {
+                            log.error("이미지 삽입 중 오류 발생 - 리뷰 번호: {}, 이미지: {}", review.getReviewNo(), originalName, e);
+                        }
+                    }
+                }
+
+                for (ReviewImg img : imgList) {
+                    File file = new File(folderPath + img.getUploadImgRename());
+                    try {
+                        img.getUploadFile().transferTo(file);
+                        log.info("파일 저장 성공 - 경로: {}", file.getAbsolutePath());
+                    } catch (IOException e) {
+                        log.error("파일 저장 실패 - 경로: {}", file.getAbsolutePath(), e);
+                    }
+                }
+            } else {
+                log.info("업로드할 이미지가 없음");
+                return result;
+            }
+        }
+        log.info("리뷰 수정 종료 - 최종 결과: {}", result1);
+        return result1;
+    }
+
+	//리뷰 개수 리턴
 	@Override
-	public int updateReview(Review review, List<MultipartFile> reviewImgs) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int reviewCount(int productNo) {
+		return mapper.reviewCount(productNo);
+	}
+
+
+	//리뷰 평점 리턴
+	@Override
+	public double avgScore(int productNo) {
+		log.info("평점 결과:{}",mapper.avgScore(productNo));
+		Double avgScore = mapper.avgScore(productNo);
+
+		return avgScore!= null?avgScore:0.0;
 	}
 	
+	
+	
+	
+	
+	// qna 입력
+	@Override
+	public int insertQna(Map<String, Object> obj) {
+		return mapper.insertQna(obj);
+}
 	// 모든 qna 보기
 	@Override
 	public List<QNA> selectQna() {
@@ -477,35 +571,22 @@ public class eCommerceServiceImpl implements eCommerceService{
 	// 사전 완료 건 업데이트
 	@Override
 	public int readyUpdate(String merchantUid) {
-		// TODO Auto-generated method stub
+
 		return mapper.readyUpdate(merchantUid);
 	}
 
 	// 사후 검증 완료건 최종처리
 	@Override
 	public int paidUpdate(String merchantUid) {
-		// TODO Auto-generated method stub
+
 		return mapper.paidUpdate(merchantUid);
 	}
 
 
-	//리뷰 개수 리턴
-	@Override
-	public int reviewCount(int productNo) {
-		return mapper.reviewCount(productNo);
-	}
-
-
-	//리뷰 평점 리턴
-	@Override
-	public double avgScore(int productNo) {
-		log.info("평점 결과:{}",mapper.avgScore(productNo));
-		return mapper.avgScore(productNo);
-
 	// 사용자 결제 취소 업데이트
 	@Override
 	public int cancelUpdate(Map<String, String> map) {
-		// TODO Auto-generated method stub
+
 		return mapper.cancelUpdate(map);
 
 	}

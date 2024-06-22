@@ -211,6 +211,46 @@
                                         </div>
                                     </td>
                                 </tr>
+
+                                <tr class="address-area">
+                                    <th>배송지</th>
+                                    <td colspan="3">
+                                        <div class="before-modify">
+                                            <div id="phoneDiv" th:text="${session.loginMember.memberAddr}">경남 사천시 서포면 선창부두길 11-2 선전리</div>
+                                            <div><button class="myPageSubBtn" type="button">주소 변경</button></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style='display: none;' class="change-address-area">
+                                    <th>배송지</th>
+                                    <td>
+                                        <div>
+                                            <div class="address-input-area">
+                                                <input type="text" name="memberAddr" placeholder="우편번호" maxlength="6" id="postcode" readonly>                       
+                                            
+                                                <button type="button" onclick="sample6_execDaumPostcode()" id="searchAddress">검색</button>
+                                            </div>
+                    
+                                            <div class="address-input-area">
+                                                <input type="text" name="memberAddr" placeholder="도로명/지번 주소" id="address" readonly>
+                                            </div>
+                                            
+                                            <div class="address-input-area">
+                                                <input type="text" name="memberAddr" placeholder="상세 주소" id="detailAddress" readonly>
+    
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button class="addrConfirmBtn confirm myPageConfirmCancelBtn" type="button" disabled>확인</button>
+                                            <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+
+
+
                             </tbody>
                         </table>
               
@@ -239,10 +279,7 @@
                                     <span th:case="K">카카오 로그인</span>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>배송지</th>
-                                <td th:text="${session.loginMember.memberAddr}">경남 사천시 서포면 선창부두길 11-2 선전리</td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </section>

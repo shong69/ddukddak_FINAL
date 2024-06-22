@@ -118,11 +118,7 @@ public interface eCommerceService {
 	 */
 	int createOrder(Orders order);
 
-	/** qna 입력
-	 * @param obj
-	 * @return
-	 */
-	int insertQna(Map<String, Object> obj);
+
 
 	/**리뷰 목록 조회하기
 	 * @param productNo
@@ -151,7 +147,7 @@ public interface eCommerceService {
 	 * @param reviewId
 	 * @return
 	 */
-	int delReview(int reviewId);
+	int delReview(int reviewNo);
 
 	/**수정할 리뷰 불러오기
 	 * @param reviewId
@@ -163,8 +159,10 @@ public interface eCommerceService {
 	 * @param review
 	 * @param reviewImgs
 	 * @return
+	 * @throws IOException 
+	 * @throws IllegalStateException 
 	 */
-	int updateReview(Review review, List<MultipartFile> reviewImgs);
+	int updateReview(Review review, List<MultipartFile> reviewImgs) throws IllegalStateException, IOException;
 
 	/**리뷰 개수 리턴
 	 * @param productNo
@@ -172,6 +170,12 @@ public interface eCommerceService {
 	 */
 	int reviewCount(int productNo);
 
+	
+	/** qna 입력
+	 * @param obj
+	 * @return
+	 */
+	int insertQna(Map<String, Object> obj);
 
 	/** 모든 qna 보기
 	 * @return

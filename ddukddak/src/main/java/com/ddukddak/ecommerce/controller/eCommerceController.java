@@ -605,24 +605,11 @@ public class eCommerceController {
 
 	}
 
-
-	// qna 입력
-	@PostMapping("insertQna")
-	@ResponseBody
-	public int insertQna(@RequestBody Map<String, Object> obj,
-						@SessionAttribute("loginMember") Member loginMember) {
-		
-		log.info("obj : " + obj);
-
-		obj.put("memberNo", loginMember.getMemberNo());
-		
-		return service.insertQna(obj);
-	}
 	//[비동기]리뷰 삭제
 	@DeleteMapping("delReview")
 	@ResponseBody
-	public int delReview(@RequestParam("reviewId") int reviewId) {
-		return service.delReview(reviewId);
+	public int delReview(@RequestParam("reviewNo") int reviewNo) {
+		return service.delReview(reviewNo);
 	}
 	
 	//[비동기]수정할 리뷰 불러오기
@@ -637,7 +624,7 @@ public class eCommerceController {
 	@PostMapping("updateReview")
 	@ResponseBody
 	public int updateReview(@ModelAttribute Review review,
-											@RequestParam("reviewImgs") List<MultipartFile> reviewImgs){
+											@RequestParam("reviewImgs") List<MultipartFile> reviewImgs) throws IllegalStateException, IOException{
 		
 		int result = service.updateReview(review,reviewImgs);
 		if(result > 0) {
@@ -647,14 +634,7 @@ public class eCommerceController {
 
 	}
 	
-	// 모든 qna 보기
-	@GetMapping("selectQna")
-	@ResponseBody
-	public List<QNA> selectQna() {
-		
-		return service.selectQna();
-	}
-	
+
 
 	//[비동기] 리뷰 개수
 	@GetMapping("reviewCount")
@@ -670,6 +650,8 @@ public class eCommerceController {
 	public double avgScore(@RequestParam("productNo") int productNo) {
 		return service.avgScore(productNo);
 	}
+	
+	
 	// 내 qna 보기
 	@GetMapping("myQna")
 	@ResponseBody
@@ -677,10 +659,30 @@ public class eCommerceController {
 		
 		return service.myQna(loginMember.getMemberNo());
 	}
+	// 모든 qna 보기
+	@GetMapping("selectQna")
+	@ResponseBody
+	public List<QNA> selectQna() {
+		
+		return service.selectQna();
+	}
 	
 
 	
-	
+
+
+	// qna 입력
+	@PostMapping("insertQna")
+	@ResponseBody
+	public int insertQna(@RequestBody Map<String, Object> obj,
+						@SessionAttribute("loginMember") Member loginMember) {
+		
+		log.info("obj : " + obj);
+
+		obj.put("memberNo", loginMember.getMemberNo());
+		
+		return service.insertQna(obj);
+	}
 	
 	
 

@@ -338,6 +338,5 @@ public class MyPageController {
 		return result;
 	}
 	
-	
-	//주문으로 이동
+
 }
