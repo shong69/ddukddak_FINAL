@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddukddak.ecommerce.model.dto.Category;
 import com.ddukddak.ecommerce.model.dto.DetailProduct;
@@ -291,18 +292,26 @@ public class eCommerceController {
 
 	    // 선택된 카트 아이디 추출
 	    String selectedCartIdsParam = params.get("cartIds");
+	    
 	    List<Integer> selectedCartIds = new ArrayList<>();
+	    
 	    if (selectedCartIdsParam != null) {
+	    	
 	        String[] selectedCartIdsArray = selectedCartIdsParam.replaceAll("[\\[\\]\"]", "").split(",");
+	        
 	        for (String id : selectedCartIdsArray) {
 	            selectedCartIds.add(Integer.parseInt(id.trim()));
+	            
 	        }
 	    }
 
 	    // 선택된 카트 항목 필터링
 	    List<CartItem> selectedItems = new ArrayList<>();
+	    
 	    for (CartItem item : cartItem) {
+	    	
 	        if (selectedCartIds.contains(item.getCartId())) {
+	        	
 	            selectedItems.add(item);
 	        }
 	    }
@@ -330,7 +339,8 @@ public class eCommerceController {
 	
 	
 	@PostMapping("complete")
-	public String eCommerceComplete(@RequestParam Map<String, Object> params, @RequestParam("cartIds") String cartIdsJson, Model model) {
+	public String eCommerceComplete(@RequestParam Map<String, Object> params, @RequestParam("cartIds") String cartIdsJson, 
+			Model model, RedirectAttributes ra, HttpSession session) {
 		log.info("params : " + params);
 		
 		// 고유 주문 번호 추출
@@ -342,7 +352,7 @@ public class eCommerceController {
 	 	// productCounts=["1","1"], 
 	 	// productPrices=["339000","339000"]}
 	    // JSON 문자열을 배열로 변환
-	    List<String> cartIds = Arrays.asList(cartIdsJson.replaceAll("[\\[\\]\"]", "").split(","));
+	    List<String> cartIds = Arrays.asList(cartIdsJson.replaceAll("[\\[\\]\"]", "").split(","));    
 	    List<String> productNos = Arrays.asList(params.get("productNos").toString().replaceAll("[\\[\\]\"]", "").split(","));
 	    List<String> productCounts = Arrays.asList(params.get("productCounts").toString().replaceAll("[\\[\\]\"]", "").split(","));
 	    List<String> productPrices = Arrays.asList(params.get("productPrices").toString().replaceAll("[\\[\\]\"]", "").split(","));
@@ -381,7 +391,7 @@ public class eCommerceController {
 	    
         // -----------------------------------------------------
         
-	    // ORDER_DETAIL 테이블에 업데이트된 회수
+	    // ORDER_DETAIL 테이블에 인서트된 횟수
 	    int result = 0;
 	    
 	    // 고유 주문 번호로 주문 번호, 회원 번호 구해오기
@@ -400,62 +410,69 @@ public class eCommerceController {
 		int memberNo = order.getMemberNo();
 		
 		
+	    // ORDERDETAIL_OPTION 테이블에 인서트된 횟수
+	    int result2 = 0;
+		
 		// 1. 주문 상세 테이블 삽입
 	    for (int i = 0; i < cartIds.size(); i++) {
-	        String cartId = cartIds.get(i).trim();
-	        String productNo = productNos.get(i).trim();
-	        String productCount = productCounts.get(i).trim();
-	        String productPrice = productPrices.get(i).trim();
-	        List<Integer> optionNoList = optionNos.get(i);
+	    	
+	    	// 여기서 cartId는 반복문 도는 회수 용도로 사용
+	        int cartId = Integer.parseInt(cartIds.get(i).trim());
+	        int productNo = Integer.parseInt(productNos.get(i).trim());
+	        int productCount = Integer.parseInt(productCounts.get(i).trim());
+	        int productPrice = Integer.parseInt(productPrices.get(i).trim());
 	        
 	        log.info("cartId: " + cartId + ", productNo: " + productNo + ", productCount: " + productCount + ", productPrice: " + productPrice);
 	        // cartId: 91, productNo: 21, productCount: 2, productPrice: 299000
 	        // cartId: 92, productNo: 13, productCount: 3, productPrice: 77900
 	        
-	        // 주문 상세 테이블에 반복 삽입
-	        result += service.insertOrderDetail(orderNo, memberNo, cartId, productNo,productCount, productPrice);
+	        // 1) 주문 상세 테이블에 반복 삽입
+	        int insertResult = service.insertOrderDetail(orderNo, memberNo, cartId, productNo,productCount, productPrice);
 	        
-	        
-	    }
-	    
-	    
-	    // **************** 여기서 부터(폼제출 체크하고 작업 필요)*************
-	    // 2. 옵션 테이블에 반복 삽입
-	    for (int i = 0; i < optionNos.size(); i++) {
-	        List<Integer> optionNoList = optionNos.get(i);
-	        
-	        for (Integer optionNo : optionNoList) {
-	            log.info("포문 안에 옵션 넘버 : " + optionNo);
-	            //result += service.insertOrderOptionDetail(orderNo, productNo, optionNo);
-	            // 포문 안에 옵션 넘버 : 215
-	            // 포문 안에 옵션 넘버 : 216
-	            // 포문 안에 옵션 넘버 : 344
-	            // 포문 안에 옵션 넘버 : 359
-	            // 포문 안에 옵션 넘버 : 355
+	        if(insertResult  > 0) {
+	        	
+	        	// 인서트 회수 증가
+	        	result += insertResult;
+	        	
+		        // 우선 주문 상세의 ORDER_ITEM_NO를 구해오자
+			    int orderItemNo = service.getOrderItemNo(orderNo, productNo, cartId);
+	        	
+			    log.info("주문 상세 테이블의 orderItemNo = {}", orderItemNo);
+			    
+			    
+			    // 2) 주문 상세 옵션 테이블에 반복 삽입
+			    for(int j = 0; j < optionNos.size(); j++) {
+			    	
+			    	List<Integer> optionNoList = optionNos.get(j);
+			    	
+			        for (Integer optionNo : optionNoList) {
+			            log.info("포문 안에 옵션 넘버 : " + optionNo);
+			            
+			            // 주문상세옵션 테이블 삽입
+			            result2 += service.insertOrderDetailOption(orderItemNo, optionNo);
+			            
+			        }
+			    	
+			    }			    
+			    
 	        }
+	        
 	    }
+
 	    
 	    if(result > 0) {
 	    	
 	    	log.info("주문 상세 테이블 정상 삽입 완료 : {}개", result);
 	    	
 	    }
-		
-		/*
-		 	{memberNo=5, 
-		 	memberTel=01032920409, 
-		 	memberAddr=04540 서울 중구 남대문로 120 3층, 
-		 	deliveryMemo=배송메모를 선택해 주세요, 
-		 	merchantUid=, 
-		 	cartId=71, 
-		 	productNo=15, 
-		 	productCount=1, 
-		 	productPrice=339000, 
-		 	option=1, 
-		 
-		 */
+
+	    if(result2 > 0) {
+	    	
+	    	log.info("주문 상세 옵션 테이블 정상 삽입 완료 : {}개", result2);
+	    	
+	    }
 			   
-		// 2. 장바구니 비워주기
+		// 3. 장바구니 비워주기
         ObjectMapper objectMapper = new ObjectMapper();
         List<Integer> cartIds2 = null;
 
@@ -465,29 +482,30 @@ public class eCommerceController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        int result2 = 0;
+        
+        // 결제 후 장바구니 
+        int result3 = 0;
         
         // cartIds가 제대로 추출되었는지 로그로 확인
         if (cartIds2 != null) {
-            for (Integer cartId2 : cartIds2) {
+            for (Integer deleteCartId : cartIds2) {
             	
-                result2 += cartService.delProduct(cartId2);
+                result3 += cartService.delProduct(deleteCartId);
                 
             }
         }
         
-        log.info("결제 완료 후 장바구니 삭제 개수 : " + result2 + "개");
+        log.info("결제 완료 후 장바구니 삭제 개수 : " + result3 + "개");
 
        
-        // 3. 실어줄 값 추출
+        // 4. 실어줄 값 추출
 
 		// 결제 수단, 결제 번호, 결제 일시, 그 외 구매자 정보...
 		// PAYMENT에서 꺼내오기 merchantUid
 		PaymentDTO payment = paymentService.selectPaid(merchantUid);
 		
 		
-		// 4. 포인트 삽입하고 적립 포인트 띄워주기(추후 결제 리팩토링 시 포인트 차감 구현 시도)
+		// 5. 포인트 삽입하고 적립 포인트 띄워주기(추후 결제 리팩토링 시 포인트 차감 구현 시도)
         
 
 		// 총 구매가의 1% 적립 포인트
@@ -527,16 +545,64 @@ public class eCommerceController {
         String formattedPaidAt = payment.getPaidAt().format(formatter);
 		
         
+        // 리다이렉트 시 필요한 데이터 설정
+        // 새로고침 시 데이터 사라지고 화이트라벨 뜸
+        // 그래서 사용자 예외 발생을 방지하기 위해 세션에 담고
+        // 리다이렉트 후 다른 메서드에서 뷰 반환
         
-		model.addAttribute("merchantUid", merchantUid);
-		model.addAttribute("deliveryMemo", deliveryMemo);
-		model.addAttribute("paymentInfo", payment);
-		model.addAttribute("formattedPaidAt", formattedPaidAt);
-		model.addAttribute("point", point);
-		model.addAttribute("myPoint", member.getMemberPoint());
+        session.setAttribute("merchantUid", merchantUid);
+        session.setAttribute("deliveryMemo", deliveryMemo);
+        session.setAttribute("paymentInfo", payment);
+        session.setAttribute("point", point);
+        session.setAttribute("myPoint", member.getMemberPoint());
+        session.setAttribute("formattedPaidAt", formattedPaidAt);
+      
+
 		
-		return "eCommerce/eCommerceComplete";
+		return "redirect:/eCommerce/completeResult";
 	}
+	
+	// 렌더링
+	@GetMapping("completeResult")
+	public String eCommerceCompleteResult(HttpSession session, Model model) {
+	    Object merchantUid = session.getAttribute("merchantUid");
+	    Object deliveryMemo = session.getAttribute("deliveryMemo");
+	    Object paymentInfo = session.getAttribute("paymentInfo");
+	    Object formattedPaidAt = session.getAttribute("formattedPaidAt");
+	    Object point = session.getAttribute("point");
+	    Object myPoint = session.getAttribute("myPoint");
+
+	    // 세션에 저장된 값이 null인지 확인하기 위해 로그 추가
+	    log.info("Session values: merchantUid={}, deliveryMemo={}, paymentInfo={}, formattedPaidAt={}, point={}, myPoint={}",
+	            merchantUid, deliveryMemo, paymentInfo, formattedPaidAt, point, myPoint);
+
+	    // 모델에 값 추가
+	    model.addAttribute("merchantUid", merchantUid);
+	    model.addAttribute("deliveryMemo", deliveryMemo);
+	    model.addAttribute("paymentInfo", paymentInfo);
+	    model.addAttribute("formattedPaidAt", formattedPaidAt);
+	    model.addAttribute("point", point);
+	    model.addAttribute("myPoint", myPoint);
+
+
+	    return "eCommerce/eCommerceComplete";
+	}
+	
+	// 페이지 벗어날 경우 실어놨던 세션 제거
+    @PostMapping("clearCompleteResultSession")
+    @ResponseBody
+    public void clearCompleteResultSession(HttpSession session) {
+        log.info("clearCompleteResultSession 호출됨");
+
+        session.removeAttribute("merchantUid");
+        session.removeAttribute("deliveryMemo");
+        session.removeAttribute("paymentInfo");
+        session.removeAttribute("formattedPaidAt");
+        session.removeAttribute("point");
+        session.removeAttribute("myPoint");
+
+        log.info("완료 페이지 벗어난 후 세션 제거 확인");
+    }
 	
 
 	//[비동기]리뷰 조회하기

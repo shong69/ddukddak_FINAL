@@ -1,18 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
     const email = document.getElementById('email').value;
     const nickname = document.getElementById('nickname').value;
-    const profileImage = document.getElementById('profileImage').value;
     const pw = document.getElementById('pw').value;
 
     // 사용자 정보를 이용해 Ajax 요청 보내기
     const userInfo = {
         email: email,
         nickname: nickname,
-        profileImage: profileImage,
         pw: pw
     };
 
-    fetch('/member/kakaoData', {
+    fetch('/member/googleData', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -35,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
             window.close(); // 팝업 창 닫기
             
         } else if(data == 3) {
-            alert(`${nickname}님의 카카오 아이디로 가입을 환영합니다 :)\n원활한 사이트 이용을 위해 기본 정보를 추가 및 수정해 주세요.`)
+            alert(`${nickname}님의 구글 아이디로 가입을 환영합니다 :)\n원활한 사이트 이용을 위해 기본 정보를 추가 및 수정해 주세요.`)
             window.opener.location.href = '/myPage/memberInfo'; // 부모 창을 마이페이지로 리다이렉트
             window.close(); // 팝업 창 닫기
             
@@ -43,9 +41,10 @@ document.addEventListener("DOMContentLoaded", function() {
             // 로그인, 중복, 회원가입 실패
             alert("로그인 처리 중 오류가 발생했습니다.");
             window.close(); // 팝업 창 닫기
+
         } else {
             // 알 수 없는 응답
-            alert("알 수 없는 응답 오류가 발생했습니다.");
+            alert(`${data} : 알 수 없는 응답 오류가 발생했습니다.`);
             window.close(); // 팝업 창 닫기
         }
 

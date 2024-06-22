@@ -501,6 +501,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 	public double avgScore(int productNo) {
 		log.info("평점 결과:{}",mapper.avgScore(productNo));
 		return mapper.avgScore(productNo);
+	}
 
 	// 사용자 결제 취소 업데이트
 	@Override
@@ -520,8 +521,8 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	// ORDER_DETAIL 삽입
 	@Override
-	public int insertOrderDetail(int orderNo, int memberNo, String cartId, String productNo, String productCount,
-			String productPrice) {
+	public int insertOrderDetail(int orderNo, int memberNo, int cartId, int productNo, int productCount,
+			int productPrice) {
 		
 		Map<String, Object> map = new HashMap<>();
 		
@@ -530,7 +531,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		map.put("orderQuantity", productCount);
 		map.put("orderPrice", productPrice);
 		map.put("orderStatus", "구매확정");
-		
+		map.put("cartId", cartId);
 		
 		return mapper.insertOrderDetail(map);
 	}
@@ -553,6 +554,34 @@ public class eCommerceServiceImpl implements eCommerceService{
 		
 		
 		return mapper.savePoint(map);
+	}
+
+	
+	// 주문상세옵션 테이블을 삽입할 오더 디테일의 아이템 번호 구하기
+	@Override
+	public int getOrderItemNo(int orderNo, int productNo, int cartId) {
+		
+		Map<String, Integer> map = new HashMap<>();
+		
+		map.put("orderNo", orderNo);
+		map.put("productNo", productNo);
+		map.put("cartId", cartId);
+		
+		return mapper.getOrderItemNo(map);
+	}
+
+	
+	// 주문상세옵션 테이블 삽입
+	@Override
+	public int insertOrderDetailOption(int orderItemNo, Integer optionNo) {
+		
+		Map<String, Integer> map = new HashMap<>();
+		
+		map.put("orderItemNo", orderItemNo);
+		map.put("optionNo", optionNo);
+		
+		return mapper.insertOrderDetailOption(map);
+
 	}
 
 	
