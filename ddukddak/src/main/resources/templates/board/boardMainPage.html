@@ -38,6 +38,17 @@
                         </span>
                         
                     </section>
+
+                    
+                    <!-- 광고 -->
+                    <div class="boardAdContainer">
+                        <th:block th:each="boardImg : ${boardImg}" th:object="${boardImg}">
+                            <img th:src="@{|${boardImg.uploadImgPath}${boardImg.uploadImgRename}|}" class="boardAd mySlides">
+                            <a class="prev" onclick="plusSlides(-1)"><i class="fa-solid fa-chevron-left"></i></a>
+                            <a class="next" onclick="plusSlides(1)"><i class="fa-solid fa-chevron-right"></i></a>
+                        </th:block>
+                        <h4 class="adViewMore"></h4>
+                    </div>
                     
                     <!-- 집들이 -->
                     <div class="myHouseMainContainer">
@@ -52,16 +63,6 @@
                             <a th:if="${boardType.boardCode == 1}" th:href="@{/myHouse/main(boardCode=${boardType.boardCode})}" class="myHouseViewMore">+더 보기</a>
                         </th:block>
 
-                    </div>
-
-                    <!-- 광고 -->
-                    <div class="boardAdContainer">
-                        <th:block th:each="boardImg : ${boardImg}" th:object="${boardImg}">
-                            <img th:src="@{|${boardImg.uploadImgPath}${boardImg.uploadImgRename}|}" class="boardAd mySlides">
-                            <a class="prev" onclick="plusSlides(-1)"><i class="fa-solid fa-chevron-left"></i></a>
-                            <a class="next" onclick="plusSlides(1)"><i class="fa-solid fa-chevron-right"></i></a>
-                        </th:block>
-                        <h4 class="adViewMore"></h4>
                     </div>
 
                     <!-- 노하우 -->
