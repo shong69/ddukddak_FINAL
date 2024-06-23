@@ -284,6 +284,18 @@ public interface eCommerceMapper {
 	 */
 	int savePoint(Map<String, Integer> map);
 
+	/** 주문상세옵션 테이블을 삽입할 오더 디테일의 아이템 번호 구하기
+	 * @param map
+	 * @return
+	 */
+	int getOrderItemNo(Map<String, Integer> map);
+
+	/** 주문상세옵션 테이블 삽입
+	 * @param map
+	 * @return
+	 */
+	int insertOrderDetailOption(Map<String, Integer> map);
+
 
 
 

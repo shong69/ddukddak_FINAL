@@ -205,7 +205,7 @@ public class MemberServiceImpl implements MemberService {
 		// 암호화 세팅
 		newKakaoMember.setMemberPw(encPw);
 		
-		// 네이버 정보 업데이트하기
+		// 카카오 정보 업데이트하기
 		int result = mapper.kakaoSignup(newKakaoMember);
 		
 		// 반환해줄 멤버 객체 생성
@@ -215,6 +215,45 @@ public class MemberServiceImpl implements MemberService {
 			
 			// 넣었던 newNaverMember의 이메일로 다시 멤버 찾아서 셀렉트해줌
 			signinMember = mapper.findMemberByKakao(newKakaoMember.getMemberEmail());
+			
+		} else {
+			
+			return null;
+		}
+		
+		
+		return signinMember;
+	}
+
+
+	// 구글 중복 찾기
+	@Override
+	public Member findMemberByGoogle(String email) {
+		// TODO Auto-generated method stub
+		return mapper.findMemberByGoogle(email);
+	}
+
+
+	// 구글 회원가입
+	@Override
+	public Member googleSignup(Member newGoogleMember) {
+
+		// 비밀번호를 암호화
+		String encPw = bcrypt.encode(newGoogleMember.getMemberPw()); 
+		
+		// 암호화 세팅
+		newGoogleMember.setMemberPw(encPw);
+		
+		// 구글 정보 업데이트하기
+		int result = mapper.googleSignup(newGoogleMember);
+		
+		// 반환해줄 멤버 객체 생성
+		Member signinMember = new Member();
+		
+		if(result > 0) {
+			
+			// 넣었던 newNaverMember의 이메일로 다시 멤버 찾아서 셀렉트해줌
+			signinMember = mapper.findMemberByGoogle(newGoogleMember.getMemberEmail());
 			
 		} else {
 			

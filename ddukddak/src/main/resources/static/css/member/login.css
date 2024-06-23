@@ -123,21 +123,50 @@ main {
     margin-top: 10px;
 }
 
+.google-login-btn img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
 
 
 /* 네이버, 카카오 버튼 묶음 */
 .socialLoginArea {
     display: flex;
     margin-top: 40px;
+    width: 100%;
+    justify-content: space-evenly;
 }
 
 
 /* 네이버 버튼 이미지 */
 #naver_id_login img {
-    width: 230px;
-    border-radius: 5px;
-    margin-right: 10px;
+    /* width: 230px; */
+    border-radius: 50%;
+    /* margin-right: 10px; */
+    /* cursor: not-allowed; */
+    /* pointer-events: none; */
 }
+
+/* 네이버 사용 불가 처리  */
+.disabled {
+    cursor: not-allowed; /* 금지 커서로 변경 */
+}
+.disabled a,
+.disabled img {
+    pointer-events: none; /* 클릭 등 모든 이벤트를 막음 */
+}
+.tooltip {
+    display: none;
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
 
 .linksArea {
     display: flex;
