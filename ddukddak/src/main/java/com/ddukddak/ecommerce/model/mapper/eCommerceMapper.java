@@ -160,13 +160,6 @@ public interface eCommerceMapper {
 	 */
 	int createOrder(Orders order);
 
-
-	/** qna 입력
-	 * @param obj
-	 * @return
-	 */
-	int insertQna(Map<String, Object> obj);
-
 	/**리뷰 등록하기
 	 * @param map
 	 * @return 
@@ -200,7 +193,55 @@ public interface eCommerceMapper {
 	 */
 	int insertImgs(Map<String, Object> map);
 
+	/**리뷰 이미지들 가져오기
+	 * @param reviewNo
+	 * @return
+	 */
+	List<String> selectReviewImgs(int reviewNo);
 
+	/**리뷰 평점
+	 * @param productNo
+	 * @return 
+	 */
+	Double avgScore(int productNo);
+	
+	/** 리뷰 삭제하기
+	 * @param reviewNo
+	 * @return
+	 */
+	int delReview(int reviewNo);
+
+	/** 수정할 리뷰 불러오기
+	 * @param reviewNo
+	 * @return
+	 */
+	Review reloadReview(int reviewNo);
+
+	/** 리뷰 업데이트
+	 * @param review
+	 * @return
+	 */
+	int updateReview(Review review);
+	
+	/**리뷰 이미지 삭제
+	 * @param reviewNo
+	 * @return 
+	 */
+	int delReviewImg(int reviewNo);
+	
+	/**리뷰 사진 업데이트
+	 * @param map
+	 * @return
+	 */
+	int updateReviewImgs(Map<String, Object> map);
+
+
+	/** qna 입력
+	 * @param obj
+	 * @return
+	 */
+	int insertQna(Map<String, Object> obj);
+	
 	/** 모든 qna 보기
 	 * @return
 	 */
@@ -229,25 +270,6 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	int paidUpdate(String merchantUid);
-
-
-	/**리뷰 이미지들 가져오기
-	 * @param reviewNo
-	 * @return
-	 */
-	List<String> selectReviewImgs(int reviewNo);
-
-	/**리뷰 평점
-	 * @param productNo
-	 * @return 
-	 */
-	double avgScore(int productNo);
-
-	/** 수정할 리뷰 불러오기
-	 * @param reviewNo
-	 * @return
-	 */
-	Review reloadReview(int reviewNo);
 
 	/** 사전 검증 에러 메시지 업데이트
 	 * @return
@@ -295,6 +317,11 @@ public interface eCommerceMapper {
 	 * @return
 	 */
 	int insertOrderDetailOption(Map<String, Integer> map);
+
+
+
+
+
 
 
 
