@@ -176,7 +176,7 @@ td {
 
 
 
-/* 삭제 버튼 */
+/* 선택 처리 버튼 */
 .multiPassBtn {
     padding: 6px 12px;
     cursor: pointer;
@@ -223,7 +223,7 @@ tbody input[type = checkbox] {
 .confirmBtn {
     padding: 10px 20px;
     cursor: pointer;
-    background-color: #388E3C ;
+    background-color: var(--gray1);
     border: none;
     border-radius: 3px;
     color: var(--white);
@@ -243,33 +243,6 @@ tbody input[type = checkbox] {
     box-shadow: none;
     transform: translateY(0);
 }
-
-/* 거절 버튼 */
-.refuseBtn {
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: #D32F2F;
-    border: none;
-    border-radius: 3px;
-    color: var(--white);
-    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.refuseBtn:hover {
-    box-shadow: rgba(0, 0, 0, 0.25) 4px 4px 2px;
-    transition: all 450ms cubic-bezier(.23, 1, 0.32, 1);
-    border-color: transparent;
-    transform: translateY(-2px);
-}
-
-.refuseBtn:active {
-    box-shadow: none;
-    transform: translateY(0);
-}
-
-
 
 
 /*페이징*/
@@ -307,3 +280,16 @@ tbody input[type = checkbox] {
     letter-spacing: 0 !important;
     font-size: 16px;
 } 
+
+
+/* 테이블 행 클릭 가능하게 하기 위한 스타일 */
+.clickable-row a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #0056b3;
+    /* color: #004080; */
+    font-weight: 700;
+}
+.clickable-row:hover {
+    background-color: #f1f1f1;
+}
