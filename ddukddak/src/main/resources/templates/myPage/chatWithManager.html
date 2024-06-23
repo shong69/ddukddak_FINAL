@@ -21,19 +21,26 @@
         <div class="chatting-content"><!--채팅 영역-->
             <ul class="display-chatting">
                 <li class="target-chat">
-                    <img src="/images/profile/main.jpg">
+                    <img src="/images/default/main.jpg">
                     <div>
-                        <b class="target-name">뚝딱봇</b><br>
-                        <p class="chat">안녕하세요! 뚝딱뚝딱 cs봇입니다!<br>원하는 내용을 질문해주세요!</p>
-                        <span class="chatDate">10:05 AM</span>
+                        <div class="target-name">뚝딱봇</div>
+                        <p class="b-chat">안녕하세요! 뚝딱뚝딱 cs봇입니다!</p>
+                        <!--span class="chatDate">10:05 AM</span-->
+                    </div>
+                </li>
+                <li class="my-chat">
+                    <div>
+                        <button type="button"  id="customer" class="c-chat u-chat" onclick="customerChat()">뚝딱뚝딱 이용 고객입니다</button>
+                        <button type="button" id="partner" class="c-chat u-chat" onclick="partnerChat()">뚝딱뚝딱 판매/시공사입니다</button>
+                        <!--span class="chatDate">10:05 AM</span-->
                     </div>
                 </li>
 
             </ul>
         </div>
         <div class="input-area">
-            <textarea id="inputChatting" col="3"></textarea>
-            <button id="send">보내기</button>
+            <textarea id="inputChatting" col="3" disabled></textarea>
+            <button type="button" id="send">보내기</button>
         </div>
     </main>
     <script src="/js/myPage/managerChat.js"></script>
