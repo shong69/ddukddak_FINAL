@@ -1,0 +1,234 @@
+/* 메인 미사용으로 꺼내오기 */
+* {
+    box-sizing: border-box;
+    /* border: 1px solid red; */
+    padding: 0;
+    margin: 0;
+
+    font-family: 'main';
+}
+
+header div:nth-child(2) {
+    flex-basis: 70%;
+}
+
+header div:nth-child(3) {
+    flex-basis: 20%;
+}
+
+body {
+    width: 1440px;
+}
+
+/* 메인 폰트 */
+@font-face {
+    font-family: 'main';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+
+
+/* h태그 */
+
+h1 {
+    font-family: 'main';
+    font-size: 30px;
+    font-weight: 700;
+}
+h2 {
+    font-family: 'main';
+    font-size: 24px;
+    font-weight: 700;
+}
+h3 {
+    font-family: 'main';
+    font-size: 18px;
+    font-weight: 500;
+}
+h4 {
+    font-family: 'main';
+    font-size: 14px;
+    font-weight: 500;
+}
+h5 {
+    font-family: 'main';
+    font-size: 12px;
+    font-weight: 300;
+}
+
+/* color */
+:root {
+    --primary1: #B09B8C;
+    --primary2: #D3BBA4;
+    --primary3: #FFF1D2;
+    --secondary: #3A732A;
+    --gray1: #404040;
+    --gray2: #595959;
+    --gray3: #737373;
+    --gray4: #8C8C8C;
+    --gray5: #BFBFBF;   
+    --white: #FFFAF0; 
+}
+
+/* 전체 div (body 역할) */
+.bodyContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 네비바 */
+.leftheaderContainer {
+    display: flex;
+    /* flex-direction: column; */
+    /* width: 100%; */
+}
+
+/* 네비 + 컨텐츠 포함 div */
+.mainContainer {
+    display: flex;
+}
+
+/* 컨텐츠 section */
+.contentContainer {
+    width: 1240px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-top: 50px;
+    height: auto;
+}
+
+/* 컨텐츠 내부 */
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 90%;
+    
+}
+
+.navBar {
+    width: 200px;
+    height: 100%;
+}
+
+/* 파트너 가입 승인 관리 타이틀*/
+.titleBox {
+    width: 100%;
+    border-bottom: 1px solid var(--gray5);
+    margin-bottom: 60px;
+}
+
+.titleBox h3 {
+    padding: 10px 0;
+    font-weight: 700;
+    font-size: 22px;
+    
+}
+
+/* 선택 승인, 삭제 div */
+.multiPassBtnDiv {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* 테이블 div */
+.listBox {
+    width: 100%;
+    height: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#imgBox {
+    padding: 0;
+}
+
+table img {
+    height: 20px;
+}
+
+th {
+    border-bottom: 1px solid #ddd;
+    padding: 14px 12px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+    background-color: var(--gray1);
+    color: white;
+    letter-spacing: 0.02em;
+}
+
+td {
+    border-bottom: 1px solid #ddd;
+    padding: 12px;
+    text-align: center; 
+    vertical-align: middle;
+    font-size: 13px;
+    max-width: 250px;
+    color: var(--gray1);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.btn-td {
+    padding: 0;
+}
+
+table a {
+    text-decoration: underline;
+}
+
+table a:hover {
+    color: blue;
+}
+
+table a:active {
+    color: purple;
+}
+
+
+
+/*페이징*/
+
+.pagination-area {
+    margin-top: 50px;
+}
+
+.pagination{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+}
+
+.pagination li{
+    width: 20px;
+    margin: 0 5px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.pagination a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.current{
+    font-weight: bold;
+    background-color: var(--gray1);
+    border-radius: 50%;
+    color: white !important;
+    letter-spacing: 0 !important;
+    font-size: 16px;
+} 

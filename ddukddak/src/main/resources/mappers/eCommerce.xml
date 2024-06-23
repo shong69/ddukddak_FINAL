@@ -372,7 +372,7 @@
 		SELECT * FROM "CATEGORY"
 	</select>
 	
-
+	<!-- 세션으로 인한 멤버 오전달 방지를 위한 멤버 찾기  -->
 	<select id="selectMember">
 		SELECT *
 		FROM "MEMBER"
@@ -592,7 +592,8 @@
 			#{orderPrice},
 			#{orderNo},
 			#{productNo},
-			#{orderStatus}
+			#{orderStatus},
+			#{cartId}			
 		)
 	</insert>
 	
@@ -604,11 +605,32 @@
 		AND MEMBER_DEL_FL = 'N'
 	</select>
 	
+	<!-- 적립금 업데이트 -->
 	<update id="savePoint">
 		UPDATE "MEMBER" SET
 		MEMBER_POINT = #{totalPoint}
 				WHERE MEMBER_NO = #{memberNo}
 		AND MEMBER_DEL_FL = 'N'
 	</update>
+	
+	<!-- 주문상세 옵션 테이블을 삽입할 오더 디테일의 아이템 번호 구하기 -->
+	<select id="getOrderItemNo">
+		SELECT ORDER_ITEM_NO
+		FROM "ORDER_DETAIL"
+		WHERE ORDER_NO = #{orderNo}
+		AND PRODUCT_NO = #{productNo}
+		AND CART_ID = #{cartId}
+	</select>
+	
+	<insert id="insertOrderDetailOption">
+		INSERT INTO "ORDERDETAIL_OPTION"
+		VALUES(
+			SEQ_ORDERDETAIL_OPTION_ID.NEXTVAL,
+			#{orderItemNo},
+			#{optionNo}
+		)
+		
+	
+	</insert>
 	
 </mapper>
