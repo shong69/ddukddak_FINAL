@@ -297,6 +297,12 @@
     text-decoration: underline;
 }
 
+.commentUpdateContent {
+    width: 400px;
+    height: 40px;
+    resize: none;
+    margin-right: 10px;
+}
 
 .commentInsertContent {
     width: 840px;

@@ -236,8 +236,8 @@ public interface eCommerceService {
 	 * @param productPrice
 	 * @return
 	 */
-	int insertOrderDetail(int orderNo, int memberNo, String cartId, String productNo, String productCount,
-			String productPrice);
+	int insertOrderDetail(int orderNo, int memberNo, int cartId, int productNo, int productCount,
+			int productPrice);
 
 	/** 현재 포인트 조회
 	 * @param memberNo
@@ -251,6 +251,20 @@ public interface eCommerceService {
 	 * @return
 	 */
 	int savePoint(int memberNo, int totalPoint);
+
+	/** 주문상세옵션 테이블을 삽입할 오더 디테일의 아이템 번호 구하기
+	 * @param orderNo
+	 * @param productNo
+	 * @return
+	 */
+	int getOrderItemNo(int orderNo, int productNo, int cartId);
+	
+	/** 주문상세옵션 테이블 삽입
+	 * @param orderItemNo
+	 * @param optionNo
+	 * @return
+	 */
+	int insertOrderDetailOption(int orderItemNo, Integer optionNo);
 
 	
 

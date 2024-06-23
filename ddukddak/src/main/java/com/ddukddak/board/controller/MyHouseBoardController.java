@@ -67,6 +67,7 @@ public class MyHouseBoardController {
 		model.addAttribute("pagination", map.get("pagination"));
 		model.addAttribute("myHouseList", map.get("myHouseList"));
 		model.addAttribute("query", query);
+		model.addAttribute("sort", sort);
 		
 		return "board/myHouseBoard/myHouseBoard";
 	}

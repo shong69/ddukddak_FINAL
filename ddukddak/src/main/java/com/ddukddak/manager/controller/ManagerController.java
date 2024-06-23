@@ -224,4 +224,19 @@ public class ManagerController {
 	}
 	
 	
+	// 신고 관리 페이지 이동
+	@GetMapping("report")
+	public String report(@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+									Model model) {
+		
+		Map<String, Object> map = service.report(cp);
+
+		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("reportList", map.get("reportList"));
+		
+		return "manager/report";
+	}
+
+	
+	
 }

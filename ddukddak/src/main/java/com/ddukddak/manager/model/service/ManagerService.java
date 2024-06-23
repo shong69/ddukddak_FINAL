@@ -68,5 +68,11 @@ public interface ManagerService {
 	 */
 	int partnerMultiDelete(String action, List<Map<String, String>> partners);
 
+	/** 신고관리
+	 * @param cp
+	 * @return
+	 */
+	Map<String, Object> report(int cp);
+
 	
 }
