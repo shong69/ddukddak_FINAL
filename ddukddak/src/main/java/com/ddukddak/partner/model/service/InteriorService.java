@@ -18,10 +18,19 @@ public interface InteriorService {
 	/** 시공사 리스트 조회
 	 * @return interiorList
 	 */
-	List<Partner> selectInteriorList();
+	Map<String, Object> selectInteriorList(int cp);
 
 //	List<Partner> selectPortfolio(int portfolioNo);
 
+	
+	/** 시공사 검색 리스트 조회
+	 * @param query
+	 * @param cp
+	 * @return interiorList
+	 */
+	Map<String, Object> searchInteriorList(String query, int cp);
+	
+	
 	/** 포트폴리오 조회
 	 * @param portfolioNo
 	 * @return portfolio
@@ -66,6 +75,19 @@ public interface InteriorService {
 	 * @return result
 	 */
 	int updateProject(Project project, List<MultipartFile> images) throws IllegalStateException, IOException;
+
+	
+	/** 메인 프로젝트 변경
+	 * @param portfolio
+	 * @param projectNo
+	 * @return
+	 */
+	int changeMainProject(Portfolio portfolio, int projectNo);
+
+
+	
+	
+	
 
 
 }
