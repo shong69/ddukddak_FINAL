@@ -155,6 +155,25 @@ public class MemberInfoServiceImpl implements MemberInfoService{
 		return mapper.updatePhoneNum(map);
 	}
 
+	// 주소 업데이트
+	@Override
+	public int updateAddress(Map<String, Object> map) {
+	    // 주소 합치기
+	    String postcode = (String) map.get("postcode");
+	    String address = (String) map.get("address");
+	    String detailAddress = (String) map.get("detailAddress");
+	    
+	    String memberAddr = postcode + " " + address + " " + detailAddress;
+	    log.info("주소 형태 확인: {}", memberAddr);
+	    
+	    map.put("memberAddr", memberAddr);
+	    
+	    int result = mapper.updateAddr(map);
+	    
+	    return result;
+	}
+
+
 	
 
 	

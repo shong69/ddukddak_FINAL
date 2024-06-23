@@ -247,6 +247,23 @@ public class MyPageController {
 		return result;
 	}
 	
+	/** 주소 업데이트 하기
+	 * @param map
+	 * @param member
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("memberInfo/addressUpdate")
+	@ResponseBody
+	public int updateAddress(@RequestBody Map<String, Object> map,
+			@SessionAttribute("loginMember") Member member,
+			HttpSession session) {
+		
+		int memberNo = member.getMemberNo();
+		map.put("memberNo", memberNo);
+		int result = infoService.updateAddress(map);
+		return result;
+	}
 	
 	//----------------------------------------------------------------
 	

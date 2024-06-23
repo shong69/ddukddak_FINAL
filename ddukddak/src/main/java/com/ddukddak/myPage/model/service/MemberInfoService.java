@@ -54,4 +54,10 @@ public interface MemberInfoService {
 	 */
 	int updatePhoneNum(Map<String, Object> map);
 
+	/** 주소 업데이트
+	 * @param map
+	 * @return
+	 */
+	int updateAddress(Map<String, Object> map);
+
 }
