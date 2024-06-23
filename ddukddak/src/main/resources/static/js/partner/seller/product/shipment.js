@@ -76,6 +76,7 @@ function handleShipment(selectedEls, action) {
             orderQuantity: tr.querySelector('.orderQuantity').innerText,
             orderDate: tr.querySelector('.orderDate').innerText,
             shipmentCompleteDate: tr.querySelector('.shipmentCompleteDate').innerText,
+            orderItemNo: tr.querySelector('.orderItemNo').innerText,
             partnerNo: loginPartnerMember
         };
     });

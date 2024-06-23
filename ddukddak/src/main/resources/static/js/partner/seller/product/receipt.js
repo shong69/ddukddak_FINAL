@@ -77,12 +77,14 @@ function receiptOpenModal() {
     selectedEls.forEach(elements => {
         const productNoValue = elements.closest('tr').querySelector('.productNo').value;
         const orderNoValue = elements.closest('tr').querySelector('.orderNo').value;
+        const orderItemNoValue = elements.closest('tr').querySelector('.orderItemNo').value;
         const productNameValue = elements.closest('tr').querySelector('.productName').value;
         obj.push({
             productNo: productNoValue,
             orderNo: orderNoValue,
             loginPartnerMember: loginPartnerMember,
-            productName: productNameValue
+            productName: productNameValue,
+            orderItemNo : orderItemNoValue
         });
     });
 
