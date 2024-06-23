@@ -1,6 +1,26 @@
-<div class="portListMainContainer" th:each="chunk, iterStat : ${projectChunks}" th:classappend="${iterStat.index == 0} ? '' : 'hidden'">
+<div th:if="${session.loginPartnerMember != null}" class="portListMainContainer" th:each="chunk, iterStat : ${projectChunks}" th:classappend="${iterStat.index == 0} ? '' : 'hidden'">
     <th:block th:each="project : ${chunk}">
         <div class="portListContainer fade" th:onclick="|location.href='@{/partner/projectDetail/{projectNo}(projectNo=${project.projectNo})}'|">
+            <th:block th:each="img : ${project.imgList}">
+                <img th:if="${img.uploadImgOrder == 0}" 
+                     th:src="|${img.uploadImgPath}${img.uploadImgRename}|" 
+                     alt="Portfolio Image 1">
+            </th:block>
+            <div class="overlay">
+                <h2 th:text="${project.projectName}">서초구 M&C</h2>
+                <h4 th:text="${project.projectContent == null} ? '' : ${project.projectContent}">깔끔한 회색톤의 모던 시공</h4>
+                <h4 th:text="${project.constructionYear}" class="portDate">2024-01-16</h4>
+            </div>
+        </div>
+        
+    </th:block>
+</div>
+
+<!-- -------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+
+<div th:if="${session.loginPartnerMember == null}" class="portListMainContainer" th:each="chunk, iterStat : ${projectChunks}" th:classappend="${iterStat.index == 0} ? '' : 'hidden'">
+    <th:block th:each="project : ${chunk}">
+        <div class="portListContainer fade" th:onclick="|location.href='@{/interior/interiorPortfolioDetail/{projectNo}(projectNo=${project.projectNo}, (portfolioNo=${portfolio.portfolioNo}))}'|">
             <th:block th:each="img : ${project.imgList}">
                 <img th:if="${img.uploadImgOrder == 0}" 
                      th:src="|${img.uploadImgPath}${img.uploadImgRename}|" 

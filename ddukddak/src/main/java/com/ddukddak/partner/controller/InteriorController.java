@@ -55,7 +55,13 @@ public class InteriorController {
 //      log.info("portfolioNo : " + loginPartnerMember.getPortfolioNo());
 //        
         Portfolio portfolio = service.selectPortfolio(loginPartnerMember.getPortfolioNo());
-//        log.info("portfolio : " + portfolio);
+        log.info("portfolio : " + portfolio);
+        
+        if(portfolio == null) {
+        	ra.addFlashAttribute("message", "포트폴리오, 프로젝트 작성이 필요합니다.");
+//        	int result = service.insertPortfolio(loginPartnerMember.getPartnerNo());
+        	return "redirect:/partner/registProject";
+        }
         
         Map<String, Object> map = service.selectProjectList(portfolio.getPortfolioNo());
         
@@ -135,6 +141,7 @@ public class InteriorController {
 	@PostMapping("registProject")
 	public String registProject(Model model,
 								@RequestParam("projectName") String inputProjectName,
+								@RequestParam("projectContent") String inputProjectContent,
 								@RequestParam("housingType") String housingType,
 								@RequestParam("workForm") String workForm,
 								@RequestParam("constructionCost") String constructionCost,
@@ -153,6 +160,7 @@ public class InteriorController {
 //		log.info("constructionYear : " + constructionYear);
 		
 		project.setProjectName(inputProjectName);
+		project.setProjectContent(inputProjectContent);
 		project.setHousingType(housingType);
 		project.setWorkForm(workForm);
 		project.setConstructionCost(constructionCost);

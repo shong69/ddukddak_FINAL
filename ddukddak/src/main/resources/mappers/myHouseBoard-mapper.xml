@@ -300,6 +300,23 @@
 		WHERE BOARD_NO = #{boardNo}
 	</update>
 	
+	<!-- 집들이 게시글 내용 수정 -->
+	<update id="updateMyHouse">
+		UPDATE "COMMUNITY" SET
+		BOARD_TITLE = #{boardTitle},
+		BOARD_CONTENT = #{boardContent}
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+	<!-- 집들이 게시글 이미지 수정 -->
+	<update id="updateImage">
+		UPDATE "UPLOAD_FILE" SET
+		UPLOAD_IMG_OG_NAME = #{uploadImgOgName},
+		UPLOAD_IMG_RENAME = #{uploadImgRename}
+		WHERE PROJECT_NO = #{boardNo}
+		AND UPLOAD_IMG_ORDER = #{uploadImgOrder}
+	</update>
+	
 </mapper>
 
 
