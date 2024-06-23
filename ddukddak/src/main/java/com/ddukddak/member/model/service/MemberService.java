@@ -86,6 +86,18 @@ public interface MemberService {
 	 */
 	Member kakaoSignup(Member newKakaoMember);
 
+	/** 구글 로그인 - 이메일 가입 멤버 찾기
+	 * @param email
+	 * @return
+	 */
+	Member findMemberByGoogle(String email);
+
+	/** 구글 회원가입
+	 * @param newKakaoMember
+	 * @return
+	 */
+	Member googleSignup(Member newGoogleMember);
+
 
 
 }
