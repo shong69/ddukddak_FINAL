@@ -285,11 +285,11 @@ public class TipBoardController {
 	
 	@PostMapping("updateTip")
 	public String updateTip(@RequestParam("boardNo") int boardNo,
-								@RequestParam("boardTitle") String inputBoardTitle,
-								@RequestParam("boardContent") String inputBoardContent,
-								@RequestParam("images") List<MultipartFile> images,
-								@SessionAttribute("loginMember") Member loginMember,
-								RedirectAttributes ra) throws IllegalStateException, IOException {
+							@RequestParam("boardTitle") String inputBoardTitle,
+							@RequestParam("boardContent") String inputBoardContent,
+							@RequestParam("images") List<MultipartFile> images,
+							@SessionAttribute("loginMember") Member loginMember,
+							RedirectAttributes ra) throws IllegalStateException, IOException {
 		
 		Board board = new Board();
 		

@@ -87,15 +87,7 @@ public interface MyHouseBoardService {
 	 * @param images
 	 * @return result
 	 */
-//	int updateMyHouse(Board board, List<MultipartFile> images) throws IllegalStateException, IOException;
-
-
-
-	int updateBoard(Board board);
-
-
-
-	void updateBoardImages(int boardNo, List<BoardImg> newImages);
+	int updateMyHouse(Board board, List<MultipartFile> images) throws IllegalStateException, IOException;
 
 
 }

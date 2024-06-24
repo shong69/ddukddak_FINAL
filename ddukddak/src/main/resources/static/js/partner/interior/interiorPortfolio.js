@@ -267,6 +267,8 @@ changeHomeLinkBtn.addEventListener("click", e => {
 const homeLinkCancelBtn = document.querySelector(".homeLinkCancelBtn");
 homeLinkCancelBtn.addEventListener("click", e => {
 
+  const inputHomeLink = document.querySelector("#inputHomeLink");
+  inputHomeLink.value = homeLink;
   const parentCompo = e.target.parentElement.parentElement.parentElement;
   parentCompo.style.display = "none";
   parentCompo.previousElementSibling.style.display = "";

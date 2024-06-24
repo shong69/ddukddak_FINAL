@@ -3,6 +3,19 @@ const inputImageList = document.querySelectorAll(".inputImg");
 const deleteImageList = document.querySelectorAll(".delete-img");
 let imgCount = imgList.length;
 
+let imgArray = new Array(imgCount);
+
+console.log(imgArray.length);
+
+// 1. 기존 이미지 길이만큼 배열만들기
+// 2. 배열에 기존 img 태그 다 넣어놓기
+// 3. 만약 x 버튼(삭제 시) 해당 인덱스에 null 값 넣기
+// 4. 만약 수정시 해당 인덱스에 File 객체 넣기
+// 5. submit 요청 시 해당 배열의 모든 요소를 for을 이용하여 순차 접근해서 
+// 요소 중 null이 있다면 -> 서브밋 안되게
+// 요소 중 null이 없다면 -> File 객체가 있는 인덱스의 번호와 File 객체를 서버로 넘기기
+// formData 
+
 // x버튼이 눌러져 삭제된 이미지의 순서를 저장
 // * Set : 중복 저장 X, 순서 유지 X
 const deleteOrder = new Set();
@@ -83,6 +96,8 @@ const changeImageFn = (inputImage, order) => {
   }
 
 
+
+
   // ------------ 선택된 이미지 미리보기 --------------
 
   const reader = new FileReader(); // JS에서 파일을 읽고 저장하는 객체
@@ -111,7 +126,8 @@ for(let i=0 ; i<inputImageList.length ; i++){
   inputImageList[i].addEventListener("change", e => {
     console.log(inputImageList[i].value);
     changeImageFn(e.target, i);
-
+    
+    console.log(inputImageList[i].files);
   })
     
   
