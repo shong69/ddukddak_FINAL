@@ -100,6 +100,15 @@
         JOIN "PARTNER" USING (PARTNER_NO)
         WHERE PARTNER_NO = #{partnerNo}
     </select>
+
+	<!-- 포트폴리오 조회 -->
+	
+    <select id="selectPortfolio2" parameterType="int" resultMap ="portfolio_rm">
+        SELECT PORTFOLIO_NO, PORTFOLIO_DETAIL, HOME_LINK, PROFILE_IMG, PARTNER_BUSINESS_NAME
+        FROM "PORTFOLIO" 
+        JOIN "PARTNER" USING (PARTNER_NO)
+        WHERE PORTFOLIO_NO = #{portfolioNo}
+    </select>
     
     
     
