@@ -583,23 +583,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 	}
 
 
-<<<<<<< HEAD
-	//리뷰 개수 리턴
-	@Override
-	public int reviewCount(int productNo) {
-		return mapper.reviewCount(productNo);
-	}
 
-
-	//리뷰 평점 리턴
-	@Override
-	public double avgScore(int productNo) {
-		log.info("평점 결과:{}",mapper.avgScore(productNo));
-		return mapper.avgScore(productNo);
-	}
-=======
-
->>>>>>> 2630ae5afc89cb8470c0ae533c04b1535af73b21
 	// 사용자 결제 취소 업데이트
 	@Override
 	public int cancelUpdate(Map<String, String> map) {
