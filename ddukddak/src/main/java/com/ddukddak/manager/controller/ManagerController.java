@@ -1,8 +1,10 @@
 package com.ddukddak.manager.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.binding.MapperMethod.ParamMap;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -134,12 +136,28 @@ public class ManagerController {
 	// 회원관리 페이지 이동
 	@GetMapping("member/management")
 	public String memberManagement(@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
-									Model model) {
+									Model model, @RequestParam Map<String, Object> params) {
 		
-		Map<String, Object> map = service.selectMember(cp);
+		Map<String, Object> map = new HashMap<>();
+		
+		if(params.get("search") == null) {
+			
+			map = service.selectMember(cp); // 그냥
+			map = service.selectSortMember(params, cp); // 정렬
+			
+		} else {
+			
+			map = service.selectSearchMember(params, cp); // 그냥 서치
+			map = service.selectSortSearchMember(params, cp); // 정렬 서치
+			
+		}
+		
+		
 
 		model.addAttribute("pagination", map.get("pagination"));
 		model.addAttribute("memberList", map.get("memberList"));
+		model.addAttribute("sort", params.get("sort"));
+		model.addAttribute("search", params.get("search"));
 		
 		return "manager/memberManagement";
 	}
@@ -180,12 +198,29 @@ public class ManagerController {
 	// 파트너 관리 페이지 이동
 	@GetMapping("partner/management")
 	public String partnerManagement(@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
-									Model model) {
+									Model model, @RequestParam Map<String, Object> params) {
 		
-		Map<String, Object> map = service.selectPartner(cp);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		if(params.get("search") == null) {
+			
+			map = service.selectPartner(cp); // 그냥
+			map = service.selectSortPartner(params, cp); // 정렬
+			
+		} else {
+			
+			map = service.selectSearchPartner(params, cp); // 그냥 서치
+			map = service.selectSortSearchPartner(params, cp); // 정렬 서치
+			
+		}
+		
 
 		model.addAttribute("pagination", map.get("pagination"));
 		model.addAttribute("partnerList", map.get("partnerList"));
+		model.addAttribute("sort", params.get("sort"));
+		model.addAttribute("search", params.get("search"));
+		
 		
 		return "manager/partnerManagement";
 	}
