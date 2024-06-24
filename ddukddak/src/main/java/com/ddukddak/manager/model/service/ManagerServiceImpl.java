@@ -178,21 +178,21 @@ public class ManagerServiceImpl implements ManagerService {
 	@Override
 	public Map<String, Object> selectPartner(int cp) {
 		// 가입 대기 중인 파트너 수 조회
-				int listCount = mapper.getPartnerListCount();
-				
-				Pagination pagination = new Pagination(cp, listCount);
-				
-				int limit = pagination.getLimit();
-				int offset = (cp - 1) * limit;
-				RowBounds rowBounds = new RowBounds(offset, limit);
-				
-				List<Partner> partnerList = mapper.selectPartnerList(rowBounds);
-				
-				// 목록 + 페이지네이션
-				Map<String, Object> map = new HashMap<>();
-				
-				map.put("pagination", pagination);
-				map.put("partnerList", partnerList);
+		int listCount = mapper.getPartnerListCount();
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<Partner> partnerList = mapper.selectPartnerList(rowBounds);
+		
+		// 목록 + 페이지네이션
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("partnerList", partnerList);
 				
 		return map;
 	}
@@ -280,6 +280,153 @@ public class ManagerServiceImpl implements ManagerService {
 		
 		map.put("pagination", pagination);
 		map.put("paymentList", paymentList);
+		
+		return map;
+	}
+
+	
+	// 회원 목록(정렬)
+	@Override
+	public Map<String, Object> selectSortMember(Map<String, Object> params, int cp) {
+		
+		// 가입 대기 중인 파트너 수 조회
+		int listCount = mapper.getSortListCount(params);
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<Member> memberList = mapper.selectMemberSortList(params, rowBounds);
+		
+		// 목록 + 페이지네이션
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("memberList", memberList);
+		
+		return map;
+	}
+
+	
+	// 검색 시 그냥 전체 회원 관리 목록
+	@Override
+	public Map<String, Object> selectSearchMember(Map<String, Object> params, int cp) {
+		
+		
+		// 가입 대기 중인 파트너 수 조회
+		int listCount = mapper.getSerchListCount(params);
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<Member> memberList = mapper.selectSearchMember(params, rowBounds);
+		
+		// 목록 + 페이지네이션
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("memberList", memberList);
+		
+		return map;
+	}
+
+	
+	// 검색 + 정렬 회원 목록
+	@Override
+	public Map<String, Object> selectSortSearchMember(Map<String, Object> params, int cp) {
+		
+		// 가입 대기 중인 파트너 수 조회
+		int listCount = mapper.getSortSerchListCount(params);
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<Member> memberList = mapper.selectSortSearchMember(params, rowBounds);
+		
+		// 목록 + 페이지네이션
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("memberList", memberList);
+		
+		return map;
+	}
+
+
+	// 파트너 목록(정렬)
+	@Override
+	public Map<String, Object> selectSortPartner(Map<String, Object> params, int cp) {
+		// 가입 대기 중인 파트너 수 조회
+		
+		int listCount = mapper.getSortListCountP(params);
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<Partner> partnerList = mapper.selectPartnerSortList(params, rowBounds);
+		
+		// 목록 + 페이지네이션
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("partnerList", partnerList);
+				
+		return map;
+	}
+
+	// 파트너 목록(검색)
+	@Override
+	public Map<String, Object> selectSearchPartner(Map<String, Object> params, int cp) {
+		// 가입 대기 중인 파트너 수 조회
+		int listCount = mapper.getSerchListCountP(params);
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<Partner> partnerList = mapper.selectSearchPartner(params, rowBounds);
+		
+		// 목록 + 페이지네이션
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("partnerList", partnerList);
+		
+		return map;
+	}
+
+	// 파트너 목록(정렬+검색)
+	@Override
+	public Map<String, Object> selectSortSearchPartner(Map<String, Object> params, int cp) {
+		// 가입 대기 중인 파트너 수 조회
+		int listCount = mapper.getSortSerchListCountP(params);
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<Partner> partnerList = mapper.selectSortSearchPartner(params, rowBounds);
+		
+		// 목록 + 페이지네이션
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("partnerList", partnerList);
 		
 		return map;
 	}

@@ -134,4 +134,193 @@
 		FROM "PAYMENT"
 		ORDER BY STARTED_AT DESC
 	</select>
+	
+	<!-- 정렬에 맞는 회원 수 조회 -->
+	<select id="getSortListCount">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE AUTHORITY = 1
+		<choose>
+			<!-- 정렬 N : 활동중 -->
+			<when test='sort == "n"'>
+				AND MEMBER_DEL_FL = 'N'
+			</when>
+			
+			<!-- 정렬 Y: 탈퇴  -->	
+			<when test='sort == "y"'>
+				AND MEMBER_DEL_FL = 'Y'
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 검색 x - 회원 정렬 목록 -->
+	<select id="selectMemberSortList">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_TEL, PROFILE_IMG,
+		TO_CHAR(ENROLL_DATE,'YYYY-MM-DD') ENROLL_DATE, MEMBER_DEL_FL
+		FROM "MEMBER"
+		WHERE AUTHORITY = 1
+		<choose>
+			<!-- 정렬 N : 활동중 -->
+			<when test='sort == "n"'>
+				AND MEMBER_DEL_FL = 'N'
+			</when>
+			
+			<!-- 정렬 Y: 탈퇴  -->	
+			<when test='sort == "y"'>
+				AND MEMBER_DEL_FL = 'Y'
+			</when>
+			
+		</choose>
+		ORDER BY MEMBER_NO DESC
+	</select>
+	
+	<!-- 검색 O - 전체 회원 수 -->
+	<select id="getSerchListCount">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE AUTHORITY = 1
+		AND MEMBER_EMAIL LIKE '%' || #{search} || '%'
+	</select>
+	
+	<!-- 검색 O 전체 회원 목록  -->
+	<select id="selectSearchMember">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_TEL, PROFILE_IMG,
+		TO_CHAR(ENROLL_DATE,'YYYY-MM-DD') ENROLL_DATE, MEMBER_DEL_FL
+		FROM "MEMBER"
+		WHERE AUTHORITY = 1
+		AND MEMBER_EMAIL LIKE '%' || #{search} || '%'
+		ORDER BY MEMBER_NO DESC
+	</select>
+	
+	<!-- 검색 + 정렬 회원 수 -->
+	<select id="getSortSerchListCount">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE AUTHORITY = 1
+		AND MEMBER_EMAIL LIKE '%' || #{search} || '%'
+		<choose>
+			<!-- 정렬 N : 활동중 -->
+			<when test='sort == "n"'>
+				AND MEMBER_DEL_FL = 'N'
+			</when>
+			
+			<!-- 정렬 Y: 탈퇴  -->	
+			<when test='sort == "y"'>
+				AND MEMBER_DEL_FL = 'Y'
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 검색 + 정렬 회원 목록 -->
+	<select id="selectSortSearchMember">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_TEL, PROFILE_IMG,
+		TO_CHAR(ENROLL_DATE,'YYYY-MM-DD') ENROLL_DATE, MEMBER_DEL_FL
+		FROM "MEMBER"
+		WHERE AUTHORITY = 1
+		AND MEMBER_EMAIL LIKE '%' || #{search} || '%'
+		<choose>
+			<!-- 정렬 N : 활동중 -->
+			<when test='sort == "n"'>
+				AND MEMBER_DEL_FL = 'N'
+			</when>
+			
+			<!-- 정렬 Y: 탈퇴  -->	
+			<when test='sort == "y"'>
+				AND MEMBER_DEL_FL = 'Y'
+			</when>
+		</choose>
+		ORDER BY MEMBER_NO DESC
+	</select>
+	
+	
+	
+	<!-- 파트너 수(정렬) -->
+	<select id="getSortListCountP">
+		SELECT COUNT(*)
+		FROM "PARTNER"
+		<choose>
+			<!-- 정렬 N : 활동중 -->
+			<when test='sort == "n"'>
+				AND PARTNER_DEL_FL = 'N'
+			</when>
+			
+			<!-- 정렬 Y: 탈퇴  -->	
+			<when test='sort == "y"'>
+				AND PARTNER_DEL_FL = 'Y'
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 파트너 목록(정렬) -->
+	<select id="selectPartnerSortList">
+		SELECT PARTNER_NO, PARTNER_ID, PARTNER_BUSINESS_NAME, PARTNER_BUSINESS_NUM,
+		TO_CHAR(ENROLL_DATE,'YYYY-MM-DD') ENROLL_DATE, PARTNER_TEL, PARTNER_DEL_FL
+		FROM "PARTNER"
+		<choose>
+			<!-- 정렬 N : 활동중 -->
+			<when test='sort == "n"'>
+				AND PARTNER_DEL_FL = 'N'
+			</when>
+			
+			<!-- 정렬 Y: 탈퇴  -->	
+			<when test='sort == "y"'>
+				AND PARTNER_DEL_FL = 'Y'
+			</when>
+		</choose>
+		ORDER BY PARTNER_NO DESC
+	</select>
+	
+	<!-- 파트너 수(검색) -->
+	<select id="getSerchListCountP">
+		SELECT COUNT(*)
+		FROM "PARTNER"
+		WHERE PARTNER_ID LIKE '%' || #{search} || '%'
+	</select>
+	
+	<!-- 파트너 목록(검색) -->
+	<select id="selectSearchPartner">
+		SELECT PARTNER_NO, PARTNER_ID, PARTNER_BUSINESS_NAME, PARTNER_BUSINESS_NUM,
+		TO_CHAR(ENROLL_DATE,'YYYY-MM-DD') ENROLL_DATE, PARTNER_TEL, PARTNER_DEL_FL
+		FROM "PARTNER"
+		WHERE PARTNER_ID LIKE '%' || #{search} || '%'
+		ORDER BY PARTNER_NO DESC
+	</select>
+	
+	<!-- 파트너 수(검색+정렬) -->
+	<select id="getSortSerchListCountP">
+		SELECT COUNT(*)
+		FROM "PARTNER"
+		WHERE PARTNER_ID LIKE '%' || #{search} || '%'
+		<choose>
+			<!-- 정렬 N : 활동중 -->
+			<when test='sort == "n"'>
+				AND PARTNER_DEL_FL = 'N'
+			</when>
+			
+			<!-- 정렬 Y: 탈퇴  -->	
+			<when test='sort == "y"'>
+				AND PARTNER_DEL_FL = 'Y'
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 파트너 목록(검색+정렬) -->
+	<select id="selectSortSearchPartner">
+		SELECT PARTNER_NO, PARTNER_ID, PARTNER_BUSINESS_NAME, PARTNER_BUSINESS_NUM,
+		TO_CHAR(ENROLL_DATE,'YYYY-MM-DD') ENROLL_DATE, PARTNER_TEL, PARTNER_DEL_FL
+		FROM "PARTNER"
+		WHERE PARTNER_ID LIKE '%' || #{search} || '%'
+		<choose>
+			<!-- 정렬 N : 활동중 -->
+			<when test='sort == "n"'>
+				AND PARTNER_DEL_FL = 'N'
+			</when>
+			
+			<!-- 정렬 Y: 탈퇴  -->	
+			<when test='sort == "y"'>
+				AND PARTNER_DEL_FL = 'Y'
+			</when>
+		</choose>
+		ORDER BY PARTNER_NO DESC
+	</select>
 </mapper>

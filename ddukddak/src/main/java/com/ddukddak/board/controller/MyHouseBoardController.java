@@ -1,7 +1,6 @@
 package com.ddukddak.board.controller;
 
-import java.awt.Image;
-import java.io.File;
+
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -24,9 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ddukddak.board.model.dto.Board;
-import com.ddukddak.board.model.dto.BoardImg;
 import com.ddukddak.board.model.service.MyHouseBoardService;
-import com.ddukddak.common.util.Utility;
 import com.ddukddak.member.model.dto.Member;
 
 import jakarta.servlet.http.Cookie;
@@ -275,8 +272,8 @@ public class MyHouseBoardController {
 	}
 	
 	
-	@GetMapping("updateMyHouse/{boardNo:[0-9]+}")
-	public String updateMyHouse(@PathVariable("boardNo") int boardNo,
+	@PostMapping("updateMyHouse")
+	public String updateMyHouse(@RequestParam("boardNo") int boardNo,
 								@RequestParam("boardTitle") String inputBoardTitle,
 								@RequestParam("boardContent") String inputBoardContent,
 								@RequestParam("images") List<MultipartFile> images,
@@ -284,67 +281,31 @@ public class MyHouseBoardController {
 								@SessionAttribute("loginMember") Member loginMember,
 								RedirectAttributes ra) throws IllegalStateException, IOException {
 		
+		log.info("boardNo : " + boardNo);
+		
 		Board board = new Board();
 		
 		board.setBoardNo(boardNo);
 		board.setBoardTitle(inputBoardTitle);
 		board.setBoardContent(inputBoardContent);
 		
-//		int result = service.updateMyHouse(board, images);
-//		String path = null;
-//		String message = null;
-//		
-//		if(result > 0) {
-//			path = "/myHouse/detail/" + boardNo;
-//			message = "집들이 게시글 수정이 완료되었습니다.";
-//		} else {
-//			path = "/myHouse/updateMyHouse";
-//			message = "집들이 게시글 수정에 실패하였습니다.";
-//		}
-//		
-//		ra.addFlashAttribute("message", message);
-//		
-//		return "redirect:" + path;
-//	}
+		int result = service.updateMyHouse(board, images);
+		String path = null;
+		String message = null;
 		
-			int result = service.updateBoard(board);
+		if(result > 0) {
+			path = "/myHouse/detail/" + boardNo;
+			message = "집들이 게시글 수정이 완료되었습니다.";
+		} else {
+			path = "/myHouse/updateMyHouse";
+			message = "집들이 게시글 수정에 실패하였습니다.";
+		}
 		
-		    // Handle images
-		    List<BoardImg> newImages = new ArrayList<>();
-		    String uploadDir = req.getServletContext().getRealPath("/images/myHouse");
+		ra.addFlashAttribute("message", message);
 		
-		    for (MultipartFile image : images) {
-		        if (!image.isEmpty()) {
-		            String originalFilename = image.getOriginalFilename();
-		            String rename = Utility.fileRename(originalFilename);
-		            String filePath = uploadDir + rename;
-		
-		            try {
-		                File file = new File(filePath);
-		                image.transferTo(file);
-		
-		                BoardImg img = new BoardImg();
-		                img.setBoardNo(boardNo);
-		                img.setUploadImgPath("/upload/");
-		                img.setUploadImgRename(rename);
-		                img.setUploadImgOgName(originalFilename);
-		                newImages.add(img);
-		            } catch (IOException e) {
-		                e.printStackTrace();
-		                ra.addFlashAttribute("message", "이미지 업로드 중 오류가 발생했습니다.");
-		                return "redirect:/myHouse/updateMyHouse/" + boardNo;
-		            }
-		        }
-		    }
-		
-		    if (!newImages.isEmpty()) {
-		        service.updateBoardImages(boardNo, newImages);
-		    }
-		
-		    ra.addFlashAttribute("message", "게시글이 성공적으로 수정되었습니다.");
-		    return "redirect:/myHouse/detail/" + boardNo;
-
+		return "redirect:" + path;
 	}
+		
 }
 
 

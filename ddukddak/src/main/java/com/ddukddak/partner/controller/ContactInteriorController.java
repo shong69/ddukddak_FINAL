@@ -55,7 +55,7 @@ public class ContactInteriorController {
 		model.addAttribute("interiorList", map.get("interiorList"));
 		model.addAttribute("query", query);
 		
-//		log.info("interiorList : " + map.get("interiorList"));
+		log.info("interiorList : " + map.get("interiorList"));
 		
 		return "partner/interior/interiorList";
 	}
@@ -68,24 +68,10 @@ public class ContactInteriorController {
 									HttpServletRequest req,
 									HttpServletResponse resp) {
 
-
-//		Project mainProject = service.selectMainProject(portfolioNo);
-//
-//		List<Project> projectList = service.selectProjectList(portfolioNo);
-//
-//
-//        if(mainProject != null) {
-//        	model.addAttribute("mainProject", mainProject);
-//        	log.info("mainProject : " + mainProject);
-//        }
-//        if(projectList != null) {
-//        	model.addAttribute("projectList", projectList);
-//        	log.info("projectList : " + projectList);
-//        }
 		
 		log.info("포트폴리오 번호 : " + portfolioNo);
 		
-		Portfolio portfolio = service.selectPortfolio(portfolioNo);
+		Portfolio portfolio = service.selectPortfolio2(portfolioNo);
 		
         
 		Map<String, Object> map = service.selectProjectList(portfolioNo);
@@ -120,7 +106,7 @@ public class ContactInteriorController {
 										  @RequestParam("portfolioNo") int portfolioNo) {
 		
 		
-		Portfolio portfolio = service.selectPortfolio(portfolioNo);
+		Portfolio portfolio = service.selectPortfolio2(portfolioNo);
 		
 		Project project = service.selectProject(projectNo);
 		

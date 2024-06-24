@@ -1,6 +1,7 @@
 package com.ddukddak.manager.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
@@ -91,6 +92,84 @@ public interface ManagerMapper {
 	 * @return
 	 */
 	List<PaymentDTO> selectPaymentList(RowBounds rowBounds);
+
+	/** 정렬에 맞는 회원 수 조회
+	 * @param params
+	 * @return
+	 */
+	int getSortListCount(Map<String, Object> params);
+
+	/** 회원 목록 정렬 결과
+	 * @param params 
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Member> selectMemberSortList(Map<String, Object> params, RowBounds rowBounds);
+
+	/** 검색 시 전체 회원 수 조회
+	 * @param params
+	 * @return
+	 */
+	int getSerchListCount(Map<String, Object> params);
+
+	/** 검색 시 전체 회원 목록 조회
+	 * @param params
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Member> selectSearchMember(Map<String, Object> params, RowBounds rowBounds);
+
+	/** 검색 + 정렬 회원 수
+	 * @param params
+	 * @return
+	 */
+	int getSortSerchListCount(Map<String, Object> params);
+
+	/** 검색 + 정렬 회원 목록
+	 * @param params
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Member> selectSortSearchMember(Map<String, Object> params, RowBounds rowBounds);
+
+	/** 파트너 수(정렬)
+	 * @param params
+	 * @return
+	 */
+	int getSortListCountP(Map<String, Object> params);
+
+	/** 파트너 목록(정렬)
+	 * @param params
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Partner> selectPartnerSortList(Map<String, Object> params, RowBounds rowBounds);
+
+	/** 파트너 수(검색)
+	 * @param params
+	 * @return
+	 */
+	int getSerchListCountP(Map<String, Object> params);
+
+	/** 파트너 목록(검색)
+	 * @param params
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Partner> selectSearchPartner(Map<String, Object> params, RowBounds rowBounds);
+
+	/** 파트너 수(검색+정렬)
+	 * @param params
+	 * @return
+	 */
+	int getSortSerchListCountP(Map<String, Object> params);
+
+	/** 파트너 목록(검색+정렬)
+	 * @param params
+	 * @param rowBounds
+	 * @return
+	 */
+	List<Partner> selectSortSearchPartner(Map<String, Object> params, RowBounds rowBounds);
 
 
 }

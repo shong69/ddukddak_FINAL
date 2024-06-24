@@ -102,7 +102,7 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 	}
 
 	
-//	// 집들이 게시판 리스트 조회
+	// 집들이 게시판 리스트 조회
 //	@Override
 //	public List<Board> selectMyHouseList(int boardType) {
 //		
@@ -220,64 +220,46 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 
 
 	// 집들이 게시글 수정
-//	@Override
-//	public int updateMyHouse(Board board, List<MultipartFile> images) throws IllegalStateException, IOException {
-//		
-//		int result = mapper.updateMyHouse(board);
-//		
-//		if(result == 0) return 0;
-//		
-//		List<BoardImg> uploadList = new ArrayList<>();
-//		
-//		for(int i = 0; i < images.size(); i ++) {
-//			
-//			if( !images.get(i).isEmpty() ) {
-//				String originalName =images.get(i).getOriginalFilename();
-//				String rename = Utility.fileRename(originalName);
-//				
-//				BoardImg img = BoardImg.builder()
-//							   .uploadImgOgName(originalName)
-//							   .uploadImgRename(rename)
-//							   .uploadImgPath(webPath)
-//							   .boardNo(board.getBoardNo())
-//							   .uploadImgOrder(i)
-//							   .uploadFile(images.get(i))
-//							   .build();
-//				
-//				uploadList.add(img);
-//				
-//				result = mapper.updateImage(img);
-//			}
-//			
-//			if(uploadList.isEmpty()) {
-//				return result;
-//			}
-//			
-//			for(BoardImg img : uploadList) {
-//				img.getUploadFile().transferTo(new File(folderPath + img.getUploadImgRename()));
-//			}
-//			
-//		}
-//		
-//		return result;
-//	}
-
-
 	@Override
-	public int updateBoard(Board board) {
-		return mapper.updateBoard(board);
-	}
-
-
-	@Override
-	public void updateBoardImages(int boardNo, List<BoardImg> images) {
-		// Delete existing images for the board
-        mapper.deleteImagesByBoardNo(boardNo);
-
-        // Insert new images
-        for (BoardImg image : images) {
-            mapper.insertImage(image);
-        }
+	public int updateMyHouse(Board board, List<MultipartFile> images) throws IllegalStateException, IOException {
+		
+		int result = mapper.updateMyHouse(board);
+		
+		if(result == 0) return 0;
+		
+		List<BoardImg> uploadList = new ArrayList<>();
+		
+		for(int i = 0; i < images.size(); i ++) {
+			
+			if( !images.get(i).isEmpty() ) {
+				String originalName =images.get(i).getOriginalFilename();
+				String rename = Utility.fileRename(originalName);
+				
+				BoardImg img = BoardImg.builder()
+							   .uploadImgOgName(originalName)
+							   .uploadImgRename(rename)
+							   .uploadImgPath(webPath)
+							   .boardNo(board.getBoardNo())
+							   .uploadImgOrder(i)
+							   .uploadFile(images.get(i))
+							   .build();
+				
+				uploadList.add(img);
+				
+				result = mapper.updateImage(img);
+			}
+			
+		}
+		
+		if(uploadList.isEmpty()) {
+			return result;
+		}
+		
+		for(BoardImg img : uploadList) {
+			img.getUploadFile().transferTo(new File(folderPath + img.getUploadImgRename()));
+		}
+		
+		return result;
 	}
 
 
