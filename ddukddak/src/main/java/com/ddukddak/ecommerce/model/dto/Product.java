@@ -45,9 +45,6 @@ public class Product {
 	private int orderNo;
 	private String orderStatus;
 	private String orderDate;
-	public void setFormattedOrderDate(String formattedDate) {
-		// TODO Auto-generated method stub
-		
-	}
+	private String orderItemNo;
 
 }

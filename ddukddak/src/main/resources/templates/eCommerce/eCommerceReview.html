@@ -30,17 +30,17 @@
                                 <i class="fa-regular fa-star"></i>
                             </span>
                             <button id="addComment" type = "button" onClick = "handleFormMissionReview(event)">등록</button>
+                            <button id="cancleComment" type="Button" onclick="calcleReviewSubmit(event)">취소</button>
                         </div>
                         <div id="optionDiv">
-                            <div>주문상품 기록</div>
                         </div>
                         <div id = "contentBox">
-                            <textarea id="commentContent" name = "reviewContent" rows="12" placeholder="다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현이나 타인의 권리를 침해하는 내용은 사용하지 않도록 주의해주세요."></textarea>
+                            <textarea id="commentContent" name = "reviewContent" rows="10" placeholder="다른 사람에게 불쾌감을 주는 욕설, 혐오, 비하의 표현이나 타인의 권리를 침해하는 내용은 사용하지 않도록 주의해주세요."></textarea>
                             <div id = "photoArea">
                                 <label for="reviewFile" id="selectReviewImgBtn" aria-label="이미지 첨부">
                                     <i class="fa-regular fa-images"></i>첨부
                                 </label>
-                                <input style="display:none;" type="file" multiple class="file" name="reviewImgs" id="reviewFile" onchange="readImgURLs(this);">
+                                <input style="display:none;" type="file" multiple required class="file" name="reviewImgs" id="reviewFile" onchange="readImgURLs(this);" accept="image/*">
                                 <div id = "reviewImgBox"></div>
                             </div>
                         </div>

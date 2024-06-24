@@ -18,6 +18,7 @@ import com.ddukddak.manager.model.service.ManagerService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import retrofit2.http.GET;
 
 @Controller
 @RequestMapping("manager")
@@ -222,6 +223,39 @@ public class ManagerController {
 
         return ResponseEntity.ok(result);
 	}
+	
+	
+	// 신고 관리 페이지 이동
+	@GetMapping("report")
+	public String report(@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+									Model model) {
+		
+		Map<String, Object> map = service.report(cp);
+
+		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("reportList", map.get("reportList"));
+		
+		return "manager/report";
+	}
+	
+	/** 결제 내역
+	 * @param cp
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("payment")
+	public String payment(@RequestParam(value="cp", required = false, defaultValue = "1") int cp,
+							Model model){
+		
+		
+		Map<String, Object> map = service.selectPayment(cp); 
+		
+		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("paymentList", map.get("paymentList"));
+		
+		return "manager/payment";
+	}
+
 	
 	
 }

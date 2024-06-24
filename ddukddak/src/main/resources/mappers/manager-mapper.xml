@@ -78,13 +78,59 @@
 		ORDER BY PARTNER_NO DESC
 	</select>
 	
-	<!-- 회원 탈퇴 처리 -->
+	<!-- 파트너 탈퇴 처리 -->
 	<update id="partnerDelete">
 		UPDATE "PARTNER" SET
 		PARTNER_DEL_FL = 'Y'
-		WHERE PARNER_NO = #{partnerNo}
+		WHERE PARTNER_NO = #{partnerNo}
 	</update>
 	
+	
+	<!-- 신고 목록 개수 조회 -->
+	<select id="getReportCount">
+		SELECT COUNT(*) FROM "REPORT"
+	</select>
+	
+	<!-- 신고 내역 조회 -->
+	<select id="selectReportList">
+		SELECT 
+	    REPORT_NO,
+	    (SELECT MEMBER_ID 
+	     FROM "MEMBER" m 
+	     LEFT JOIN "REPORT" r 
+	     ON m.MEMBER_NO = r.REPORTED_MEMBER_NO 
+	     WHERE r.REPORT_NO = main.REPORT_NO) AS REPORTED_MEMBER_ID,
+	    (SELECT MEMBER_ID 
+	     FROM "MEMBER" m 
+	     LEFT JOIN "REPORT" r 
+	     ON m.MEMBER_NO = r.MEMBER_NO 
+	     WHERE r.REPORT_NO = main.REPORT_NO) AS MEMBER_ID,
+	    REPORT_REASON, 
+	    TO_CHAR(REPORT_DATE, 'YYYY-MM-DD') AS REPORT_DATE, 
+	    BOARD_NO
+		FROM 
+	    "REPORT" main
+	    ORDER BY REPORT_NO DESC
+	</select>
 
 	
+	<!-- 결제 내역 수 조회 -->
+	<select id="getPaymentCount">
+		SELECT COUNT(*)
+		FROM "PAYMENT"
+	</select>
+	
+	
+	<select id="selectPaymentList">
+		SELECT 
+			PAYMENT_NO,
+			MERCHANT_UID,
+			BUYER_NAME,
+			AMOUNT,
+			STATUS,
+			PG_PROVIDER,
+			PAY_METHOD,
+			STARTED_AT
+		FROM "PAYMENT"	
+	</select>
 </mapper>
