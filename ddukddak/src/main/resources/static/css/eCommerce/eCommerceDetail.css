@@ -510,7 +510,6 @@
 #reviewList{
     list-style-type: none;
     width : 100%;
-    background-color: #f3f3f3;
 }
 
 .reviewInfoArea{
@@ -559,6 +558,10 @@
     width : 1000px;
     height: 35px;
 }
+#reviewForm {
+    height: 550px;
+    border-bottom:0.5px solid #6b6b6b;
+}
 .display-none{
     display : none;
 }
@@ -576,7 +579,8 @@
     align-items: center;
 
 }
-#addComment{
+#addComment,
+#cancleComment{
     flex-basis: 8%;
     height : 25px;
     border-radius: 18px;
@@ -600,7 +604,7 @@
     margin-left : 25px;
     height: 50px;
 }
-#optionDiv>div{
+#optionDiv>div:first-child{
     text-align: start;
     margin-bottom: 5px;
     font-weight: 600;
@@ -614,7 +618,7 @@
 }
 #contentBox{
     border : 0.4px solid #bbbbbb;
-    height: 350px;
+    height: 400px;
 }
 #commentContent{
     width : 1000px;
@@ -622,26 +626,26 @@
     resize: none;
     border : none;
     font-size: 17px;
+    line-height: 30px;
 }
 #commentContent:focus{
     outline:none;
 }
 .noReviewLi{
-    margin-top: 50px;
+    margin: auto 0;
 }
 .noReviewArea{
     width: 90%;
-    height: 100px;
     font-size: 40px;
     text-align: center;
-    color : white;
-    background-color: #bbbbbb;
-
+    color : black;
     margin:0 auto;
+    line-height: 800px;
 }
 #photoArea{
     display: flex;
     flex-direction: row;
+    background-color: white;
 }
 #selectReviewImgBtn{
     width : 70px;
@@ -667,7 +671,7 @@
     overflow-x: auto;
     width : 500px;
     height: 70px;
-    margin-bottom: 8px;
+    margin: 5px;
     border : none;
     background-color: transparent;
 }
@@ -701,7 +705,8 @@
 .reviewRow{
     min-height: 400px;
     margin:15px;
-    margin: 30px 0;
+    margin: 50px 0;
+    border-bottom: #fff;
 }
 .infoArea{
     display: flex;
@@ -727,6 +732,7 @@
     width:50px;
     border-radius: 18px;
     cursor: pointer;
+    background-color: transparent;
 }
 .updateBtn{
     margin-right: 10px;
@@ -735,16 +741,27 @@
     margin-left: auto;
 }
 .reviewImg{
-    height: 180px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin:8px 0;
+}
+.reviewImg>div{
+    background-color: white;
 }
 .oneReviewImg{
-    width : 80px;
+    width : 200px;
 }
+
 .additionalInfoArea{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin: 5px 30px;
+}
+.additionalInfoArea >span:nth-child(2){
+    color:#5d90c0;
 }
 .rateDiv{
     display: flex;
@@ -752,29 +769,32 @@
     align-items: center;
 
 }
-.content {
-    font-size: 20px;
-    padding: 0 1rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 7;
-    -webkit-box-orient: vertical; 
-    overflow: hidden;
-    margin-top: 10px; 
-}
-
 .reviewContent {
     width: 1000px;
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: 21px;
     overflow: hidden;
     padding:10px;
     margin:15px auto;
+
 }
+
+.content {
+    font-size: 20px;
+    line-height: 30px;
+    padding: 0 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical; 
+    overflow: hidden;
+    margin: 10px 0; 
+}
+
+
 .moreBtn {
     appearance: none;
     cursor: pointer;
-    margin: 5px;
-    margin-left: 16px;
+    margin-left: 15px;
 }
 .moreBtn::before{
     content: '더보기';

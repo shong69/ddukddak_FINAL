@@ -60,7 +60,7 @@
                                         <img class="preview">
                                         <!-- th:src="|*{uploadImgPath}*{uploadImgRename}|" -->
                                     </label>
-                                    <input type="file" name="images" class="inputImg" th:id="|img*{uploadImgOrder}| " accept="image/*">
+                                    <input type="file" name="images" class="inputImg" th:id="|img*{uploadImgOrder}|" accept="image/*">
                                     <span class="delete-img">&times;</span>
                                 </div>
                             </th:block>
@@ -128,7 +128,7 @@
                 </div>
 
                 <div class="btn-area">
-                    <button class="boardCreateBtn" id="registMainProjectBtn" type="button">메인프로젝트 등록</button>
+                    <button th:unless="${project.mainProjectFl=='Y'}" class="boardCreateBtn" id="registMainProjectBtn" type="button">메인프로젝트 등록</button>
                     <button class="boardCreateBtn" id="updateProjectBtn">프로젝트 수정</button>
                     <button class="boardCreateBtn" id="deleteProjectBtn" type="button">프로젝트 삭제</button>
                 </div>

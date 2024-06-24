@@ -21,58 +21,81 @@
     -->
 
     <h2 style="text-align: center; margin: 50px;">주문/결제</h2>
-    
-    <div id="completeBox">
-        <div style="padding: 20px 0; border-bottom: 1px solid rgb(187, 187, 187); margin: 0 20px;">
-            <h1 style="color: #3A732A;">주문이 정상적으로 완료되었습니다!</h1>
+
+    <!-- 결제 완료 세션이 없을 경우 -->
+    <th:block th:if="${session.merchantUid== null}">
+        <div id="completeBox">
+            <div style="padding: 20px 0; border-bottom: 1px solid rgb(187, 187, 187); margin: 0 20px;">
+                <h1 style="color: #3A732A;">세션이 만료되었습니다.</h1>
+            </div>
+            <div id="boxUnder">
+                <div>
+                </div>
+                <img src="/images/main/main-logo.png" style="height: 300px; opacity: 10%;">
+            </div>
         </div>
 
+        <script>
+            alert('세션이 유효하지 않습니다. 페이지를 이동합니다.')
+            location.href='/myPage'
+        </script>
 
-        <div id="boxUnder">
-            <div>
-                <table>
-                    <tr>
-                        <td><h3>주문번호</h3></td>
-                        <td><h3 style="font-weight: bold;" th:text="${merchantUid}">12345678</h3></td>
-                    </tr>
-                    <tr>
-                        <td><h3>배송지 정보</h3></td>
-                        <td>
-                            <h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.buyerPostcode}">우편번호</h3>
-                            <h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.buyerAddr}">주소</h3>
-                            <h3 id="buyerTel" style="color: rgb(165, 165, 165);" th:text="${paymentInfo.buyerTel}">연락처</h3>
-                            <h3 style="color: rgb(125, 123, 123); font-size: 14px;" th:text="|[배송요청사항 : ${deliveryMemo}]|"></h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><h3>주문금액</h3></td>
-                        <td><h3 id="amount" style="font-weight: bold;" th:text="${paymentInfo.amount}">16,900원</h3></td>
-                        <td>
-                            <h3 th:text="|적립금 : ${point}|"></h3>
-                            <h3 th:text="|내 적립금 : ${myPoint}|"></h3>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><h3>결제상세</h3></td>
-                        <td><h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.pgProvider}">신용카드</h3>
-                            <th:block th:if="${paymentInfo.payMethod == 'card'}">
-                                <h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.cardName}">카드이름</h3>
-                            </th:block>
+    </th:block>
 
-                            <th:block th:unless="${paymentInfo.payMethod == 'card'}">
-                                <h3 style="color: rgb(165, 165, 165);">카카오포인트</h3>
-                            </th:block>
-                            
-                            <h3 style="color: rgb(165, 165, 165);" th:text="|결제일시 : ${formattedPaidAt}|">결제일시 : 2024-05-23</h3></td>
-                            
-                    </tr>
-                </table>
+    <!-- 결제 완료 세션이 있을 경우 -->
+    <th:block th:unless="${session.merchantUid== null}">
+
+        <div id="completeBox">
+            <div style="padding: 20px 0; border-bottom: 1px solid rgb(187, 187, 187); margin: 0 20px;">
+                <h1 style="color: #3A732A;">주문이 정상적으로 완료되었습니다!</h1>
             </div>
 
-            <img src="/images/main/main-logo.png" style="height: 300px; opacity: 10%;">
-        </div>
-    </div>
 
+            <div id="boxUnder">
+                <div>
+                    <table>
+                        <tr>
+                            <td><h3>주문번호</h3></td>
+                            <td><h3 style="font-weight: bold;" th:text="${merchantUid}">12345678</h3></td>
+                        </tr>
+                        <tr>
+                            <td><h3>배송지 정보</h3></td>
+                            <td>
+                                <h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.buyerPostcode}">우편번호</h3>
+                                <h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.buyerAddr}">주소</h3>
+                                <h3 id="buyerTel" style="color: rgb(165, 165, 165);" th:text="${paymentInfo.buyerTel}">연락처</h3>
+                                <h3 style="color: rgb(125, 123, 123); font-size: 14px;" th:text="|[배송요청사항 : ${deliveryMemo}]|"></h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h3>주문금액</h3></td>
+                            <td>
+                                <h3 id="amount" style="font-weight: bold;" th:text="${paymentInfo.amount}">16,900원</h3>
+                                <h3 id="point" style="color: rgb(125, 123, 123); font-size: 14px; font-weight: 600;" th:text="|구매 적립금 : ${point}|"></h3>
+                                <h3 id="savePoint" style="color: rgb(125, 123, 123); font-size: 14px; font-weight: 600;" th:text="|내 보유 적립금 : ${myPoint}|"></h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h3>결제상세</h3></td>
+                            <td><h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.pgProvider}">신용카드</h3>
+                                <th:block th:if="${paymentInfo.payMethod == 'card'}">
+                                    <h3 style="color: rgb(165, 165, 165);" th:text="${paymentInfo.cardName}">카드이름</h3>
+                                </th:block>
+
+                                <th:block th:unless="${paymentInfo.payMethod == 'card'}">
+                                    <h3 style="color: rgb(165, 165, 165);">카카오포인트</h3>
+                                </th:block>
+                                
+                                <h3 style="color: rgb(165, 165, 165);" th:text="|결제일시 : ${formattedPaidAt}|">결제일시 : 2024-05-23</h3></td>
+                                
+                        </tr>
+                    </table>
+                </div>
+
+                <img src="/images/main/main-logo.png" style="height: 300px; opacity: 10%;">
+            </div>
+        </div>
+    </th:block>
 
     <div style="border: 1px solid rgb(165, 165, 165); width: 100%; margin-top: 100px; margin-bottom: 50px;"></div>
 
@@ -202,25 +225,51 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            const amountElement = document.getElementById('amount');
-            const amountText = amountElement.textContent;
-
             const formatAmount = (amount) => {
-                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '원';
             };
-
-            const formattedAmount = formatAmount(amountText);
-            amountElement.textContent = formattedAmount + '원';
-
-            const telElement = document.getElementById('buyerTel');
-            const telText = telElement.textContent;
-
+    
+            const formatPoint = (point) => {
+                return point.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + 'pt';
+            };
+    
             const formatTel = (tel) => {
                 return tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
             };
+    
+            // 포맷할 요소들의 목록
+            const amountElements = [
+                { id: 'amount', formatter: formatAmount },
+                { id: 'point', formatter: formatPoint },
+                { id: 'savePoint', formatter: formatPoint },
+                { id: 'buyerTel', formatter: formatTel }
+            ];
+    
+            amountElements.forEach(({ id, formatter }) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    const text = element.textContent;
+                    const formattedText = formatter(text);
+                    element.textContent = formattedText;
+                }
+            });
+        });
+    </script>
 
-            const formattedTel = formatTel(telText);
-            telElement.textContent = formattedTel;
+    <!-- 페이지를 벗어날 때 세션 제거 -->
+    <script>
+        window.addEventListener('pagehide', function(event) {
+            if (!event.persisted) {
+                // Send a fetch request to clear the session when the page is being unloaded
+                fetch('/eCommerce/clearCompleteResultSession', { 
+                    method: 'POST', 
+                    keepalive: true 
+                }).then(response => {
+                    console.log('Session cleared');
+                }).catch(error => {
+                    console.error('Error clearing session:', error);
+                });
+            }
         });
     </script>
 </body>

@@ -81,6 +81,7 @@
                             <h3 class="price" style="margin: 20px 7px; font-weight: 700; letter-spacing: 0.05em" th:text="|*{productPrice * productCount}원|">13,900원</h3>
                         </div>
                         
+                        <input class="cartId" type="hidden" name="cartId" th:value="*{cartId}">
                         <input class="productNo" type="hidden" name="productNo" th:value="*{productNo}">
                         <input class="productCount" type="hidden" name="productCount" th:value="*{productCount}">
                         <input class="productPrice" type="hidden" name="productPrice" th:value="*{productPrice}">

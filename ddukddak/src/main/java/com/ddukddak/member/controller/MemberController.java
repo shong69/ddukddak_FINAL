@@ -20,9 +20,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ddukddak.common.config.KakaoConfig;
 import com.ddukddak.member.model.dto.Member;
-import com.ddukddak.member.model.service.KakaoService;
 import com.ddukddak.member.model.service.MemberService;
 
 import jakarta.servlet.http.Cookie;
@@ -100,11 +98,13 @@ public class MemberController {
         if (accessToken != null) {
             // 카카오 연결 끊기 요청
             RestTemplate restTemplate = new RestTemplate();
+            
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + accessToken);
+            
             HttpEntity<String> entity = new HttpEntity<>(headers);
-
             ResponseEntity<String> response = restTemplate.postForEntity("https://kapi.kakao.com/v1/user/unlink", entity, String.class);
+            
             if (response.getStatusCode().is2xxSuccessful()) {
                 // 연결 끊기 성공
                 log.info("Kakao unlink successful");
@@ -117,7 +117,14 @@ public class MemberController {
             session.removeAttribute("kakaoAccessToken");
         }
 
+        
 	    // 스프링 세션 완료 처리
+        
+        // 세션 무효화 (모든 속성 제거)
+        // Google 로그아웃은 일반적으로 애플리케이션의 세션을 무효화하는 것으로 충분
+        // 하지만 이러면 메인 페이지에서 비로그인 시에도 멤버 텔을 따짐
+		//session.invalidate();
+		
 		status.setComplete();
 		
 		ra.addFlashAttribute("message", "로그아웃 되었습니다.");
@@ -402,7 +409,7 @@ public class MemberController {
 			if(signinMember != null) {
 				
 				// 회원 가입 성공
-				log.info("네이버 회원 가입 시 정보 : " + signinMember);
+				log.info("카카오 회원 가입 시 정보 : " + signinMember);
 				// 로그인 실어주기
 				session.setAttribute("loginMember", signinMember);
 				
@@ -417,6 +424,97 @@ public class MemberController {
 	}
 	
 	
+	
+	/** 구글 로그인
+	 * @param map
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("googleData")
+	@ResponseBody
+	public int googleLogin(@RequestBody Map<String, String> map, HttpSession session) {
+	
+		
+        String email = map.get("email");
+        String nickName = map.get("nickname");
+        String pw = map.get("pw");
+        
+        log.info("멤버 컨트롤러단 emali : " + email);
+        log.info("멤버 컨트롤러단 nickName : " + nickName);
+        
+        // 카카오 가입된 멤버 찾기
+        Member member = service.findMemberByGoogle(email);
+        
+        // 이후 네이버 로직과 동일
+        
+        log.info("멤버 컨트롤러단 member 결과 : " + member);
+        
+        if(member != null) {
+        	
+        	if(member.getSocialLoginType().equals("G")) {
+        		
+        		// 카카오 가입자 로그인
+				session.setAttribute("loginMember", member);
+				
+				return 1;
+        	} else {
+        		
+        		// 일반 or 네이버 or 카카오
+        		
+        		return 2;
+        	}
+        } else {
+        	
+			// 1) 아이디
+			String uuid = "구글_" + UUID.randomUUID().toString();
+        	
+			// 2) 닉네임 길면 자르고
+			if(nickName.length() > 10) {
+				nickName = nickName.substring(0, 10);
+			}
+			
+			// 3) 닉네임 중복 방지
+			String originalNickname = nickName;
+			
+			int count = 1;
+			 
+			while(service.checkNickname(nickName) == 1) {
+                nickName = originalNickname + count;
+                count++;
+			}
+			
+			
+			// 3) 이름은 그냥 카카오(중복 가능하니까)
+			String name = "구글";
+			
+			Member newGoogleMember = Member.builder()
+									.memberId(uuid)
+									.memberPw(pw)
+									.memberEmail(email)
+									.memberName(name)
+									.memberNickname(nickName)
+									.build();
+			
+			Member signinMember = service.googleSignup(newGoogleMember);
+			
+			log.info("멤버 컨트롤러단 사인업 결과 : " + signinMember);
+			
+			if(signinMember != null) {
+				
+				// 회원 가입 성공
+				log.info("구글 회원 가입 시 정보 : " + signinMember);
+				// 로그인 실어주기
+				session.setAttribute("loginMember", signinMember);
+				
+				return 3;
+			} 
+			
+			
+			log.info("멤버 컨트롤러단 사인업 결과 4번 : " + signinMember);
+			// 로그인, 중복, 회원가입 다 실패
+			return 4;
+        }
+	}
 	
 	
 	
