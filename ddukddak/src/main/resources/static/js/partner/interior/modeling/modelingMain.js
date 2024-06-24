@@ -1,80 +1,237 @@
+// Three.js 공간 생성
+const canvas = document.getElementById('canvas');
+const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+renderer.setSize(400, 400);
+renderer.setPixelRatio(window.devicePixelRatio);
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(60, 1, 1, 1000);
+camera.position.set(0, 2, 5);
+camera.lookAt(0, 0, 0);
+camera.updateProjectionMatrix();
+
+const controls = new THREE.OrbitControls(camera, canvas);
+controls.target.set(0, 1, 0);
+
+// 초기 그라데이션 배경 설정
+const initialBackgroundTexture = new THREE.TextureLoader().load('/images/partner/interior/modeling/background1.JPG');
+let gradientTexture = initialBackgroundTexture;
+scene.background = gradientTexture;
+
+// 초기 바닥 텍스처 로드
+const initialFloorTexture = new THREE.TextureLoader().load('/images/partner/interior/modeling/floor1.jpg', function(texture) {
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1, 1);
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+});
+
+// 바닥 두께 설정
+const floorThickness = 0.3;
+const floorGeometry = new THREE.BoxGeometry(10, floorThickness, 10);
+const floorMaterial = new THREE.MeshStandardMaterial({ map: initialFloorTexture });
+const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+floor.position.y = -floorThickness / 2;
+scene.add(floor);
+
+// 초기 벽 텍스처 로드
+const initialWallTexture = new THREE.TextureLoader().load('/images/partner/interior/modeling/wall1.jpg', function(texture) {
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(1, 1);
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+});
+
+// 벽면 재질 설정
+const wallMaterial = new THREE.MeshStandardMaterial({ map: initialWallTexture });
+
+// 벽의 높이 설정
+const wallHeight = 4.5; // 벽의 높이를 적절한 값으로 설정
+
+// 벽 1 (앞쪽 벽)
+const wall1Geometry = new THREE.BoxGeometry(10, wallHeight, 0.3);
+const wall1 = new THREE.Mesh(wall1Geometry, wallMaterial);
+wall1.name = "wall1";
+wall1.position.set(0, wallHeight / 2, -5);
+scene.add(wall1);
+
+// 벽 2 (오른쪽 벽)
+const wall2Geometry = new THREE.BoxGeometry(0.3, wallHeight, 10);
+const wall2 = new THREE.Mesh(wall2Geometry, wallMaterial);
+wall2.name = "wall2";
+wall2.position.set(5, wallHeight / 2, 0);
+scene.add(wall2);
+
+// 벽 3 (뒤쪽 벽)
+const wall3Geometry = new THREE.BoxGeometry(10, wallHeight, 0.3);
+const wall3 = new THREE.Mesh(wall3Geometry, wallMaterial);
+wall3.name = "wall3";
+wall3.position.set(0, wallHeight / 2, 5);
+scene.add(wall3);
+
+// 벽 4 (왼쪽 벽)
+const wall4Geometry = new THREE.BoxGeometry(0.3, wallHeight, 10);
+const wall4 = new THREE.Mesh(wall4Geometry, wallMaterial);
+wall4.name = "wall4";
+wall4.position.set(-5, wallHeight / 2, 0);
+scene.add(wall4);
+
+// 조명 설정
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+scene.add(directionalLight);
+
+// 주변광
+const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+scene.add(ambientLight);
+
+// 애니메이션 루프
+function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+
+    // 카메라의 위치와 방향을 기준으로 조명의 방향 업데이트
+    const cameraDirection = new THREE.Vector3();
+    camera.getWorldDirection(cameraDirection);
+    directionalLight.position.copy(camera.position);
+    directionalLight.position.add(cameraDirection.multiplyScalar(10));
+
+    renderer.render(scene, camera);
+}
+
+function updateTextures() {
+    // 새로운 배경 텍스처를 로드하여 씬 배경을 업데이트
+    gradientTexture = new THREE.TextureLoader().load(backgroundNo);
+    scene.background = gradientTexture;
+
+    // 다시 렌더링
+    renderer.render(scene, camera);
+}
+function updateFloorTextures(texturePath) {
+    // 새로운 바닥 텍스처를 로드하여 바닥의 텍스처를 업데이트
+    const newTexture = new THREE.TextureLoader().load(texturePath, function(texture) {
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(1, 1);
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+
+        floor.material.map = texture;
+        floor.material.needsUpdate = true;
+
+        // 다시 렌더링
+        renderer.render(scene, camera);
+    });
+}
+
+function updateWallTextures(texturePath) {
+    // 새로운 벽 텍스처를 로드하여 벽면의 텍스처를 업데이트
+    const newTexture = new THREE.TextureLoader().load(texturePath, function(texture) {
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(1, 1);
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+
+        wall1.material.map = texture;
+        wall1.material.needsUpdate = true;
+        wall2.material.map = texture;
+        wall2.material.needsUpdate = true;
+        wall3.material.map = texture;
+        wall3.material.needsUpdate = true;
+        wall4.material.map = texture;
+        wall4.material.needsUpdate = true;
+
+        // 다시 렌더링
+        renderer.render(scene, camera);
+    });
+}
+
+animate();
+
+
+
+
+
 // 가구선택 소품들
 const chair = document.querySelector("#chair");
-const electronic = document.querySelector("#electronic");
+const bed = document.querySelector("#bed");
 const table = document.querySelector("#table");
 const thing = document.querySelector("#thing");
 const wall = document.querySelector("#wall");
-const rug = document.querySelector("#rug");
+const electronic = document.querySelector("#electronic");
 
 // 처음의 의자/소파 선택칸만 보이게 하기
 chair.style.display = 'block';
-electronic.style.display = 'none';
+bed.style.display = 'none';
 table.style.display = 'none';
 thing.style.display = 'none';
 wall.style.display = 'none';
-rug.style.display = 'none';
+electronic.style.display = 'none';
 
 // 가구선택버튼
 const addChair = document.querySelector("#add-chair");
-const addElectronic = document.querySelector("#add-electronic");
+const addBed = document.querySelector("#add-bed");
 const addTable = document.querySelector("#add-table");
 const addThing = document.querySelector("#add-thing");
 const addWall = document.querySelector("#add-wall");
-const addRug = document.querySelector("#add-rug");
+const addElectronic = document.querySelector("#add-electronic");
 
 // 의자/소파 버튼 선택 시
 addChair.addEventListener("click", () => {
     chair.style.display = 'block';
+    bed.style.display = 'none';
+    table.style.display = 'none';
+    thing.style.display = 'none';
+    wall.style.display = 'none';
     electronic.style.display = 'none';
-    table.style.display = 'none';
-    thing.style.display = 'none';
-    wall.style.display = 'none';
-    rug.style.display = 'none';
 });
-// 가전제품 버튼 선택 시
-addElectronic.addEventListener("click", () => {
+// 침대 버튼 선택 시
+addBed.addEventListener("click", () => {
     chair.style.display = 'none';
-    electronic.style.display = 'block';
+    bed.style.display = 'block';
     table.style.display = 'none';
     thing.style.display = 'none';
     wall.style.display = 'none';
-    rug.style.display = 'none';
+    electronic.style.display = 'none';
 });
 // 테이블/책상 버튼 선택 시
 addTable.addEventListener("click", () => {
     chair.style.display = 'none';
-    electronic.style.display = 'none';
+    bed.style.display = 'none';
     table.style.display = 'block';
     thing.style.display = 'none';
     wall.style.display = 'none';
-    rug.style.display = 'none';
+    electronic.style.display = 'none';
 });
 // 소품 버튼 선택 시
 addThing.addEventListener("click", () => {
     chair.style.display = 'none';
-    electronic.style.display = 'none';
+    bed.style.display = 'none';
     table.style.display = 'none';
     thing.style.display = 'block';
     wall.style.display = 'none';
-    rug.style.display = 'none';
+    electronic.style.display = 'none';
 });
 // 벽걸이 버튼 선택 시
 addWall.addEventListener("click", () => {
     chair.style.display = 'none';
-    electronic.style.display = 'none';
+    bed.style.display = 'none';
     table.style.display = 'none';
     thing.style.display = 'none';
     wall.style.display = 'block';
-    rug.style.display = 'none';
-});
-// 러그/매트 버튼 선택 시
-addRug.addEventListener("click", () => {
-    chair.style.display = 'none';
     electronic.style.display = 'none';
+});
+// 가전제품 버튼 선택 시
+addElectronic.addEventListener("click", () => {
+    chair.style.display = 'none';
+    bed.style.display = 'none';
     table.style.display = 'none';
     thing.style.display = 'none';
     wall.style.display = 'none';
-    rug.style.display = 'block';
+    electronic.style.display = 'block';
 });
 
 
@@ -136,16 +293,16 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("moveBtn").style.backgroundColor = "initial";
         document.getElementById("rotateBtn").style.backgroundColor = "initial";
         document.getElementById("delBtn").style.backgroundColor = "#b3bcc2";
-
+    
         // sqare를 클릭하면 삭제
         const sqares = document.querySelectorAll(".sqare");
         sqares.forEach(sqare => {
             sqare.removeEventListener("dragstart", dragStart);
             sqare.removeEventListener("dragend", dragEnd);
             sqare.removeEventListener("click", rotateSquare); // 회전 이벤트 리스너 제거
-            sqare.addEventListener("click", deleteSquare);
+            sqare.addEventListener("click", deleteSquareAndModel); // 수정된 부분
         });
-
+    
         // td 요소에서 drop 이벤트 리스너 제거
         const tds = document.getElementsByTagName("td");
         for (const td of tds) {
@@ -153,6 +310,30 @@ document.addEventListener("DOMContentLoaded", function() {
             td.removeEventListener("drop", drop);
         }
     }
+    
+    // sqare를 클릭하면 해당 sqare와 연결된 모델을 삭제
+    function deleteSquareAndModel(e) {
+        const sqare = e.target;
+        deleteSquare(e); // 일단 sqare 삭제
+    
+        // 해당 sqare와 매핑된 모델 가져오기
+        const model = modelsMap.get(sqare.id);
+        if (model) {
+            scene.remove(model); // Three.js scene에서 모델 제거
+        }
+    }
+    
+    // sqare를 클릭하면 삭제
+    function deleteSquare(e) {
+        if (activeTool === "delete") {
+            const sqare = e.target;
+            sqare.parentNode.removeChild(sqare);
+        }
+    }
+    
+
+    // 초기화 및 변수 설정
+    const modelsMap = new Map(); // 모델과 div 요소 간의 매핑을 위한 Map
 
     // 드래그 시작 이벤트
     function dragStart(e) {
@@ -187,7 +368,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (currentTd !== newTd) {
             newTd.appendChild(sqare);
+
+             // 해당 sqare와 매핑된 모델 가져오기
+            const model = modelsMap.get(sqareId);
+            if (model) {
+                // 모델의 위치 업데이트
+                const rectX = sqare.offsetLeft;
+                const rectY = sqare.offsetTop;
+                const modelPositionX = -4 + (1.3 / 80) * (rectX - 303);
+                const modelPositionY = -4 + (1.3 / 80) * (rectY - 103);
+                model.position.set(modelPositionX, 0, modelPositionY);
+            }
         }
+
     }
 
     // sqare를 클릭할 때마다 90도 회전
@@ -198,6 +391,13 @@ document.addEventListener("DOMContentLoaded", function() {
             const currentRotation = parseInt(transform.match(/-?\d+/)[0]);
             const newRotation = currentRotation + 90;
             sqare.style.transform = `rotate(${newRotation}deg)`;
+
+             // 해당 sqare와 매핑된 모델 가져오기
+            const model = modelsMap.get(sqare.id);
+            if (model) {
+                // 모델도 90도 회전
+                model.rotateY(Math.PI / 2); // 90도를 라디안으로 변환하여 회전
+            }
         }
     }
 
@@ -209,27 +409,189 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // 이미지 클릭 시 sqare 생성
-    const images = document.querySelectorAll(".item-box img");
-    const td = document.getElementsByTagName("td");
+    const loader = new THREE.GLTFLoader();
+    let rectX = 0;
+    let rectY = 0;
+
+   // 이미지 클릭 시 sqare 생성 및 glb 파일 로드
+    const images = document.querySelectorAll(".mainImg");
+    const td = document.getElementsByClassName("mainTd");
+    let sqare = 0;
+    let idNo = 0;
 
     images.forEach((img, index) => {
         img.addEventListener("click", () => {
+            
+            // 현재 td에 이미 sqare가 존재하는 경우, 추가하지 않음
             for (let i = 0; i < td.length; i++) {
                 if (td[i].childNodes.length === 0) {
-                    const sqare = document.createElement("div");
+                    sqare = document.createElement("div");
                     sqare.classList.add("sqare");
-                    sqare.id = `sqare-${index}-${i}`; // 각 요소에 고유한 ID 부여
+                    sqare.id = idNo; // 각 요소에 고유한 ID 부여
                     sqare.style.backgroundColor = getColorByIndex(index); // 색상을 설정
                     td[i].appendChild(sqare);
                     sqare.draggable = true;
                     sqare.addEventListener("dragstart", dragStart);
                     sqare.addEventListener("dragend", dragEnd);
+
+                    rectX = sqare.offsetLeft;
+                    rectY = sqare.offsetTop;
+
                     break;
                 }
             }
+
+            
+            const filePath = img.getAttribute("value");
+            if (filePath) {
+                loader.load(filePath, function (gltf) {
+                    const model = gltf.scene;
+
+                    // Compute dimensions of the loaded model's bounding box
+                    const bbox = new THREE.Box3().setFromObject(model);
+                    const modelSize = new THREE.Vector3();
+                    bbox.getSize(modelSize);
+
+                    // Compute scaling factor to fit within the floor plane
+                    const floorSize = new THREE.Vector3(10, 0.3, 10); // Floor plane dimensions
+                    let scaleFactor = 0;
+                    if(filePath == '/images/partner/interior/modeling/chair/chair-5.glb') {
+                        scaleFactor = Math.min(
+                            floorSize.x * 3 / modelSize.x,
+                            floorSize.y * 3 / modelSize.y,
+                            floorSize.z * 3 / modelSize.z
+                        );
+                    } else if(filePath == '/images/partner/interior/modeling/chair/chair-6.glb') {
+                        scaleFactor = Math.min(
+                            floorSize.x * 4 / modelSize.x,
+                            floorSize.y * 4 / modelSize.y,
+                            floorSize.z * 4 / modelSize.z
+                        );
+                    } else {
+                        scaleFactor = Math.min(
+                            floorSize.x * 6 / modelSize.x,
+                            floorSize.y * 6 / modelSize.y,
+                            floorSize.z * 6 / modelSize.z
+                        );
+                    }
+
+                    // Apply uniform scaling
+                    model.scale.set(scaleFactor, scaleFactor, scaleFactor);
+
+                    let modelPositionX = -4 + (1.3 / 80) * (rectX - 303);
+                    let modelPositionY = -4 + (1.3 / 80) * (rectY - 103);
+
+                    if(filePath == '/images/partner/interior/modeling/chair/chair-5.glb') {
+                        model.position.set(modelPositionX, 0.9, modelPositionY);
+                    }else if(filePath == '/images/partner/interior/modeling/chair/chair-9.glb') {
+                        model.position.set(modelPositionX, 0.5, modelPositionY);
+                    } else {
+                        model.position.set(modelPositionX, 0, modelPositionY);
+                    }
+
+                    model.name = idNo;
+                    idNo ++;
+
+                    scene.add(model);
+
+                    // 모델과 sqare의 매핑 저장
+                    modelsMap.set(sqare.id, model);
+
+                    animate();
+                }, undefined, function (error) {
+                    console.error(`Failed to load model from ${filePath}:`, error);
+                });
+            }
+
         });
     });
+
+    // 이미지 클릭 시 sqare 생성 및 glb 파일 로드
+    const wallImages = document.querySelectorAll(".wallImg");
+    const wallTd = document.getElementsByClassName("wallTd");
+    let wallSqare = 0;
+
+    wallImages.forEach((img, index) => {
+        img.addEventListener("click", () => {
+            
+            // 현재 td에 이미 sqare가 존재하는 경우, 추가하지 않음
+            for (let i = 0; i < wallTd.length; i++) {
+                if (wallTd[i].childNodes.length === 0) {
+                    wallSqare = document.createElement("div");
+                    wallSqare.classList.add("sqare");
+                    wallSqare.id = idNo; // 각 요소에 고유한 ID 부여
+                    wallSqare.style.backgroundColor = getColorByIndex(index); // 색상을 설정
+                    wallTd[i].appendChild(wallSqare);
+                    wallSqare.draggable = true;
+                    wallSqare.addEventListener("dragstart", dragStart);
+                    wallSqare.addEventListener("dragend", dragEnd);
+
+                    rectX = wallSqare.offsetLeft;
+                    rectY = wallSqare.offsetTop;
+
+                    break;
+                }
+            }
+
+            
+            const filePath = img.getAttribute("value");
+            if (filePath) {
+                loader.load(filePath, function (gltf) {
+                    const model = gltf.scene;
+
+                    // Compute dimensions of the loaded model's bounding box
+                    const bbox = new THREE.Box3().setFromObject(model);
+                    const modelSize = new THREE.Vector3();
+                    bbox.getSize(modelSize);
+
+                    // Compute scaling factor to fit within the floor plane
+                    const floorSize = new THREE.Vector3(10, 0.3, 10); // Floor plane dimensions
+                    let scaleFactor = 0;
+                    if(filePath == '/images/partner/interior/modeling/wall/wall-1.glb') {
+                        scaleFactor = Math.min(
+                            floorSize.x * 3 / modelSize.x,
+                            floorSize.y * 3 / modelSize.y,
+                            floorSize.z * 3 / modelSize.z
+                        );
+                    } else if(filePath == '/images/partner/interior/modeling/wall/wall-2.glb') {
+                        scaleFactor = Math.min(
+                            floorSize.x * 4 / modelSize.x,
+                            floorSize.y * 4 / modelSize.y,
+                            floorSize.z * 4 / modelSize.z
+                        );
+                    } else {
+                        scaleFactor = Math.min(
+                            floorSize.x * 6 / modelSize.x,
+                            floorSize.y * 6 / modelSize.y,
+                            floorSize.z * 6 / modelSize.z
+                        );
+                    }
+
+                    // Apply uniform scaling
+                    model.scale.set(scaleFactor, scaleFactor, scaleFactor);
+
+                    let modelPositionX = -4 + (1.3 / 80) * (rectX - 303);
+                    let modelPositionY = -4.8 + (1.3 / 80) * (rectY - 103);
+                    
+                    model.position.set(modelPositionX, 2, modelPositionY);
+                        
+                    model.name = idNo;
+                    idNo ++;
+
+                    scene.add(model);
+
+                    // 모델과 sqare의 매핑 저장
+                    modelsMap.set(wallSqare.id, model);
+
+                    animate();
+                }, undefined, function (error) {
+                    console.error(`Failed to load model from ${filePath}:`, error);
+                });
+            }
+
+        });
+    });
+
 
     // 색상 설정 함수
     function getColorByIndex(index) {
@@ -256,48 +618,68 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+// 배경색 가져오기
+const colorBox = document.querySelectorAll(".colorBox");
+let backgroundNo = "";
 
+colorBox.forEach(element => {
+    element.addEventListener("click", e => {
+        // Remove border from all colorBox elements
+        colorBox.forEach(box => {
+            box.style.border = "none";
+        });
 
-// Three.js 공간 생성
-const canvas = document.getElementById('canvas');
-const renderer = new THREE.WebGLRenderer({ canvas });
-renderer.setSize(400, 400);
+        // Apply border to the clicked colorBox
+        e.target.style.border = "1px solid #b3bcc2";
 
-const scene = new THREE.Scene();
+        var no = e.target.attributes[1].value;
+        backgroundNo = `/images/partner/interior/modeling/background${no}.JPG`;
 
-const camera = new THREE.PerspectiveCamera(45, 1, 1, 1000);
-camera.position.set(0, 10, 20);
-camera.lookAt(0, 0, 0);
-
-const controls = new THREE.OrbitControls(camera, canvas);
-controls.target.set(0, 0, 0);
-
-const floorGeometry = new THREE.PlaneGeometry(10, 10, 10, 10);
-const floorMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff }); // White color, no wireframe
-const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-floor.rotation.x = -Math.PI / 2;
-scene.add(floor);
-
-// Lighting
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 5, 5).normalize();
-scene.add(light);
-
-
-// GLTFLoader to load the model
-const loader = new THREE.GLTFLoader();
-loader.load('/images/partner/interior/modeling/OlosChair.glb', function (gltf) {
-    scene.add(gltf.scene);
-    animate();
-}, undefined, function (error) {
-    console.error(error);
+        // 로드된 텍스처를 업데이트
+        updateTextures();
+    });
 });
 
+// 바닥 텍스처 바꾸기
+const floorBox = document.querySelectorAll(".floorBox");
+let floorBackground = "";
 
-function animate() {
-    requestAnimationFrame(animate);
-    controls.update();
-    renderer.render(scene, camera);
-}
+floorBox.forEach(element => {
+    element.addEventListener("click", e => {
+        // Remove border from all floorBox elements
+        floorBox.forEach(box => {
+            box.style.border = "none";
+        });
 
-animate();
+        // Apply border to the clicked floorBox
+        e.target.style.border = "1px solid #b3bcc2";
+
+        var no = e.target.attributes[1].value;
+        floorBackground = `/images/partner/interior/modeling/floor${no}.jpg`;
+
+        // 로드된 텍스처를 업데이트
+        updateFloorTextures(floorBackground);
+    });
+});
+
+// 벽 텍스처 바꾸기
+const wallBox = document.querySelectorAll(".wallBox");
+let wallBackground = "";
+
+wallBox.forEach(element => {
+    element.addEventListener("click", e => {
+        // Remove border from all wallBox elements
+        wallBox.forEach(box => {
+            box.style.border = "none";
+        });
+
+        // Apply border to the clicked wallBox
+        e.target.style.border = "1px solid #b3bcc2";
+
+        var no = e.target.attributes[1].value;
+        wallBackground = `/images/partner/interior/modeling/wall${no}.jpg`;
+
+        // 로드된 텍스처를 업데이트
+        updateWallTextures(wallBackground);
+    });
+});

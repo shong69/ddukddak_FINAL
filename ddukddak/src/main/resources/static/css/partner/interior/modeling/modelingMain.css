@@ -97,8 +97,8 @@
 }
 
 #floor-plan table {
-  width: 600px;
-  height: 600px;
+  width: 610px;
+  height: 610px;
   margin-top: 100px;
   margin-left: 300px;
   background-color: white;
@@ -110,11 +110,32 @@
   padding: 0;
 }
   
-#floor-plan td {
+.mainTd  {
   margin: 0;
   padding: 0;
   width: 100px;
   height: 100px;
+}
+
+.wallTd1 {
+  margin: 0;
+  padding: 0;
+  width: 100px;
+  height: 10px;
+}
+
+.wallTd2 {
+  margin: 0;
+  padding: 0;
+  width: 10px;
+  height: 100px;
+}
+
+.wallTdSide {
+  margin: 0;
+  padding: 0;
+  width: 10px;
+  height: 10px;
 }
 
 
@@ -147,7 +168,157 @@
 #canvas {
   width: 400px;
   height: 400px;
-  border: 1px solid black;
+  border: 1px solid var(--gray4);
+}
+
+/* 바닥, 벽지 바꾸기 */
+#floorAndwall {
+  position: absolute;
+  top: 500px;
+  left: 330px;
+  display: flex;
+  z-index: 10;
+  height: 400px;
+}
+
+#floorTextureBox,
+#wallTextureBox {
+  width: 100px;
+  border-radius: 20px;
+  border: 2px solid #b3bcc2;
+  background-color: #f7f7f7;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#floorTextureBox > div,
+#wallTextureBox > div {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+#floorTextureBox > h4,
+#wallTextureBox > h4 {
+  margin-bottom: 8px;
+  background-color: var(--gray3);
+  color: white;
+  padding: 0 5px;
+}
+
+#floorTextureBox > div:nth-child(2) {
+  border: 1px solid #b3bcc2;
+  background-image: url('/images/partner/interior/modeling/floor1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#floorTextureBox > div:nth-child(3) {
+  background-image: url('/images/partner/interior/modeling/floor2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#floorTextureBox > div:nth-child(4) {
+  background-image: url('/images/partner/interior/modeling/floor3.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#floorTextureBox > div:nth-child(5) {
+  background-image: url('/images/partner/interior/modeling/floor4.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#floorTextureBox > div:nth-child(6) {
+  background-image: url('/images/partner/interior/modeling/floor5.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#wallTextureBox > div:nth-child(2) {
+  border: 1px solid #b3bcc2;
+  background-image: url('/images/partner/interior/modeling/wall1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#wallTextureBox > div:nth-child(3) {
+  background-image: url('/images/partner/interior/modeling/wall2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#wallTextureBox > div:nth-child(4) {
+  background-image: url('/images/partner/interior/modeling/wall3.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#wallTextureBox > div:nth-child(5) {
+  background-image: url('/images/partner/interior/modeling/wall4.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#wallTextureBox > div:nth-child(6) {
+  background-image: url('/images/partner/interior/modeling/wall5.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+
+/* 모델링 배경색깔 바꾸기 */
+#modelingContainer {
+  display: flex;
+}
+
+#backgroundColorBox {
+  width: 100px;
+  border-radius: 20px;
+  border: 2px solid #b3bcc2;
+  background-color: #f7f7f7;
+  margin-right: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#backgroundColorBox > div {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+#backgroundColorBox > div:nth-child(1) {
+  background: linear-gradient(#E4F5FF, #FFECD6);
+  border: 1px solid #b3bcc2;
+}
+
+#backgroundColorBox > div:nth-child(2) {
+  background: linear-gradient(#FFE4EB, #D6FFF8);
+}
+
+#backgroundColorBox > div:nth-child(3) {
+  background: linear-gradient(#E4FFED, #F2D6FF);
+}
+
+#backgroundColorBox > div:nth-child(4) {
+  background: linear-gradient(#FFF0E4, #FFD6D6);
+}
+
+#backgroundColorBox > div:nth-child(5) {
+  background: linear-gradient(#FFFFFF, #C9C9C9);
 }
 
 .sqare {
@@ -164,7 +335,7 @@
 
   
 #open {
-  background-color: black;
+  background-color: var(--gray4);
   border: none;
   color: var(--white);
   font-size: 20px;
@@ -178,6 +349,7 @@
   align-items: center;
   flex-direction: column;
   margin: 30px;
+  margin-left: 150px;
   width: 300px;
   height: 350px;
 }
