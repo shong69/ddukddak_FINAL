@@ -74,7 +74,7 @@ public class MyHouseBoardController {
 	
 	@GetMapping("detail/{boardNo:[0-9]+}")
 	public String myHouseDetail(@PathVariable("boardNo") int boardNo,
-			@SessionAttribute(value="loginMember", required=false) Member loginMember,
+								@SessionAttribute(value="loginMember", required=false) Member loginMember,
 								Model model,
 								RedirectAttributes ra,
 								HttpServletRequest req,
@@ -249,9 +249,60 @@ public class MyHouseBoardController {
 	}
 	
 	@GetMapping("updateMyHouse")
-	public String updateMyHouse(@RequestParam("boardNo") int boardNo) {
+	public String updateMyHouse(@RequestParam("boardNo") int boardNo,
+								@SessionAttribute(value="loginMember", required=false) Member loginMember,
+								RedirectAttributes ra,
+								Model model) {
+		
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("boardNo", boardNo);
+		
+		Board board = service.selectBoard(map);
+		
+		if(loginMember == null || loginMember.getMemberNo() != board.getMemberNo()) {
+			ra.addFlashAttribute("message", "접근 권한이 없습니다.");
+			return "redirect:/myHouse/detail/" + boardNo;
+		}
+		
+		log.info("boardNo : " + board.getBoardNo());
+		
+		model.addAttribute("board", board);
 		
 		return "board/myHouseBoard/updateMyHouse";
+	}
+	
+	
+	@PostMapping("updateMyHouse")
+	public String updateMyHouse(@RequestParam("boardNo") int boardNo,
+								@RequestParam("boardTitle") String inputBoardTitle,
+								@RequestParam("boardContent") String inputBoardContent,
+								@RequestParam("images") List<MultipartFile> images,
+								@SessionAttribute("loginMember") Member loginMember,
+								RedirectAttributes ra) throws IllegalStateException, IOException {
+		
+		Board board = new Board();
+		
+		board.setBoardNo(boardNo);
+		board.setBoardTitle(inputBoardTitle);
+		board.setBoardContent(inputBoardContent);
+		
+		int result = service.updateMyHouse(board, images);
+		String path = null;
+		String message = null;
+		
+		if(result > 0) {
+			path = "/myHouse/detail/" + boardNo;
+			message = "집들이 게시글 수정이 완료되었습니다.";
+		} else {
+			path = "/myHouse/updateMyHouse";
+			message = "집들이 게시글 수정에 실패하였습니다.";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
 	}
 
 	

@@ -26,21 +26,29 @@
             <!-- 중간 시공사 컨테이너 -->
             <div class="topContainer">
                 <div class="imgContainer">
-                    <img class="portLogo" src="/images/profile/main.jpg"></img>
+                    <img class= "portLogo" th:unless="${portfolio.profileImg}" th:src="#{user.default.image}">
+                    <img class= "portLogo" th:if="${portfolio.profileImg}" th:src="${portfolio.profileImg}">
                 </div>
                 <div class="nameContainer">
-                    <h2 class="portName">캣츠코</h2>
+                    <h2 class="portName" th:text="${portfolio.partnerBusinessName}">캣츠코</h2>
                 </div>
                 <div class="buttonContainer">
-                    <button class="interiorMatchBtn">컨택하기</button>
+                    <button class="interiorMatchBtn" id="interiorMatchBtn">컨택하기</button>
                 </div>
             </div>
 
             <!-- 시공사 이름 + 프로젝트 캐러셀 컨테이너 -->
             <div class="midContainer">
-                <h1 class="portTitle">외국계 글로벌 데비마이어 목동 사옥</h1>
+                <h1 class="portTitle" th:text="${project.projectName}">외국계 글로벌 데비마이어 목동 사옥</h1>
                 
-                <th:block th:replace="~{/common/fragments/portfolioCarouselDetail}"></th:block>
+                <div class="projectImgContainer">
+                    <th:block th:unless="${#lists.isEmpty(project.imgList)}" th:each="image : ${project.imgList}">
+                      <img th:src="|${image.uploadImgPath}${image.uploadImgRename}|" class="boardAd mySlides">
+                    </th:block>
+                    <h4 class="adViewMore">1/6+</h4>
+                    <a class="prev"><i class="fa-solid fa-chevron-left"></i></a>
+                    <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
+                  </div>
             </div>
 
 
@@ -50,14 +58,14 @@
                     <h1>프로젝트 정보</h1>
                 </div>
                 <div class="detailContent">
-                    <h3>남양주 별내동</h3>
-                    <h3>2024-03-25</h3>
-                    <h3>43평</h3>
-                    <h3>리모델링</h3>
-                    <h3>4000만원대</h3>
+                    <h3 th:text="|지역 : ${project.region}|">남양주 별내동</h3>
+                    <h3 th:text="|시공일 : ${project.constructionYear}|">2024-03-25</h3>
+                    <h3 th:text="|평수 : ${project.workArea}평|">43평</h3>
+                    <h3 th:text="|작업형태 : ${project.workForm}|">리모델링</h3>
+                    <h3 th:text="|시공가격 : ${project.constructionCost}원|">4000만원대</h3>
                 </div>
                 <div class="detailExplination">
-                    <div class="detailTextarea">서울시 강남구에 위치한 현대적 사무실 리모델링 프로젝트는 ABC 인테리어 아키텍처 회사에 의해 성공적으로 완공되었습니다. 이 프로젝트의 주요 목표는 효율적인 작업 환경을 제공하는 동시에 세련된 디자인을 구현하는 것이었습니다.
+                    <div class="detailTextarea" th:text="${project.projectContent}">서울시 강남구에 위치한 현대적 사무실 리모델링 프로젝트는 ABC 인테리어 아키텍처 회사에 의해 성공적으로 완공되었습니다. 이 프로젝트의 주요 목표는 효율적인 작업 환경을 제공하는 동시에 세련된 디자인을 구현하는 것이었습니다.
 
                         리모델링 전, 사무실은 어두운 색상과 좁은 공간으로 인해 직원들의 생산성이 저하되고 있었습니다. 이를 개선하기 위해 ABC 인테리어 아키텍처 팀은 다음과 같은 작업을 수행했습니다:
                         
@@ -74,6 +82,9 @@
 
             <!-- 프로젝트 리스트 컨테이너 -->
             <div class="botContainer">
+
+                <h1 th:text="|${portfolio.partnerBusinessName} 의 다른 프로젝트보기|">다른 프로젝트 보기</h1>
+
                 <!-- 프로젝트 리스트 불러오기 -->
                 <th:block th:replace="~{common/fragments/interiorProjectList.html}"></th:block>
 
@@ -86,10 +97,17 @@
         <div id="portDetailTop">↑</div>
 
 
+
         <!-- 푸터 -->
         <th:block th:replace="~{common/fragments/footer}"></th:block>
-        <script src="/js/common/fragments/portfolioCarousel.js"></script>
-        <script src="/js/partner/interior/interiorPortfolio.js"></script>
+        <!-- <script src="/js/common/fragments/portfolioCarousel.js"></script> -->
+        <!-- <script src="/js/partner/interior/interiorPortfolio.js"></script> -->
+
+        <script th:inline="javascript">
+            const loginMember = /*[[${session.loginMember}]]*/ "로그인 회원";
+        </script>
+
+        <script src="/js/common/redirectToLogin.js"></script>
         <script src="/js/partner/interior/interiorPortfolioDetail.js"></script>
         <script src="/js/partner/interior/interiorPortfolio-dom.js"></script>
         <script src="https://kit.fontawesome.com/7f3fe5627c.js" crossorigin="anonymous"></script>

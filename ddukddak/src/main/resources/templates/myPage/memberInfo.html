@@ -29,7 +29,6 @@
                 <section>
                         <table class="member-info">
                             <tbody>
-
                                 <tr class="profile-img-area">
                                     <th>사진</th>
                                     <td>
@@ -216,34 +215,37 @@
                                     <th>배송지</th>
                                     <td colspan="3">
                                         <div class="before-modify">
-                                            <div id="phoneDiv" th:text="${session.loginMember.memberAddr}">경남 사천시 서포면 선창부두길 11-2 선전리</div>
+                                            <div id="addrDiv">경남 사천시 서포면 선창부두길 11-2 선전리</div>
                                             <div><button class="myPageSubBtn" type="button">주소 변경</button></div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr style='display: none;' class="change-address-area">
                                     <th>배송지</th>
-                                    <td>
-                                        <div>
-                                            <div class="address-input-area">
-                                                <input type="text" name="memberAddr" placeholder="우편번호" maxlength="6" id="postcode" readonly>                       
-                                            
-                                                <button type="button" onclick="sample6_execDaumPostcode()" id="searchAddress">검색</button>
+                                    <td colspan="3">
+                                        <div class="addr-area">
+                                            <div>
+                                                <div class="address-input-area">
+                                                    <input type="text" name="memberAddr" placeholder="우편번호" maxlength="6" id="postcode" readonly>                       
+                                                
+                                                    <button type="button" onclick="sample6_execDaumPostcode()" id="searchAddress">검색</button>
+                                                </div>
+                        
+                                                <div class="address-input-area">
+                                                    <input type="text" name="memberAddr" placeholder="도로명/지번 주소" id="address" readonly>
+                                                </div>
+                                                
+                                                <div class="address-input-area">
+                                                    <input type="text" name="memberAddr" placeholder="상세 주소" id="detailAddress" readonly>
+        
+                                                </div>
                                             </div>
-                    
-                                            <div class="address-input-area">
-                                                <input type="text" name="memberAddr" placeholder="도로명/지번 주소" id="address" readonly>
-                                            </div>
-                                            
-                                            <div class="address-input-area">
-                                                <input type="text" name="memberAddr" placeholder="상세 주소" id="detailAddress" readonly>
-    
+                                            <div>
+                                                <button class="addrConfirmBtn confirm myPageConfirmCancelBtn" type="button">확인</button>
+                                                <button class="addrCancel  cancel myPageConfirmCancelBtn" type="button">취소</button>
                                             </div>
                                         </div>
-                                        <div>
-                                            <button class="addrConfirmBtn confirm myPageConfirmCancelBtn" type="button" disabled>확인</button>
-                                            <button class="cancel myPageConfirmCancelBtn" type="button">취소</button>
-                                        </div>
+
 
                                     </td>
                                 </tr>
@@ -290,11 +292,14 @@
     </main>
     <th:block th:replace="~{common/fragments/footer}"></th:block>
 
-    <!-- 회원 프로필 이미지 변경시 사용할 변수 js 변수로 얻어놓기 -->
-    <script th:inline="javascript"><!--타임리프 적용해서 자바스크립트 사용함 알림-->
-        const loginMember = /*[[session.loginMember]]*/ '로그인 한 회원';
+
+    <script th:inline="javascript">
+        const loginMember = /*[[${session.loginMember}]]*/ '로그인 한 회원';
+        const loginType = /*[[${session.loginMember.socialLoginType}]]*/ "로그인 타입";
         const loginMemberProfileImg = /*[[${session.loginMember.profileImg}]]*/ "회원프로필이미지";
+        const loginMemberAddress = /*[[${session.loginMember.memberAddr}]]*/ "회원 주소";
     </script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="/js/myPage/memberInfo.js"></script> 
 </body>
 

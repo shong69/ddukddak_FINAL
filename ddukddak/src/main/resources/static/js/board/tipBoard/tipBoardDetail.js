@@ -110,3 +110,53 @@ if(boardLike != null) {
   
   })
 }
+
+// ===============================================================
+
+// 집들이 게시글 삭제
+const deleteBtn = document.querySelector("#deleteBtn");
+
+if(deleteBtn != null) {
+  deleteBtn.addEventListener("click", () => {
+
+    console.log(boardNo);
+  
+    if(!confirm("해당 노하우 게시물을 삭제하기겠습니까?")) {
+  
+      alert("게시글 삭제가 취소되었습니다");
+      return;
+  
+    }
+  
+    fetch("/tip/deleteTip?boardNo=" + boardNo + "&boardCode=" + boardCode, {
+      method : "DELETE"
+    })
+    .then(resp => resp.text())
+    .then(result => {
+      
+      if (result > 0) {
+        alert("게시글 삭제가 완료되었습니다.");
+        location.href = "/tip/main?boardCode=" + boardCode;
+      } else {
+        alert("게시글 삭제에 실패하였습니다.");
+        location.href = "/tip/detail/" + boardNo;
+      }
+  
+    })
+    
+  
+  });
+}
+
+// ==================================================================
+
+// 노하우 게시글 수정
+const updateBtn = document.querySelector("#updateBtn");
+if (updateBtn != null) {
+
+  updateBtn.addEventListener("click", () => {
+  
+    location.href = "/tip/updateTip?boardNo=" + boardNo;
+  
+  });
+}

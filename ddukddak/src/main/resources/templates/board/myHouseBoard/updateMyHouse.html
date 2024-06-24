@@ -6,11 +6,14 @@
   <title>뚝딱뚝딱 : 커뮤니티</title>
 
   <link rel="stylesheet" href="/css/common/main.css">
+  <link rel="stylesheet" href="/css/board/myHouseBoard/updateMyHouse.css">
   <link rel="stylesheet" href="/css/common/fragments/header.css">
+  <link rel="stylesheet" href="/css/common/button.css">
   <link rel="stylesheet" href="/css/common/fragments/footer.css">
   <link rel="stylesheet" href="/css/common/fragments/board/side-category.css">
-  <link rel="stylesheet" href="/css/common/button.css">
   <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
+
+  <script src="https://kit.fontawesome.com/fa0ef5fd68.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -27,15 +30,54 @@
 
         <div class="searchArea">
 
-          <span th:text="${application.boardTypeList[0].boardName}" class="title">집들이</span>
-          <!-- <span>
-              <form class="searchForm">
-                <input type="text" placeholder="집들이 검색" class="searchBox">
-                <i class="fa-solid fa-magnifying-glass" id="searchBtn"></i>
-              </form>
-            </span> -->
-
+          <div th:text="|${application.boardTypeList[0].boardName} 이미지 수정|" class="title"></div>
+          
         </div>
+
+        <form th:action="@{/myHouse/updateMyHouse(boardNo=${board.boardNo})}" method="POST" id="updateMyHouseForm" enctype="multipart/form-data">
+          
+          <div class="input-img-area">
+            <div class="projectImg thumbnail">
+                <label th:for="|img${board.imageList[0].uploadImgOrder}|">
+                    <img class="preview">
+                </label>
+                <input type="file" name="images" class="inputImg" th:id="|img${board.imageList[0].uploadImgOrder}|" accept="image/*">
+                <span class="delete-img">&times;</span>
+            </div>
+
+            <div class="preview-img">
+
+              <th:block th:each="img, iterStat : ${board.imageList}" th:object="${img}">
+                  <th:block th:if="${iterStat.index > 0}">
+                      <div class="projectImg previewImg">
+                          <label th:for="|img*{uploadImgOrder}|">
+                              <img class="preview">
+                          </label>
+                          <input type="file" name="images" class="inputImg" th:id="|img*{uploadImgOrder}|" accept="image/*">
+                          <span class="delete-img">&times;</span>
+                      </div>
+                  </th:block>
+              </th:block>
+
+              </div>
+          </div>
+
+          <div class="titleInput">
+            <h1>집들이 제목</h1>
+              <input type="text" placeholder="집들이 제목" id="boardTitle" name="boardTitle" th:value="${board.boardTitle}">
+          </div>
+
+          <div class="contentInput">
+            <h1>집들이 내용</h1>
+              <textarea placeholder="집들이 내용 입력" id="boardContent" name="boardContent" th:text="${board.boardContent}"></textarea>
+          </div>
+
+          <div class="btnArea">
+            <button class="boardCreateBtn" id="updateBtn">수정</button>
+            <button type="button" class="boardCreateBtn" id="cancelBtn">취소</button>
+          </div>
+
+        </form>
 
       </div>
 
@@ -45,5 +87,28 @@
   
 
   <th:block th:replace="~{common/fragments/footer}"></th:block>
+
+  <!-- 이미지 미리 보기 설정 -->
+  <script th:inline="javascript">
+    const boardNo = /*[[${board.boardNo}]]*/ "게시글 번호";
+    const imgList = /*[[${board.imageList}]]*/ [];
+    const previewList = document.querySelectorAll('img.preview');
+
+    const orderList = [];   // 기존에 존재하던 이미지를 순서를 기록하기 위한 배열 생성
+
+    for(let img of imgList) { 
+
+        previewList[img.uploadImgOrder].src = img.uploadImgPath + img.uploadImgRename;
+
+        orderList.push(img.uploadImgOrder);
+        // 다섯개 이미지가 전부다 있었다
+        // -> [0,1,2,3,4]
+
+    }
+
+  </script>
+
+  <script src="/js/common/fragments/board/side-category.js"></script>
+  <script src="/js/board/myHouseBoard/updateMyHouse.js"></script>
 </body>
 </html>

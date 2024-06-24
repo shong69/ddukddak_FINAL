@@ -87,11 +87,12 @@ public class ContactInteriorController {
 		
 		Portfolio portfolio = service.selectPortfolio(portfolioNo);
 		
-		log.info("portfolio : " + portfolio);
         
 		Map<String, Object> map = service.selectProjectList(portfolioNo);
 		
 		portfolio.setMainProject( (Project) map.get("mainProject") );
+		
+		log.info("portfolio : " + portfolio);
 		
 		List<Project> projectList = (List<Project>) map.get("projectList");
 		
@@ -113,22 +114,27 @@ public class ContactInteriorController {
         return projectChunks;
     }
 	
-	@GetMapping("interiorPortfolioDetail/{portfolioNo:[0-9]+}")
-	public String interiorPortfolioDetail(Model model, @PathVariable("portfolioNo") int portfolioNo) {
+	@GetMapping("interiorPortfolioDetail/{projectNo:[0-9]+}")
+	public String interiorPortfolioDetail(Model model, 
+										  @PathVariable("projectNo") int projectNo,
+										  @RequestParam("portfolioNo") int portfolioNo) {
 		
-//		Project mainProject = service.selectMainProject(portfolioNo);
-//		
-//		List<Project> projectList = service.selectProjectList(portfolioNo);
-//		
-//		log.info("portfolio : " + mainProject.toString());
-//		log.info("projectList : " + projectList.toString());
-//		List<List<Project>> portfolioChunks = chunkBoards(projectList, 3);
-//		
-//		if (mainProject != null) {
-//			model.addAttribute("mainPortfolio", mainProject);
-//			model.addAttribute("portfolioChunks", portfolioChunks);
-//			
-//		}
+		
+		Portfolio portfolio = service.selectPortfolio(portfolioNo);
+		
+		Project project = service.selectProject(projectNo);
+		
+		log.info("project : " + project);
+		
+		Map<String, Object> map = service.selectProjectList(portfolioNo);
+		
+		List<Project> projectList = (List<Project>) map.get("projectList");
+		
+		List<List<Project>> projectChunks = chunkProjects(projectList, 3);
+		
+		model.addAttribute("project", project);
+		model.addAttribute("projectChunks", projectChunks);
+		model.addAttribute("portfolio", portfolio);
 		
 		return "partner/interior/projectDetail";
 	}

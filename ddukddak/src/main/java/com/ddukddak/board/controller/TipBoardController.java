@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -227,13 +228,13 @@ public class TipBoardController {
   		
     		// 후에 리스트, 상세페이지 다 되면 상세페이지로 넘어가게 수정
     		path= "/tip/detail/" + boardNo;
-    		message = "집들이 게시글 등록이 완료되었습니다.";
+    		message = "노하우 게시글 등록이 완료되었습니다.";
     		
     		
     	} else {
     		
     		path = "/tip/main";
-    		message = "집들이 게시글 등록에 실패하였습니다.";
+    		message = "노하우 게시글 등록에 실패하였습니다.";
     		
     	}
 	    
@@ -245,4 +246,85 @@ public class TipBoardController {
 		return "redirect:" + path;
 	}
 	
+	@DeleteMapping("deleteTip")
+	@ResponseBody
+	public int deleteTip(@RequestParam("boardNo") int boardNo,
+							 @RequestParam("boardCode") int boardCode,
+							 RedirectAttributes ra) {
+		
+		log.info("boardNo : " + boardNo);
+
+		return service.deleteTip(boardNo);
+	}
+	
+	@GetMapping("updateTip")
+	public String updateMyHouse(@RequestParam("boardNo") int boardNo,
+								@SessionAttribute(value="loginMember", required=false) Member loginMember,
+								RedirectAttributes ra,
+								Model model) {
+		
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("boardNo", boardNo);
+		
+		Board board = myHouseService.selectBoard(map);
+		
+		if(loginMember == null || loginMember.getMemberNo() != board.getMemberNo()) {
+			ra.addFlashAttribute("message", "접근 권한이 없습니다.");
+			return "redirect:/tip/detail/" + boardNo;
+		}
+		
+		log.info("이미지 : " + board.getImageList());
+		
+		model.addAttribute("board", board);
+		
+		return "board/tipBoard/updateTip";
+	}
+	
+	
+	@PostMapping("updateTip")
+	public String updateTip(@RequestParam("boardNo") int boardNo,
+								@RequestParam("boardTitle") String inputBoardTitle,
+								@RequestParam("boardContent") String inputBoardContent,
+								@RequestParam("images") List<MultipartFile> images,
+								@SessionAttribute("loginMember") Member loginMember,
+								RedirectAttributes ra) throws IllegalStateException, IOException {
+		
+		Board board = new Board();
+		
+		board.setBoardNo(boardNo);
+		board.setBoardTitle(inputBoardTitle);
+		board.setBoardContent(inputBoardContent);
+		
+		int result = myHouseService.updateMyHouse(board, images);
+		String path = null;
+		String message = null;
+		
+		if(result > 0) {
+			path = "/tip/detail/" + boardNo;
+			message = "노하우 게시글 수정이 완료되었습니다.";
+		} else {
+			path = "/tip/updateMyHouse";
+			message = "노하우 게시글 수정에 실패하였습니다.";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

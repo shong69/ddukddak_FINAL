@@ -524,20 +524,20 @@ public class eCommerceServiceImpl implements eCommerceService{
     }
 
 	//리뷰 개수 리턴
-//	@Override
-//	public int reviewCount(int productNo) {
-//		return mapper.reviewCount(productNo);
-//	}
+	@Override
+	public int reviewCount(int productNo) {
+		return mapper.reviewCount(productNo);
+	}
 
 
 	//리뷰 평점 리턴
-//	@Override
-//	public double avgScore(int productNo) {
-//		log.info("평점 결과:{}",mapper.avgScore(productNo));
-//		Double avgScore = mapper.avgScore(productNo);
-//
-//		return avgScore!= null?avgScore:0.0;
-//	}
+	@Override
+	public double avgScore(int productNo) {
+		log.info("평점 결과:{}",mapper.avgScore(productNo));
+		Double avgScore = mapper.avgScore(productNo);
+
+		return avgScore!= null?avgScore:0.0;
+	}
 	
 	
 	
@@ -582,20 +582,6 @@ public class eCommerceServiceImpl implements eCommerceService{
 		return mapper.paidUpdate(merchantUid);
 	}
 
-
-	//리뷰 개수 리턴
-	@Override
-	public int reviewCount(int productNo) {
-		return mapper.reviewCount(productNo);
-	}
-
-
-	//리뷰 평점 리턴
-	@Override
-	public double avgScore(int productNo) {
-		log.info("평점 결과:{}",mapper.avgScore(productNo));
-		return mapper.avgScore(productNo);
-	}
 
 	// 사용자 결제 취소 업데이트
 	@Override
