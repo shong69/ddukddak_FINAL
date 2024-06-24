@@ -52,9 +52,12 @@ async function customerChatting () {
 	div1.classList.add("target-name");
 	div1.innerText = "뚝딱봇";
 
+	/* 처음 선택값 보관배열 */
+	let firstValue = "";
+
 	const div2 = document.createElement("div");
 	div2.classList.add("chat");
-	div2.innerText="아래 항목 중 원하시는 문의 종류를 선택해 주세요";
+	div2.innerText="아래 항목 중 원하시는 문의 종류를 선택해 주세요.";
 	div.append(div1, div2);
 	categorys.forEach(category=>{
 		const p =document.createElement("button");
@@ -63,7 +66,52 @@ async function customerChatting () {
 		p.classList.add("c-chat")
 		p.innerText = category;
 		div.append(p);
+
+
+		p.addEventListener("click", e => {
+			firstValue = p.innerText;
+
+			const li = document.createElement("li");
+			li.classList.add("target-chat");
+
+			const img = document.createElement("img");
+			img.src = "/images/default/main.jpg";
+
+			const div = document.createElement("div");
+			const div1= document.createElement("div");
+			div1.classList.add("target-name");
+			div1.innerText = "뚝딱봇";
+
+			const div2 = document.createElement("div");
+			div2.classList.add("chat");
+			div2.innerText="선택하신 문의 종류에 해당하는 질문을 작성해주세요.";
+
+			div.append(div1, div2);
+			li.append(img, div);
+			chattingContent.append(li);
+
+			/* input disable 풀기 */
+			document.getElementById('inputChatting').removeAttribute('disabled');
+		})
 	});
+
+	document.querySelector("#send").addEventListener("click", () => {
+		const obj = {
+			"firstValue" : firstValue,
+			"secondValue" : document.getElementById('inputChatting').value
+		}
+		
+			/* 입력값 비동기로 보내기 */
+			fetch("/eCommerce/selectBestProduct", {
+			method: "POST",
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify(obj)
+			})
+			.then(resp => resp.text())
+			.then(result => {
+				console.log(result);
+			});
+	})
 
 	const span = document.createElement("span");
 	span.classList.add("chatDate");
