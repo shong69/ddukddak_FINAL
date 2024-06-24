@@ -48,6 +48,7 @@
                                     <th></th>
                                     <th>회원 아이디</th>
                                     <th>회원 이메일</th>
+                                    <th>회원 연락처</th>
                                     <th>가입일</th>
                                     <th>탈퇴 여부</th>
                                     <th></th>
@@ -83,9 +84,12 @@
                                         <td id="imgBox"><img th:src="*{profileImg}"></td>
 
                                         <!-- 회원 아이디 -->
-                                        <td th:text="*{memberId}">회원 아이디</td>
+                                        <td th:text="*{memberId}" class="member-id">회원 아이디</td>
 
                                         <!-- 회원 이메일 -->
+                                        <td th:text="*{memberEmail}">회원 이메일</td>
+
+                                        <!-- 회원 휴대폰 -->
                                         <td th:text="*{memberTel}">회원 번호</td>
 
                                         <!-- 가입일 -->

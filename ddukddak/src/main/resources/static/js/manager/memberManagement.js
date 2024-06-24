@@ -1,3 +1,28 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const memberIds = document.querySelectorAll('.member-id');
+
+    memberIds.forEach(idElement => {
+        let memberId = idElement.textContent;
+        
+        // 구글 아이디 포맷
+        if (memberId.startsWith('구글_')) {
+            memberId = '구글 유저';
+        }
+
+        // 카카오 아이디 포맷
+        else if (memberId.startsWith('카카오_')) {
+            memberId = '카카오 유저';
+        }
+
+        else if (memberId.startsWith('네이버_')) {
+            memberId = '네이버 유저';
+        }
+
+        // 포맷된 아이디로 교체
+        idElement.textContent = memberId;
+    });
+});
+
 // ***** 1. 체크 박스 ***** 
 const selectAll = document.querySelector('thead input[type="checkbox"]');
 const selectItems = document.querySelectorAll('tbody input[type="checkbox"]');
@@ -37,6 +62,7 @@ delBtn.forEach(button => {
 
 // 서버로 값 전달 함수
 async function handleApproval(action, e) {
+
     const selectedItems = Array.from(selectItems).filter(checkbox => checkbox.checked);
 
     if (selectedItems.length > 0) {
@@ -56,7 +82,7 @@ async function handleApproval(action, e) {
     const button = e.currentTarget;
     const row = button.closest('tr');
     const memberNo = row.querySelector('td:nth-child(2)').textContent;
-    const memberTel = row.querySelector('td:nth-child(5)').textContent;
+    const memberTel = row.querySelector('td:nth-child(6)').textContent;
     console.log(memberNo);
 
     try {
@@ -74,7 +100,14 @@ async function handleApproval(action, e) {
         // 2. 회원 탈퇴 시 문자 발송
         if (updateResult == 1) { // 파트너 DEL 'W' -> 'Y' OR 'N' 성공
 
-            const smsResponse = await fetch(`/sms/sendOne/${action}`, {
+            // 소셜 로그인으로 번호 없는 친구들 처리
+            if(memberTel == null || memberTel === '') {
+                alert('휴대폰 미등록으로 별도 문자발송 없이 탈퇴 처리 하였습니다.');
+                window.location.reload();
+                return;
+            }
+
+            const smsResponse = await fetch(`/sms/sendOne/member/${action}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -107,17 +140,49 @@ document.querySelector('#multiPassBtn').addEventListener('click', () => {
     // 1. 미체크 처리
     const selectedItems = Array.from(selectItems).filter(checkbox => checkbox.checked);
 
+    // 선택 개수(알림 띄우기용)
+    const selectedCount = selectedItems.length;
+
+
     if (selectedItems.length === 0) {
         alert('선택된 항목이 없습니다.');
         return;
     }
 
-    if(confirm("선택한 항목에 대해 탈퇴처리를 진행하겠습니까?")) {
-        handleMultiApproval("delete");
+    // 휴대폰 번호가 없는 항목 필터링
+    const itemsWithoutPhone = selectedItems.filter(item => {
+        const row = item.closest('tr');
+        const memberTel = row.querySelector('td:nth-child(6)').textContent;
+        return !memberTel || memberTel.trim() === '';
+    });
+
+    // 탈퇴 여부가 '탈퇴'인 항목 필터링
+    const itemsDeactivated = selectedItems.filter(item => {
+        const row = item.closest('tr');
+        const memberStatus = row.querySelector('td:nth-child(8)').textContent;
+        return memberStatus === '탈퇴';
+    });
+
+    // 이미 탈퇴
+    if (itemsDeactivated.length > 0) {
+        alert(`선택한 항목 중 ${itemsDeactivated.length}개의 탈퇴된 회원이 있습니다.\n선택 작업 시에는 활동 중인 회원만 선택해 주세요.`);
+        return;
+    }
+
+    // 휴대폰
+    if (itemsWithoutPhone.length > 0) {
+        alert(`선택된 항목 중 ${itemsWithoutPhone.length}개의 휴대폰 번호가 없는 항목이 있습니다.\n선택 작업 시에는 휴대폰 번호가 있는 항목만 선택해 주세요.`);
+        return;
+    }
+    
+
+    if(confirm(`선택한 ${selectedCount}개 항목에 대해 탈퇴처리를 진행하겠습니까?`)) {
+        handleMultiApproval('delete');
+
     } else {
         alert("작업이 취소되었습니다. 선택한 항목이 해제됩니다.");
          // 체크된 항목 모두 해제
-         Array.from(selectItems).forEach(checkbox => {
+        Array.from(selectItems).forEach(checkbox => {
             checkbox.checked = false;
         });
 
@@ -140,7 +205,7 @@ async function handleMultiApproval(actionForBackend) {
         .map(checkbox => {
             const row = checkbox.closest('tr');
             const memberNo = row.querySelector('td:nth-child(2)').textContent;
-            const memberTel = row.querySelector('td:nth-child(5)').textContent;
+            const memberTel = row.querySelector('td:nth-child(6)').textContent;
             return { memberNo, memberTel };
         });
     

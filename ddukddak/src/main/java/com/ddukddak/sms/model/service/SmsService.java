@@ -56,6 +56,13 @@ public interface SmsService {
 	 */
 	SingleMessageSentResponse sendPartnerSms2(String string, String toNumber);
 
+	/** 파트너 탈퇴 SMS 발송
+	 * @param action
+	 * @param partners
+	 * @return
+	 */
+	MultipleDetailMessageSentResponse sendPartnerMultiSms(String action, List<Map<String, String>> partners);
+
 
 	
 	

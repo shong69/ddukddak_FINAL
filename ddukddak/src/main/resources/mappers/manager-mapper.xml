@@ -49,7 +49,7 @@
 		
 	<!-- 회원 목록 조회 -->
 	<select id="selectMemberList">
-		SELECT MEMBER_NO, MEMBER_ID, MEMBER_TEL, PROFILE_IMG,
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_TEL, PROFILE_IMG,
 		TO_CHAR(ENROLL_DATE,'YYYY-MM-DD') ENROLL_DATE, MEMBER_DEL_FL
 		FROM "MEMBER"
 		WHERE AUTHORITY = 1
@@ -120,7 +120,7 @@
 		FROM "PAYMENT"
 	</select>
 	
-	
+	<!-- 결제 내역 목록 조회 -->
 	<select id="selectPaymentList">
 		SELECT 
 			PAYMENT_NO,
@@ -131,6 +131,7 @@
 			PG_PROVIDER,
 			PAY_METHOD,
 			STARTED_AT
-		FROM "PAYMENT"	
+		FROM "PAYMENT"
+		ORDER BY STARTED_AT DESC
 	</select>
 </mapper>

@@ -357,39 +357,24 @@ public class eCommerceController {
 	    List<String> productCounts = Arrays.asList(params.get("productCounts").toString().replaceAll("[\\[\\]\"]", "").split(","));
 	    List<String> productPrices = Arrays.asList(params.get("productPrices").toString().replaceAll("[\\[\\]\"]", "").split(","));
 	    
+	   
         // --------------------- 옵션 추출 --------------------
         
-        // 추가) 
-        
-	    // + 옵션 꺼내서 ORDERDETAIL_OPTION 테이블에 넣어야함
-	    List<String> optionNosJson = Arrays.asList(params.get("optionNos").toString().split(","));
+	    String optionNosString = params.get("optionNos").toString();
+	    optionNosString = optionNosString.substring(1, optionNosString.length() - 1);
+	    List<String> optionNosList = Arrays.asList(optionNosString.split("\",\""));
 
-
-	    // + 옵션들 리스트로 변환
-	    List<List<Integer>> optionNos = new ArrayList<>();
-
-	    
-	    for (String optionNoJson : optionNosJson) {
-	        try {
-	            optionNoJson = optionNoJson.replaceAll("[\\[\\]\"]", ""); // 대괄호와 따옴표 제거
-	            if (!optionNoJson.trim().isEmpty()) {
-	                List<Integer> optionNoList = Arrays.stream(optionNoJson.split(","))
-	                                                    .map(String::trim)
-	                                                    .map(Integer::parseInt)
-	                                                    .collect(Collectors.toList());
-	                optionNos.add(optionNoList);
-	            }
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
+	    // 앞뒤에 붙는 따옴표 제거
+	    for (int i = 0; i < optionNosList.size(); i++) {
+	        optionNosList.set(i, optionNosList.get(i).replaceAll("^\"|\"$", "").trim());
 	    }
 
-	    
-        log.info("optionNos 는 과연 뭘까 ? : " + optionNos);
-	    
+	    int size = optionNosList.size();
+	    log.info("optionNosList 뭘까 ? : " + optionNosList);
+	    log.info("optionNosList 사이즈는 뭘까 ? : " + size);
 
 	    
-        // -----------------------------------------------------
+	    // 옵션 추출 
         
 	    // ORDER_DETAIL 테이블에 인서트된 횟수
 	    int result = 0;
@@ -439,22 +424,23 @@ public class eCommerceController {
 	        	
 			    log.info("주문 상세 테이블의 orderItemNo = {}", orderItemNo);
 			    
-			    
-			    // 2) 주문 상세 옵션 테이블에 반복 삽입
-			    for(int j = 0; j < optionNos.size(); j++) {
-			    	
-			    	List<Integer> optionNoList = optionNos.get(j);
-			    	
-			        for (Integer optionNo : optionNoList) {
-			            log.info("포문 안에 옵션 넘버 : " + optionNo);
-			            
-			            // 주문상세옵션 테이블 삽입
-			            result2 += service.insertOrderDetailOption(orderItemNo, optionNo);
-			            
-			        }
-			    	
-			    }			    
-			    
+		        // 2) 주문 상세 옵션 테이블에 반복 삽입
+		        if (i < optionNosList.size()) {
+		            String optionNoJson = optionNosList.get(i).replaceAll("[\\[\\]\"]", "");
+		            List<Integer> optionNosForProduct = Arrays.stream(optionNoJson.split(","))
+		                                                      .map(String::trim)
+		                                                      .map(Integer::parseInt)
+		                                                      .collect(Collectors.toList());
+
+		            for (Integer optionNo : optionNosForProduct) {
+		                log.info("포문 안에 옵션 넘버 : " + optionNo);
+
+		                // 주문상세옵션 테이블 삽입
+		                result2 += service.insertOrderDetailOption(orderItemNo, optionNo);
+		            }
+		        }
+
+		        
 	        }
 	        
 	    }

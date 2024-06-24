@@ -622,6 +622,7 @@
 		AND CART_ID = #{cartId}
 	</select>
 	
+	<!-- 주문 상세 옵션 테이블 삽입  -->
 	<insert id="insertOrderDetailOption">
 		INSERT INTO "ORDERDETAIL_OPTION"
 		VALUES(

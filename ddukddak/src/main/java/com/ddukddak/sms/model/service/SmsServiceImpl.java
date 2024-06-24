@@ -216,6 +216,9 @@ public class SmsServiceImpl implements SmsService {
 		return null;
 	}
 
+	
+	// ---------------------------------------------------------------------------
+	
 
 	// 회원 탈퇴 메세지 전송
 	@Override
@@ -227,7 +230,7 @@ public class SmsServiceImpl implements SmsService {
 		
 		switch(delMessage) {
 		
-			case "confirm" : msg = "[뚝딱뚝딱] 귀하의 회원정보가 탈퇴처리되었습니다. 죄송합니다 :("; break;
+			case "delete" : msg = "[뚝딱뚝딱] 귀하의 회원정보가 탈퇴처리되었습니다. 죄송합니다 :("; break;
 	
 		}
 		
@@ -329,7 +332,7 @@ public class SmsServiceImpl implements SmsService {
 				
 				switch(string) {
 				
-					case "confirm" : msg = "[뚝딱뚝딱] 귀하의 파트너정보가 탈퇴처리되었습니다. 죄송합니다 :("; break;
+					case "delete" : msg = "[뚝딱뚝딱] 귀하의 파트너정보가 탈퇴처리되었습니다. 죄송합니다 :("; break;
 			
 				}
 				
@@ -356,6 +359,69 @@ public class SmsServiceImpl implements SmsService {
 				// 따로 결과만 발송이기 때문에 인증키 로직 없음
 				
 				return response;
+	}
+
+	
+	// 파트너 탈퇴 다수 문자 발송
+	@Override
+	public MultipleDetailMessageSentResponse sendPartnerMultiSms(String action, List<Map<String, String>> partners) {
+		
+		// 응답 값 생성
+		MultipleDetailMessageSentResponse multiResponse;
+		
+		String msg = null;
+
+		
+		switch(action) {
+		
+			case "delete" : msg = "[뚝딱뚝딱] 귀하의 파트너정보가 탈퇴처리되었습니다. 죄송합니다 :("; break;
+	
+		}
+		
+		ArrayList<Message> messageList = new ArrayList<>();
+		
+        for (int i = 0; i < partners.size(); i++) {
+        	
+            Map<String, String> member = partners.get(i);
+            String toNumber = member.get("partnerTel");
+        	
+            Message message = new Message();
+            // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+            message.setFrom(fromNumber);
+            message.setTo(toNumber);
+            message.setText(msg);
+
+            // 메시지 건건 마다 사용자가 원하는 커스텀 값(특정 주문/결제 건의 ID를 넣는등)을 map 형태로 기입하여 전송 후 확인해볼 수 있습니다!
+            /*HashMap<String, String> map = new HashMap<>();
+
+            map.put("키 입력", "값 입력");
+            message.setCustomFields(map);*/
+
+            messageList.add(message);
+        }
+        
+        try {
+        	
+            // send 메소드로 단일 Message 객체를 넣어도 동작합니다!
+            // 세 번째 파라미터인 showMessageList 값을 true로 설정할 경우 MultipleDetailMessageSentResponse에서 MessageList를 리턴하게 됩니다!
+            //MultipleDetailMessageSentResponse response = this.messageService.send(messageList, false, true);
+
+            // 중복 수신번호를 허용하고 싶으실 경우 위 코드 대신 아래코드로 대체해 사용해보세요!
+        	multiResponse = this.messageService.send(messageList, true);
+
+            System.out.println(multiResponse);
+
+            return multiResponse;
+            
+        } catch (NurigoMessageNotReceivedException exception) {
+            System.out.println(exception.getFailedMessageList());
+            System.out.println(exception.getMessage());
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+		
+		
+		return null;
 	}
 
     
