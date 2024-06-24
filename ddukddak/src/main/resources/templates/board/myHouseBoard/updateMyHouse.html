@@ -34,8 +34,10 @@
           
         </div>
 
-        <form th:action="@{/myHouse/updateMyHouse(boardNo=${board.boardNo})}" method="POST" id="updateMyHouseForm" enctype="multipart/form-data">
-          
+        <form th:action="@{/myHouse/updateMyHouse}" method="POST" id="updateMyHouseForm" enctype="multipart/form-data">
+          <p>[[${board.boardNo}]]</p>
+          <input type="hidden" name="boardNo" th:value="${board.boardNo}">
+
           <div class="input-img-area">
             <div class="projectImg thumbnail">
                 <label th:for="|img${board.imageList[0].uploadImgOrder}|">

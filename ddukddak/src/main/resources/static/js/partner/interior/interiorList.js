@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
             item.addEventListener('click', function() {
                 const portfolioNo = this.getAttribute('data-portfolio-no');
                 
-                if (portfolioNo) {
+                if (portfolioNo != 0) {
                     const url = `/interior/interiorPortfolio/${portfolioNo}`;
                     window.location.href = url;
                 } else {

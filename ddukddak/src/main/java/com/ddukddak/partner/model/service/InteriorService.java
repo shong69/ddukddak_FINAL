@@ -115,6 +115,8 @@ public interface InteriorService {
 	 */
 	int selectPortfolioNo(int partnerNo);
 
+	Portfolio selectPortfolio2(int portfolioNo);
+
 
 	
 	

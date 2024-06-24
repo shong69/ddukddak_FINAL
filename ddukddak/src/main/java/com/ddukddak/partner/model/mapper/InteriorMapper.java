@@ -19,7 +19,7 @@ public interface InteriorMapper {
 	/** 시공사 리스트 조회
 	 * @return interiorList
 	 */
-	List<Partner> selectIneriorList();
+	List<Partner> selectIneriorList(RowBounds rowBounds);
 	
 	
 	/** 시공사 리스트 검색 조회
@@ -160,6 +160,9 @@ public interface InteriorMapper {
 	 * @return portfolioNo
 	 */
 	int selectPortfolioNo(int partnerNo);
+
+
+	Portfolio selectPortfolio2(int portfolioNo);
 
 
 

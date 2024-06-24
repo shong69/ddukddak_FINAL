@@ -59,7 +59,7 @@ public class InteriorServiceImpl implements InteriorService {
 		int offset = (cp - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		
-		List<Partner> interiorList = mapper.selectIneriorList();
+		List<Partner> interiorList = mapper.selectIneriorList(rowBounds);
 		
 		Map<String, Object> map = new HashMap<>();
 		
@@ -276,15 +276,16 @@ public class InteriorServiceImpl implements InteriorService {
 				
 			}
 			
-			// 선택한 파일이 없을 경우
-			if(uploadList.isEmpty()) {
-				return result;
-			}
 			
-			for(ProjectImg img : uploadList) {
-				img.getUploadFile().transferTo( new File(folderPath + img.getUploadImgRename()) );
-			}
-			
+		}
+		
+		// 선택한 파일이 없을 경우
+		if(uploadList.isEmpty()) {
+			return result;
+		}
+		
+		for(ProjectImg img : uploadList) {
+			img.getUploadFile().transferTo( new File(folderPath + img.getUploadImgRename()) );
 		}
 		
 		return result;
@@ -375,6 +376,12 @@ public class InteriorServiceImpl implements InteriorService {
 	public int selectPortfolioNo(int partnerNo) {
 		
 		return mapper.selectPortfolioNo(partnerNo);
+	}
+
+	@Override
+	public Portfolio selectPortfolio2(int portfolioNo) {
+		
+		return mapper.selectPortfolio2(portfolioNo);
 	}
 
 
