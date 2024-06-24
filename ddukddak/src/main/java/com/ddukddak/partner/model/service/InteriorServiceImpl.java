@@ -41,6 +41,12 @@ public class InteriorServiceImpl implements InteriorService {
 	@Value("${my.interior.folder-path}")
 	private String folderPath;
 	
+	@Value("${my.profile.web-path}")
+	private String profileWebPath;
+	
+	@Value("${my.profile.folder-path}")
+	private String profileFolderPath;
+	
 	// 시공사 리스트 조회
 	@Override
 	public Map<String, Object> selectInteriorList(int cp) {
@@ -87,8 +93,8 @@ public class InteriorServiceImpl implements InteriorService {
 	}
 
 	@Override
-	public Portfolio selectPortfolio(int portfolioNo) {
-		return mapper.selectPortfolio(portfolioNo);
+	public Portfolio selectPortfolio(int partnerNo) {
+		return mapper.selectPortfolio(partnerNo);
 		
 	}
 
@@ -153,6 +159,8 @@ public class InteriorServiceImpl implements InteriorService {
 //		portfolio = mapper.selectPortfolio(project.getPortfolioNo());
 //		
 //		project.setPortfolioNo(portfolio.getPortfolioNo());
+		
+		
 		
 		int result = mapper.projectInsert(project);
 		log.info("projectNo : " + project.getProjectNo());
@@ -262,6 +270,7 @@ public class InteriorServiceImpl implements InteriorService {
 								 .build();
 				
 				uploadList.add(img);
+				log.info("i번째 : " + i);
 				
 				result = mapper.updateImage(img);
 				
@@ -310,6 +319,62 @@ public class InteriorServiceImpl implements InteriorService {
 		result = mapper.registMainProject(projectNo);
 		
 		return result;
+	}
+
+	
+	// 시공사 프로필 이미지 변경
+	@Override
+	public int updateProfileImg(MultipartFile profileImg, Partner loginPartnerMember) throws IOException {
+		
+		String updatePath = null;
+		String rename = null;
+		
+		if(!profileImg.isEmpty()) {
+			rename=Utility.fileRename(profileImg.getOriginalFilename());
+			
+			updatePath = profileWebPath + rename;
+		}
+		
+		Partner partner = Partner.builder()
+						  .partnerNo(loginPartnerMember.getPartnerNo())
+						  .profileImg(updatePath)
+						  .build();
+		
+		log.info("partner : " + partner); 
+		log.info(updatePath);
+		
+		int result = mapper.updateProfileImg(partner);
+		
+		if(result > 0) {
+			if(!profileImg.isEmpty()) {
+				profileImg.transferTo(new File(profileFolderPath + rename));
+			}
+			loginPartnerMember.setProfileImg(updatePath);
+		}
+		
+		return result;
+	}
+
+	
+	// 시공사 홈페이지 변경
+	@Override
+	public int updateHomeLink(Partner partner) {
+		
+		return mapper.updateHomeLink(partner);
+	}
+
+	// 포트폴리오 생성
+	@Override
+	public int insertPortfolio(int partnerNo) {
+		
+		return mapper.insertPortfolio(partnerNo);
+	}
+
+	// 포트폴리오 번호 조회
+	@Override
+	public int selectPortfolioNo(int partnerNo) {
+		
+		return mapper.selectPortfolioNo(partnerNo);
 	}
 
 

@@ -44,31 +44,12 @@
                     </div>
 
                     <!-- Next and previous buttons -->
+                    <a class="prev"><i class="fa-solid fa-chevron-left"></i></a>
+                    <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
                 </th:block>
                 
-                <a class="prev"><i class="fa-solid fa-chevron-left"></i></a>
-                <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
             </div>
         </div>
-
-        <!--
-        <div class="midContainer">
-
-             <div th:unless="${portfolio.profileImg != null}" class="imgContainer">
-                <img th:src="#{user.default.image}" class="portLogo">
-             </div>
-
-            <div th:if="${portfolio.profileImg != null}" class="imgContainer">
-                <img class="portLogo" th:src="${portfolio.profileImg}"></img>
-            </div>
-            <div class="nameContainer">
-                <h2 class="portName" th:text="${portfolio.partnerBusinessName}">캣츠코</h2>
-            </div>
-            <div>
-                <button class="myPageMainBtn" type="button">프로필 사진 변경</button>
-            </div>
-        </div>
-        -->
 
         <!-- 중간 시공사 컨테이너 -->
         <div class="midContainer">
@@ -93,19 +74,19 @@
         <!-- 중간 시공사 컨테이너 -->
         <div style="display: none;" class="changeProfileImg">
 
-            <form id="profile-form" action="/partner/partnerProrileImg" method="POST" name="profileForm" enctype="multipart/form-data">
+            <form id="profile-form" action="/partner/changePartnerProfile" method="POST" class="profileForm" name="profileForm" enctype="multipart/form-data">
                 <!-- 프로필 이미지 X -->
                 <div class="profileImg">
                     <label for="inputImage" class="image-label">
                         <img id="profile-img" 
                         th:with="user=#{user.default.image}"
-                        th:src="${session.loginPartnerMember.profileImg?:user}">
+                        th:src="${portfolio.profileImg?:user}">
                     </label>
                     <input id="inputImage" type="file" name="profile-image" accept="image/*">
                     <span class="delete-image">&times;</span>
                 </div>
 
-                <div class="nameContainer">
+                <div class="changeNameContainer">
                     <h2 class="portName" th:text="${portfolio.partnerBusinessName}">캣츠코</h2>
                 </div>
 
@@ -115,6 +96,37 @@
                 </div>
 
             </form>
+        </div>
+
+        <!-- 홈링크 AREA -->
+
+        <div class="homeLinkArea">
+
+            <h2>시공사 홈페이지 주소 : </h2>
+
+            <h3 th:text="${portfolio.homeLink == null} ? '주소를 등록해주세요' : ${portfolio.homeLink}"></h3>
+
+            <div>
+                <button class="changeHomeLinkBtn">홈링크 변경</button>
+            </div>
+
+        </div>
+
+        <div style="display: none;" class="changeHomeLink">
+
+            <form id="homeLinkForm" class="homeLinkForm" action="/partner/updateHomeLink" method="POST">
+
+                <h2>시공사 홈페이지 주소 : </h2>
+
+                <input type="text" name="homeLink" id="inputHomeLink" class="inputHomeLink" th:value="${portfolio.homeLink}">
+
+                <div class="homeLinkBtnArea">
+                    <button class="homeLinkCancelBtn" type="button">취소</button>
+                    <button class="homeLinkConfirmBtn" type="submit">변경</button>
+                </div>
+
+            </form>
+
         </div>
 
 

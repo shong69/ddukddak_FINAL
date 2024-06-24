@@ -29,5 +29,8 @@ public class Portfolio {
 	
 	private String partnerBusinessName;
 	
+	private int partnerNo;
+	private int projectNo;
+	
 	
 }

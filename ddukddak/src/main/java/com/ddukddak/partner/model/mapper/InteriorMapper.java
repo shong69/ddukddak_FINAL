@@ -30,7 +30,7 @@ public interface InteriorMapper {
 	List<Partner> searchInteriorList(String query, RowBounds rowBounds);
 	
 
-	Portfolio selectPortfolio(int portfolioNo);
+	Portfolio selectPortfolio(int partnerNo);
 	
 	Project selectMainProject(int portfolioNo);
 
@@ -132,6 +132,36 @@ public interface InteriorMapper {
 	int getSearchCount(String query);
 
 
+	/** 시공사 프로필 이미지 변경
+	 * @param partner
+	 * @return result
+	 */
+	int updateProfileImg(Partner partner);
+
+
+	
+	/** 시공사 홈페이지 변경
+	 * @param partner
+	 * @return result
+	 */
+	int updateHomeLink(Partner partner);
+
+
+	
+	/** 포트폴리오 생성
+	 * @param partnerNo
+	 * @return result
+	 */
+	int insertPortfolio(int partnerNo);
+
+
+	/** 포트폴리오 번호 조회
+	 * @param partnerNo
+	 * @return portfolioNo
+	 */
+	int selectPortfolioNo(int partnerNo);
+
+
 
 
 	
@@ -141,7 +171,6 @@ public interface InteriorMapper {
 //	 */
 //	List<Project> selectProjectListWithoutMainProject(int portfolioNo);
 
-	
 	
 
 	

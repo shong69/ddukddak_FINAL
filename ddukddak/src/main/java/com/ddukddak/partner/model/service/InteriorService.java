@@ -35,7 +35,7 @@ public interface InteriorService {
 	 * @param portfolioNo
 	 * @return portfolio
 	 */
-	Portfolio selectPortfolio(int portfolioNo); 
+	Portfolio selectPortfolio(int partnerNo); 
 
 	List<Partner> searchInteriorList();
 	
@@ -83,6 +83,37 @@ public interface InteriorService {
 	 * @return
 	 */
 	int changeMainProject(Portfolio portfolio, int projectNo);
+
+	
+	
+	/** 시공사 프로필 이미지 	변경
+	 * @param profileImg
+	 * @param loginPartnerMember
+	 * @return result
+	 */
+	int updateProfileImg(MultipartFile profileImg, Partner loginPartnerMember) throws IOException;
+
+	
+	/** 시공사 홈페이지 주소 등록
+	 * @param partner
+	 * @return result
+	 */
+	int updateHomeLink(Partner partner);
+
+	
+	/** 포트폴리오 생성
+	 * @param partnerNo
+	 * @return result
+	 */
+	int insertPortfolio(int partnerNo);
+
+	
+	
+	/** 포트폴리오 번호 조회
+	 * @param partnerNo
+	 * @return portfolioNo
+	 */
+	int selectPortfolioNo(int partnerNo);
 
 
 	
