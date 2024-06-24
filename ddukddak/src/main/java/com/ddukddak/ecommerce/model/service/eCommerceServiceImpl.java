@@ -501,7 +501,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 	public double avgScore(int productNo) {
 		log.info("평점 결과:{}",mapper.avgScore(productNo));
 		return mapper.avgScore(productNo);
-
+	}
 	// 사용자 결제 취소 업데이트
 	@Override
 	public int cancelUpdate(Map<String, String> map) {
