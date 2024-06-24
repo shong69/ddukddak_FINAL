@@ -437,7 +437,7 @@
 		        bc.BIG_CATEGORY_NO, 
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
-		        o.ORDER_NO,
+		        o.ORDER_NO
 		    ORDER BY p.PRODUCT_NO DESC)
 	</select>
 
@@ -462,7 +462,7 @@
 		    bc.BIG_CATEGORY_NAME,
 		    od.ORDER_QUANTITY,
 		    o.ORDER_NO,
-			od.ORDER_ITEM_NO
+			od.ORDER_ITEM_NO,
 		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		FROM PRODUCT p
@@ -580,7 +580,7 @@
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO,
-			od.ORDER_ITEM_NO
+			od.ORDER_ITEM_NO,
 		        uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		        LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		    FROM PRODUCT p
@@ -1009,7 +1009,7 @@
 	    SET od.ORDER_STATUS = '출고대기'
 	    WHERE od.ORDER_NO = #{orderNo}
 	    AND od.PRODUCT_NO = #{productNo}
-		AND od.ORDER_ITEM_NO = #{orderItem}
+		AND od.ORDER_ITEM_NO = #{orderItemNo}
 	    AND EXISTS (
 	        SELECT 1
 	        FROM PRODUCT p
@@ -1098,7 +1098,7 @@
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
-			od.ORDER_ITEM_NO
+			od.ORDER_ITEM_NO,
 		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		FROM PRODUCT p
@@ -1193,7 +1193,7 @@
 		    od.ORDER_QUANTITY,
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
-		    od.ORDER_STATUS,
+		    od.ORDER_STATUS
 		ORDER BY p.PRODUCT_NO DESC)
 	</select>
 	
@@ -1786,5 +1786,682 @@
 		    )
 	</update> 
 
+	<select id="selectCompleteListCount">
+		SELECT COUNT(*) FROM 
+ (SELECT 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    TO_CHAR(p.PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		    TO_CHAR(p.PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME,
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
+		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		JOIN ORDER_DETAIL od ON p.PRODUCT_NO = od.PRODUCT_NO
+		JOIN ORDERS o ON od.ORDER_NO = o.ORDER_NO
+		JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		WHERE od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+		AND uf.UPLOAD_IMG_ORDER = 0
+		AND p.PARTNER_NO = #{partnerNo}
+		GROUP BY 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    p.PRODUCT_CREATE_DATE, 
+		    p.PRODUCT_UPDATE_DATE, 
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME, 
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+				od.ORDER_ITEM_NO
+			ORDER BY p.PRODUCT_NO DESC)
+	</select>
 		
+	<select id="selectCompleteList">
+		SELECT 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    TO_CHAR(p.PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		    TO_CHAR(p.PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME,
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			c.CART_ID,
+			m.MEMBER_NICKNAME,
+			o.MERCHANT_UID,
+		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
+		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		JOIN ORDER_DETAIL od ON p.PRODUCT_NO = od.PRODUCT_NO
+		JOIN ORDERS o ON od.ORDER_NO = o.ORDER_NO
+		JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		JOIN CART c ON p.PRODUCT_NO = c.PRODUCT_NO
+		JOIN "MEMBER" m ON c.MEMBER_NO = m.MEMBER_NO 
+		WHERE od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+		AND uf.UPLOAD_IMG_ORDER = 0
+		AND p.PARTNER_NO = #{partnerNo}
+		GROUP BY 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    p.PRODUCT_CREATE_DATE, 
+		    p.PRODUCT_UPDATE_DATE, 
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME, 
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			c.CART_ID,
+			m.MEMBER_NICKNAME,
+			o.MERCHANT_UID
+		ORDER BY p.PRODUCT_NO DESC
+	</select>
+	
+	
+	<select id="selectCompleteCountStatus">
+		SELECT COUNT(*)
+		FROM (
+		    SELECT 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    TO_CHAR(p.PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		    TO_CHAR(p.PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME,
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
+		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		JOIN ORDER_DETAIL od ON p.PRODUCT_NO = od.PRODUCT_NO
+		JOIN ORDERS o ON od.ORDER_NO = o.ORDER_NO
+		JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		WHERE od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+		AND uf.UPLOAD_IMG_ORDER = 0
+		AND p.PARTNER_NO = #{partnerNo}
+		GROUP BY 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    p.PRODUCT_CREATE_DATE, 
+		    p.PRODUCT_UPDATE_DATE, 
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME, 
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS
+		ORDER BY p.PRODUCT_NO DESC)
+	</select>
+	
+	<select id="selectCompleteListStatus">
+		SELECT 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    TO_CHAR(p.PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		    TO_CHAR(p.PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME,
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID,
+		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
+		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		JOIN ORDER_DETAIL od ON p.PRODUCT_NO = od.PRODUCT_NO
+		JOIN ORDERS o ON od.ORDER_NO = o.ORDER_NO
+		JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		WHERE 
+			<choose>
+			            <when test="status == 'PC'">
+			               od.ORDER_STATUS IN ('구매확정')
+			            </when>
+			            <when test="status == 'PR'">
+			                od.ORDER_STATUS IN ('주문거절')
+			            </when>
+			            <when test="status == 'SR'">
+			                od.ORDER_STATUS IN ('출고거절')
+			            </when>
+			            <otherwise>
+			                od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+			            </otherwise>
+	         </choose>
+		AND uf.UPLOAD_IMG_ORDER = 0
+		AND p.PARTNER_NO = #{partnerNo}
+		GROUP BY 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    p.PRODUCT_CREATE_DATE, 
+		    p.PRODUCT_UPDATE_DATE, 
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME, 
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID
+			ORDER BY p.PRODUCT_NO DESC
+	</select>
+	
+	<select id="selectCompleteListCountMainSort">
+		SELECT COUNT(*)
+		FROM (
+		    SELECT 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    TO_CHAR(p.PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		    TO_CHAR(p.PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME,
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
+		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		JOIN ORDER_DETAIL od ON p.PRODUCT_NO = od.PRODUCT_NO
+		JOIN ORDERS o ON od.ORDER_NO = o.ORDER_NO
+		JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		WHERE od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+		AND uf.UPLOAD_IMG_ORDER = 0
+		AND p.PARTNER_NO = #{partnerNo}
+		AND bc.BIG_CATEGORY_NO = #{mainSort}
+		GROUP BY 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    p.PRODUCT_CREATE_DATE, 
+		    p.PRODUCT_UPDATE_DATE, 
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME, 
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS
+		ORDER BY p.PRODUCT_NO DESC)
+	</select>
+
+	<select id="selectCompleteListMainSort">
+		SELECT 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    TO_CHAR(p.PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		    TO_CHAR(p.PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME,
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID,
+		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
+		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		JOIN ORDER_DETAIL od ON p.PRODUCT_NO = od.PRODUCT_NO
+		JOIN ORDERS o ON od.ORDER_NO = o.ORDER_NO
+		JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		WHERE od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+		AND uf.UPLOAD_IMG_ORDER = 0
+		AND p.PARTNER_NO = #{partnerNo}
+		AND bc.BIG_CATEGORY_NO = #{mainSort}
+		GROUP BY 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    p.PRODUCT_CREATE_DATE, 
+		    p.PRODUCT_UPDATE_DATE, 
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME, 
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID
+			ORDER BY p.PRODUCT_NO DESC
+	</select>
+	
+	<select id="selectCompleteListCountMainSortStatus">
+		SELECT COUNT(*)
+		FROM (
+		    SELECT 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    TO_CHAR(p.PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		    TO_CHAR(p.PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME,
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
+		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		JOIN ORDER_DETAIL od ON p.PRODUCT_NO = od.PRODUCT_NO
+		JOIN ORDERS o ON od.ORDER_NO = o.ORDER_NO
+		JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		WHERE od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+		AND uf.UPLOAD_IMG_ORDER = 0
+		AND p.PARTNER_NO = #{partnerNo}
+		AND bc.BIG_CATEGORY_NO = #{mainSort}
+		GROUP BY 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    p.PRODUCT_CREATE_DATE, 
+		    p.PRODUCT_UPDATE_DATE, 
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME, 
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS
+		ORDER BY p.PRODUCT_NO DESC)
+	</select>
+
+	<select id="selectCompleteListMainSortStatus">
+		SELECT 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    TO_CHAR(p.PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		    TO_CHAR(p.PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME,
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID,
+		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
+		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		JOIN ORDER_DETAIL od ON p.PRODUCT_NO = od.PRODUCT_NO
+		JOIN ORDERS o ON od.ORDER_NO = o.ORDER_NO
+		JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		WHERE 
+			<choose>
+			            <when test="status == 'PC'">
+			               od.ORDER_STATUS IN ('구매확정')
+			            </when>
+			            <when test="status == 'PR'">
+			                od.ORDER_STATUS IN ('주문거절')
+			            </when>
+			            <when test="status == 'SR'">
+			                od.ORDER_STATUS IN ('출고거절')
+			            </when>
+			            <otherwise>
+			                od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+			            </otherwise>
+	         </choose>
+		AND uf.UPLOAD_IMG_ORDER = 0
+		AND p.PARTNER_NO = #{partnerNo}
+		AND bc.BIG_CATEGORY_NO = #{mainSort}
+		GROUP BY 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    p.PRODUCT_CREATE_DATE, 
+		    p.PRODUCT_UPDATE_DATE, 
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME, 
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID
+			ORDER BY p.PRODUCT_NO DESC
+	</select>
+	
+	<select id="selectCompleteListCountSort">
+		SELECT COUNT(*)
+		FROM (
+		    SELECT 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    TO_CHAR(p.PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		    TO_CHAR(p.PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME,
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+		    o.MERCHANT_UID,
+		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
+		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		JOIN ORDER_DETAIL od ON p.PRODUCT_NO = od.PRODUCT_NO
+		JOIN ORDERS o ON od.ORDER_NO = o.ORDER_NO
+		JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		WHERE od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+		AND uf.UPLOAD_IMG_ORDER = 0
+		AND p.PARTNER_NO = #{partnerNo}
+		AND c.CATEGORY_NO = #{sort}
+		GROUP BY 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    p.PRODUCT_CREATE_DATE, 
+		    p.PRODUCT_UPDATE_DATE, 
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME, 
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+		    o.MERCHANT_UID
+		ORDER BY p.PRODUCT_NO DESC)
+	</select>
+	
+	<select id="selectCompleteListSort">
+		SELECT 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    TO_CHAR(p.PRODUCT_CREATE_DATE, 'YYYY-MM-DD') AS PRODUCT_CREATE_DATE,
+		    TO_CHAR(p.PRODUCT_UPDATE_DATE, 'YYYY-MM-DD') AS PRODUCT_UPDATE_DATE,
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME,
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID,
+		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
+		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
+		FROM PRODUCT p
+		JOIN UPLOAD_FILE uf ON p.PRODUCT_NO = uf.PRODUCT_NO
+		JOIN ORDER_DETAIL od ON p.PRODUCT_NO = od.PRODUCT_NO
+		JOIN ORDERS o ON od.ORDER_NO = o.ORDER_NO
+		JOIN CATEGORY c ON p.CATEGORY_NO = c.CATEGORY_NO
+		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
+		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
+		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		WHERE 
+			<choose>
+			            <when test="status == 'PC'">
+			               od.ORDER_STATUS IN ('구매확정')
+			            </when>
+			            <when test="status == 'PR'">
+			                od.ORDER_STATUS IN ('주문거절')
+			            </when>
+			            <when test="status == 'SR'">
+			                od.ORDER_STATUS IN ('출고거절')
+			            </when>
+			            <otherwise>
+			                od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+			            </otherwise>
+	         </choose>
+		AND uf.UPLOAD_IMG_ORDER = 0
+		AND p.PARTNER_NO = #{partnerNo}
+		AND c.CATEGORY_NO = #{sort}
+		GROUP BY 
+		    p.PRODUCT_NO, 
+		    p.PRODUCT_NAME, 
+		    p.PRODUCT_PRICE, 
+		    p.PRODUCT_CREATE_DATE, 
+		    p.PRODUCT_UPDATE_DATE, 
+		    p.PRODUCT_FL, 
+		    c.CATEGORY_NO, 
+		    c.CATEGORY_NAME, 
+		    p.PARTNER_NO, 
+		    uf.UPLOAD_IMG_NO, 
+		    uf.UPLOAD_IMG_PATH, 
+		    uf.UPLOAD_IMG_OG_NAME, 
+		    uf.UPLOAD_IMG_RENAME, 
+		    uf.UPLOAD_IMG_ORDER, 
+		    bc.BIG_CATEGORY_NO, 
+		    bc.BIG_CATEGORY_NAME,
+		    od.ORDER_QUANTITY,
+		    o.ORDER_NO,
+		    o.ORDER_DATE,
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID
+			ORDER BY p.PRODUCT_NO DESC
+	</select>
+	
 </mapper>

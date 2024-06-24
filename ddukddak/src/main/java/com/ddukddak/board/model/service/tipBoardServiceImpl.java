@@ -44,6 +44,7 @@ public class tipBoardServiceImpl implements tipBoardService{
 		Map<String, Object> map = new HashMap<>();
 		map.put("boardCode",boardCode);
 		map.put("sort",sort);
+		log.info("boardCode : " + boardCode);
 		
 		List<Board> tipList = mapper.selectTipList(map);
 		
