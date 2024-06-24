@@ -3,12 +3,18 @@ const inputImageList = document.querySelectorAll(".inputImg");
 const deleteImageList = document.querySelectorAll(".delete-img");
 let imgCount = imgList.length;
 
+// 1. 기존 이미지 길이만큼 배열만들기
 let imgArray = new Array(imgCount);
 
 console.log(imgArray.length);
 
-// 1. 기존 이미지 길이만큼 배열만들기
 // 2. 배열에 기존 img 태그 다 넣어놓기
+previewList.forEach((img, index) => {
+  imgArray[index] = img;
+});
+
+console.log(imgArray);
+
 // 3. 만약 x 버튼(삭제 시) 해당 인덱스에 null 값 넣기
 // 4. 만약 수정시 해당 인덱스에 File 객체 넣기
 // 5. submit 요청 시 해당 배열의 모든 요소를 for을 이용하여 순차 접근해서 
@@ -124,10 +130,14 @@ for(let i=0 ; i<inputImageList.length ; i++){
 
   // **** input태그에 이미지가 선택된 경우(값이 변경된 경우) ****
   inputImageList[i].addEventListener("change", e => {
-    console.log(inputImageList[i].value);
+    
     changeImageFn(e.target, i);
     
     console.log(inputImageList[i].files);
+
+    imgArray[i] = inputImageList[i].files;
+
+    console.log(imgArray);
   })
     
   
@@ -141,33 +151,17 @@ for(let i=0 ; i<inputImageList.length ; i++){
     // 미리보기 이미지가 있을 때에만
     if(previewList[i].getAttribute("src") != null 
     &&  previewList[i].getAttribute("src") != ""  ){
-      
-      // // 기존에 이미지가 존재하고 있을 경우에만
-      // if( orderList.includes(i) ){
-      //   deleteOrder.add(i);
-      // }
-      // imgCount --;
+      imgArray[i] = null;
     }
-
+    
+    console.log(imgArray);
     previewList[i].src       = ""; // 미리보기 이미지 제거
     inputImageList[i].value  = ""; // input에 선택된 파일 제거
     backupInputList[i]       = undefined; // 백업본 제거
     
-    // console.log("딜리트 오더 : " , deleteOrder);
     
   });
 }
-
-
-
-// document.addEventListener("click", () => {
-  
-//   console.log(imgList.length);
-//   // console.log(inputImageList.length);
-//   console.log(imgCount);
-
-// });
-
 
 // -------------------------------------------
 
@@ -180,12 +174,14 @@ updateProjectForm.addEventListener("submit", e => {
   const constructionCost = document.querySelector("[name='constructionCost']");
   const constructionYear = document.querySelector("[name='constructionYear']");
   
-
-  // if(imgList.length != imgCount) {
-  //   alert("비어있는 프로젝트 이미지를 등록해주세요.");
-  //   e.preventDefault();
-  //   return;
-  // }
+  for(let i = 0; i < imgArray.length; i ++) {
+    if(imgArray[i] == null) {
+      alert("빈 프로젝트 이미지를 등록해주세요.");
+      e.preventDefault();
+      break;
+    }
+  }
+  
 
   if(workArea.value.trim().length == 0){
     alert("시공 면적을 입력해주세요.");
@@ -208,17 +204,6 @@ updateProjectForm.addEventListener("submit", e => {
     return;
   }
 
-  // input 태그에 삭제할 이미지 순서(Set)를 배열로 만든 후 대입
-  // -> value(문자열) 저장 시 배열은 toString()호출되서 양쪽 []가 사라짐
-  document.querySelector("[name='deleteOrder']").value
-    = Array.from( deleteOrder );
-
-	console.log(document.querySelector("[name='deleteOrder']"));
-	// deleteOrder에 {2, 3} 이 있다면
-	// <input type="hidden" name="deleteOrder" value="2,3">
-
-  // 현재 페이지에서 얻어온 querystring을 input 태그 hidden 타입에 value 값으로 대입하기
-  // document.querySelector("[name='querystring']").value = location.search;
 });
 
 // -------------------------------------------------------------------------------------------
