@@ -14,6 +14,7 @@ import com.ddukddak.main.model.dto.Pagination;
 import com.ddukddak.manager.model.mapper.ManagerMapper;
 import com.ddukddak.member.model.dto.Member;
 import com.ddukddak.partner.model.dto.Partner;
+import com.ddukddak.payment.model.dto.PaymentDTO;
 import com.ddukddak.sms.model.service.SmsService;
 
 import lombok.RequiredArgsConstructor;
@@ -254,6 +255,31 @@ public class ManagerServiceImpl implements ManagerService {
 		
 		map.put("pagination", pagination);
 		map.put("reportList", reportList);
+		
+		return map;
+	}
+
+
+	// 결제 내역
+	@Override
+	public Map<String, Object> selectPayment(int cp) {
+		
+		// 결제 테이블 개수 조회 
+		int listCount = mapper.getPaymentCount();
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<PaymentDTO> paymentList = mapper.selectPaymentList(rowBounds);
+		
+		// 목록 + 페이지네이션
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("paymentList", paymentList);
 		
 		return map;
 	}

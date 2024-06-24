@@ -114,4 +114,23 @@
 	</select>
 
 	
+	<!-- 결제 내역 수 조회 -->
+	<select id="getPaymentCount">
+		SELECT COUNT(*)
+		FROM "PAYMENT"
+	</select>
+	
+	
+	<select id="selectPaymentList">
+		SELECT 
+			PAYMENT_NO,
+			MERCHANT_UID,
+			BUYER_NAME,
+			AMOUNT,
+			STATUS,
+			PG_PROVIDER,
+			PAY_METHOD,
+			STARTED_AT
+		FROM "PAYMENT"	
+	</select>
 </mapper>
