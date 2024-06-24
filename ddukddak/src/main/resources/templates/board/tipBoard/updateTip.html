@@ -30,12 +30,12 @@
 
         <div class="searchArea">
 
-          <div th:text="|${application.boardTypeList[0].boardName} 이미지 수정|" class="title"></div>
+          <div th:text="|${application.boardTypeList[1].boardName} 이미지 수정|" class="title"></div>
           
         </div>
 
-        <form th:action="@{/myHouse/updateMyHouse(boardNo=${board.boardNo})}" method="POST" id="updateMyHouseForm" enctype="multipart/form-data">
-          
+        <form th:action="@{/tip/updateTip(boardNo=${board.boardNo})}" method="POST" id="updateTipForm" enctype="multipart/form-data">
+
           <div class="input-img-area">
             <div class="projectImg thumbnail">
                 <label th:for="|img${board.imageList[0].uploadImgOrder}|">
@@ -63,13 +63,13 @@
           </div>
 
           <div class="titleInput">
-            <h1>집들이 제목</h1>
-              <input type="text" placeholder="집들이 제목" id="boardTitle" name="boardTitle" th:value="${board.boardTitle}">
+            <h1>노하우 제목</h1>
+              <input type="text" placeholder="노하우 제목" id="boardTitle" name="boardTitle" th:value="${board.boardTitle}">
           </div>
 
           <div class="contentInput">
-            <h1>집들이 내용</h1>
-              <textarea placeholder="집들이 내용 입력" id="boardContent" name="boardContent" th:text="${board.boardContent}"></textarea>
+            <h1>노하우 내용</h1>
+              <textarea placeholder="노하우 내용 입력" id="boardContent" name="boardContent" th:text="${board.boardContent}"></textarea>
           </div>
 
           <div class="btnArea">
@@ -109,6 +109,6 @@
   </script>
 
   <script src="/js/common/fragments/board/side-category.js"></script>
-  <script src="/js/board/myHouseBoard/updateMyHouse.js"></script>
+  <script src="/js/board/tip/updateTip.js"></script>
 </body>
 </html>

@@ -100,6 +100,13 @@
 
         <th:black th:replace="~{common/fragments/board/boardComment}"></th:black>
 
+        <th:block th:if="${session.loginMember != null and session.loginMember.memberNo == board.memberNo}">
+          <div class="update-remove">
+            <button type="button" id="updateBtn">수정</button>
+            <button type="button" id="deleteBtn">삭제</button>
+          </div>
+        </th:block>
+
 
       </div>
 
@@ -146,14 +153,8 @@
 
   <th:block th:replace="~{common/fragments/footer}"></th:block>
 
-  <script src="/js/common/fragments/board/reportModal.js"></script>
-  <script src="/js/common/fragments/board/side-category.js"></script>
-  <script src="/js/common/main.js"></script>
-  <script src="/js/common/redirectToLogin.js"></script>
-  <script src="/js/board/comment.js"></script>
-  <script src="/js/board/tipBoard/tipBoardDetail.js"></script>
-
   <script th:inline="javascript">
+    const boardCode = /*[[${application.boardTypeList[1].boardCode}]]*/ "게시판 코드";
 
     const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원번호";
 
@@ -166,5 +167,12 @@
     const userDefaultImage = /*[[#{user.default.image}]]*/ "기본 이미지";
 
   </script>
+  <script src="/js/common/fragments/board/reportModal.js"></script>
+  <script src="/js/common/fragments/board/side-category.js"></script>
+  <script src="/js/common/main.js"></script>
+  <script src="/js/common/redirectToLogin.js"></script>
+  <script src="/js/board/comment.js"></script>
+  <script src="/js/board/tipBoard/tipBoardDetail.js"></script>
+
 </body>
 </html>
