@@ -57,7 +57,7 @@
                                 <!-- 게시글이 존재 X-->
                                 <th:block th:if="${#lists.isEmpty(passList)}">
                                     <tr>
-                                        <td colspan="6">파트너 등록 요청이 없습니다.</td>
+                                        <td colspan="8">파트너 등록 요청이 없습니다.</td>
                                     </tr>
                                 </th:block>
 
@@ -105,7 +105,7 @@
                     <!-- 게시글이 있을 때만 페이지네이션이 보이게 할 예정 -->
                     <div class="pagination-area">
 
-                        <ul class="pagination" th:object="${pagination}">
+                        <ul class="pagination" th:object="${pagination}" th:unless="${#lists.isEmpty(passList)}">
 
                             <!-- 첫 페이지로 이동 -->
                             <li><a th:href="@{/manager/partnerPass(cp=1)}">&lt;&lt;</a></li>

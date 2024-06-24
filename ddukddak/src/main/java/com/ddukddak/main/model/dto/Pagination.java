@@ -129,15 +129,26 @@ public class Pagination {
 		// nextPage : ">" 클릭 시 이동할 페이지 번호
 		//			  (다음 페이지 번호 목록 중 시작 번호)
 		
+		
+		// 이거 작성한 사람 벌금
+		
 		// 더 이상 넘어갈 페이지가 없을 경우
-		if(currentPage == maxPage) {
+//		if(currentPage == maxPage) {
+//			nextPage = maxPage;
+//		} else { // 그 외 경우
+//			if(currentPage == 1) {
+//				nextPage = maxPage;
+//			} else {
+//				nextPage = endPage + 1;
+//			}
+//		}
+		
+		// 더 이상 넘아갈 페이지가 없을 경우
+		if(endPage == maxPage) {
 			nextPage = maxPage;
+			
 		} else { // 그 외 경우
-			if(currentPage == 1) {
-				nextPage = maxPage;
-			} else {
-				nextPage = endPage + 1;
-			}
+			nextPage = endPage + 1;
 		}
 	}
 	

@@ -15,6 +15,35 @@ document.addEventListener('DOMContentLoaded', () => {
     businessNumberElements.forEach(element => {
         element.textContent = formatBusinessNumber(element.textContent);
     });
+
+    const sort = document.getElementById('sort');
+
+    // URL에서 현재 sort 파라미터를 읽어와서 select 요소의 기본값으로 설정
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentSort = urlParams.get('sort');
+    
+    if (currentSort) {
+        sort.value = currentSort;
+    } else {
+        sort.value = 'all';
+    }
+
+    sort.addEventListener('change', function() {
+        const selectedOption = this.value;
+        const currentUrl = new URL(window.location.href);
+        
+        if (selectedOption === 'all') {
+            currentUrl.searchParams.delete('sort'); // 기본 선택 값을 선택했을 때 쿼리 파라미터 삭제
+        } else {
+            currentUrl.searchParams.set('sort', selectedOption);
+        }
+
+        // 페이지 변경 시 cp 값을 1로 초기화
+        currentUrl.searchParams.set('cp', 1);
+
+        window.location.href = currentUrl.toString(); // URL 변경 및 페이지 리로드
+    });
+
 });
 
 
@@ -235,3 +264,8 @@ async function handleMultiApproval(actionForBackend) {
         alert('선택된 항목이 없습니다.');
     }
 }
+
+
+document.getElementById('formBtn').addEventListener('click', () => {
+    document.getElementById('search-sort-Form').submit();
+});

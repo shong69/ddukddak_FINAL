@@ -80,5 +80,47 @@ public interface ManagerService {
 	 */
 	Map<String, Object> selectPayment(int cp);
 
+	/** 회원 목록(정렬)
+	 * @param params
+	 * @param cp
+	 * @return
+	 */
+	Map<String, Object> selectSortMember(Map<String, Object> params, int cp);
+
+	/** 검색 시 회원 전체
+	 * @param params
+	 * @param cp
+	 * @return
+	 */
+	Map<String, Object> selectSearchMember(Map<String, Object> params, int cp);
+
+	/** 검색 + 정렬 회원
+	 * @param params
+	 * @param cp
+	 * @return
+	 */
+	Map<String, Object> selectSortSearchMember(Map<String, Object> params, int cp);
+
+	/** 파트너 목록(정렬)
+	 * @param params
+	 * @param cp
+	 * @return
+	 */
+	Map<String, Object> selectSortPartner(Map<String, Object> params, int cp);
+
+	/** 파트너 목록(검색)
+	 * @param params
+	 * @param cp
+	 * @return
+	 */
+	Map<String, Object> selectSearchPartner(Map<String, Object> params, int cp);
+
+	/** 파트너 목록(검색+정렬)
+	 * @param params
+	 * @param cp
+	 * @return
+	 */
+	Map<String, Object> selectSortSearchPartner(Map<String, Object> params, int cp);
+
 	
 }

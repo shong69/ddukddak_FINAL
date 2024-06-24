@@ -129,13 +129,54 @@ h5 {
     
 }
 
+#search-sort-Form {
+    width: 100%;
+} 
+
 /* 선택 승인, 삭제 div */
 .multiPassBtnDiv {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     width: 100%;
     margin-bottom: 10px;
 }
+
+.status-select {
+    width: 80px;
+    height: 100%;
+    /* padding-left: 5px; */
+}
+
+/* 검색 */
+.search-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: 1px solid var(--gray4);
+    border-radius: 3px;
+}
+
+.search-area input {
+    width: 280px;
+    height: 90%;
+    padding-left: 10px;
+    color: var(--gray1);
+    border: none;
+    
+}
+
+.search-area input:focus {
+    outline: none;
+}
+
+.search-area i {
+    position: absolute;
+    right: 10px;
+    color: var(--gray3);
+    cursor: pointer;
+}
+
 
 /* 테이블 div */
 .listBox {
