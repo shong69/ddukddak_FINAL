@@ -26,21 +26,66 @@ function partnerChat(){
 }
 
 /***********************상담 카테고리선택***********************/
+
 const chattingContent = document.querySelector(".display-chatting");
-async function customerChatting () {
+function customerChatting () {
 	//1. 문의 카테고리 불러오기->선택
-	const categorys = [
-		'제품정보',
-		'배송 및 반품',
-		'주문 및 결제',
-		'적립금 및 포인트',
-		'게시글 작성 및 관리',
-		'댓글 및 좋아요',
-		'전문가 상담',
-		'매칭 과정',
-		'사이트 사용 문제',
-		'3d홈디자인 기능'
-	];
+	const categorys = {
+		'제품정보':1,
+		'주문 및 결제':2,
+		'적립금 및 포인트':3,
+		'게시글 작성 및 관리':4,
+		'전문가 상담':5,
+		'3d홈디자인 기능':6,
+		'사이트 사용 문제':7
+	}
+
+
+	const li = document.createElement("li");
+	li.classList.add("target-chat");
+	
+
+	const img = document.createElement("img");
+	img.src = "/images/default/main.jpg";
+
+	const div = document.createElement("div");
+	const div1= document.createElement("div");
+	div1.classList.add("target-name");
+	div1.innerText = "뚝딱봇";
+
+	const div2 = document.createElement("div");
+	div2.classList.add("chat");
+	div2.innerText="원하시는 문의 종류를 선택해 주세요.";
+	div.append(div1, div2);
+	Object.entries(categorys).forEach(([key, value])=>{
+		const p =document.createElement("button");
+		p.setAttribute("type","button");
+		p.classList.add("b-chat");
+		p.classList.add("c-chat");
+		p.innerText = key;
+		const functionName = `choose${value}`;
+		console.log(`choose${value}`);
+		p.addEventListener("click",function(event){
+			window[functionName](event);
+
+		})
+		div.append(p);
+		
+	})
+	const span = document.createElement("span");
+	span.classList.add("chatDate");
+	span.innerText = getCurrentTimeAMPM();
+
+	div.append(span);
+	li.append(img, div);
+	chattingContent.append(li);
+
+	scrollBtm();
+}
+
+//제품 정보
+function choose1(event){
+
 	const li = document.createElement("li");
 	li.classList.add("target-chat");
 
@@ -52,49 +97,63 @@ async function customerChatting () {
 	div1.classList.add("target-name");
 	div1.innerText = "뚝딱봇";
 
-	/* 처음 선택값 보관배열 */
-	let firstValue = "";
+	const p = document.createElement("p");
+	p.classList.add("chat");
+	p.innerText="제품 정보는\n해당 제품의 상세 페이지에서 열람 가능합니다.\n자세한 문의는 제품 페이지 내의 문의 내역에 질문을 남겨주세요.";
+	div.append(div1, p);
+	const span = document.createElement("span");
+	span.classList.add("chatDate");
+	span.innerText = getCurrentTimeAMPM();
+	div.append(span);
+	li.append(img, div);
+	chattingContent.append(li);
 
-	const div2 = document.createElement("div");
-	div2.classList.add("chat");
-	div2.innerText="아래 항목 중 원하시는 문의 종류를 선택해 주세요.";
-	div.append(div1, div2);
-	categorys.forEach(category=>{
-		const p =document.createElement("button");
-		p.setAttribute("type","button");
-		p.classList.add("b-chat");
-		p.classList.add("c-chat")
-		p.innerText = category;
-		div.append(p);
+	const parentTd = event.target.parentElement;
+	console.log(parentTd.children);
+	Array.from(parentTd.children).forEach(element =>{
+		console.log(element);
+		if(element.tagName ==='BUTTON'){
+			element.disabled = true;
+			element.classList.remove("c-chat");
+		}
+	})
+	// 1초 후에 다시 함수 실행
+	setTimeout(() => {
+		customerChatting();
+	}, 2500);
+	
+	scrollBtm();
+}
+
+//주문, 결제 정보
+function choose2(){
+
+	const li = document.createElement("li");
+	li.classList.add("target-chat");
+
+	const img = document.createElement("img");
+	img.src = "/images/default/main.jpg";
+
+	const div = document.createElement("div");
+	const div1= document.createElement("div");
+	div1.classList.add("target-name");
+	div1.innerText = "뚝딱봇";
+
+	const p = document.createElement("p");
+	p.classList.add("chat");
+	p.innerText="";
+	div.append(div1, p);
+	const span = document.createElement("span");
+	span.classList.add("chatDate");
+	span.innerText = getCurrentTimeAMPM();
+	div.append(span);
+	li.append(img, div);
+	chattingContent.append(li);
+
+	document.getElementById('inputChatting').removeAttribute('disabled');
 
 
-		p.addEventListener("click", e => {
-			firstValue = p.innerText;
-
-			const li = document.createElement("li");
-			li.classList.add("target-chat");
-
-			const img = document.createElement("img");
-			img.src = "/images/default/main.jpg";
-
-			const div = document.createElement("div");
-			const div1= document.createElement("div");
-			div1.classList.add("target-name");
-			div1.innerText = "뚝딱봇";
-
-			const div2 = document.createElement("div");
-			div2.classList.add("chat");
-			div2.innerText=`${firstValue}에 대한 문의 종류에 해당하는 질문을 작성해주세요.`;
-
-			div.append(div1, div2);
-			li.append(img, div);
-			chattingContent.append(li);
-
-			/* input disable 풀기 */
-			document.getElementById('inputChatting').removeAttribute('disabled');
-		})
-	});
-
+	//주문번호 입력하는 경우
 	document.querySelector("#send").addEventListener("click", () => {
 		const obj = {
 			"category" : firstValue,
@@ -113,18 +172,33 @@ async function customerChatting () {
 			});
 	})
 
-	const span = document.createElement("span");
-	span.classList.add("chatDate");
-
-	span.innerText = getCurrentTimeAMPM();
-	div.append(span);
-
-	li.append(img, div);
-	chattingContent.append(li);
-	//2.  문의하기
-
-	//답변하기
+	scrollBtm();
 }
+
+//주문 및 결제
+function choose3(){
+
+}
+
+//적립금 및 포인트
+function choose4(){
+
+}
+
+//3d 홈디자인 기능
+function choose5(){
+
+}
+
+
+//사이트 사용 문제
+function choose6(){
+
+}
+
+
+
+
 
 
 
@@ -148,6 +222,7 @@ function getCurrentTimeAMPM() {
     const currentTime = hours + ':' + formattedMinutes + ' ' + ampm;
     return currentTime;
 }
+function scrollBtm(){
+	chattingContent.scrollTop = chattingContent.scrollHeight - chattingContent.clientHeight;
 
-// 예시: 콘솔에 현재 시각을 출력합니다.
-console.log(getCurrentTimeAMPM()); // 예상 출력: "7:43 AM"
+}
