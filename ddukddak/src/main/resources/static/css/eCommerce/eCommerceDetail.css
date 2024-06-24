@@ -599,12 +599,14 @@
     color: white;
     transition-duration: 0.1s;
 }
-#optionDiv{
+#optionDiv,
+.optionDiv2{
     margin-right: auto;
     margin-left : 25px;
     height: 50px;
 }
-#optionDiv>div:first-child{
+#optionDiv>div:first-child,
+.optionDiv2>div:first-child{
     text-align: start;
     margin-bottom: 5px;
     font-weight: 600;
@@ -618,13 +620,13 @@
 }
 #contentBox{
     border : 0.4px solid #bbbbbb;
-    height: 400px;
+    height: 420px;
 }
 #commentContent{
     width : 1000px;
     padding:10px;
     resize: none;
-    border : none;
+    border: none;
     font-size: 17px;
     line-height: 30px;
 }
@@ -722,6 +724,9 @@
 .commentWriteDate{
     margin-top: auto;
 }
+.reviewWrite{
+    margin-bottom: 20px;
+}
 .editArea{
     width : 120px;
     margin-left: auto;
@@ -741,7 +746,7 @@
     margin-left: auto;
 }
 .reviewImg{
-    height: 120px;
+    height: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -752,6 +757,7 @@
 }
 .oneReviewImg{
     width : 200px;
+    max-height: 200px;
 }
 
 .additionalInfoArea{

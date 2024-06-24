@@ -1,5 +1,4 @@
 
-
 //-------------------------------------------------------------
 
 //1. 리뷰 등록 비동기 + (사진, 텍스트, 별점)도 올리기
@@ -23,7 +22,7 @@ function readImgURLs(input) {
             }
 
             reviewImgFiles.push(file); // 파일을 배열에 추가
-
+            console.log(reviewImgFiles);
             const reader = new FileReader();
             reader.onload = function(e) {
                 const previewContainer = document.createElement('div');
@@ -38,13 +37,16 @@ function readImgURLs(input) {
                 deleteButton.classList.add('delete-button');
                 deleteButton.classList.add('fa-solid');
                 deleteButton.classList.add('fa-trash-can');
-                deleteButton.onclick = function() {
+
+                deleteButton.addEventListener("click",()=>{
                     if (confirm("해당 사진을 삭제하시겠습니까?")) {
                         const index = Array.from(reviewImgBox.children).indexOf(previewContainer);
                         reviewImgFiles.splice(index, 1); // 배열에서 파일 제거
                         previewContainer.remove(); // 이미지 삭제
                     }
-                };
+
+                });
+
                 previewContainer.appendChild(deleteButton);
 
                 reviewImgBox.appendChild(previewContainer);
@@ -63,6 +65,7 @@ let reviewRating;  //별점
 
 const stars = document.querySelectorAll(".fa-star");
 console.log(stars);
+
 stars.forEach((star, index) =>{
     star.addEventListener("click",()=>{
         if(!star.classList.contains("fill")){ //누른 별이 비어있는 경우
@@ -76,32 +79,32 @@ stars.forEach((star, index) =>{
             reviewRating = index + 1;
         }else{
             console.log(star.classList);
-            for(let i = 4; i>=index; i--){
+            for(let i = index; i<stars.length; i++){
                 
                 stars[i].classList.remove('fa-solid');
                 stars[i].classList.add('fa-regular');
                 stars[i].classList.remove('fill');
             }
-            reviewRating=0;
+            reviewRating=index;
         }
 
     })
 })
-console.log(typeof productNo);
 
+console.log(reviewImgFiles);
 //  3) 비동기로 리뷰 작성(+수정)하기
-function handleFormMissionReview(event) {
+async function handleFormMissionReview(event) {
     event.preventDefault();
-
+    console.log(reviewRating);
     const form = document.getElementById('reviewForm');
     const formData = new FormData(form);
     console.log(typeof formData);
 
-    // 리뷰 이미지 파일을 FormData에 추가
+    // 리뷰 이미지 파일 FormData에 추가
     reviewImgFiles.forEach(file => {
+        console.log(file);
         formData.append('reviewImgs', file);
     });
-    
     //orderItemNo 추가
     const orderItemNoSelect = document.querySelector(".reviewOptSelect");
     const option = orderItemNoSelect.options[orderItemNoSelect.selectedIndex]; 
@@ -109,43 +112,45 @@ function handleFormMissionReview(event) {
     console.log(optionValue);//옵션명 불러오기 여부 확인
     formData.append("orderItemNo", option.value);
     formData.append("optionValue", optionValue); 
-
-
     formData.append('reviewRating', reviewRating); // 별점 추가
     formData.append('productNo', productNo); //상품 번호 추가
 
-    // FormData 내용을 콘솔에 출력 (모든 키와 값을 출력)
-    for (let [key, value] of formData.entries()) {
-        console.log(key, typeof value);
-    }
+    // // FormData 내용을 콘솔에 출력 (모든 키와 값을 출력)
+    // for (let [key, value] of formData.entries()) {
+    //     console.log(key, typeof value);
+    // }
 
+    // reviewRating과 reviewContent 입력 여부 검사
+    if (!formData.has('reviewRating') || reviewRating === 0) {
+        alert('별점을 등록해 주세요.');
+        return;
+    }
+    if (!formData.get('reviewContent')) {
+        alert('리뷰 내용을 입력해 주세요.');
+        return;
+    }
     // reviewNo 가져오기
     const reviewNo = document.querySelector("#hiddenReviewNo").value;
     const url = reviewNo ? "/eCommerce/updateReview" : "/eCommerce/reviewPost";
-
-    fetch(url, {
+    const resp = await fetch(url, {
         method: 'POST',
         body: formData
     })
-    .then(response => response.text())
-    .then(result => {
-        console.log('result:', result);  
-        if(result > 0){
-            alert(reviewNo ? "리뷰가 수정되었습니다." : "리뷰가 등록되었습니다.");
-            getReviewCount(productNo); //리뷰 개수 업데이트
-            openReviewCheck(productNo); //리뷰 작성 가능 여부 
-            getAvgReviewScore(productNo) // 평점 업데이트
-            selectReviewList(productNo); // 리뷰 목록 새로 고침
-        }else{
-            alert(reviewNo ? "리뷰 수정 실패" : "리뷰 등록 실패");
-            return;
-        }
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        alert(reviewNo ? "리뷰 수정에 실패했습니다." : "리뷰 등록에 실패했습니다.");
+    const result = await resp.text();
+    if(result > 0){
+        alert(reviewNo ? "리뷰가 수정되었습니다." : "리뷰가 등록되었습니다.");
+
+        //리뷰 작성 영역 새로고침
+
+        getReviewCount(productNo); //리뷰 개수 업데이트
+        openReviewCheck(productNo); //리뷰 작성 가능 여부 
+        getAvgReviewScore(productNo) // 평점 업데이트
+        selectReviewList(productNo); // 리뷰 목록 새로 고침
+
+    }else{
+        alert(reviewNo ? "리뷰 수정 실패\n다시 입력해 주세요" : "리뷰 등록 실패\n다시 입력해 주세요");
         return;
-    });
+    }
 
 }
 
@@ -162,7 +167,6 @@ function calcleReviewSubmit(event){
      }
      const reviewForm = document.querySelector("#reviewForm");
      reviewForm.classList.add("display-none");
-     selectReviewList(productNo);
 }
 
 
@@ -174,7 +178,7 @@ async function openReviewCheck(productNo){
     //리뷰 작성 권한 비동기로 알아오기
     const reviewForm = document.querySelector("#reviewForm");
     const optionDiv = document.querySelector("#optionDiv");
-
+    const optionDiv2 =document.querySelector(".optionDiv2");
     //로그인 여부 확인
     if(typeof loginMember === 'undefined' || loginMember === null){
         reviewForm.classList.add('display-none');
@@ -186,12 +190,34 @@ async function openReviewCheck(productNo){
     if(reviewAuthList&& reviewAuthList.length > 0){//작성 하지 않은 리뷰가 존재하는 경우
         //id=reviewForm 노출시키기
         reviewForm.classList.remove('display-none');
-        
-        
-        const existingSelect = document.querySelector("select.reviewOptSelect");
-        if(existingSelect) {
-            optionDiv.removeChild(existingSelect);
+        //별점 재설정
+        stars.forEach(star=>{
+            if(star.classList.contains("fa-solid")){
+                star.classList.remove("fa-solid");
+                star.classList.remove("fill");
+                star.classList.add("fa-regular");
+            }
+        })
+        //글 삭제
+        document.querySelector("#commentContent").value = "";
+        //이미지 삭제
+        if(document.querySelector("#reviewImgBox")?.childElementCount != null){
+            document.querySelector("#reviewImgBox").innerHTML = "";
         }
+        //옵션 영역 재설정
+        if(optionDiv2){
+            optionDiv2.remove();
+        }
+        if(optionDiv.classList.contains("display-none")){
+            optionDiv.classList.remove("display-none");
+        }
+        //옵션 재생성
+        const reviewOptSelect =document.querySelector("select.reviewOptSelect");
+        if(reviewOptSelect?.childElementCount !=null) { //select 가 존재하면
+            const parentDiv = reviewOptSelect.parentElement;
+            parentDiv.innerHTML = "";
+        }
+
         const div = document.createElement("div");
         div.innerText ="주문상품 기록";
         const select = document.createElement("select");
@@ -204,15 +230,12 @@ async function openReviewCheck(productNo){
             option.innerHTML = `주문일:${item.orderDate} | 주문옵션:${item.optionValue} ${item.orderQuantity}개`;
             option.setAttribute("data-value", `${item.optionValue}`); //data-value에 optionvalue 넣어서 옵션명 리뷰에 저장하기
             select.append(option);
-            console.log(option);
         })
         optionDiv.append(div,select);
     }else{
         reviewForm.classList.add('display-none');
     }
-    
-    //리뷰 리스트 알아오기
-    selectReviewList(productNo);
+    selectReviewList(productNo)
 }
 
 //3. 리뷰 작성 가능 주문 상품 목록
@@ -234,6 +257,7 @@ function selectReviewList(productNo){
     fetch("/eCommerce/selectReviewList?productNo="+productNo)
     .then(resp=>resp.json())
     .then(result => {
+        console.log(result.length);
         const reviewList = result;
         const reviewContainer = document.getElementById("reviewContainer");
         reviewContainer.innerHTML = "";
@@ -360,9 +384,7 @@ function selectReviewList(productNo){
                     const moreBtn = document.createElement('input');
                     moreBtn.classList.add("moreBtn");
                     moreBtn.type = "checkbox";
-
                     contentArea.append(moreBtn);
-  
                 reviewContainer.append(li);
                 }
             });
@@ -385,13 +407,16 @@ function delReview(reviewNo,productNo){
             if (result ==1) {
                 alert("리뷰가 삭제되었습니다.");
                 selectReviewList(productNo); // 리뷰 목록 새로 고침
+                getReviewCount(productNo);//개수 업데이트
+                openReviewCheck(productNo); //리뷰 작성 가능 여부 
+                getAvgReviewScore(productNo) // 평점 업데이트
             } else {
                 alert("리뷰 삭제에 실패했습니다.");
             }
         })
         .catch(error => console.error('Error:', error));
     }
-    getReviewCount(productNo);//개수 업데이트
+
 }
 
 
@@ -407,6 +432,9 @@ function updateFn(reviewNo,productNo) {
             alert("리뷰 수정 실패");
             return;
         }
+        //reviewNo 넣어주기
+        document.querySelector("#hiddenReviewNo").value = reviewNo;
+
         //수정 영역 안보이도록
         const editAreas = document.querySelectorAll(".editArea");
         console.log(editAreas,"didi");
@@ -424,8 +452,17 @@ function updateFn(reviewNo,productNo) {
             reviewForm.classList.remove("display-none");
         }
 
-
+        //원래 optionDiv 가리고 새로 만들어서 삽입하기
+        const optionDiv = document.querySelector("#optionDiv"); 
+        optionDiv.classList.add("display-none");
         //주문 옵션
+        const reviewArea = document.querySelector("#reviewArea");
+        const children = reviewArea.children;
+
+        const optionDiv2 = document.createElement("div");
+        optionDiv2.classList.add("optionDiv2");
+        reviewArea.insertBefore(optionDiv2,children[1]);
+
         const div = document.createElement("div");
         div.innerText ="주문상품";
         const select = document.createElement("select");
@@ -438,8 +475,8 @@ function updateFn(reviewNo,productNo) {
         option.setAttribute("data-value", `${review.optionValue}`); //data-value에 optionvalue 넣어서 옵션명 리뷰에 저장하기
         select.append(option);
         console.log(option);
-        const optionDiv = document.querySelector("#optionDiv"); 
-        optionDiv.append(div,select);
+        
+        optionDiv2.append(div,select);
 
         // 리뷰 내용
         const commentContent = document.querySelector("#commentContent");
@@ -472,28 +509,43 @@ function updateFn(reviewNo,productNo) {
                 const preview = document.createElement('img');
                 preview.classList.add('preview-image');
                 preview.src = img;
+                const values = img.split('/');
+                preview.value = values[values.length-1];
+                console.log(preview.value);
                 previewContainer.appendChild(preview);
 
                 const deleteButton = document.createElement('button');
+                deleteButton.type = "button";
                 deleteButton.classList.add('delete-button');
                 deleteButton.classList.add('fa-solid');
                 deleteButton.classList.add('fa-trash-can');
-                deleteButton.onclick = function() {
-                    if (confirm("해당 사진을 삭제하시겠습니까?")) {
-                        const index = Array.from(reviewImgBox.children).indexOf(previewContainer);
-                        reviewImgFiles.splice(index, 1); // 배열에서 파일 제거
+                deleteButton.addEventListener("click", e=>{
+                const imageSrc = preview.src.split('/').pop();
+                if (confirm("해당 사진을 삭제하시겠습니까?")) {
+                    console.log('삭제한다고');
+                    fetch(`/eCommerce/delImg`, {
+                        method: 'DELETE',
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ imageSrc: imageSrc }) // 필요한 데이터 추가
+                    })
+                    .then(resp => resp.text())
+                    .then(result => {
+                        console.log(result);
                         previewContainer.remove(); // 이미지 삭제
-                    }
-                };
+
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
+                    
+                })
                 previewContainer.appendChild(deleteButton);
 
                 reviewImgBox.appendChild(previewContainer);
             });
         reviewForm.scrollIntoView({behavior : 'smooth'});
         }
-        document.querySelector("#hiddenReviewNo").value = reviewNo;
+        
     });
-    getReviewCount(productNo); //개수 업데이트
 
 }
 
