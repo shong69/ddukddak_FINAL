@@ -9,15 +9,6 @@ if (memberTel != null) {
             location.href = '/myPage/memberInfo';
         }
     }
-    
-    const topButton = document.querySelector("#top");
-    
-    topButton.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        })
-    });
 }
 
 const chatting = document.querySelector("#chatting");
@@ -182,4 +173,13 @@ for (let i = 0; i < productPriceElements.length; i++) {
     productPriceElements[i].textContent = formatNumberWithCommas(productPrice); // 포맷팅된 내용으로 설정
 }
 
-
+/* 탑버튼 */
+    
+const topButton = document.querySelector("#top");
+    
+topButton.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    })
+});

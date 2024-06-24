@@ -173,17 +173,13 @@ body {
     /*box-shadow: 7px 7px 10px #dbdbdb;*/
 }
 
-.tipMainContainer {
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
 .titleContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
     width: 95%;
     justify-content: space-between;
-    padding: 30px;
+    padding: 20px;
     margin-top: 10px;
 }
 
@@ -325,35 +321,44 @@ body {
 }
 
 /* 팁 보드  */
-.slider {
-    position: relative;
-    width: 100%;
-    max-width: 1200px;
-    margin: auto;
-    overflow: hidden;
-}
 
-.slide-container {
+.tipMainContainer {
     display: flex;
-    transition: transform 0.5s ease;
+    flex-direction: column;
 }
 
 .tipBoardMainContainer {
+    width: 100%;
+    /* transform: translateX(-8.5%); */
+    height: auto;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    /* padding-bottom: 30px; */
 }
 
 .tipBoardContainer {
-    flex: 0 0 33.333%; /* Show 3 slides at once */
-    box-sizing: border-box;
+    width: 400px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px; /* Optional: rounded corners */
+    padding: 10px; /* Add some padding */
+    box-sizing: border-box; 
+    /* margin: 30px; */
+    margin-top: 50px;
+
+
 }
 
 .tipBoardImg {
     width: 100%;
     height: 240px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 5px; /* Optional: rounded corners */
     cursor: pointer;
     overflow: hidden;
 }
@@ -363,7 +368,7 @@ body {
 }
 
 .tipBoardImg img:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
 }
 
 .tipBoardUserInfoContainer {
@@ -402,84 +407,8 @@ body {
     margin-right: 10px;
 }
 
-.tipBoardLikeContainer {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.like {
-    display: flex;
-}
-
-.tipBoardLikeContainer a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-}
-
-.tipBoardLikeContainer i {
-    font-size: 16px;
-    color: red;
-    margin-right: 5px;
-}
-
-.tipBoardLikeContainer h4 {
-    font-size: 16px;
-    margin: 0;
-}
-
-.tipBoardContent {
-    font-size: 14px;
-    color: #333;
-    line-height: 1.5;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 700;
-}
-
-.tipBoardUserName, .tipBoardTitle, .tipBoardContent {
-    color: var(--gray1);
-}
-
-.slider-btn {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    cursor: pointer;
-    z-index: 2;
-    border-radius: 50%; /* 둥근 버튼 모양 */
-    width: 50px; /* 너비 */
-    height: 50px; /* 높이 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px; /* 아이콘 크기 */
-    transition: background-color 0.3s;
-}
-
-.prev-btn {
-    left: 10px; /* 왼쪽 위치 */
-    top: 50%; /* 버튼의 상단을 중앙으로 정렬 */
-    transform: translateY(-50%); /* 버튼을 수직 중앙 정렬 */
-    z-index: 1; /* z-index 추가 */
-}
-
-.next-btn {
-    right: 10px; /* 오른쪽 위치 */
-    top: 50%; /* 버튼의 상단을 중앙으로 정렬 */
-    transform: translateY(-50%); /* 버튼을 수직 중앙 정렬 */
-    z-index: 1; /* z-index 추가 */
-    margin-left: 10px; /* prev-btn과의 간격 설정 */
-}
 
 
-.slider-btn:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-}
 
 /* 탑버튼 */
 #boardMainTop {

@@ -1,58 +1,24 @@
-<div class="slider">
-    <button class="slider-btn prev-btn" onclick="moveSlide(-1)">&#10094;</button>
-    <div class="slide-container" id="slide-container">
-        <div class="tipBoardMainContainer" th:each="chunk, iterStat : ${tipBoardChunks}" th:classappend="${iterStat.index == 0} ? '' : 'hidden'">
-            <th:block th:each="board : ${chunk}">
-                <div class="tipBoardContainer fade" th:onclick="|location.href='@{/tip/detail/{boardNo}(boardNo=${board.boardNo})}'|">
-                    <div class="tipBoardImg">
-                        <img th:src="@{|${board.thumbnail}|}" alt="Portfolio Image" class="tipBoardImg">
-                    </div>
-                    <div class="tipBoardUserInfoContainer">
-                        <div class="tipBoardTitle" th:text="${board.boardTitle}">제목</div>
-                        <div class="nameBox">
-                            <img th:src="${board.profileImg}">
-                            <div class="tipBoardUserName" th:text="${board.memberNickname}">닉네임</div>
-                        </div>
-                        <div class="tipBoardLikeContainer">
-                            <div class="like">
-                                <i class="fa-solid fa-heart" style="color: red;"></i>
-                                <!-- 빈하트 : fa-regular -->
-                                <h3 th:text="${board.likeCount}">10</h3>
-                            </div>
-                        </div>
-                        <div class="tipBoardContent" th:text="${board.boardContent}">내용</div>
+<div class="tipBoardMainContainer" th:each="chunk, iterStat : ${tipBoardChunks}" th:classappend="${iterStat.index == 0} ? '' : 'hidden'">
+    <th:block th:each="board : ${chunk}">
+        <div class="tipBoardContainer fade" th:onclick="|location.href='@{/tip/detail/{boardNo}(boardNo=${board.boardNo})}'|">
+            <div class="tipBoardImg">
+                <img th:src="@{|${board.thumbnail}|}" alt="Portfolio Image" class="tipBoardImg">
+            </div>
+            <div class="tipBoardUserInfoContainer">
+                <div class="tipBoardTitle" th:text="${board.boardTitle}">제목</div>
+                <div class="nameBox">
+                    <img th:src="${board.profileImg}">
+                    <div class="tipBoardUserName" th:text="${board.memberNickname}">닉네임</div>
+                </div>
+                <div class="tipBoardLikeContainer">
+                    <div class="like">
+                        <i class="fa-solid fa-heart" style="color: red;"></i>
+                        <!-- 빈하트 : fa-regular -->
+                        <h3 th:text="${board.likeCount}">10</h3>
                     </div>
                 </div>
-            </th:block>
+                <div class="tipBoardContent" th:text="${board.boardContent}">내용</div>
+            </div>
         </div>
-    </div>
-    <button class="slider-btn next-btn" onclick="moveSlide(1)">&#10095;</button>
+    </th:block>
 </div>
-
-
-<script>
-    let currentIndex = 0;
-
-function moveSlide(direction) {
-    const slideContainer = document.getElementById('slide-container');
-    const totalSlides = slideContainer.children.length;
-    const slidesPerPage = 3;
-
-    currentIndex += direction;
-
-    // Boundary checks
-    if (currentIndex < 0) {
-        currentIndex = totalSlides - slidesPerPage;
-    }
-    if (currentIndex >= totalSlides) {
-        currentIndex = 0;
-    }
-
-    // Calculate the width of a single slide
-    const slideWidth = slideContainer.children[0].offsetWidth;
-    const newTransform = `translateX(${-slideWidth * currentIndex}px)`;
-
-    slideContainer.style.transform = newTransform;
-}
-
-</script>
