@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/images/main/favicon.ico">
-    <title>관리자 : 회원관리</title>
+    <title>관리자 : 신고내역</title>
 
     <!-- <link rel="stylesheet" href="/css/common/main.css"> -->
     <link rel="stylesheet" href="/css/common/fragments/header.css">
     <link rel="stylesheet" href="/css/common/fragments/admin/leftheader.css">
-    <link rel="stylesheet" href="/css/manager/memberManagement.css">
+    <link rel="stylesheet" href="/css/manager/report.css">
 </head>
 <body>
     <div class="bodyContainer">
@@ -28,34 +28,26 @@
                 <div class="content">
                     <!-- 타이틀 -->
                     <div class="titleBox">
-                        <h3>회원 관리</h3>
+                        <h3>신고내역</h3>
                     </div>
 
-                    <!-- 선택 승인, 삭제 영역 -->
-                    <div class="multiPassBtnDiv">
-                        <div>
-                            <button id="multiPassBtn" type="button" class="multiPassBtn">탈퇴 처리</button>
-                        </div>
-                    </div>
 
                     <!-- 테이블 -->
                     <div class="listBox">
                         <table>
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox" class="select-all" name="selectAll"></th>
-                                    <th>회원 번호</th>
-                                    <th></th>
-                                    <th>회원 아이디</th>
-                                    <th>회원 이메일</th>
-                                    <th>가입일</th>
-                                    <th>탈퇴 여부</th>
-                                    <th></th>
+                                    <th>신고 번호</th>
+                                    <th>피신고자 아이디</th>
+                                    <th>신고 사유</th>
+                                    <th>신고 날짜</th>
+                                    <th>신고자 아이디</th>
+                                    <th>신고 게시글 링크</th>
                                 </tr>
                             </thead>
                             <tbody>
 
-                                <th:block th:if="${#lists.isEmpty(memberList)}">
+                                <th:block th:if="${#lists.isEmpty(reportList)}">
                                     <tr>
                                         <td colspan="6">회원이 존재하지 않습니다.</td>
                                     </tr>
@@ -68,44 +60,28 @@
                                 -->
 
                                 <!-- 게시글이 존재 O -->
-                                <th:block th:unless="${#lists.isEmpty(memberList)}">
+                                <th:block th:unless="${#lists.isEmpty(reportList)}">
 
                                     <!-- 반복문을 통한 행 생성 -->
-                                    <tr th:each="member : ${memberList}" th:object="${member}">
-                                        
-                                        <!-- 체크 박스 -->
-                                        <td><input type="checkbox" class="select-item" name="selectItem"></td>
+                                    <tr th:each="report : ${reportList}" th:object="${report}">
 
-                                        <!-- 회원 번호 -->
-                                        <td th:text="*{memberNo}">회원 번호</td>
+                                        <!-- 신고 번호 -->
+                                        <td th:text="*{reportNo}">신고 번호</td>
 
-                                        <!-- 회원프로필 -->
-                                        <td id="imgBox"><img th:src="*{profileImg}"></td>
+                                        <!-- 피신고자 아이디 -->
+                                        <td th:text="*{reportedMemberId}">피신고자 아이디</td>
 
-                                        <!-- 회원 아이디 -->
-                                        <td th:text="*{memberId}">회원 아이디</td>
+                                        <!-- 신고 사유 -->
+                                        <td th:text="*{reportReason}">신고 사유</td>
 
-                                        <!-- 회원 이메일 -->
-                                        <td th:text="*{memberTel}">회원 번호</td>
+                                        <!-- 신고 날짜 -->
+                                        <td th:text="*{reportDate}">신고 날짜</td>
 
-                                        <!-- 가입일 -->
-                                        <td th:text="*{enrollDate}">가입일</td>
+                                        <!-- 신고자 아이디 -->
+                                        <td th:text="*{memberId}">신고자 아이디</td>
 
-                                        <!-- 탈퇴 여부 -->
-                                        <th:block th:if="*{memberDelFl == 'N'}">
-                                            <td>활동중</td>
-                                        </th:block>
-                                        <th:block th:unless="*{memberDelFl == 'N'}">
-                                            <td>탈퇴</td>
-                                        </th:block>
-
-                                        <!-- 탈퇴 버튼 -->
-                                        <th:block th:if="*{memberDelFl == 'N'}">
-                                            <td class="btn-td"><button type="button" class="delBtn">탈퇴</button></td>
-                                        </th:block>
-                                        <th:block th:unless="*{memberDelFl == 'N'}">
-                                            <td></td>
-                                        </th:block>
+                                        <!-- 신고 게시글 링크 -->
+                                        <td><a th:href="|/myHouse/detail/*{boardNo}|" th:text="|/myHouse/detail/*{boardNo}|">신고 게시글 링크</a></td>
                                     </tr>
                                 </th:block>
                             </tbody>
@@ -119,10 +95,10 @@
                         <ul class="pagination" th:object="${pagination}">
 
                             <!-- 첫 페이지로 이동 -->
-                            <li><a th:href="@{/manager/member/management(cp=1)}">&lt;&lt;</a></li>
+                            <li><a th:href="@{/manager/report(cp=1)}">&lt;&lt;</a></li>
 
                             <!-- 이전 목록 마지막 번호로 이동 -->
-                            <li><a th:href="@{/manager/member/management(cp=*{prevPage})}">&lt;</a></li>
+                            <li><a th:href="@{/manager/report(cp=*{prevPage})}">&lt;</a></li>
 
                             <!-- 특정 페이지로 이동 -->
                             <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
@@ -134,24 +110,23 @@
             
                                 <!-- 보고있지 않은 페이지 -->
                                 <li th:unless="${i} == *{currentPage}">
-                                    <a th:href="@{/manager/member/management(cp=${i})}" 
+                                    <a th:href="@{/manager/report(cp=${i})}" 
                                     th:text="${i}">이동할 페이지</a>
                                 </li>
                                 
                             </th:block>
                             
                             <!-- 다음 목록 시작 번호로 이동 -->
-                            <li><a th:href="@{/manager/member/management(cp=*{nextPage})}">&gt;</a></li>
+                            <li><a th:href="@{/manager/report(cp=*{nextPage})}">&gt;</a></li>
 
                             <!-- 끝 페이지로 이동 -->
-                            <li><a th:href="@{/manager/member/management(cp=*{maxPage})}">&gt;&gt;</a></li>
+                            <li><a th:href="@{/manager/report(cp=*{maxPage})}">&gt;&gt;</a></li>
                         </ul>
                     </div>
                 </div>
             </section>
         </div>
     </div>
-    <script src="/js/manager/memberManagement.js"></script>
     <script src="/js/common/redirectToLogin.js"></script>
 </body>
 

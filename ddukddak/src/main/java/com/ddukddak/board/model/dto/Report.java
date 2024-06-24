@@ -22,4 +22,8 @@ public class Report {
 	private String reportDate;			// 신고날짜
 	private int boardNo;				// 게시글 번호
 	
+	
+	private String reportedMemberId;	// 피신고자 아이디
+	private String memberId;			// 신고자 아이디
+	
 }
