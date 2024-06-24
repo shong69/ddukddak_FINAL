@@ -198,7 +198,7 @@ public class SmsController {
     	
     	
     	// 승인이냐, 거절이냐에 따라 문자 발송 양식 수정을 위해 키값 추가
-    	SingleMessageSentResponse response = service.sendMemberSms("confirm", toNumber);
+    	SingleMessageSentResponse response = service.sendMemberSms("delete", toNumber);
     	
     	// response : SMS 발송 결과
     	log.info("response : " + response);
@@ -225,7 +225,7 @@ public class SmsController {
     	
     	List<Map<String, String>> members = paramMap.get("members");
 		
-        if (action == null) {
+        if (action == null || (!action.equals("delete"))) {
         	return ResponseEntity.ok(0);  // Invalid action
         }
     	
@@ -263,7 +263,7 @@ public class SmsController {
     	
     	
     	// 승인이냐, 거절이냐에 따라 문자 발송 양식 수정을 위해 키값 추가
-    	SingleMessageSentResponse response = service.sendPartnerSms2("confirm", toNumber);
+    	SingleMessageSentResponse response = service.sendPartnerSms2("delete", toNumber);
     	
     	// response : SMS 발송 결과
     	log.info("response : " + response);
@@ -293,11 +293,11 @@ public class SmsController {
 		log.info("SMS 컨트롤러 partners: " + partners);
 		log.info("SMS 컨트롤러 action: " + action);
 		
-        if (action == null || (!action.equals("confirm") && !action.equals("refuse"))) {
+        if (action == null || (!action.equals("delete"))) {
         	return ResponseEntity.ok(0);  // Invalid action
         }
     	
-    	MultipleDetailMessageSentResponse multiResponse = service.sendPartnerManySms(action, partners);
+    	MultipleDetailMessageSentResponse multiResponse = service.sendPartnerMultiSms(action, partners);
     	
     	// response : SMS 발송 결과
     	log.info("multiResponse : " + multiResponse);

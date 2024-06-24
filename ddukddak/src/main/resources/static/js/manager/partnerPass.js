@@ -113,12 +113,15 @@ document.querySelector('#multiPassBtn').addEventListener('click', () => {
     // 1. 미체크 처리
     const selectedItems = Array.from(selectItems).filter(checkbox => checkbox.checked);
 
+    const selectedCount = selectedItems.length;
+
+
     if (selectedItems.length === 0) {
         alert('선택된 항목이 없습니다.');
         return;
     }
 
-    let action = prompt('원하는 작업을 입력해 주세요. "승인" 또는 "거절" (입력 시 ""는 제외)', '');
+    let action = prompt(`선택된 ${selectedCount}개 항목에 대해 원하는 작업을 입력해 주세요.\n"승인" 또는 "거절" (입력 시 ""는 제외)`, '');
 
     action = action && action.trim();
 
@@ -147,7 +150,7 @@ document.querySelector('#multiPassBtn').addEventListener('click', () => {
         return;
     }
 
-
+    
     // 3. 정말 진행할지 물어보기
     if(!confirm(`선택된 모든 항목에 대해 정말 '${action}' 처리를 진행하시겠습니까?`)) {
 

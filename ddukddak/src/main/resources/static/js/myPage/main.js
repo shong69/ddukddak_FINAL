@@ -5,7 +5,7 @@ function selectOrderList() {
     fetch("/myPage/selectOrderList")
         .then(resp => resp.text())
         .then(result => {
-            console.log(result);
+            console.log("result : " + result);
             if (result != null) {
                 const orderList = JSON.parse(result);
 
@@ -22,8 +22,11 @@ function selectOrderList() {
                 }, {}); //주문번호가 key이고 주문번호에 해당하는 주문들의 리스트가 value인 객체
 
                 // 2. 그룹화된 데이터를 기반으로 DOM 요소 생성
-                Object.keys(groupedOrders).forEach(orderNo => {
-                    
+
+                // 
+                //Object.keys(groupedOrders).forEach(orderNo => {
+                Object.keys(groupedOrders).sort((a, b) => b - a).forEach(orderNo => {
+
                     const orderGroup = groupedOrders[orderNo];
                     // 주문번호별 컨테이너
                     const orderDiv = document.createElement('div');
@@ -40,13 +43,16 @@ function selectOrderList() {
                         totalPrice += order.orderPrice;
                     });
 
+                    // 가격을 1,000원 단위로 쉼표 포매팅
+                    const formattedTotalPrice = totalPrice.toLocaleString();
+
                     const div = document.createElement('div');
                     div.classList.add('order-info');
                     div.innerHTML = `
-                        <div class="orderTotalPrice">총 가격 ${totalPrice}원</div>
+                        <div class="orderTotalPrice">총 가격 ${formattedTotalPrice}원</div>
                         <div class="date-address">
                             <div>${orderGroup[0].orderDate} | 주문일</div>
-                            <div>${orderGroup[0].deliveryAddress}| 배송지</div>
+                            <div>${orderGroup[0].deliveryAddress} | 배송지</div>
                         </div>
                     `;
                     orderDiv.append(div);
@@ -55,12 +61,15 @@ function selectOrderList() {
                     orderGroup.forEach(order => {
                         const row = document.createElement('div');
 
+                        // 각 주문 항목의 가격을 포매팅
+                        const formattedOrderPrice = order.orderPrice.toLocaleString();
+
                         row.classList.add('order-item');
                         row.innerHTML = `
                             <div><img src="${order.productImg}" class="productImg"></div>
                             <div><a class="orderItemPath" href="#" onclick="findUrl(${order.productNo}); return false;">${order.productName} [${order.optionValue}]</a></div>
                             <div>${order.orderQuantity}개</div>
-                            <div>${order.orderPrice} 원</div>
+                            <div>${formattedOrderPrice} 원</div>
                             <div class="statusArea"><div class="status">${order.orderDelFl === 'Y' ? '주문 취소' : order.orderStatus}</div></div>
                         `;
 

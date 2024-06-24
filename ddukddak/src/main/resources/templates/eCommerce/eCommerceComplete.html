@@ -23,7 +23,7 @@
     <h2 style="text-align: center; margin: 50px;">주문/결제</h2>
 
     <!-- 결제 완료 세션이 없을 경우 -->
-    <th:block th:if="${session.merchantUid== null}">
+    <th:block th:if="${session.merchantUid == null}">
         <div id="completeBox">
             <div style="padding: 20px 0; border-bottom: 1px solid rgb(187, 187, 187); margin: 0 20px;">
                 <h1 style="color: #3A732A;">세션이 만료되었습니다.</h1>
@@ -43,7 +43,7 @@
     </th:block>
 
     <!-- 결제 완료 세션이 있을 경우 -->
-    <th:block th:unless="${session.merchantUid== null}">
+    <th:block th:unless="${session.merchantUid == null}">
 
         <div id="completeBox">
             <div style="padding: 20px 0; border-bottom: 1px solid rgb(187, 187, 187); margin: 0 20px;">

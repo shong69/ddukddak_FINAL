@@ -28,7 +28,7 @@
                 <div class="content">
                     <!-- 타이틀 -->
                     <div class="titleBox">
-                        <h3>회원 관리</h3>
+                        <h3>파트너 관리</h3>
                     </div>
 
                     <!-- 선택 승인, 삭제 영역 -->
@@ -46,9 +46,9 @@
                                     <th><input type="checkbox" class="select-all" name="selectAll"></th>
                                     <th>No</th>
                                     <th>아이디</th>
-                                    <th>대표번호</th>
                                     <th>상호명</th>
                                     <th>사업자등록번호</th>
+                                    <th>파트너 연락처</th>
                                     <th>탈퇴여부</th>
                                     <th></th>
                                 </tr>
@@ -81,14 +81,15 @@
 
                                         <!-- 파트너 아이디 -->
                                         <td th:text="*{partnerId}">파트너 아이디</td>
-
-                                        <td th:text="*{partnerTel}">파트너 연락처</td>
-
+                                        
                                         <!-- 상호명 -->
                                         <td th:text="*{partnerBusinessName}">상호명</td>
 
                                         <!-- 사업자등록번호 -->
-                                        <td th:text="*{partnerBusinessNum}">사업자등록번호</td>
+                                        <td th:text="*{partnerBusinessNum}" class="business-number">사업자등록번호</td>
+
+                                        <!-- 파트너 연락처 -->
+                                        <td th:text="*{partnerTel}">파트너 연락처</td>
 
                                         <!-- 탈퇴 여부 -->
                                         <th:block th:if="*{partnerDelFl == 'N'}">
@@ -118,10 +119,10 @@
                         <ul class="pagination" th:object="${pagination}">
 
                             <!-- 첫 페이지로 이동 -->
-                            <li><a th:href="@{/manager/member/management(cp=1)}">&lt;&lt;</a></li>
+                            <li><a th:href="@{/manager/partner/management(cp=1)}">&lt;&lt;</a></li>
 
                             <!-- 이전 목록 마지막 번호로 이동 -->
-                            <li><a th:href="@{/manager/member/management(cp=*{prevPage})}">&lt;</a></li>
+                            <li><a th:href="@{/manager/partner/management(cp=*{prevPage})}">&lt;</a></li>
 
                             <!-- 특정 페이지로 이동 -->
                             <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
@@ -133,17 +134,17 @@
             
                                 <!-- 보고있지 않은 페이지 -->
                                 <li th:unless="${i} == *{currentPage}">
-                                    <a th:href="@{/manager/member/management(cp=${i})}" 
+                                    <a th:href="@{/manager/partner/management(cp=${i})}" 
                                     th:text="${i}">이동할 페이지</a>
                                 </li>
                                 
                             </th:block>
                             
                             <!-- 다음 목록 시작 번호로 이동 -->
-                            <li><a th:href="@{/manager/member/management(cp=*{nextPage})}">&gt;</a></li>
+                            <li><a th:href="@{/manager/partner/management(cp=*{nextPage})}">&gt;</a></li>
 
                             <!-- 끝 페이지로 이동 -->
-                            <li><a th:href="@{/manager/member/management(cp=*{maxPage})}">&gt;&gt;</a></li>
+                            <li><a th:href="@{/manager/partner/management(cp=*{maxPage})}">&gt;&gt;</a></li>
                         </ul>
                     </div>
                 </div>
