@@ -318,6 +318,12 @@ public interface eCommerceMapper {
 	 */
 	int insertOrderDetailOption(Map<String, Integer> map);
 
+	/** 리뷰 이미지 삭제
+	 * @param imgSrc
+	 * @return
+	 */
+	int delImg(Map<String, String> map);
+
 
 
 

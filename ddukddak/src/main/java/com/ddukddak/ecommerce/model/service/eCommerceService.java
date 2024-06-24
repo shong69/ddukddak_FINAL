@@ -266,6 +266,12 @@ public interface eCommerceService {
 	 */
 	int insertOrderDetailOption(int orderItemNo, Integer optionNo);
 
+	/**[비동기] 사진 삭제
+	 * @param imgSrc
+	 * @return
+	 */
+	int delImg(Map<String, String> map);
+
 	
 
 

@@ -354,7 +354,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		for(Review review : list) {
 			int reviewNo = review.getReviewNo();
 			List<String> imgList = mapper.selectReviewImgs(reviewNo);
-			log.info("이미지리스트 : {}",imgList);
+//			log.info("이미지리스트 : {}",imgList);
 			review.setImgList(imgList);
 			}
 		
@@ -447,6 +447,13 @@ public class eCommerceServiceImpl implements eCommerceService{
 		return review;
 	}
 
+	//리뷰 이미지 삭제
+	@Override
+	public int delImg(Map<String,String> map) {
+		int result = mapper.delImg(map);
+		return result;
+	}
+
 	private static final Logger log = LoggerFactory.getLogger(eCommerceServiceImpl.class);
 
     // 리뷰 수정하기
@@ -462,65 +469,69 @@ public class eCommerceServiceImpl implements eCommerceService{
 
         if (result > 0) {
             List<ReviewImg> imgList = new ArrayList<>();
-            if (reviewImgs != null && !reviewImgs.isEmpty()) {
-                log.info("업로드할 이미지 수: {}", reviewImgs.size());
+            if (reviewImgs != null || !reviewImgs.isEmpty()) {
+                log.info("업로드할 이미지 수: {}", reviewImgs.size()-1);
+                if(reviewImgs.size()>1) {
+                    Map<String, Object> map = new HashMap<>();
 
-                // 기존 이미지 삭제
-                int deleteResult = mapper.delReviewImg(review.getReviewNo());
-                log.info("기존 이미지 삭제 결과: {}", deleteResult);
-                
-                Map<String, Object> map = new HashMap<>();
+                    for (int i = 1; i < reviewImgs.size(); i++) {
+                    	
+                        MultipartFile file = reviewImgs.get(i);
+                        log.info("이미지 내놔: {}", file);
 
-                for (int i = 0; i < reviewImgs.size(); i++) {
-                    String originalName = reviewImgs.get(i).getOriginalFilename();
-                    log.info("원본 파일 이름: {}", originalName);
+                        // 파일의 원본 이름을 가져옵니다.
+                        String originalName = file.getOriginalFilename();
+                        log.info("Original file name: {}", originalName);
 
-                    if (originalName != null && !originalName.isEmpty()) {
-                        String rename = Utility.fileRename(originalName);
-                        log.info("변경된 파일 이름: {}", rename);
-                        
-                        map.put("reviewNo", review.getReviewNo());
-                        map.put("uploadImgOgName", originalName);
-                        map.put("uploadImgRename", rename);
-                        map.put("uploadImgPath", webPath);
-                        map.put("uploadImgOrder", i);
-                        
+                        log.info("원본 파일 이름: {}", originalName);
+
+                        if (originalName != null && !originalName.isEmpty()) {
+                            String rename = Utility.fileRename(originalName);
+                            log.info("변경된 파일 이름: {}", rename);
+                            
+                            map.put("reviewNo", review.getReviewNo());
+                            map.put("uploadImgOgName", originalName);
+                            map.put("uploadImgRename", rename);
+                            map.put("uploadImgPath", webPath);
+                            map.put("uploadImgOrder", i);
+                            
+                            try {
+                                int insertResult = mapper.insertImgs(map);
+                                result1 += insertResult;
+                                log.info("이미지 삽입 결과: {}", insertResult);
+
+                                ReviewImg img = ReviewImg.builder()
+                                        .reviewNo(review.getReviewNo())
+                                        .uploadImgOgName(originalName)
+                                        .uploadImgRename(rename)
+                                        .uploadImgOrder(i)
+                                        .uploadImgPath(webPath)
+                                        .uploadFile(reviewImgs.get(i))
+                                        .build();
+                                imgList.add(img);
+                            } catch (Exception e) {
+                                log.error("이미지 삽입 중 오류 발생 - 리뷰 번호: {}, 이미지: {}", review.getReviewNo(), originalName, e);
+                            }
+                        }
+                    }
+
+                    for (ReviewImg img : imgList) {
+                        File file = new File(folderPath + img.getUploadImgRename());
                         try {
-                            int insertResult = mapper.insertImgs(map);
-                            result1 += insertResult;
-                            log.info("이미지 삽입 결과: {}", insertResult);
-
-                            ReviewImg img = ReviewImg.builder()
-                                    .reviewNo(review.getReviewNo())
-                                    .uploadImgOgName(originalName)
-                                    .uploadImgRename(rename)
-                                    .uploadImgOrder(i)
-                                    .uploadImgPath(webPath)
-                                    .uploadFile(reviewImgs.get(i))
-                                    .build();
-                            imgList.add(img);
-                        } catch (Exception e) {
-                            log.error("이미지 삽입 중 오류 발생 - 리뷰 번호: {}, 이미지: {}", review.getReviewNo(), originalName, e);
+                            img.getUploadFile().transferTo(file);
+                            log.info("파일 저장 성공 - 경로: {}", file.getAbsolutePath());
+                        } catch (IOException e) {
+                            log.error("파일 저장 실패 - 경로: {}", file.getAbsolutePath(), e);
                         }
                     }
                 }
-
-                for (ReviewImg img : imgList) {
-                    File file = new File(folderPath + img.getUploadImgRename());
-                    try {
-                        img.getUploadFile().transferTo(file);
-                        log.info("파일 저장 성공 - 경로: {}", file.getAbsolutePath());
-                    } catch (IOException e) {
-                        log.error("파일 저장 실패 - 경로: {}", file.getAbsolutePath(), e);
-                    }
-                }
-            } else {
-                log.info("업로드할 이미지가 없음");
-                return result;
+                else {
+                    log.info("업로드할 이미지가 없음");
+                    return result;
+            } 
             }
         }
-        log.info("리뷰 수정 종료 - 최종 결과: {}", result1);
-        return result1;
+		return result1 + result;
     }
 
 	//리뷰 개수 리턴
@@ -663,6 +674,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		return mapper.insertOrderDetailOption(map);
 
 	}
+
 
 	
 

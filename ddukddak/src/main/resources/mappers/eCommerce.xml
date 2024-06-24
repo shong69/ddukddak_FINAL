@@ -429,6 +429,7 @@
 		LEFT JOIN ORDER_DETAIL O ON O.ORDER_ITEM_NO = R.ORDER_ITEM_NO 
 		LEFT JOIN ORDERS R ON R.ORDER_NO = O.ORDER_NO 
 		WHERE R.PRODUCT_NO=#{productNo}
+		AND REVIEW_DEL_FL = 'N'
 	</select>
 	
 	<!--해당 상품에서 내가 작성할 수 있는 주문상품 리스트 찾기 -->
@@ -453,6 +454,7 @@
 		SELECT COUNT(*)
 		FROM REVIEW
 		WHERE PRODUCT_NO = #{productNo}
+		AND REVIEW_DEL_FL = 'N'
 	</select>
 	<!-- 리뷰 평점 가져오기 -->
 	<select id="avgScore">
@@ -505,8 +507,11 @@
 		WHERE REVIEW_NO = #{reviewNo}
 	</update>
 	
-	
-	
+	<!-- 리뷰 이미지 1개씩 삭제 -->
+	<delete id ="delImg">
+		DELETE FROM "UPLOAD_FILE" 
+		WHERE UPLOAD_IMG_RENAME=#{imageSrc}
+	</delete>
 
 	
 	<!-- QnA -->

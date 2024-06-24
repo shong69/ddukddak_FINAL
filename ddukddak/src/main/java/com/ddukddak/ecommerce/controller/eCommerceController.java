@@ -656,6 +656,7 @@ public class eCommerceController {
 			return 0;
 		}else {//리뷰 사진 uploadFile에 삽입하기
 			List<MultipartFile> imgList = new ArrayList<>(reviewImgs);
+
 			int imgResult = service.insertImgs(reviewNo, reviewImgs);
 			
 			if(imgResult >0) {
@@ -686,11 +687,21 @@ public class eCommerceController {
 		return review;
 	}
 
+	//[비동기] 리뷰 이미지 삭제하기
+	@DeleteMapping("delImg")
+	@ResponseBody
+	public int delImg(@RequestBody Map<String, String> map) {
+
+		//log.info("이미지 삭제 결과 : {}",service.delImg(map));
+		return service.delImg(map);
+	}
+	
+	
 	//[비동기]리뷰 수정하기
 	@PostMapping("updateReview")
 	@ResponseBody
 	public int updateReview(@ModelAttribute Review review,
-											@RequestParam("reviewImgs") List<MultipartFile> reviewImgs) throws IllegalStateException, IOException{
+							@RequestParam("reviewImgs") List<MultipartFile> reviewImgs) throws IllegalStateException, IOException{
 		
 		int result = service.updateReview(review,reviewImgs);
 		if(result > 0) {
