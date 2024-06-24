@@ -81,4 +81,13 @@ public interface MyHouseBoardService {
 	int deleteMyHouse(int boardNo);
 
 
+
+	/** 집들이 수정
+	 * @param board
+	 * @param images
+	 * @return result
+	 */
+	int updateMyHouse(Board board, List<MultipartFile> images) throws IllegalStateException, IOException;
+
+
 }

@@ -20,6 +20,12 @@
     <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 
+    <!-- 구글 sdk 추가 -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!-- 앱의 클라이언트 ID 지정 -->
+    <meta name="google-signin-client_id" content="739886228603-jchth8f6nd964ov8vmf9n9o0qerr4kvo.apps.googleusercontent.com">
+
 </head>
 <body>
     <th:block th:replace="~{common/fragments/header}"></th:block>
@@ -64,16 +70,21 @@
 
                     <div class="socialLoginArea">
                         <!-- 네이버 -->
-                        <div id="naver_id_login">
-                            
-                        </div>
-                    
+                        <div id="naver_id_login" class="disabled" data-tooltip="검수 이슈로 인한 사용 불가"></div>
+                        <!-- Tooltip 요소 / 네이버 사용 불가 -->
+                        <div id="tooltip" class="tooltip"></div>
+
                         <!-- 카카오 -->
                         <div>
                             <a id="kakao-login-btn" style="cursor: pointer;">
-                                <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
-                                    width="195px;" height="50px" alt="카카오 로그인 버튼" />
+                                <img src="/images/assets/kakao_logo_pick.webp"
+                                    height="50px" alt="카카오로그인" />
                             </a>
+                        </div>
+
+                        <div>
+                            <a id="google-login-btn" style="cursor: pointer;">
+                            <img src="/images/assets/google.png" alt="구글로그인", height="50px"/></a>
                         </div>
                     </div>
                     
@@ -97,13 +108,5 @@
 
     <script src="/js/common/redirectToLogin.js"></script>
 
-    <!-- 카카오 팝업창으로 열기 -->
-    <script>
-        document.getElementById('kakao-login-btn').addEventListener('click', function(event) {
-            event.preventDefault();
-            const kakaoLoginUrl = '/kakaoLogin';
-            window.open(kakaoLoginUrl, 'kakao-login-popup', 'width=600,height=600');
-        });
-    </script>
 </body>
 </html>

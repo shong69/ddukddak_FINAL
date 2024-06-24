@@ -20,29 +20,59 @@
 
         <main class="mainContainer">
 
-            <th:block th:object="${mainProject}">
             <!-- 시공사 이름 + 메인 캐러셀 컨테이너 -->
-                <div class="topContainer">
-                    <h1 class="portTitle" th:text="*{partnerBusinessName}">캣츠코</h1>
+            <div class="topContainer">
+                <h1 class="portTitle" th:text="${portfolio.partnerBusinessName}">캣츠코</h1>
+                
+                <div class="slideshow-container">
+
+                    <th:block th:if="${portfolio.mainProject == null}">
+                        <h1>메인 프로젝트를 등록해 주세요</h1>
+                    </th:block>
+
+                    <!-- Full-width images with number and caption text -->
+                    <th:block th:unless="${portfolio.mainProject == null}">
+                        <div th:each="img : ${portfolio.mainProject.imgList}" th:object="${img}" class="mySlides fade">
+                            <a th:href="@{/interior/interiorPortfolioDetail/{projectNo}(projectNo=*{projectNo}, portfolioNo=${portfolio.portfolioNo})}" method="GET">
+                                <!-- <p>[[|*{uploadImgPath}*{uploadImgRename}|]]</p> -->
+                                <img th:src="|*{uploadImgPath}*{uploadImgRename}|" style="width:100%" class="adBannerImg">
+                                <div class="text-overlay">
+                                    <h1 class="text-title" th:text="${portfolio.mainProject.projectName}"></h1>
+                                    <h3 class="text-subtitle" th:text="${portfolio.mainProject.projectContent}"></h3>
+                                    <h4 class="text-date" th:text="|${portfolio.mainProject.constructionYear} |"></h4>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Next and previous buttons -->
+                        <a class="prev"><i class="fa-solid fa-chevron-left"></i></a>
+                        <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
+                    </th:block>
                     
-                    <th:block th:replace="~{common/fragments/portfolioCarousel}"></th:block>
-                </div>
 
-                <!-- 중간 시공사 컨테이너 -->
-                <div class="midContainer">
-                    <div class="imgContainer">
-                        <img class= "portLogo" th:unless="*{profileImg}" th:src="#{user.default.image}">
-                        <img class= "portLogo" th:if="*{profileImg}" th:src="*{profileImg}">
-                    </div>
-                    <div class="nameContainer">
-                        <h2 class="portName" th:text="*{partnerBusinessName}">캣츠코</h2>
-                    </div>
-                    <div class="buttonContainer">
-                        <button class="interiorMatchBtn">컨택하기</button>
-                    </div>
                 </div>
-            </th:block>
+                
+                </div>
+            </div>
 
+            <!-- 중간 시공사 컨테이너 -->
+            <div class="midContainer">
+                <div class="imgContainer">
+                    <img class= "portLogo" th:unless="${portfolio.profileImg}" th:src="#{user.default.image}">
+                    <img class= "portLogo" th:if="${portfolio.profileImg}" th:src="${portfolio.profileImg}">
+                </div>
+                <div class="nameContainer">
+                    <h2 class="portName" th:text="${portfolio.partnerBusinessName}">캣츠코</h2>
+                </div>
+                <div class="buttonContainer">
+                    <button class="interiorMatchBtn" id="interiorMatchBtn">컨택하기</button>
+                </div>
+            </div>
+            
+            <div class="interiorHomeLink">
+                <h2>해당 시공사 홈페이지 :</h2>
+                <a href="#" th:text="${portfolio.homeLink}"></a>
+            </div>
 
             <!-- 프로젝트 리스트 컨테이너 -->
             <div class="botContainer">
@@ -59,7 +89,10 @@
 
         <!-- 푸터 -->
         <th:block th:replace="~{common/fragments/footer}"></th:block>
-        <script src="/js/common/fragments/portfolioCarousel.js"></script>
+        <!-- <script src="/js/common/fragments/portfolioCarousel.js"></script> -->
+        <script th:inline="javascript">
+            const loginMember = /*[[${session.loginMember}]]*/ "로그인 회원";
+        </script>
         <script src="/js/partner/interior/interiorPortfolio-dom.js"></script>
         <script src="/js/partner/interior/interiorPortfolio.js"></script>
         <script src="/js/common/redirectToLogin.js"></script>

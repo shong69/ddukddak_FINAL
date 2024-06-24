@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
 import com.ddukddak.partner.model.dto.Partner;
 import com.ddukddak.partner.model.dto.Portfolio;
@@ -19,6 +20,15 @@ public interface InteriorMapper {
 	 * @return interiorList
 	 */
 	List<Partner> selectIneriorList();
+	
+	
+	/** 시공사 리스트 검색 조회
+	 * @param query
+	 * @param cp
+	 * @return interiorList
+	 */
+	List<Partner> searchInteriorList(String query, RowBounds rowBounds);
+	
 
 	Portfolio selectPortfolio(int portfolioNo);
 	
@@ -92,6 +102,47 @@ public interface InteriorMapper {
 	 * @return result
 	 */
 	int updateImage(ProjectImg img);
+
+	
+	/** 메인프로젝트 해제
+	 * @param projectNo
+	 * @return result
+	 */
+	int clearMainProject(int projectNo);
+
+	
+	/** 메인 프로젝트 변경
+	 * @param projectNo
+	 * @return result
+	 */
+	int registMainProject(int projectNo);
+
+
+	
+	/** 시공사 개수 조회
+	 * @return listCount
+	 */
+	int getInteriorListCount();
+
+
+	/** 검색 시공사 개수 조회
+	 * @param query
+	 * @return listCount
+	 */
+	int getSearchCount(String query);
+
+
+
+
+	
+//	/** 메인 프로젝트 제외한 프로젝트 리스트 조회
+//	 * @param portfolioNo
+//	 * @return projectList
+//	 */
+//	List<Project> selectProjectListWithoutMainProject(int portfolioNo);
+
+	
+	
 
 	
 //	/** 프로젝트 이미지 삽입(1행)

@@ -58,15 +58,38 @@
 	</resultMap>
 
 
+	<!-- 시공사 개수 조회 -->
+	<select id="getInteriorListCount">
+		SELECT COUNT(*) FROM "PARTNER" 
+		WHERE PARTNER_TYPE = 1
+		AND PARTNER_DEL_FL = 'N'
+	</select>
+	
+	<!-- 검색 시공사 개수 조회 -->
+	<select id="getSearchCount">
+		SELECT COUNT(*) FROM "PARTNER"
+		WHERE PARTNER_TYPE = 1
+		AND(PARTNER_BUSINESS_NAME LIKE '%' || UPPER( #{query} ) || '%' OR PARTNER_BUSINESS_NAME LIKE '%' || LOWER ( #{query} ) || '%' )
+		AND PARTNER_DEL_FL = 'N'
+	</select>
 	
 	<!-- 시공사 리스트 조회 -->
 	<select id="selectIneriorList">
-		SELECT PARTNER_NO, PARTNER_TEL, PARTNER_BUSINESS_NAME, PORTFOLIO_NO, HOME_LINK
+		SELECT PARTNER_NO, PARTNER_TEL, PARTNER_BUSINESS_NAME, PORTFOLIO_NO, HOME_LINK, PORTFOLIO_NO
 		FROM PARTNER 
 		LEFT JOIN PORTFOLIO USING (PARTNER_NO)
 		WHERE PARTNER_TYPE = 1
 		AND PARTNER_DEL_FL = 'N'
-    <!-- AND MAIN_PROJECT_FL = 'Y' -->
+	</select>
+	
+	<!-- 검색 시공사 리스트 조회 -->
+	<select id="searchInteriorList">
+		SELECT PARTNER_NO, PARTNER_TEL, PARTNER_BUSINESS_NAME, PORTFOLIO_NO, HOME_LINK, PORTFOLIO_NO
+		FROM PARTNER 
+		LEFT JOIN PORTFOLIO USING (PARTNER_NO)
+		WHERE PARTNER_TYPE = 1
+		AND PARTNER_DEL_FL = 'N'
+		AND (PARTNER_BUSINESS_NAME LIKE '%' || LOWER( #{query} ) || '%' OR PARTNER_BUSINESS_NAME LIKE '%' || UPPER ( #{query} ) || '%')
 	</select>
 	
 	<!-- 포트폴리오 조회 -->
@@ -106,8 +129,7 @@
 		NATURAL JOIN PORTFOLIO 
 		NATURAL JOIN PROJECT_INFO 
 		NATURAL JOIN PROJECT
-		WHERE PARTNER_TYPE = 1 
-		AND MAIN_PROJECT_FL = 'N'
+		WHERE PARTNER_TYPE = 1
 		AND PROJECT_DEL_FL = 'N'
 		AND PORTFOLIO_NO = #{portfolioNo}
 		ORDER BY CONSTRUCTION_YEAR DESC
@@ -236,6 +258,18 @@
 		UPLOAD_IMG_RENAME = #{uploadImgRename}
 		WHERE PROJECT_NO = #{projectNo}
 		AND UPLOAD_IMG_ORDER = #{uploadImgOrder}
+	</update>
+	
+	<!-- 메인 프로젝트 해제 -->
+	<update id="clearMainProject">
+		UPDATE "PROJECT_INFO" SET MAIN_PROJECT_FL = 'N'
+		WHERE PROJECT_NO = #{projectNo}
+	</update>
+	
+	<!-- 메인 프로젝트 변경 -->
+	<update id="registMainProject">
+		UPDATE "PROJECT_INFO" SET MAIN_PROJECT_FL = 'Y'
+		WHERE PROJECT_NO = #{projectNo}
 	</update>
 	
 	

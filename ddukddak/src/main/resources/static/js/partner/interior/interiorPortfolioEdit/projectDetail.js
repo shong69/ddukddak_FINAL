@@ -109,7 +109,7 @@ for(let i=0 ; i<inputImageList.length ; i++){
 
   // **** input태그에 이미지가 선택된 경우(값이 변경된 경우) ****
   inputImageList[i].addEventListener("change", e => {
-    
+    console.log(inputImageList[i].value);
     changeImageFn(e.target, i);
 
   })
@@ -144,13 +144,13 @@ for(let i=0 ; i<inputImageList.length ; i++){
 
 
 
-document.addEventListener("click", () => {
+// document.addEventListener("click", () => {
   
-  console.log(imgList.length);
-  // console.log(inputImageList.length);
-  console.log(imgCount);
+//   console.log(imgList.length);
+//   // console.log(inputImageList.length);
+//   console.log(imgCount);
 
-});
+// });
 
 
 // -------------------------------------------
@@ -205,7 +205,7 @@ updateProjectForm.addEventListener("submit", e => {
   // document.querySelector("[name='querystring']").value = location.search;
 });
 
-
+// -------------------------------------------------------------------------------------------
 
 /* 프로젝트 삭제 */
 const deleteProjectBtn = document.querySelector("#deleteProjectBtn");
@@ -220,3 +220,12 @@ deleteProjectBtn.addEventListener("click", () => {
   location.href="/partner/deleteProject?projectNo=" + projectNo;
 
 });
+
+// ---------------------------------------------------------------------------------
+
+// 메인 프로젝트 등록하기
+document.querySelector("#registMainProjectBtn").addEventListener("click", () => {
+
+  location.href = "/partner/registMainProject?projectNo=" + projectNo;
+
+})

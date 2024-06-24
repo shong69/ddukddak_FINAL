@@ -89,7 +89,8 @@
 			DEFAULT,
 			DEFAULT,
 			DEFAULT,
-			#{partnerType})
+			#{partnerType},
+			NULL)
 	</insert>
 
 

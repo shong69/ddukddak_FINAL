@@ -372,7 +372,7 @@
 		SELECT * FROM "CATEGORY"
 	</select>
 	
-
+	<!-- 세션으로 인한 멤버 오전달 방지를 위한 멤버 찾기  -->
 	<select id="selectMember">
 		SELECT *
 		FROM "MEMBER"
@@ -423,15 +423,17 @@
 	<!--리뷰 리스트 불러오기-->
 	<select id="selectReviewList">
 		SELECT R.REVIEW_NO, REVIEW_CONTENT, REVIEW_CREATE_DATE, REVIEW_UPDATE_DATE,
-		REVIEW_RATING, R.PRODUCT_NO, R.MEMBER_NO, R.ORDER_ITEM_NO, REVIEW_DEL_FL,MEMBER_ID,OPTION_VALUE 
+		REVIEW_RATING, R.PRODUCT_NO, R.MEMBER_NO, R.ORDER_ITEM_NO, REVIEW_DEL_FL,MEMBER_ID,OPTION_VALUE, ORDER_QUANTITY,ORDER_DATE
 		FROM REVIEW R
 		LEFT JOIN MEMBER M ON M.MEMBER_NO = R.MEMBER_NO
+		LEFT JOIN ORDER_DETAIL O ON O.ORDER_ITEM_NO = R.ORDER_ITEM_NO 
+		LEFT JOIN ORDERS R ON R.ORDER_NO = O.ORDER_NO 
 		WHERE R.PRODUCT_NO=#{productNo}
 	</select>
 	
 	<!--해당 상품에서 내가 작성할 수 있는 주문상품 리스트 찾기 -->
 	<select id="checkReviewAuth">
-		SELECT O.ORDER_NO, D.ORDER_ITEM_NO, TO_CHAR(ORDER_DATE,'YYYY-MM-DD') ORDER_DATE, D.ORDER_QUANTITY,
+		SELECT O.MERCHANT_UID , O.ORDER_NO, D.ORDER_ITEM_NO, TO_CHAR(ORDER_DATE,'YYYY-MM-DD') ORDER_DATE, D.ORDER_QUANTITY,
 			(LISTAGG(T.OPTION_VALUE,',') WITHIN GROUP (ORDER BY T.OPTION_NO)) OPTION_VALUE
 		FROM ORDERS O
 		JOIN ORDER_DETAIL D ON O.ORDER_NO = D.ORDER_NO
@@ -444,7 +446,7 @@
 		  AND D.ORDER_STATUS = '구매확정'
 		  AND O.STATUS = 'paid'
 		  AND R.ORDER_ITEM_NO IS NULL
-		GROUP BY O.ORDER_NO, D.ORDER_ITEM_NO, ORDER_DATE, D.ORDER_QUANTITY
+		GROUP BY O.MERCHANT_UID, O.ORDER_NO, D.ORDER_ITEM_NO, ORDER_DATE, D.ORDER_QUANTITY
 	</select>
 
 	<select id="reviewCount">
@@ -454,16 +456,15 @@
 	</select>
 	<!-- 리뷰 평점 가져오기 -->
 	<select id="avgScore">
-		SELECT ROUND(REVIEW_RATING /COUNT(*) OVER(),1) RESULT
+		SELECT ROUND(SUM(REVIEW_RATING) / COUNT(REVIEW_RATING), 1) AS RESULT
 		FROM REVIEW
 		WHERE REVIEW_DEL_FL = 'N'
 		AND PRODUCT_NO = #{productNo}
 	</select>
 	<!-- 리뷰 이미지 등록 -->
 	<insert id="insertImgs">
-		INSERT INTO UPLOAD_FILE VALUES(
-			SEQ_UPLOAD_IMG_NO.NEXTVAL,#{uploadImgPath},#{uploadImgOgName},#{uploadImgRename},#{uploadImgOrder},5,NULL,NULL,#{reviewNo}, NULL
-		)
+		INSERT INTO UPLOAD_FILE VALUES
+		(SEQ_UPLOAD_IMG_NO.NEXTVAL,#{uploadImgPath},#{uploadImgOgName},#{uploadImgRename},#{uploadImgOrder},5,NULL,NULL,#{reviewNo}, NULL)
 	</insert>
 
 	<!-- 리뷰 이미지 목록 가져오기 -->
@@ -475,15 +476,34 @@
 	
 	<!-- 수정할 리뷰 불러오기 -->
 	<select id="reloadReview">
-		SELECT REVIEW_NO, REVIEW_CONTENT, REVIEW_RATING, PRODUCT_NO, MEMBER_NO, ORDER_ITEM_NO,
-		OPTION_VALUE
-		FROM REVIEW
+		SELECT REVIEW_NO, REVIEW_CONTENT, REVIEW_RATING, W.PRODUCT_NO, W.MEMBER_NO, W.ORDER_ITEM_NO,
+		OPTION_VALUE, O.ORDER_QUANTITY , ORDER_DATE 
+		FROM REVIEW W
+		LEFT JOIN ORDER_DETAIL O ON O.ORDER_ITEM_NO = W.ORDER_ITEM_NO 
+		LEFT JOIN ORDERS R ON R.ORDER_NO = O.ORDER_NO 
 		WHERE REVIEW_NO = #{reviewNo}
 		AND REVIEW_DEL_FL = 'N'
 	</select>
 	
+	<!--리뷰 수정-->
+	<update id="updateReview">
+		UPDATE REVIEW SET 
+		REVIEW_CONTENT = #{reviewContent},
+		REVIEW_RATING = #{reviewRating},
+		REVIEW_UPDATE_DATE = SYSDATE
+		WHERE REVIEW_NO = #{reviewNo}
+	</update>
 	
-	
+	<!--기존 리뷰 이미지 삭제-->
+	<delete id="delReviewImg">
+		DELETE FROM "UPLOAD_FILE" WHERE REVIEW_NO = #{reviewNo}
+	</delete>
+
+	<!--리뷰 삭제-->
+	<update id = "delReview">
+		UPDATE "REVIEW" SET REVIEW_DEL_FL='Y'
+		WHERE REVIEW_NO = #{reviewNo}
+	</update>
 	
 	
 	
@@ -572,7 +592,8 @@
 			#{orderPrice},
 			#{orderNo},
 			#{productNo},
-			#{orderStatus}
+			#{orderStatus},
+			#{cartId}			
 		)
 	</insert>
 	
@@ -584,11 +605,32 @@
 		AND MEMBER_DEL_FL = 'N'
 	</select>
 	
+	<!-- 적립금 업데이트 -->
 	<update id="savePoint">
 		UPDATE "MEMBER" SET
 		MEMBER_POINT = #{totalPoint}
 				WHERE MEMBER_NO = #{memberNo}
 		AND MEMBER_DEL_FL = 'N'
 	</update>
+	
+	<!-- 주문상세 옵션 테이블을 삽입할 오더 디테일의 아이템 번호 구하기 -->
+	<select id="getOrderItemNo">
+		SELECT ORDER_ITEM_NO
+		FROM "ORDER_DETAIL"
+		WHERE ORDER_NO = #{orderNo}
+		AND PRODUCT_NO = #{productNo}
+		AND CART_ID = #{cartId}
+	</select>
+	
+	<insert id="insertOrderDetailOption">
+		INSERT INTO "ORDERDETAIL_OPTION"
+		VALUES(
+			SEQ_ORDERDETAIL_OPTION_ID.NEXTVAL,
+			#{orderItemNo},
+			#{optionNo}
+		)
+		
+	
+	</insert>
 	
 </mapper>

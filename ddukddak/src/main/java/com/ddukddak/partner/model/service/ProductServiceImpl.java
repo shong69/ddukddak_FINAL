@@ -854,6 +854,7 @@ public class ProductServiceImpl implements ProductService{
 	        int productNo = Integer.parseInt(entry.get("productNo").toString());
 	        int orderNo = Integer.parseInt(entry.get("orderNo").toString());
 	        int loginPartnerMember = Integer.parseInt(entry.get("loginPartnerMember").toString());
+	        int orderItemNo = Integer.parseInt(entry.get("orderItemNo").toString());
 	        String productName = entry.get("productName").toString();
 
 	        log.info("Product No: " + productNo);
@@ -866,6 +867,7 @@ public class ProductServiceImpl implements ProductService{
 	        newMap.put("orderNo", orderNo);
 	        newMap.put("partnerNo", loginPartnerMember);
 	        newMap.put("productName", productName);
+	        newMap.put("orderItemNo", orderItemNo);
 
 	        result += mapper.acceptReceipt(newMap);
 	    }
@@ -889,6 +891,7 @@ public class ProductServiceImpl implements ProductService{
 			int orderNo = Integer.parseInt(entry.get("orderNo").toString());
 			int loginPartnerMember = Integer.parseInt(entry.get("loginPartnerMember").toString());
 			String productName = entry.get("productName").toString();
+	        	int orderItemNo = Integer.parseInt(entry.get("orderItemNo").toString());
 			
 			log.info("Product No: " + productNo);
 			log.info("Order No: " + orderNo);
@@ -900,6 +903,7 @@ public class ProductServiceImpl implements ProductService{
 			newMap.put("orderNo", orderNo);
 			newMap.put("partnerNo", loginPartnerMember);
 			newMap.put("productName", productName);
+			newMap.put("orderItemNo", orderItemNo);
 			
 			result += mapper.rejectReceipt(newMap);
 		}
@@ -1097,7 +1101,8 @@ public class ProductServiceImpl implements ProductService{
 	        String orderNo = entry.get("orderNo").toString();
 	        String productName = entry.get("productName").toString();
 	        int partnerNo = Integer.parseInt(entry.get("partnerNo").toString());
-
+		int orderItemNo = Integer.parseInt(entry.get("orderItemNo").toString());
+		
 	        log.info("Order No: " + orderNo);
 	        log.info("Product Name: " + productName);
 
@@ -1105,6 +1110,7 @@ public class ProductServiceImpl implements ProductService{
 	        newMap.put("orderNo", orderNo);
 	        newMap.put("productName", productName);
 	        newMap.put("partnerNo", partnerNo);
+		newMap.put("orderItemNo", orderItemNo);
 
 	        result += mapper.acceptShipment(newMap);
 	    }
@@ -1124,6 +1130,7 @@ public class ProductServiceImpl implements ProductService{
 	        String orderNo = entry.get("orderNo").toString();
 	        String productName = entry.get("productName").toString();
 	        int partnerNo = Integer.parseInt(entry.get("partnerNo").toString());
+		int orderItemNo = Integer.parseInt(entry.get("orderItemNo").toString());
 
 	        log.info("Order No: " + orderNo);
 	        log.info("Product Name: " + productName);
@@ -1132,6 +1139,7 @@ public class ProductServiceImpl implements ProductService{
 	        newMap.put("orderNo", orderNo);
 	        newMap.put("productName", productName);
 	        newMap.put("partnerNo", partnerNo);
+		newMap.put("orderItemNo", orderItemNo);
 
 	        result += mapper.rejectShipment(newMap);
 	    }

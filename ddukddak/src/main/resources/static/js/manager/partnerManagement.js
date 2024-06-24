@@ -57,17 +57,16 @@ async function handleApproval(action, e) {
     const row = button.closest('tr');
     const partnerNo = row.querySelector('td:nth-child(2)').textContent;
     const partnerTel = row.querySelector('td:nth-child(4)').textContent;
-    console.log(memberNo);
 
     try {
 
         // 1. 파트너 탈퇴 처리
-        const updateResponse = await fetch(`/manager/partner/member/${action}`, {
+        const updateResponse = await fetch(`/manager/partner/${action}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: memberNo
+            body: partnerNo
         });
         const updateResult = await updateResponse.text();
 

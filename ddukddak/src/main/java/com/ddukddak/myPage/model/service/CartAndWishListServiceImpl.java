@@ -138,6 +138,7 @@ public class CartAndWishListServiceImpl implements CartAndWishListService{
 	@Override
 	public List<Order> selectOrderList(Member loginMember) {
 		int memberNo = loginMember.getMemberNo();
+		log.info("주문 목록 조회 :{}",mapper.selectOrderList(memberNo));
 		return mapper.selectOrderList(memberNo);
 	}
 

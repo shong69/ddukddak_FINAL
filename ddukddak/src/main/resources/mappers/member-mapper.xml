@@ -177,4 +177,34 @@
 				'K')
 	</insert>
 	
+	<!-- 구글 로그인 - 멤버 찾기  -->
+	<select id="findMemberByGoogle">
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_EMAIL, MEMBER_PW, MEMBER_NAME, 
+		MEMBER_NICKNAME, MEMBER_TEL, MEMBER_ADDR, MEMBER_POINT, PROFILE_IMG,
+		TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일"') ENROLL_DATE, 
+		MEMBER_DEL_FL, AUTHORITY, SOCIAL_LOGIN_TYPE
+		FROM "MEMBER"
+		WHERE MEMBER_EMAIL = #{email}
+		AND MEMBER_DEL_FL = 'N'
+	</select>
+	
+	<!-- 구글 회원가입 -->
+	<insert id="googleSignup">
+		INSERT INTO "MEMBER"
+		VALUES(SEQ_MEMBER_NO.NEXTVAL, 
+				#{memberId}, 
+				#{memberEmail}, 
+				#{memberPw}, 
+				#{memberName}, 
+				#{memberNickname},
+				NULL, 
+				NULL, 
+				DEFAULT, 
+				DEFAULT, 
+				DEFAULT, 
+				DEFAULT, 
+				1, 
+				'G')
+	</insert>
+	
 </mapper>

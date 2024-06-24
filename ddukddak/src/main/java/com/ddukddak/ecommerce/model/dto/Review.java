@@ -26,6 +26,8 @@ public class Review {
 	private int memberNo;
 	private String memberId; 
 	private String optionValue; //옵션 이름
+	private String orderDate;
+	private int orderQuantity;
 	private int orderItemNo;
 	private String reviewDelFl;
 	
