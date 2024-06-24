@@ -246,3 +246,41 @@ if(profile != null){
   });
 
 }
+
+
+const changeHomeLinkBtn = document.querySelector(".changeHomeLinkBtn");
+
+changeHomeLinkBtn.addEventListener("click", e => {
+
+  const parentCompo = e.target.parentElement.parentElement;
+  parentCompo.style.display="none";
+  parentCompo.nextElementSibling.style.display = "";
+
+});
+
+const homeLinkCancelBtn = document.querySelector(".homeLinkCancelBtn");
+homeLinkCancelBtn.addEventListener("click", e => {
+
+  const parentCompo = e.target.parentElement.parentElement.parentElement;
+  parentCompo.style.display = "none";
+  parentCompo.previousElementSibling.style.display = "";
+
+});
+
+
+const homeLinkForm = document.querySelector("#homeLinkForm");
+
+homeLinkForm.addEventListener("submit", e => {
+
+  const inputHomeLink = document.querySelector("#inputHomeLink");
+  const regExp = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
+
+  
+  if(!regExp.test(inputHomeLink.value)) {   
+    alert("입력된 url 형식이 올바르지 않습니다.");
+    e.preventDefault();
+    inputHomeLink.focus();
+    return;
+  }
+
+});

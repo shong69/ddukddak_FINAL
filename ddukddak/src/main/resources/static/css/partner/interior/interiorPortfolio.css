@@ -83,23 +83,119 @@
     align-items: center;
     cursor: pointer;
     border: 1px solid #ddd;
+    margin: 0 7.5px;
 }
-.image-label>img{
-    width: 100%;
-    height: 100%;
+
+.image-label > img{
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
 }
 
 #inputImage{
     display:none;
 }
+
+.profileForm{
+    display: flex;
+    align-items: center;
+}
+
+.changeNameContainer {
+    left: 250px;
+}
+
+.changeNameContainer h2 {
+    width: 150px;
+    text-align: center;
+}
+
+.profile-area {
+    left: 300px;
+}
+
 .delete-image{
     position: absolute;
-    left:200px;
-    top:100px;
+    left: 80px;
+    top: 0px;
     font-size: 20px;
     cursor: pointer;
     color:black;
+}
+
+.changeProfileImg {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* 홈링크 */
+.homeLinkArea {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.homeLinkArea * {
+    margin-right: 20px;
+}
+
+
+.changeHomeLinkBtn {
+    width: 85px; 
+    height: 20px;
+    border-radius: 5px;
+    
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.changeHomeLinkBtn:hover {
+    background-color: var(--white);
+    border: 0.5px solid var(--gray1);
+}
+
+.changeHomeLink {
+    width: 100%;
+}
+
+.inputHomeLink {
+    font-size: 18px;
+}
+
+.homeLinkForm {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.homeLinkForm * {
+    margin-right: 20px;
+}
+
+.homeLinkBtnArea {
+    display: flex;
+}
+
+.homeLinkBtnArea button {
+    width: 85px; 
+    height: 20px;
+    border-radius: 5px;
+    
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.homeLinkBtnArea button:hover {
+    background-color: var(--white);
+    border: 0.5px solid var(--gray1);
 }
 
 /* 프로젝트 컨테이너 */

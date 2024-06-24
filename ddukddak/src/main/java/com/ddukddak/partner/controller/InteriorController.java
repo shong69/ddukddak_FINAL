@@ -52,15 +52,25 @@ public class InteriorController {
             
         }
         
+        Portfolio portfolio = service.selectPortfolio(loginPartnerMember.getPartnerNo());
+        log.info("파트너 멤버 : " + loginPartnerMember);
+        
 //      log.info("portfolioNo : " + loginPartnerMember.getPortfolioNo());
 //        
-        Portfolio portfolio = service.selectPortfolio(loginPartnerMember.getPortfolioNo());
         log.info("portfolio : " + portfolio);
         
         if(portfolio == null) {
         	ra.addFlashAttribute("message", "포트폴리오, 프로젝트 작성이 필요합니다.");
-//        	int result = service.insertPortfolio(loginPartnerMember.getPartnerNo());
-        	return "redirect:/partner/registProject";
+        	int result = service.insertPortfolio(loginPartnerMember.getPartnerNo());
+        	String path = null;
+        	
+        	if(result > 0) {
+        		path = "/partner/registProject";
+        	} else {
+        		path = "/partner/main";
+        	}
+        	
+        	return "redirect:" + path;
         }
         
         Map<String, Object> map = service.selectProjectList(portfolio.getPortfolioNo());
@@ -157,6 +167,15 @@ public class InteriorController {
 		
 		Project project = new Project();
 		
+		if(loginPartnerMember.getPortfolioNo() == 0) {
+			int portfolioNo = service.selectPortfolioNo(loginPartnerMember.getPartnerNo());
+			project.setPortfolioNo(portfolioNo);
+			log.info("포트폴리오 번호 : " + portfolioNo);
+		} else {
+			project.setPortfolioNo(loginPartnerMember.getPortfolioNo());
+			log.info("포트폴리오 번호 : " + project.getPortfolioNo());
+		}
+		
 //		log.info("constructionYear : " + constructionYear);
 		
 		project.setProjectName(inputProjectName);
@@ -168,8 +187,8 @@ public class InteriorController {
 		project.setRegion(region);
 		project.setConstructionYear(constructionYear);
 		project.setFamilySize(familySize);
-		project.setPortfolioNo(loginPartnerMember.getPortfolioNo());
 		project.setPartnerNo(loginPartnerMember.getPartnerNo());
+		log.info("프로젝트 등록 확인 : " + project);
 		
 //		log.info("images : " + images);
 		MultipartFile mainImg = null;
@@ -287,7 +306,7 @@ public class InteriorController {
 									@SessionAttribute("loginPartnerMember") Partner loginPartnerMember,
 									RedirectAttributes ra) {
 		
-		Portfolio portfolio = service.selectPortfolio(loginPartnerMember.getPortfolioNo());
+		Portfolio portfolio = service.selectPortfolio(loginPartnerMember.getPartnerNo());
 		
 		log.info("확인 : " + portfolio);
 		
@@ -306,6 +325,51 @@ public class InteriorController {
 		ra.addFlashAttribute("message", message);
 		
 		return "redirect:" + path;
+	}
+	
+	
+	@PostMapping("changePartnerProfile")
+	public String changePartnerProfile(@RequestParam("profile-image") MultipartFile profileImg,
+									   @SessionAttribute("loginPartnerMember") Partner loginPartnerMember,
+									   RedirectAttributes ra) throws IOException {
+		
+		int result = service.updateProfileImg(profileImg, loginPartnerMember);
+		
+		String message = null;
+		
+		if(result > 0) {
+			message = "프로필 이미지가 변경되었습니다.";
+		} else {
+			message = "프로필 이미지 변경에 실패하였습니다.";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:/partner/interiorPortfolioEditMain";
+	}
+	
+	@PostMapping("updateHomeLink")
+	public String updateHomeLink(@RequestParam("homeLink") String homeLink,
+								 @SessionAttribute("loginPartnerMember") Partner loginPartnerMember,
+								 RedirectAttributes ra) {
+		
+		Partner partner = new Partner();
+		
+		partner.setHomeLink(homeLink);
+		partner.setPartnerNo(loginPartnerMember.getPartnerNo());
+		
+		int result = service.updateHomeLink(partner);
+		String message = null;
+		
+		if(result > 0) {
+			message = "시공사 홈페이지 주소 변경이 완료되었습니다.";
+		} else {
+			message = "시공사 홈페이지 주소 변경에 실패하였습니다.";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:/partner/interiorPortfolioEditMain";
 	}
 }
 
