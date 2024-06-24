@@ -84,7 +84,7 @@ async function customerChatting () {
 
 			const div2 = document.createElement("div");
 			div2.classList.add("chat");
-			div2.innerText="선택하신 문의 종류에 해당하는 질문을 작성해주세요.";
+			div2.innerText=`${firstValue}에 대한 문의 종류에 해당하는 질문을 작성해주세요.`;
 
 			div.append(div1, div2);
 			li.append(img, div);
