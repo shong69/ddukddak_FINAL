@@ -143,23 +143,29 @@ if(interiorMatchBtn != null) {
 const myPageMainBtn = document.querySelector(".myPageMainBtn");
 const confirmBtn = document.querySelector(".confirm");
 
-myPageMainBtn.addEventListener("click", () => {
-  const parentCompo = myPageMainBtn.parentElement.parentElement;
-  console.log(parentCompo);
-  parentCompo.style.display="none";
-  parentCompo.nextElementSibling.style.display = "";
-});
+if (myPageMainBtn != null) {
+
+  myPageMainBtn.addEventListener("click", () => {
+    const parentCompo = myPageMainBtn.parentElement.parentElement;
+    console.log(parentCompo);
+    parentCompo.style.display="none";
+    parentCompo.nextElementSibling.style.display = "";
+  });
+}
 
 //취소 버튼 클릭 시 dispaly=""
 //사진 변경 시 
 const profileCancelBtn = document.querySelector(".profile-del-btn");
-profileCancelBtn.addEventListener("click", e=>{
-    const parentCompo = e.target.parentElement.parentElement.parentElement;
-    console.log(parentCompo);
-    parentCompo.style.display="none";
-    console.log(parentCompo.previousElementSibling);
-    parentCompo.previousElementSibling.style.display= "";
-});
+if(profileCancelBtn != null) {
+
+  profileCancelBtn.addEventListener("click", e=>{
+      const parentCompo = e.target.parentElement.parentElement.parentElement;
+      console.log(parentCompo);
+      parentCompo.style.display="none";
+      console.log(parentCompo.previousElementSibling);
+      parentCompo.previousElementSibling.style.display= "";
+  });
+}
 
 //1. 사진 변경
 const profile = document.querySelector("#profile-form");

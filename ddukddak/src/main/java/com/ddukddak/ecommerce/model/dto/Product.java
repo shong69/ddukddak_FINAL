@@ -47,4 +47,7 @@ public class Product {
 	private String orderDate;
 	private String orderItemNo;
 
+	private String memberNickname;
+	private int cartId;
+	private String merchantUid;
 }

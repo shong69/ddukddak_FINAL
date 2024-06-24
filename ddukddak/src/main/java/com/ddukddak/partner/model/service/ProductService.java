@@ -196,6 +196,8 @@ public interface ProductService {
 
 	int rejectShipment(Map<String, Object> map);
 
+	Map<String, Object> selectCompleteList(int partnerNo, int mainSort, int sort, String status, int cp);
+
 
 
 

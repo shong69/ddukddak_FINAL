@@ -122,7 +122,7 @@ public interface MyHouseBoardMapper {
 	 * @param board
 	 * @return result
 	 */
-	int updateMyHouse(Board board);
+//	int updateMyHouse(Board board);
 
 
 
@@ -130,7 +130,19 @@ public interface MyHouseBoardMapper {
 	 * @param img
 	 * @return result
 	 */
-	int updateImage(BoardImg img);
+//	int updateImage(BoardImg img);
+
+
+
+	int updateBoard(Board board);
+
+
+
+	void deleteImagesByBoardNo(int boardNo);
+
+
+
+	void insertImage(BoardImg image);
 
 
 }

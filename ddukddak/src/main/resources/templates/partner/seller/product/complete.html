@@ -27,10 +27,10 @@
         <div id="orderStatus">
             <h3>판매 상태</h3>
 
-            <input type="checkbox" value="all" name="order"><label>전체</label>
-            <input type="checkbox" value="orderConfirm" name="order"><label>구매확정</label>
-            <input type="checkbox" value="orderRejection" name="order"><label>접수 거절</label>
-            <input type="checkbox" value="shopmnetRejection" name="order"><label>출고 거절</label>
+            <input type="checkbox" value="A" name="order" id="selectAll" onclick="updateStatus(this)"><label for="selectAll">전체</label>
+            <input type="checkbox" value="PC" name="order" id="selectProductConfirm" onclick="updateStatus(this)"><label for="selectProductConfirm">구매확정</label>
+            <input type="checkbox" value="PR" name="order" id="selectProductReject" onclick="updateStatus(this)"><label for="selectProductReject">주문 거절</label>
+            <input type="checkbox" value="SR" name="order" id="selectShipmentReject" onclick="updateStatus(this)"><label for="selectShipmentReject">출고 거절</label>
         </div>
 
          <!-- 상품목록 -->
@@ -38,10 +38,9 @@
             <table>
                 <thead style="height: 40px;">
                     <td>
-                        <input type="checkbox" value="1" name="selectProduct">
+                        <input type="checkbox" value="1" name="select" id="selectAllCheckBox">
                     </td>
-                    <td>no</td>
-                    <td>품목별 주문번호</td>
+                    <td>주문번호</td>
                     <td>주문자</td>
                     <td>상품명/옵션</td>
                     <td>수량</td>
@@ -49,125 +48,66 @@
                     <td>완료일</td>
                 </thead>
 
-
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td>111</td>
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000001
-                    </td>
-                    <td>김소영</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자(P010a440TO)
-                        <h5>
-                            색상 : 토프<br>
-                            크기 : 벤치형
-                        </h5>
-                    </td>
-                    <td>3</td>
-                    <td>구매확정</td>
-                    <td>2024-05-23</td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td>111</td>
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000001
-                    </td>
-                    <td>김소영</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자(P010a440TO)
-                        <h5>
-                            색상 : 토프<br>
-                            크기 : 벤치형
-                        </h5>
-                    </td>
-                    <td>3</td>
-                    <td>구매확정</td>
-                    <td>2024-05-23</td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td>111</td>
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000001
-                    </td>
-                    <td>김소영</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자(P010a440TO)
-                        <h5>
-                            색상 : 토프<br>
-                            크기 : 벤치형
-                        </h5>
-                    </td>
-                    <td>3</td>
-                    <td>구매확정</td>
-                    <td>2024-05-23</td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td>111</td>
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000001
-                    </td>
-                    <td>김소영</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자(P010a440TO)
-                        <h5>
-                            색상 : 토프<br>
-                            크기 : 벤치형
-                        </h5>
-                    </td>
-                    <td>3</td>
-                    <td>구매확정</td>
-                    <td>2024-05-23</td>
-                </tr>
-                <tr class="borderTr">
-                    <td>
-                        <input type="checkbox" value="1" name="selectProduct">
-                    </td>
-                    <td>111</td>
-                    <td>
-                        20241231-000001<br>
-                        B20200101-000001
-                    </td>
-                    <td>김소영</td>
-                    <td>
-                        오아르 벤 원목 부클레<br> 
-                        패브릭 의자(P010a440TO)
-                        <h5>
-                            색상 : 토프<br>
-                            크기 : 벤치형
-                        </h5>
-                    </td>
-                    <td>3</td>
-                    <td>구매확정</td>
-                    <td>2024-05-23</td>
-                </tr>
-                
+                <th:block th:each="completeList : ${completeList}" th:object="${completeList}">
+                    <tr class="borderTr">
+                        <td>
+                            <input type="checkbox" value="1" name="selectProduct">
+                        </td>
+                        <td th:text="*{merchantUid}"></td>
+                        <td th:text="*{memberNickname}">김소영</td>
+                        <td th:text="|*{productName} [*{options}]|"></td>
+                        <td th:text="*{orderQuantity}">3</td>
+                        <td th:text="*{orderStatus}">구매확정</td>
+                        <td th:text="*{orderDate}">2024-05-23</td>
+                    </tr>
+                </th:block>
             </table>
         </div>
 
         <!-- 페이지네이션 -->
-        <div><h3 style="text-align: center; margin: 30px 0;"><<&nbsp;&nbsp;<&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;>></h3></div>
+        <div class="pagination">
+            <th:block th:if="${status == null}">
+                <ul class="pagination" th:object="${pagination}">
+                    <li><a th:href="@{|/partner/seller/product/complete?cp=1|}">&lt;&lt;</a></li>
+                    <li><a th:href="@{|/partner/seller/product/complete?cp=*{prevPage}|}">&lt;</a></li>
+                    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+                        <li th:if="${i} == *{currentPage}">
+                            <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                        </li>
+                        <li th:unless="${i} == *{currentPage}">
+                            <a th:href="@{|/partner/seller/product/complete?cp=${i}|}" th:text="${i}">이동할 페이지</a>
+                        </li>
+                    </th:block>
+                    <li>
+                        <a th:href="@{|/partner/seller/product/complete?cp=*{nextPage}&status=${status}|}">&gt;</a>
+                    </li>
+                    <li><a th:href="@{|/partner/seller/product/complete?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
+                </ul>
+            </th:block>
+            <th:block th:unless="${status == null}">
+                <ul class="pagination" th:object="${pagination}">
+                    <li><a th:href="@{|/partner/seller/product/complete?cp=1&status=${status}|}">&lt;&lt;</a></li>
+                    <li><a th:href="@{|/partner/seller/product/complete?cp=*{prevPage}&status=${status}|}">&lt;</a></li>
+                    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+                        <li th:if="${i} == *{currentPage}">
+                            <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                        </li>
+                        <li th:unless="${i} == *{currentPage}">
+                            <a th:href="@{|/partner/seller/product/complete?cp=${i}&status=${status}|}" th:text="${i}">이동할 페이지</a>
+                        </li>
+                    </th:block>
+                    <li>
+                        <a th:href="@{|/partner/seller/product/complete?cp=*{nextPage}&status=${status}|}">&gt;</a>
+                    </li>
+                    <li><a th:href="@{|/partner/seller/product/complete?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
+                </ul>
+            </th:block>
+        </div>
 
     </div>
-    
+    <script th:inline="javascript">
+        const loginPartnerMember = /*[[${session.loginPartnerMember.partnerNo}]]*/ "loginPartnerMember";
+    </script>
+    <script src="/js/partner/seller/product/complete.js"></script>
 </body>
 </html>

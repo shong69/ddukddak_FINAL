@@ -84,7 +84,7 @@ function receiptOpenModal() {
             orderNo: orderNoValue,
             loginPartnerMember: loginPartnerMember,
             productName: productNameValue,
-            orderItemNo : orderItemNoValue
+            orderItemNo: orderItemNoValue
         });
     });
 
@@ -93,7 +93,8 @@ function receiptOpenModal() {
     };
     const orderOK = document.querySelector("#orderOK");
 
-    orderOK.removeEventListener("click", handleOrderOK);
+    // Remove any existing event listener
+    // orderOK.replaceWith(orderOK.cloneNode(true));
     orderOK.addEventListener("click", () => handleOrderOK(map, "receipt"));
 }
 
@@ -174,11 +175,13 @@ function rejectionOpenModal() {
         const productNoValue = elements.closest('tr').querySelector('.productNo').value;
         const orderNoValue = elements.closest('tr').querySelector('.orderNo').value;
         const productNameValue = elements.closest('tr').querySelector('.productName').value;
+        const orderItemNo = elements.closest('tr').querySelector('.orderItemNo').value;
         obj.push({
             productNo: productNoValue,
             orderNo: orderNoValue,
             loginPartnerMember: loginPartnerMember,
-            productName: productNameValue
+            productName: productNameValue,
+            orderItemNo: orderItemNo
         });
     });
 
@@ -187,12 +190,17 @@ function rejectionOpenModal() {
     };
     const orderOK = document.querySelector("#orderOK");
 
-    orderOK.removeEventListener("click", handleOrderOK);
+    // Remove any existing event listener
+    // orderOK.replaceWith(orderOK.cloneNode(true));
     orderOK.addEventListener("click", () => handleOrderOK(map, "rejection"));
 }
 
 function handleOrderOK(map, type) {
     const url = type === "receipt" ? "/partner/seller/product/receiptAccept" : "/partner/seller/product/receiptReject";
+
+    console.log(type);
+    console.log('URL:', url);
+    console.log('Payload:', JSON.stringify(map));
 
     fetch(url, {
         method: "POST",
@@ -201,13 +209,17 @@ function handleOrderOK(map, type) {
     })
         .then(resp => resp.text())
         .then(result => {
-            if (result > 0) {
+            console.log('Response:', result);
+            if (parseInt(result) > 0) {
                 alert(type === "receipt" ? "접수되었습니다" : "거절되었습니다");
                 window.location.reload();
             } else {
                 alert(type === "receipt" ? "접수 실패" : "거절 실패");
                 return;
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
 }
 
@@ -274,18 +286,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-
 document.addEventListener('DOMContentLoaded', () => {
     const rows = document.querySelectorAll('.borderTr');
-    console.log(rows);
+    // console.log(rows);
     rows.forEach(row => {
-        console.log(row);
+        // console.log(row);
         const productPrice = row.querySelector('.productPrice').value;
         const orderQuantity = row.querySelector('.orderQuantity').value;
         const totalPrice = productPrice * orderQuantity;
-        console.log(totalPrice);
-        console.log(orderQuantity);
-        console.log(productPrice);
+        // console.log(totalPrice);
+        // console.log(orderQuantity);
+        // console.log(productPrice);
         row.querySelector('.totalPrice').innerText = totalPrice.toLocaleString();
     });
 });

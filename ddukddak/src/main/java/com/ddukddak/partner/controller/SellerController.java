@@ -244,6 +244,7 @@ public class SellerController {
 		model.addAttribute("pagination", map.get("pagination"));
 		model.addAttribute("status", status);
 				
+		log.info("status : " + status);
 				
 		return "partner/seller/product/apply";
 	}
@@ -567,7 +568,7 @@ public class SellerController {
 		return "partner/seller/product/receipt";
 	}
 	
-	@PostMapping("/product/receiptAccept")
+	@PostMapping("product/receiptAccept")
 	@ResponseBody
 	public int ProductAcceptReceipt(@RequestBody Map<String, Object> map) {
 		
@@ -579,11 +580,13 @@ public class SellerController {
 		
 	}
 	
-	@PostMapping("/product/receiptReject")
+	@PostMapping("product/receiptReject")
 	@ResponseBody
 	public int ProductDeclineReceipt(@RequestBody Map<String, Object> map) {
 		
 		int result = service.rejectReceipt(map);
+		
+//		log.info("reject controller : " + map.toString());
 		return result;
 	}
 	
@@ -665,5 +668,41 @@ public class SellerController {
 		obj.put("partnerNo", loginPartnerMember.getPartnerNo());
 		
 		return service.insertQnaAnswer(obj);
+	}
+	
+	
+	@GetMapping("product/complete")
+	public String ProductComplete(@RequestParam(value="cp", required=false, defaultValue="1") int cp,
+														@RequestParam(value="mainSort", required=false, defaultValue="0") int mainSort,
+														@RequestParam(value="sort", required=false, defaultValue="0") int sort,
+														@RequestParam(value="status", required=false, defaultValue="A") String status,
+														Model model,
+														@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) {
+		
+int partnerNo = loginPartnerMember.getPartnerNo();
+		
+		// 대분류 카테고리 선택
+		List<Category> categoryList = eCommerceService.selectCategory();
+		
+//		log.info("categoryList : " + categoryList);
+		
+		model.addAttribute("categoryList", categoryList);
+		
+		// 소분류 카테고리 선택
+		List<Category> smallCategoryList = eCommerceService.selectSmallCategory();
+		
+//		log.info("smallCategoryList : " + smallCategoryList);
+
+		model.addAttribute("smallCategoryList", smallCategoryList);
+		
+		// 재고상품 조회
+		Map<String, Object> map = service.selectCompleteList(partnerNo, mainSort, sort, status, cp);
+		
+		log.info("map : " + map.toString());
+		model.addAttribute("completeList", map.get("completeList"));
+		model.addAttribute("pagination", map.get("pagination"));
+		model.addAttribute("status", status);
+		
+		return "partner/seller/product/complete";
 	}
 }

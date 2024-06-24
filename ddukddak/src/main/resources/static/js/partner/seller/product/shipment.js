@@ -24,6 +24,7 @@ function sellerConfirmModal() {
         const orderQuantity = tr.querySelector('.orderQuantity').innerText;
         const orderDate = tr.querySelector('.orderDate').innerText;
         const shipmentCompleteDate = tr.querySelector('.shipmentCompleteDate').innerText;
+        const orderItemNo = tr.querySelector('.orderItemNo').value;
 
         const div = document.createElement("div");
         div.classList.add("elementBox");
@@ -76,7 +77,7 @@ function handleShipment(selectedEls, action) {
             orderQuantity: tr.querySelector('.orderQuantity').innerText,
             orderDate: tr.querySelector('.orderDate').innerText,
             shipmentCompleteDate: tr.querySelector('.shipmentCompleteDate').innerText,
-            orderItemNo: tr.querySelector('.orderItemNo').innerText,
+            orderItemNo: tr.querySelector('.orderItemNo').value,
             partnerNo: loginPartnerMember
         };
     });
@@ -93,6 +94,7 @@ function handleShipment(selectedEls, action) {
     })
     .then(resp => resp.json())
     .then(result => {
+        console.log(action);
         if (result > 0) {
             alert(action === 'ship' ? "출고되었습니다." : "출고가 거절되었습니다.");
             window.location.reload();
