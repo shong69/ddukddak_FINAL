@@ -37,11 +37,11 @@
         
         <table class="pointTable">
             <tr>
-                <td>김소영 님의 포인트<i class="fa-solid fa-sack-dollar"></i></td>
+                <td th:text="|${session.loginMember.memberName} 님의 포인트|"><i class="fa-solid fa-sack-dollar"></i></td>
             </tr>
             <tr>
-                <th>
-                    5900pt
+                <th th:text="|${session.loginMember.memberPoint}pt|">
+
                 </th>
             </tr>
         </table>

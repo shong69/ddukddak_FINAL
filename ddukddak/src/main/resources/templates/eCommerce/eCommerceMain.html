@@ -109,8 +109,8 @@
               </div>
               <div class="review-wrap">
                 <img src="/images/main/star.png">
-                <h5>4.1</h5>
-                <h5>리뷰 78개</h5>
+                <h5 th:text="*{reviewRating}"></h5>
+                <h5 th:text="|리뷰 *{reviewCount}개|"></h5>
               </div>
             </a>
           </div>
@@ -159,8 +159,8 @@
               </div>
               <div class="review-wrap">
                 <img src="/images/main/star.png">
-                <h5>4.1</h5>
-                <h5>리뷰 78개</h5>
+                <h5 th:text="*{reviewRating}"></h5>
+                <h5 th:text="|리뷰 *{reviewCount}개|"></h5>
               </div>
             </a>
           </div>

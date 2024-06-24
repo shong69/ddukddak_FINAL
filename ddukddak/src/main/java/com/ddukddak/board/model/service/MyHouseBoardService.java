@@ -98,4 +98,5 @@ public interface MyHouseBoardService {
 	void updateBoardImages(int boardNo, List<BoardImg> newImages);
 
 
+
 }

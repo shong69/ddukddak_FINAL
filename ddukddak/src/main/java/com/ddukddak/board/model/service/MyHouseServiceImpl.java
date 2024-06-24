@@ -281,6 +281,8 @@ public class MyHouseServiceImpl implements MyHouseBoardService {
 	}
 
 
+
+
 }
 
 

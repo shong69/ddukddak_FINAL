@@ -438,7 +438,25 @@
     font-size: 16px;
 }
 
+#pagination{
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+}
+#pagination li {
+    width : 20px;
+    margin:0 5px;
+    text-align: center;
+}
 
+.pagination li.disabled a {
+    pointer-events: none;
+    color: #ccc;
+}
+
+.pagination li a.current {
+    font-weight: bold;
+}
 /*회원 정보*/
 .member-info,
 .add-info{

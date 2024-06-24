@@ -132,8 +132,8 @@
             </div>
             <div class="review-wrap">
               <img src="/images/main/star.png">
-              <h5>4.1</h5>
-              <h5>리뷰 78개</h5>
+              <h5 th:text="*{reviewRating}"></h5>
+              <h5 th:text="|리뷰 *{reviewCount}개|"></h5>
             </div>
           </a>
         </div>
@@ -196,7 +196,7 @@
 
 
     <!-- 시공사 찾기 -->
-    <div id="constructor">
+    <!-- <div id="constructor">
       <div><h2 style="margin-bottom: 30px;">시공사 찾기</h2></div>
 
       <div>
@@ -251,7 +251,7 @@
       <input id="loginMember" type="hidden" th:value="${session.loginMember}">
       <input id="memberTel" type="hidden" th:value="${session.loginMember.memberTel}">
     </th:block>
-  </div>
+  </div> -->
 
   <div id="top">↑</div>
 
@@ -328,6 +328,8 @@
 
         return false;
     }
+
+
   </script>
 
   
