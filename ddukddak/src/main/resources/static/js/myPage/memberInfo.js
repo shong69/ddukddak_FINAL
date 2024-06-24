@@ -27,11 +27,12 @@ myPageSubBtns.forEach(btn => {
         const parentTd = btn.parentElement.parentElement.parentElement.parentElement;
         //소셜 로그인의 경우 이메일과 비밀번호 변경 막기
         //memberType 이 k나 N인 경우 막기
-        if(loginMember.socialLoginType != 'D' && parentTd.className=='password-area'){
+
+        if(loginType != 'D' && parentTd.className=='password-area'){
             alert("소셜 로그인의 경우 비밀번호 변경이 불가합니다");
             return;
         }
-        if(loginMember.socialLoginType != 'D' && parentTd.className=='email-area'){
+        if(loginType != 'D' && parentTd.className=='email-area'){
             alert("소셜 로그인의 경우 이메일 변경이 불가합니다");
             return;
         }
@@ -75,13 +76,16 @@ pwCancelBtn.addEventListener("click", ()=>{
     newPwAlert.innerText="";
     newPwConfirmAlert.innerText="";
 
-
 })
 
 //취소 버튼 클릭 시(나머지의 경우) 
 cancelBtns.forEach(btn =>{
     btn.addEventListener("click",()=>{
-        const parentTd =btn.parentElement.parentElement.parentElement;
+        var parentTd =btn.parentElement.parentElement.parentElement;
+        if(btn.classList.contains("addrCancel")){
+            console.log("배송");
+            parentTd = btn.parentElement.parentElement.parentElement.parentElement;
+        }
         parentTd.style.display ="none";
         parentTd.previousElementSibling.style.display="";
 
@@ -541,7 +545,7 @@ nicknameConfirmBtn.addEventListener("click", ()=>{
 });
 
 
-//---------------------------------------
+//--------------------------------------------------------------------
 
 //5. 휴대폰 번호 변경
 const phoneNum = document.querySelector("input[name='phoneNum']");
@@ -704,4 +708,119 @@ phoneConfirmBtn.addEventListener("click", () => {
 });
 
 
+//-----------------------------------------------------------------------------------
+const memberAddress = loginMemberAddress.replace(/\^\^\^/g, ' ');
+document.querySelector("#addrDiv").innerText = memberAddress;
 
+
+//6. 주소 변경
+// 주소 검색 버튼 클릭 시
+
+
+const addrConfirmBtn = document.querySelector(".addrConfirmBtn");
+const memberAddrs = document.querySelectorAll("input[name='memberAddr']");
+const postcode = document.querySelector("#postcode");
+const address = document.querySelector("#address");
+const detailAddress = document.querySelector("#detailAddress");
+
+document.querySelector("#searchAddress").addEventListener("click", () => {
+    const searchButton = document.getElementById('searchAddress');
+
+    // 주소 필드에 값이 있는지 확인
+    if (postcode.value || address.value || detailAddress.value) {
+        // 값이 있으면 필드 비우기 및 버튼 텍스트 변경
+        postcode.value = '';
+        address.value = '';
+        detailAddress.value = '';
+        detailAddress.readOnly = true;
+        searchButton.innerText = '검색';
+    } else {
+        // 값이 없으면 주소 검색 함수 호출
+        execDaumPostcode();
+    }
+});
+
+/* 다음 주소 API 활용*/
+function execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('postcode').value = data.zonecode;
+            document.getElementById("address").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("detailAddress").readOnly = false;
+            document.getElementById("detailAddress").focus();
+
+            // 검색 버튼 텍스트 변경
+            document.getElementById('searchAddress').innerText = '초기화';
+        }
+    }).open();
+}
+
+
+
+addrConfirmBtn.addEventListener("click",async()=> {
+
+    if(postcode.value.trim().length==0){
+        alert("주소 입력을 완료해주세요");
+        return;
+    }else if(detailAddress.value.trim().length==0){
+        alert("상세 주소를 입력해주세요");
+        return;
+    }
+
+
+
+    try{
+
+        const resp = await fetch("/myPage/memberInfo/addressUpdate",{
+            method : "POST",
+            headers : {"Content-Type" : "application/json"},
+            body : JSON.stringify({"postcode" : postcode.value,
+                                    "address" : address.value,
+                                    "detailAddress" : detailAddress.value
+                                })
+                            });
+        const result = await resp.text();
+        
+        if(result == 0){
+            alert("주소 업데이트 실패");
+            return;
+        }
+        alert("주소가 변경되었습니다");
+        let addrDiv = document.querySelector("#addrDiv");
+        addrDiv.innerText = `${postcode.value} ${address.value} ${detailAddress.value}`;
+
+        phoneNum.value = "";
+        pAuthInput.value = "";
+
+        // 변경 폼 숨기기
+        const changeAddressArea = document.querySelector(".change-address-area");
+        changeAddressArea.style.display = 'none';
+
+        // 원래 폼 다시 보이기
+        const beforeModify = document.querySelector(".address-area");
+        beforeModify.style.display = '';
+
+        return;
+    }catch(error){
+        console.log("Error : ", error);
+    }
+
+});

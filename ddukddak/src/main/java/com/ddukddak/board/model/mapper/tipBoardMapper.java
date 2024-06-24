@@ -25,4 +25,6 @@ public interface tipBoardMapper {
 
 	List<Board> searchList(Map<String, Object> map);
 
+	int deleteTip(int boardNo);
+
 }

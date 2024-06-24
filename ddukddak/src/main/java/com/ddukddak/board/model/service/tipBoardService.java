@@ -18,4 +18,7 @@ public interface tipBoardService {
 
 	int insertBoard(Board board, List<MultipartFile> imgList) throws IOException;
 
+	int deleteTip(int boardNo);
+
+
 }

@@ -136,5 +136,13 @@ public class tipBoardServiceImpl implements tipBoardService{
 		}
 		return boardNo;
 	}
+
+	// 노하우 게시글 삭제
+	@Override
+	public int deleteTip(int boardNo) {
+		
+		return mapper.deleteTip(boardNo);
+	}
+
 	
 }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ddukddak.common.util.Utility;
+import com.ddukddak.main.model.dto.Pagination;
 import com.ddukddak.partner.model.ProjectInsertException;
 import com.ddukddak.partner.model.dto.Partner;
 import com.ddukddak.partner.model.dto.Portfolio;
@@ -41,11 +43,48 @@ public class InteriorServiceImpl implements InteriorService {
 	
 	// 시공사 리스트 조회
 	@Override
-	public List<Partner> selectInteriorList() {
+	public Map<String, Object> selectInteriorList(int cp) {
 		
-		return mapper.selectIneriorList();
+		int listCount = mapper.getInteriorListCount();
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		List<Partner> interiorList = mapper.selectIneriorList();
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("interiorList", interiorList);
+		
+		return map;
 	}
 
+	// 시공사 리스트 검색 조회
+	@Override
+	public Map<String, Object> searchInteriorList(String query, int cp) {
+		
+		int listCount = mapper.getSearchCount(query);
+		
+		Pagination pagination = new Pagination(cp, listCount);
+		
+		int limit = pagination.getLimit();
+		int offset = (cp - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		List<Partner> interiorList = mapper.searchInteriorList(query, rowBounds);
+		log.info("인테리어 검색 리스트 : " + interiorList);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pagination", pagination);
+		map.put("interiorList", interiorList);
+		
+		return map;
+	}
 
 	@Override
 	public Portfolio selectPortfolio(int portfolioNo) {
@@ -241,6 +280,42 @@ public class InteriorServiceImpl implements InteriorService {
 		
 		return result;
 	}
+
+
+	// 메인 프로젝트 변경
+	@Override
+	public int changeMainProject(Portfolio portfolio, int projectNo) {
+		
+		List<Project> projectList = new ArrayList<>(portfolio.getProjectList());
+//		List<Project> projectList = new ArrayList<>();
+//		
+//		projectList = mapper.selectProjectListWithoutMainProject( portfolio.getPortfolioNo() ); 
+				
+				
+		int result = -1;
+		
+		log.info("프로젝트 리스트 : " + projectList);
+		
+		for(Project project : projectList) {
+			
+			log.info(project.getMainProjectFl());
+			
+			if(project.getMainProjectFl().equals("Y") || project.getMainProjectFl() == "Y") {
+				log.info("메인 프로젝트 : " + project);
+				result = mapper.clearMainProject(project.getProjectNo());
+			}
+			
+		}
+		
+		result = mapper.registMainProject(projectNo);
+		
+		return result;
+	}
+
+
+
+
+	
 
 
 }

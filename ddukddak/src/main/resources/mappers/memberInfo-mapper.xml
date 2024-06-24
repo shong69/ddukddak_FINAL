@@ -84,4 +84,10 @@
 		MEMBER_TEL = #{updatePhoneNum}
 		WHERE MEMBER_NO = #{memberNo}
 	</update>
+	
+	<update id="updateAddr">
+		UPDATE "MEMBER" SET
+		MEMBER_ADDR = #{memberAddr}
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
 </mapper>

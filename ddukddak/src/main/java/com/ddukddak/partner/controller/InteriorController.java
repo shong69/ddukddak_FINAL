@@ -55,7 +55,13 @@ public class InteriorController {
 //      log.info("portfolioNo : " + loginPartnerMember.getPortfolioNo());
 //        
         Portfolio portfolio = service.selectPortfolio(loginPartnerMember.getPortfolioNo());
-//        log.info("portfolio : " + portfolio);
+        log.info("portfolio : " + portfolio);
+        
+        if(portfolio == null) {
+        	ra.addFlashAttribute("message", "포트폴리오, 프로젝트 작성이 필요합니다.");
+//        	int result = service.insertPortfolio(loginPartnerMember.getPartnerNo());
+        	return "redirect:/partner/registProject";
+        }
         
         Map<String, Object> map = service.selectProjectList(portfolio.getPortfolioNo());
         
@@ -135,6 +141,7 @@ public class InteriorController {
 	@PostMapping("registProject")
 	public String registProject(Model model,
 								@RequestParam("projectName") String inputProjectName,
+								@RequestParam("projectContent") String inputProjectContent,
 								@RequestParam("housingType") String housingType,
 								@RequestParam("workForm") String workForm,
 								@RequestParam("constructionCost") String constructionCost,
@@ -153,6 +160,7 @@ public class InteriorController {
 //		log.info("constructionYear : " + constructionYear);
 		
 		project.setProjectName(inputProjectName);
+		project.setProjectContent(inputProjectContent);
 		project.setHousingType(housingType);
 		project.setWorkForm(workForm);
 		project.setConstructionCost(constructionCost);
@@ -213,6 +221,7 @@ public class InteriorController {
 							 	@RequestParam("familySize") String familySize,
 							 	@RequestParam("projectContent") String projectContent,
 							 	@SessionAttribute("loginPartnerMember") Partner loginPartnerMember,
+							 	RedirectAttributes ra,
 							 	Model model) throws IllegalStateException, IOException {
 		
 		Project project = new Project();
@@ -230,11 +239,24 @@ public class InteriorController {
 		
 		
 		int result = service.updateProject(project, images);
+		String path = null;
+		String message = null;
+		
 		
 		log.info("프로젝트 : " + project);
 		log.info("이미지 : " + images);
 		
-		return "redirect:/partner/interiorPortfolioEditMain";
+		if(result > 0) {
+			path = "/partner/interiorPortfolioEditMain";
+			message = "프로젝트 수정이 완료되었습니다.";
+		} else {
+			path = "/partner/projectDetail/" + projectNo;
+			message = "프로젝트 수정에 실패하였습니다.";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
 	}
 	
 	
@@ -253,6 +275,32 @@ public class InteriorController {
 		} else {
 			path = "/partner/projectDetail/" + projectNo;
 			message = "프로젝트 삭제에 실패하였습니다.";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
+	}
+	
+	@GetMapping("registMainProject")
+	public String registMainProject(@RequestParam("projectNo") int projectNo,
+									@SessionAttribute("loginPartnerMember") Partner loginPartnerMember,
+									RedirectAttributes ra) {
+		
+		Portfolio portfolio = service.selectPortfolio(loginPartnerMember.getPortfolioNo());
+		
+		log.info("확인 : " + portfolio);
+		
+		int result = service.changeMainProject(portfolio, projectNo);
+		String path = null;
+		String message = null;
+		
+		if(result > 0) {
+			path = "/partner/interiorPortfolioEditMain";
+			message = "메인프로젝트 변경이 완료되었습니다.";
+		} else {
+			path = "/partner/projectDetail/" + projectNo;
+			message = "메인프로젝트 변경에 실패하였습니다.";
 		}
 		
 		ra.addFlashAttribute("message", message);

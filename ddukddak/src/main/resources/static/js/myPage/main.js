@@ -5,6 +5,7 @@ function selectOrderList() {
     fetch("/myPage/selectOrderList")
         .then(resp => resp.text())
         .then(result => {
+            console.log(result);
             if (result != null) {
                 const orderList = JSON.parse(result);
 
@@ -30,7 +31,7 @@ function selectOrderList() {
 
                     // 주문 번호 헤더 추가
                     const orderHeader = document.createElement('h3');
-                    orderHeader.textContent = `주문 번호: ${orderNo}`;
+                    orderHeader.textContent = `주문 번호: ${orderGroup[0].merchantUid}`;
                     orderDiv.appendChild(orderHeader);
 
                     //총 가격 계산하기

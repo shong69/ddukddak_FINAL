@@ -49,12 +49,49 @@ section {
 .searchInterior {
     
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 50px 0;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 30px;
+    width: 100%;
+}
+
+.searchForm {
+    display: flex;
+    border: 1px solid black;
+    margin: 0 20px;
+    height: 30px;
+    border-radius: 5px;
+    align-items: center;
+}
+
+.inputInterior {
+    width: 750px;
+    font-size: 15px;
+    border: none;
+    margin: 0 5px;
+    outline: none;
+}
+
+.searchBtn {
+    background-color: white;
+    color: black;
+    width: 30px; 
+    height: 29px;
+    border-radius: 5px;
+    
+    /* 폰트 */
+    font-family: 'main';
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.searchBtn:hover {
+    background-color: var(--white);
+    background-color: white;
+
 }
 
 .selectDate {

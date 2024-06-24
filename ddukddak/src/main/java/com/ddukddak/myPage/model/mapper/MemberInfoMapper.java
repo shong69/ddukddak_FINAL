@@ -84,6 +84,12 @@ public interface MemberInfoMapper {
 	 */
 	int dupNickname(Object object);
 
+	/** 주소 업데이트
+	 * @param map
+	 * @return
+	 */
+	int updateAddr(Map<String, Object> map);
+
 
 
 

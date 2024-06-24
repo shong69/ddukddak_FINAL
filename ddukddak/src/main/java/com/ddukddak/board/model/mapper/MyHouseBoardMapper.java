@@ -117,4 +117,20 @@ public interface MyHouseBoardMapper {
 	int deleteMyHouse(int boardNo);
 
 
+
+	/** 집들이 게시글 내용 수정
+	 * @param board
+	 * @return result
+	 */
+	int updateMyHouse(Board board);
+
+
+
+	/** 집들이 이미지 수정
+	 * @param img
+	 * @return result
+	 */
+	int updateImage(BoardImg img);
+
+
 }

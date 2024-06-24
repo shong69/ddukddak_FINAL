@@ -21,7 +21,7 @@
 
         <!-- 시공사 이름 + 메인 캐러셀 컨테이너 -->
         <div class="topContainer">
-            <h1 class="portTitle">캣츠코</h1>
+            <h1 class="portTitle" th:text="${portfolio.partnerBusinessName}">캣츠코</h1>
             
             <div class="slideshow-container">
 
@@ -38,7 +38,7 @@
                             <div class="text-overlay">
                                 <h1 class="text-title" th:text="${portfolio.mainProject.projectName}"></h1>
                                 <h3 class="text-subtitle" th:text="${portfolio.mainProject.projectContent}"></h3>
-                                <h4 class="text-date" th:text="|${portfolio.mainProject.constructionYear} 년|"></h4>
+                                <h4 class="text-date" th:text="|${portfolio.mainProject.constructionYear} |"></h4>
                             </div>
                         </a>
                     </div>
@@ -50,6 +50,25 @@
                 <a class="next"><i class="fa-solid fa-chevron-right"></i></a>
             </div>
         </div>
+
+        <!--
+        <div class="midContainer">
+
+             <div th:unless="${portfolio.profileImg != null}" class="imgContainer">
+                <img th:src="#{user.default.image}" class="portLogo">
+             </div>
+
+            <div th:if="${portfolio.profileImg != null}" class="imgContainer">
+                <img class="portLogo" th:src="${portfolio.profileImg}"></img>
+            </div>
+            <div class="nameContainer">
+                <h2 class="portName" th:text="${portfolio.partnerBusinessName}">캣츠코</h2>
+            </div>
+            <div>
+                <button class="myPageMainBtn" type="button">프로필 사진 변경</button>
+            </div>
+        </div>
+        -->
 
         <!-- 중간 시공사 컨테이너 -->
         <div class="midContainer">
@@ -66,6 +85,36 @@
             <div class="nameContainer">
                 <h2 class="portName" th:text="${portfolio.partnerBusinessName}">캣츠코</h2>
             </div>
+            <div>
+                <button class="myPageMainBtn" type="button">프로필 사진 변경</button>
+            </div>
+        </div>
+
+        <!-- 중간 시공사 컨테이너 -->
+        <div style="display: none;" class="changeProfileImg">
+
+            <form id="profile-form" action="/partner/partnerProrileImg" method="POST" name="profileForm" enctype="multipart/form-data">
+                <!-- 프로필 이미지 X -->
+                <div class="profileImg">
+                    <label for="inputImage" class="image-label">
+                        <img id="profile-img" 
+                        th:with="user=#{user.default.image}"
+                        th:src="${session.loginPartnerMember.profileImg?:user}">
+                    </label>
+                    <input id="inputImage" type="file" name="profile-image" accept="image/*">
+                    <span class="delete-image">&times;</span>
+                </div>
+
+                <div class="nameContainer">
+                    <h2 class="portName" th:text="${portfolio.partnerBusinessName}">캣츠코</h2>
+                </div>
+
+                <div class="profile-area">
+                    <button class="profile-del-btn myPageDelUpdateBtn" type="button">취소</button>
+                    <button class="confirm myPageDelUpdateBtn" type="submit">수정</button>
+                </div>
+
+            </form>
         </div>
 
 

@@ -244,10 +244,12 @@ const showUpdateComment = (commentNo, element) => {
   textarea.value = originalContent;
 
   const updateBtn = document.createElement('button');
+  updateBtn.classList.add("myPageMainBtn")
   updateBtn.innerText = '수정';
   updateBtn.onclick = () => updateComment(commentNo, textarea.value);
 
   const cancelBtn = document.createElement('button');
+  cancelBtn.classList.add("myPageMainBtn")
   cancelBtn.innerText = '취소';
   cancelBtn.onclick = () => {
     commentContent.style.display = 'block';

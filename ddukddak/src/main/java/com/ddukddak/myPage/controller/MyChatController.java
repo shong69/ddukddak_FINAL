@@ -40,29 +40,8 @@ public class MyChatController {
 		return "myPage/chatWithInter";
 	}
 
-	//채팅 상대 검색
-	
-	//채팅방 입장(없으면 생성)
+
 	
 	
-	//채팅방 목록 조회 - 비동기
-	
-	
-	//메세지 조회 - 비동기
-	
-	//채팅 읽음 표시
-	
-	
-	/** 채팅 목록 조회 및 페이지 전환
-	 * @return
-	 */
-	@GetMapping("chatWithManager")
-	public String chatWithManager(@SessionAttribute("loginMember") Member loginMember,
-			Model model) {
-		
-		
-		return "myPage/chatWithManager";
-	}
-	
-	
+
 }

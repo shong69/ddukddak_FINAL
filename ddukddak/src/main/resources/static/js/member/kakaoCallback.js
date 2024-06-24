@@ -42,9 +42,11 @@ document.addEventListener("DOMContentLoaded", function() {
         } else if (data == 4) {
             // 로그인, 중복, 회원가입 실패
             alert("로그인 처리 중 오류가 발생했습니다.");
+            window.close(); // 팝업 창 닫기
         } else {
             // 알 수 없는 응답
             alert("알 수 없는 응답 오류가 발생했습니다.");
+            window.close(); // 팝업 창 닫기
         }
 
     })
