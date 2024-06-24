@@ -32,18 +32,14 @@ import opennlp.tools.util.TrainingParameters;
 @Component
 @PropertySource("classpath:/config.properties")
 public class NLPModel {
-
-	private final String trainingDataPath;
 	
 	private DocumentCategorizerME categorizer; //문서 분류기
 	
 
 
 	// 생성자 주입을 활용하는 방법 (객체 생성 후 필드 주입이 뒤늦게 이루어지기 때문에.. )
-	public NLPModel(@Value("${nlp.training.data.path}") String trainingDataPath) throws Exception {
-		this.trainingDataPath = trainingDataPath;
-		//initializeModel();
-	}
+	@Value("${nlp.training.data.path}")
+	private String trainingDataPath;
 
 	private void initializeModel() throws Exception {
 		log.info("모델 초기화 시작");

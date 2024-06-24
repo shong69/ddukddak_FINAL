@@ -97,12 +97,12 @@ async function customerChatting () {
 
 	document.querySelector("#send").addEventListener("click", () => {
 		const obj = {
-			"firstValue" : firstValue,
-			"secondValue" : document.getElementById('inputChatting').value
+			"category" : firstValue,
+			"inquiry" : document.getElementById('inputChatting').value
 		}
 		
 			/* 입력값 비동기로 보내기 */
-			fetch("/eCommerce/selectBestProduct", {
+			fetch("/userChat/recommend", {
 			method: "POST",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify(obj)
