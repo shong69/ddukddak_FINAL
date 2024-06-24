@@ -93,32 +93,32 @@ public class NLPModel {
 		}
 	}
 
-	// 문의 분류 메서드
-	public String categorize(String inquiry) {
-		// 입력 문장 전처리
-		List<String> iWordsList = preprocess(inquiry); // 입력된 증상을 단어로 분리
-		String[] iWords = iWordsList.toArray(new String[0]);
-		double[] outcomes = categorizer.categorize(iWords); // 분류 결과 얻기
-		
-		log.info("단어 배열 {}", (Object) iWords);
-		log.info("카테고리 일치 확률 {}", outcomes);
-		
-		// outcomes의 모든 확률이 동일한 경우 감지 (== AI가 정확한 판단을 하지 못함)
-	    boolean allEqual = true;
-	    for (int i = 1; i < outcomes.length; i++) {
-	        if (outcomes[i] != outcomes[0]) {
-	            allEqual = false;
-	            break;
-	        }
-	    }
-	    
-	    if (allEqual) {
-	        log.warn("모든 카테고리의 일치 확률이 동일합니다. 모델이 올바르게 분류하지 못했습니다.");
-	        return "nodata";
-	    }
-
-		return categorizer.getBestCategory(outcomes); // 가장 가능성이 높은 카테고리 반환
-	}
+//	// 문의 분류 메서드
+//	public String categorize(String inquiry) {
+//		// 입력 문장 전처리
+//		List<String> iWordsList = preprocess(inquiry); // 입력된 증상을 단어로 분리
+//		String[] iWords = iWordsList.toArray(new String[0]);
+//		double[] outcomes = categorizer.categorize(iWords); // 분류 결과 얻기
+//		
+//		log.info("단어 배열 {}", (Object) iWords);
+//		log.info("카테고리 일치 확률 {}", outcomes);
+//		
+//		// outcomes의 모든 확률이 동일한 경우 감지 (== AI가 정확한 판단을 하지 못함)
+//	    boolean allEqual = true;
+//	    for (int i = 1; i < outcomes.length; i++) {
+//	        if (outcomes[i] != outcomes[0]) {
+//	            allEqual = false;
+//	            break;
+//	        }
+//	    }
+//	    
+//	    if (allEqual) {
+//	        log.warn("모든 카테고리의 일치 확률이 동일합니다. 모델이 올바르게 분류하지 못했습니다.");
+//	        return "nodata";
+//	    }
+//
+//		return categorizer.getBestCategory(outcomes); // 가장 가능성이 높은 카테고리 반환
+//	}
 
 	// 입력 문장 전처리 및 n-그램 생성 메서드
 	// n-그램(n-gram) : 연속된 n개의 아이템으로 이루어진 시퀀스
