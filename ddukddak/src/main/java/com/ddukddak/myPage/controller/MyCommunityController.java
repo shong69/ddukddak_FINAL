@@ -35,9 +35,13 @@ public class MyCommunityController {
 	@GetMapping("myPageHouseBoard")
 	public String myPageHouseBoard(
 			@SessionAttribute("loginMember")Member loginMember,
+			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 			Model model) {
-		Map<String, Object> map = service.selectMyHouseBoardList(loginMember);
+		
+		Map<String, Object> map = service.selectMyHouseBoardList(loginMember,cp);
+		
 		model.addAttribute("myHouseBoardList", map.get("myHouseBoardList"));
+		model.addAttribute("pagination", map.get("pagination"));
 		
 		return "myPage/myPageHouseBoard";
 	}
@@ -47,10 +51,12 @@ public class MyCommunityController {
 	@GetMapping("myPageTipBoard")
 	public String myPageTipBoard(
 			@SessionAttribute("loginMember")Member loginMember,
+			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 			Model model) {
 		
-		Map<String, Object> map = service.selectMyTipBoardList(loginMember);
+		Map<String, Object> map = service.selectMyTipBoardList(loginMember,cp);
 		model.addAttribute("myTipBoardList", map.get("myTipBoardList"));
+		model.addAttribute("pagination", map.get("pagination"));
 		
 		return "myPage/myPageTipBoard";
 	}
@@ -58,10 +64,12 @@ public class MyCommunityController {
 	//내가 좋아요 한 게시글
 	@GetMapping("myLikes")
 	public String myLikes(@SessionAttribute("loginMember")Member loginMember,
+			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 			Model model) {
 		
-		Map<String, Object> map = service.selectMyHouseBoardList(loginMember);
+		Map<String, Object> map = service.selectMyHouseBoardList(loginMember, cp);
 		model.addAttribute("myHouseBoardList", map.get("myHouseBoardList"));
+		model.addAttribute("pagination", map.get("pagination"));
 		return "myPage/myLikes";
 	}
 	
@@ -69,20 +77,26 @@ public class MyCommunityController {
 	@ResponseBody
 	@GetMapping("House")
 	public Object likeHouses(@SessionAttribute("loginMember")Member loginMember,
+			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 			Model model) {
 		
-		Map<String, Object> map = service.selectLikeHouseBoardList(loginMember);
+		Map<String, Object> map = service.selectLikeHouseBoardList(loginMember,cp);
+		model.addAttribute("pagination", map.get("pagination"));
 
-		return map.get("likeHouseBoardList");
+		//return map.get("likeHouseBoardList");
+		return map;
 	}
 	
 	@ResponseBody
 	@GetMapping("Tip")
 	public Object likeTips(@SessionAttribute("loginMember")Member loginMember,
+			@RequestParam(value="cp", required=false, defaultValue="1") int cp,
 			Model model) {
-		Map<String, Object> map = service.selectLikeTipBoardList(loginMember);
-
-		return map.get("likeTipBoardList");
+		Map<String, Object> map = service.selectLikeTipBoardList(loginMember,cp);
+		model.addAttribute("pagination", map.get("pagination"));
+		
+		//return map.get("likeTipBoardList");
+		return map;
 	}
 	
 

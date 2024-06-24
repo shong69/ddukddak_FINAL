@@ -24,19 +24,25 @@
             <th:block th:replace="~{common/fragments/myPageSideBar}"></th:block>
 
             <section class="myPage-main">
+
                 <h2 class="category-name">좋아요한 게시글</h2>
-                <div class="select-area">
-                    <select class="select-box">
-                        <option value="1">집들이</option>
-                        <option value="2">노하우</option>
-                    </select>
-                </div>
+                <form id = "select" method = "">
+                    <div class="select-area">
+                        <select class="select-box">
+                            <option value="1">집들이</option>
+                            <option value="2">노하우</option>
+                        </select>
+                    </div>
+                </form>
+
 
                 <div id="postArea"></div>
 
 
 
-                <!--페이지 네이션 추가-->
+                <div id="pagination">
+                
+                </div>
             </section>
         </section>
 

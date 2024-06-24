@@ -283,6 +283,7 @@ public class TipBoardController {
 	}
 	
 	
+
 //	@PostMapping("updateTip")
 //	public String updateTip(@RequestParam("boardNo") int boardNo,
 //								@RequestParam("boardTitle") String inputBoardTitle,
@@ -297,22 +298,24 @@ public class TipBoardController {
 //		board.setBoardTitle(inputBoardTitle);
 //		board.setBoardContent(inputBoardContent);
 //		
-//		int result = myHouseService.updateMyHouse(board, images);
-//		String path = null;
-//		String message = null;
-//		
-//		if(result > 0) {
-//			path = "/tip/detail/" + boardNo;
-//			message = "노하우 게시글 수정이 완료되었습니다.";
-//		} else {
-//			path = "/tip/updateMyHouse";
-//			message = "노하우 게시글 수정에 실패하였습니다.";
-//		}
-//		
-//		ra.addFlashAttribute("message", message);
-//		
-//		return "redirect:" + path;
-//	}
+
+
+	@PostMapping("updateTip")
+	public String updateTip(@RequestParam("boardNo") int boardNo,
+								@RequestParam("boardTitle") String inputBoardTitle,
+								@RequestParam("boardContent") String inputBoardContent,
+								@RequestParam("images") List<MultipartFile> images,
+								@SessionAttribute("loginMember") Member loginMember,
+								RedirectAttributes ra) throws IllegalStateException, IOException {
+		
+		Board board = new Board();
+		
+		board.setBoardNo(boardNo);
+		board.setBoardTitle(inputBoardTitle);
+		board.setBoardContent(inputBoardContent);
+		
+  }
+
 }
 
 

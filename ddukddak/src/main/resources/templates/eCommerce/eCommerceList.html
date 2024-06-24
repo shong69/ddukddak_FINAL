@@ -80,8 +80,8 @@
                                         </div>
                                         <div>
                                             <img src="/images/main/star.png" style="height: 10px;">
-                                            <h5 style="margin-right: 5px;">4.1</h5>
-                                            <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+                                            <h5 style="margin-right: 5px;" th:text="*{selectProductList[col].reviewRating}"></h5>
+                                            <h5 style="color: #9B9B9B;" th:text="|리뷰 *{selectProductList[col].reviewCount}개|"></h5>
                                         </div>
                                     </a>
                                     <!-- 검색 O -->
@@ -112,8 +112,8 @@
                                         </div>
                                         <div>
                                             <img src="/images/main/star.png" style="height: 10px;">
-                                            <h5 style="margin-right: 5px;">4.1</h5>
-                                            <h5 style="color: #9B9B9B;">리뷰 78개</h5>
+                                            <h5 style="margin-right: 5px;" th:text="*{selectProductList[col].reviewRating}"></h5>
+                                            <h5 style="color: #9B9B9B;" th:text="|리뷰 *{selectProductList[col].reviewCount}개|">리뷰 78개</h5>
                                         </div>
                                     </a>
                                 </div>

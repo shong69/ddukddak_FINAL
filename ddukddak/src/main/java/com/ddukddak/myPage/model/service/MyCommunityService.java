@@ -8,26 +8,28 @@ public interface MyCommunityService {
 
 	/**내 집들이 게시글 목록 조회
 	 * @param loginMember
+	 * @param cp 
 	 * @return
 	 */
-	Map<String, Object> selectMyHouseBoardList(Member loginMember);
+	Map<String, Object> selectMyHouseBoardList(Member loginMember, int cp);
 
 	/** 내 노하우 게시글 목록 조회
 	 * @param loginMember
+	 * @param cp 
 	 * @return
 	 */
-	Map<String, Object> selectMyTipBoardList(Member loginMember);
+	Map<String, Object> selectMyTipBoardList(Member loginMember, int cp);
 
 	/**좋아요 한 집들이 게시글 목록 조회
 	 * @param loginMember
 	 * @return
 	 */
-	Map<String, Object> selectLikeHouseBoardList(Member loginMember);
+	Map<String, Object> selectLikeHouseBoardList(Member loginMember, int cp);
 
 	/**좋아요 한 노하우 게시글 목록 조회
 	 * @param loginMember
 	 * @return
 	 */
-	Map<String, Object> selectLikeTipBoardList(Member loginMember);
+	Map<String, Object> selectLikeTipBoardList(Member loginMember, int cp);
 
 }

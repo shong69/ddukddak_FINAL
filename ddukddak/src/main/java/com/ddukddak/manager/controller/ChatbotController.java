@@ -56,30 +56,24 @@ public class ChatbotController {
 		return service.getAllCategory();
 	}
 	
-//	/** 답변하기
-//	 * @param map
-//	 * @return
-//	 */
-//	@PostMapping("/recommend")
-//	@ResponseBody
-//	public String getRecommendation(@RequestBody Map<String, Object> map) {
-//
-//		log.info("입력된 문의 {}", (String) map.get("inquiry"));
-//
-//		RecommendAnswer result = service.recommendAnswer((String) map.get("inquiry"), nlpModel);
-//
-//		if (result.getDoctor() != null) {
-//			return "추천 의사 이름 : " + result.getDoctor().getDoctorName() + "\n전공명: " + result.getDoctor().getMajorName()
-//					+ "\n전화번호: " + result.getDoctor().getDoctorTel();
-//		} else {
-//			return result.getMessage();
-//		}
-//	}
-//	
-//	/** 학습하기
-//	 * @param fr
-//	 * @return
-//	 */
+	/** 답변하기
+	 * @param map
+	 * @return
+	 */
+	@PostMapping("/recommend")
+	@ResponseBody
+	public String getRecommendation(@RequestBody Map<String, Object> map) {
+		log.info("카테고리{}",(String)map.get("category"));
+		log.info("입력된 문의 {}", (String) map.get("inquiry"));
+		
+		RecommendAnswer result = service.recommendAnswer((String)map.get("category"),(String) map.get("inquiry"), nlpModel);
+		return result.getMessage();
+	}
+	
+	/** 학습하기
+	 * @param fr
+	 * @return
+	 */
 //	@ResponseBody
 //	@PostMapping("/feedback")
 //    public ResponseEntity<String> feedback(@RequestBody  Request fr) {

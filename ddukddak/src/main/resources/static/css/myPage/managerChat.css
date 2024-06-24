@@ -96,6 +96,7 @@ html{
 	white-space: pre-wrap;
 	font-size: 14px;
 	margin: 3px;
+	width: fit-content;
 }
 .b-chat,
 .u-chat {
