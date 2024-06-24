@@ -582,6 +582,7 @@ public class eCommerceServiceImpl implements eCommerceService{
 		return mapper.paidUpdate(merchantUid);
 	}
 
+
 	// 사용자 결제 취소 업데이트
 	@Override
 	public int cancelUpdate(Map<String, String> map) {
