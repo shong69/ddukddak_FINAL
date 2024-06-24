@@ -470,12 +470,18 @@ input{
 {
     height: 300px;
 }
+
+.change-address-area{
+    height: 400px;
+
+}
 .profile-img-area,
 .password-area,
 .id-area,
 .email-area,
 .nickname-area,
 .phoneNum-area,
+.address-area,
 .add-info tr{
     height: 100px;
 }
@@ -690,9 +696,49 @@ input::placeholder{
 
 }
 
-.phoneNum-area2 div:nth-child(2){
+.phoneNum-area2 div:nth-child(2),
+.addr-area{
     margin-left: 80px;
 }
+.addr-area{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.addr-area>div:first-child{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+input[name="memberAddr"]{
+    width : 600px;
+    height: 40px;
+    border-radius: 5px;
+    padding: 8px;
+    font-family: 'main';
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    border: 1px solid var(--gray5);
+    margin-bottom: 20px;
+}
+.address-input-area{
+    display: flex;
+    align-items: start;
+}
+.address-input-area:first-of-type{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#searchAddress{
+    width: 60px;
+    height: 20px;
+    border-radius: 5px;
+}
+
+
 
 
 
@@ -703,6 +749,10 @@ input::placeholder{
     margin-bottom: 100px;
 }
 
+.addr-area{
+    display: flex;
+    flex-direction: column;
+}
 
 .add-info td{
     display: flex;

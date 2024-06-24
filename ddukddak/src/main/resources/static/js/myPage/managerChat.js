@@ -1,191 +1,105 @@
-
-// 비동기로 메세지 목록을 조회하는 함수
-function selectChattingFn() {
-
-	fetch("/chatting/selectMessage?"+`chattingNo=${selectChattingNo}&memberNo=${loginMemberNo}`)
-	.then(resp => resp.json())
-	.then(messageList => {
-		console.log(messageList);
-
-		// <ul class="display-chatting">
-		const ul = document.querySelector(".display-chatting");
-
-		// 메세지 만들어서 출력하기
-		for(let msg of messageList){
-			//<li>,  <li class="my-chat">
-			const li = document.createElement("li");
-
-			// 보낸 시간
-			const span = document.createElement("span");
-			span.classList.add("chatDate");
-			span.innerText = msg.sendTime;
-
-			// 메세지 내용
-			const p = document.createElement("p");
-			p.classList.add("chat");
-			p.innerHTML = msg.messageContent; // br태그 해석을 위해 innerHTML
-
-			// 내가 작성한 메세지인 경우
-			if(loginMemberNo == msg.senderNo){ 
-				li.classList.add("my-chat");
-				
-				li.append(span, p);
-				
-			}else{ // 상대가 작성한 메세지인 경우
-				li.classList.add("target-chat");
-
-				// 상대 프로필
-				// <img src="/resources/images/user.png">
-				const img = document.createElement("img");
-				img.setAttribute("src", selectTargetProfile);
-				
-				const div = document.createElement("div");
-
-				// 상대 이름
-				const b = document.createElement("b");
-				b.innerText = selectTargetName; // 전역변수
-
-				const br = document.createElement("br");
-
-				div.append(b, br, p, span);
-				li.append(img,div);
-
-			}
-
-			ul.append(li);
-			display.scrollTop = display.scrollHeight; // 스크롤 제일 밑으로
-		}
-
-	})
-	.catch(err => console.log(err));
-
-
+/****************문의종료****************/
+function finishChat(){
+	alert("상담이 종료됩니다");
+	window.close();
 }
 
+/************************상담대상선택*************************/
+const customerBtn = document.querySelector("#customer");
+const partnerBtn = document.querySelector("#partner");
+function customerChat(){
+	partnerBtn.classList.add("display-none");
+	customerBtn.disabled = true;
+	customerBtn.classList.remove("c-chat"); //선택 액션 없애기
 
-// ----------------------------------------------------------------------------------------------------------------
-
-// sockjs를 이용한 WebSocket 구현
-
-// 로그인이 되어 있을 경우에만
-// /chattingSock 이라는 요청 주소로 통신할 수 있는  WebSocket 객체 생성
-let chattingSock;
-
-if(loginMemberNo != ""){
-	chattingSock = new SockJS("/chattingSock");
+	//해당하는 문의 카테고리 불러오기
+	customerChatting();
 }
 
+function partnerChat(){
+	customerBtn.classList.add("display-none");
+	partnerBtn.disabled =true;
+	partnerBtn.classList.remove("c-chat");
 
-
-// 채팅 입력
-const send = document.getElementById("send");
-
-const sendMessage = () => {
-	const inputChatting = document.getElementById("inputChatting");
-
-	if (inputChatting.value.trim().length == 0) {
-		alert("채팅을 입력해주세요.");
-		inputChatting.value = "";
-	} else {
-		var obj = {
-			"senderNo": loginMemberNo,
-			"targetNo": selectTargetNo,
-			"chattingNo": selectChattingNo,
-			"messageContent": inputChatting.value,
-		};
-		console.log(obj)
-
-		// JSON.stringify() : 자바스크립트 객체를 JSON 문자열로 변환
-		chattingSock.send(JSON.stringify(obj));
-
-		inputChatting.value = "";
-	}
+	//해당하는 문의 카테고리 불러오기
+	partnerChatting();
 }
 
-// 엔터 == 제출
-// 쉬프트 + 엔터 == 줄바꿈
-inputChatting.addEventListener("keyup", e => {
-	if(e.key == "Enter"){ 
-		if (!e.shiftKey) {
-			sendMessage();
-		}
-	}
-})
+/***********************상담 카테고리선택***********************/
+const chattingContent = document.querySelector(".display-chatting");
+async function customerChatting () {
+	//1. 문의 카테고리 불러오기->선택
+	const categorys = [
+		'제품정보',
+		'배송 및 반품',
+		'주문 및 결제',
+		'적립금 및 포인트',
+		'게시글 작성 및 관리',
+		'댓글 및 좋아요',
+		'전문가 상담',
+		'매칭 과정',
+		'사이트 사용 문제',
+		'3d홈디자인 기능'
+	];
+	const li = document.createElement("li");
+	li.classList.add("target-chat");
 
+	const img = document.createElement("img");
+	img.src = "/images/default/main.jpg";
 
+	const div = document.createElement("div");
+	const div1= document.createElement("div");
+	div1.classList.add("target-name");
+	div1.innerText = "뚝딱봇";
 
-// WebSocket 객체 chattingSock이 서버로 부터 메세지를 통지 받으면 자동으로 실행될 콜백 함수
-chattingSock.onmessage = function(e) {
-	// 메소드를 통해 전달받은 객체값을 JSON객체로 변환해서 obj 변수에 저장.
-	const msg = JSON.parse(e.data);
-	console.log(msg);
+	const div2 = document.createElement("div");
+	div2.classList.add("chat");
+	div2.innerText="아래 항목 중 원하시는 문의 종류를 선택해 주세요";
+	div.append(div1, div2);
+	categorys.forEach(category=>{
+		const p =document.createElement("button");
+		p.setAttribute("type","button");
+		p.classList.add("b-chat");
+		p.classList.add("c-chat")
+		p.innerText = category;
+		div.append(p);
+	});
 
+	const span = document.createElement("span");
+	span.classList.add("chatDate");
 
-	// 현재 채팅방을 보고있는 경우
-	if(selectChattingNo == msg.chattingNo){
+	span.innerText = getCurrentTimeAMPM();
+	div.append(span);
 
+	li.append(img, div);
+	chattingContent.append(li);
+	//2.  문의하기
 
-		const ul = document.querySelector(".display-chatting");
-	
-		// 메세지 만들어서 출력하기
-		//<li>,  <li class="my-chat">
-		const li = document.createElement("li");
-	
-		// 보낸 시간
-		const span = document.createElement("span");
-		span.classList.add("chatDate");
-		span.innerText = msg.sendTime;
-	
-		// 메세지 내용
-		const p = document.createElement("p");
-		p.classList.add("chat");
-		p.innerHTML = msg.messageContent; // br태그 해석을 위해 innerHTML
-	
-		// 내가 작성한 메세지인 경우
-		if(loginMemberNo == msg.senderNo){ 
-			li.classList.add("my-chat");
-			
-			li.append(span, p);
-			
-		}else{ // 상대가 작성한 메세지인 경우
-			li.classList.add("target-chat");
-	
-			// 상대 프로필
-			// <img src="/resources/images/user.png">
-			const img = document.createElement("img");
-			img.setAttribute("src", selectTargetProfile);
-			
-			const div = document.createElement("div");
-	
-			// 상대 이름
-			const b = document.createElement("b");
-			b.innerText = selectTargetName; // 전역변수
-	
-			const br = document.createElement("br");
-	
-			div.append(b, br, p, span);
-			li.append(img,div);
-	
-		}
-	
-		ul.append(li)
-		display.scrollTop = display.scrollHeight; // 스크롤 제일 밑으로
-	}
-
-
-
-	selectRoomList();
+	//답변하기
 }
 
 
 
 
-// 문서 로딩 완료 후 수행할 기능
-document.addEventListener("DOMContentLoaded", ()=>{
-	
-	// 채팅방 목록에 클릭 이벤트 추가
-	roomListAddEvent(); 
 
-	// 보내기 버튼에 이벤트 추가
-	send.addEventListener("click", sendMessage);
-});
+
+function getCurrentTimeAMPM() {
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes();
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+
+    // 12시간 형식으로 변환
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 0시는 12시로 표시
+
+    // 분이 한 자릿수인 경우 앞에 0을 붙입니다.
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+    // 시간과 분을 합쳐서 반환
+    const currentTime = hours + ':' + formattedMinutes + ' ' + ampm;
+    return currentTime;
+}
+
+// 예시: 콘솔에 현재 시각을 출력합니다.
+console.log(getCurrentTimeAMPM()); // 예상 출력: "7:43 AM"
