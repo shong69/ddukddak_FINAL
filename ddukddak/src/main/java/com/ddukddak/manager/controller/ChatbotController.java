@@ -1,10 +1,7 @@
 package com.ddukddak.manager.controller;
 
-import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ddukddak.manager.NLPModel;
-import com.ddukddak.manager.model.dto.InquiryCategory;
 import com.ddukddak.manager.model.dto.RecommendAnswer;
-import com.ddukddak.manager.model.dto.Request;
 import com.ddukddak.manager.model.service.ChatbotService;
 import com.ddukddak.member.model.dto.Member;
 
@@ -36,6 +31,7 @@ public class ChatbotController {
 	 * */
 	private final ChatbotService service;
 	private final NLPModel nlpModel;
+	
 	/** 챗봇 진입
 	 * @return
 	 */

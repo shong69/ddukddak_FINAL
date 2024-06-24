@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import com.ddukddak.manager.model.dto.StopWords;
 
-
 import lombok.extern.slf4j.Slf4j;
 import opennlp.tools.doccat.DoccatFactory;
 import opennlp.tools.doccat.DoccatModel;

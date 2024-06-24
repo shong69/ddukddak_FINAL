@@ -1,12 +1,9 @@
 package com.ddukddak.manager.model.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.ddukddak.manager.NLPModel;
 import com.ddukddak.manager.model.dto.Inquiry;
-import com.ddukddak.manager.model.dto.InquiryCategory;
 import com.ddukddak.manager.model.dto.RecommendAnswer;
 import com.ddukddak.manager.model.mapper.ChatbotMapper;
 

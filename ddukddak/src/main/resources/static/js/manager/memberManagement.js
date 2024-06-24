@@ -180,13 +180,6 @@ document.querySelector('#multiPassBtn').addEventListener('click', () => {
         return;
     }
 
-    // 휴대폰 번호가 없는 항목 필터링
-    const itemsWithoutPhone = selectedItems.filter(item => {
-        const row = item.closest('tr');
-        const memberTel = row.querySelector('td:nth-child(6)').textContent;
-        return !memberTel || memberTel.trim() === '';
-    });
-
     // 탈퇴 여부가 '탈퇴'인 항목 필터링
     const itemsDeactivated = selectedItems.filter(item => {
         const row = item.closest('tr');
@@ -199,14 +192,6 @@ document.querySelector('#multiPassBtn').addEventListener('click', () => {
         alert(`선택한 항목 중 ${itemsDeactivated.length}개의 탈퇴된 회원이 있습니다.\n선택 작업 시에는 활동 중인 회원만 선택해 주세요.`);
         return;
     }
-
-    // 휴대폰
-    if (itemsWithoutPhone.length > 0) {
-        alert(`선택된 항목 중 ${itemsWithoutPhone.length}개의 휴대폰 번호가 없는 항목이 있습니다.\n선택 작업 시에는 휴대폰 번호가 있는 항목만 선택해 주세요.`);
-        return;
-    }
-    
-
     if(confirm(`선택한 ${selectedCount}개 항목에 대해 탈퇴처리를 진행하겠습니까?`)) {
         handleMultiApproval('delete');
 
@@ -242,7 +227,14 @@ async function handleMultiApproval(actionForBackend) {
     
     // 체크 된 애들 개수(알림에 띄울) 얻어오기
     const selectedCount = selectedItems.length;
+    
+    // 전화번호가 없는 항목 추출
+    const invalidPhoneNumberItems = selectedItems.filter(item => !item.memberTel || item.memberTel.trim() === "");
 
+    // 유효한 전화번호가 있는 항목 추출
+    const validPhoneNumberItems = selectedItems.filter(item => item.memberTel && item.memberTel.trim() !== "");
+
+    console.log('validPhoneNumberItems : ' + validPhoneNumberItems);
     //console.log("actionForBackend : " + actionForBackend);
     //console.log("selectedItems: ", JSON.stringify(selectedItems));
     
@@ -262,27 +254,38 @@ async function handleMultiApproval(actionForBackend) {
 
             // 업데이트 성공 시 SMS 발송 시작
             if (updateResult > 0) {
-                try {
-                    const smsResponse = await fetch(`/sms/sendMany/member/mulit/${actionForBackend}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ members: selectedItems }),
-                    })
-                    const smsResult = await smsResponse.text();
-                    
-                    console.log("문자 결과 개수 : " + smsResult);
-    
-                    alert(` 선택하신 항목에 대한 '회원 탈퇴' 처리 결과입니다.
+                if(validPhoneNumberItems.length > 0) {
+                    // selectedItems 배열에서 휴대전화가 널이 아닌 필터가 걸린 배열
+                    try {
+                        const smsResponse = await fetch(`/sms/sendMany/member/mulit/${actionForBackend}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ members: validPhoneNumberItems }),
+                        })
+                        const smsResult = await smsResponse.text();
+                        
+                        console.log("문자 결과 개수 : " + smsResult);
+                        
+                        // 체크된 항목 중 1개 이상 유효한 휴대폰이 있는 회원을 탈퇴시킬 경우
+                        alert(`선택하신 항목에 대한 '회원 탈퇴' 처리 결과입니다.
+                            \n 업데이트 성공 결과 : ${updateResult} / ${selectedCount}
+                            \n SMS 발송 성공 결과 : ${smsResult} / ${validPhoneNumberItems.length}
+                            \n 휴대전화 미등록으로 인한 미발송 : ${invalidPhoneNumberItems.length}건`);
+        
+                        window.location.reload();
+                    } catch(smsError) {
+                        alert('SMS 발송 중 오류가 발생했습니다: ' + smsError.message);
+                    }
+                } else {
+                    // 1개라도 유효한 휴대폰이 없는 회원을 탈퇴시킬 경우(애초에 문자 발송 시도 X)
+                    alert(`선택하신 항목에 대한 '회원 탈퇴' 처리 결과입니다.
                         \n 업데이트 성공 결과 : ${updateResult} / ${selectedCount}
-                        \n SMS 발송 성공 결과 : ${smsResult} / ${selectedCount}`);
-    
+                        \n SMS 발송 가능한 전화번호가 없습니다.
+                        \n 휴대전화 미등록으로 인한 미발송 : ${invalidPhoneNumberItems.length}건`);
                     window.location.reload();
-                } catch(smsError) {
-                    alert('SMS 발송 중 오류가 발생했습니다: ' + smsError.message);
-                }
-                
+                }       
             } else {
                 alert('회원 탈퇴 처리 중 오류가 발생했습니다.');
                 window.location.reload();
