@@ -97,11 +97,11 @@
 }
 
 #floor-plan table {
-  width: 610px;
-  height: 610px;
+  width: 600px;
+  height: 620px;
   margin-top: 100px;
   margin-left: 300px;
-  background-color: white;
+  background-color: #f1f1f2;
   border: 1px solid black;
 }
   
@@ -121,21 +121,15 @@
   margin: 0;
   padding: 0;
   width: 100px;
-  height: 10px;
-}
-
-.wallTd2 {
-  margin: 0;
-  padding: 0;
-  width: 10px;
-  height: 100px;
+  height: 20px;
+  border-bottom: 1px solid black;
 }
 
 .wallTdSide {
   margin: 0;
   padding: 0;
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
 }
 
 
