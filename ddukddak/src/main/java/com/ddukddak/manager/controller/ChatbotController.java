@@ -46,16 +46,7 @@ public class ChatbotController {
 		
 		return "myPage/chatWithManager";
 	}
-	
-	/** 전체 카테고리
-	 * @return
-	 */
-	@GetMapping("/category")
-	@ResponseBody
-	public List<InquiryCategory> getCategory() {
-		return service.getAllCategory();
-	}
-	
+
 	/** 답변하기
 	 * @param map
 	 * @return

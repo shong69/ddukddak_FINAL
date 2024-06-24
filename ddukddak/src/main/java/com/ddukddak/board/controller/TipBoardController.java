@@ -299,7 +299,7 @@ public class TipBoardController {
 //		board.setBoardContent(inputBoardContent);
 //		
 
-//
+
 //	@PostMapping("updateTip")
 //	public String updateTip(@RequestParam("boardNo") int boardNo,
 //								@RequestParam("boardTitle") String inputBoardTitle,
@@ -313,8 +313,7 @@ public class TipBoardController {
 //		board.setBoardNo(boardNo);
 //		board.setBoardTitle(inputBoardTitle);
 //		board.setBoardContent(inputBoardContent);
-//		
-//  }
+
 //		int result = myHouseService.updateMyHouse(board, images);
 //		String path = null;
 //		String message = null;
