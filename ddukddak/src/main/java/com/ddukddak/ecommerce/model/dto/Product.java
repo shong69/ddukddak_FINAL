@@ -50,4 +50,10 @@ public class Product {
 	private String memberNickname;
 	private int cartId;
 	private String merchantUid;
+	
+	
+	//리뷰 개수와 평점
+	private double reviewRating;
+	private int reviewCount;
+	
 }

@@ -215,7 +215,7 @@
                                     <th>배송지</th>
                                     <td colspan="3">
                                         <div class="before-modify">
-                                            <div id="addrDiv">경남 사천시 서포면 선창부두길 11-2 선전리</div>
+                                            <div id="addrDiv" th:text="${session.loginMember?.memberAddr}"></div>
                                             <div><button class="myPageSubBtn" type="button">주소 변경</button></div>
                                         </div>
                                     </td>
