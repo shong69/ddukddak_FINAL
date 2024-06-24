@@ -597,7 +597,10 @@ public class eCommerceServiceImpl implements eCommerceService{
 		log.info("평점 결과:{}",mapper.avgScore(productNo));
 		return mapper.avgScore(productNo);
 	}
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 24eacd84e43c868eef6922235824bcba6f95fed9
 
 >>>>>>> 7655d55b340ed9369da064f839a17a2e0ee02a8a
 	// 사용자 결제 취소 업데이트
