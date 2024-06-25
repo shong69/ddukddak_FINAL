@@ -679,7 +679,7 @@ public class SellerController {
 														Model model,
 														@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) {
 		
-int partnerNo = loginPartnerMember.getPartnerNo();
+		int partnerNo = loginPartnerMember.getPartnerNo();
 		
 		// 대분류 카테고리 선택
 		List<Category> categoryList = eCommerceService.selectCategory();
