@@ -1,4 +1,13 @@
 /* 전체 백그라운드색 컨테이너 */
+
+body {
+    background-image: url("/images/board/aa.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+
 .boardMainPageContainer {
     display: flex;
     flex-wrap: wrap;

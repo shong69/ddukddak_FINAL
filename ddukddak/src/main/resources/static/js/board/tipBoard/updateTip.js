@@ -3,6 +3,25 @@ const inputImageList = document.querySelectorAll(".inputImg");
 const deleteImageList = document.querySelectorAll(".delete-img");
 let imgCount = imgList.length;
 
+// 1. 기존 이미지 길이만큼 배열만들기
+let imgArray = new Array(imgCount);
+
+console.log(imgArray.length);
+
+// 2. 배열에 기존 img 태그 다 넣어놓기
+previewList.forEach((img, index) => {
+  imgArray[index] = img;
+});
+
+console.log(imgArray);
+
+// 3. 만약 x 버튼(삭제 시) 해당 인덱스에 null 값 넣기
+// 4. 만약 수정시 해당 인덱스에 File 객체 넣기
+// 5. submit 요청 시 해당 배열의 모든 요소를 for을 이용하여 순차 접근해서 
+// 요소 중 null이 있다면 -> 서브밋 안되게
+// 요소 중 null이 없다면 -> File 객체가 있는 인덱스의 번호와 File 객체를 서버로 넘기기
+// formData 
+
 // x버튼이 눌러져 삭제된 이미지의 순서를 저장
 // * Set : 중복 저장 X, 순서 유지 X
 const deleteOrder = new Set();
@@ -83,6 +102,8 @@ const changeImageFn = (inputImage, order) => {
   }
 
 
+
+
   // ------------ 선택된 이미지 미리보기 --------------
 
   const reader = new FileReader(); // JS에서 파일을 읽고 저장하는 객체
@@ -109,9 +130,14 @@ for(let i=0 ; i<inputImageList.length ; i++){
 
   // **** input태그에 이미지가 선택된 경우(값이 변경된 경우) ****
   inputImageList[i].addEventListener("change", e => {
-    console.log(inputImageList[i].value);
+    
     changeImageFn(e.target, i);
+    
+    console.log(inputImageList[i].files);
 
+    imgArray[i] = inputImageList[i].files;
+
+    console.log(imgArray);
   })
     
   
@@ -125,19 +151,14 @@ for(let i=0 ; i<inputImageList.length ; i++){
     // 미리보기 이미지가 있을 때에만
     if(previewList[i].getAttribute("src") != null 
     &&  previewList[i].getAttribute("src") != ""  ){
-      
-      // // 기존에 이미지가 존재하고 있을 경우에만
-      // if( orderList.includes(i) ){
-      //   deleteOrder.add(i);
-      // }
-      // imgCount --;
+      imgArray[i] = null;
     }
-
+    
+    console.log(imgArray);
     previewList[i].src       = ""; // 미리보기 이미지 제거
     inputImageList[i].value  = ""; // input에 선택된 파일 제거
     backupInputList[i]       = undefined; // 백업본 제거
     
-    // console.log("딜리트 오더 : " , deleteOrder);
     
   });
 }
@@ -149,6 +170,14 @@ document.querySelector("#updateTipForm").addEventListener("submit", e => {
 
   const boardTitle = document.querySelector("#boardTitle");
   const boardContent = document.querySelector("#boardContent");
+
+  for(let i = 0; i < imgArray.length; i ++) {
+    if(imgArray[i] == null) {
+      alert("빈 노하우 이미지를 등록해주세요.");
+      e.preventDefault();
+      break;
+    }
+  }
 
   if(boardTitle.value.trim().length === 0) {
     alert("노하우 제목을 입력해주세요.");

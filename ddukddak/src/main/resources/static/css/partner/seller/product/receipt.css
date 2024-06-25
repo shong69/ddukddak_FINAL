@@ -81,6 +81,11 @@
 .borderTr > td:first-child {
     width: 10px;
 }
+.borderTr > td {
+    padding: 15px;
+    word-wrap: break-word;
+    font-size: small;
+}
 
 
 /* 모달창 */
