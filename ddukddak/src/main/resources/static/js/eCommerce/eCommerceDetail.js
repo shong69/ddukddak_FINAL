@@ -10,10 +10,10 @@ const reviewBox = document.querySelector("#reviewBox");
 const qnaBox = document.querySelector("#qnaBox");
 
 detailInfo.addEventListener("click", () => {
-    detailInfo.style.backgroundColor = 'var(--primary3)';
-    review.style.backgroundColor = 'var(--white)';
-    qna.style.backgroundColor = 'var(--white)';
-    changeInfo.style.backgroundColor = 'var(--white)';
+    detailInfo.style.backgroundColor = 'rgb(223, 213, 201)';
+    review.style.backgroundColor = '#f3eeeb';
+    qna.style.backgroundColor = '#f3eeeb';
+    changeInfo.style.backgroundColor = '#f3eeeb';
 
     explain.style.display = 'flex';
     change.style.display = 'none';
@@ -22,10 +22,10 @@ detailInfo.addEventListener("click", () => {
 });
 
 review.addEventListener("click", () => {
-    detailInfo.style.backgroundColor = 'var(--white)';
-    review.style.backgroundColor = 'var(--primary3)';
-    qna.style.backgroundColor = 'var(--white)';
-    changeInfo.style.backgroundColor = 'var(--white)';
+    detailInfo.style.backgroundColor = '#f3eeeb';
+    review.style.backgroundColor = 'rgb(223, 213, 201)';
+    qna.style.backgroundColor = '#f3eeeb';
+    changeInfo.style.backgroundColor = '#f3eeeb';
 
     reviewBox.style.display ='flex';
     explain.style.display = 'none';
@@ -36,10 +36,10 @@ review.addEventListener("click", () => {
 });
 
 qna.addEventListener("click", () => {
-    detailInfo.style.backgroundColor = 'var(--white)';
-    review.style.backgroundColor = 'var(--white)';
-    qna.style.backgroundColor = 'var(--primary3)';
-    changeInfo.style.backgroundColor = 'var(--white)';
+    detailInfo.style.backgroundColor = '#f3eeeb';
+    review.style.backgroundColor = '#f3eeeb';
+    qna.style.backgroundColor = 'rgb(223, 213, 201)';
+    changeInfo.style.backgroundColor = '#f3eeeb';
 
     qnaBox.style.display = 'flex';
     explain.style.display = 'none';
@@ -48,10 +48,10 @@ qna.addEventListener("click", () => {
 });
 
 changeInfo.addEventListener("click", () => {
-    detailInfo.style.backgroundColor = 'var(--white)';
-    review.style.backgroundColor = 'var(--white)';
-    qna.style.backgroundColor = 'var(--white)';
-    changeInfo.style.backgroundColor = 'var(--primary3)';
+    detailInfo.style.backgroundColor = '#f3eeeb';
+    review.style.backgroundColor = '#f3eeeb';
+    qna.style.backgroundColor = '#f3eeeb';
+    changeInfo.style.backgroundColor = 'rgb(223, 213, 201)';
 
     explain.style.display = 'none';
     change.style.display = 'flex';
