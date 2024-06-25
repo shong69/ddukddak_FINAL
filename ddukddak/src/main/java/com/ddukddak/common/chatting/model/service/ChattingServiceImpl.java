@@ -144,6 +144,15 @@ public class ChattingServiceImpl implements ChattingService{
 
 
 
+	//[챗봇] 주문정보 리턴- merchantUid 입력값
+	@Override
+	public String orderInfo(String orderNo) {
+		
+		return mapper.orderInfo(orderNo);
+	}
+
+
+
 
 
 	

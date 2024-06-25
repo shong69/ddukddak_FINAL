@@ -141,7 +141,7 @@ function choose2(){
 
 	const p = document.createElement("p");
 	p.classList.add("chat");
-	p.innerText="";
+	p.innerText="원하시는 주문 번호를 입력해주세요.";
 	div.append(div1, p);
 	const span = document.createElement("span");
 	span.classList.add("chatDate");
@@ -154,22 +154,70 @@ function choose2(){
 
 
 	//주문번호 입력하는 경우
-	document.querySelector("#send").addEventListener("click", () => {
+	document.querySelector("#send").addEventListener("click", async() => {
+		const value = document.querySelector("#inputChatting").value;
 		const obj = {
-			"category" : firstValue,
-			"inquiry" : document.getElementById('inputChatting').value
+			"value" : value,
 		}
 		
 			/* 입력값 비동기로 보내기 */
-			fetch("/userChat/recommend", {
+			const resp =fetch("/myChat/orderInfo", {
 			method: "POST",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify(obj)
 			})
-			.then(resp => resp.text())
-			.then(result => {
+			const result = (await resp).text();
+			if(result != null){
 				console.log(result);
-			});
+
+				//주문정보 출력
+				const li = document.createElement("li");
+				li.classList.add("target-chat");
+			
+				const img = document.createElement("img");
+				img.src = "/images/default/main.jpg";
+			
+				const div = document.createElement("div");
+				const div1= document.createElement("div");
+				div1.classList.add("target-name");
+				div1.innerText = "뚝딱봇";
+			
+				const p = document.createElement("p");
+				p.classList.add("chat");
+				p.innerText="";
+				div.append(div1, p);
+				const span = document.createElement("span");
+				span.classList.add("chatDate");
+				span.innerText = getCurrentTimeAMPM();
+				div.append(span);
+				li.append(img, div);
+				chattingContent.append(li);
+			}else{
+				//조회 실패
+				const li = document.createElement("li");
+				li.classList.add("target-chat");
+			
+				const img = document.createElement("img");
+				img.src = "/images/default/main.jpg";
+			
+				const div = document.createElement("div");
+				const div1= document.createElement("div");
+				div1.classList.add("target-name");
+				div1.innerText = "뚝딱봇";
+			
+				const p = document.createElement("p");
+				p.classList.add("chat");
+				p.innerText="조회에 실패하였습니다.\n다시 입력해주세요.";
+				div.append(div1, p);
+				const span = document.createElement("span");
+				span.classList.add("chatDate");
+				span.innerText = getCurrentTimeAMPM();
+				div.append(span);
+				li.append(img, div);
+				chattingContent.append(li);
+				
+				return;
+			}
 	})
 
 	scrollBtm();

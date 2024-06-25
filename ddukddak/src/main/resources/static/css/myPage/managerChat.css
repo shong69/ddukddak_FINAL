@@ -37,20 +37,21 @@ html{
 	margin:10px 20px;
 }
 .close-popup{
-	width: 80px;
+	width:60px;
 	height: 20px;
-	border:1px solid #00663a;
+	border:none;
 	border-radius: 13px;
 	background-color: transparent;
-	margin: 15px 5px 0 auto;
-	font-size: 12px;
+	margin: 10px 5px 0 auto;
+	font-size: 13px;
 	color:#00663a;
 }
 .close-popup:hover{
-	box-shadow: 0 1px 1px rgba(0,0,0,0.16), 0 1px 1px rgba(0,0,0,0.23);
+	transition-duration: 0.3s;
+	background-color: #00522e;
+	color: #fffef0;
 }
 .popup-info{
-	margin-top: 5px;
 	margin-left: 20px;
 	font-size: 12px;
 	line-height: 20px;
@@ -62,15 +63,14 @@ html{
 
 
 .display-chatting {
-    /*height:570px;*/
     width:100%;
-	max-height: calc(100vh - 150px);
+	height: 560px;
     overflow: auto;
 	list-style: none;
 }
 
 .display-chatting > li{
-	margin: 15px 10px;
+	margin: 20px 10px;
 }
 .display-chatting li:last-child {
     margin-bottom: 0; /* 마지막 li 요소의 아래 여백을 없애기 */
@@ -129,7 +129,7 @@ html{
     position:fixed;
     bottom:3px;
     right:3px;
-	height: 100px;
+	height: 80px;
 	width:99%;
     display: flex;
 }
@@ -144,14 +144,21 @@ html{
 }
 
 #send {
+	margin-left: 2px;
 	width: 20%;
 	border:1px solid #eee;
 	font-size: 15px;
-	background-color: #00663a;
+	background-color: #00522e;
 	color: #fffef0;
 	border-radius: 6px;
 }
 
+#send:hover{
+	transition-duration: 0.3s;
+	background-color: #fffef0;
+	color: #00522e;
+	border: 0.4px solid #00522e; 
+}
 .my-chat {
 	text-align: right;
 }
@@ -165,3 +172,5 @@ html{
 .display-none{
 	display :none;
 }
+
+
