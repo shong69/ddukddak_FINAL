@@ -11,9 +11,9 @@
     align-items: center;
 }
 
-#estimateContainer > div:first-child > div {
-    width: 300px;
-    height: 300px;
+#estimateContainer > div:first-child > img {
+    width: 400px;
+    height: 400px;
     margin: 20px;
 }
 
@@ -77,9 +77,56 @@ tr.listRow td {
     border: none; /* 개별 셀의 기본 보더를 제거 */
 }
 
+.interiorDetailView {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--secondary);
+    left: 0px; 
+    top: 0px;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 100%;
+    will-change: transform;
+    outline: none;
+
+    cursor: pointer;
+    
+    /* 폰트 */
+    font-family: 'main';
+    word-wrap: break-word;
+    text-align: center; 
+    color: var(--white); 
+}
+
+.interiorDetailView:hover {
+    color: var(--white);
+    left: 0px; 
+    top: 0px;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    border-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 5px 5px;
+    transform: translateY(-2px);
+    
+
+    /* 폰트 */
+    font-family: 'main';
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.interiorDetailView:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
 
 /*페이징*/
 .pagination{
+    margin-top: 50px;
     list-style: none;
     display: flex;
     justify-content: center;
@@ -106,4 +153,4 @@ tr.listRow td {
     border-radius: 50%;
     color: white !important;
     letter-spacing: 0 !important;
-}
+} 

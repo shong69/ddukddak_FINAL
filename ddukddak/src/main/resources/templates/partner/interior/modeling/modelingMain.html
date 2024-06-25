@@ -291,60 +291,84 @@
             <div>
               <table id="floor-table">
                 <tr>
+                  <td class="wallSide"></td>
                   <td class="wallTd wallTd1"></td>
                   <td class="wallTd wallTd1"></td>
                   <td class="wallTd wallTd1"></td>
                   <td class="wallTd wallTd1"></td>
                   <td class="wallTd wallTd1"></td>
                   <td class="wallTd wallTd1"></td>
+                  <td class="wallSide"></td>
                 </tr>
                 <tr>
+                  <td class="wallTd wallTd2"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
+                  <td class="wallTd wallTd3"></td>
                 </tr>
                 <tr>
+                  <td class="wallTd wallTd2"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
+                  <td class="wallTd wallTd3"></td>
                 </tr>
                 <tr>
+                  <td class="wallTd wallTd2"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
+                  <td class="wallTd wallTd3"></td>
                 </tr>
                 <tr>
+                  <td class="wallTd wallTd2"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
+                  <td class="wallTd wallTd3"></td>
                 </tr>
                 <tr>
+                  <td class="wallTd wallTd2"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
+                  <td class="wallTd wallTd3"></td>
                 </tr>
                 <tr>
+                  <td class="wallTd wallTd2"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
                   <td class="mainTd"></td>
+                  <td class="wallTd wallTd3"></td>
+                </tr>
+                <tr>
+                  <td class="wallSide"></td>
+                  <td class="wallTd wallTd4"></td>
+                  <td class="wallTd wallTd4"></td>
+                  <td class="wallTd wallTd4"></td>
+                  <td class="wallTd wallTd4"></td>
+                  <td class="wallTd wallTd4"></td>
+                  <td class="wallTd wallTd4"></td>
+                  <td class="wallSide"></td>
                 </tr>
               </table>
 
@@ -372,13 +396,11 @@
       
                 <!-- 견적조회 container -->
                 <div id="searchContainer">
-                  <h3>스크린샷 저장하기</h3>
-                  <h3>3D 모델링 저장하기</h3>
-                  <h3>내 게시판에 공유하기</h3>
-                  <h3>공유</h3>
+                  <h3 id="screenShot">스크린샷 저장하기</h3>
       
-                  <button class="interiorViewPrice" onclick="location.href='/partner/interior/modeling/estimate';">예상견적 조회 (가구 미포함)</button>
-                  <button type="button" id="interiorViewPrice" class="interiorViewPrice">예상견적 조회 (가구 포함)</button>
+                  <form id="estimateButton" action="/partner/interior/modeling/estimate" method="POST">
+                    <button id="next" class="interiorViewPrice">시공사 포트폴리오 보러가기</button>
+                  </form>
                 </div>
               </div>
 

@@ -30,6 +30,7 @@
 }
 
 .prev, .next {
+    background-color: rgba(125, 125, 125, 0.25);
     cursor: pointer;
     position: absolute;
     top: 50%;

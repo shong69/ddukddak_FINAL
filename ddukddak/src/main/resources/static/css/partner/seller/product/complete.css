@@ -37,6 +37,14 @@
 #productList thead {
     background-color: var(--white);
 }
+#tdContainer td {
+    padding: 10px;
+    word-wrap: inherit;
+    white-space: normal;
+    text-overflow: ellipsis;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
 
 .borderTr {
     box-shadow: 5px 5px 10px var(--gray5);
@@ -47,8 +55,8 @@
     width: 10px;
 }
 .borderTr > td {
-    font-size: small;
-    padding: 5px;
+    font-size: medium;
+    padding: 10px;
 }
 
 .pagination{

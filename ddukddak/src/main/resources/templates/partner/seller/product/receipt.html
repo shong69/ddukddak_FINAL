@@ -47,12 +47,14 @@
             <table>
                 <thead style="height: 60px;">
                     <td></td>
-                    <td>상품</td>
+                    <td></td>
+                    <td>No</td>
+                    <td>주문번호</td>
                     <td>분류</td>
+                    <td>상품명</td>
                     <td>옵션</td>
                     <td>수량</td>
                     <td>상품번호</td>
-                    <td>상품명</td>
                     <td>판매가</td>
                 </thead>
 
@@ -62,11 +64,13 @@
                             <input type="checkbox" value="1" name="selectProduct">
                         </td>
                         <td><img th:src="@{*{thumbnail}}" alt="Product Thumbnail"></td>
+                        <td th:text="*{orderNo}">1</td>
+                        <td th:text="*{merchantUid}">1</td>
                         <td th:text="*{categoryName}">가구/의자</td>
+                        <td th:text="*{productName}">오아르 벤 원목 부클레 패브릭 의자</td>
                         <td th:text="|[*{options}]|">오크내추럴</td>
                         <td th:text="*{orderQuantity}">300</td>
                         <td th:text="*{productNo}">F202405210001</td>
-                        <td th:text="*{productName}">오아르 벤 원목 부클레 패브릭 의자</td>
                         <td class="totalPrice" th:value="*{productPrice}">122,200</td>
 
                         <input type="hidden" class="productUpdateDate" th:value="*{productUpdateDate}">
