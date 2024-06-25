@@ -19,9 +19,11 @@
 
     <div id="estimateContainer">
         <div>
-            <img th:src="|data:image/jpeg;base64,${floorPlan}|"></img>
-            <img th:src="|data:image/png;base64,${ThreedModeling}|"></img>
+            <img id="floorPlanImg" th:src="|data:image/jpeg;base64,${floorPlan}|"></img>
+            <img id="threedModelingImg" th:src="|data:image/png;base64,${ThreedModeling}|"></img>
         </div>
+
+        <button id="downloadBtn" style="width: 200px; cursor: pointer;">이미지 다운로드</button>
 
         <div>
 
