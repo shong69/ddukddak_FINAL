@@ -53,8 +53,11 @@ dependencies {
 	
 	// JSON 파싱(카카오 토큰 요청)
 	implementation 'com.google.code.gson:gson:2.8.8'
+	
+	// SpringAOP + AspectJ
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
 
-}
+}	
 
 tasks.named('test') {
 	useJUnitPlatform()

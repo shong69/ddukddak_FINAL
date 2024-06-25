@@ -30,16 +30,16 @@ public class GoogleLoginController {
 	
 	private final GoogleService service;
 	private final GoogleConfig googleApi;
-
 	
 	/** 구글 로그인 요청 보내기
 	 * @param response
 	 * @throws IOException
 	 */
-	@RequestMapping(value="/googleLogin", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="googleLogin", method = {RequestMethod.GET, RequestMethod.POST})
     public void loginUrlGoogle(HttpServletResponse response) throws IOException {
         String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleApi.getGoogleClientId()
-                + "&redirect_uri=http://localhost/oauth/googleCallback"
+                + "&redirect_uri="
+                + googleApi.getGoogleRedirectUrl()
                 + "&response_type=code"
                 + "&scope=email%20profile%20openid"
                 + "&access_type=offline"

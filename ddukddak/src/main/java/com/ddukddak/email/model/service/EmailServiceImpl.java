@@ -8,6 +8,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -102,25 +103,43 @@ public class EmailServiceImpl implements EmailService {
 		//    수정(update)을 먼저 수행
 		//    -> 1 반환 == 업데이트 성공 == 이미 존재해서 인증번호 변경
 		//    -> 0 반환 == 업데이트 실패 == 이메일 존재 X --> INSERT 시도	
-		int result = mapper.updateAuthKey(map);
+//		int result = mapper.updateAuthKey(map);
+//		
+//		// 2) update 실패 시 insert 시도
+//		if(result == 0) {
+//			
+//			result = mapper.insertAuthKey(map);
+//			
+//		} 
+//		
+//		// 수정, 삽입 후에도 result 가 0 == 실패
+//		if(result == 0) return null;
+//		
+//		// 성공
+//		return authKey; // 오류 없이 완료되면 authKey 반환
 		
-		// 2) update 실패 시 insert 시도
-		if(result == 0) {
-			
-			result = mapper.insertAuthKey(map);
-			
-		} 
-		
-		// 수정, 삽입 후에도 result 가 0 == 실패
-		if(result == 0) return null;
-		
-		// 성공
-		return authKey; // 오류 없이 완료되면 authKey 반환
+		// 트랜잭션을 분리하여 데이터베이스 작업 수행
+		boolean isStored = storeAuthKey(map);
+		return isStored ? authKey : null; // 오류없이 완료되면 authKey 반환
 		
 	}
 
 	
 	
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public boolean storeAuthKey(Map<String, String> map) {
+		
+		// 1) 해당 이메일이 DB에 존재하는 경우 수정(update)
+		int result = mapper.updateAuthKey(map);
+		
+		// 2) 업데이트 실패 시 삽입 시도
+		if(result == 0) {
+			result = mapper.insertAuthKey(map);
+		}
+		return result > 0;
+	}
+
+
 	/** HTML 파일 -> String 변환(타임리프 적용)
 	 * @param authKey
 	 * @param pageName
