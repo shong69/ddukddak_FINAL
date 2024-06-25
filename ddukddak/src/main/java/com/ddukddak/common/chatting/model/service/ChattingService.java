@@ -83,6 +83,12 @@ public interface ChattingService {
 	 */
 	int IupdateReadFlag(Map<String, Object> paramMap);
 
+	/**[챗봇]
+	 * @param string
+	 * @return
+	 */
+	String orderInfo(String string);
+
 
 
 	

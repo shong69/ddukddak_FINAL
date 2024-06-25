@@ -79,6 +79,12 @@ public interface ChattingMapper {
 	 */
 	int IupdateReadFlag(Map<String, Object> paramMap);
 
+	/**[챗봇] 주문정보 리턴
+	 * @param orderNo
+	 * @return
+	 */
+	String orderInfo(String orderNo);
+
 
 
 
