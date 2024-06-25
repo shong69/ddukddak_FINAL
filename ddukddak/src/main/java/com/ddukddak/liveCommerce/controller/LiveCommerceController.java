@@ -14,7 +14,7 @@ public class LiveCommerceController {
 	
 	@GetMapping("")
 	public String main() {
-		return "/liveCommerce/liveCommerceMain";
+		return "liveCommerce/liveCommerceMain";
 	}
 	
 //	/*STOMP(simple text oriented protocol*/

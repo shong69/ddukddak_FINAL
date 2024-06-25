@@ -5,7 +5,7 @@ function selectOrderList() {
     fetch("/myPage/selectOrderList")
         .then(resp => resp.text())
         .then(result => {
-            console.log("result : " + result);
+            //console.log("result : " + result);
             if (result != null) {
                 const orderList = JSON.parse(result);
 

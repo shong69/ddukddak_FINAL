@@ -1,6 +1,7 @@
 package com.ddukddak.email.controller;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,14 +31,18 @@ public class EmailController {
 	 */
 	@ResponseBody
 	@PostMapping("signup")
-	public int signup(@RequestBody String email) {
+	public CompletableFuture<Integer> signup(@RequestBody String email) {
 		
-		
-		service.sendEmailAsync("signup", email);
-		
-		
-		return 1; // 성공
-
+        // 비동기 메서드 호출로 변경
+        try {
+            // 이메일 전송 로직
+        	service.sendEmailAsync("signup", email);
+            return CompletableFuture.completedFuture(1); // 성공
+        } catch (Exception e) {
+            // 실패 시
+            return CompletableFuture.completedFuture(0); // 실패
+        }
+        
 	}
 	
 	
@@ -46,12 +51,17 @@ public class EmailController {
      */
     @ResponseBody
     @PostMapping("findId")    
-    public int findId(@RequestBody String email) {
+    public CompletableFuture<Integer> findId(@RequestBody String email) {
+    	
         // 비동기 메서드 호출로 변경
-        service.sendEmailAsync("findId", email);
-        
-        // 비동기 호출이므로 성공 응답을 즉시 반환
-        return 1; // 요청 성공
+        try {
+            // 이메일 전송 로직
+        	service.sendEmailAsync("findId", email);
+            return CompletableFuture.completedFuture(1); // 성공
+        } catch (Exception e) {
+            // 실패 시
+            return CompletableFuture.completedFuture(0); // 실패
+        }
     }
 	
     

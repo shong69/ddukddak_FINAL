@@ -45,7 +45,7 @@ public class PartnerController {
 		if(loginPartnerMember != null) {
 			memberNo = loginPartnerMember.getPartnerNo();
 	}
-		return "/partner/login";
+		return "partner/login";
 }
 	
 	@PostMapping("login")
@@ -195,7 +195,7 @@ public class PartnerController {
 		model.addAttribute("partnerType", partner.getPartnerType());
 			
 			
-		return "/common/resultId";
+		return "common/resultId";
 		
 	}
 	

@@ -659,6 +659,7 @@ emailAuth.addEventListener('click', () => {
     .then(resp => resp.text())
     .then(result => {
         if(result == 1) {
+            console.log("result : " + result);
             console.log("인증 번호 발송 성공");
             alert("입력해 주신 이메일 주소로 인증번호가 발송되었습니다.");
         } else {

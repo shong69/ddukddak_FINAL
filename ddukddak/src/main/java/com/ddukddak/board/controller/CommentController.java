@@ -77,7 +77,7 @@ public class CommentController {
 	        return response;
 	}
 	
-   @PutMapping("/update")
+   @PutMapping("update")
     public Map<String, Object> update(@RequestBody Comment comment) {
         int result = service.update(comment);
         Map<String, Object> response = new HashMap<>();
@@ -89,7 +89,7 @@ public class CommentController {
         return response;
     }
    
-   @DeleteMapping("/delete")
+   @DeleteMapping("delete")
    public Map<String, Object> delete(@RequestParam("commentNo") int commentNo) {
        int result = service.delete(commentNo);
        Map<String, Object> response = new HashMap<>();
