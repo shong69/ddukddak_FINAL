@@ -40,7 +40,7 @@ public class MyPageController {
 	//주문내역 진입
 	@GetMapping("")
 	public String main() {
-		return "/myPage/myPageMain";
+		return "myPage/myPageMain";
 	}
 	
 	@GetMapping("selectOrderList")

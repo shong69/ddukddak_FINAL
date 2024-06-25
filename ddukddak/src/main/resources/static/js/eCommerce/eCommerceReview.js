@@ -8,21 +8,47 @@ function readImgURLs(input) {
     if (input.files && input.files.length > 0) {
         const reviewImgBox = document.getElementById('reviewImgBox');
         const totalReviewImages = reviewImgBox.children.length + input.files.length;
+        const maxSize = 10 * 1024 * 1024; // 사진 최대 크기 10MB
+        const maxImages = 5;
+        let isValid = true;
+        let totalSize = 0;
 
-        if (totalReviewImages > 6) {
+        if (totalReviewImages > maxImages) {
             alert('리뷰 이미지는 최대 5개까지 추가할 수 있습니다.');
             return;
         }
 
+        // 추가할 파일의 크기 합산
+        Array.from(input.files).forEach(file => {
+            totalSize += file.size;
+        });
+        //파일 업로드 총 크기 확인
+        if (totalSize > maxSize) {
+            alert('모든 파일의 총 크기는 10MB를 초과할 수 없습니다.');
+            return;
+        }
         Array.from(input.files).forEach(file => {
             // 이미지 파일인지 확인
             if (!file.type.startsWith('image/')) {
                 alert('이미지 파일만 선택할 수 있습니다.');
+                isValid = false;
                 return;
             }
+            // 파일 크기 확인
+            if (file.size > maxSize) {
+                alert('파일 크기가 너무 큽니다. 최대 허용 크기는 10MB입니다.');
+                isValid = false;
+                return;
+            }
+        });
 
+        if (!isValid) {
+            return;
+        }
+
+        Array.from(input.files).forEach(file => {
             reviewImgFiles.push(file); // 파일을 배열에 추가
-            console.log(reviewImgFiles);
+
             const reader = new FileReader();
             reader.onload = function(e) {
                 const previewContainer = document.createElement('div');
@@ -34,21 +60,17 @@ function readImgURLs(input) {
                 previewContainer.appendChild(preview);
 
                 const deleteButton = document.createElement('button');
-                deleteButton.classList.add('delete-button');
-                deleteButton.classList.add('fa-solid');
-                deleteButton.classList.add('fa-trash-can');
+                deleteButton.classList.add('delete-button', 'fa-solid', 'fa-trash-can');
 
-                deleteButton.addEventListener("click",()=>{
+                deleteButton.addEventListener("click", () => {
                     if (confirm("해당 사진을 삭제하시겠습니까?")) {
                         const index = Array.from(reviewImgBox.children).indexOf(previewContainer);
                         reviewImgFiles.splice(index, 1); // 배열에서 파일 제거
                         previewContainer.remove(); // 이미지 삭제
                     }
-
                 });
 
                 previewContainer.appendChild(deleteButton);
-
                 reviewImgBox.appendChild(previewContainer);
             };
             reader.readAsDataURL(file);
@@ -385,7 +407,10 @@ function selectReviewList(productNo){
                     const moreBtn = document.createElement('input');
                     moreBtn.classList.add("moreBtn");
                     moreBtn.type = "checkbox";
-                    contentArea.append(moreBtn);
+                    if(content.innerText.length>184){
+                        contentArea.append(moreBtn);
+                    }
+
                 reviewContainer.append(li);
                 }
             });
@@ -523,7 +548,6 @@ function updateFn(reviewNo,productNo) {
                 deleteButton.addEventListener("click", e=>{
                 const imageSrc = preview.src.split('/').pop();
                 if (confirm("해당 사진을 삭제하시겠습니까?")) {
-                    console.log('삭제한다고');
                     fetch(`/eCommerce/delImg`, {
                         method: 'DELETE',
                         headers: { "Content-Type": "application/json" },
@@ -533,11 +557,9 @@ function updateFn(reviewNo,productNo) {
                     .then(result => {
                         console.log(result);
                         previewContainer.remove(); // 이미지 삭제
-
                     })
                     .catch(error => console.error('Error:', error));
                 }
-                    
                 })
                 previewContainer.appendChild(deleteButton);
 
@@ -586,3 +608,5 @@ async function getAvgReviewScore(productNo) {
 getReviewCount(productNo);
 
 getAvgReviewScore(productNo);
+
+
