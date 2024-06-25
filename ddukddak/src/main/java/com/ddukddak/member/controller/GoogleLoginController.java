@@ -42,6 +42,8 @@ public class GoogleLoginController {
 	            + "&access_type=offline"
 	            + "&prompt=select_account";
 	    
+	    log.info("clientId : " + clientId);
+	    log.info("redirectUri : " + redirectUri);
 	    log.info("OAuth 2.0 요청 URL: " + reqUrl);
 	    
 	    // 생성된 URL로 리디렉션
