@@ -297,7 +297,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     const rectX = sqare.offsetLeft;
                     const rectY = sqare.offsetTop;
                     const modelPositionX = -4 + (1.3 / 80) * (rectX - 303);
-                    const modelPositionY = -4 + (1.3 / 80) * (rectY - 103);
+                    const modelPositionY = -4 + (1.3 / 85) * (rectY - 103);
                     model.position.set(modelPositionX, 0, modelPositionY);
                 }
             }
@@ -338,7 +338,7 @@ document.addEventListener("DOMContentLoaded", function() {
                        const rectX = sqare.offsetLeft;
                        const rectY = sqare.offsetTop;
                        const modelPositionX = -4.8 + (1.3 / 80) * (rectX - 303);
-                       const modelPositionY = -4 + (1.3 / 80) * (rectY - 103);
+                       const modelPositionY = -4 + (1.3 / 90) * (rectY - 103);
                        model.position.set(modelPositionX, 2, modelPositionY);
 
                        model.rotation.y = Math.PI/2;
@@ -583,7 +583,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     model.scale.set(scaleFactor, scaleFactor, scaleFactor);
 
                     let modelPositionX = -4 + (1.3 / 80) * (rectX - 303);
-                    let modelPositionY = -4 + (1.3 / 80) * (rectY - 103);
+                    let modelPositionY = -4 + (1.3 / 85) * (rectY - 103);
 
                     model.position.set(modelPositionX, 0, modelPositionY);
 
@@ -678,7 +678,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     model.scale.set(scaleFactor, scaleFactor, scaleFactor);
 
                     let modelPositionX = -4 + (1.3 / 80) * (rectX - 303);
-                    let modelPositionY = -4.8 + (1.3 / 80) * (rectY - 103);
+                    let modelPositionY = -4.8 + (1.3 /80) * (rectY - 103);
                     
                     model.position.set(modelPositionX, 2, modelPositionY);
                         
@@ -793,7 +793,7 @@ openButton.addEventListener('click', function() {
         viewer.style.transform = 'translate(-1050px, -450px)';
         
         // Three.js 카메라 및 렌더러 크기 조정
-        camera.aspect = 2; // viewer 크기에 맞추어 aspect 비율 조정
+        camera.aspect = 1; // viewer 크기에 맞추어 aspect 비율 조정
         camera.updateProjectionMatrix();
         renderer.setSize(800, 800); // viewer 크기에 맞추어 renderer 크기 조정
 
@@ -861,7 +861,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const captureDiv = document.getElementById('floor-table');
         const floorPlanImage = await makeDivToImageFile(captureDiv);
-        const threedModelingImage = saveScreenshot();
+        const threedModelingImage = await saveScreenshot();
 
         // 숨겨진 입력 필드 생성 및 추가
         const floorPlanInput = document.createElement("input");
