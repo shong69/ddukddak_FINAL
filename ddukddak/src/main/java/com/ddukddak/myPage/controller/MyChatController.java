@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.ddukddak.common.chatting.model.dto.ChattingRoom;
 import com.ddukddak.common.chatting.model.service.ChattingService;
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.myPage.model.dto.Order;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @Controller
 @RequestMapping("myChat")
 @RequiredArgsConstructor
@@ -57,9 +59,11 @@ public class MyChatController {
 	
 	@PostMapping("orderInfo")
 	@ResponseBody
-	public String orderInfo(@SessionAttribute("loginMember") Member loginMember,
-							@RequestBody Map<String, String> map) {
-		return service.orderInfo(map.get("value"));
+	public List<Order> orderInfo(@SessionAttribute("loginMember") Member loginMember,
+							@RequestBody Map<String, Object> map) {
+		map.put("memberNo", loginMember.getMemberNo());
+		log.info("야야{}",service.orderInfo(map));
+		return service.orderInfo(map);
 	}
 
 }
