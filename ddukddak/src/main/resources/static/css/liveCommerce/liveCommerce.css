@@ -22,10 +22,12 @@
 /*라이브커머스 영역*/
 .title{
     margin:50px 0 20px 180px;
+    color: white;
+    text-shadow: 3px 3px 3px var(--gray2);
 }
 .main-video{
-    width : 80%;
-    height: 780px;
+    width : 83.5%;
+    height: 700px;
     margin: 0 auto;
     box-shadow: 0 3px 3px rgba(0,0,0,0.4), 0 3px 3px rgba(0,0,0,0.4);
     display: flex;
@@ -42,6 +44,11 @@
     flex-basis: 80%;
     background-color: black;
 }
+
+.video iframe {
+    width: 100%;
+    height: 100%;
+}
 .video-title{
     flex-basis: 20%;
     background-color: white;
@@ -57,53 +64,85 @@
     background-color: #F9F1FF;
 }
 
-.input-area{
-    flex-basis: 20%;
-    background-color: white;
+#chatting {
+    background: #F9F1FF;
+    width: 100%;
+    height: 660PX;
+    border: 1px solid rgb(194, 194, 194);
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
 }
 
-.display-chatting > li{
-	margin: 15px 10px;
-}
-.display-chatting li:last-child {
-    margin-bottom: 0; /* 마지막 li 요소의 아래 여백을 없애기 */
-}
-.target-chat{
-	display: flex;
-	align-items: flex-start;
-}
-.target-chat > img{
-	width: 30px;
-	margin-right: 5px;
-	border-radius: 50%;
-}
-.target-name{
-	font-size: 13px;
-}
-.chat {
-	display: inline-block;
-	border-radius: 9px;
-	padding: 10px 15px 10px 15px;
-	background-color: #eee;
-	text-align: left;
-	max-width: 500px;
-	word-break: break-all;
-	white-space: pre-wrap;
-	font-size: 14px;
+.chattingBox {
+    display: flex;
+    flex-direction: column;
+    margin: 7px 12px;
 }
 
+.chattingBox2 {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    margin: 7px 12px;
+}
 
-.input-area {
+.chattingUser {
+    font-family: 'main';
+    font-size: 10px;
+    margin-bottom: 5px;
+}
+
+.chattingUnder {
     display: flex;
 }
 
-#inputChatting {
-	padding: 3px;
-	font-size: 1.3em;
-	width: 100%;
-	resize: none;
-	border: 1px solid #ddd;
-    outline-color: #00663a;
+.chattingmessage {
+    background-color: white;
+    font-family: 'main';
+    width: fit-content;
+    height: 30px;
+    box-shadow: 3px 3px 3px rgb(196, 196, 196);
+    height: 30px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.chattingTime {
+    font-family: 'main';
+    font-size: 8px;
+    display: flex;
+    align-items: end;
+    margin: 0 5px;
+}
+
+#chattingInput {
+    width: 376px;
+    height: 40px;
+    border: none;
+    padding: 0 10px;
+    border-bottom: 1px var(--gray4) solid;
+}
+
+#chattingInput::placeholder {
+    color: var(--gray4);
+    font-family: 'main';
+}
+
+#chattingButton {
+    background-color: white;
+    border: 1px var(--gray4) solid;
+    height: 40px;
+    width: 50px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}
+
+#chattingButton:hover {
+    background-color: rgb(216, 216, 216);
 }
 
 #send {
