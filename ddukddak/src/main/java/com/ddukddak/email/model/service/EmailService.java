@@ -1,6 +1,7 @@
 package com.ddukddak.email.model.service;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public interface EmailService {
 
@@ -21,7 +22,8 @@ public interface EmailService {
 	/** 이메일 발송(서버 비동기)
 	 * @param pageName
 	 * @param email
+	 * @return 
 	 */
-	void sendEmailAsync(String pageName, String email);
+	CompletableFuture<Integer> sendEmailAsync(String pageName, String email);
 
 }

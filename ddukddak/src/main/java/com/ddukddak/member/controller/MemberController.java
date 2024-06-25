@@ -246,7 +246,7 @@ public class MemberController {
 		model.addAttribute("memberId", member.getMemberId());
 		model.addAttribute("enrollDate", member.getEnrollDate());
 		
-		return "/common/resultId";
+		return "common/resultId";
 		
 		
 	}

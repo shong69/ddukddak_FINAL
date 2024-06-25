@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,7 +37,7 @@ public class GoogleLoginController {
 	 * @param response
 	 * @throws IOException
 	 */
-	@RequestMapping(value="googleLogin", method = {RequestMethod.GET, RequestMethod.POST})
+	@GetMapping("googleLogin")
     public void loginUrlGoogle(HttpServletResponse response) throws IOException {
         String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleApi.getGoogleClientId()
                 + "&redirect_uri="

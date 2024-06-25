@@ -2,6 +2,7 @@ package com.ddukddak.email.model.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -35,8 +36,16 @@ public class EmailServiceImpl implements EmailService {
      */
     @Async
     @Override
-    public void sendEmailAsync(String pageName, String email) {
-        sendEmail(pageName, email);
+    public CompletableFuture<Integer> sendEmailAsync(String pageName, String email) {
+       
+        try {
+            // 이메일 전송 로직
+            sendEmail(pageName, email);
+            return CompletableFuture.completedFuture(1); // 성공
+        } catch (Exception e) {
+            // 실패 시
+            return CompletableFuture.completedFuture(0); // 실패
+        }
     }
 	
 
@@ -124,8 +133,7 @@ public class EmailServiceImpl implements EmailService {
 		
 	}
 
-	
-	
+
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public boolean storeAuthKey(Map<String, String> map) {
 		
