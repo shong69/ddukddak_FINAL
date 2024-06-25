@@ -438,7 +438,7 @@
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO
-		    ORDER BY p.PRODUCT_NO DESC)
+		    ORDER BY o.ORDER_NO DESC)
 	</select>
 
 <!-- 판매관리 판매상품 리스트조회 -->
@@ -463,6 +463,7 @@
 		    od.ORDER_QUANTITY,
 		    o.ORDER_NO,
 			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID,
 		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		FROM PRODUCT p
@@ -495,8 +496,9 @@
 		    bc.BIG_CATEGORY_NAME,
 		    od.ORDER_QUANTITY,
 		    o.ORDER_NO,
-			od.ORDER_ITEM_NO
-		ORDER BY p.PRODUCT_NO DESC
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID
+		ORDER BY o.ORDER_NO DESC
 	</select>
 	
 	
@@ -556,7 +558,7 @@
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO
-		    ORDER BY p.PRODUCT_NO DESC)
+		    ORDER BY o.ORDER_NO DESC)
 	</select>
 	
 	<!-- 접수관리 판매상품 조회 메인카테고리 -->
@@ -581,6 +583,7 @@
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO,
 			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID,
 		        uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		        LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		    FROM PRODUCT p
@@ -614,8 +617,9 @@
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO,
-			od.ORDER_ITEM_NO
-		    ORDER BY p.PRODUCT_NO DESC
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID
+		    ORDER BY o.ORDER_NO DESC
 	</select>
 	
 	<!-- 접수관리 수량 개수조회 상태 -->
@@ -673,7 +677,7 @@
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO
-		    ORDER BY p.PRODUCT_NO DESC)
+		    ORDER BY o.ORDER_NO DESC)
 	</select>
 	
 	<!-- 접수관리 수량 조회 상태 -->
@@ -698,6 +702,7 @@
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO,
 			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID,
 		        uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		        LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		    FROM PRODUCT p
@@ -730,7 +735,8 @@
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO,
-			od.ORDER_ITEM_NO
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID
 		        ORDER BY 
 		        <choose>
 		            <when test="status == 'AM'">
@@ -740,7 +746,7 @@
 		                p.PRODUCT_PRICE DESC
 		            </when>
 		            <otherwise>
-		                p.PRODUCT_NO DESC
+		                o.ORDER_NO DESC
 		            </otherwise>
 		        </choose>
 	</select>
@@ -769,6 +775,7 @@
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO,
+		        o.MERCHANT_UID,
 		        uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		        LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		    FROM PRODUCT p
@@ -801,8 +808,9 @@
 		        bc.BIG_CATEGORY_NO, 
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
-		        o.ORDER_NO
-		    ORDER BY p.PRODUCT_NO DESC)
+		        o.ORDER_NO,
+		        o.MERCHANT_UID
+		    ORDER BY o.ORDER_NO DESC)
 	</select>
 	
 	<!-- 판매관리 판매상품 조회 메인카테고리 상태 -->
@@ -826,7 +834,8 @@
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO,
-			od.ORDER_ITEM_NO
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID,
 		        uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		        LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		    FROM PRODUCT p
@@ -860,7 +869,8 @@
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO,
-			od.ORDER_ITEM_NO
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID
 		        ORDER BY 
 		        <choose>
 		            <when test="status == 'AM'">
@@ -870,7 +880,7 @@
 		                p.PRODUCT_PRICE DESC
 		            </when>
 		            <otherwise>
-		                p.PRODUCT_NO DESC
+		                o.ORDER_NO DESC
 		            </otherwise>
 		        </choose>
 	</select>
@@ -897,6 +907,7 @@
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO,
+		        o.MERCHANT_UID,
 		        uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		        LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		    FROM PRODUCT p
@@ -929,8 +940,9 @@
 		        bc.BIG_CATEGORY_NO, 
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
-		        o.ORDER_NO
-		    ORDER BY p.PRODUCT_NO DESC)
+		        o.ORDER_NO,
+		        o.MERCHANT_UID
+		    ORDER BY o.ORDER_NO DESC)
 	</select>
 	
 	<!-- 판매관리 판매상품 조회 카테고리 -->
@@ -955,6 +967,7 @@
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO,
 			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID,
 		        uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		        LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		    FROM PRODUCT p
@@ -988,7 +1001,8 @@
 		        bc.BIG_CATEGORY_NAME,
 		        od.ORDER_QUANTITY,
 		        o.ORDER_NO,
-			od.ORDER_ITEM_NO
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID
 		        ORDER BY 
 		        <choose>
 		            <when test="status == 'AM'">
@@ -998,7 +1012,7 @@
 		                p.PRODUCT_PRICE DESC
 		            </when>
 		            <otherwise>
-		                p.PRODUCT_NO DESC
+		               o.ORDER_NO DESC
 		            </otherwise>
 		        </choose>
 	</select>
@@ -1134,7 +1148,7 @@
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
 			od.ORDER_ITEM_NO
-		ORDER BY p.PRODUCT_NO DESC
+		ORDER BY o.ORDER_NO DESC
 	</select>
 	
 	<select id="selectShipmentListCount">
@@ -1194,7 +1208,7 @@
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS
-		ORDER BY p.PRODUCT_NO DESC)
+		ORDER BY o.ORDER_NO DESC)
 	</select>
 	
 	<!-- 접수관리 수량 개수조회 상태 -->
@@ -1256,7 +1270,7 @@
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS
-		ORDER BY p.PRODUCT_NO DESC)
+		ORDER BY o.ORDER_NO DESC)
 	</select>
 	
 	<select id="selectShipmentListStatus">
@@ -1334,7 +1348,7 @@
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
 			od.ORDER_ITEM_NO
-			ORDER BY p.PRODUCT_NO DESC
+			ORDER BY o.ORDER_NO DESC
 	</select>
 	
 	<!-- 접수관리 판매상품 개수조회 메인카테고리 -->
@@ -1397,7 +1411,7 @@
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS
-		ORDER BY p.PRODUCT_NO DESC)
+		ORDER BY o.ORDER_NO DESC)
 	</select>
 	
 	<select id="selectShipmentListMainSort">
@@ -1459,7 +1473,7 @@
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
 			od.ORDER_ITEM_NO
-			ORDER BY p.PRODUCT_NO DESC
+			ORDER BY o.ORDER_NO DESC
 	</select>
 	
 	<select id="selectShipmentListCountMainSortStatus">
@@ -1521,7 +1535,7 @@
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS
-		ORDER BY p.PRODUCT_NO DESC)
+		ORDER BY o.ORDER_NO DESC)
 	</select>
 	
 	<select id="selectShipmentListMainSortStatus">
@@ -1600,7 +1614,7 @@
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
 			od.ORDER_ITEM_NO
-			ORDER BY p.PRODUCT_NO DESC
+			ORDER BY o.ORDER_NO DESC
 	</select>
 	
 	<select id="selectShipmentListCountSort">
@@ -1662,7 +1676,7 @@
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS
-		ORDER BY p.PRODUCT_NO DESC)
+		ORDER BY o.ORDER_NO DESC)
 	</select>
 	
 	<select id="selectShipmentListSort">
@@ -1741,7 +1755,7 @@
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
 			od.ORDER_ITEM_NO
-			ORDER BY p.PRODUCT_NO DESC
+			ORDER BY o.ORDER_NO DESC
 	</select>
 	
 	<update id="acceptShipment">
