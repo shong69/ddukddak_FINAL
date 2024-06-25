@@ -6,6 +6,7 @@ import java.util.Map;
 import com.ddukddak.common.chatting.model.dto.ChattingRoom;
 import com.ddukddak.common.chatting.model.dto.Message;
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.myPage.model.dto.Order;
 import com.ddukddak.partner.model.dto.Partner;
 
 public interface ChattingService {
@@ -84,10 +85,10 @@ public interface ChattingService {
 	int IupdateReadFlag(Map<String, Object> paramMap);
 
 	/**[챗봇]
-	 * @param string
+	 * @param map
 	 * @return
 	 */
-	String orderInfo(String string);
+	List<Order> orderInfo(Map<String, Object> map);
 
 
 

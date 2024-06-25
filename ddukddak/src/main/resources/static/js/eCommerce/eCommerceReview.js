@@ -181,6 +181,7 @@ async function openReviewCheck(productNo){
     const optionDiv2 =document.querySelector(".optionDiv2");
     //로그인 여부 확인
     if(typeof loginMember === 'undefined' || loginMember === null){
+        console.log(loginMember);
         reviewForm.classList.add('display-none');
         selectReviewList(productNo);
         return;

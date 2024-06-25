@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.ddukddak.common.chatting.model.dto.ChattingRoom;
 import com.ddukddak.common.chatting.model.dto.Message;
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.myPage.model.dto.Order;
 import com.ddukddak.partner.model.dto.Partner;
 
 @Mapper
@@ -80,10 +81,10 @@ public interface ChattingMapper {
 	int IupdateReadFlag(Map<String, Object> paramMap);
 
 	/**[챗봇] 주문정보 리턴
-	 * @param orderNo
+	 * @param map
 	 * @return
 	 */
-	String orderInfo(String orderNo);
+	List<Order> orderInfo(Map<String, Object> map);
 
 
 

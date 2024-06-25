@@ -10,6 +10,7 @@ import com.ddukddak.common.chatting.model.dto.ChattingRoom;
 import com.ddukddak.common.chatting.model.dto.Message;
 import com.ddukddak.common.chatting.model.mapper.ChattingMapper;
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.myPage.model.dto.Order;
 import com.ddukddak.partner.model.dto.Partner;
 
 import lombok.RequiredArgsConstructor;
@@ -146,9 +147,9 @@ public class ChattingServiceImpl implements ChattingService{
 
 	//[챗봇] 주문정보 리턴- merchantUid 입력값
 	@Override
-	public String orderInfo(String orderNo) {
+	public List<Order> orderInfo(Map<String, Object> map) {
 		
-		return mapper.orderInfo(orderNo);
+		return mapper.orderInfo(map);
 	}
 
 
