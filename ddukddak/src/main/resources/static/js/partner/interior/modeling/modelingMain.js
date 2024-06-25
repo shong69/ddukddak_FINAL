@@ -317,22 +317,63 @@ document.addEventListener("DOMContentLoaded", function() {
             const newTd = e.target.tagName.toLowerCase() === "td" ? e.target : e.target.parentNode;
             if (currentTd !== newTd) {
                 newTd.appendChild(sqare);
-    
-                 // 해당 sqare와 매핑된 모델 가져오기
-                const model = modelsMap.get(sqareId);
-                if (model) {
-                    // 모델의 위치 업데이트
-                    const rectX = sqare.offsetLeft;
-                    const rectY = sqare.offsetTop;
-                    const modelPositionX = -4 + (1.3 / 80) * (rectX - 303);
-                    const modelPositionY = -4 + (1.3 / 80) * (rectY - 103);
-                    model.position.set(modelPositionX, 2, modelPositionY);
-                }
-            }
-        } else {
-            alert("벽걸이 상품은 벽에만 설치해야 합니다.");
-        }
 
+                if(newTd.classList.contains("wallTd1")) {
+                    // 해당 sqare와 매핑된 모델 가져오기
+                   const model = modelsMap.get(sqareId);
+                   if (model) {
+                       // 모델의 위치 업데이트
+                       const rectX = sqare.offsetLeft;
+                       const rectY = sqare.offsetTop;
+                       const modelPositionX = -4 + (1.3 / 80) * (rectX - 303);
+                       const modelPositionY = -4 + (1.3 / 80) * (rectY - 103);
+                       model.position.set(modelPositionX, 2, modelPositionY);
+                       model.rotation.y = 0;
+                   }
+                } else if(newTd.classList.contains("wallTd2")) {
+                    // 해당 sqare와 매핑된 모델 가져오기
+                   const model = modelsMap.get(sqareId);
+                   if (model) {
+                       // 모델의 위치 업데이트
+                       const rectX = sqare.offsetLeft;
+                       const rectY = sqare.offsetTop;
+                       const modelPositionX = -4.8 + (1.3 / 80) * (rectX - 303);
+                       const modelPositionY = -4 + (1.3 / 80) * (rectY - 103);
+                       model.position.set(modelPositionX, 2, modelPositionY);
+
+                       model.rotation.y = Math.PI/2;
+                   }
+                } else if(newTd.classList.contains("wallTd3")) {
+                    // 해당 sqare와 매핑된 모델 가져오기
+                   const model = modelsMap.get(sqareId);
+                   if (model) {
+                       // 모델의 위치 업데이트
+                       const rectX = sqare.offsetLeft;
+                       const rectY = sqare.offsetTop;
+                       const modelPositionX = -4.8 + (1.3 / 80) * (rectX - 303);
+                       const modelPositionY = -4 + (1.3 / 80) * (rectY - 103);
+                       model.position.set(modelPositionX, 2, modelPositionY);
+
+                       model.rotation.y = -Math.PI/2;
+                    }
+                } else if(newTd.classList.contains("wallTd4")) {
+                    // 해당 sqare와 매핑된 모델 가져오기
+                   const model = modelsMap.get(sqareId);
+                   if (model) {
+                       // 모델의 위치 업데이트
+                       const rectX = sqare.offsetLeft;
+                       const rectY = sqare.offsetTop;
+                       const modelPositionX = -4 + (1.3 / 80) * (rectX - 303);
+                       const modelPositionY = -5.5 + (1.3 / 80) * (rectY - 103);
+                       model.position.set(modelPositionX, 2, modelPositionY);
+
+                       model.rotation.y = Math.PI;
+                    }
+                }
+            } else {
+                alert("벽걸이 상품은 벽에만 설치해야 합니다.");
+            }
+        }
     }
 
 
@@ -578,6 +619,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     wallSqare.classList.add("sqare");
                     wallSqare.classList.add("wallSqare");
                     wallSqare.setAttribute("name", "wallSqare");
+                    wallSqare.setAttribute("address", e.target.getAttribute("src"));
                     wallSqare.id = idNo; // 각 요소에 고유한 ID 부여
                     const originalString = e.target.getAttribute("src");
                     const lengthWithoutLastFour = originalString.length - 4;
@@ -656,12 +698,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         });
     });
-
-    // 드래그 앤 드롭 리스너 추가 함수
-    function addDragAndDropListeners(sqare) {
-        sqare.addEventListener("dragstart", dragStart);
-        sqare.addEventListener("dragend", dragEnd);
-    }
 
     // 초기 설정: Move 버튼 활성화
     enableMoveMode();
@@ -783,11 +819,76 @@ openButton.addEventListener('click', function() {
     }
 });
 
-
 // JavaScript 코드
-const interiorViewPrice = document.querySelector("#interiorViewPrice");
 
-interiorViewPrice.addEventListener("click", () => {
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const estimateButton = document.getElementById("estimateButton");
+
+    function saveAs(url, fileName) {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    function makeDivToImageFile(captureDiv) {
+        return html2canvas(captureDiv, {
+            allowTaint: true,
+            useCORS: true,
+            width: captureDiv.offsetWidth,
+            height: captureDiv.offsetHeight,
+            scale: 1
+        }).then(function (canvas) {
+            var imageURL = canvas.toDataURL('image/jpeg');
+            imageURL = imageURL.replace("data:image/jpeg;base64,", "");
+            return imageURL;
+        });
+    }
+
+    function saveScreenshot() {
+        renderer.render(scene, camera);
+        var dataURL = canvas.toDataURL('image/png');
+        dataURL = dataURL.replace("data:image/png;base64,", "");
+        return dataURL;
+    }
+
+    async function handleEstimate(event) {
+        event.preventDefault();  // 기본 폼 제출 방지
+
+        const captureDiv = document.getElementById('floor-table');
+        const floorPlanImage = await makeDivToImageFile(captureDiv);
+        const threedModelingImage = saveScreenshot();
+
+        // 숨겨진 입력 필드 생성 및 추가
+        const floorPlanInput = document.createElement("input");
+        floorPlanInput.setAttribute('name', 'floorPlan');
+        floorPlanInput.value = floorPlanImage;
+        floorPlanInput.type = 'hidden';
+
+        const threedModelingInput = document.createElement("input");
+        threedModelingInput.setAttribute('name', 'ThreedModeling');
+        threedModelingInput.value = threedModelingImage;
+        threedModelingInput.type = 'hidden';
+
+        // 폼에 추가
+        estimateButton.appendChild(floorPlanInput);
+        estimateButton.appendChild(threedModelingInput);
+
+        // 폼 직접 제출
+        estimateButton.submit();
+    }
+
+    // 예상견적 조회 버튼 클릭 시 핸들러 호출
+    document.getElementById('next').addEventListener('click', handleEstimate);
+});
+
+const screenShot = document.querySelector("#screenShot");
+
+screenShot.addEventListener("click", () => {
 
     const captureDiv = document.getElementById('floor-table');
     
@@ -815,11 +916,30 @@ interiorViewPrice.addEventListener("click", () => {
         scale: 1
     
       }).then(function (canvas) {
-        const imageURL = canvas.toDataURL('image/jpeg');
-        saveAs(imageURL, 'new Floor Plan.jpg');
+        var imageURL = canvas.toDataURL('image/jpeg');
+        console.log(imageURL);
+        saveAs(imageURL, 'Floor Plan.jpg');
+        estimateButton.append(input);
       }).catch(function (err) {
         console.log(err);
       });
-    
     }
+
+
+    renderer.render(scene, camera);
+        var dataURL = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = '3D Modeling.png';
+        link.click();
+
+        dataURL = dataURL.replace("data:image/png;base64,", "");
+        
+        const input = document.createElement("input");
+        input.setAttribute('name', 'ThreedModeling')
+        input.value = dataURL;
+        input.type = 'hidden';
+
+
+        estimateButton.append(input);
 })
