@@ -183,6 +183,7 @@ public class TipBoardController {
 	
 	@GetMapping("registTip")
 	public String registMyHouse() {
+		
 		return "board/tipBoard/registTipBoard";
 	}
 	
@@ -193,6 +194,7 @@ public class TipBoardController {
 												@RequestParam ("mainImg") String mainImgFileName,
 												@RequestParam ("images") List<MultipartFile> images,
 												RedirectAttributes ra) throws IOException{
+		
 		Board board = new Board();
 		
 	    board.setBoardTitle(inputTitle);

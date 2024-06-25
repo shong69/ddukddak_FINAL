@@ -6,6 +6,15 @@ const imageUpload = document.getElementById('imageUpload');
 if (imageUpload != null) {
     imageUpload.addEventListener('change', function(event) {
         
+        const files = event.target.files;
+        let existingPreviewContainer = document.querySelector('.preview-container');
+        let guideText;
+
+        if(files.length > 10) {
+            alert("노하우 이미지 등록은 10개까지 가능합니다.");
+            existingPreviewContainer.innerHTML = '';
+            return;
+        };
         
         if(mainImgHidden.value != "") {
             mainImgHidden.value = '';
@@ -14,9 +23,6 @@ if (imageUpload != null) {
             largeImage.src = '';
         }
             
-        const files = event.target.files;
-        let existingPreviewContainer = document.querySelector('.preview-container');
-        let guideText;
     
         if (existingPreviewContainer) {
             existingPreviewContainer.innerHTML = '';
@@ -70,6 +76,14 @@ registTipForm.addEventListener("submit", e => {
     const boardContent = document.querySelector("#boardContent");
     const images = document.getElementById('imageUpload').files;
     const mainImg = document.getElementById('mainImgHidden').value;
+
+    console.log(images.length);
+
+    if(images.length > 10) {
+        alert("사진을 1장 이상 업로드해주세요.");
+        e.preventDefault();
+        return;
+    }
 
     if(boardTitle.value.trim().length == 0) {
         alert("집들이 제목을 입력해주세요.");

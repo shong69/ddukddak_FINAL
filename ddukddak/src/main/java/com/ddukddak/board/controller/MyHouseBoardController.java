@@ -215,13 +215,13 @@ public class MyHouseBoardController {
     	if(boardNo > 0) {
   		
     		// 후에 리스트, 상세페이지 다 되면 상세페이지로 넘어가게 수정
-    		path= "/myHouse/detail/" + boardNo;
+    		path= "detail/" + boardNo;
     		message = "집들이 게시글 등록이 완료되었습니다.";
     		
     		
     	} else {
     		
-    		path = "/myHouse/main";
+    		path = "main";
     		message = "집들이 게시글 등록에 실패하였습니다.";
     		
     	}
@@ -261,7 +261,7 @@ public class MyHouseBoardController {
 		
 		if(loginMember == null || loginMember.getMemberNo() != board.getMemberNo()) {
 			ra.addFlashAttribute("message", "접근 권한이 없습니다.");
-			return "redirect:/myHouse/detail/" + boardNo;
+			return "redirect:detail/" + boardNo;
 		}
 		
 		log.info("boardNo : " + board.getBoardNo());
@@ -294,10 +294,10 @@ public class MyHouseBoardController {
 		String message = null;
 		
 		if(result > 0) {
-			path = "/myHouse/detail/" + boardNo;
+			path = "detail/" + boardNo;
 			message = "집들이 게시글 수정이 완료되었습니다.";
 		} else {
-			path = "/myHouse/updateMyHouse";
+			path = "updateMyHouse";
 			message = "집들이 게시글 수정에 실패하였습니다.";
 		}
 		
