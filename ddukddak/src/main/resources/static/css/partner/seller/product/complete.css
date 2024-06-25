@@ -46,6 +46,16 @@
     border-spacing: 0;
 }
 
+#tdContainer > tr > :nth-child(3) {
+    width: 100px;
+}
+#tdContainer > tr > :nth-child(5) {
+    width: 100px;
+}
+#tdContainer > tr > :nth-child(6) {
+    width: 100px;
+}
+
 .borderTr {
     box-shadow: 5px 5px 10px var(--gray5);
     height: 120px;

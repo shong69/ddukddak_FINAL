@@ -87,7 +87,13 @@
     font-size: small;
 }
 
+.borderTr > :nth-child(5) {
+    width: 100px;
+}
 
+#theadContainer > tr > :nth-child(9) {
+    width: 100px;
+}
 /* 모달창 */
 .modal {
     display: none;

@@ -1824,6 +1824,9 @@
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
 			od.ORDER_ITEM_NO,
+			c.CART_ID,
+			m.MEMBER_NICKNAME,
+			o.MERCHANT_UID,
 		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		FROM PRODUCT p
@@ -1834,6 +1837,8 @@
 		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
+		JOIN CART c ON p.PRODUCT_NO = c.PRODUCT_NO
+		JOIN "MEMBER" m ON c.MEMBER_NO = m.MEMBER_NO 
 		WHERE od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
 		AND uf.UPLOAD_IMG_ORDER = 0
 		AND p.PARTNER_NO = #{partnerNo}
@@ -1858,8 +1863,11 @@
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
-				od.ORDER_ITEM_NO
-			ORDER BY p.PRODUCT_NO DESC)
+			od.ORDER_ITEM_NO,
+			c.CART_ID,
+			m.MEMBER_NICKNAME,
+			o.MERCHANT_UID
+		ORDER BY p.PRODUCT_NO DESC)
 	</select>
 		
 	<select id="selectCompleteList">
@@ -1933,9 +1941,8 @@
 	
 	
 	<select id="selectCompleteCountStatus">
-		SELECT COUNT(*)
-		FROM (
-		    SELECT 
+		SELECT COUNT (*) FROM
+		(SELECT 
 		    p.PRODUCT_NO, 
 		    p.PRODUCT_NAME, 
 		    p.PRODUCT_PRICE, 
@@ -1956,6 +1963,10 @@
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			c.CART_ID,
+			m.MEMBER_NICKNAME,
+			o.MERCHANT_UID,
 		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		FROM PRODUCT p
@@ -1966,7 +1977,23 @@
 		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		WHERE od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+		JOIN CART c ON p.PRODUCT_NO = c.PRODUCT_NO
+		JOIN "MEMBER" m ON c.MEMBER_NO = m.MEMBER_NO 
+		WHERE 
+			<choose>
+			            <when test="status == 'PC'">
+			               od.ORDER_STATUS IN ('구매확정')
+			            </when>
+			            <when test="status == 'PR'">
+			                od.ORDER_STATUS IN ('주문거절')
+			            </when>
+			            <when test="status == 'SR'">
+			                od.ORDER_STATUS IN ('출고거절')
+			            </when>
+			            <otherwise>
+			                od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+			            </otherwise>
+	         </choose>
 		AND uf.UPLOAD_IMG_ORDER = 0
 		AND p.PARTNER_NO = #{partnerNo}
 		GROUP BY 
@@ -1989,7 +2016,11 @@
 		    od.ORDER_QUANTITY,
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
-		    od.ORDER_STATUS
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			c.CART_ID,
+			m.MEMBER_NICKNAME,
+			o.MERCHANT_UID
 		ORDER BY p.PRODUCT_NO DESC)
 	</select>
 	
@@ -2094,6 +2125,8 @@
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID,
 		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		FROM PRODUCT p
@@ -2128,8 +2161,10 @@
 		    od.ORDER_QUANTITY,
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
-		    od.ORDER_STATUS
-		ORDER BY p.PRODUCT_NO DESC)
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			o.MERCHANT_UID
+			ORDER BY p.PRODUCT_NO DESC)
 	</select>
 
 	<select id="selectCompleteListMainSort">
@@ -2197,9 +2232,8 @@
 	</select>
 	
 	<select id="selectCompleteListCountMainSortStatus">
-		SELECT COUNT(*)
-		FROM (
-		    SELECT 
+		SELECT COUNT (*) FROM
+		(SELECT 
 		    p.PRODUCT_NO, 
 		    p.PRODUCT_NAME, 
 		    p.PRODUCT_PRICE, 
@@ -2220,6 +2254,10 @@
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			c.CART_ID,
+			m.MEMBER_NICKNAME,
+			o.MERCHANT_UID,
 		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		FROM PRODUCT p
@@ -2230,7 +2268,23 @@
 		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		WHERE od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+		JOIN CART c ON p.PRODUCT_NO = c.PRODUCT_NO
+		JOIN "MEMBER" m ON c.MEMBER_NO = m.MEMBER_NO 
+		WHERE 
+			<choose>
+			            <when test="status == 'PC'">
+			               od.ORDER_STATUS IN ('구매확정')
+			            </when>
+			            <when test="status == 'PR'">
+			                od.ORDER_STATUS IN ('주문거절')
+			            </when>
+			            <when test="status == 'SR'">
+			                od.ORDER_STATUS IN ('출고거절')
+			            </when>
+			            <otherwise>
+			                od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+			            </otherwise>
+	         </choose>
 		AND uf.UPLOAD_IMG_ORDER = 0
 		AND p.PARTNER_NO = #{partnerNo}
 		AND bc.BIG_CATEGORY_NO = #{mainSort}
@@ -2254,7 +2308,11 @@
 		    od.ORDER_QUANTITY,
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
-		    od.ORDER_STATUS
+		    od.ORDER_STATUS,
+			od.ORDER_ITEM_NO,
+			c.CART_ID,
+			m.MEMBER_NICKNAME,
+			o.MERCHANT_UID
 		ORDER BY p.PRODUCT_NO DESC)
 	</select>
 
@@ -2337,9 +2395,8 @@
 	</select>
 	
 	<select id="selectCompleteListCountSort">
-		SELECT COUNT(*)
-		FROM (
-		    SELECT 
+		SELECT COUNT (*) FROM
+		(SELECT 
 		    p.PRODUCT_NO, 
 		    p.PRODUCT_NAME, 
 		    p.PRODUCT_PRICE, 
@@ -2360,7 +2417,10 @@
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
-		    o.MERCHANT_UID,
+			od.ORDER_ITEM_NO,
+			c.CART_ID,
+			m.MEMBER_NICKNAME,
+			o.MERCHANT_UID,
 		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
 		FROM PRODUCT p
@@ -2371,7 +2431,23 @@
 		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		WHERE od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+		JOIN CART c ON p.PRODUCT_NO = c.PRODUCT_NO
+		JOIN "MEMBER" m ON c.MEMBER_NO = m.MEMBER_NO 
+		WHERE 
+			<choose>
+			            <when test="status == 'PC'">
+			               od.ORDER_STATUS IN ('구매확정')
+			            </when>
+			            <when test="status == 'PR'">
+			                od.ORDER_STATUS IN ('주문거절')
+			            </when>
+			            <when test="status == 'SR'">
+			                od.ORDER_STATUS IN ('출고거절')
+			            </when>
+			            <otherwise>
+			                od.ORDER_STATUS IN ('주문거절', '구매확정', '출고거절')
+			            </otherwise>
+	         </choose>
 		AND uf.UPLOAD_IMG_ORDER = 0
 		AND p.PARTNER_NO = #{partnerNo}
 		AND c.CATEGORY_NO = #{sort}
@@ -2396,7 +2472,10 @@
 		    o.ORDER_NO,
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
-		    o.MERCHANT_UID
+			od.ORDER_ITEM_NO,
+			c.CART_ID,
+			m.MEMBER_NICKNAME,
+			o.MERCHANT_UID
 		ORDER BY p.PRODUCT_NO DESC)
 	</select>
 	
