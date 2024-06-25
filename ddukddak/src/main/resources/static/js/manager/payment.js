@@ -44,3 +44,15 @@ function toggle(source) {
         checkboxes[i].checked = source.checked;
     }
 }
+
+document.querySelectorAll('.confirmBtn').forEach(element => {
+
+    element.addEventListener('click', e => {
+        alert('서비스 준비중입니다.');
+    })
+
+});
+
+document.getElementById('multiPassBtn').addEventListener('click', () => {
+    alert('서비스 준비중입니다.');
+});

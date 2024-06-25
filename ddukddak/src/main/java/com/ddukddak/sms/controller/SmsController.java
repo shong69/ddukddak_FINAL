@@ -32,7 +32,7 @@ public class SmsController {
      * @param toNumber
      * @return
      */
-    @PostMapping("/sendOne")
+    @PostMapping("sendOne")
     public int sendOne(@RequestBody String toNumber) {
     
     
@@ -95,7 +95,7 @@ public class SmsController {
      * @param toNumber
      * @return
      */
-    @PostMapping("/sendOne/confirm")
+    @PostMapping("sendOne/confirm")
     public int partnerConfirm(@RequestBody String toNumber) {
     	
     	
@@ -120,7 +120,7 @@ public class SmsController {
      * @param toNumber
      * @return
      */
-    @PostMapping("/sendOne/refuse")
+    @PostMapping("sendOne/refuse")
     public int partnerRefuse(@RequestBody String toNumber) {
     	
     	
@@ -146,7 +146,7 @@ public class SmsController {
      * @param paramMap
      * @return
      */
-    @PostMapping("/sendMany/mulit/{actionForBackend}")
+    @PostMapping("sendMany/mulit/{actionForBackend}")
     public  ResponseEntity<Integer> sendManyPartnerPass(@PathVariable("actionForBackend") String action, 
 			@RequestBody Map<String, List<Map<String, String>>> paramMap) {
     	
@@ -193,7 +193,7 @@ public class SmsController {
      * @param toNumber
      * @return
      */
-    @PostMapping("/sendOne/member/delete")
+    @PostMapping("sendOne/member/delete")
     public int memberDel(@RequestBody String toNumber) {
     	
     	
@@ -218,7 +218,7 @@ public class SmsController {
      * @param paramMap
      * @return
      */
-    @PostMapping("/sendMany/member/mulit/{actionForBackend}")
+    @PostMapping("sendMany/member/mulit/{actionForBackend}")
     public  ResponseEntity<Integer> sendManyMemberDelete(@PathVariable("actionForBackend") String action, 
 			@RequestBody Map<String, List<Map<String, String>>> paramMap) {
     	
@@ -260,7 +260,7 @@ public class SmsController {
      * @param toNumber
      * @return
      */
-    @PostMapping("/sendOne/partner/delete")
+    @PostMapping("sendOne/partner/delete")
     public int partnerDel(@RequestBody String toNumber) {
     	
     	
@@ -285,7 +285,7 @@ public class SmsController {
      * @param paramMap
      * @return
      */
-    @PostMapping("/sendMany/partner/mulit/{actionForBackend}")
+    @PostMapping("sendMany/partner/mulit/{actionForBackend}")
     public  ResponseEntity<Integer> sendManyPartnerDelete(@PathVariable("actionForBackend") String action, 
 			@RequestBody Map<String, List<Map<String, String>>> paramMap) {
     	

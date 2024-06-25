@@ -14,12 +14,19 @@ public class GoogleConfig {
 	@Value("${google.client-secret}")
 	private String googleClientSecret;
 	
+	@Value("${google.redirect-url}")
+	private String googleRedirectUrl;
+	
     public String getGoogleClientId() {
         return googleClientId;
     }
 
     public String getGoogleClientSecret() {
         return googleClientSecret;
+    }
+    
+    public String getGoogleRedirectUrl() {
+    	return googleRedirectUrl;
     }
 	
 }

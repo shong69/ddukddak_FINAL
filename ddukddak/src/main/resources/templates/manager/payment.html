@@ -82,7 +82,7 @@
                                         <td th:text="*{paymentNo}">결제 번호</td>
 
                                         <!-- 주문 번호 -->
-                                        <td><a th:text="*{merchantUid}">주문번호</a></td>
+                                        <td><a th:text="*{merchantUid}" onclick="alert('서비스 준비중입니다.')">주문번호</a></td>
 
                                         <!-- 구매자명 -->
                                         <td th:text="*{buyerName}">구매자명</td>
@@ -111,7 +111,7 @@
                     <!-- 게시글이 있을 때만 페이지네이션이 보이게 할 예정 -->
                     <div class="pagination-area">
 
-                        <ul class="pagination" th:object="${pagination}">
+                        <ul class="pagination" th:object="${pagination}" th:unless="${#lists.isEmpty(paymentList)}">
 
                             <!-- 첫 페이지로 이동 -->
                             <li><a th:href="@{/manager/payment(cp=1)}">&lt;&lt;</a></li>
