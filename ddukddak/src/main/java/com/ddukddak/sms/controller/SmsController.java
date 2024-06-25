@@ -225,6 +225,8 @@ public class SmsController {
     	
     	List<Map<String, String>> members = paramMap.get("members");
 		
+    	log.info("SMS 컨트롤러 members : " + members);
+    	
         if (action == null || (!action.equals("delete"))) {
         	return ResponseEntity.ok(0);  // Invalid action
         }

@@ -263,6 +263,10 @@ public class SmsServiceImpl implements SmsService {
 	// 회원 다수 탈퇴 SMS 발송
 	@Override
 	public MultipleDetailMessageSentResponse sendMemberMultiSms(String action, List<Map<String, String>> members) {
+		
+		log.info("SMS 서비스단 : members : " + members);
+		log.info("SMS 서비스단 : action : " + action);
+		
 		// 응답 값 생성
 		MultipleDetailMessageSentResponse multiResponse;
 		
@@ -281,6 +285,11 @@ public class SmsServiceImpl implements SmsService {
         	
             Map<String, String> member = members.get(i);
             String toNumber = member.get("memberTel");
+            
+            // 전화번호가 null이거나 유효하지 않은 경우 건너뛰기
+            if (toNumber == null || !isValidPhoneNumber(toNumber)) {
+                continue;
+            }
         	
             Message message = new Message();
             // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
@@ -319,6 +328,13 @@ public class SmsServiceImpl implements SmsService {
 		
 		
 		return null;
+	}
+
+
+	// 전화번호 유효성 검사 메소드 추가
+	private boolean isValidPhoneNumber(String phoneNumber) {
+	    // 예시: 전화번호가 01012345678 형태로 유효한지 검사
+	    return phoneNumber.matches("^010\\d{8}$");
 	}
 
 
