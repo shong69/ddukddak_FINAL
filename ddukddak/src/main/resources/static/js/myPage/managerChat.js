@@ -184,7 +184,8 @@ function choose2(){
 			
 				const p = document.createElement("p");
 				p.classList.add("chat");
-				p.innerText="";
+				p.innerText=
+					"	회원님의 6월 29일 주문하신 상품인\n레어울트라어저구[화이트/나무] 1개,어쩌구상품[갈릭] 2개는\n현재 출고대기 상태입니다				";
 				div.append(div1, p);
 				const span = document.createElement("span");
 				span.classList.add("chatDate");
