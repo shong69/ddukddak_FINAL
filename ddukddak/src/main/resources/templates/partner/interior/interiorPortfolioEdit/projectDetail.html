@@ -47,16 +47,7 @@
                         <input type="file" name="images" class="inputImg" th:id="|img${project.imgList[0].uploadImgOrder}|" accept="image/*">
                         <span class="delete-img">&times;</span>
                     </div>
-                    <!-- <div class="projectImg thumbnail">
-                        <label th:for="|img${project.imgList[0].uploadImgOrder}|">
-                            <img class="preview">
-                        </label>
-                        <input type="file" name="images" class="inputImg" th:id="|img${project.imgList[0].uploadImgOrder}|" accept="image/*">
-                        <span class="delete-img">&times;</span>
-                    </div> -->
-
-                    <!-- <p>[[|img${project.imgList[0].uploadImgOrder}|]]</p> -->
-
+                    
                     <div class="preview-img">
 
                         <th:block th:each="img, iterStat : ${project.imgList}" th:object="${img}">
