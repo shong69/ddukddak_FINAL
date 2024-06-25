@@ -202,4 +202,13 @@ setInterval(function(){
         // 새 URL로 이동합니다
         window.location.href = newUrl;
     });
+
+
+    const h4 = document.querySelectorAll("h4");
+
+    h4.forEach(element => {
+        element.addEventListener("click", e => {
+            window.location.href = `/eCommerce/list/1/1?query=${e.target.innerText}`;
+        })
+    })
 </script>

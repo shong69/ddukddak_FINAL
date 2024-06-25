@@ -36,6 +36,9 @@ public class ModelingController {
 								   @RequestParam(value="cp", required=false, defaultValue="1") int cp,
 								   @RequestParam(value="query", required = false) String query,
 									Model model) {
+		
+		log.info("floorPlan" + floorPlan);
+		log.info("ThreedModeling" + ThreedModeling);
 		// 사진값 넘겨주기
 		model.addAttribute("floorPlan", floorPlan);
 		model.addAttribute("ThreedModeling", ThreedModeling);
