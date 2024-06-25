@@ -179,4 +179,14 @@
 		AND SENDER_TYPE = #{senderType}
 		AND TARGET_NO = #{memberNo}
 	</update>
+	
+	
+	
+	
+	<!-- 챗봇-주문정보 -->
+	<select id="orderInfo">
+		SELECT 
+		FROM ORDER
+		WHERE MERCHANT-UID=#{orderNo}
+	</select>
 </mapper>
