@@ -49,4 +49,9 @@ header > div:nth-child(3) {
 header > div:nth-child(3) > a {
     padding: 0 20px;
 }
-
+.logoContainers {
+    height: 50px;
+}
+.logo-img {
+    height: 50px;
+}
