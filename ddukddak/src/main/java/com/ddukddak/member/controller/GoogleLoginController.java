@@ -36,7 +36,7 @@ public class GoogleLoginController {
 	    // OAuth 2.0 인증 요청 URL을 생성
 	    String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?"
 	            + "client_id=" + clientId
-	            + "&redirect_uri=" + redirectUri
+	            + "&redirect_uri=https://ddukddak.store/oauth/googleCallback"
 	            + "&response_type=code"
 	            + "&scope=email%20profile%20openid"
 	            + "&access_type=offline"
