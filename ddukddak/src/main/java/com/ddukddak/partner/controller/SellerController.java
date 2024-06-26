@@ -334,6 +334,7 @@ public class SellerController {
 		log.info("optionName : " + optionName);
 		log.info("optionContent : " + optionContent);
 		log.info("optionCount : " + optionCount);
+		log.info("productNo : " + productNo);
 		
 		// PRODUCT 테이블 삽입
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -362,9 +363,9 @@ public class SellerController {
 		// 설명사진
 		List<MultipartFile> imgList2 = new ArrayList<>(explainImgs);
 		
-		log.info("explainImgs : " + explainImgs);
+		log.info("explainImgs : " + productNo);
 		
-		int result9 = service.updateInsertEnplainImg(productNo, smallCategory, explainImgs);
+		int result9 = service.updateInsertEnplainImg(productNo, smallCategory, imgList2);
 
 		// 옵션 비우기
 		int result4 = service.delOption(productNo);

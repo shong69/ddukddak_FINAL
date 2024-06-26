@@ -176,6 +176,7 @@ plusButton.addEventListener("click", () => {
 
     contentCountInput.classList.add("contentCountInput");
     contentCountInput.setAttribute('name', 'optionCount');
+    contentCountInput.type = 'number';
 
     td1.innerText = "옵션 내용";
     td1.style.fontSize = "12px";
