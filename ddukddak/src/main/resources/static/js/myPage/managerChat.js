@@ -26,6 +26,7 @@ function partnerChat(){
 }
 
 /***********************상담 카테고리선택***********************/
+//while문으로 customerChatting 계속 실행 -> choose1,2,3,4 그때마다 부르기 -> 문의종료 버튼을 누를 때만 while문을 멈추도록
 
 const chattingContent = document.querySelector(".display-chatting");
 const inputChatting = document.getElementById('inputChatting');
@@ -70,12 +71,12 @@ function customerChatting () {
 		p.classList.add("b-chat");
 		p.classList.add("c-chat");
 		p.innerText = key;
-		const functionName = `choose${value}`;
+		//const functionName = `choose${value}`;
 		console.log(`choose${value}`);
 
 		p.addEventListener("click",function(event){
-			window[functionName](event);
-
+			window[`choose${value}`](event);
+			return;
 		})
 		div.append(p);
 		
@@ -557,12 +558,50 @@ function choose0(event){
 }
 
 
+//*************************************************************** */
+//파트너 선택시
+function partnerChatting(){
+	const li = document.createElement("li");
+	li.classList.add("target-chat");
+
+	const img = document.createElement("img");
+	img.src = "/images/default/chatbot.webp";
+
+	const div = document.createElement("div");
+	const div1= document.createElement("div");
+	div1.classList.add("target-name");
+	div1.innerText = "뚝딱봇";
+
+	const p = document.createElement("p");
+	p.classList.add("chat");
+	p.innerText="접근할 수 없는 권한입니다.";
+	div.append(div1, p);
+	const span = document.createElement("span");
+	span.classList.add("chatDate");
+	span.innerText = getCurrentTimeAMPM();
+	div.append(span);
+	li.append(img, div);
+	chattingContent.append(li);
+
+	const parentTd = event.target.parentElement;
+	console.log(parentTd.children);
+	Array.from(parentTd.children).forEach(element =>{
+		console.log(element);
+		if(element.tagName ==='BUTTON'){
+			element.disabled = true;
+			element.classList.remove("c-chat");
+		}
+	})
+	// 1초 후에 다시 함수 실행
+	setTimeout(() => {
+		customerChatting();
+	}, 2000);
+	
+	scrollBtm();
+}
 
 
-
-
-
-
+//************************************************************* */
 function getCurrentTimeAMPM() {
     const now = new Date();
     let hours = now.getHours();
