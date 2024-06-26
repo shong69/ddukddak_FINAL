@@ -26,6 +26,7 @@ import com.ddukddak.board.model.dto.Board;
 import com.ddukddak.board.model.service.MyHouseBoardService;
 import com.ddukddak.member.model.dto.Member;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -77,6 +78,10 @@ public class MyHouseBoardController {
 								RedirectAttributes ra,
 								HttpServletRequest req,
 								HttpServletResponse resp) {
+		
+		ServletContext application = req.getServletContext();
+		
+		log.info("보드타입 리스트: " + application.getAttribute("boardTypeList"));
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("boardNo", boardNo);
@@ -158,7 +163,7 @@ public class MyHouseBoardController {
 			path = "board/myHouseBoard/myHouseBoardDetail";
 			
 			model.addAttribute("board", board);
-			
+			model.addAttribute("boardTypeList", application.getAttribute("boardTypeList"));
 		}
 		
 				
