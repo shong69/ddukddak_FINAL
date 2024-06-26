@@ -34,7 +34,7 @@
           
         </div>
 
-        <form th:action="@{/tip/updateTip(boardNo=${board.boardNo})}" method="POST" id="updateTipForm" enctype="multipart/form-data">
+        <form th:action="@{/tip/updateTip/{boardNo}(boardNo=${board.boardNo})}" method="POST" id="updateTipForm" enctype="multipart/form-data">
 
           <div class="input-img-area">
             <div class="projectImg thumbnail">

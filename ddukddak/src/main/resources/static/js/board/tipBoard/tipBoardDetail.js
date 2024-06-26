@@ -157,7 +157,7 @@ if (updateBtn != null) {
 
   updateBtn.addEventListener("click", () => {
   
-    location.href = "/tip/updateTip?boardNo=" + boardNo;
+    location.href = "/tip/updateTip/" + boardNo;
   
   });
 }
