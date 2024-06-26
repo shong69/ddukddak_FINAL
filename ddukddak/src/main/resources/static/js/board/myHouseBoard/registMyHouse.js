@@ -121,6 +121,6 @@ registMyHouseForm.addEventListener("submit", e => {
 
 document.querySelector("#backToList").addEventListener("click", () => {
 
-    location.href="/myHouse/main?boardCode=" + boardCode;
+    location.href="main?boardCode=" + boardCode;
 
 });

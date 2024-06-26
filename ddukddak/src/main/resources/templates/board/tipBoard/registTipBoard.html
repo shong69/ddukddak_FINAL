@@ -70,6 +70,10 @@
     
     <th:block th:replace="~{common/fragments/footer}"></th:block>
 
+    <script th:inline="javascript">
+        const boardCode = /*[[${application.boardTypeList[1].boardCode}]]*/ "게시판 코드";
+    </script>
+
     <script src="/js/common/fragments/board/side-category.js"></script>
     <script src="/js/common/main.js"></script>
     <script src="/js/board/tipBoard/registTip.js"></script>
