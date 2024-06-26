@@ -41,6 +41,8 @@ public class BoardMainController {
 		
 		List<BoardImg> boardImg = service.selectBoardMainAd();
 		
+		log.info("boardImg : " +boardImg.toString());
+		
 		if (boardImg != null) {
 			
 			
