@@ -95,7 +95,7 @@ public class eCommerceController {
 			model.addAttribute("smallCategoryNo", smallcategoryNo);
 			model.addAttribute("query", query);
 			
-			return "/eCommerce/eCommerceList";
+			return "eCommerce/eCommerceList";
 		} else {
 			List<Product> list = service.selectProduct(memberNo);
 			List<Product> bestList = service.selectBestProduct(memberNo);
@@ -105,7 +105,7 @@ public class eCommerceController {
 			model.addAttribute("selectBestProductList", bestList);
 			
 			
-			return "/eCommerce/eCommerceMain";		
+			return "eCommerce/eCommerceMain";		
 		}
 		
 
@@ -186,7 +186,7 @@ public class eCommerceController {
 
 		model.addAttribute("loginMember", loginMember);
 		
-		return "/eCommerce/eCommerceList";
+		return "eCommerce/eCommerceList";
 	}
 	
 	
@@ -386,7 +386,7 @@ public class eCommerceController {
 	        log.error("Order not found for merchantUid: " + merchantUid);
 	        model.addAttribute("message", "파라미터 안넘어옴");
 	        
-	        return "/myPage/cart"; // 적절한 에러 페이지로 리다이렉트
+	        return "myPage/cart"; // 적절한 에러 페이지로 리다이렉트
 	    }
 	    
 		int orderNo = order.getOrderNo();

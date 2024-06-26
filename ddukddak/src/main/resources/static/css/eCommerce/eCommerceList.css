@@ -1,3 +1,25 @@
+/* 광고배너 */
+#ad1 {
+    position: fixed;
+    top: 100px;
+    left: 50px;
+    width: 150px;
+}
+
+#ad2 {
+    position: fixed;
+    top: 100px;
+    right: 50px;
+    width: 150px;
+}
+
+#ad3 {
+    position: fixed;
+    top: 450px;
+    right: 50px;
+    width: 150px;
+}
+
 
 #detail {
     display: flex;
