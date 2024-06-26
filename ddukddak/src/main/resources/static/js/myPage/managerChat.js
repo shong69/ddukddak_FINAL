@@ -32,9 +32,6 @@ const inputChatting = document.getElementById('inputChatting');
 
 function customerChatting () {
 
-	// 기존에 있는 채팅 항목 초기화
-    chattingContent.innerHTML = '';
-	
 	if(inputChatting.disabled= false){
 		inputChatting.setAttribute('disabled');
 	}
@@ -75,6 +72,7 @@ function customerChatting () {
 		p.innerText = key;
 		const functionName = `choose${value}`;
 		console.log(`choose${value}`);
+
 		p.addEventListener("click",function(event){
 			window[functionName](event);
 
@@ -127,7 +125,7 @@ function choose1(event){
 			element.classList.remove("c-chat");
 		}
 	})
-	// 1초 후에 다시 함수 실행
+	// 2초 후에 다시 함수 실행
 	setTimeout(() => {
 		customerChatting();
 	}, 2000);
@@ -236,7 +234,7 @@ function choose2(event){
 			}, 2000);
 			
 			const parentTd = event.target.parentElement;
-			console.log(parentTd.children);
+
 			Array.from(parentTd.children).forEach(element =>{
 				console.log(element);
 				if(element.tagName ==='BUTTON'){

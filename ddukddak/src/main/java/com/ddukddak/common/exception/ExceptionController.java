@@ -15,13 +15,13 @@ public class ExceptionController {
 		return "common/error/404";
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public String allExceptionHandler(Exception e, Model model) {
-		
-		model.addAttribute("e", e);
-		
-		return "common/error/500";
-	}
+//	@ExceptionHandler(Exception.class)
+//	public String allExceptionHandler(Exception e, Model model) {
+//		
+//		model.addAttribute("e", e);
+//		
+//		return "common/error/500";
+//	}
 	
 	
 }
