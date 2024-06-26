@@ -151,16 +151,12 @@ document.addEventListener('DOMContentLoaded', function() {
           optionContentBox.append(cutInput2);
   
           optionContentBox.style.display = 'none';
-          e.target.style.display = "none";
-          e.target.nextElementSibling.style.display = 'none';
           plusEx.style.display = 'block';
 
           plusEx.addEventListener('click', () => {
-            console.log(elements);
-            optionContentBox.style.display = 'flex';
-            plusEx.style.display = 'none';
-            e.target.style.display = "block";
-            e.target.nextElementSibling.style.display = 'block';
+            plusEx.previousElementSibling.previousElementSibling.remove();
+            plusEx.previousElementSibling.remove();
+            plusEx.remove();
           })
       }
   })
@@ -240,7 +236,7 @@ const productPlusButton = document.querySelector("#productPlusButton");
 productPlusButton.addEventListener("click", e => {
 
   
-  const allApply = document.getElementsByClassName("applyButton");
+  const allApply = document.getElementsByClassName("optionContentBox");
 
   for(let i = 0; i < allApply.length; i ++) {
     if(allApply[i].style.display != 'none') {
@@ -263,7 +259,7 @@ productPlusButton.addEventListener("click", e => {
   inputBox.placeholder = "예시 : 컬러";
 
   const h5 = document.createElement("h5");
-  h5.innerText = "상세보기";
+  h5.innerText = "삭제";
   h5.classList.add("plusEx");
 
   const box2 = document.createElement("div");
@@ -408,15 +404,12 @@ productPlusButton.addEventListener("click", e => {
           optionContentBox.append(cutInput2);
   
           optionContentBox.style.display = 'none';
-          e.target.style.display = "none";
-          e.target.nextElementSibling.style.display = 'none';
           plusEx.style.display = 'block';
 
           plusEx.addEventListener('click', () => {
-            optionContentBox.style.display = 'flex';
-            plusEx.style.display = 'none';
-            e.target.style.display = "block";
-            e.target.nextElementSibling.style.display = 'block';
+            plusEx.previousElementSibling.previousElementSibling.remove();
+            plusEx.previousElementSibling.remove();
+            plusEx.remove();
           })
       }
   })
