@@ -709,7 +709,7 @@ phoneConfirmBtn.addEventListener("click", () => {
 
 
 //-----------------------------------------------------------------------------------
-const memberAddress = loginMemberAddress.replace(/\^\^\^/g, ' ');
+const memberAddress = loginMemberAddress?.replace(/\^\^\^/g, ' ');
 document.querySelector("#addrDiv").innerText = memberAddress;
 
 
