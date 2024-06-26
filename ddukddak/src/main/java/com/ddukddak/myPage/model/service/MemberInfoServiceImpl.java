@@ -69,6 +69,9 @@ public class MemberInfoServiceImpl implements MemberInfoService{
 		return result;
 	}
 
+
+	
+	
 	@Override
 	public int changePassword(Map<String, String> map, int memberNo) {
 		//현재 비밀번호 확인
@@ -79,8 +82,13 @@ public class MemberInfoServiceImpl implements MemberInfoService{
 		log.info( bcrypt.encode(map.get("currentPw")));
 		
 		if(!bcrypt.matches(map.get("currentPw"), originPw)) {
-			return 0;
+			return 0; //입력한 현재 비밀번호가 동일하지 않은 경우
 		}
+		
+		if(bcrypt.matches(map.get("newPw"), originPw)) {
+			return -1; //새 비밀번호가 이전 비밀번호와 동일한 경우
+		}
+
 		//새 비밀번호 등록하기
 		
 		String encPw = bcrypt.encode(map.get("newPw"));
@@ -174,7 +182,6 @@ public class MemberInfoServiceImpl implements MemberInfoService{
 	}
 
 
-	
 
 	
 }

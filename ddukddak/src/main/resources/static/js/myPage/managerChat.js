@@ -268,7 +268,7 @@ function choose2(event){
 				} 
 	});
 
-
+	document.getElementById('inputChatting').setAttribute(disabled);
 	scrollBtm();
 }
 

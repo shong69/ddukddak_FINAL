@@ -294,7 +294,7 @@ unviewPwBtns.forEach(btn =>{
 
 //*비밀번호 변경하기-비동기
 // pwObj가 모두 true인 경우 넘기기
-pwConfirmBtn.addEventListener("click", e=>{
+pwConfirmBtn.addEventListener("click", async e=>{
 
     let pass="true";
     for(let key in pwObj){
@@ -312,7 +312,7 @@ pwConfirmBtn.addEventListener("click", e=>{
     }
 
     //비동기로 비밀번호 값들 넘기기
-    fetch("/myPage/memberInfo/password",{
+    await fetch("/myPage/memberInfo/password",{
         method: "POST",
         headers : {"Content-Type" : "application/json"},
         body: JSON.stringify(obj)

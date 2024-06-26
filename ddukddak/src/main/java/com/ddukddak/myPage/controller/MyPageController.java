@@ -136,6 +136,7 @@ public class MyPageController {
 		return "myPage/memberInfo";
 	}
 
+	
 	/**[회원정보]비밀번호 변경 -비동기
 	 * @return
 	 */
@@ -152,7 +153,8 @@ public class MyPageController {
 		String message=null;
 		Map<String, String> response = new HashMap<>();
 		if(result>0) message = "비밀번호가 변경되었습니다.";
-		else 		 message = "비밀번호 변경 실패\n다시 시도해주세요.";
+		else if (result == 0) message = "비밀번호 변경 실패\n다시 시도해주세요.";
+		else				message = "이전 비밀번호와 동일합니다";
 		
 		response.put("message", message);
 		return response;
