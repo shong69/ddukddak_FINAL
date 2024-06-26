@@ -37,7 +37,9 @@ public class WebSocketConfig implements WebSocketConfigurer{
 				.addInterceptors(handshakeInterceptor)
 				.setAllowedOriginPatterns("http://localhost/", 
 										"http://127.0.0.1/", 
-										"http://192.168.50.200/")
+										"http://192.168.50.200/",
+										"http://43.203.94.153", "https://43.203.94.153",
+										"https://ddukddak.store/","http://ddukddak.store/" )
 				.withSockJS();
 		
 	}
