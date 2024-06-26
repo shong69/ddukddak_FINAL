@@ -51,7 +51,7 @@
         </div>
 
         <div class="myHouseTitle">
-          <h4 th:text="|[${boardTypeList[1].boardName}]|">[노하우]</h4>
+          <h4>[노하우]</h4>
           <div>
             <h2 th:text="${board.boardTitle}">게시글 제목</h2>
 
@@ -154,17 +154,26 @@
   <th:block th:replace="~{common/fragments/footer}"></th:block>
 
   <script th:inline="javascript">
-    const boardCode = /*[[${boardTypeList[1].boardCode}]]*/ "게시판 코드";
+     const boardTypeList = /*[[${boardTypeList}]]*/ [];
 
-    const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원번호";
+      const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원번호";
 
-    const boardNo = /*[[${board.boardNo}]]*/ "게시글 번호";
+      const boardNo = /*[[${board.boardNo}]]*/ "게시글 번호";
 
-    const writerNo = /*[[${board.memberNo}]]*/ "작성자 번호";
+      const writerNo = /*[[${board.memberNo}]]*/ "작성자 번호";
 
-    let likeCheck = /*[[${board.likeCheck}]]*/ "좋아요 여부";
+      let likeCheck = /*[[${board.likeCheck}]]*/ "좋아요 여부";
 
-    const userDefaultImage = /*[[#{user.default.image}]]*/ "기본 이미지";
+      const userDefaultImage = /*[[#{user.default.image}]]*/ "기본 이미지";
+
+      // Extract boardCode for boardName "노하우"
+      let boardCode = "게시판 코드";
+      for (const board of boardTypeList) {
+          if (board.boardName === "노하우") {
+              boardCode = board.boardCode;
+              break;
+          }
+      }
 
   </script>
   <script src="/js/common/fragments/board/reportModal.js"></script>
