@@ -50,32 +50,37 @@
                 </table>
 
                 <!-- 페이지네이션 -->
-                <div class="pagination">
-                    <ul class = "pagination" th:object="${pagination}">
-                        <li><a th:href="@{|/myPage/wishList?cp=1|}">&lt;&lt;</a></li>
-                        <li><a th:href="@{|/myPage/wishList?cp=*{prevPage}|}">&lt;</a></li>
-            
-                        <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
-    
-                            <li th:if="${i} == *{currentPage}">
-                                <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
-                            </li>
-    
-                            <li th:unless="${i} == *{currentPage}">
-                                <a th:href="@{|/myPage/wishList?cp=${i}|}"
-                                th:text="${i}">이동할 페이지</a>
-                            </li>
-                            
-                        </th:block>
-            
-                    
-                        <li>
-                            <a th:href="@{|/myPage/wishList?cp=*{nextPage}|}">&gt;</a>
-                        </li>
-                        <li><a th:href="@{|/myPage/wishList?cp=*{maxPage}|}">&gt;&gt;</a></li>
-                    </ul>
+                 <th:block th:if="${wishList.size()> 0}">
+
+                    <div class="pagination">
+                        <ul class = "pagination" th:object="${pagination}">
+                            <li><a th:href="@{|/myPage/wishList?cp=1|}">&lt;&lt;</a></li>
+                            <li><a th:href="@{|/myPage/wishList?cp=*{prevPage}|}">&lt;</a></li>
                 
-                </div>
+                            <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+        
+                                <li th:if="${i} == *{currentPage}">
+                                    <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                                </li>
+        
+                                <li th:unless="${i} == *{currentPage}">
+                                    <a th:href="@{|/myPage/wishList?cp=${i}|}"
+                                    th:text="${i}">이동할 페이지</a>
+                                </li>
+                                
+                            </th:block>
+                
+                        
+                            <li>
+                                <a th:href="@{|/myPage/wishList?cp=*{nextPage}|}">&gt;</a>
+                            </li>
+                            <li><a th:href="@{|/myPage/wishList?cp=*{maxPage}|}">&gt;&gt;</a></li>
+                        </ul>
+                    
+                    </div>
+                 </th:block>
+
+                
 
             </section>
         </section>

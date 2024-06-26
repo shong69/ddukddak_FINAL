@@ -28,7 +28,12 @@ function partnerChat(){
 /***********************상담 카테고리선택***********************/
 
 const chattingContent = document.querySelector(".display-chatting");
+const inputChatting = document.getElementById('inputChatting');
+
 function customerChatting () {
+	if(inputChatting.disabled= false){
+		inputChatting.setAttribute('disabled');
+	}
 	//1. 문의 카테고리 불러오기->선택
 	const categorys = {
 		'제품정보':1,
@@ -80,7 +85,7 @@ function customerChatting () {
 	div.append(span);
 	li.append(img, div);
 	chattingContent.append(li);
-
+	inputChatting.disabled = true;
 	scrollBtm();
 }
 
@@ -152,12 +157,30 @@ function choose2(event){
 	li.append(img, div);
 	chattingContent.append(li);
 
-	document.getElementById('inputChatting').removeAttribute('disabled');
+	inputChatting.removeAttribute('disabled');
 
 
 	//주문번호 입력하는 경우
 	document.querySelector("#send").addEventListener("click", async() => {
 		const value = document.querySelector("#inputChatting").value;
+
+
+		const li = document.createElement("li");
+		li.classList.add("my-chat");
+		const div = document.createElement("div");
+		const p = document.createElement("p");
+		p.classList.add("u-chat");
+		p.innerText=value;
+		div.append(p);
+		const span = document.createElement("span");
+		span.classList.add("chatDate");
+		span.innerText = getCurrentTimeAMPM();
+		div.append(span);
+		li.append(div);
+		chattingContent.append(li);
+
+		scrollBtm();
+
 		const obj = {
 			"value" : value,
 		}
@@ -203,8 +226,6 @@ function choose2(event){
 			li.append(img, div);
 			chattingContent.append(li);
 
-
-
 				// 1초 후에 다시 함수 실행
 			setTimeout(() => {
 				customerChatting();
@@ -238,7 +259,7 @@ function choose2(event){
 		
 			const p = document.createElement("p");
 			p.classList.add("chat");
-			p.innerText="조회에 실패하였습니다.\n다시 입력해주세요.";
+			p.innerText="조회에 실패하였습니다.\n다시 시도해주세요.";
 			div.append(div1, p);
 			const span = document.createElement("span");
 			span.classList.add("chatDate");
@@ -258,17 +279,18 @@ function choose2(event){
 					element.classList.remove("c-chat");
 				}
 			})
-
+			
 			// 1초 후에 다시 함수 실행
 			setTimeout(() => {
 				customerChatting();
 			}, 2000);
 			
 			scrollBtm();
+			inputChatting.disabled = true;
 				} 
 	});
 
-	document.getElementById('inputChatting').setAttribute(disabled);
+
 	scrollBtm();
 }
 

@@ -27,6 +27,7 @@ function updatePagination(pagination) {
 
     if (currentPage === 1) {
         firstPage.classList.add("disabled");
+        firstPage.innerHTML = `&lt;&lt;`;
     }else{
         firstPage.innerHTML = `<a href="#" onclick="goToPage(1)">&lt;&lt;</a>`;
     }
@@ -36,6 +37,7 @@ function updatePagination(pagination) {
 
     if (currentPage === 1) {
         prevPage.classList.add("disabled");
+        prevPage.innerHTML= `&lt;`;
     }else{
         prevPage.innerHTML = `<a href="#" onclick="goToPage(${currentPage - 1})">&lt;</a>`;
     }
@@ -57,6 +59,7 @@ function updatePagination(pagination) {
     if (currentPage === pagination.maxPage) {
         console.log(pagination.maxPage);
         nextPage.classList.add("disabled");
+        nextPage.innerHTML=`&gt;`;
     }else{
         nextPage.innerHTML = `<a href="#" onclick="goToPage(${currentPage + 1})">&gt;</a>`;
     }
@@ -66,6 +69,7 @@ function updatePagination(pagination) {
 
     if (currentPage === pagination.maxPage) {
         lastPage.classList.add("disabled");
+        lastPage.innerHTML = `&gt;`;
     }else{
         lastPage.innerHTML = `<a href="#" onclick="goToPage(${pagination.maxPage})">&gt;&gt;</a>`;
     }
