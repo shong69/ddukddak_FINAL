@@ -59,35 +59,35 @@
 
                 </ul>
 
-                <th:block>
-                    
-                </th:block>
-                <div class="pagination">
-                    <ul class = "pagination" th:object="${pagination}">
-                        <li><a th:href="@{/myCommunity/myPageHouseBoard(cp=1)}">&lt;&lt;</a></li>
-                        <li><a th:href="@{/myCommunity/myPageHouseBoard(cp=*{prevPage})}">&lt;</a></li>
-            
-                        <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
-    
-                            <li th:if="${i} == *{currentPage}">
-                                <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
-                            </li>
-    
-                            <li th:unless="${i} == *{currentPage}">
-                                <a th:href="@{/myCommunity/myPageHouseBoard(cp=${i})}"
-                                th:text="${i}">이동할 페이지</a>
-                            </li>
-                            
-                        </th:block>
-            
-                    
-                        <li>
-                            <a th:href="@{/myCommunity/myPageHouseBoard(cp=*{nextPage})}">&gt;</a>
-                        </li>
-                        <li><a th:href="@{/myCommunity/myPageHouseBoard(cp=*{maxPage})}">&gt;&gt;</a></li>
-                    </ul>
+                <th:block th:if="${myHouseBoardList.size()> 0}">
+                    <div class="pagination">
+                        <ul class = "pagination" th:object="${pagination}">
+                            <li><a th:href="@{/myCommunity/myPageHouseBoard(cp=1)}">&lt;&lt;</a></li>
+                            <li><a th:href="@{/myCommunity/myPageHouseBoard(cp=*{prevPage})}">&lt;</a></li>
                 
-                </div>
+                            <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+        
+                                <li th:if="${i} == *{currentPage}">
+                                    <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                                </li>
+        
+                                <li th:unless="${i} == *{currentPage}">
+                                    <a th:href="@{/myCommunity/myPageHouseBoard(cp=${i})}"
+                                    th:text="${i}">이동할 페이지</a>
+                                </li>
+                                
+                            </th:block>
+                
+                        
+                            <li>
+                                <a th:href="@{/myCommunity/myPageHouseBoard(cp=*{nextPage})}">&gt;</a>
+                            </li>
+                            <li><a th:href="@{/myCommunity/myPageHouseBoard(cp=*{maxPage})}">&gt;&gt;</a></li>
+                        </ul>
+                    
+                    </div>
+                </th:block>
+
             </section>
         </section>
 

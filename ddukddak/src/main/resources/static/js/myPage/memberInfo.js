@@ -710,7 +710,10 @@ phoneConfirmBtn.addEventListener("click", () => {
 
 //-----------------------------------------------------------------------------------
 const memberAddress = loginMemberAddress?.replace(/\^\^\^/g, ' ');
-document.querySelector("#addrDiv").innerText = memberAddress;
+if(memberAddress != undefined){ //주소가 있으면 넣기
+    document.querySelector("#addrDiv").innerText = memberAddress;
+}
+
 
 
 //6. 주소 변경
