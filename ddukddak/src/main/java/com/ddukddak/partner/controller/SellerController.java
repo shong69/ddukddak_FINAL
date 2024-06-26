@@ -320,6 +320,7 @@ public class SellerController {
 										@RequestParam (name = "optionName", required = false) List<String> optionName,
 										@RequestParam (name = "optionContent", required = false) List<String> optionContent,
 										@RequestParam (name = "optionCount", required = false) List<String> optionCount,
+										@RequestParam(name="explainImg", required = false) List<MultipartFile> explainImgs,
 										@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) throws IllegalStateException, IOException  {
 		
 		int memberNo = loginPartnerMember.getPartnerNo();
@@ -357,6 +358,13 @@ public class SellerController {
 		log.info("imgList : " + imgList);
 
 		int result2 = service.updateInsertImg(productNo, smallCategory, imgList);
+		
+		// 설명사진
+		List<MultipartFile> imgList2 = new ArrayList<>(explainImgs);
+		
+		log.info("explainImgs : " + explainImgs);
+		
+		int result9 = service.updateInsertEnplainImg(productNo, smallCategory, explainImgs);
 
 		// 옵션 비우기
 		int result4 = service.delOption(productNo);
@@ -433,6 +441,7 @@ public class SellerController {
 			@RequestParam (name = "optionName", required = false) List<String> optionName,
 			@RequestParam (name = "optionContent", required = false) List<String> optionContent,
 			@RequestParam (name = "optionCount", required = false) List<String> optionCount,
+			@RequestParam(name="explainImg", required = false) List<MultipartFile> explainImgs,
 			@SessionAttribute("loginPartnerMember") Partner loginPartnerMember) throws IllegalStateException, IOException  {
 		
 		int memberNo = loginPartnerMember.getPartnerNo();
@@ -470,6 +479,17 @@ public class SellerController {
 		log.info("subImgs : " + subImgs);
 		
 		int result2 = service.updateInsertImg(productNo, smallCategory, imgList);
+		
+		// 설명사진
+		
+		// 설명사진 비우기
+		int result10 = service.deleteExplainImg(productNo);
+		
+		List<MultipartFile> imgList2 = new ArrayList<>(explainImgs);
+		
+		log.info("explainImgs : " + explainImgs);
+		
+		int result9 = service.updateInsertEnplainImg(productNo, smallCategory, explainImgs);
 		
 		// 옵션 비우기
 		int result4 = service.delOption(productNo);

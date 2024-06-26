@@ -10,9 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class NaverResponse {
-	private String accessToken;
-	private String refreshToken;
-	private Integer expiresIn;
+	private String access_token;
+	private String refresh_token;
+	private String token_type;
+	private Integer expires_in;
 	private String error;
-	private String errorDescription;	
+	private String error_description;	
 }

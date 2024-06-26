@@ -63,17 +63,6 @@ public interface MemberMapper {
 	 */
 	int signup(Member inputMember);
 
-	/** 네이버 로그인 - 이메일로 가입한 멤버 찾기
-	 * @param naverEmail
-	 * @return
-	 */
-	Member findMemberByEmail(String naverEmail);
-
-	/** 네이버 회원가입
-	 * @param newNaverMember
-	 * @return
-	 */
-	int naverSignup(Member newNaverMember);
 
 	/** 카카오 로그인 - 이메일 가입 멤버 찾기
 	 * @param email
@@ -99,6 +88,19 @@ public interface MemberMapper {
 	 * @return
 	 */
 	int googleSignup(Member newGoogleMember);
+
+	/** 네이버 중복 찾기
+	 * @param email
+	 * @return
+	 */
+	Member findMemberByNaver(String email);
+	
+	
+	/** 네이버 회원가입
+	 * @param newNaverMember
+	 * @return
+	 */
+	int naverSignup(Member newNaverMember);
 
 
 

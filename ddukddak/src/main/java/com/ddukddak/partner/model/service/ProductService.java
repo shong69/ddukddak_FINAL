@@ -125,6 +125,16 @@ public interface ProductService {
 	 * @throws IllegalStateException 
 	 */
 	int updateInsertImg(String proudctNo, String smallCategory, List<MultipartFile> imgList) throws IllegalStateException, IOException;
+	
+	/** 설명사진 판매등록
+	 * @param productNo
+	 * @param smallCategory
+	 * @param explainImgs
+	 * @return
+	 * @throws IOException 
+	 * @throws IllegalStateException 
+	 */
+	int updateInsertEnplainImg(String productNo, String smallCategory, List<MultipartFile> explainImgs) throws IllegalStateException, IOException;
 
 	/** 대표사진 업데이트
 	 * @param thumbnailImg
@@ -197,6 +207,13 @@ public interface ProductService {
 	int rejectShipment(Map<String, Object> map);
 
 	Map<String, Object> selectCompleteList(int partnerNo, int mainSort, int sort, String status, int cp);
+
+	/** 설명사진 지우기
+	 * @param productNo
+	 * @return
+	 */
+	int deleteExplainImg(String productNo);
+
 
 
 
