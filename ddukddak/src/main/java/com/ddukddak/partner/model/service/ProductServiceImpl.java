@@ -1226,7 +1226,7 @@ public class ProductServiceImpl implements ProductService{
 						
 						List<Product> completeList = mapper.selectCompleteList(partnerNo, rowBounds);
 						
-						log.info("receiptList selectReceiptList : " + completeList.toString());
+						log.info("completeList : " + completeList.toString());
 						
 						Map<String, Object> map = new HashMap<>();
 						map.put("pagination", pagination);
