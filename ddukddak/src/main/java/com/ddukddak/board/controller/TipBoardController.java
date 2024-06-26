@@ -170,6 +170,9 @@ public class TipBoardController {
 				
 			}
 		}
+		log.info("boardTypeList : " +  application.getAttribute("boardTypeList").toString());
+		
+		
 		model.addAttribute("board", board);
 		model.addAttribute("boardTypeList", application.getAttribute("boardTypeList"));
 //		log.info("board : " + board.toString());

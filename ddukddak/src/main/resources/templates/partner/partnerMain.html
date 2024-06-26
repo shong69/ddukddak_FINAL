@@ -30,14 +30,9 @@
             </div>
         </th:block>
 
-        <th:block th:if="${session.loginPartnerMember}" th:object="${session.loginPartnerMember}">
+        <th:block th:if="${session.loginPartnerMember}">
             <div>
-                <th:block th:if="#{partnerType} == 1">
-                    <a href="/partner/logout"><h4>로그아웃</h4></a>
-                </th:block>
-                <th:block th:if="#{partnerType} == 2">
-                    <a href="/partner/logout"><h4>로그아웃</h4></a>
-                </th:block>
+                <a href="/partner/logout"><h4>로그아웃</h4></a>
             </div>
         </th:block>
     </header>
