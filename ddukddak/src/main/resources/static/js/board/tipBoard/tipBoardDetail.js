@@ -129,7 +129,8 @@ if(deleteBtn != null) {
     }
   
     fetch("/tip/deleteTip?boardNo=" + boardNo + "&boardCode=" + boardCode, {
-      method : "DELETE"
+      method : "DELETE",
+      headers : {"Content-Type" : "application/json"}
     })
     .then(resp => resp.text())
     .then(result => {

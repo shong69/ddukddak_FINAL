@@ -209,6 +209,7 @@ body {
 .tipMainContainer {
     display: flex;
     flex-direction: column;
+    /* align-items: center; */
 }
 
 .tipBoardMainContainer {
@@ -219,7 +220,7 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    /* padding-bottom: 30px; */
+    padding-bottom: 30px;
 }
 
 .tipBoardContainer {
@@ -342,6 +343,7 @@ body {
 
 .tipBoardMainContainer.active {
     display: flex; 
+    /* justify-content: space-around; */
 }
 
 .tipBoardMoreBtnContainer {

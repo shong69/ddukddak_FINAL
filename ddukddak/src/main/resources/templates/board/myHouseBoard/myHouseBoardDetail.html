@@ -128,17 +128,26 @@
 
   <script th:inline="javascript">
 
-    const boardCode = /*[[${boardTypeList[0].boardCode}]]*/ "게시판 코드";
+      const boardTypeList = /*[[${boardTypeList}]]*/ [];
 
-    const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원번호";
+      const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원번호";
 
-    const boardNo = /*[[${board.boardNo}]]*/ "게시글 번호";
+      const boardNo = /*[[${board.boardNo}]]*/ "게시글 번호";
 
-    const writerNo = /*[[${board.memberNo}]]*/ "작성자 번호";
+      const writerNo = /*[[${board.memberNo}]]*/ "작성자 번호";
 
-    let likeCheck = /*[[${board.likeCheck}]]*/ "좋아요 여부";
+      let likeCheck = /*[[${board.likeCheck}]]*/ "좋아요 여부";
 
-    const userDefaultImage = /*[[#{user.default.image}]]*/ "기본 이미지";
+      const userDefaultImage = /*[[#{user.default.image}]]*/ "기본 이미지";
+
+      // Extract boardCode for boardName "노하우"
+      let boardCode = "게시판 코드";
+      for (const board of boardTypeList) {
+          if (board.boardName === "집들이") {
+              boardCode = board.boardCode;
+              break;
+          }
+      }
 
   </script>
 
