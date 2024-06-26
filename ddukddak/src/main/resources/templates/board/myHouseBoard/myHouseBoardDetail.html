@@ -53,7 +53,7 @@
         </div>
 
         <div class="myHouseTitle">
-          <h4 th:text="|[${application.boardTypeList[0].boardName}]|">게시판이름</h4>
+          <h4 th:text="|[${boardTypeList[0].boardName}]|">게시판이름</h4>
 
           <div>
             <h2 th:text="${board.boardTitle}">게시글 제목</h2>
@@ -109,6 +109,7 @@
             <button type="button" id="deleteBtn">삭제</button>
           </div>
         </th:block>
+
         
       </div>
 
@@ -127,7 +128,7 @@
 
   <script th:inline="javascript">
 
-    const boardCode = /*[[${application.boardTypeList[0].boardCode}]]*/ "게시판 코드";
+    const boardCode = /*[[${boardTypeList[0].boardCode}]]*/ "게시판 코드";
 
     const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원번호";
 

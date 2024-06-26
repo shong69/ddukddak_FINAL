@@ -63,7 +63,7 @@
           <section class="listArea">
 
             <th:block th:if="${#lists.isEmpty(myHouseList)}">
-              <h3 class="emptyList">등록된 집들이 게시물이 없습니다.</h3>
+              <h2 class="emptyList">등록된 집들이 게시물이 없습니다.</h2>
             </th:block>
 
             <th:block th:each="myHouse : ${myHouseList}" th:unless="${#lists.isEmpty(myHouseList)}">
@@ -134,7 +134,7 @@
             <button type="button" class="boardCreateBtn" id="boardCreateBtn" th:if="${session.loginMember}">작성하기</button>
           </section>
           
-          <section class="paginationArea">
+          <section class="paginationArea" th:unless="${#lists.isEmpty(myHouseList)}">
 
             <div class="pagination-area">
           

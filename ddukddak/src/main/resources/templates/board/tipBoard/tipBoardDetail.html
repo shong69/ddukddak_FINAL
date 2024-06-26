@@ -51,7 +51,7 @@
         </div>
 
         <div class="myHouseTitle">
-          <h4 th:text="|[${application.boardTypeList[1].boardName}]|">[노하우]</h4>
+          <h4 th:text="|[${boardTypeList[1].boardName}]|">[노하우]</h4>
           <div>
             <h2 th:text="${board.boardTitle}">게시글 제목</h2>
 
@@ -107,7 +107,6 @@
           </div>
         </th:block>
 
-
       </div>
 
     </div>
@@ -148,13 +147,14 @@
             <button type="modalButton" id="cancelButton" class="myPageConfirmCancelBtn">취소</button>
           </div>
       </form>
+
     </div>
   </div>
 
   <th:block th:replace="~{common/fragments/footer}"></th:block>
 
   <script th:inline="javascript">
-    const boardCode = /*[[${application.boardTypeList[1].boardCode}]]*/ "게시판 코드";
+    const boardCode = /*[[${boardTypeList[1].boardCode}]]*/ "게시판 코드";
 
     const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원번호";
 
