@@ -69,7 +69,7 @@ function updatePagination(pagination) {
 
     if (currentPage === pagination.maxPage) {
         lastPage.classList.add("disabled");
-        lastPage.innerHTML = `&gt;`;
+        lastPage.innerHTML = `&gt;&gt;`;
     }else{
         lastPage.innerHTML = `<a href="#" onclick="goToPage(${pagination.maxPage})">&gt;&gt;</a>`;
     }
@@ -186,7 +186,7 @@ function loadTipBoards(page, pageSize) {
                                 section.className = 'tipBoard-item';
 
                                 const imgA = document.createElement("a");
-                                imgA.href = "/tip/deatil/" + myTipBoardList[listIndex].boardNo;
+                                imgA.href = `/tip/deatil/${myTipBoardList[listIndex].boardNo}`;
                                 const img = document.createElement('img');
                                 img.className = 'tipBoard-img';
                                 img.src = myTipBoardList[listIndex].thumbnail;

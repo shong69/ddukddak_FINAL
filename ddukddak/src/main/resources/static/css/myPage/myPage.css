@@ -405,6 +405,7 @@
     white-space: normal;
     text-align: start;
     margin: auto 0;
+    line-height: 20px;
 }
 .tipBoard-img{
     width:330px;
