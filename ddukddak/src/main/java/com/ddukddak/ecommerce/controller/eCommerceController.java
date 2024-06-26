@@ -544,7 +544,7 @@ public class eCommerceController {
         session.setAttribute("formattedPaidAt", formattedPaidAt);
         
         // 쇼핑상품 랜덤 4개 가져오기
- 		List<Product> list = service.selectProduct(memberNo);
+ 		List<Product> list = service.selectProduct6(memberNo);
  		
  		model.addAttribute("selectProductList", list);
       

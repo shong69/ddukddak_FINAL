@@ -272,6 +272,12 @@ public interface eCommerceService {
 	 */
 	int delImg(Map<String, String> map);
 
+	/** 결제완료용 추천상품 6개 가져오기
+	 * @param memberNo
+	 * @return
+	 */
+	List<Product> selectProduct6(int memberNo);
+
 	
 
 
