@@ -1,12 +1,17 @@
-<!doctype html>
-<html lang="ko">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naver Callback</title>
+
+    <!-- <script src="/js/member/naverCallback.js" defer></script> -->
 </head>
 <body>
-
-    <!-- 콜백 호출 -->
-    <script src="/js/member/naverCallback.js"></script>
+    
+    <!-- 사용자 정보를 숨김 필드로 전달 -->
+    <input type="hidden" id="email" th:value="${email}" />
+    <input type="hidden" id="nickname" th:value="${nickname}" />
+    <input type="hidden" id="pw" th:value="${pw}" />
 </body>
 </html>
