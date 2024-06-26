@@ -26,18 +26,29 @@ public class GoogleLoginController {
 	/** 구글 로그인 요청 보내기
 	 * @param response
 	 * @throws IOException
-	 */
+	 */	
 	@GetMapping("googleLogin")
-    public void loginUrlGoogle(HttpServletResponse response) throws IOException {
-        String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleApi.getGoogleClientId()
-                + "&redirect_uri="
-                + googleApi.getGoogleRedirectUrl()
-                + "&response_type=code"
-                + "&scope=email%20profile%20openid"
-                + "&access_type=offline"
-        		+ "&prompt=select_account";
-        response.sendRedirect(reqUrl);
-    }
+	public String googleLoginPage() {
+		
+		String clientId = googleApi.getGoogleClientId();
+		String redirectUri = googleApi.getGoogleRedirectUrl();
+		
+	    // OAuth 2.0 인증 요청 URL을 생성
+	    String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?"
+	            + "client_id=" + clientId
+	            + "&redirect_uri=" + redirectUri
+	            + "&response_type=code"
+	            + "&scope=email%20profile%20openid"
+	            + "&access_type=offline"
+	            + "&prompt=select_account";
+	    
+	    log.info("clientId : " + clientId);
+	    log.info("redirectUri : " + redirectUri);
+	    log.info("OAuth 2.0 요청 URL: " + reqUrl);
+	    
+	    // 생성된 URL로 리디렉션
+	    return "redirect:" + reqUrl;
+	}
 	
 	/** 구글 로그인 콜백 처리 - 로그인, 회원가입 관련 로직은 멤버 쪽에서 
 	 * @param code
