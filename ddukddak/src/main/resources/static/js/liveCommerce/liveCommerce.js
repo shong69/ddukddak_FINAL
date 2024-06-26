@@ -148,6 +148,21 @@ if (chattingInput != null) {
 
 
 
+if (chattingInput != null) {
+    chattingButton.addEventListener("click", (e) => {
+        if(chattingInput.value.trim().length === 0) {
+            alert("채팅을 입력해 주세요");
+        } else {
+            makeChatting2();
+            chattingInput.value = "";
+        }
+    
+    });
+    
+}
+
+
+
 $(document).ready(function(){
     $('.slider').slick({
         slidesToShow: 4,
