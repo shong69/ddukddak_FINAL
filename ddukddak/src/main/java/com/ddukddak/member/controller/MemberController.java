@@ -442,7 +442,7 @@ public class MemberController {
         log.info("멤버 컨트롤러단 emali : " + email);
         log.info("멤버 컨트롤러단 nickName : " + nickName);
         
-        // 카카오 가입된 멤버 찾기
+        // 구글 가입된 멤버 찾기
         Member member = service.findMemberByGoogle(email);
         
         // 이후 네이버 로직과 동일
@@ -453,7 +453,7 @@ public class MemberController {
         	
         	if(member.getSocialLoginType().equals("G")) {
         		
-        		// 카카오 가입자 로그인
+        		// 구글 가입자 로그인
 				session.setAttribute("loginMember", member);
 				
 				return 1;
@@ -515,6 +515,98 @@ public class MemberController {
 			return 4;
         }
 	}
+	
+	/** 네이버 로그인
+	 * @param map
+	 * @param session
+	 * @return
+	 */
+	@PostMapping("naverData")
+	@ResponseBody
+	public int naverLogin(@RequestBody Map<String, String> map, HttpSession session) {
+	
+		
+        String email = map.get("email");
+        String nickName = map.get("nickname");
+        String pw = map.get("pw");
+        
+        log.info("멤버 컨트롤러단 emali : " + email);
+        log.info("멤버 컨트롤러단 nickName : " + nickName);
+        
+        // 네이버 가입된 멤버 찾기
+        Member member = service.findMemberByNaver(email);
+        
+        // 이후 네이버 처음 로직과 동일
+        
+        log.info("멤버 컨트롤러단 member 결과 : " + member);
+        
+        if(member != null) {
+        	
+        	if(member.getSocialLoginType().equals("N")) {
+        		
+        		// 카카오 가입자 로그인
+				session.setAttribute("loginMember", member);
+				
+				return 1;
+        	} else {
+        		
+        		// 일반 or 네이버 or 카카오
+        		
+        		return 2;
+        	}
+        } else {
+        	
+			// 1) 아이디
+			String uuid = "네이버_" + UUID.randomUUID().toString();
+        	
+			// 2) 닉네임 길면 자르고
+			if(nickName.length() > 10) {
+				nickName = nickName.substring(0, 10);
+			}
+			
+			// 3) 닉네임 중복 방지
+			String originalNickname = nickName;
+			
+			int count = 1;
+			 
+			while(service.checkNickname(nickName) == 1) {
+                nickName = originalNickname + count;
+                count++;
+			}
+			
+			
+			// 3) 이름은 그냥 카카오(중복 가능하니까)
+			String name = "네이버";
+			
+			Member newNaverMember = Member.builder()
+									.memberId(uuid)
+									.memberPw(pw)
+									.memberEmail(email)
+									.memberName(name)
+									.memberNickname(nickName)
+									.build();
+			
+			Member signinMember = service.naverSignup(newNaverMember);
+			
+			log.info("멤버 컨트롤러단 사인업 결과 : " + signinMember);
+			
+			if(signinMember != null) {
+				
+				// 회원 가입 성공
+				log.info("구글 회원 가입 시 정보 : " + signinMember);
+				// 로그인 실어주기
+				session.setAttribute("loginMember", signinMember);
+				
+				return 3;
+			} 
+			
+			
+			log.info("멤버 컨트롤러단 사인업 결과 4번 : " + signinMember);
+			// 로그인, 중복, 회원가입 다 실패
+			return 4;
+        }
+	}
+	
 	
 	
 	

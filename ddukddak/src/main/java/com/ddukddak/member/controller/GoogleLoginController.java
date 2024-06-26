@@ -53,7 +53,7 @@ public class GoogleLoginController {
 	/** 구글 로그인 콜백 처리 - 로그인, 회원가입 관련 로직은 멤버 쪽에서 
 	 * @param code
 	 * @param model
-	 * @return
+	 * @return 
 	 */
 	@GetMapping("oauth/googleCallback")
 	public String googleLogin(@RequestParam("code")String code, Model model) {

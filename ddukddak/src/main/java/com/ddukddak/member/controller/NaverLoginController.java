@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ddukddak.common.config.NaverConfig;
 import com.ddukddak.member.model.dto.Member;
+import com.ddukddak.member.model.dto.NaverResponse;
 import com.ddukddak.member.model.service.MemberService;
 import com.ddukddak.member.model.service.NaverService;
 
@@ -59,7 +60,15 @@ public class NaverLoginController {
 		return "redirect:" + reqUrl;
 	}
 	
-	@PostMapping("oauth/naverCallback")
+	
+	/** 네이버 콜백
+	 * @param code
+	 * @param model
+	 * @param state
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("oauth/naverCallback")
 	public String naverLogin(@RequestParam("code")String code, Model model, 
 							@RequestParam("state") String state, HttpSession session) {
 		
@@ -71,12 +80,46 @@ public class NaverLoginController {
         if (sessionState == null || !sessionState.equals(state)) {
             throw new IllegalStateException("유효하지 않은 상태 검증입니다.");
         }
-
-        // 서비스 단에서 유저 정보 구해오기
-        //Map<String, Object> userInfo = service.getNaverUserInfo(code, state);
         
-        
-        
+        //
+        try {
+            // 서비스 단에서 유저 정보 구해오기
+        	Map<String, Object> userInfo = service.getNaverUserInfo(code, state);
+            
+            /*
+            {response={id=DMiJp8--wkQCVwIJ0UxyLC6QI0JSmuc1cIG2rEyFcDc, 
+            nickname=눈누난나, 
+            email=soowagger@naver.com, 
+            name=신수민}, 
+            resultcode=00, 
+            message=success}
+            */
+        	
+        	log.info("컨트롤러에서 받은 userInfo : " + userInfo);
+        	
+            Map<String, Object> responseMap = (Map<String, Object>) userInfo.get("response");
+            String nickname = (String) responseMap.get("nickname");
+            String email = (String) responseMap.get("email");
+            String pw = (String) responseMap.get("id"); // 고유 클라이언트값 비번으로 활용
+        	
+        	log.info("닉네임 : {} / 이메일 : {} / 고유 ID : {} ", nickname, email, pw);
+        	
+        	// 구글, 카카오에서 이름을 활용하지 않았기 때문에 닉네임까지만 가져가자
+        	
+            // Null 체크(정책상 없겠지만)
+            if (email == null || nickname == null || pw == null) {
+                throw new IllegalArgumentException("네이버 사용자 정보가 포함되지 않았습니다.");
+            }
+        	
+            model.addAttribute("email", email);
+            model.addAttribute("nickname", nickname);
+            model.addAttribute("pw", pw);
+            
+        } catch (Exception e) {
+            
+        	log.error("네이버 로그인 중 오류 발생", e);
+            
+        }
 		
 		
 		return "member/naverCallback";

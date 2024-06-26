@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ddukddak.common.config.KakaoConfig;
+import com.ddukddak.member.model.dto.NaverResponse;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -62,7 +63,9 @@ public class KakaoServiceImpl implements KakaoService {
             String responseBody = response.getBody();
             JsonElement element = JsonParser.parseString(responseBody);
             JsonObject jsonObject = element.getAsJsonObject();
+            
             return jsonObject.get("access_token").getAsString();
+            
         }
         
         
