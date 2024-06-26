@@ -60,4 +60,6 @@ public interface MemberInfoService {
 	 */
 	int updateAddress(Map<String, Object> map);
 
+
+
 }
