@@ -235,6 +235,7 @@ const insertChildComment = (parentCommentNo, btn) => {
 
 // 댓글 수정 화면 보여주기
 const showUpdateComment = (commentNo, element) => {
+
   const commentContainer = element.closest('.commentContainer');
   const commentContent = commentContainer.querySelector('.commentContent');
   const originalContent = commentContent.innerText;
