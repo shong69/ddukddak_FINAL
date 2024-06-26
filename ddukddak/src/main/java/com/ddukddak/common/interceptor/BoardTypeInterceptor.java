@@ -62,6 +62,8 @@ public class BoardTypeInterceptor implements HandlerInterceptor{
 			
 			// 조회 결과를 application scope에 추가 	
 			application.setAttribute("boardTypeList", boardTypeList);
+			
+			log.info("boardTypeList : " + boardTypeList.toString());
 		}
 		
 		
