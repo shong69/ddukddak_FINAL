@@ -132,7 +132,7 @@ if(deleteBtn != null) {
     }
   
     fetch("/myHouse/deleteMyHouse?boardNo=" + boardNo + "&boardCode=" + boardCode, {
-      method : "DELETE",
+      method : "POST",
       headers : {"content-Type" : "application/json"}
     })
     .then(resp => resp.text())

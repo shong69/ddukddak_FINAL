@@ -245,7 +245,7 @@ public class MyHouseBoardController {
 	}
 	
 	
-	@DeleteMapping("deleteMyHouse")
+	@PostMapping("deleteMyHouse")
 	@ResponseBody
 	public int deleteMyHouse(@RequestParam("boardNo") int boardNo,
 							 @RequestParam("boardCode") int boardCode,
