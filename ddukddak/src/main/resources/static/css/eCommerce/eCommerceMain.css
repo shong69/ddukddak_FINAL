@@ -27,6 +27,21 @@
     height: 500px;
 }
 
+/* 광고배너 */
+#ad1 {
+    position: fixed;
+    top: 100px;
+    left: 50px;
+    width: 200px;
+}
+
+#ad2 {
+    position: fixed;
+    top: 100px;
+    right: 50px;
+    width: 200px;
+}
+
 
 
 /* 오늘의 상품 */
