@@ -131,6 +131,23 @@ window.onload = function() {
 };
 
 
+if (chattingInput != null) {
+    chattingInput.addEventListener("keypress", (e) => {
+        if(e.key === 'Enter') {
+            if(chattingInput.value.trim().length === 0) {
+                alert("채팅을 입력해 주세요");
+            } else {
+                makeChatting2();
+                chattingInput.value = "";
+            }
+        }
+    
+    });
+    
+}
+
+
+
 $(document).ready(function(){
     $('.slider').slick({
         slidesToShow: 4,

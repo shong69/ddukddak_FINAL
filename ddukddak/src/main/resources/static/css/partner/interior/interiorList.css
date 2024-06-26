@@ -6,10 +6,25 @@ section {
     width: 1020px;
 }
 
+/* 광고배너 */
+#ad1 {
+    position: fixed;
+    top: 150px;
+    left: 70px;
+    width: 200px;
+}
+
+#ad2 {
+    position: fixed;
+    top: 300px;
+    right: 70px;
+    width: 200px;
+}
+
 /* 배너 */
 .bannerArea {
     position: relative;
-    width: 1440px;
+    width: 1300px;
     height: 270px;
 }
 

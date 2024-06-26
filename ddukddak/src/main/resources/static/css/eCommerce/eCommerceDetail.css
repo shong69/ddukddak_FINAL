@@ -3,6 +3,22 @@
     margin-top: 50px;
 }
 
+/* 광고배너 */
+#ad1 {
+    position: fixed;
+    top: 100px;
+    left: 50px;
+    width: 150px;
+}
+
+#ad2 {
+    position: fixed;
+    top: 100px;
+    right: 50px;
+    width: 150px;
+    height: 350px;
+}
+
 #detailContainer {
     display: flex;
     flex-direction: column;
