@@ -76,3 +76,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+const boardCreateBtn = document.querySelector(".boardCreateBtn");
+if (boardCreateBtn != null) {
+    boardCreateBtn.addEventListener("click", () => {
+    
+        location.href="/tip/registTip?boardCode=" + boardCode;
+    
+    });
+}

@@ -55,13 +55,11 @@
               </div>
 
               <!-- 작성하기 버튼 -->
-              <form action="tip/registTip" method="get" class="btn-form">
                 <th:block th:if="${session.loginMember != null}">
                   <div class="btn-container">
                     <button class="boardCreateBtn">작성하기</button>
                   </div>
                 </th:block>
-              </form>
 
               <!-- 노하우 -->
               <div class="tipMainContainer">
@@ -84,7 +82,9 @@
     <!-- 푸터 -->
     <th:block th:replace="~{common/fragments/footer}"></th:block>
     
-
+    <script th:inline="javascript">
+      const boardCode = /*[[${boardCode}]]*/ "board code" 
+    </script>
     <script src="/js/board/boardMainPage.js"></script>
     <script src="/js/common/fragments/board/side-category.js"></script>
     <script src="/js/board/tipBoard/tipBoard-DOM.js"></script>

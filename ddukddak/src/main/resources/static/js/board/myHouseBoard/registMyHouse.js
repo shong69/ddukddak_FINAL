@@ -84,6 +84,7 @@ registMyHouseForm.addEventListener("submit", e => {
     const boardContent = document.querySelector("#boardContent");
     const images = document.getElementById('imageUpload').files;
     const mainImg = document.getElementById('mainImgHidden').value;
+    const boardCreateSubmitBtn =document.querySelector(".boardCreateSubmitBtn");
 
     console.log(images.length);
 
@@ -118,6 +119,11 @@ registMyHouseForm.addEventListener("submit", e => {
         return;
     }
 
+    if (boardCreateSubmitBtn != null) {
+        boardCreateSubmitBtn.addEventListener('click', () => {
+            location.href= "/tip/registTip";
+        }) ;
+    }
 });
 
 // ----------------------------------------------------------------------------

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.tomcat.util.http.fileupload.RequestContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -182,8 +183,10 @@ public class TipBoardController {
 	}
 	
 	@GetMapping("registTip")
-	public String registMyHouse() {
+	public String registMyHouse(@RequestParam("boardCode") int boardCode,
+												Model model) {
 		
+		model.addAttribute("boardCode", boardCode);
 		return "board/tipBoard/registTipBoard";
 	}
 	
@@ -194,6 +197,7 @@ public class TipBoardController {
 												@RequestParam ("mainImg") String mainImgFileName,
 												@RequestParam ("images") List<MultipartFile> images,
 												RedirectAttributes ra) throws IOException{
+		
 		
 		Board board = new Board();
 		
