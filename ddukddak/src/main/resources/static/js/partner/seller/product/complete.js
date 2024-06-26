@@ -28,6 +28,7 @@ function getStatusFromUrl() {
 document.addEventListener('DOMContentLoaded', function () {
     const status = getStatusFromUrl();
     if (status) {
+        console.log(status);
         const checkbox = document.querySelector(`input[name="order"][value="${status}"]`);
         if (checkbox) {
             checkbox.checked = true;
