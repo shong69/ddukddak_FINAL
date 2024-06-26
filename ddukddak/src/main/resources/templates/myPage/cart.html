@@ -31,7 +31,7 @@
                     
                     <table class="cartList">
                         <thead>
-                            <th>전체(N개)</th>
+                            <th th:text="|전체 ${cartList.size()}개|"></th>
                             <th><input name = "check" id="totalCheck" type="checkbox"></th>
                             <th>상품이미지</th>
                             <th>상품정보[옵션]</th>

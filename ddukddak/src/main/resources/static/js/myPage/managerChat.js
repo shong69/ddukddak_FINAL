@@ -31,6 +31,10 @@ const chattingContent = document.querySelector(".display-chatting");
 const inputChatting = document.getElementById('inputChatting');
 
 function customerChatting () {
+
+	// 기존에 있는 채팅 항목 초기화
+    chattingContent.innerHTML = '';
+	
 	if(inputChatting.disabled= false){
 		inputChatting.setAttribute('disabled');
 	}

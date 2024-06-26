@@ -163,7 +163,8 @@
                 <input type="radio" name="detail-toggle" id="detailOff" class="detailCheck">
                 
                 <div class="detail-content">
-                    <p th:each="t : ${e.getStackTrace()}" th:text="${t}"></p>
+                    <!-- <p th:each="t : ${e.getStackTrace()}" th:text="${t}"></p> -->
+                    <p>Error message: ${e.message}</p>
                 </div>
             </div>
             

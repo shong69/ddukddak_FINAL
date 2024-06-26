@@ -23,10 +23,5 @@ public class ExceptionController {
 		return "common/error/500";
 	}
 	
-    @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public String handleMaxSizeException(MaxUploadSizeExceededException exc, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("message", "파일 크기가 너무 큽니다. 최대 허용 크기는 10MB입니다.");
-        return "redirect:/uploadStatus";
-    }
 	
 }
