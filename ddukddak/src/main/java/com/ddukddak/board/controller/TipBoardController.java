@@ -258,7 +258,7 @@ public class TipBoardController {
 		return "redirect:" + path;
 	}
 	
-	@DeleteMapping("deleteTip")
+	@PostMapping("deleteTip")
 	@ResponseBody
 	public int deleteTip(@RequestParam("boardNo") int boardNo,
 							 @RequestParam("boardCode") int boardCode,
