@@ -117,7 +117,7 @@
 
                     <table style="text-align: center;">
 
-                        <thead>
+                        <thead style="height: 80px;">
                             <th>시공사</th>
                             <th>전화번호</th>
                             <!-- <th>주소</th>
@@ -128,8 +128,12 @@
 
                         <tbody>
 
+                            <tr th:if="${#lists.isEmpty(interiorList)}">
+                              <td colspan="4"><h1 style="border: 1px solid black; border-radius: 10px; color: var(--secondary);">조회되는 시공사가 없습니다.</h1></td>
+                            </tr>
+
                             <tr class="listRow"
-                                th:each="interior : ${interiorList}" th:object="${interior}">
+                                th:each="interior : ${interiorList}" th:object="${interior}" th:unless="${#lists.isEmpty(interiorList)}">
                                 <td th:text="*{partnerBusinessName}">삶</td>
                                 <td th:text="*{partnerTel}">01012341234</td>
                                 <td th:text="*{homeLink != null ? homeLink : '없음'}"></td>
@@ -148,7 +152,7 @@
                 </section>
                 
 
-                <section class="paginationArea">
+                <section class="paginationArea" th:unless="${#lists.isEmpty(interiorList)}">
 
                     <div class="pagination-area">
                   
