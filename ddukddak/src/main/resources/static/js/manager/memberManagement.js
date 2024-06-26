@@ -148,7 +148,7 @@ async function handleApproval(action, e) {
             const smsResult = await smsResponse.text();
 
             if (smsResult == 1) { // 문자 발송 성공
-                alert(`회원 탈퇴 처리가 완료되었습니다.\n해당 파트너에게 결과가 문자로 발송되었습니다.`);
+                alert(`회원 탈퇴 처리가 완료되었습니다.\n해당 회원에게 탈퇴 처리 결과가 문자로 발송되었습니다.`);
                 window.location.reload();
             } else {
                 alert("금일 발송량 초과 혹은 서버 문제로 인해 인증 번호 발송에 실패했습니다.");   
