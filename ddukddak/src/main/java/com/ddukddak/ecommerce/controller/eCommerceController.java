@@ -542,6 +542,11 @@ public class eCommerceController {
         session.setAttribute("point", point);
         session.setAttribute("myPoint", member.getMemberPoint());
         session.setAttribute("formattedPaidAt", formattedPaidAt);
+        
+        // 쇼핑상품 랜덤 4개 가져오기
+ 		List<Product> list = service.selectProduct(memberNo);
+ 		
+ 		model.addAttribute("selectProductList", list);
       
 
 		
