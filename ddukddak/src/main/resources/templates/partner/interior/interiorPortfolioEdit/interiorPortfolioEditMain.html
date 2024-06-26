@@ -25,12 +25,12 @@
             
             <div class="slideshow-container">
 
-                <th:block th:if="${portfolio.mainProject == null}">
-                    <img src="/partner/interior/portfolioEdit/noImageProject.png">
+                <th:block th:unless="${portfolio.mainProject == null}">
+                    <img src="/images/partner/interior/portfolioEdit/noImageProject.png" class="mySlides fade" style="object-fit: scale-down;">
                 </th:block>
 
                 <!-- Full-width images with number and caption text -->
-                <th:block th:unless="${portfolio.mainProject == null}">
+                <th:block th:if="${portfolio.mainProject == null}">
                     <div th:each="img : ${portfolio.mainProject.imgList}" th:object="${img}" class="mySlides fade">
                         <a th:href="@{/partner/projectDetail/{projectNo}(projectNo=*{projectNo})}" method="GET">
                             <!-- <p>[[|*{uploadImgPath}*{uploadImgRename}|]]</p> -->
