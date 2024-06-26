@@ -109,13 +109,13 @@ public class MyPageController {
 	
 	//--------------------------------------------------------------
 	
-	/**[회원정보] 프로필 이미지 변경 - 비동기
+	/**[회원정보] 프로필 이미지 변경
 	 * @param file
 	 * @param loginMemebr
 	 * @return
 	 * @throws Exception
 	 */
-	@PostMapping("memberInfo/profileImg")
+	@PostMapping("memberInfo")
 	public String changeProfileImg(
 			@RequestParam("profile-image") MultipartFile file,
 			@SessionAttribute("loginMember") Member loginMember,
