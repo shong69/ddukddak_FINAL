@@ -59,8 +59,8 @@ public class PaymentController {
     	
     	log.info("order 객체 결과 : " + order);
         
-    	int result = eCommerceService.createOrder(order);
-        
+    	int result = eCommerceService.createOrder(order);        
+    	
         String impKey = paymentConfig.getPayApikey();
         String impSecret = paymentConfig.getPaySecret();
         
