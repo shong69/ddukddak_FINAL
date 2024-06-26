@@ -1,5 +1,6 @@
 package com.ddukddak.common.exception;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -14,13 +15,13 @@ public class ExceptionController {
 		return "common/error/404";
 	}
 	
-//	@ExceptionHandler(Exception.class)
-//	public String allExceptionHandler(Exception e, Model model) {
-//		
-//		model.addAttribute("e", e);
-//		
-//		return "error/500";
-//	}
+	@ExceptionHandler(Exception.class)
+	public String allExceptionHandler(Exception e, Model model) {
+		
+		model.addAttribute("e", e);
+		
+		return "common/error/500";
+	}
 	
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public String handleMaxSizeException(MaxUploadSizeExceededException exc, RedirectAttributes redirectAttributes) {

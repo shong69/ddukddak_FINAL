@@ -58,7 +58,7 @@ public class GoogleServiceImpl implements GoogleService {
 									.clientId(googleApi.getGoogleClientId())
 									.clientSecret(googleApi.getGoogleClientSecret())
 									.code(code)
-									.redirectUri("http://localhost/oauth/googleCallback")
+									.redirectUri(googleApi.getGoogleRedirectUrl())
 									.grantType("authorization_code")
 									.build();
 				
