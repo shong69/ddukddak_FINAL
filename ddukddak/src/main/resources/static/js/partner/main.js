@@ -1,14 +1,10 @@
-const seller = document.querySelector('#sellerBtn');
-const interior = document.querySelector('#interiorBtn');
+const sellerBtn = document.querySelector('#sellerBtn');
+const interiorBtn = document.querySelector('#interiorBtn');
 
-if(seller != null) {
-    seller.addEventListener('click', () => {
-        seller.closest('form').submit();
-    })
-}
+sellerBtn.addEventListener("click", () => {
+    location.href = "/partner/seller/product/create";
+});
 
-if(interior != null) {
-    interior.addEventListener('click', () => {
-        interior.closest('form').submit();
-    })
-}
+interiorBtn.addEventListener("click", () => {
+    location.href = "/partner/interiorPortfolioEditMain";
+})

@@ -166,7 +166,12 @@ public class MyHouseBoardController {
 	}
 	
 	@GetMapping("registMyHouse")
-	public String registMyHouse() {
+	public String registMyHouse(@RequestParam("boardCode") int boardCode,
+								Model model) {
+		
+		log.info("boardCode : " + boardCode);
+		
+		model.addAttribute("boardCode", boardCode);
 		return "board/myHouseBoard/registMyHouse";
 	}
 	

@@ -59,9 +59,9 @@ public class InteriorController {
         	String path = null;
         	
         	if(result > 0) {
-        		path = "/partner/registProject";
+        		path = "partner/registProject";
         	} else {
-        		path = "/partner/main";
+        		path = "partner/main";
         	}
         	
         	return "redirect:" + path;

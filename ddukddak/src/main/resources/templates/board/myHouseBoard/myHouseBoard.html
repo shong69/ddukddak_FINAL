@@ -228,7 +228,9 @@
           
     <th:block th:replace="~{common/fragments/footer}"></th:block>
 
-
+    <script th:inline="javascript">
+      const boardCode = /*[[${boardCode}]]*/ "게시판 코드";
+    </script>
     <script src="/js/board/myHouseBoard/myHouseBoard.js"></script>
     <script src="/js/common/fragments/board/side-category.js"></script>
 
