@@ -30,11 +30,11 @@
 
         <div class="searchArea">
 
-          <div th:text="|${application.boardTypeList[1].boardName} 이미지 수정|" class="title"></div>
+          <div class="title">노하우 수정</div>
           
         </div>
 
-        <form th:action="@{/tip/updateTip(boardNo=${board.boardNo})}" method="POST" id="updateTipForm" enctype="multipart/form-data">
+        <form th:action="@{/tip/updateTip/{boardNo}(boardNo=${board.boardNo})}" method="POST" id="updateTipForm" enctype="multipart/form-data">
 
           <div class="input-img-area">
             <div class="projectImg thumbnail">

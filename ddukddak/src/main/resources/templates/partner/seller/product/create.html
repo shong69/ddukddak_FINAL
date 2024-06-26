@@ -68,33 +68,36 @@
         </div>
 
         <!-- 페이지네이션 -->
-        <div class="pagination">
-            <ul class = "pagination" th:object="${pagination}">
-                <li><a th:href="@{|/partner/seller/product/create?cp=1|}">&lt;&lt;</a></li>
-                <li><a th:href="@{|/partner/seller/product/create?cp=*{prevPage}|}">&lt;</a></li>
-    
-                <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
-
-                    <li th:if="${i} == *{currentPage}">
-                        <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
-                    </li>
-
-                    <li th:unless="${i} == *{currentPage}">
-                        <a th:href="@{|/partner/seller/product/create?cp=${i}|}"
-                        th:text="${i}">이동할 페이지</a>
-                    </li>
-                    
-                </th:block>
-    
-            
-                <li>
-                    <a th:href="@{|/partner/seller/product/create?cp=*{nextPage}|}">&gt;</a>
-                </li>
-                <li><a th:href="@{|/partner/seller/product/create?cp=*{maxPage}|}">&gt;&gt;</a></li>
-            </ul>
+         <th:block th:if="${createList.size() > 0}">
+            <div class="pagination">
+                <ul class = "pagination" th:object="${pagination}">
+                    <li><a th:href="@{|/partner/seller/product/create?cp=1|}">&lt;&lt;</a></li>
+                    <li><a th:href="@{|/partner/seller/product/create?cp=*{prevPage}|}">&lt;</a></li>
         
-        </div>
-
+                    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+    
+                        <li th:if="${i} == *{currentPage}">
+                            <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                        </li>
+    
+                        <li th:unless="${i} == *{currentPage}">
+                            <a th:href="@{|/partner/seller/product/create?cp=${i}|}"
+                            th:text="${i}">이동할 페이지</a>
+                        </li>
+                        
+                    </th:block>
+        
+                
+                    <li>
+                        <a th:href="@{|/partner/seller/product/create?cp=*{nextPage}|}">&gt;</a>
+                    </li>
+                    <li><a th:href="@{|/partner/seller/product/create?cp=*{maxPage}|}">&gt;&gt;</a></li>
+                </ul>
+            
+            </div>
+    
+         </th:block>
+ 
     </div>
 
 
@@ -129,7 +132,7 @@
                     <table>
                         <tr>
                             <td><h4>상품명</h4></td>
-                            <td><input id="productName" name="productName"></td>
+                            <td><input id="productName" name="productName" style="padding: 0 10px;"></td>
                         </tr>
                         <tr>
                             <td><h4>상품 분류</h4></td>
@@ -149,7 +152,7 @@
     
                         <tr>
                             <td><h4>판매가</h4></td>
-                            <td><input id="price" name="productPrice"></td>
+                            <td><input id="price" name="productPrice" style="padding: 0 10px;" type="number"></td>
                         </tr>
                     </table>
     

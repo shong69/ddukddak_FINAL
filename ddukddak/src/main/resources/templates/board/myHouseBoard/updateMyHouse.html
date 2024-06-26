@@ -30,13 +30,11 @@
 
         <div class="searchArea">
 
-          <div th:text="|${application.boardTypeList[0].boardName} 이미지 수정|" class="title"></div>
+          <div class="title">집들이 수정</div>
           
         </div>
 
-        <form th:action="@{updateMyHouse}" method="POST" id="updateMyHouseForm" enctype="multipart/form-data">
-          
-          <input type="hidden" name="boardNo" th:value="${board.boardNo}">
+        <form th:action="@{/myHouse/updateMyHouse/{boardNo}(boardNo=${board.boardNo})}" method="POST" id="updateMyHouseForm" enctype="multipart/form-data">
 
           <div class="input-img-area">
             <div class="projectImg thumbnail">

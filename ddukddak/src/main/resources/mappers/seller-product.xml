@@ -338,6 +338,7 @@
 			CATEGORY_NO = #{smallCategoryNo},
 			PRODUCT_PRICE = #{productPrice},
 			PARTNER_NO = #{memberNo},
+			PRODUCT_FL = 'N'
 		WHERE PRODUCT_NO = #{productNo}
 	</update>
 	

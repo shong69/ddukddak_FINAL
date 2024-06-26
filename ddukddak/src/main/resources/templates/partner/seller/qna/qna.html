@@ -55,36 +55,39 @@
         </div>
 
         <!-- 페이지네이션 -->
-        <div>
-            <ul class="pagination" th:object="${pagination}">
-                <li><a th:href="@{/partner/seller/qna?cp=1}">&lt;&lt;</a></li>
-
-                <li><a th:href="|/partner/seller/qna?cp=*{prevPage}|">&lt;</a></li>
-
-                <th:block th:if="*{startPage lt endPage}" th:each="i : *{#numbers.sequence(startPage, endPage)}">
+         <th:block th:if="${qnaList.size()>0}">
+            <div>
+                <ul class="pagination" th:object="${pagination}">
+                    <li><a th:href="@{/partner/seller/qna?cp=1}">&lt;&lt;</a></li>
+    
+                    <li><a th:href="|/partner/seller/qna?cp=*{prevPage}|">&lt;</a></li>
+    
+                    <th:block th:if="*{startPage lt endPage}" th:each="i : *{#numbers.sequence(startPage, endPage)}">
+                            
+                            <li th:if="${i} == *{currentPage}">
+                                <a class="current" th:text="${i}">현재페이지</a>
+                            </li>
+                            
+                            <li th:unless="${i} == *{currentPage}">
+                                <a th:href="|/partner/seller/qna?cp=${i}|"
+                                    th:text="${i}">이동할 페이지</a>
+                            </li>
+                        </th:block>
                         
-                        <li th:if="${i} == *{currentPage}">
-                            <a class="current" th:text="${i}">현재페이지</a>
-                        </li>
-                        
-                        <li th:unless="${i} == *{currentPage}">
-                            <a th:href="|/partner/seller/qna?cp=${i}|"
-                                th:text="${i}">이동할 페이지</a>
-                        </li>
-                    </th:block>
-                    
-
-                    <th:block th:unless="*{startPage lt endPage}">
-                        <li>
-                            <a class="current">1</a>
-                        </li>
-                    </th:block>
-
-                <li><a th:href="|/partner/seller/qna?cp=*{nextPage}|">&gt;</a></li>
-
-                <li><a th:href="|/partner/seller/qna?cp=*{maxPage}|">&gt;&gt;</a></li>
-            </ul>
-        </div>
+    
+                        <th:block th:unless="*{startPage lt endPage}">
+                            <li>
+                                <a class="current">1</a>
+                            </li>
+                        </th:block>
+    
+                    <li><a th:href="|/partner/seller/qna?cp=*{nextPage}|">&gt;</a></li>
+    
+                    <li><a th:href="|/partner/seller/qna?cp=*{maxPage}|">&gt;&gt;</a></li>
+                </ul>
+            </div>
+         </th:block>
+    
     </div>
 
 

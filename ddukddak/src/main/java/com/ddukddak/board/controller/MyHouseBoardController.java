@@ -256,8 +256,8 @@ public class MyHouseBoardController {
 		return service.deleteMyHouse(boardNo);
 	}
 	
-	@GetMapping("updateMyHouse")
-	public String updateMyHouse(@RequestParam("boardNo") int boardNo,
+	@GetMapping("updateMyHouse/{boardNo:[0-9]+}")
+	public String updateMyHouse(@PathVariable("boardNo") int boardNo,
 								@SessionAttribute(value="loginMember", required=false) Member loginMember,
 								RedirectAttributes ra,
 								Model model) {
@@ -282,8 +282,8 @@ public class MyHouseBoardController {
 	}
 	
 	
-	@PostMapping("updateMyHouse")
-	public String updateMyHouse(@RequestParam("boardNo") int boardNo,
+	@PostMapping("updateMyHouse/{boardNo:[0-9]+}")
+	public String updateMyHouse(@PathVariable("boardNo") int boardNo,
 								@RequestParam("boardTitle") String inputBoardTitle,
 								@RequestParam("boardContent") String inputBoardContent,
 								@RequestParam("images") List<MultipartFile> images,
@@ -304,10 +304,10 @@ public class MyHouseBoardController {
 		String message = null;
 		
 		if(result > 0) {
-			path = "detail/" + boardNo;
+			path = "/myHouse/detail/" + boardNo;
 			message = "집들이 게시글 수정이 완료되었습니다.";
 		} else {
-			path = "updateMyHouse";
+			path = "/myHouse/updateMyHouse/" + boardNo;
 			message = "집들이 게시글 수정에 실패하였습니다.";
 		}
 		
