@@ -53,7 +53,7 @@ function customerChatting () {
 	
 
 	const img = document.createElement("img");
-	img.src = "/images/default/main.jpg";
+	img.src = "/images/default/chatbot.webp";
 
 	const div = document.createElement("div");
 	const div1= document.createElement("div");
@@ -98,7 +98,7 @@ function choose1(event){
 	li.classList.add("target-chat");
 
 	const img = document.createElement("img");
-	img.src = "/images/default/main.jpg";
+	img.src = "/images/default/chatbot.webp";
 
 	const div = document.createElement("div");
 	const div1= document.createElement("div");
@@ -141,7 +141,7 @@ function choose2(event){
 	li.classList.add("target-chat");
 
 	const img = document.createElement("img");
-	img.src = "/images/default/main.jpg";
+	img.src = "/images/default/chatbot.webp";
 
 	const div = document.createElement("div");
 	const div1= document.createElement("div");
@@ -209,7 +209,7 @@ function choose2(event){
 			li.classList.add("target-chat");
 
 			const img = document.createElement("img");
-			img.src = "/images/default/main.jpg";
+			img.src = "/images/default/chatbot.webp";
 
 			const div = document.createElement("div");
 			const div1 = document.createElement("div");
@@ -252,7 +252,7 @@ function choose2(event){
 			li.classList.add("target-chat");
 		
 			const img = document.createElement("img");
-			img.src = "/images/default/main.jpg";
+			img.src = "/images/default/chatbot.webp";
 		
 			const div = document.createElement("div");
 			const div1= document.createElement("div");
@@ -303,7 +303,7 @@ function choose3(event){
 	li.classList.add("target-chat");
 
 	const img = document.createElement("img");
-	img.src = "/images/default/main.jpg";
+	img.src = "/images/default/chatbot.webp";
 
 	const div = document.createElement("div");
 	const div1= document.createElement("div");
@@ -344,7 +344,7 @@ function choose4(event){
 	li.classList.add("target-chat");
 
 	const img = document.createElement("img");
-	img.src = "/images/default/main.jpg";
+	img.src = "/images/default/chatbot.webp";
 
 	const div = document.createElement("div");
 	const div1= document.createElement("div");
@@ -388,7 +388,7 @@ function choose5(event){
 	li.classList.add("target-chat");
 
 	const img = document.createElement("img");
-	img.src = "/images/default/main.jpg";
+	img.src = "/images/default/chatbot.webp";
 
 	const div = document.createElement("div");
 	const div1= document.createElement("div");
@@ -432,7 +432,7 @@ function choose6(event){
 	li.classList.add("target-chat");
 
 	const img = document.createElement("img");
-	img.src = "/images/default/main.jpg";
+	img.src = "/images/default/chatbot.webp";
 
 	const div = document.createElement("div");
 	const div1= document.createElement("div");
@@ -477,7 +477,7 @@ function choose7(){
 	li.classList.add("target-chat");
 
 	const img = document.createElement("img");
-	img.src = "/images/default/main.jpg";
+	img.src = "/images/default/chatbot.webp";
 
 	const div = document.createElement("div");
 	const div1= document.createElement("div");
@@ -521,7 +521,7 @@ function choose0(event){
 	li.classList.add("target-chat");
 
 	const img = document.createElement("img");
-	img.src = "/images/default/main.jpg";
+	img.src = "/images/default/chatbot.webp";
 
 	const div = document.createElement("div");
 	const div1= document.createElement("div");
