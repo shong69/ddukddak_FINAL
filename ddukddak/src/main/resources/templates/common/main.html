@@ -249,11 +249,12 @@
         <button>시공사 찾기</button>
       </div>
     </div>
-    <th:block th:unless="${session.loginMember} == null">
-      <input id="loginMember" type="hidden" th:value="${session.loginMember}">
-      <input id="memberTel" type="hidden" th:value="${session.loginMember.memberTel}">
-    </th:block>
   </div> -->
+
+  <th:block th:unless="${session.loginMember} == null">
+    <input id="loginMember" type="hidden" th:value="${session.loginMember}">
+    <input id="memberTel" type="hidden" th:value="${session.loginMember.memberTel}">
+  </th:block>
 
   <div id="top">↑</div>
 
