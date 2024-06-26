@@ -28,7 +28,7 @@ function updatePagination(pagination) {
     if (currentPage === 1) {
         firstPage.classList.add("disabled");
         firstPage.innerHTML = `&lt;&lt;`;
-    }else{
+    } else {
         firstPage.innerHTML = `<a href="#" onclick="goToPage(1)">&lt;&lt;</a>`;
     }
     paginationElement.appendChild(firstPage);
@@ -38,11 +38,10 @@ function updatePagination(pagination) {
     if (currentPage === 1) {
         prevPage.classList.add("disabled");
         prevPage.innerHTML= `&lt;`;
-    }else{
+    } else {
         prevPage.innerHTML = `<a href="#" onclick="goToPage(${currentPage - 1})">&lt;</a>`;
     }
     paginationElement.appendChild(prevPage);
-
 
     for (let i = pagination.startPage; i <= pagination.endPage; i++) {
         const page = document.createElement("li");
@@ -60,7 +59,7 @@ function updatePagination(pagination) {
         console.log(pagination.maxPage);
         nextPage.classList.add("disabled");
         nextPage.innerHTML=`&gt;`;
-    }else{
+    } else {
         nextPage.innerHTML = `<a href="#" onclick="goToPage(${currentPage + 1})">&gt;</a>`;
     }
     paginationElement.appendChild(nextPage);
@@ -70,7 +69,7 @@ function updatePagination(pagination) {
     if (currentPage === pagination.maxPage) {
         lastPage.classList.add("disabled");
         lastPage.innerHTML = `&gt;&gt;`;
-    }else{
+    } else {
         lastPage.innerHTML = `<a href="#" onclick="goToPage(${pagination.maxPage})">&gt;&gt;</a>`;
     }
     paginationElement.appendChild(lastPage);
@@ -148,6 +147,10 @@ function loadHouseBoards(page, pageSize) {
                     div.classList.add("noHouseData");
                     div.innerText = "좋아요 한 게시글이 존재하지 않습니다.";
                     postArea.append(div);
+                    
+                    // 숨기기 또는 비우기
+                    const paginationElement = document.getElementById("pagination");
+                    paginationElement.innerHTML = "";
                 }
             }
         });
@@ -186,7 +189,7 @@ function loadTipBoards(page, pageSize) {
                                 section.className = 'tipBoard-item';
 
                                 const imgA = document.createElement("a");
-                                imgA.href = `/tip/deatil/${myTipBoardList[listIndex].boardNo}`;
+                                imgA.href = `/tip/detail/${myTipBoardList[listIndex].boardNo}`;
                                 const img = document.createElement('img');
                                 img.className = 'tipBoard-img';
                                 img.src = myTipBoardList[listIndex].thumbnail;
@@ -230,6 +233,10 @@ function loadTipBoards(page, pageSize) {
                     div.classList.add("noHouseData");
                     div.innerText = "좋아요 한 게시글이 존재하지 않습니다.";
                     postArea.append(div);
+                    
+                    // 숨기기 또는 비우기
+                    const paginationElement = document.getElementById("pagination");
+                    paginationElement.innerHTML = "";
                 }
             }
         });
