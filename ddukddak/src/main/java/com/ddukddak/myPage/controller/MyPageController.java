@@ -264,6 +264,10 @@ public class MyPageController {
 		int memberNo = member.getMemberNo();
 		map.put("memberNo", memberNo);
 		int result = infoService.updateAddress(map);
+		if(result > 0) {
+			member.setMemberAddr((String)map.get("memberAddr"));
+			session.setAttribute("loginMember", member);
+		}
 		return result;
 	}
 	
