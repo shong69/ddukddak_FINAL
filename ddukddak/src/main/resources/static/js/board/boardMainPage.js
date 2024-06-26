@@ -1,17 +1,16 @@
 const boardMainTop = document.querySelector("#boardMainTop");
 
-if (boardMainTop != null ) {
+if (boardMainTop != null) {
     boardMainTop.addEventListener("click", () => {
         window.scrollTo({
             top: 0,
             behavior: "smooth"
-        })
+        });
     });
 }
 
-
 /* 사이드바 트렌지션 부드럽게 */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const category = document.getElementById('categoryNav');
     let lastScrollY = window.scrollY;
     let isTicking = false;
@@ -55,8 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', onScroll);
 });
 
-
-
 /* 광고 더보기 눌렀을때 */
 const slideshow = document.querySelector(".boardAdContainer");
 const adViewMore = document.querySelector('.adViewMore');
@@ -67,16 +64,16 @@ const prev = document.querySelector('.prev');
 if (slideshow != null) {
     let slideIndex = 1;
     let slideInterval;
-    
+
     function showSlides(n) {
-        // console.log("Showing slide number:", n);
+        console.log("Showing slide number:", n);
         let i;
         let slides = document.getElementsByClassName("mySlides");
-        if(slides != null) {
+
+        if (slides != null && slides.length > 0) {
             if (n > slides.length) { slideIndex = 1; }
-            // 슬라이드 번호가 이미지 개수를 넘어가면 1번째 슬라이드로
             if (n < 1) { slideIndex = slides.length; }
-            // 슬라이드 번호가 1보다 작으면 마지막 슬라이드로
+
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
                 slides[i].style.opacity = 0.2;
@@ -86,15 +83,17 @@ if (slideshow != null) {
             setTimeout(() => {
                 slides[slideIndex - 1].style.opacity = 1;
             }, 30);
+
             if (adViewMore != null) {
-                
                 adViewMore.textContent = `${slideIndex} / ${slides.length}`;
             }
+        } else {
+            console.log("No slides found.");
         }
     }
 
     function plusSlides(n) {
-        // console.log("Moving slides by:", n);
+        console.log("Moving slides by:", n);
         slideIndex += n;
         showSlides(slideIndex);
         resetInterval();
@@ -107,36 +106,34 @@ if (slideshow != null) {
     }
 
     function resetInterval() {
-        // console.log("Resetting interval");
+        console.log("Resetting interval");
         clearInterval(slideInterval);
         slideInterval = setInterval(() => {
             plusSlides(1);
         }, 5000);
     }
-    
-    
-    showSlides(slideIndex);
 
+    showSlides(slideIndex);
     resetInterval();
+
     if (next != null) {
         next.addEventListener('click', () => {
-            // console.log("Next button clicked");
-             plusSlides(1);
-             resetInterval();
-         });
+            console.log("Next button clicked");
+            plusSlides(1);
+            resetInterval();
+        });
     }
 
     if (prev != null) {
         prev.addEventListener('click', () => {
+            console.log("Prev button clicked");
             plusSlides(-1);
             resetInterval();
         });
     }
 }
- 
 
-
-// 숨긴처리 
+/* 숨긴처리 */
 document.addEventListener('DOMContentLoaded', (event) => {
     const tipBoardMainContainers = document.querySelectorAll('.tipBoardMainContainer');
     const viewMoreBtn = document.querySelector("#tipBoardViewMore");
@@ -153,7 +150,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             if (currentVisibleIndex < tipBoardMainContainers.length - 1) {
                 currentVisibleIndex++;
                 tipBoardMainContainers[currentVisibleIndex].classList.remove('hidden'); // Show the next hidden list
-                
+
                 // If all lists are shown, hide the button
                 if (currentVisibleIndex >= tipBoardMainContainers.length - 1) {
                     viewMoreBtn.style.display = 'none';
@@ -186,11 +183,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 portListMainContainers[currentVisibleIndex].classList.remove('hidden'); // Show the next hidden list
                 tipBoardMainContainer[currentVisibleIndex].classList.remove('hidden');
                 // If all lists are shown, hide the button
-                if (currentVisibleIndex >= portListMainContainers.length - 1 && tipBoardMainContainer >= tipBoardMainContainer.length - 1) {
+                if (currentVisibleIndex >= portListMainContainers.length - 1 && currentVisibleIndex >= tipBoardMainContainer.length - 1) {
                     viewMoreBtn.style.display = 'none';
                 }
             }
-            
         });
     }
 });
@@ -198,44 +194,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
 const likeCount = document.querySelector("#likeCount");
 const boardLike = document.querySelector("#boardLike")
 
-if(boardLike != null) {
-  boardLike.addEventListener("click", e => {
+if (boardLike != null) {
+    boardLike.addEventListener("click", e => {
+        if (loginMemberNo == null) {
+            alert("로그인 후 이용해주세요.");
+            return;
+        }
 
-    if(loginMemberNo == null) {
-      alert("로그인 후 이용해주세요.");
-      return;
-    }
-  
-    const obj = {
-      "memberNo" : loginMemberNo,
-      "boardNo" : boardNo,
-      "likeCheck" : likeCheck
-    }
-  
-    // 좋아요 INSERT / DELETE 비동기 요청
-    fetch("/board/like", {
-      method : "POST",
-      headers : {"Content-Type" : "application/json"},
-      body : JSON.stringify(obj)
+        const obj = {
+            "memberNo": loginMemberNo,
+            "boardNo": boardNo,
+            "likeCheck": likeCheck
+        }
+
+        // 좋아요 INSERT / DELETE 비동기 요청
+        fetch("/board/like", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(obj)
+        })
+            .then(resp => resp.text())
+            .then(count => {
+                console.log(count);
+
+                if (count == -1) {
+                    console.log("좋아요 실패");
+                    return;
+                }
+
+                likeCheck = likeCheck == 0 ? 1 : 0;
+
+                e.target.classList.toggle("fa-regular");
+                e.target.classList.toggle("fa-solid");
+
+                likeCount.innerText = count;
+            });
     })
-    .then(resp => resp.text())
-    .then(count => {
-  
-      console.log(count);
-  
-      if(count == -1) {
-        console.log("좋아요 실패");
-        return;
-      }
-  
-      likeCheck = likeCheck == 0 ? 1 : 0;
-  
-      e.target.classList.toggle("fa-regular");
-      e.target.classList.toggle("fa-solid");
-  
-      likeCount.innerText = count;
-  
-    });
-  
-  })
 }
