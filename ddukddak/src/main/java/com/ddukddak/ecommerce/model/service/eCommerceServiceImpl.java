@@ -674,6 +674,32 @@ public class eCommerceServiceImpl implements eCommerceService{
 
 	}
 
+	// 결제완료용 추천상품 6개 가져오기
+	@Override
+	public List<Product> selectProduct6(int memberNo) {
+		List<Product> list = mapper.selectProduct(memberNo);
+		        
+		        List<Product> randomList = new ArrayList<Product>();
+		        
+		        List<Integer> saveNo = new ArrayList<Integer>();
+		        
+		        for(int i = 0; i < 6; i++) {
+		        	Random random = new Random();
+		            int randomIndex = random.nextInt(list.size());
+		            
+		            if(saveNo.contains(randomIndex)) {
+		            	i--;
+		            } else {
+		            	saveNo.add(randomIndex);
+		            	
+		            	randomList.add(list.get(randomIndex));
+		            }
+		        	
+		        }
+				
+				return randomList;
+	}
+
 
 	
 
