@@ -229,13 +229,13 @@ public class TipBoardController {
     	if(boardNo > 0) {
   		
     		// 후에 리스트, 상세페이지 다 되면 상세페이지로 넘어가게 수정
-    		path= "/tip/detail/" + boardNo;
+    		path= "detail/" + boardNo;
     		message = "노하우 게시글 등록이 완료되었습니다.";
     		
     		
     	} else {
     		
-    		path = "/tip/main";
+    		path = "main";
     		message = "노하우 게시글 등록에 실패하였습니다.";
     		
     	}

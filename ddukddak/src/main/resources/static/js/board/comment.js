@@ -236,31 +236,37 @@ const insertChildComment = (parentCommentNo, btn) => {
 // 댓글 수정 화면 보여주기
 const showUpdateComment = (commentNo, element) => {
 
+  // console.log(element);
+  
   const commentContainer = element.closest('.commentContainer');
   const commentContent = commentContainer.querySelector('.commentContent');
   const originalContent = commentContent.innerText;
-
-  const textarea = document.createElement('textarea');
-  textarea.classList.add('commentUpdateContent');
-  textarea.value = originalContent;
+  
+  
+  const inputTextarea = document.createElement('textarea');
+  inputTextarea.classList.add('commentUpdateContent');
+  inputTextarea.value = originalContent;
+  
+  element.parentElement.style.display='none';
 
   const updateBtn = document.createElement('button');
   updateBtn.classList.add("myPageMainBtn")
   updateBtn.innerText = '수정';
-  updateBtn.onclick = () => updateComment(commentNo, textarea.value);
+  updateBtn.onclick = () => updateComment(commentNo, inputTextarea.value);
 
   const cancelBtn = document.createElement('button');
   cancelBtn.classList.add("myPageMainBtn")
   cancelBtn.innerText = '취소';
   cancelBtn.onclick = () => {
+    element.parentElement.style.display = '';
     commentContent.style.display = 'block';
-    textarea.remove();
+    inputTextarea.remove();
     updateBtn.remove();
     cancelBtn.remove();
   }
 
   commentContent.style.display = 'none';
-  commentContent.after(textarea, updateBtn, cancelBtn);
+  commentContent.after(inputTextarea, updateBtn, cancelBtn);
 }
 
 // 댓글 수정

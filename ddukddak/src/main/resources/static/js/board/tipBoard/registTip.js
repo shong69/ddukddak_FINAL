@@ -116,6 +116,6 @@ registTipForm.addEventListener("submit", e => {
 
 document.querySelector("#backToList").addEventListener("click", () => {
 
-    location.href="/tip/main"
+    location.href="main?boardCode=" + boardCode;
 
 });
