@@ -47,19 +47,19 @@
 
     <th:block th:object="${session.loginPartnerMember}">
         <div id="selectContainer">
-            <form action="/partner/seller/product/create" method="get">
-                <div class="selectBox" id="sellerBtn">
-                    <i class="fa-solid fa-house-user"></i>
-                    <h3>판매사</h3>
-                </div>
-            </form>
+            
+            <button type="button" class="selectBox" id="sellerBtn">
+                <i class="fa-solid fa-house-user"></i>
+                <h3>판매사</h3>
+            </button>
+            
 
-            <form action="/partner/interiorPortfolioEditMain" method="get">
-                <div class="selectBox" id="interiorBtn">
-                    <i class="fa-solid fa-paint-roller"></i>
-                    <h3>시공사</h3>
-                </div>
-            </form>
+            
+            <button type="button" class="selectBox" id="interiorBtn">
+                <i class="fa-solid fa-paint-roller"></i>
+                <h3>시공사</h3>
+            </button>
+            
         </div>
     </th:block>
 

@@ -75,6 +75,9 @@ function updateMainImage(src, fileName) {
 
 /* 집들이 작성 유효성 검사 */
 
+const boardCreateSubmitBtn = document.querySelector(".boardCreateSubmitBtn");
+
+
 registMyHouseForm.addEventListener("submit", e => {
 
     const boardTitle = document.querySelector("#boardTitle");

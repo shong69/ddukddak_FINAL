@@ -5,7 +5,7 @@ const boardCreateBtn = document.querySelector("#boardCreateBtn");
 if (boardCreateBtn != null) {
     boardCreateBtn.addEventListener("click", () => {
     
-        location.href="/myHouse/registMyHouse";
+        location.href="/myHouse/registMyHouse?boardCode=" + boardCode;
     
     });
 }
