@@ -361,11 +361,14 @@ public class SellerController {
 		int result2 = service.updateInsertImg(productNo, smallCategory, imgList);
 		
 		// 설명사진
-		List<MultipartFile> imgList2 = new ArrayList<>(explainImgs);
-		
-		log.info("explainImgs : " + productNo);
-		
-		int result9 = service.updateInsertEnplainImg(productNo, smallCategory, imgList2);
+		if(explainImgs != null) {
+			List<MultipartFile> imgList2 = new ArrayList<>(explainImgs);
+			
+			log.info("explainImgs : " + productNo);
+			
+			int result9 = service.updateInsertEnplainImg(productNo, smallCategory, imgList2);
+			
+		}
 
 		// 옵션 비우기
 		int result4 = service.delOption(productNo);

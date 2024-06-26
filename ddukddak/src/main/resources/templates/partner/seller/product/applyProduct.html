@@ -144,11 +144,10 @@
                     <h4>상품 상세설명</h4>
 
                     <div class="form__input--file_wrap">
-                        <input accept="image/*" class="form__input--file" id="upload1" type="file" multiple>
+                        <input accept="image/*" class="form__input--file" id="upload1" name="explainImg" type="file" multiple>
                         <label class="form__label--file" for="upload1">파일선택</label>
                         <span class="form__span--file">선택된 파일이 없습니다.</span>
                     </div>
-                    <input type="file" id="explainImgInput" multiple>
                 </div>
 
 
@@ -272,13 +271,8 @@
 
         // subImageFiles를 FormData에 추가
         subImageFiles.forEach(file => {
+            console.log(file);
             formData.append('subImgs', file);
-        });
-
-        // explainImg 파일 추가
-        const explainImgInput = document.getElementById('explainImgInput');
-        Array.from(explainImgInput.files).forEach(file => {
-            formData.append('explainImg', file);
         });
 
         // 폼 데이터 로그 출력 (디버깅 용도)
@@ -333,12 +327,6 @@ function handleFormSubmissionModify(event) {
         // subImageFiles를 FormData에 추가
         subImageFiles.forEach(file => {
             formData.append('subImgs', file);
-        });
-
-        // explainImg 파일 추가
-        const explainImgInput = document.getElementById('explainImgInput');
-        Array.from(explainImgInput.files).forEach(file => {
-            formData.append('explainImg', file);
         });
 
         // 폼 데이터 로그 출력 (디버깅 용도)
