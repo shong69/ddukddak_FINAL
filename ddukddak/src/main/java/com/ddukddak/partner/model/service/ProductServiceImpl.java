@@ -519,6 +519,62 @@ public class ProductServiceImpl implements ProductService{
 		}
 		
 	}
+	
+	// 설명사진 업데이트
+	@Override
+	public int updateInsertEnplainImg(String productNo, String smallCategory, List<MultipartFile> explainImgs) throws IllegalStateException, IOException {
+		List<ProductImg> uploadList = new ArrayList<>();
+		
+		log.info("explainImgs" + explainImgs);
+	
+		// 상세사진 업로드가 없을 때
+		if(explainImgs.isEmpty()) {
+			return 1;
+		} else {
+			Map<String, Object> map = new HashMap<String, Object>();
+			
+			int result = 0;
+			
+			for(int i = 1; i < explainImgs.size(); i++) {
+				
+				// 원본명
+				String originalName = explainImgs.get(i).getOriginalFilename();
+				if(!originalName.equals("")) {
+					log.info("name : " +originalName);
+					
+					// 변경명
+					String rename = Utility.fileRename(originalName);
+					
+					map.put("uploadImgOgName", originalName);
+					map.put("uploadImgRename", rename);
+					map.put("uploadImgPath", webPath);
+					map.put("category", smallCategory);
+					map.put("productNo", Integer.parseInt(productNo));
+					map.put("uploadImgOrder", i);
+					
+					result += mapper.insertImg3(map);
+					
+					ProductImg img = ProductImg.builder()
+							.uploadImgOgName(originalName)
+							.uploadImgRename(rename)
+							.uploadImgPath(webPath)
+							.uploadImgOrder(i)
+							.uploadFile(explainImgs.get(i))
+							.build();
+					
+					uploadList.add(img);
+					
+				}
+				
+			}
+			// 폴더에 이미지저장
+			for(ProductImg img : uploadList) {
+				img.getUploadFile().transferTo( new File(folderPath + img.getUploadImgRename()) );
+			}
+			return result;
+			
+		}
+	}
 
 	// 대표사진 업데이트
 	@Override
@@ -1324,4 +1380,11 @@ public class ProductServiceImpl implements ProductService{
 					}
 				}
 	}
+
+	// 설명사진 비우기
+	@Override
+	public int deleteExplainImg(String productNo) {
+		return mapper.deleteExplainImg(productNo);
+	}
+
 }

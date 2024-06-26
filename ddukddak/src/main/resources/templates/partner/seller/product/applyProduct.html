@@ -130,7 +130,7 @@
                     <label for="subFile" class="upload">사진 등록</label>
                     <ul class="image-preview">
                         <th:block th:each="imgs : ${img}" th:object="${imgs}">
-                            <th:block th:if="${imgs.uploadImgOrder != 0}">
+                            <th:block th:if="${imgs.uploadImgOrder != 0 and imgs.uploadImgOrder < 99}">
                                 <li>
                                     <img th:src="|${imgs.uploadImgPath}${imgs.uploadImgRename}|" th:value="${imgs.uploadImgRename}">
                                     <button class="delButton fa-solid fa-trash-can" th:value="${imgs.uploadImgNo}"></button>
@@ -148,6 +148,7 @@
                         <label class="form__label--file" for="upload1">파일선택</label>
                         <span class="form__span--file">선택된 파일이 없습니다.</span>
                     </div>
+                    <input type="file" id="explainImgInput" multiple>
                 </div>
 
 
@@ -226,118 +227,141 @@
             }
         }
 
-        function handleFormSubmission(event) {
-            event.preventDefault(); // 기본 제출 동작 막기
-
-            //유효성 검사
-            var optionTemp = true;
-
-            const optionTemps = document.getElementsByClassName("applyButton");
-
-            console.log(optionTemps);
-
-            for(let i = 0; i < optionTemps.length; i ++) {
-                console.log(optionTemps[i]);
-                if(optionTemps[i].style.display != 'none') {
-                    optionTemp = false;
-                }
-            }
-
-            if(document.querySelector("#productName").value.trim().length === 0 ||
-                document.querySelector("#productPrice").value.trim().length === 0) {
-                    alert("모든 입력값 작성을 완료해주세요");
-            } else if(!optionTemp) {
-                alert("모든 옵션값 적용을 완료해주세요");
+        document.getElementById('upload1').addEventListener('change', function(event) {
+            var input = event.target;
+            var span = document.querySelector('.form__span--file');
+            var files = input.files;
+            
+            if (files.length === 0) {
+                span.textContent = '선택된 파일이 없습니다.';
             } else {
-                const form = document.getElementById('uploadForm');
-                console.log(form);
-                const formData = new FormData(form);
-    
-                // subImageFiles를 FormData에 추가
-                subImageFiles.forEach(file => {
-                    formData.append('subImgs', file);
-                });
-    
-                // 폼 데이터 로그 출력 (디버깅 용도)
-                for (let [key, value] of formData.entries()) {
-                    console.log(key, value);
+                var fileNames = [];
+                for (var i = 0; i < files.length; i++) {
+                    fileNames.push(files[i].name);
                 }
-    
-                // FormData 객체를 사용하여 서버로 POST 요청 보내기
-                fetch('/partner/seller/product/applySellProduct', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(result => {
-    
-                    if(result > 0) {
-                        alert("등록 완료");
-                        location.href = '/partner/seller/product/apply';
-                    } else {
-                        alert("등록 실패");
-                    }
-                })
-
+                span.textContent = fileNames.join(', ');
             }
+        });
 
+        function handleFormSubmission(event) {
+    event.preventDefault(); // 기본 제출 동작 막기
+
+    //유효성 검사
+    var optionTemp = true;
+
+    const optionTemps = document.getElementsByClassName("applyButton");
+
+    console.log(optionTemps);
+
+    for (let i = 0; i < optionTemps.length; i++) {
+        console.log(optionTemps[i]);
+        if (optionTemps[i].style.display != 'none') {
+            optionTemp = false;
+        }
+    }
+
+    if (document.querySelector("#productName").value.trim().length === 0 ||
+        document.querySelector("#productPrice").value.trim().length === 0) {
+        alert("모든 입력값 작성을 완료해주세요");
+    } else if (!optionTemp) {
+        alert("모든 옵션값 적용을 완료해주세요");
+    } else {
+        const form = document.getElementById('uploadForm');
+        console.log(form);
+        const formData = new FormData(form);
+
+        // subImageFiles를 FormData에 추가
+        subImageFiles.forEach(file => {
+            formData.append('subImgs', file);
+        });
+
+        // explainImg 파일 추가
+        const explainImgInput = document.getElementById('explainImgInput');
+        Array.from(explainImgInput.files).forEach(file => {
+            formData.append('explainImg', file);
+        });
+
+        // 폼 데이터 로그 출력 (디버깅 용도)
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
         }
 
-        function handleFormSubmissionModify(event) {
-            event.preventDefault(); // 기본 제출 동작 막기
-
-            
-            //유효성 검사
-            var optionTemp = true;
-
-            const optionTemps = document.getElementsByClassName("applyButton");
-
-            console.log(optionTemps);
-
-            for(let i = 0; i < optionTemps.length; i ++) {
-                console.log(optionTemps[i]);
-                if(optionTemps[i].style.display != 'none') {
-                    optionTemp = false;
-                }
-            }
-
-            if(document.querySelector("#productName").value.trim().length === 0 ||
-                document.querySelector("#productPrice").value.trim().length === 0) {
-                    alert("모든 입력값 작성을 완료해주세요");
-            } else if(!optionTemp) {
-                alert("모든 옵션값 적용을 완료해주세요");
+        // FormData 객체를 사용하여 서버로 POST 요청 보내기
+        fetch('/partner/seller/product/applySellProduct', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(result => {
+            if (result > 0) {
+                alert("등록 완료");
+                location.href = '/partner/seller/product/apply';
             } else {
-                const form = document.getElementById('uploadForm');
-                console.log(form);
-                const formData = new FormData(form);
-    
-                // subImageFiles를 FormData에 추가
-                subImageFiles.forEach(file => {
-                    formData.append('subImgs', file);
-                });
-    
-                // 폼 데이터 로그 출력 (디버깅 용도)
-                for (let [key, value] of formData.entries()) {
-                    console.log(key, value);
-                }
-    
-                // FormData 객체를 사용하여 서버로 POST 요청 보내기
-                fetch('/partner/seller/product/modifySellProduct', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.text())
-                .then(result => {
-    
-                    if(result > 0) {
-                        alert("등록 완료");
-                        location.href = '/partner/seller/product/apply';
-                    } else {
-                        alert("등록 실패");
-                    }
-                })
+                alert("등록 실패");
             }
+        });
+    }
+}
+
+function handleFormSubmissionModify(event) {
+    event.preventDefault(); // 기본 제출 동작 막기
+
+    //유효성 검사
+    var optionTemp = true;
+
+    const optionTemps = document.getElementsByClassName("applyButton");
+
+    console.log(optionTemps);
+
+    for (let i = 0; i < optionTemps.length; i++) {
+        console.log(optionTemps[i]);
+        if (optionTemps[i].style.display != 'none') {
+            optionTemp = false;
+        }
+    }
+
+    if (document.querySelector("#productName").value.trim().length === 0 ||
+        document.querySelector("#productPrice").value.trim().length === 0) {
+        alert("모든 입력값 작성을 완료해주세요");
+    } else if (!optionTemp) {
+        alert("모든 옵션값 적용을 완료해주세요");
+    } else {
+        const form = document.getElementById('uploadForm');
+        console.log(form);
+        const formData = new FormData(form);
+
+        // subImageFiles를 FormData에 추가
+        subImageFiles.forEach(file => {
+            formData.append('subImgs', file);
+        });
+
+        // explainImg 파일 추가
+        const explainImgInput = document.getElementById('explainImgInput');
+        Array.from(explainImgInput.files).forEach(file => {
+            formData.append('explainImg', file);
+        });
+
+        // 폼 데이터 로그 출력 (디버깅 용도)
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
+        // FormData 객체를 사용하여 서버로 POST 요청 보내기
+        fetch('/partner/seller/product/modifySellProduct', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(result => {
+            if (result > 0) {
+                alert("등록 완료");
+                location.href = '/partner/seller/product/apply';
+            } else {
+                alert("등록 실패");
             }
+        });
+    }
+}
     </script>
 
     

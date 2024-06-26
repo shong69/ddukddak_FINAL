@@ -229,6 +229,12 @@ public interface ProductMapper {
 	 * @return
 	 */
 	int insertImg2(Map<String, Object> map);
+	
+	/** 설명사진 업로드
+	 * @param map
+	 * @return
+	 */
+	int insertImg3(Map<String, Object> map);
 
 	/** 옵션 비우기
 	 * @param productNo
@@ -351,6 +357,13 @@ public interface ProductMapper {
 	int selectCompleteListCountSort(Map<String, Object> newMap);
 
 	List<Product> selectCompleteListSort(Map<String, Object> newMap, RowBounds rowBounds);
+
+	/** 설명사진 지우기
+	 * @param productNo
+	 * @return
+	 */
+	int deleteExplainImg(String productNo);
+
 
 
 
