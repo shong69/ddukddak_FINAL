@@ -340,7 +340,7 @@ function selectReviewList(productNo){
 
                     
                     editArea.append(updateBtn, delBtn);                    
-                    reviewWrite.append(editArea, infoArea);
+                    reviewWrite.append(infoArea, editArea);
                     li.append(reviewWrite);
 
                     //이미지 배열 추가----------------------------------
@@ -370,7 +370,7 @@ function selectReviewList(productNo){
                     const rateDiv =  document.createElement("span");
                     rateDiv.classList.add("rateDiv");
                     const rateTitle = document.createElement("span");
-                    rateTitle.innerText="별점";
+                    rateTitle.innerHTML=`평점 &nbsp`;
                     rateDiv.append(rateTitle);
                     const optionValue = document.createElement("span");
                     optionValue.classList.add("optionValue");
