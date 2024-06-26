@@ -40,7 +40,7 @@
 
                     <div id="imgSubContainer" >
                         <span th:each="img : ${productInfo.imgList}">
-                            <img th:src="|${img.uploadImgPath}${img.uploadImgRename}|" class="subImg">
+                            <img th:src="|${img.uploadImgPath}${img.uploadImgRename}|" th:if="${img.uploadImgOrder < 99}" class="subImg">
                         </span>
                     </div>
 
@@ -169,8 +169,14 @@
 
                         <div id="explain">
                             <img src="/images/eCommerce/ex-main1.png">
-                            <img src="/images/eCommerce/ex-main2.png">
                             <img src="/images/eCommerce/ex-main3.png">
+                        
+                            <div th:each="img : ${productInfo.imgList}" th:if="${img.uploadImgOrder > 99}">
+                                <div>
+                                    <img th:src="|${img.uploadImgPath}${img.uploadImgRename}|" class="mainImg">
+                                </div>
+            
+                            </div>
                         </div>
 
                         <th:block th:replace="~{eCommerce/eCommerceReview}"></th:block>
