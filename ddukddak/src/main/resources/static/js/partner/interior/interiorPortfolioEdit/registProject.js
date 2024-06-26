@@ -231,6 +231,16 @@ if (imageUpload != null) {
 
 }
 
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+var yyyy = today.getFullYear();
+
+today = yyyy + '-' + mm + '-' + dd;
+
+// input 태그의 max 속성에 현재 날짜 설정
+document.getElementById('constructionYear').setAttribute('min', today);
+
 function updateMainImage(src, fileName) {
     mainImgText.classList.add('mainImgText');
     mainImgText.style.display = 'block';
