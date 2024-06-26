@@ -115,10 +115,20 @@
         
         function submitSelectedCartForm() {
             const loginMemberTel = /*[[${session.loginMember.memberTel}]]*/ "휴대폰";
+            const loginMemberAddr = /*[[${session.loginMember.memberAddr}]]*/ "주소";
 
             if(loginMemberTel == null) {
 
                 if(confirm(`휴대폰이 등록되지 않으면 구매하실 수 없습니다.\n '확인' 버튼 클릭 시 휴대폰 등록 경로로 이동합니다.`)) {
+                    location.href = '/myPage/memberInfo';
+                }
+                
+                return;
+            }
+
+            
+            if(loginMemberAddr == null) {
+                if(confirm(`주소가 등록되지 않으면 구매하실 수 없습니다.\n '확인' 버튼 클릭 시 휴대폰 등록 경로로 이동합니다.`)) {
                     location.href = '/myPage/memberInfo';
                 }
                 
@@ -139,18 +149,18 @@
                 totalPrice += price * count;
         });
 
-        if (selectedCartIds.length === 0) {
-            alert("하나 이상의 상품을 선택해주세요.");
-            return;
-        }
+            if (selectedCartIds.length === 0) {
+                alert("하나 이상의 상품을 선택해주세요.");
+                return;
+            }
 
-        // cartIds 배열을 숨겨진 필드에 JSON 문자열로 설정
-        document.getElementById('cartIdsHidden').value = JSON.stringify(selectedCartIds);
+            // cartIds 배열을 숨겨진 필드에 JSON 문자열로 설정
+            document.getElementById('cartIdsHidden').value = JSON.stringify(selectedCartIds);
 
-        // 총 금액을 숨겨진 필드에 설정
-        document.getElementById('totalPriceHidden').value = totalPrice;
+            // 총 금액을 숨겨진 필드에 설정
+            document.getElementById('totalPriceHidden').value = totalPrice;
 
-        document.getElementById('cartForm').submit();
+            document.getElementById('cartForm').submit();
 
         }
 
