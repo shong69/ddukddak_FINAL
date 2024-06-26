@@ -161,7 +161,7 @@ if (updateBtn != null) {
 
   updateBtn.addEventListener("click", () => {
   
-    location.href = "/myHouse/updateMyHouse?boardNo=" + boardNo;
+    location.href = "/myHouse/updateMyHouse/" + boardNo;
   
   });
 }
