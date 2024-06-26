@@ -1969,8 +1969,6 @@
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
 			od.ORDER_ITEM_NO,
-			c.CART_ID,
-			m.MEMBER_NICKNAME,
 			o.MERCHANT_UID,
 		    uf.UPLOAD_IMG_PATH || uf.UPLOAD_IMG_RENAME AS THUMBNAIL,
 		    LISTAGG(o2.OPTION_NAME || ': ' || o2.OPTION_VALUE, ' / ') WITHIN GROUP (ORDER BY o2.OPTION_NAME) AS OPTIONS
@@ -1982,8 +1980,6 @@
 		JOIN BIG_CATEGORY bc ON c.BIG_CATEGORY_NO = bc.BIG_CATEGORY_NO
 		JOIN ORDERDETAIL_OPTION oo ON od.ORDER_ITEM_NO = oo.ORDER_ITEM_NO
 		JOIN "OPTION" o2 ON oo.OPTION_NO = o2.OPTION_NO
-		JOIN CART c ON p.PRODUCT_NO = c.PRODUCT_NO
-		JOIN "MEMBER" m ON c.MEMBER_NO = m.MEMBER_NO 
 		WHERE 
 			<choose>
 			            <when test="status == 'PC'">
@@ -2023,10 +2019,7 @@
 		    o.ORDER_DATE,
 		    od.ORDER_STATUS,
 			od.ORDER_ITEM_NO,
-			c.CART_ID,
-			m.MEMBER_NICKNAME,
-			o.MERCHANT_UID
-		ORDER BY p.PRODUCT_NO DESC)
+			o.MERCHANT_UID)
 	</select>
 	
 	<select id="selectCompleteListStatus">
@@ -2103,7 +2096,6 @@
 		    od.ORDER_STATUS,
 			od.ORDER_ITEM_NO,
 			o.MERCHANT_UID
-			ORDER BY p.PRODUCT_NO DESC
 	</select>
 	
 	<select id="selectCompleteListCountMainSort">
