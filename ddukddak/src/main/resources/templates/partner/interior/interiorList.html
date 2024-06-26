@@ -33,70 +33,6 @@
                     
                 </section>
 
-                
-                <!-- <section class="searchInterior">
-
-                    <div class="titleArea">
-                        <h2>시공사 찾기</h2>
-                    </div>
-                    
-                    <div>
-                        <table>
-                          <tr>
-                            <td><h3>시공사 지역</h3></td>
-                            <td>
-                              <select>
-                                <option>서울</option>
-                                <option>경기/인천</option>
-                                <option>충청/대전</option>
-                                <option>전라/광주</option>
-                                <option>경북/대구</option>
-                                <option>경남/부산/울산</option>
-                                <option>강원</option>
-                                <option>제주</option>
-                              </select>
-                            </td>
-                            <td><h3>견적금액</h3></td>
-                            <td>
-                              <input class="interiorPrice" type="number" step="100000" min="0">&nbsp;원
-                              <span>~</span>
-                              <input class="interiorPrice" type="number" step="100000" min="0">&nbsp;원
-                            </td>
-                          </tr>
-                
-                
-                          <tr>
-                            <td><h3>시공일정</h3></td>
-                            <td>
-                              <input type="date" class="selectDate">
-                              <span>~</span>
-                              <input type="date" class="selectDate">
-                            </td>
-                          </tr>
-                
-                
-                          <tr>
-                            <td><h3>원하는 스타일</h3></td>
-                            <td style="display: flex;">
-                              <input type="checkbox" name="style" value="1"><h4>모던</h4>
-                              <input type="checkbox" name="style" value="2"><h4>시크</h4>
-                              <input type="checkbox" name="style" value="3"><h4>화려</h4>
-                              <input type="checkbox" name="style" value="4"><h4>깔끔</h4>
-                              <input type="checkbox" name="style" value="5"><h4>무채색</h4>
-                            </td>
-                          </tr>
-                        </table>
-                      </div>
-                        
-                      
-                    </table>
-                    
-                    <div>
-                      <button class="interiorSearchBtn">시공사 찾기</button>
-                    </div>
-
-                </section> -->
-
                 <section class="searchInterior">
                     <h2>시공사 검색</h2>
 
@@ -129,7 +65,7 @@
                         <tbody>
 
                             <tr th:if="${#lists.isEmpty(interiorList)}">
-                              <td colspan="4"><h1 style="color: var(--secondary); border: 1px solid black;">조회되는 시공사가 없습니다.</h1></td>
+                              <td colspan="4"><h1 style="color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); border-radius: 10px;">조회되는 시공사가 없습니다.</h1></td>
                             </tr>
 
                             <tr class="listRow"
