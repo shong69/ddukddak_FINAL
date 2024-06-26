@@ -58,6 +58,13 @@ public class FileConfig implements WebMvcConfigurer{
 	private String eCommerceResourceLocation;
 	@Value("${my.ecommerce.resource-handler}")
 	private String eCommerceResourceHandler;
+	
+//	리뷰
+	@Value("${my.review.resource-location}")
+	private String reviewResourceLocation;
+	@Value("${my.review.resource-handler}")
+	private String reviewResourceHandler;
+	
 
 //	시공사 요청 주소
 	@Value("${my.interior.resource-handler}")
@@ -96,6 +103,9 @@ public class FileConfig implements WebMvcConfigurer{
 		registry.addResourceHandler(eCommerceResourceHandler)
 		.addResourceLocations(eCommerceResourceLocation);
 		
+//		리뷰 이미지
+		registry.addResourceHandler(reviewResourceHandler)
+		.addResourceLocations(reviewResourceLocation);
 //		시공사 이미지
 		registry.addResourceHandler(interiorResourceHandler)
 		.addResourceLocations(interiorResourceLocation);

@@ -672,15 +672,16 @@
     flex-direction: row;
     overflow-x: auto;
     width : 500px;
-    height: 70px;
+    height: 100px;
     margin: 5px;
     border : none;
     background-color: transparent;
 }
 .preview-image-container,
 .preview-image{
-    width : 70px;
-    height: 70px;
+    width: 100%;  /* 컨테이너의 너비에 맞춤 */
+    height: 100%; /* 컨테이너의 높이에 맞춤 */
+    object-fit: cover; /* 이미지가 컨테이너에 맞게 채워지도록 */
     margin:0 auto;
 }
 .delete-button{
@@ -754,10 +755,14 @@
 }
 .reviewImg>div{
     background-color: white;
+    height: inherit;
+    display: flex;
+    flex-direction: row;
 }
 .oneReviewImg{
-    width : 200px;
-    max-height: 200px;
+    width: 100%;  /* 컨테이너의 너비에 맞춤 */
+    height: 100%; /* 컨테이너의 높이에 맞춤 */
+    object-fit: cover;
 }
 
 .additionalInfoArea{
