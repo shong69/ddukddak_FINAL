@@ -203,5 +203,5 @@ document.querySelector("#cancelBtn").addEventListener("click", () => {
   }
   
   alert("집들이 게시글 수정이 취소되었습니다.");
-  location.href = "detail/" + boardNo;
+  location.href = "/myHouse/detail/" + boardNo;
 })

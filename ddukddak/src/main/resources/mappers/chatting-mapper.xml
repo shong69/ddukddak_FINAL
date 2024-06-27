@@ -122,6 +122,7 @@
         SELECT PARTNER_NO, PARTNER_TEL, PARTNER_BUSINESS_NAME FROM PARTNER
         WHERE (PARTNER_TEL LIKE '%${query}%' OR PARTNER_BUSINESS_NAME LIKE '%${query}%')
         AND PARTNER_DEL_FL = 'N'
+        AND PARTNER_TYPE=1
     </select>
 	
 	<!-- [일반회원]채팅 확인 -->

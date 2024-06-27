@@ -42,7 +42,7 @@
                                             <!--3개로 주어진 myTipBoardList의 인덱스 -->
                                             <section class="tipBoard-item">
                                                 <a th:href="|/tip/detail/*{boardNo}|">
-                                                    <img th:src="@{thumbnail}" class="tipBoard-img">
+                                                    <img th:src="*{thumbnail}" class="tipBoard-img">
                                                 </a>
                                                 <span th:text="|@${session.loginMember.memberNickname}|">@USER01</span>
                                                 <span th:text="*{boardTitle}">베란다 가구배치 꿀팁</span>

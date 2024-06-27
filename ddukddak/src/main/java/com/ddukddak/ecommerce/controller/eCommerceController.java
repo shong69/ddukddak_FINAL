@@ -545,6 +545,7 @@ public class eCommerceController {
         
         // 쇼핑상품 랜덤 4개 가져오기
  		List<Product> list = service.selectProduct6(memberNo);
+ 		log.info("completeProuctList : " + list);
  		
  		model.addAttribute("selectProductList", list);
       

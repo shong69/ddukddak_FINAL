@@ -97,61 +97,65 @@
         
 
          <!-- 페이지네이션 -->
-         <div class="pagination">
-            <th:block th:if="${status == null}">
-                <ul class = "pagination" th:object="${pagination}">
-                    <li><a th:href="@{|/partner/seller/product/apply?cp=1|}">&lt;&lt;</a></li>
-                    <li><a th:href="@{|/partner/seller/product/apply?cp=*{prevPage}|}">&lt;</a></li>
+          <th:block th:if="${applyList.size() > 0}">
+            
+            <div class="pagination">
+                <th:block th:if="${status == null}">
+                    <ul class = "pagination" th:object="${pagination}">
+                        <li><a th:href="@{|/partner/seller/product/apply?cp=1|}">&lt;&lt;</a></li>
+                        <li><a th:href="@{|/partner/seller/product/apply?cp=*{prevPage}|}">&lt;</a></li>
+            
+                        <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
         
-                    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
-    
-                        <li th:if="${i} == *{currentPage}">
-                            <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
-                        </li>
-    
-                        <li th:unless="${i} == *{currentPage}">
-                            <a th:href="@{|/partner/seller/product/apply?cp=${i}|}"
-                            th:text="${i}">이동할 페이지</a>
-                        </li>
-                        
-                    </th:block>
+                            <li th:if="${i} == *{currentPage}">
+                                <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                            </li>
         
-                
-                    <li>
-                        <a th:href="@{|/partner/seller/product/apply?cp=*{nextPage}&status=${status}|}">&gt;</a>
-                    </li>
-                    <li><a th:href="@{|/partner/seller/product/apply?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
-                </ul>
-            </th:block>
-            <th:block th:unless="${status == null}">
-                <ul class = "pagination" th:object="${pagination}">
-                    <li><a th:href="@{|/partner/seller/product/apply?cp=1&status=${status}|}">&lt;&lt;</a></li>
-                    <li><a th:href="@{|/partner/seller/product/apply?cp=*{prevPage}&status=${status}|}">&lt;</a></li>
-        
-                    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
-    
-                        <li th:if="${i} == *{currentPage}">
-                            <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                            <li th:unless="${i} == *{currentPage}">
+                                <a th:href="@{|/partner/seller/product/apply?cp=${i}|}"
+                                th:text="${i}">이동할 페이지</a>
+                            </li>
+                            
+                        </th:block>
+            
+                    
+                        <li>
+                            <a th:href="@{|/partner/seller/product/apply?cp=*{nextPage}&status=${status}|}">&gt;</a>
                         </li>
-    
-                        <li th:unless="${i} == *{currentPage}">
-                            <a th:href="@{|/partner/seller/product/apply?cp=${i}&status=${status}|}"
-                            th:text="${i}">이동할 페이지</a>
-                        </li>
-                        
-                    </th:block>
+                        <li><a th:href="@{|/partner/seller/product/apply?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
+                    </ul>
+                </th:block>
+                <th:block th:unless="${status == null}">
+                    <ul class = "pagination" th:object="${pagination}">
+                        <li><a th:href="@{|/partner/seller/product/apply?cp=1&status=${status}|}">&lt;&lt;</a></li>
+                        <li><a th:href="@{|/partner/seller/product/apply?cp=*{prevPage}&status=${status}|}">&lt;</a></li>
+            
+                        <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
         
-                
-                    <li>
-                        <a th:href="@{|/partner/seller/product/apply?cp=*{nextPage}&status=${status}|}">&gt;</a>
-                    </li>
-                    <li><a th:href="@{|/partner/seller/product/apply?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
-                </ul>
-
-            </th:block>
-        </div>
-
-
+                            <li th:if="${i} == *{currentPage}">
+                                <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                            </li>
+        
+                            <li th:unless="${i} == *{currentPage}">
+                                <a th:href="@{|/partner/seller/product/apply?cp=${i}&status=${status}|}"
+                                th:text="${i}">이동할 페이지</a>
+                            </li>
+                            
+                        </th:block>
+            
+                    
+                        <li>
+                            <a th:href="@{|/partner/seller/product/apply?cp=*{nextPage}&status=${status}|}">&gt;</a>
+                        </li>
+                        <li><a th:href="@{|/partner/seller/product/apply?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
+                    </ul>
+    
+                </th:block>
+            </div>
+    
+    
+          </th:block>
+ 
     </div>
 
 

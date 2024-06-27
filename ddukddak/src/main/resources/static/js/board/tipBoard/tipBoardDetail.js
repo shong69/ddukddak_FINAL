@@ -129,7 +129,7 @@ if(deleteBtn != null) {
     }
   
     fetch("/tip/deleteTip?boardNo=" + boardNo + "&boardCode=" + boardCode, {
-      method : "DELETE",
+      method : "POST",
       headers : {"Content-Type" : "application/json"}
     })
     .then(resp => resp.text())
@@ -157,7 +157,7 @@ if (updateBtn != null) {
 
   updateBtn.addEventListener("click", () => {
   
-    location.href = "/tip/updateTip?boardNo=" + boardNo;
+    location.href = "/tip/updateTip/" + boardNo;
   
   });
 }

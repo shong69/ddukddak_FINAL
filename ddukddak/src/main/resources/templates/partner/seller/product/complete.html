@@ -27,6 +27,7 @@
             <input type="checkbox" value="A" name="order" id="selectAll" onclick="updateStatus(this)"><label for="selectAll">전체</label>
             <input type="checkbox" value="PC" name="order" id="selectProductConfirm" onclick="updateStatus(this)"><label for="selectProductConfirm">구매확정</label>
             <input type="checkbox" value="PR" name="order" id="selectProductReject" onclick="updateStatus(this)"><label for="selectProductReject">주문 거절</label>
+            <input type="checkbox" value="SR" name="order" id="selectShipmentReject" onclick="updateStatus(this)"><label for="selectShipmentReject">출고 거절</label>
         </div>
 
          <!-- 상품목록 -->
@@ -60,47 +61,28 @@
             </table>
         </div>
 
-        <!-- 페이지네이션 -->
-        <div class="pagination">
-            <th:block th:if="${status == null}">
-                <ul class="pagination" th:object="${pagination}">
-                    <li><a th:href="@{|/partner/seller/product/complete?cp=1|}">&lt;&lt;</a></li>
-                    <li><a th:href="@{|/partner/seller/product/complete?cp=*{prevPage}|}">&lt;</a></li>
-                    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
-                        <li th:if="${i} == *{currentPage}">
-                            <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
-                        </li>
-                        <li th:unless="${i} == *{currentPage}">
-                            <a th:href="@{|/partner/seller/product/complete?cp=${i}|}" th:text="${i}">이동할 페이지</a>
-                        </li>
-                    </th:block>
-                    <li>
-                        <a th:href="@{|/partner/seller/product/complete?cp=*{nextPage}&status=${status}|}">&gt;</a>
-                    </li>
-                    <li><a th:href="@{|/partner/seller/product/complete?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
-                </ul>
+
+        <!-- Pagination -->
+    <div class="pagination">
+        <ul class="pagination" th:object="${pagination}">
+            <li><a th:href="@{|/partner/seller/product/complete?cp=1&status=${status}|}">&lt;&lt;</a></li>
+            <li><a th:href="@{|/partner/seller/product/complete?cp=*{prevPage}&status=${status}|}">&lt;</a></li>
+            <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+                <li th:if="${i} == *{currentPage}">
+                    <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
+                </li>
+                <li th:unless="${i} == *{currentPage}">
+                    <a th:href="@{|/partner/seller/product/complete?cp=${i}&status=${status}|}" th:text="${i}">이동할 페이지</a>
+                </li>
             </th:block>
-            <th:block th:unless="${status == null}">
-                <ul class="pagination" th:object="${pagination}">
-                    <li><a th:href="@{|/partner/seller/product/complete?cp=1&status=${status}|}">&lt;&lt;</a></li>
-                    <li><a th:href="@{|/partner/seller/product/complete?cp=*{prevPage}&status=${status}|}">&lt;</a></li>
-                    <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
-                        <li th:if="${i} == *{currentPage}">
-                            <a class="current" th:text="${i}" style="font-weight: bold;">현재페이지</a>
-                        </li>
-                        <li th:unless="${i} == *{currentPage}">
-                            <a th:href="@{|/partner/seller/product/complete?cp=${i}&status=${status}|}" th:text="${i}">이동할 페이지</a>
-                        </li>
-                    </th:block>
-                    <li>
-                        <a th:href="@{|/partner/seller/product/complete?cp=*{nextPage}&status=${status}|}">&gt;</a>
-                    </li>
-                    <li><a th:href="@{|/partner/seller/product/complete?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
-                </ul>
-            </th:block>
-        </div>
+            <li>
+                <a th:href="@{|/partner/seller/product/complete?cp=*{nextPage}&status=${status}|}">&gt;</a>
+            </li>
+            <li><a th:href="@{|/partner/seller/product/complete?cp=*{maxPage}&status=${status}|}">&gt;&gt;</a></li>
+        </ul>
 
     </div>
+
     <script th:inline="javascript">
         const loginPartnerMember = /*[[${session.loginPartnerMember.partnerNo}]]*/ "loginPartnerMember";
     </script>
