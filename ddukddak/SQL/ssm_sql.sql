@@ -91,7 +91,8 @@ BEGIN
             DEFAULT, 
             DEFAULT, 
             DEFAULT, 
-            2
+            2,
+            NULL
         );
     END LOOP;
 END;
