@@ -213,9 +213,9 @@ public class MyHouseBoardController {
     	
     	List<MultipartFile> imgList = new ArrayList<>(images);
     	
-    	imgList.remove(mainImg);	// 중복된 mainImg 리스트에서 삭제
+//    	imgList.remove(mainImg);	// 중복된 mainImg 리스트에서 삭제
     	
-    	imgList.add(0, mainImg);	// 다시 mainImg 를 배열 0번째 자리에 추가
+//    	imgList.add(0, mainImg);	// 다시 mainImg 를 배열 0번째 자리에 추가
     	
     	int boardNo = service.insertBoard(board, imgList);
     	
