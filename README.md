@@ -3,9 +3,11 @@
 > **“오늘의집 스타일의 인테리어 쇼핑몰 서비스”**  
 > 사용자 편의와 커뮤니티 기능까지 담은 팀 기반 풀스택 웹 프로젝트
 
+
+
 [🔗 GitHub Repository](https://github.com/shong69/ddukddak_FINAL)
 
----
+
 
 ## 📌 주요 기능
 
@@ -22,7 +24,9 @@
 - 주문내역 및 통계 확인
 - 관리자 전용 대시보드
 
----
+
+
+
 
 ## 🛠 기술 스택
 
@@ -35,24 +39,9 @@
 | **협업 도구**| Notion, Google Drive, KakaoTalk |
 | **디자인 도구**| Figma, ERDCloud |
 
----
 
-## 📁 프로젝트 구조 예시
-ddukddak/
-├── src/
-│ └── main/
-│ ├── java/com/ddukddak/
-│ │ ├── controller/
-│ │ ├── service/
-│ │ ├── model/
-│ │ └── repository/
-│ └── resources/
-│ ├── templates/
-│ └── static/
-├── test/
-└── build.gradle
 
----
+
 
 ## 👨‍👩‍👧‍👦 팀원 및 역할
 
